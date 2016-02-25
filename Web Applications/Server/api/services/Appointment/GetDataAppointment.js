@@ -9,6 +9,8 @@ module.exports = {
         return {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
+            FromTime: data.FromTime,
+            ToTime: data.ToTime,
             Status: 'Received',
             Type: data.Type,
             Enable: 'Y'
@@ -61,7 +63,8 @@ module.exports = {
             Fund: data.Fund,
             FundType: data.FundType,
             Allergy: data.Allergy,
-            PresentComplain: data.PresentComplain
+            PresentComplain: data.PresentComplain,
+            Description: data.Description
         };
     },
     /*

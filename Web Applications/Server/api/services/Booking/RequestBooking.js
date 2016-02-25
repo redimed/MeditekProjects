@@ -9,6 +9,7 @@ module.exports = function(data, userInfo) {
         !_.isEmpty(data.Doctor) &&
         !_.isEmpty(data.Patient)) {
         var objAppt = null;
+        var objTelehealthAppt = null;
         sequelize.transaction()
             .then(function(t) {
                 var objCheckTimeRoster = {
@@ -69,26 +70,15 @@ module.exports = function(data, userInfo) {
                             .then(function(apptCreated) {
                                 if (!_.isEmpty(apptCreated)) {
                                     objAppt = apptCreated;
-                                    if (data.Appointment.Type === 'Onsite') {
-                                        var objCreateOnsiteAppt = {
-                                            data: {
-                                                Description: data.Appointment.Description
-                                            },
-                                            transaction: t,
-                                            appointmentObject: objAppt
-                                        };
-                                        return Services.CreateOnsiteAppointment(objCreateOnsiteAppt);
-                                    } else if (data.Appointment.Type === 'Telehealth') {
-                                        var objCreateTelehealthAppt = {
-                                            data: {
-                                                UID: UUIDService.Create(),
-                                                CreatedBy: userInfo.ID
-                                            },
-                                            transaction: t,
-                                            appointmentObject: objAppt
-                                        };
-                                        return Services.CreateTelehealthAppointment(objCreateTelehealthAppt);
-                                    }
+                                    var objCreateTelehealthAppt = {
+                                        data: {
+                                            UID: UUIDService.Create(),
+                                            CreatedBy: userInfo.ID
+                                        },
+                                        transaction: t,
+                                        appointmentObject: objAppt
+                                    };
+                                    return Services.CreateTelehealthAppointment(objCreateTelehealthAppt);
                                 }
                             }, function(err) {
                                 defer.reject({
@@ -96,7 +86,125 @@ module.exports = function(data, userInfo) {
                                     error: err
                                 });
                             })
-                            .then(function(onsiteAppointmentorTelehealthCreated) {
+                            .then(function(telehealthApptCreated) {
+                                if (!_.isEmpty(telehealthApptCreated)) {
+                                    objTelehealthAppt = telehealthApptCreated;
+                                    var whereClausePatient = {};
+                                    _.forEach(data.Patient, function(valueKey, indexKey) {
+                                        if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                            moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                            whereClausePatient[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                        } else if (!_.isArray(valueKey) &&
+                                            !_.isObject(valueKey)) {
+                                            whereClausePatient[indexKey] = valueKey;
+                                        }
+                                    });
+                                    return Patient.findOne({
+                                        include: [{
+                                            model: PatientDVA,
+                                            required: false
+                                        }, {
+                                            model: PatientKin,
+                                            required: false
+                                        }, {
+                                            model: PatientMedicare,
+                                            required: false
+                                        }, {
+                                            model: UserAccount,
+                                            required: false
+                                        }, {
+                                            model: Country,
+                                            required: false,
+                                            as: 'Country1'
+                                        }, {
+                                            model: Country,
+                                            required: false,
+                                            as: 'Country2'
+                                        }],
+                                        where: whereClausePatient,
+                                        transaction: t
+                                    });
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(patientInfo) {
+                                if (!_.isEmpty(patientInfo)) {
+                                    patientInfo = JSON.parse(JSON.stringify(patientInfo));
+                                    var dataPatientAppointment =
+                                        Services.GetDataAppointment.PatientAppointmentCreate(patientInfo);
+                                    //add fields exception for PatientAppointment
+                                    if (!_.isEmpty(patientInfo.UserAccount)) {
+                                        dataPatientAppointment.PhoneNumber = patientInfo.UserAccount.PhoneNumber;
+                                    }
+                                    if (!_.isEmpty(patientInfo.Country1)) {
+                                        dataPatientAppointment.Country = patientInfo.Country1.ShortName;
+                                    }
+                                    if (!_.isEmpty(patientInfo.Country2)) {
+                                        dataPatientAppointment.CountryOfBirth = patientInfo.Country2.ShortName;
+                                    }
+                                    if (!_.isEmpty(patientInfo.PatientMedicares)) {
+                                        patientInfo.PatientMedicares = _.sortBy(patientInfo.PatientMedicares, function(PM) {
+                                            return PM.CreatedDate;
+                                        });
+                                        dataPatientAppointment.MedicareNumber = patientInfo.PatientMedicares[patientInfo.PatientMedicares.length - 1].MedicareNumber;
+                                        dataPatientAppointment.MedicareReferenceNumber = patientInfo.PatientMedicares[patientInfo.PatientMedicares.length - 1].MedicareReferenceNumber;
+                                        dataPatientAppointment.MedicareExpiryDate = patientInfo.PatientMedicares[patientInfo.PatientMedicares.length - 1].ExpiryDate;
+                                    }
+                                    if (!_.isEmpty(patientInfo.PatientDVAs)) {
+                                        patientInfo.PatientDVAs = _.sortBy(patientInfo.PatientDVAs, function(PD) {
+                                            return PD.CreatedDate;
+                                        });
+                                        dataPatientAppointment.DVANumber = patientInfo.PatientDVAs[patientInfo.PatientDVAs.length - 1].DVANumber;
+                                    }
+                                    if (!_.isEmpty(patientInfo.PatientKins)) {
+                                        patientInfo.PatientKins = _.sortBy(patientInfo.PatientKins, function(PK) {
+                                            return PK.CreatedDate;
+                                        });
+                                        dataPatientAppointment.PatientKinFirstName = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].FirstName;
+                                        dataPatientAppointment.PatientKinMiddleName = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].MiddleName;
+                                        dataPatientAppointment.PatientKinLastName = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].LastName;
+                                        dataPatientAppointment.PatientKinRelationship = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].Relationship;
+                                        dataPatientAppointment.PatientKinMobilePhoneNumber = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].MobilePhoneNumber;
+                                        dataPatientAppointment.PatientKinHomePhoneNumber = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].HomePhoneNumber;
+                                        dataPatientAppointment.PatientKinWorkPhoneNumber = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].WorkPhoneNumber;
+                                    }
+                                    dataPatientAppointment.UID = UUIDService.Create();
+                                    dataPatientAppointment.CreatedBy = userInfo.ID;
+                                    var objectCreatePatientAppt = {
+                                        data: dataPatientAppointment,
+                                        telehealthAppointmentObject: objTelehealthAppt,
+                                        transaction: t
+                                    };
+                                    return Services.CreatePatientAppointment(objectCreatePatientAppt)
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(patientAppointmentCreated) {
+                                if (data.Appointment.Type === 'Onsite') {
+                                    var objCreateOnsiteAppt = {
+                                        data: {
+                                            Description: data.Appointment.Description
+                                        },
+                                        transaction: t,
+                                        appointmentObject: objAppt
+                                    };
+                                    return Services.CreateOnsiteAppointment(objCreateOnsiteAppt);
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(onsiteApptCreated) {
                                 var whereClauseDoctor = {};
                                 _.forEach(data.Doctor, function(valueKey, indexKey) {
                                     if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||

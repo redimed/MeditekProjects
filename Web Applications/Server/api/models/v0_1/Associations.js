@@ -103,7 +103,7 @@ module.exports = {
             foreignKey: 'UserAccountID'
         });
         //association Patient - PatientKin
-        Patient.hasOne(PatientKin, {
+        Patient.hasMany(PatientKin, {
             foreignKey: 'PatientID'
         });
         PatientKin.belongsTo(Patient, {
@@ -111,7 +111,7 @@ module.exports = {
         });
 
         //association Patient - PatientPension
-        Patient.hasOne(PatientPension, {
+        Patient.hasMany(PatientPension, {
             foreignKey: 'PatientID'
         });
         PatientPension.belongsTo(Patient, {
@@ -119,7 +119,7 @@ module.exports = {
         });
 
         //association Patient - PatientDVA
-        Patient.hasOne(PatientDVA, {
+        Patient.hasMany(PatientDVA, {
             foreignKey: 'PatientID'
         });
         PatientDVA.belongsTo(Patient, {
@@ -127,7 +127,7 @@ module.exports = {
         });
 
         //association Patient - PatientMedicare
-        Patient.hasOne(PatientMedicare, {
+        Patient.hasMany(PatientMedicare, {
             foreignKey: 'PatientID'
         });
         PatientMedicare.belongsTo(Patient, {
@@ -181,8 +181,17 @@ module.exports = {
             foreignKey: 'CountryID1'
         });
         Patient.belongsTo(Country, {
-            foreignKey: 'CountryID1'
-        })
+            foreignKey: 'CountryID1',
+            as: 'Country1'
+        });
+        //Patient - Country
+        Country.hasOne(Patient, {
+            foreignKey: 'CountryID2'
+        });
+        Patient.belongsTo(Country, {
+            foreignKey: 'CountryID2',
+            as: 'Country2'
+        });
 
         /* Doctor */
         FileUpload.hasOne(Doctor, {
@@ -398,7 +407,7 @@ module.exports = {
         });
 
         //association Patient - PatientGP
-        Patient.hasOne(PatientGP, {
+        Patient.hasMany(PatientGP, {
             foreignKey: 'PatientID'
         });
         PatientGP.belongsTo(Patient, {
@@ -406,7 +415,7 @@ module.exports = {
         });
 
         //association Patient - PatientFund
-        Patient.hasOne(PatientFund, {
+        Patient.hasMany(PatientFund, {
             foreignKey: 'PatientID'
         });
         PatientFund.belongsTo(Patient, {

@@ -197,7 +197,7 @@ app.directive('onsiteAppointment', function(){
                         console.log('saveWaAppointment', data);
                         toastr.success("Update appointment successfully !");
                         swal.close();
-                        $state.go("authentication.WAAppointment.detail", {}, {
+                        $state.go("authentication.onsite.appointment", {}, {
                             reload: true
                         });
                     }, function(err) {
@@ -206,7 +206,7 @@ app.directive('onsiteAppointment', function(){
                         } else {
                             swal.close();
                             toastr.error('Update Appointment Failed');
-                            $state.go("authentication.WAAppointment.detail", {}, {
+                            $state.go("authentication.onsite.appointment", {}, {
                                 reload: true
                             });
                         }
@@ -233,7 +233,7 @@ app.directive('onsiteAppointment', function(){
                     };
                     if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
                         var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
-                        var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time + ' Z';
+                        var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time;
                         $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").format('YYYY-MM-DD HH:mm:ss Z');
                     } else {
                         $scope.wainformation.FromTime = null;

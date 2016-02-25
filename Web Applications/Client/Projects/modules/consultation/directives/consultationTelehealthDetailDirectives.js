@@ -228,13 +228,16 @@ app.directive('telehealthDetail', function() {
                             };
                         };
                     };
+                    console.log("$scope.wainformation.FromTime",$scope.info.appointmentDate)
                     if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
                         var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
-                        var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time + ' Z';
+                        var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time;
                         $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").format('YYYY-MM-DD HH:mm:ss Z');
                     } else {
                         $scope.wainformation.FromTime = null;
                     };
+                    console.log("$scope.wainformation.FromTime",$scope.wainformation.FromTime)
+                    alert('222')
                     console.log($scope.wainformation.TelehealthAppointment.PatientAppointment)
                     if ($scope.info.MedicareExpiryDate != null && $scope.info.MedicareExpiryDate != '') {
                         $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');

@@ -243,26 +243,29 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         if (Boolean(headers.requireupdatetoken) === true) {
             $rootScope.getNewToken();
         }
-        if (response.status == 'success') {
-            var key = 'Clinical__Details.Telehealth__WAAppointment.Notes.' + fileItem.formData[0].fileTypeClinical;
-            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
-                $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-            };
-            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
-                $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
-            };
-            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads) {
-                $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads = [];
-            };
-            $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads.push({
-                UID: response.fileUID
-            })
-            console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails);
-        } else {
-            toastr.error("Upload Image error");
-            swal.close();
+        console.log("headers", headers)
+        console.log("response", response)
+        alert(22)
+            // if (response.status == 'success') {
+            //     var key = 'Clinical__Details.Telehealth__WAAppointment.Notes.' + fileItem.formData[0].fileTypeClinical;
+            //     if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
+            //         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
+            //     };
+            //     if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
+            //         $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
+            //     };
+            //     if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads) {
+            //         $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads = [];
+            //     };
+            //     $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads.push({
+            //         UID: response.fileUID
+            //     })
+            //     console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails);
+            // } else {
+            //     toastr.error("Upload Image error");
+            //     swal.close();
 
-        };
+        // };
     };
     uploader.onCompleteAll = function() {
         $scope.sendRequestAppointment();

@@ -9,7 +9,7 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
     };
     $scope.info = {
         data: {
-            Limit: 1,
+            Limit: 20,
             Offset: 0,
             Filter: [{
                 Appointment: {
@@ -24,14 +24,16 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
             }]
         }
     };
-    var today = new Date();
-    $scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD HH:mm:ss Z');
+   
     $scope.ListTodayConsultation = function(data) {
         if (data == 'todaylist') {
             $state.go("authentication.consultation.list", {
                 roleid: 'roleid'
             });
         } else if (data == 'today') {
+            var today = new Date();
+            $scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD 00:00:00 Z');
+            console.log("requesr data",$scope.info.data);
             WAAppointmentService.loadListWAAppointment($scope.info.data).then(function(response) {
                 console.log("response data",response);
                 if (response.rows.length != 0) {

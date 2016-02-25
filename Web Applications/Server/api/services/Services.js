@@ -47,6 +47,7 @@ module.exports = {
     GetWAAppointmentObject: require('./Appointment/GetWAAppointmentObject'),
     RequestWAAppointmentPatient: require('./Appointment/RequestWAAppointmentPatient'),
     CreateOnsiteAppointment: require('./Appointment/CreateOnsiteAppointment'),
+    GetDetailWAAppointmentforEform: require('./Appointment/GetDetailWAAppointmentforEform'),
     //end Appointment
     Module: require('./Authorization/v0_1/Module'),
     Role: require('./Authorization/v0_1/Role'),
@@ -110,9 +111,10 @@ module.exports = {
     GetDetailBooking: require('./Booking/GetDetailBooking'),
     DestroyBooking: require('./Booking/DestroyBooking'),
     UpdateStatusBooking: require('./Booking/UpdateStatusBooking'),
+    CheckTimeRoster: require('./Booking/CheckTimeRoster'),
     //begin Roster
     //Begin Company
     GetListCompany: require('./Company/GetListCompany'),
     CreateCompany: require('./Company/CreateCompany')
-    //End Company
+        //End Company
 };

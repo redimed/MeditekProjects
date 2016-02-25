@@ -10,6 +10,7 @@ module.exports = {
         'RequestWAAppointment': ['isAuthenticated'],
         'GetListWAAppointment': ['isAuthenticated'],
         'GetDetailWAAppointment': ['isAuthenticated'],
+        'GetDetailWAAppointmentforEform': true,
         'UpdateRequestWAAppointment': ['isAuthenticated'],
         'DisableWAAppointment': ['isAuthenticated'],
         'RequestWAAppointmentPatient': true

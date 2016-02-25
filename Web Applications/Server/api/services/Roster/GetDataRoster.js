@@ -25,14 +25,13 @@ module.exports = {
                     var timeTo = toTime.split(' ')[1];
                     var timeFrom = fromTime.split(' ')[1];
                     if (!_.isEmpty(rangeDateFrom)) {
-                        rangeDateFrom.by('days', function(moment) {
+                        rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment.format('YYYY-MM-DD') + ' ' + timeFrom,
-                                toTime: moment.format('YYYY-MM-DD') + ' ' + timeTo
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
-                        arrayDateRepeat[0].UID = data.UID;
                     }
                     if (!_.isEmpty(arrayDateRepeat) &&
                         _.isArray(arrayDateRepeat)) {
@@ -43,7 +42,7 @@ module.exports = {
                                 moment(valueDate.fromTime).format('e') ===
                                 moment(fromTime).format('e')) {
                                 var objectRoster = {
-                                    UID: valueDate.UID || UUIDService.Create(),
+                                    UID: UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,
@@ -66,14 +65,13 @@ module.exports = {
                     var timeTo = toTime.split(' ')[1];
                     var timeFrom = fromTime.split(' ')[1];
                     if (!_.isEmpty(rangeDateFrom)) {
-                        rangeDateFrom.by('days', function(moment) {
+                        rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment.format('YYYY-MM-DD') + ' ' + timeFrom,
-                                toTime: moment.format('YYYY-MM-DD') + ' ' + timeTo
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
-                        arrayDateRepeat[0].UID = data.UID;
                     }
                     if (!_.isEmpty(arrayDateRepeat) &&
                         _.isArray(arrayDateRepeat)) {
@@ -82,7 +80,7 @@ module.exports = {
                                 HelperService.CheckExistData(valueDate.fromTime) &&
                                 HelperService.CheckExistData(valueDate.toTime)) {
                                 var objectRoster = {
-                                    UID: valueDate.UID || UUIDService.Create(),
+                                    UID: UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,
@@ -105,14 +103,13 @@ module.exports = {
                     var timeTo = toTime.split(' ')[1];
                     var timeFrom = fromTime.split(' ')[1];
                     if (!_.isEmpty(rangeDateFrom)) {
-                        rangeDateFrom.by('days', function(moment) {
+                        rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment.format('YYYY-MM-DD') + ' ' + timeFrom,
-                                toTime: moment.format('YYYY-MM-DD') + ' ' + timeTo
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
-                        arrayDateRepeat[0].UID = data.UID;
                     }
                     if (!_.isEmpty(arrayDateRepeat) &&
                         _.isArray(arrayDateRepeat)) {
@@ -124,7 +121,7 @@ module.exports = {
                                 moment(fromTime).format('e') &&
                                 moment(valueDate.fromTime).format('e') <= 5) {
                                 var objectRoster = {
-                                    UID: valueDate.UID || UUIDService.Create(),
+                                    UID: UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,
@@ -150,7 +147,7 @@ module.exports = {
             (moment(data.ToTime, 'YYYY-MM-DD Z', true).isValid() ||
                 moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z', true).isValid())) {
             var objectRoster = {
-                UID: data.UID || UUIDService.Create(),
+                UID: UUIDService.Create(),
                 FromTime: data.FromTime,
                 ToTime: data.ToTime,
                 IsRecurrence: data.IsRecurrence,

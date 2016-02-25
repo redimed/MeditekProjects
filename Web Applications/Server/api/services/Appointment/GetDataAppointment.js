@@ -63,7 +63,8 @@ module.exports = {
             Fund: data.Fund,
             FundType: data.FundType,
             Allergy: data.Allergy,
-            PresentComplain: data.PresentComplain
+            PresentComplain: data.PresentComplain,
+            Description: data.Description
         };
     },
     /*

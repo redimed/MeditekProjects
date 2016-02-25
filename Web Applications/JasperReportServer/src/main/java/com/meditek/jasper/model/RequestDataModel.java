@@ -16,20 +16,20 @@ public class RequestDataModel{
     String templateUID;
     List<FormDataModel> data;
 
-    public List<FormDataModel> getData() {
-        return data;
-    }
-
-    public void setData(List<FormDataModel> data) {
-        this.data = data;
-    }
-
     public String getPrintMethod() {
         return printMethod;
     }
 
     public void setPrintMethod(String printMethod) {
         this.printMethod = printMethod;
+    }
+
+    public List<FormDataModel> getData() {
+        return data;
+    }
+
+    public void setData(List<FormDataModel> data) {
+        this.data = data;
     }
 
     public String getTemplateUID() {
@@ -39,7 +39,6 @@ public class RequestDataModel{
     public void setTemplateUID(String templateUID) {
         this.templateUID = templateUID;
     }
-
-
+    
     
 }

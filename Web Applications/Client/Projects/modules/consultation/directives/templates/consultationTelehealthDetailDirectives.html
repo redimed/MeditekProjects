@@ -201,6 +201,10 @@
                                                     <label class="control-label">Site</label>
                                                     <div class="form-control-focus"> </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Decription</label>
+                                                    <textarea class="form-control" rows="5" ng-model="wainformation.TelehealthAppointment.Description"></textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -532,15 +536,34 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group form-md-line-input">
+                                                                <div class="input-icon">
+                                                                    <select size="1" class="form-control" ng-model="ShowData.patient.Country" ng-disabled="ShowData.isLinkPatient">
+                                                                        <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
+                                                                    </select>
+                                                                    <label class="control-label">Country</label>
+                                                                    <div class="form-control-focus"> </div>
+                                                                    <i class="fa fa-flag"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div id="tab_kinGuardian" class="tab-pane">
                                                     <div class="row">
                                                         <h4 class="control-label col-md-12 col-sm-12">Next of Kin/Guardian</h4>
-                                                        <div class="col-md-12 col-sm-12">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input">
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinName">
-                                                                <label class="control-label">Name</label>
+                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinFirstName">
+                                                                <label class="control-label">First Name</label>
+                                                                <div class="form-control-focus"> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group form-md-line-input">
+                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinLastName">
+                                                                <label class="control-label">Last Name</label>
                                                                 <div class="form-control-focus"> </div>
                                                             </div>
                                                         </div>
@@ -601,7 +624,7 @@
                                                         <div class="col-md-4 col-sm-4">
                                                             <div class="form-group form-md-line-input">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.ExpiryDate">
+                                                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.MedicareExpiryDate">
                                                                     <label class="control-label">Expiry date</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <i class="glyphicon glyphicon-calendar"></i>

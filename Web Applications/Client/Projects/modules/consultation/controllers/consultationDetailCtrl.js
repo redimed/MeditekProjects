@@ -156,6 +156,10 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         $state.go("authentication.consultation.detail.consultNote");
     };
     $scope.telehealthDetail = function() {
-        $state.go("authentication.consultation.detail.telehealth");
+        if($scope.wainformation.Type == 'Onsite'){
+             $state.go("authentication.onsite.appointment", { UID: $scope.wainformation.UID })
+        }else{
+            $state.go("authentication.consultation.detail.telehealth",{ UID: $scope.wainformation.UID });
+        }
     };
 });

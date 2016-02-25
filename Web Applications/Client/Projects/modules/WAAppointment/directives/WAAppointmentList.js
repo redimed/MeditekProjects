@@ -56,9 +56,6 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                     $state.go("authentication.onsite.appointment", { UID: UID })
                 } else {
                      $state.go("authentication.WAAppointment.detail", { UID: UID })
-                    // if (scope.data) {
-                    //     scope.data.getDetailWAAppointmentByUid(UID);
-                    // };
                 };
 
             };

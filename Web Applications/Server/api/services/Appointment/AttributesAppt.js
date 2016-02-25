@@ -73,5 +73,8 @@ module.exports = {
         return ['UID', 'UserAccountID', 'FileName', 'FileLocation', 'FileType',
             'FileExtension', 'Description'
         ];
+    }, 
+    OnsiteAppointment: function() {
+        return ['Description'];
     }
 };

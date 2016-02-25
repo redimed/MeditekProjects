@@ -9,6 +9,8 @@ module.exports = {
         return {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
+            FromTime: data.FromTime,
+            ToTime: data.ToTime,
             Status: 'Received',
             Type: data.Type,
             Enable: 'Y'

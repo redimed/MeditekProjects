@@ -12,13 +12,17 @@
 
 module.exports = {
 
-  /***************************************************************************
-   * Set the default database connection for models in the development       *
-   * environment (see config/connections.js and config/models.js )           *
-   ***************************************************************************/
+    /***************************************************************************
+     * Set the default database connection for models in the development       *
+     * environment (see config/connections.js and config/models.js )           *
+     ***************************************************************************/
 
-  // models: {
-  //   connection: 'someMongodbServer'
-  // }
+    // models: {
+    //   connection: 'someMongodbServer'
+    // }
+    // ssl: {
+    //     key: require('fs').readFileSync(__dirname + '../../ssl/star_redimed_com_au.key'),
+    //     cert: require('fs').readFileSync(__dirname + '../../ssl/star_redimed_com_au.pem')
+    // },
 
 };

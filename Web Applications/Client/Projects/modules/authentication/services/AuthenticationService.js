@@ -18,9 +18,11 @@ angular.module('app.authentication.service', [])
             return getDetailUser.post({
                 data: data
             });
-        }
-        services.getDetailOpentok = function() {
+        };
+        
+        services.CreateRoomInOpentok = function() {
             return apiTelehealth.one('telehealth/socket/generateSession').get();
         };
+
         return services;
     })

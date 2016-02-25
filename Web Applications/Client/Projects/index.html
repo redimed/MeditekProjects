@@ -225,41 +225,43 @@ License: You must have a valid license purchased only from themeforest(the above
         <script type="text/javascript">
             io.sails.autoConnect = false;
             // io.sails.url = o.const.telehealthBaseURL;
-            var socketAuth = io.sails.connect(o.const.authBaseUrl);
+            var socketAuth,socketRest,socketNc,socketTelehealth;
+            socketAuth = io.sails.connect(o.const.authBaseUrl);
             socketAuth.on('connect',function(){
-                console.log("auth connect socket");
+                console.log("auth connect socket",socketAuth);
 
-                var socketRest=io.sails.connect(o.const.restBaseUrl);
+                socketRest=io.sails.connect(o.const.restBaseUrl);
                 socketRest.on('connect',function(){
-                    console.log('rest connect socket');
+                    console.log('rest connect socket',socketRest);
 
-                    var socketNc=io.sails.connect(o.const.ncBaseUrl);
+                    socketNc=io.sails.connect(o.const.ncBaseUrl);
                     socketNc.on('connect',function(){
-                        console.log('notification center connect socket');
+                        console.log('notification center connect socket',socketNc);
 
-                        var socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
+                        socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
                         socketTelehealth.on('connect',function(){
-                            console.log("telehealth connect socket");
+                            console.log("telehealth connect socket",socketTelehealth);
                             
                         })
                         socketTelehealth.on('testmessage',function(msg){
-                            console.log(JSON.stringify(msg));
+                            console.log(JSON.stringify("d"+msg));
                         });
                         
                     })
                     socketNc.on('testmessage',function(msg){
-                        console.log(JSON.stringify(msg));
+                        console.log("ncccccc");
+                        console.log(JSON.stringify("c"+msg));
                     })
 
                 })
                 socketRest.on('testmessage',function(msg){
-                    console.log(JSON.stringify(msg));
+                    console.log(JSON.stringify("b"+msg));
                 })
                 
             })
 
             socketAuth.on('testmessage',function(msg){
-                console.log(JSON.stringify(msg));
+                console.log(JSON.stringify("a"+msg));
             });
 
             /*var socketAuth = io.sails.connect(o.const.authBaseUrl);

@@ -2,6 +2,7 @@ var app = angular.module('app.authentication.home.list.controller', []);
 
 app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentService,toastr) {
     $scope.UserRole = $cookies.getObject('userInfo').roles[0].RoleCode;
+    console.log(socketTelehealth);
     $scope.checkRole = false;
     if ($scope.UserRole == 'PATIENT') {
         $scope.checkRole = true;

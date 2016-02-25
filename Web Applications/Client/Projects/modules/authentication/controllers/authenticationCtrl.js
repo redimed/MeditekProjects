@@ -91,38 +91,15 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         name: 'Silver Savings Account'
     }];
 
-
-    console.log("=======================", $cookies.getObject('userInfo'));
-
-    //phan quoc chien get detail open tok
-    function OpentokCreateSession() {
-        AuthenticationService.getDetailOpentok().then(function(data) {
-            $scope.Opentok = {
-                apiKey: data.data.apiKey,
-                sessionId: data.data.sessionId,
-                token: data.data.token
-            }
+    // phan quoc chien
+    // opentok
+    function getDetailRoomOpentok() {
+        AuthenticationService.CreateRoomInOpentok().then(function(data) {
+            console.log(data.data);
+            console.log(socketTelehealth);
+            socketTelehealth.opentok = data.data;
         });
     };
 
-    OpentokCreateSession();
-
-    //phan quoc chien join room
-    // function OpenTokJoinRoom() {
-    //     console.log('user UID', $cookies.getObject('userInfo').TelehealthUser.UID);
-    //     // io.socket.get('/api/telehealth/socket/joinRoom', {
-    //     socketTelehealth.get('/api/telehealth/socket/joinRoom', {
-    //         uid: $cookies.getObject('userInfo').TelehealthUser.UID
-    //     }, function(data) {
-    //         console.log("JoinRoom", data);
-    //     });
-    // };
-    // if ($cookies.getObject('userInfo').TelehealthUser != null) {
-    //     OpenTokJoinRoom();
-    // };
-    // // io.socket.on('receiveMessage', function(msg) {
-    // socketTelehealth.on('receiveMessage', function(msg) {
-    //     console.log("===================================",msg.message);
-    //     $scope.$broadcast("end",{a:"asdasd"});
-    // });
+    getDetailRoomOpentok();
 });

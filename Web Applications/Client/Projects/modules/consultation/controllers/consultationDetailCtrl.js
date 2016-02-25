@@ -25,11 +25,11 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     function OpentokSendCall(uidCall, uidUser, message) {
         console.log("uidCall", uidCall);
         console.log("uidUser", uidUser);
-        io.socket.get('/api/telehealth/socket/messageTransfer', {
+        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
             from: $scope.userInfo.TelehealthUser.UID,
             to: uidCall,
             message: message,
-            sessionId: $scope.Opentok.sessionId,
+            sessionId: socketTelehealth.opentok.sessionId,
             fromName: $scope.userInfo.UserName
         }, function(data) {
             console.log("send call", data);
@@ -40,12 +40,11 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         audio.pause();
         swal.close();
     }
-
     $scope.opentokData = {
             userName: null,
             userCall: null,
             call: function() {
-                console.log("Opentok", $scope.Opentok);
+                console.log(socketTelehealth.opentok);
                 WAAppointmentService.GetDetailPatientByUid({
                     UID: $scope.wainformation.Patients[0].UID
                 }).then(function(data) {
@@ -55,11 +54,11 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                         $scope.opentokData.userName = data.data[0].FirstName + " " + data.data[0].LastName;
                         OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "call");
                         window.open($state.href("blank.call", {
-                            apiKey: $scope.Opentok.apiKey,
-                            sessionId: $scope.Opentok.sessionId,
-                            token: $scope.Opentok.token,
+                            apiKey: socketTelehealth.opentok.apiKey,
+                            sessionId: socketTelehealth.opentok.sessionId,
+                            token: socketTelehealth.opentok.token,
                             userName: $scope.opentokData.userName
-                        }));
+                        }),"CAll",{directories:"no"});
                     } else {
                         toastr.error("Patient Is Not Exist", "error");
                     };

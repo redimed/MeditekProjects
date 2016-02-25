@@ -1,7 +1,10 @@
 module.exports = {
-	apiUrl: 'https://localhost:3015/',
-	apiServerUrl: 'https://192.168.1.235:3005/',
-	apiPDFUrl: 'https://192.168.1.100:3019/',
+	//apiUrl: 'https://testapp.redimed.com.au:3015/',
+	//apiServerUrl: 'https://testapp.redimed.com.au:3005/',
+	//apiPDFUrl: 'https://testapp.redimed.com.au:3013/',
+	apiUrl: 'https://meditek.redimed.com.au:3015/',
+	apiServerUrl: 'https://meditek.redimed.com.au:3005/',
+	apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
 	getParamsIframe: function(appointmentId, patientId){
 		return '/eform?appoinmentUID='+appointmentId+'&patientUID='+patientId;
 	},

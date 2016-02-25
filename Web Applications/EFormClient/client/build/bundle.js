@@ -481,9 +481,12 @@
 /***/ function(module, exports) {
 
 	/** @jsx React.DOM */module.exports = {
-		apiUrl: 'https://localhost:3015/',
-		apiServerUrl: 'https://192.168.1.235:3005/',
-		apiPDFUrl: 'https://192.168.1.100:3019/',
+		//apiUrl: 'https://testapp.redimed.com.au:3015/',
+		//apiServerUrl: 'https://testapp.redimed.com.au:3005/',
+		//apiPDFUrl: 'https://testapp.redimed.com.au:3013/',
+		apiUrl: 'https://meditek.redimed.com.au:3015/',
+		apiServerUrl: 'https://meditek.redimed.com.au:3005/',
+		apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
 		getParamsIframe: function(appointmentId, patientId){
 			return '/eform?appoinmentUID='+appointmentId+'&patientUID='+patientId;
 		},
@@ -1175,8 +1178,11 @@
 	    _dragAndDropFields: function(){
 	    	var self = this;
 	    	this.drakeField = dragula([].slice.apply(document.querySelectorAll('.dragula')),{
-	            copy: true,
-	            revertOnSpill: true
+	            copy: false,
+	            revertOnSpill: true,
+	            invalid: function (el, handle) {
+	                return false; // don't prevent any drags from initiating by default
+	              },
 	        });
 	    	this.drakeField.on('drop', function(el,target,source,sibling){
 	    		if (el.parentNode == target) {
@@ -1212,7 +1218,7 @@
 	    _dragAndDropSections:function(){
 	    	var self = this;
 	    	this.drakeSection = dragula([].slice.apply(document.querySelectorAll('.dragulaSection')),{
-	            copy: true,
+	            copy: false,
 	            revertOnSpill: true,
 	            moves: function(el, container, handle){
 	                return handle.className.indexOf('dragulaSectionHandler') > -1;

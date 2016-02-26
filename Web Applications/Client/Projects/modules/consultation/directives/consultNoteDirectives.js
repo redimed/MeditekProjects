@@ -104,6 +104,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.$watch('consultationuid', function(newValue, oldValue) {
                 if (newValue !== undefined) {
                     consultationServices.detailConsultation(newValue).then(function(response) {
+                        console.log(response)
                         $scope.requestInfo = null;
                         $scope.requestOther = {};
                         if (response.data !== null) {
@@ -174,21 +175,35 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             }
             $scope.createConsultation = function() {
                 $scope.ConsultationDataCreate();
-                console.log($scope.requestInfo)
-                o.loadingPage(true);
-                consultationServices.createConsultation($scope.requestInfo).then(function(response) {
-                    if (response == 'success') {
+                if ($scope.requestInfo.Consultations[0].ConsultationData.length !== 0 || $scope.requestInfo.Consultations[0].FileUploads.length !== 0) {
+                    if ($scope.requestInfo.Consultations[0].FileUploads.length !== 0 && $scope.requestInfo.Consultations[0].ConsultationData.length == 0) {
+                         var FileUploads = {
+                            Category : "Appointment",
+                            FileUploads:null,
+                            Name:"FileUploads",
+                            Section:"Consultation Details",
+                            Type:"FileUploads",
+                            Value:$scope.requestInfo.Consultations[0].FileUploads.length
+                         }
+                         $scope.requestInfo.Consultations[0].ConsultationData.push(FileUploads);
+                    }
+                    o.loadingPage(true);
+                    consultationServices.createConsultation($scope.requestInfo).then(function(response) {
+                        if (response == 'success') {
+                            o.loadingPage(false);
+                            $state.go("authentication.consultation.detail", {
+                                UID: $stateParams.UID,
+                                UIDPatient: $stateParams.UIDPatient
+                            });
+                            toastr.success("Success");
+                        };
+                    }, function(err) {
                         o.loadingPage(false);
-                        $state.go("authentication.consultation.detail", {
-                            UID: $stateParams.UID,
-                            UIDPatient: $stateParams.UIDPatient
-                        });
-                        toastr.success("Success");
-                    };
-                }, function(err) {
-                    o.loadingPage(false);
-                    toastr.error('Create Consultation Fail');
-                });
+                        toastr.error('Create Consultation Fail');
+                    });
+                } else {
+                    toastr.error("Please input data");
+                };
             }
             $scope.updateConsultation = function() {
                 $scope.ConsultationUpdate();
@@ -243,7 +258,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         };
                     });
                     if (!isExist) {
-                        if (object.Value !== null) {
+                        if (object.Value !== null && object.Value !== "") {
                             ConsultationDataTemp.push(object);
                         };
                     };

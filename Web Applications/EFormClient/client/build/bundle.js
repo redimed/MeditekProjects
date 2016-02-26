@@ -480,13 +480,18 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	/** @jsx React.DOM */module.exports = {
+	/** @jsx React.DOM */var domain = 'https://testapp.redimed.com.au';
+
+	module.exports = {
 		//apiUrl: 'https://testapp.redimed.com.au:3015/',
 		//apiServerUrl: 'https://testapp.redimed.com.au:3005/',
 		//apiPDFUrl: 'https://testapp.redimed.com.au:3013/',
-		apiUrl: 'https://meditek.redimed.com.au:3015/',
-		apiServerUrl: 'https://meditek.redimed.com.au:3005/',
-		apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
+		//apiUrl: 'https://meditek.redimed.com.au:3015/',
+		//apiServerUrl: 'https://meditek.redimed.com.au:3005/',
+		//apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
+		apiUrl: domain+':3015/',
+		apiServerUrl: domain+':3005/',
+		apiPDFUrl: domain+':3013/',
 		getParamsIframe: function(appointmentId, patientId){
 			return '/eform?appoinmentUID='+appointmentId+'&patientUID='+patientId;
 		},

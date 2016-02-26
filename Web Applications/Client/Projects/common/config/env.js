@@ -24,16 +24,16 @@ var configTelehealthBaseUrl = {
 };
 
 var configNcBaseUrl={
-	'local':'https://localhost:1337',
-	'meditekServer':'http://telehealthvietnam.com.vn:1337',
-	'testApp':'https://testapp.redimed.com.au:1337',
-	'app':'https://apps.redimed.com.au:1337',
+	'local':'https://localhost:3016',
+	'meditekServer':'https://meditek.redimed.com.au:3016',
+	'testApp':'https://testapp.redimed.com.au:3016',
+	'app':'https://apps.redimed.com.au:3016',
 };
 
 var configEFormUrl={
 	'local':'https://localhost:3014',
 	// 'local':'http://192.168.1.235:3005',
-	'meditekServer':'http://telehealthvietnam.com.vn:3014',
+	'meditekServer':'https://meditek.redimed.com.au:3014',
 	'testApp':'https://testapp.redimed.com.au:3014',
 	'app':'https://apps.redimed.com.au:3014'
 };

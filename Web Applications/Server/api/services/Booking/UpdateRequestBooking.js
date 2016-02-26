@@ -20,7 +20,7 @@ module.exports = function(data, userInfo) {
                     transaction: t
                 };
                 return Services.CheckTimeRoster(objCheckTimeRoster)
-                    .then(function(dada) {
+                    .then(function(checkTimeRosterOk) {
                         var whereClauseSite = {};
                         _.forEach(data.Site, function(valueKey, indexKey) {
                             if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
@@ -217,6 +217,7 @@ module.exports = function(data, userInfo) {
                         });
                     });
             }, function(err) {
+                console.log('err10');
                 defer.reject(err);
             });
     } else {

@@ -96,7 +96,7 @@ module.exports = function(data, userInfo) {
                                     return subGrouped[0].UID;
                                 });
                                 var objCheckExistAppointment = {
-                                    where: arrayRosterUID,
+                                    where: arrRosterDestroy,
                                     userAccount: data.UserAccount,
                                     transaction: t
                                 };
@@ -146,7 +146,7 @@ module.exports = function(data, userInfo) {
                         });
                 } else if (data.Roster.CaseOccurance == 'N') {
                     var objCheckExistAppointment = {
-                        where: [data.Roster.UID],
+                        where: [data.Roster],
                         userAccount: data.UserAccount,
                         transaction: t
                     };

@@ -40,8 +40,7 @@ module.exports = function(objCheck) {
             })
             .then(function(numberofRoster) {
                 if (numberofRoster === 0) {
-                    var error = new Error('Booking.Appointment.without.roster');
-                    defer.reject(error);
+                    defer.reject({ status: 'withoutRoster' });
                 } else {
                     defer.resolve({ status: 'CheckTimeRoster.Ok' });
                 }
@@ -50,7 +49,7 @@ module.exports = function(objCheck) {
             });
     } else {
         var error = new Error('CheckTimeRoster.objCheck.failed');
-        defer.resolve(error);
+        defer.reject(error);
     }
     return defer.promise;
 };

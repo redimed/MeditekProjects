@@ -1,7 +1,7 @@
 module.exports = {
     GetListEFormTemplate: function(req, res){
         EFormTemplate.findAll({
-            where: {Active: 1},
+            where: {Active: 'Y'},
             include: [{
                 model: EFormTemplateData,
                 required: false,
@@ -61,9 +61,10 @@ module.exports = {
         EFormTemplate.find({ where: {ID: req.body.id} })
         .then(function(EFormTemplate){
             if(EFormTemplate){
+                console.log(EFormTemplate);
                 EFormTemplate.update({
-                    Active: 0,
-                    Enable: 0
+                    Active: 'N',
+                    Enable: 'N'
                 })
                 .then(function(){
                     res.json({data: EFormTemplate});
@@ -86,7 +87,7 @@ module.exports = {
     },
     PostList: function(req, res){
         EForm.findAll({
-            where: {Enable: 1},
+            where: {Enable: 'Y'},
             include: [{
                 model: EFormData,
                 required: false,
@@ -151,7 +152,7 @@ module.exports = {
         .then(function(EForm){
             if(EForm){
                 EForm.update({
-                    Enable: 0
+                    Enable: 'N'
                 })
                 .then(function(data){
                     res.json({data: data});

@@ -10,6 +10,8 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
         UserUID: "",
         PinNumber: ""
     }
+    
+
     $scope.postData = {
         "data": {},
         "otherData": {

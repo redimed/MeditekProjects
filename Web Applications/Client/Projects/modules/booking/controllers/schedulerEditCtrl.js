@@ -149,7 +149,14 @@ app.controller('schedulerEditCtrl', function($scope, BookingService, RosterServi
                         toastr.success('Update Booking Successfully');
                         $modalInstance.close();
                     }, function(error) {
-
+                        if(typeof error.data !== 'undefined'){
+                            var type = error.data.status;
+                            switch(type){
+                                case 'withoutRoster':
+                                    toastr.error('Booking Appointment Time Wrong !!!');
+                                    break;
+                            }
+                        }
                     })
             }
         }

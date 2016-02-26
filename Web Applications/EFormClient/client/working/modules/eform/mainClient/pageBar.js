@@ -7,11 +7,7 @@ module.exports = React.createClass({
             <div className="page-bar">
                 <ul className="page-breadcrumb">
                     <li>
-                        <a>Home</a>
-                        <i className="fa fa-circle"></i>
-                    </li>
-                    <li>
-                        <span>E-Form</span>
+                        <a>EForm List</a>
                     </li>
                 </ul>
                 <div className="page-toolbar">

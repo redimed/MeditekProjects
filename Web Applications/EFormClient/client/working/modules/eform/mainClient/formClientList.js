@@ -46,6 +46,7 @@ module.exports = React.createClass({
                         <thead className="flip-content">
                             <tr>
                                 <th className="bg-blue-dark bg-font-blue-dark">Name</th>
+                                <th className="bg-blue-dark bg-font-blue-dark">Created Date</th>
                                 <th className="bg-blue-dark bg-font-blue-dark">Action</th>
                             </tr>
                         </thead>
@@ -55,6 +56,9 @@ module.exports = React.createClass({
                                     return (
                                         <tr key={index}>
                                             <td>{l.Name}</td>
+                                            <td>
+                                                {moment(l.CreatedDate).format('DD/MM/YYYY HH:mm:ss')}
+                                            </td>
                                             <td>
                                                 <Link to={"/eform/detail/appointment/"+this.appointmentUID+"/patient/"+this.patientUID+"/client/"+l.ID} className="label label-sm label-success">
                                                     View Form

@@ -24,7 +24,7 @@ var configTelehealthBaseUrl = {
 };
 
 var configNcBaseUrl={
-	'local':'https://localhost:3016',
+	'local':'https://192.168.1.235:3016',
 	'meditekServer':'https://meditek.redimed.com.au:3016',
 	'testApp':'https://testapp.redimed.com.au:3016',
 	'app':'https://apps.redimed.com.au:3016',

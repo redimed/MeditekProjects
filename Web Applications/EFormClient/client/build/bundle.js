@@ -1685,9 +1685,8 @@
 	    },
 	    componentDidMount: function(){
 	        $(this.refs.input).datepicker({
-	            autoclose: true,
+	            autoclose: false,
 	            format: 'dd/mm/yyyy',
-	            orientation: "auto top"
 	        });
 	        if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
 	            $(this.refs.group).contextmenu({
@@ -2794,11 +2793,7 @@
 	            React.createElement("div", {className: "page-bar"}, 
 	                React.createElement("ul", {className: "page-breadcrumb"}, 
 	                    React.createElement("li", null, 
-	                        React.createElement("a", null, "Home"), 
-	                        React.createElement("i", {className: "fa fa-circle"})
-	                    ), 
-	                    React.createElement("li", null, 
-	                        React.createElement("span", null, "E-Form")
+	                        React.createElement("a", null, "EForm List")
 	                    )
 	                ), 
 	                React.createElement("div", {className: "page-toolbar"}, 
@@ -2944,6 +2939,7 @@
 	                        React.createElement("thead", {className: "flip-content"}, 
 	                            React.createElement("tr", null, 
 	                                React.createElement("th", {className: "bg-blue-dark bg-font-blue-dark"}, "Name"), 
+	                                React.createElement("th", {className: "bg-blue-dark bg-font-blue-dark"}, "Created Date"), 
 	                                React.createElement("th", {className: "bg-blue-dark bg-font-blue-dark"}, "Action")
 	                            )
 	                        ), 
@@ -2953,6 +2949,9 @@
 	                                    return (
 	                                        React.createElement("tr", {key: index}, 
 	                                            React.createElement("td", null, l.Name), 
+	                                            React.createElement("td", null, 
+	                                                moment(l.CreatedDate).format('DD/MM/YYYY HH:mm:ss')
+	                                            ), 
 	                                            React.createElement("td", null, 
 	                                                React.createElement(Link, {to: "/eform/detail/appointment/"+this.appointmentUID+"/patient/"+this.patientUID+"/client/"+l.ID, className: "label label-sm label-success"}, 
 	                                                    "View Form"
@@ -3193,11 +3192,7 @@
 				React.createElement("div", {className: "page-bar"}, 
 				     React.createElement("ul", {className: "page-breadcrumb"}, 
 	                                                    React.createElement("li", null, 
-	                                                            React.createElement("a", {onClick: this._goToHome}, "Home"), 
-	                                                    React.createElement("i", {className: "fa fa-circle"})
-	                    ), 
-	                    React.createElement("li", null, 
-	                        React.createElement("span", null, "E-Form")
+	                                                            React.createElement("a", {onClick: this._goToHome}, "List EForm")
 	                    )
 	                ), 
 	                React.createElement("div", {className: "page-toolbar"}, 

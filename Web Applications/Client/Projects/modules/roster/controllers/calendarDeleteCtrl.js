@@ -28,6 +28,9 @@ app.controller('calendarDeleteCtrl', function($scope, $stateParams, RosterServic
 			}
 		})
 		.then(function(response){
+			if(response.status === 'existAppt'){
+				toastr.error('Appointment Booking Existed');
+			}
 			$modalInstance.close();
 		}, function(error){
 

@@ -23,9 +23,8 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         $(this.refs.input).datepicker({
-            autoclose: true,
+            autoclose: false,
             format: 'dd/mm/yyyy',
-            orientation: "auto top"
         });
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({

@@ -48,11 +48,7 @@ module.exports = React.createClass({
 			<div className="page-bar">
 			     <ul className="page-breadcrumb">
                                                     <li>
-                                                            <a onClick={this._goToHome}>Home</a>
-                                                    <i className="fa fa-circle"></i>
-                    </li>
-                    <li>
-                        <span>E-Form</span>
+                                                            <a onClick={this._goToHome}>List EForm</a>
                     </li>
                 </ul>
                 <div className="page-toolbar">

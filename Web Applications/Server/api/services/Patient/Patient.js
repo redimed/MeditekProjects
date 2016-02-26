@@ -1157,7 +1157,7 @@ module.exports = {
                             ]
                         },
                         {
-                            model:Country,
+                            model:Country1,
                             attributes:['ShortName'],
                             required:false
                         }
@@ -1198,7 +1198,7 @@ module.exports = {
                     ]
                 },
                 {
-                    model: Country,
+                    model: Country1,
                     attributes: ['ShortName'],
                     required: false
                 },

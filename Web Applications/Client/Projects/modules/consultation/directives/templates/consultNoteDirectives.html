@@ -6,9 +6,9 @@
         </div>
         <div class="actions">
             <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="Reset()" ng-show="!checkRoleUpdate && CheckUpdate == false">
-                        <i class="glyphicon glyphicon-plus"></i> Add Consult Note</button>
+                <i class="glyphicon glyphicon-plus"></i> Add Consult Note</button>
         </div>
-       <!--  <div class="tools">
+        <!--  <div class="tools">
             <a href="javascript:;" class="collapse"> </a>
             <a href="javascript:;" class="fullscreen"> </a>
         </div> -->
@@ -18,16 +18,116 @@
             <fieldset ng-disabled="checkRoleUpdate">
                 <div class="form-body">
                     <br/>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3">History of previous skin cancers and treatment</label>
                         <div class="col-md-8 col-sm-8">
                             <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.cancersTreatmens'].Value">
                         </div>
+                    </div> -->
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">History of immunosuppression</label>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="radio-list">
+                                <label class="radio-inline">
+                                    <input type="radio" name="immunosuppression" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue'].Value"> No
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="immunosuppression" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue'].Value"> Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppression'].Value" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue'].Value == 'Y'">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3">History of immunosuppression</label>
-                        <div class="col-md-8 col-sm-8">
-                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppression'].Value">
+                        <label class="control-label col-md-5 col-sm-5">Have you had MELANOMA before ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="radio-list">
+                                <label class="radio-inline">
+                                    <input type="radio" name="Melanoma" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma'].Value"> No
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Melanoma" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma'].Value"> Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">Have you had other skin cancer (eg. Basal Cell/Aquamous Cell Cancer) before ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="radio-list">
+                                <label class="radio-inline">
+                                    <input type="radio" name="CellAquamous" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.CellAquamous'].Value"> No
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="CellAquamous" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.CellAquamous'].Value"> Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">Do you have any skin lesion that you are concerned about ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="radio-list">
+                                <label class="radio-inline">
+                                    <input type="radio" name="ConcernedAbout" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAbout'].Value"> No
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="ConcernedAbout" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAbout'].Value"> Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">If YES, where ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAboutValue'].Value">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">Had it changed ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="radio-list">
+                                <label class="radio-inline">
+                                    <input type="radio" name="HaditChanged" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.HaditChanged'].Value"> No
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="HaditChanged" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.HaditChanged'].Value"> Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">If YES, please describe (eg. darker, larger, changed shape, itch).</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.PleaseDescribe'].Value">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">Is there a family history of Skin cancer ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="radio-list">
+                                <label class="radio-inline">
+                                    <input type="radio" name="SkinCancer" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.SkinCancer'].Value"> No
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="SkinCancer" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.SkinCancer'].Value"> Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-sm-5">If YES, do you know what type ? Melanoma or Non Melanoma</label>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="radio-list">
+                                <label class="radio-inline">
+                                    <input type="radio" name="IfYesMelanoma" value="Melanoma" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.IfYesMelanoma'].Value"> Melanoma
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="IfYesMelanoma" value="Non Melanoma" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.IfYesMelanoma'].Value"> Non Melanoma
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <hr/>
@@ -150,12 +250,12 @@
                                         <span class="btn green btn-file">
                                             <i class="fa fa-file-image-o"></i>
                                         <span class="fileinput-new">Select Image</span>
-                                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                                        <input type="file" nv-file-select="" uploader="uploader" multiple/>
                                         </span>
                                         <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
                                             <span class="glyphicon glyphicon-trash"></span> Remove all
                                         </button>
-                                         <button type="button" class="btn btn-default" ng-click="AddDrawing('data')">
+                                        <button type="button" class="btn btn-default" ng-click="AddDrawing('data')">
                                             <span class="glyphicon glyphicon-plus"></span> Add Drawing
                                         </button>
                                     </div>
@@ -168,7 +268,7 @@
                                             <tr class="uppercase">
                                                 <th>#</th>
                                                 <th width="30%">File Name</th>
-                                                <th >File Type</th>
+                                                <th>File Type</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -299,7 +399,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--  <div class="form-group">
                                 <div class="checkbox-list">
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12">
@@ -385,7 +485,7 @@
                                     </div>
                                 </div>
                             </div>
-                           <div class="form-group">
+                            <div class="form-group">
                                 <div class="checkbox-list">
                                     <div class="row">
                                         <div class="col-md-2 col-sm-2">
@@ -516,38 +616,40 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <hr/>
+                    <h5 class="bold">Suitable :</h5>
                     <div class="form-group">
-                        <label class="control-label col-md-2 col-sm-2 bold">Recommended Anaesthesia</label>
-                        <div class="col-md-7 col-sm-7">
-                            <div class="checkbox-list">
-                                <div class="row">
-                                    <div class="col-md-2 col-sm-2">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Recommended__Anaesthesia.GA'].Value"> GA
-                                        </label>
-                                    </div>
-                                    <div class="col-md-2 col-sm-2">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Recommended__Anaesthesia.LA'].Value"> LA
-                                        </label>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Recommended__Anaesthesia.IV__Sedation'].Value"> IV Sedation
-                                        </label>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Recommended__Anaesthesia.Regiona__block'].Value"> Regional block
-                                        </label>
-                                    </div>
+                        <div class="checkbox-list">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3" align="right">
+                                    <label class="checkbox-inline" >
+                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Specialist'].Value"> Refer to specialist :
+                                    </label>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                   <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.SpecialistValue'].Value">
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-list">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3" align="right">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Telehealth'].Value"> Suitable to telehealth :
+                                    </label>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                   <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue'].Value">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  <div class="form-group">5
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2 col-sm-2 bold">Urgency</label>
@@ -572,8 +674,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                    </div> -->
+                    <!-- <div class="form-group">
                         <label class="control-label col-md-2 col-sm-2 bold">Suitable for</label>
                         <div class="col-md-7 col-sm-7">
                             <div class="checkbox-list">
@@ -603,7 +705,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </fieldset>
             <div class="form-actions right">
@@ -617,7 +719,6 @@
         </form>
     </div>
 </div>
-
 <script type="text/ng-template" id="showDrawingTemplate">
     <div class="modal-header my-modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
@@ -626,7 +727,6 @@
         <drawing data="drawingData" action="drawingAction"></drawing>
     </div>
 </script>
-
 <script type="text/ng-template" id="showImageTemplate">
     <div class="modal-header my-modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>

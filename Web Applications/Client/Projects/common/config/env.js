@@ -3,7 +3,7 @@ var env='meditekServer'; //local,meditekServer,testApp,app
 
 var configRestBaseUrl={
 	//'local':'http://localhost:3005',
-	 'local':'https://192.168.1.235:3005',
+	'local':'https://192.168.1.235:3005',
 	'meditekServer':'https://meditek.redimed.com.au:3005',
 	'testApp':'https://testapp.redimed.com.au:3005',
 	'app':'https://apps.redimed.com.au:3005'
@@ -17,7 +17,7 @@ var configAuthBaseUrl={
 };
 
 var configTelehealthBaseUrl = {
-	'local':'http://localhost:3009',
+	'local':'https://192.168.1.235:3009',
 	'meditekServer':'https://meditek.redimed.com.au:3009',
 	'testApp':'https://testapp.redimed.com.au:3009',
 	'app':'https://apps.redimed.com.au:3009',

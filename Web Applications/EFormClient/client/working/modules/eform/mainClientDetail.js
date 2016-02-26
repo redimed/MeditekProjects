@@ -18,7 +18,7 @@ module.exports = React.createClass({
             EFormService.formDetail({id: self.props.params.formId})
             .then(function(response){
                 var EFormTemplate = response.data;
-                self.templateId = EFormTemplate.ID;
+                self.templateId = EFormTemplate.UID;
                 var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
                 self.setState(function(prevState){
                     return {

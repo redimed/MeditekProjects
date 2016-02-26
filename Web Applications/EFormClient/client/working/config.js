@@ -1,4 +1,4 @@
-var domain = 'https://testapp.redimed.com.au';
+var domain = 'https://meditek.redimed.com.au';
 
 module.exports = {
 	//apiUrl: 'https://testapp.redimed.com.au:3015/',

@@ -480,7 +480,7 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	/** @jsx React.DOM */var domain = 'https://testapp.redimed.com.au';
+	/** @jsx React.DOM */var domain = 'https://meditek.redimed.com.au';
 
 	module.exports = {
 		//apiUrl: 'https://testapp.redimed.com.au:3015/',
@@ -3003,7 +3003,7 @@
 	            EFormService.formDetail({id: self.props.params.formId})
 	            .then(function(response){
 	                var EFormTemplate = response.data;
-	                self.templateId = EFormTemplate.ID;
+	                self.templateId = EFormTemplate.UID;
 	                var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
 	                self.setState(function(prevState){
 	                    return {
@@ -3250,7 +3250,7 @@
 	                EFormService.formDetail({id: formDetailClientData.EFormTemplateID})
 	                .then(function(response){
 	                    var EFormTemplate = response.data;
-	                    self.templateId = EFormTemplate.ID;
+	                    self.templateId = EFormTemplate.UID;
 	                    var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
 	                    self.setState(function(prevState){
 	                        return {

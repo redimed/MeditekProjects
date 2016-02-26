@@ -10,7 +10,7 @@ var configRestBaseUrl={
 };
 
 var configAuthBaseUrl={
-	'local':'https://192.168.1.235:3006',,
+	'local':'https://192.168.1.235:3006',
 	'meditekServer':'https://meditek.redimed.com.au:3006',
 	'testApp':'https://testapp.redimed.com.au:3006',
 	'app':'https://apps.redimed.com.au:3006',

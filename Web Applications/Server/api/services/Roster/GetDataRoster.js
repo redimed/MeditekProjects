@@ -17,18 +17,20 @@ module.exports = {
                 moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z', true).isValid())) {
             switch (data.RecurrenceType) {
                 case 'weekly':
-                    var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
-                    var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
-                    var endRecurrence = moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD');
-                    var rangeDateFrom = moment.range(moment(fromTime).format('YYYY-MM-DD'), endRecurrence);
+                    var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                    var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                    var endRecurrence = moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                    var rangeDateFrom = moment.range(moment(fromTime).format('YYYY-MM-DD Z'), moment(endRecurrence).format('YYYY-MM-DD HH:mm:ss Z'));
                     var arrayDateRepeat = [];
                     var timeTo = toTime.split(' ')[1];
+                    var zoneTo = toTime.split(' ')[2];
                     var timeFrom = fromTime.split(' ')[1];
+                    var zoneFrom = fromTime.split(' ')[2];
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom,
-                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -57,18 +59,20 @@ module.exports = {
                     }
                     break;
                 case 'daily':
-                    var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
-                    var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
-                    var endRecurrence = moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD');
-                    var rangeDateFrom = moment.range(moment(fromTime).format('YYYY-MM-DD'), endRecurrence);
+                    var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                    var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                    var endRecurrence = moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD Z');
+                    var rangeDateFrom = moment.range(moment(fromTime).format('YYYY-MM-DD Z'), moment(endRecurrence).format('YYYY-MM-DD Z'));
                     var arrayDateRepeat = [];
                     var timeTo = toTime.split(' ')[1];
                     var timeFrom = fromTime.split(' ')[1];
+                    var zoneFrom = fromTime.split(' ')[2];
+                    var zonteTo = toTime.split(' ')[2];
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom,
-                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -158,6 +162,7 @@ module.exports = {
             };
             dataRes.push(objectRoster);
         }
+        console.log('dataRes', dataRes);
         return dataRes;
     },
 };

@@ -16,6 +16,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <html lang="en" ng-app="app">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
+
 <head>
     <title ng-bind="$state.current.data.title">Loading...</title>
     <meta charset="utf-8" />
@@ -24,100 +25,76 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta content="" name="description" />
     <meta content="" name="author" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js">
     <!-- END GLOBAL MANDATORY STYLES -->
-
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <!-- muti select -->
-            <link href="theme/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
-            <link href="theme/assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" type="text/css" />
-            <link href="theme/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-            <link href="theme/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-        
-
+    <!-- muti select -->
+    <link href="theme/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <link href="theme/assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" type="text/css" />
+    <link href="theme/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="theme/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS -->
-
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
     <link id="ng_load_plugins_before" />
     <!-- END DYMANICLY LOADED CSS FILES -->
-
     <!-- BEGIN PAGE LEVEL STYLE -->
-        <link href="./theme/assets/admin/pages/css/profile-old.css" rel="stylesheet" type="text/css"/>
-
-        <!-- page_user_account_profile1_account -->
-        <link href="./theme/assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />
-
-        <!-- profile 2 -->
-            <link href="theme/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
-        <!-- end profile 2 -->
-
-        <!-- BEGIN component bootstrap fileinput -->
-            <link href="theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
-        <!-- END component bootstrap fileinput -->
-
-        <!-- BEGIN component_date_time_pickers -->
-            <link href="theme/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-            <link href="theme/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-            <link href="theme/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
-            <link href="theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
-        <!-- END component_date_time_pickers -->
-
-        <!-- BEGIN portfolio -->
-            <link href="theme/assets/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
-            <link href="theme/assets/admin/pages/css/portfolio.css" rel="stylesheet" type="text/css"/>
-        <!-- END portfolio -->
-
+    <link href="./theme/assets/admin/pages/css/profile-old.css" rel="stylesheet" type="text/css" />
+    <!-- page_user_account_profile1_account -->
+    <link href="./theme/assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />
+    <!-- profile 2 -->
+    <link href="theme/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
+    <!-- end profile 2 -->
+    <!-- BEGIN component bootstrap fileinput -->
+    <link href="theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+    <!-- END component bootstrap fileinput -->
+    <!-- BEGIN component_date_time_pickers -->
+    <link href="theme/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <link href="theme/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="theme/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+    <!-- END component_date_time_pickers -->
+    <!-- BEGIN portfolio -->
+    <link href="theme/assets/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+    <link href="theme/assets/admin/pages/css/portfolio.css" rel="stylesheet" type="text/css" />
+    <!-- END portfolio -->
     <!-- END PAGE LEVEL STYLE -->
-
     <!-- BEGIN PAGE LEVEL STYLES -->
-        <!-- BEGIN dropdowns -->
-        <link href="./theme/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- END dropdowns -->
-
-        <!-- begin login  -->
-        <link href="theme/assets/pages/css/login.min.css" rel="stylesheet" type="text/css" />
-        <!-- end login -->
-
-        <!-- begin sweetalert -->
-        <link href="./theme/assets/global/libs/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css" />
-        <!-- end sweetalert -->
-
-        <!-- autoComplete -->
-        <link rel="stylesheet" type="text/css" href="theme/assets/global/libs/allmighty-autocomplete-master/style/autocomplete.css">
-        <!-- END autoComplete -->
-        
+    <!-- BEGIN dropdowns -->
+    <link href="./theme/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- END dropdowns -->
+    <!-- begin login  -->
+    <link href="theme/assets/pages/css/login.min.css" rel="stylesheet" type="text/css" />
+    <!-- end login -->
+    <!-- begin sweetalert -->
+    <link href="./theme/assets/global/libs/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css" />
+    <!-- end sweetalert -->
+    <!-- autoComplete -->
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/libs/allmighty-autocomplete-master/style/autocomplete.css">
+    <!-- END autoComplete -->
     <!-- END PAGE LEVEL STYLES -->
-
-
-    
-    
-    
-
-    
-
     <!-- BEGIN THEME LAYOUT STYLES -->
-        <link href="./theme/assets/global/css/components.min.css" id="style_components" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-        <link href="./theme/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-        <link href="./theme/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/css/components.min.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="./theme/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="./theme/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
     <link href="./theme/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
     <!-- myCheckbox myRadio -->
     <!-- <link rel="stylesheet" type="text/css" href="theme/assets/global/libs/my_Checkbox_Radio/style.css"> -->
-    
-    <link rel="shortcut icon" href="favicon.ico" /> 
+    <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <!-- END HEAD -->
 <!-- <body class="page-header-fixed page-quick-sidebar-over-content"> -->
+
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white">
     <!--- TIEN TASK -->
     <div id="loading">Loading</div>
@@ -125,339 +102,286 @@ License: You must have a valid license purchased only from themeforest(the above
     <div ui-view="root"></div>
     <!-- loading page -->
     <div class="loading-page"></div>
-
     <!--[endif]-->
-        <!-- BEGIN CORE JQUERY PLUGINS -->
-        
-        <script src="common/config/env.js"></script>
-        <script src="common/config/config.js"></script>
-        <script src="./theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-        <script src="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-        <!-- END CORE JQUERY PLUGINS -->
-
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-            <!-- begin portfilo -->
-                <script src="theme/assets/global/plugins/jquery-mixitup/jquery.mixitup.min.js"></script>
-                <script src="theme/assets/global/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-            <!-- end portfilo -->
-
-            <!-- date picker -->
-                <script src="theme/assets/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-            <!--<script src="theme/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>-->
-            <!-- end date picker -->
-
-            <!-- BEGIN table_datatables_editable -->
-            <!--<script src="theme/assets/global/scripts/datatable.js" type="text/javascript"></script>
+    <!-- BEGIN CORE JQUERY PLUGINS -->
+    <script src="common/config/env.js"></script>
+    <script src="common/config/config.js"></script>
+    <script src="./theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE JQUERY PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- begin portfilo -->
+    <script src="theme/assets/global/plugins/jquery-mixitup/jquery.mixitup.min.js"></script>
+    <script src="theme/assets/global/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+    <!-- end portfilo -->
+    <!-- date picker -->
+    <script src="theme/assets/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <!--<script src="theme/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>-->
+    <!-- end date picker -->
+    <!-- BEGIN table_datatables_editable -->
+    <!--<script src="theme/assets/global/scripts/datatable.js" type="text/javascript"></script>
             <script src="theme/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>-->
-            <!-- END table_datatables_editable -->
+    <!-- END table_datatables_editable -->
+    <!-- form wizard -->
+    <script type="text/javascript" src="theme/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="theme/assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
+    <script type="text/javascript" src="theme/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <!-- end form wizard -->
+    <!-- begin component form tool -->
+    <script src="theme/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/autosize/autosize.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js" type="text/javascript"></script>
+    <!-- end component form tool -->
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN CORE ANGULARJS PLUGINS -->
+    <script src="./theme/assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js"></script>
+    <script src="./theme/assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+    <!-- BEGIN DEPENDENCIES -->
+    <script type="text/javascript" src="./theme/assets/global/libs/restangular/dist/restangular.min.js"></script>
+    <script type="text/javascript" src="./theme/assets/global/libs/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="./theme/assets/global/libs/lodash/lodash.min.js"></script>
+    <script type="text/javascript" src="./theme/assets/global/libs/moment/moment.js"></script>
+    <!-- END DEPENDENCIES -->
+    <!-- BEGIN OPENTOK -->
+    <script src="./theme/assets/global/libs/opentok/opentok.min.js" type="text/javascript"></script>
+    <!-- END OPENTOK -->
+    <!-- BEGIN socket -->
+    <script src="./theme/assets/global/libs/socket/socket.io-1.3.7.js" type="text/javascript"></script>
+    <!-- END socket -->
+    <script src="./theme/assets/global/libs/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+    <!-- BEGIN ANGULAR TOASTR -->
+    <link rel="stylesheet" type="text/css" href="./theme/assets/global/libs/angular-toastr/dist/angular-toastr.css" />
+    <script type="text/javascript" src="./theme/assets/global/libs/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <!-- END ANGULAR TOASTR -->
+    <!-- BEGIN ANGULAR PROGRESS BUTTON -->
+    <link rel="stylesheet" type="text/css" href="./theme/assets/global/libs/ladda/dist/ladda.min.css" />
+    <script type="text/javascript" src="./theme/assets/global/libs/spin.js/spin.js"></script>
+    <script type="text/javascript" src="./theme/assets/global/libs/ladda/dist/ladda.min.js"></script>
+    <script type="text/javascript" src="./theme/assets/global/libs/ladda-angular/dist/ladda-angular.js"></script>
+    <!-- END ANGULAR PROGRESS BUTTON -->
+    <script src="app.js" type="text/javascript"></script>
+    <!-- BEGIN socket -->
+    <script src="./theme/assets/global/libs/sails.io.js/sails.io.js" type="text/javascript"></script>
+    <!-- END socket -->
+    <script type="text/javascript">
+    io.sails.autoConnect = false;
+    //socket 3006
+    socketAuth = io.sails.connect(o.const.authBaseUrl);
+    socketAuth.on('connect', function() {
+        console.log("auth connect socket");
 
-            <!-- form wizard -->
-                <script type="text/javascript" src="theme/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-                <script type="text/javascript" src="theme/assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
-                <script type="text/javascript" src="theme/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-            <!-- end form wizard -->
+        //socket 3005
+        socketRest = io.sails.connect(o.const.restBaseUrl);
+        socketRest.on('connect', function() {
+            console.log('rest connect socket');
 
-            <!-- begin component form tool -->
-                <script src="theme/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/autosize/autosize.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js" type="text/javascript"></script>
-            <!-- end component form tool -->
-        <!-- END PAGE LEVEL PLUGINS -->
-       
+            //socket 3009
+            socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
+            socketTelehealth.on('connect', function() {
+                console.log("telehealth connect socket");
 
-        <!-- BEGIN CORE ANGULARJS PLUGINS -->
-        <script src="./theme/assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js"></script>
-        <script src="./theme/assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
-        <script src="./theme/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
-        <!-- BEGIN DEPENDENCIES -->
-        <script type="text/javascript" src="./theme/assets/global/libs/restangular/dist/restangular.min.js"></script>
-        <script type="text/javascript" src="./theme/assets/global/libs/angular-cookies/angular-cookies.js"></script>
-        <script type="text/javascript" src="./theme/assets/global/libs/lodash/lodash.min.js"></script>
-        <script type="text/javascript" src="./theme/assets/global/libs/moment/moment.js"></script>
-        <!-- END DEPENDENCIES -->
-
-        <!-- BEGIN OPENTOK -->
-        <script src="./theme/assets/global/libs/opentok/opentok.min.js" type="text/javascript"></script>
-        <!-- END OPENTOK -->
-
-        <!-- BEGIN socket -->
-        <script src="./theme/assets/global/libs/socket/socket.io-1.3.7.js" type="text/javascript"></script>
-        <!-- END socket -->
-
-
-        <script src="./theme/assets/global/libs/angular-animate/angular-animate.min.js" type="text/javascript"></script>
-
-
-        <!-- BEGIN ANGULAR TOASTR -->
-            <link rel="stylesheet" type="text/css" href="./theme/assets/global/libs/angular-toastr/dist/angular-toastr.css" />
-            <script type="text/javascript" src="./theme/assets/global/libs/angular-toastr/dist/angular-toastr.tpls.js"></script>
-        <!-- END ANGULAR TOASTR -->
-
-        <!-- BEGIN ANGULAR PROGRESS BUTTON -->
-            <link rel="stylesheet" type="text/css" href="./theme/assets/global/libs/ladda/dist/ladda.min.css" />
-            <script type="text/javascript" src="./theme/assets/global/libs/spin.js/spin.js"></script>
-            <script type="text/javascript" src="./theme/assets/global/libs/ladda/dist/ladda.min.js"></script>
-            <script type="text/javascript" src="./theme/assets/global/libs/ladda-angular/dist/ladda-angular.js"></script>
-        <!-- END ANGULAR PROGRESS BUTTON -->
-
-        <script src="app.js" type="text/javascript"></script>
-        <!-- BEGIN socket -->
-        <script src="./theme/assets/global/libs/sails.io.js/sails.io.js" type="text/javascript"></script>
-        <!-- END socket -->
-        <script type="text/javascript">
-            io.sails.autoConnect = false;
-            // io.sails.url = o.const.telehealthBaseURL;
-            var socketAuth,socketRest,socketNc,socketTelehealth;
-            socketAuth = io.sails.connect(o.const.authBaseUrl);
-            socketAuth.on('connect',function(){
-                console.log("auth connect socket",socketAuth);
-
-                socketRest=io.sails.connect(o.const.restBaseUrl);
-                socketRest.on('connect',function(){
-                    console.log('rest connect socket',socketRest);
-
-                    socketNc=io.sails.connect(o.const.ncBaseUrl);
-                    socketNc.on('connect',function(){
-                        console.log('notification center connect socket',socketNc);
-
-                        socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
-                        socketTelehealth.on('connect',function(){
-                            console.log("telehealth connect socket",socketTelehealth);
-                            
-                        })
-                        socketTelehealth.on('testmessage',function(msg){
-                            console.log(JSON.stringify("d"+msg));
-                        });
-                        
-                    })
-                    socketNc.on('testmessage',function(msg){
-                        console.log("ncccccc");
-                        console.log(JSON.stringify("c"+msg));
-                    })
-
-                })
-                socketRest.on('testmessage',function(msg){
-                    console.log(JSON.stringify("b"+msg));
-                })
-                
+                //socket 3016
+                socketNc = io.sails.connect(o.const.ncBaseUrl);
+                socketNc.on('connect', function() {
+                    console.log('notification center connect socket');
+                });
+                socketNc.on('testmessage', function(msg) {
+                    console.log(JSON.stringify(msg));
+                });
             })
-
-            socketAuth.on('testmessage',function(msg){
-                console.log(JSON.stringify("a"+msg));
+            socketTelehealth.on('testmessage', function(msg) {
+                console.log(JSON.stringify("d" + msg));
             });
+            socketTelehealth.on('receiveMessage', function(msg) {
+                switch (msg.message) {
+                    case "decline":
+                        socketTelehealth.funDecline(msg);
+                        break;
+                    case "call":
+                        socketTelehealth.funCall(msg);
+                        break;
+                };
+            });
+        })
+        socketRest.on('testmessage', function(msg) {
+            console.log(JSON.stringify("b" + msg));
+        })
 
-            /*var socketAuth = io.sails.connect(o.const.authBaseUrl);
-            socketAuth.on('connect',function(){
-                alert("auth connect socket");
-                socketAuth.get('/api/updateSocket',{msg:'update socket io server auth'},function(data,jwres){
-                    alert(JSON.stringify(data));
+    })
 
-                    var socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
-                    console.log(">>>>>>>>>>>>socketTelehealth",socketTelehealth);
-                    socketTelehealth.on('connect',function(){
-                        alert("connect socketTelehealth");
-                        socketTelehealth.get('/api/updateSocket',{msg:'update socket io server auth'},function(data,jwres){
-                            alert(JSON.stringify(data));
-                        })
-                    })
-
-                    socketTelehealth.on('testmessage',function(msg){
-                        alert(JSON.stringify(msg));
-                    });
-                })
-            })
-
-            socketAuth.on('testmessage',function(msg){
-                alert(JSON.stringify(msg));
-            });*/
-        </script>
-        <script src="directives.js" type="text/javascript"></script>
-
-        <!--BEGIN COMMON SERVICE-->
-
-        <script src="common/services/CommonService.js"></script>
-        <script src="common/directives/dialog.js"></script>
-        <script src="common/directives/menuBar.js"></script>
-        <script src="common/directives/dimage.js"></script>
-        <script src="common/directives/drawing.js"></script>
-        <script src="common/directives/finishRender.js"></script>
-        <script src="common/directives/common.js"></script>
-
-        <!--END COMMON SERVICE-->
-
-        <!-- BEGIN lockScreen -->
-        <script src="common/views/lockScreenCtrl.js"></script>
-        <!-- END lockScreen -->
-
-        <!-- BEGIN MODULE unAuthentication -->
-            <script src="modules/unAuthentication/unAuthentication.js" ></script>
-            <script type="text/javascript" src="modules/unAuthentication/services/unAuthenticateService.js"></script>
-            <script src="modules/unAuthentication/controllers/unAuthenticationCtrl.js"></script>
-            <!-- Doctor -->
-            <script src="modules/unAuthentication/controllers/loginCtrl.js"></script>
-            <script src="modules/unAuthentication/controllers/registerCtrl.js"></script>
-            <script src="modules/unAuthentication/controllers/activationCtrl.js"></script>
-            <script src="modules/unAuthentication/controllers/fotgotCtrl.js"></script>
-            <!-- Patient -->
-            <script src="modules/unAuthentication/controllers/changepassCtrl.js"></script>
-        <!-- END MODULE unAuthentication -->
-
-        <!-- BEGIN MODULE authentication -->
-            <script src="modules/authentication/authentication.js" ></script>
-            <script type="text/javascript" src="modules/authentication/services/AuthenticationService.js"></script>
-            <script src="modules/authentication/controllers/authenticationCtrl.js"></script>
-        <!-- END MODULE authentication -->
-
-        <!-- BEGIN MODULE blank -->
-            <script src="modules/blank/blank.js"></script>
-            <script src="modules/blank/services/blankServices.js"></script>
-            <script src="modules/blank/controllers/blankCtrl.js"></script>
-            <script src="modules/blank/controllers/callCtrl.js"></script>
-            <script src="modules/blank/controllers/registerPatientCtrl.js"></script>
-            <script src="modules/blank/controllers/searchPatientCtrl.js"></script>
-            <script src="modules/blank/services/blankServices.js"></script>
-        <!-- END MODULE blank -->
-
-        <!-- BEGIN MODULE home -->
-            <script src="modules/home/home.js" ></script>
-            <script src="modules/home/services/homeService.js" ></script>
-            <script src="modules/home/controllers/homeCtrl.js"></script>
-            <script src="modules/home/controllers/homeListCtrl.js"></script>
-            <script src="modules/home/controllers/homeListDetailCtrl.js"></script>
-            <script src="modules/home/controllers/modalCtrl.js"></script>
-        <!-- END MODULE home -->
-        <!-- BEGIN MODULE study -->
-            <script src="modules/study/study.js" ></script>
-            <script src="modules/study/services/studyService.js"></script>
-            <script src="modules/study/directives/studyDirective.js"></script>
-            <script src="modules/study/directives/studyListDirective.js"></script>
-            <script src="modules/study/controllers/studyCtrl.js"></script>
-            <script src="modules/study/controllers/studyListCtrl.js"></script>
-            <script src="modules/study/controllers/studyDetailCtrl.js"></script>
-        <!-- END MODULE study -->
-
-        <!-- BEGIN MODULE appointment -->
-            <script src="modules/appointment/js/Appointment_helper.js" ></script>
-            <script src="modules/appointment/appointment.js" ></script>
-            <script src="modules/appointment/controllers/appointmentCtrl.js"></script>
-            <script src="modules/appointment/controllers/appointmentListCtrl.js"></script>
-            <script src="modules/appointment/controllers/appointmentListModalCtrl.js"></script>
-            <script src="modules/appointment/controllers/appointmentRequestCtrl.js"></script>
-            <script src="modules/appointment/controllers/appointmentRequestModalCtrl.js"></script>
-            <script src="modules/appointment/directives/listAppointmentDirectives.js"></script>
-            <script src="modules/appointment/services/appointmentServiecs.js"></script>
-
-        <!-- END MODULE appointment -->
-
-        <!-- BEGIN MODULE urgentCare -->
-            <script src="modules/urgentCare/urgentCare.js" ></script>
-            <script src="modules/urgentCare/controllers/urgentCareCtrl.js"></script>
-            <script src="modules/urgentCare/controllers/urgentCareListCtrl.js"></script>
-            <script src="modules/urgentCare/controllers/urgentCareListDetailCtrl.js"></script>
-            <script src="modules/urgentCare/directives/urgentCareListDirective.js"></script>
-            <script src="modules/urgentCare/directives/urgentCareDetailDirective.js"></script>
-            <script src="modules/urgentCare/services/urgentCareService.js"></script>
-        <!-- END MODULE urgentCare -->
-
-        <!-- BEGIN MODULE doctor -->
-            <script src="modules/doctor/doctor.js" ></script>
-            <script src="modules/doctor/services/doctorService.js"></script>
-            <script src="modules/doctor/controllers/doctorCtrl.js"></script>
-            <script src="modules/doctor/controllers/doctorHomeCtrl.js"></script>
-            <script src="modules/doctor/controllers/doctorListCtrl.js"></script>
-            <script src="modules/doctor/controllers/doctorCreateCtrl.js"></script>
-            <script src="modules/doctor/controllers/doctorProfileCtrl.js"></script>
-            <script src="modules/doctor/directives/listDirective.js"></script>
-            <script src="modules/doctor/directives/createDirective.js"></script>
-            <script src="modules/doctor/directives/detailDirective.js"></script>
-        <!-- END MODULE doctor -->
-
-        <!-- BEGIN MODULE patient -->
-            <script src="modules/patient/patient.js" ></script>
-            <script src="modules/patient/controllers/patientCtrl.js"></script>
-            <script src="modules/patient/controllers/patientListCtrl.js"></script>
-            <script src="modules/patient/controllers/patientCreateCtrl.js"></script>
-            <script src="modules/patient/services/PatientService.js"></script>
-            <script src="modules/patient/directives/PatientDirective.js"></script>
-            <script src="modules/patient/directives/patientListDirective.js"></script>
-            <script src="modules/patient/directives/patientListModalDirective.js"></script>
-            <script src="modules/patient/controllers/patientHomeCtrl.js"></script>
-            <script src="modules/patient/directives/patientCreateDirective.js"></script>
-        <!-- END MODULE patient -->
-
-        <!-- BEGIN MODULE user -->
-            <script src="modules/user/user.js" ></script>
-            <script src="modules/user/controllers/userCtrl.js"></script>
-            <script src="modules/user/controllers/userListCtrl.js"></script>
-            <script src="modules/user/controllers/userListDetailCtrl.js"></script>
-            <script src="modules/user/controllers/userDetailCtrl.js"></script>
-            <script src="modules/user/controllers/userProfileCtrl.js"></script>
-            <script src="modules/user/controllers/changePassCtrl.js"></script>
-        <!-- END MODULE user -->
-
-        <!-- BEGIN MODULE WAAppointment -->
-            <script src="modules/WAAppointment/js/WA_helper.js" ></script>
-            <script src="modules/WAAppointment/WAAppointment.js" ></script>
-            <script src="modules/WAAppointment/controllers/WAAppointmentCtrl.js"></script>
-            <script src="modules/WAAppointment/controllers/WAAppointmentListCtrl.js"></script>
-            <script src="modules/WAAppointment/controllers/WAAppointmentListDetailCtrl.js"></script>
-            <script src="modules/WAAppointment/controllers/WAAppointmentGPCtrl.js"></script>
-            <script src="modules/WAAppointment/services/WAAppointmentService.js"></script>
-            <script src="modules/WAAppointment/directives/WAAppointmentList.js"></script>
-        <!-- END MODULE WAAppointment -->
-
-
-        <!-- BEGIN MODULE consultation -->
-            <script src="modules/consultation/consultation.js" ></script>
-            <script src="modules/consultation/services/consultationServices.js"></script>
-            <script src="modules/consultation/controllers/consultationCtrl.js"></script>
-            <script src="modules/consultation/controllers/consultationListCtrl.js"></script>
-            <script src="modules/consultation/controllers/consultationDetailCtrl.js"></script>
-            <script src="modules/consultation/controllers/consultationTelehealthDetailCtrl.js"></script>
-            <script src="modules/consultation/controllers/patientAdmissionCtrl.js"></script>
-            <script src="modules/consultation/controllers/consultNoteCtrl.js"></script>
-            <script src="modules/consultation/controllers/eFormsCtrl.js"></script>
-            <script src="modules/consultation/controllers/drawingCtrl.js"></script>
-            <script src="modules/consultation/controllers/consultationListPatient.js"></script>
-            <script src="modules/consultation/services/consultationServices.js"></script>
-            <script src="modules/consultation/directives/listAppoint.js"></script>
-            <script src="modules/consultation/directives/consultationTelehealthDetailDirectives.js"></script>
-            <script src="modules/consultation/directives/consultNoteDirectives.js"></script>
-            <script src="modules/consultation/directives/listAppConsultationDirective.js"></script>
-            <script src="modules/consultation/directives/listPatientConsultation.js"></script>
-            <script src="modules/consultation/js/Consultation_helper.js"></script>
-
-        <!-- END MODULE consultation -->
-
-        <!-- BEGIN MODULE eForms -->
-            <script src="modules/eForm/eForm.js"></script>
-            <script src="modules/eForm/directives/eFormDirective.js"></script>
-            <script src="modules/eForm/directives/eFormListDirective.js"></script>
-            <script src="modules/eForm/controllers/eFormCtrl.js"></script>
-            <script src="modules/eForm/controllers/eFormHomeCtrl.js"></script>
-            <script src="modules/eForm/controllers/eFormListCtrl.js"></script>
-            <script src="modules/eForm/controllers/eFormDetailCtrl.js"></script>
-            <script src="modules/eForm/controllers/eFormCreateCtrl.js"></script>
-            <script src="modules/eForm/controllers/eFormAppointmentCtrl.js"></script>
-            <!--<script src="modules/eForms/eForms.js" ></script>
+    socketAuth.on('testmessage', function(msg) {
+        console.log(JSON.stringify("a" + msg));
+    });
+    </script>
+    <script src="directives.js" type="text/javascript"></script>
+    <!--BEGIN COMMON SERVICE-->
+    <script src="common/services/CommonService.js"></script>
+    <script src="common/directives/dialog.js"></script>
+    <script src="common/directives/menuBar.js"></script>
+    <script src="common/directives/dimage.js"></script>
+    <script src="common/directives/drawing.js"></script>
+    <script src="common/directives/finishRender.js"></script>
+    <script src="common/directives/common.js"></script>
+    <!--END COMMON SERVICE-->
+    <!-- BEGIN lockScreen -->
+    <script src="common/views/lockScreenCtrl.js"></script>
+    <!-- END lockScreen -->
+    <!-- BEGIN MODULE unAuthentication -->
+    <script src="modules/unAuthentication/unAuthentication.js"></script>
+    <script type="text/javascript" src="modules/unAuthentication/services/unAuthenticateService.js"></script>
+    <script src="modules/unAuthentication/controllers/unAuthenticationCtrl.js"></script>
+    <!-- Doctor -->
+    <script src="modules/unAuthentication/controllers/loginCtrl.js"></script>
+    <script src="modules/unAuthentication/controllers/registerCtrl.js"></script>
+    <script src="modules/unAuthentication/controllers/activationCtrl.js"></script>
+    <script src="modules/unAuthentication/controllers/fotgotCtrl.js"></script>
+    <!-- Patient -->
+    <script src="modules/unAuthentication/controllers/changepassCtrl.js"></script>
+    <!-- END MODULE unAuthentication -->
+    <!-- BEGIN MODULE authentication -->
+    <script src="modules/authentication/authentication.js"></script>
+    <script type="text/javascript" src="modules/authentication/services/AuthenticationService.js"></script>
+    <script src="modules/authentication/controllers/authenticationCtrl.js"></script>
+    <!-- END MODULE authentication -->
+    <!-- BEGIN MODULE blank -->
+    <script src="modules/blank/blank.js"></script>
+    <script src="modules/blank/services/blankServices.js"></script>
+    <script src="modules/blank/controllers/blankCtrl.js"></script>
+    <script src="modules/blank/controllers/callCtrl.js"></script>
+    <script src="modules/blank/controllers/registerPatientCtrl.js"></script>
+    <script src="modules/blank/controllers/searchPatientCtrl.js"></script>
+    <script src="modules/blank/services/blankServices.js"></script>
+    <!-- END MODULE blank -->
+    <!-- BEGIN MODULE home -->
+    <script src="modules/home/home.js"></script>
+    <script src="modules/home/services/homeService.js"></script>
+    <script src="modules/home/controllers/homeCtrl.js"></script>
+    <script src="modules/home/controllers/homeListCtrl.js"></script>
+    <script src="modules/home/controllers/homeListDetailCtrl.js"></script>
+    <script src="modules/home/controllers/modalCtrl.js"></script>
+    <!-- END MODULE home -->
+    <!-- BEGIN MODULE study -->
+    <script src="modules/study/study.js"></script>
+    <script src="modules/study/services/studyService.js"></script>
+    <script src="modules/study/directives/studyDirective.js"></script>
+    <script src="modules/study/directives/studyListDirective.js"></script>
+    <script src="modules/study/controllers/studyCtrl.js"></script>
+    <script src="modules/study/controllers/studyListCtrl.js"></script>
+    <script src="modules/study/controllers/studyDetailCtrl.js"></script>
+    <!-- END MODULE study -->
+    <!-- BEGIN MODULE appointment -->
+    <script src="modules/appointment/js/Appointment_helper.js"></script>
+    <script src="modules/appointment/appointment.js"></script>
+    <script src="modules/appointment/controllers/appointmentCtrl.js"></script>
+    <script src="modules/appointment/controllers/appointmentListCtrl.js"></script>
+    <script src="modules/appointment/controllers/appointmentListModalCtrl.js"></script>
+    <script src="modules/appointment/controllers/appointmentRequestCtrl.js"></script>
+    <script src="modules/appointment/controllers/appointmentRequestModalCtrl.js"></script>
+    <script src="modules/appointment/directives/listAppointmentDirectives.js"></script>
+    <script src="modules/appointment/services/appointmentServiecs.js"></script>
+    <!-- END MODULE appointment -->
+    <!-- BEGIN MODULE urgentCare -->
+    <script src="modules/urgentCare/urgentCare.js"></script>
+    <script src="modules/urgentCare/controllers/urgentCareCtrl.js"></script>
+    <script src="modules/urgentCare/controllers/urgentCareListCtrl.js"></script>
+    <script src="modules/urgentCare/controllers/urgentCareListDetailCtrl.js"></script>
+    <script src="modules/urgentCare/directives/urgentCareListDirective.js"></script>
+    <script src="modules/urgentCare/directives/urgentCareDetailDirective.js"></script>
+    <script src="modules/urgentCare/services/urgentCareService.js"></script>
+    <!-- END MODULE urgentCare -->
+    <!-- BEGIN MODULE doctor -->
+    <script src="modules/doctor/doctor.js"></script>
+    <script src="modules/doctor/services/doctorService.js"></script>
+    <script src="modules/doctor/controllers/doctorCtrl.js"></script>
+    <script src="modules/doctor/controllers/doctorHomeCtrl.js"></script>
+    <script src="modules/doctor/controllers/doctorListCtrl.js"></script>
+    <script src="modules/doctor/controllers/doctorCreateCtrl.js"></script>
+    <script src="modules/doctor/controllers/doctorProfileCtrl.js"></script>
+    <script src="modules/doctor/directives/listDirective.js"></script>
+    <script src="modules/doctor/directives/createDirective.js"></script>
+    <script src="modules/doctor/directives/detailDirective.js"></script>
+    <!-- END MODULE doctor -->
+    <!-- BEGIN MODULE patient -->
+    <script src="modules/patient/patient.js"></script>
+    <script src="modules/patient/controllers/patientCtrl.js"></script>
+    <script src="modules/patient/controllers/patientListCtrl.js"></script>
+    <script src="modules/patient/controllers/patientCreateCtrl.js"></script>
+    <script src="modules/patient/services/PatientService.js"></script>
+    <script src="modules/patient/directives/PatientDirective.js"></script>
+    <script src="modules/patient/directives/patientListDirective.js"></script>
+    <script src="modules/patient/directives/patientListModalDirective.js"></script>
+    <script src="modules/patient/controllers/patientHomeCtrl.js"></script>
+    <script src="modules/patient/directives/patientCreateDirective.js"></script>
+    <!-- END MODULE patient -->
+    <!-- BEGIN MODULE user -->
+    <script src="modules/user/user.js"></script>
+    <script src="modules/user/controllers/userCtrl.js"></script>
+    <script src="modules/user/controllers/userListCtrl.js"></script>
+    <script src="modules/user/controllers/userListDetailCtrl.js"></script>
+    <script src="modules/user/controllers/userDetailCtrl.js"></script>
+    <script src="modules/user/controllers/userProfileCtrl.js"></script>
+    <script src="modules/user/controllers/changePassCtrl.js"></script>
+    <!-- END MODULE user -->
+    <!-- BEGIN MODULE WAAppointment -->
+    <script src="modules/WAAppointment/js/WA_helper.js"></script>
+    <script src="modules/WAAppointment/WAAppointment.js"></script>
+    <script src="modules/WAAppointment/controllers/WAAppointmentCtrl.js"></script>
+    <script src="modules/WAAppointment/controllers/WAAppointmentListCtrl.js"></script>
+    <script src="modules/WAAppointment/controllers/WAAppointmentListDetailCtrl.js"></script>
+    <script src="modules/WAAppointment/controllers/WAAppointmentGPCtrl.js"></script>
+    <script src="modules/WAAppointment/services/WAAppointmentService.js"></script>
+    <script src="modules/WAAppointment/directives/WAAppointmentList.js"></script>
+    <!-- END MODULE WAAppointment -->
+    <!-- BEGIN MODULE consultation -->
+    <script src="modules/consultation/consultation.js"></script>
+    <script src="modules/consultation/services/consultationServices.js"></script>
+    <script src="modules/consultation/controllers/consultationCtrl.js"></script>
+    <script src="modules/consultation/controllers/consultationListCtrl.js"></script>
+    <script src="modules/consultation/controllers/consultationDetailCtrl.js"></script>
+    <script src="modules/consultation/controllers/consultationTelehealthDetailCtrl.js"></script>
+    <script src="modules/consultation/controllers/patientAdmissionCtrl.js"></script>
+    <script src="modules/consultation/controllers/consultNoteCtrl.js"></script>
+    <script src="modules/consultation/controllers/eFormsCtrl.js"></script>
+    <script src="modules/consultation/controllers/drawingCtrl.js"></script>
+    <script src="modules/consultation/controllers/consultationListPatient.js"></script>
+    <script src="modules/consultation/services/consultationServices.js"></script>
+    <script src="modules/consultation/directives/listAppoint.js"></script>
+    <script src="modules/consultation/directives/consultationTelehealthDetailDirectives.js"></script>
+    <script src="modules/consultation/directives/consultNoteDirectives.js"></script>
+    <script src="modules/consultation/directives/listAppConsultationDirective.js"></script>
+    <script src="modules/consultation/directives/listPatientConsultation.js"></script>
+    <script src="modules/consultation/js/Consultation_helper.js"></script>
+    <!-- END MODULE consultation -->
+    <!-- BEGIN MODULE eForms -->
+    <script src="modules/eForm/eForm.js"></script>
+    <script src="modules/eForm/directives/eFormDirective.js"></script>
+    <script src="modules/eForm/directives/eFormListDirective.js"></script>
+    <script src="modules/eForm/controllers/eFormCtrl.js"></script>
+    <script src="modules/eForm/controllers/eFormHomeCtrl.js"></script>
+    <script src="modules/eForm/controllers/eFormListCtrl.js"></script>
+    <script src="modules/eForm/controllers/eFormDetailCtrl.js"></script>
+    <script src="modules/eForm/controllers/eFormCreateCtrl.js"></script>
+    <script src="modules/eForm/controllers/eFormAppointmentCtrl.js"></script>
+    <!--<script src="modules/eForms/eForms.js" ></script>
             <script src="modules/eForms/services/eFormsService.js" ></script>
             <script src="modules/eForms/directives/eFormsGenerateDirective.js" ></script>
             <script src="modules/eForms/directives/eFormsListDirective.js" ></script>
@@ -484,197 +408,163 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="modules/eForms/directives/question13.js"></script>
             <script src="modules/eForms/directives/eFormManagerDirective.js"></script>
             <script src="modules/eForms/directives/eFormManagerDirective.js"></script>-->
-        <!-- END MODULE eForms -->
+    <!-- END MODULE eForms -->
+    <!-- BEGIN MODULE sandbox -->
+    <script src="modules/sandbox/sandbox.js"></script>
+    <script src="modules/sandbox/controllers/sandboxCtrl.js"></script>
+    <script src="modules/sandbox/controllers/privateFormCtrl.js"></script>
+    <script src="modules/sandbox/controllers/workersCompCtrl.js"></script>
+    <script src="modules/sandbox/controllers/dragTableCtrl.js"></script>
+    <!-- END MODULE sandbox -->
+    <!-- begin module admission -->
+    <script src="modules/admission/admission.js"></script>
+    <script src="modules/admission/services/admissionServiecs.js"></script>
+    <script src="modules/admission/controllers/admissionCtrl.js"></script>
+    <script src="modules/admission/controllers/admissionRequestCtrl.js"></script>
+    <script src="modules/admission/controllers/admissionRequestStep1Ctrl.js"></script>
+    <script src="modules/admission/controllers/admissionRequestStep2Ctrl.js"></script>
+    <script src="modules/admission/controllers/admissionRequestStep3Ctrl.js"></script>
+    <script src="modules/admission/controllers/modalAdd1Ctrl.js"></script>
+    <script src="modules/admission/controllers/modalDelete1Ctrl.js"></script>
+    <script src="modules/admission/controllers/modalUpdate1Ctrl.js"></script>
+    <script src="modules/admission/controllers/modalAdd2Ctrl.js"></script>
+    <script src="modules/admission/controllers/modalDelete2Ctrl.js"></script>
+    <script src="modules/admission/controllers/modalUpdate2Ctrl.js"></script>
+    <script src="modules/admission/controllers/admissionDetailCtrl.js"></script>
+    <!-- end module admission -->
+    <!-- begin module drawing -->
+    <script src="modules/drawing/drawing.js"></script>
+    <script src="modules/drawing/controllers/drawingCtrl.js"></script>
+    <script src="modules/drawing/controllers/drawingHomeCtrl.js"></script>
+    <!-- end module drawing -->
+    <!-- begin module roster -->
+    <script src="modules/roster/roster.js"></script>
+    <script src="modules/roster/controllers/rosterCtrl.js"></script>
+    <script src="modules/roster/services/rosterServices.js"></script>
+    <script src="modules/roster/controllers/rosterHomeCtrl.js"></script>
+    <script src="modules/roster/controllers/calendarCtrl.js"></script>
+    <script src="modules/roster/controllers/calendarCreateCtrl.js"></script>
+    <script src="modules/roster/controllers/calendarEditCtrl.js"></script>
+    <script src="modules/roster/controllers/calendarDeleteCtrl.js"></script>
+    <!-- end module roster -->
+    <!-- begin module booking -->
+    <script src="modules/booking/booking.js"></script>
+    <script src="modules/booking/controllers/bookingCtrl.js"></script>
+    <script src="modules/booking/controllers/schedulerCtrl.js"></script>
+    <script src="modules/booking/controllers/schedulerCreateCtrl.js"></script>
+    <script src="modules/booking/controllers/schedulerEditCtrl.js"></script>
+    <script src="modules/booking/controllers/schedulerDeleteCtrl.js"></script>
+    <script src="modules/booking/services/bookingServices.js"></script>
+    <!-- end module booking -->
+    <!-- begin module company -->
+    <script src="modules/company/company.js"></script>
+    <script src="modules/company/directives/companyDirective.js"></script>
+    <script src="modules/company/directives/companyListDirective.js"></script>
+    <script src="modules/company/controllers/companyCtrl.js"></script>
+    <script src="modules/company/controllers/companyHomeCtrl.js"></script>
+    <script src="modules/company/controllers/companyListCtrl.js"></script>
+    <script src="modules/company/controllers/companyDetailCtrl.js"></script>
+    <script src="modules/company/controllers/companyCreateCtrl.js"></script>
+    <script src="modules/company/controllers/siteCtrl.js"></script>
+    <script src="modules/company/controllers/insurerCtrl.js"></script>
+    <script src="modules/company/controllers/staffCtrl.js"></script>
+    <script src="modules/company/controllers/userAccountCtrl.js"></script>
+    <!-- end module company -->
+    <!-- begin module onsite -->
+    <script src="modules/onsite/onsite.js"></script>
+    <script src="modules/onsite/directives/onsiteDirective.js"></script>
+    <script src="modules/onsite/directives/onsiteAppointmentDirective.js"></script>
+    <script src="modules/onsite/controllers/onsiteCtrl.js"></script>
+    <script src="modules/onsite/controllers/onsiteHomeCtrl.js"></script>
+    <script src="modules/onsite/controllers/onsiteAppointmentCtrl.js"></script>
+    <!-- end module onsite -->
+    <!-- END CORE ANGULARJS PLUGINS -->
+    <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+    <!-- END APP LEVEL ANGULARJS SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- multi select -->
+    <script src="theme/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="theme/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN Custom Dropdowns -->
+    <script src="./theme/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="./theme/assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>
+    <!-- END Custom Dropdowns -->
+    <!-- BEGIN file input -->
+    <script src="./theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+    <!-- END file input -->
+    <!-- BEGIN datetime picker -->
+    <script src="./theme/assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
+    <!-- END datetime picker -->
+    <!-- begin portfilo -->
+    <script src="./theme/assets/admin/pages/scripts/portfolio.js"></script>
+    <!-- end portfilo -->
+    <!-- BEGIN table_datatables_editable -->
+    <!--<script src="./theme/assets/pages/scripts/table-datatables-editable.min.js" type="text/javascript"></script>-->
+    <!-- END table_datatables_editable -->
+    <!-- begin form wizard -->
+    <script src="theme/assets/pages/scripts/form-wizard.js" type="text/javascript"></script>
+    <!-- end form wizard -->
+    <script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6LcrK9cSAAAAALEcjG9gTRPbeA0yAVsKd8sBpFpR"></script>
+    <!-- begin sweetalert -->
+    <script type="text/javascript" src="./theme/assets/global/libs/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- end sweetalert -->
+    <!-- RECAPTCHA -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
+    <script src="./theme/assets/global/libs/angular-recaptcha/release/angular-recaptcha.min.js" type="text/javascript"></script>
+    <!-- END RECAPTCHA -->
+    <!-- jsTree + canvas blob-->
+    <link rel="stylesheet" type="text/css" href="./assets/global/libs/jstree/dist/themes/default/style.min.css">
+    <script type="text/javascript" src="./assets/global/libs/jstree/dist/jstree.js"></script>
+    <script type="text/javascript" src="./assets/global/libs/jstree/dist/jsTree.directive.js"></script>
+    <script type="text/javascript" src="./assets/global/libs/canvas-toBlob.js/canvas-toBlob.js"></script>
+    <script type="text/javascript" src="./assets/global/libs/FileSaver.js/FileSaver.js"></script>
+    <!--<script src="theme/assets/pages/scripts/login.min.js" type="text/javascript"></script>-->
+    <!-- multi select -->
+    <script src="theme/assets/pages/scripts/components-multi-select.min.js" type="text/javascript"></script>
+    <!-- end multi select -->
+    <!-- jsTree -->
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/libs/jsTree/dist/themes/default/style.min.css">
+    <script type="text/javascript" src="theme/assets/global/libs/jsTree/dist/jstree.js"></script>
+    <script type="text/javascript" src="theme/assets/global/libs/jsTree/dist/jsTree.directive.js"></script>
+    <!-- angular-ui-calendar -->
+    <link href='theme/assets/global/libs/fullcalendar-scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
+    <link href='theme/assets/global/libs/fullcalendar-scheduler/lib/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <script type="text/javascript" src="theme/assets/global/libs/angular-ui-calendar/src/calendar.js"></script>
+    <script type="text/javascript" src="theme/assets/global/libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="theme/assets/global/libs/fullcalendar/dist/gcal.js"></script>
+    <!-- fullCalendar-sheduler -->
+    <link href='theme/assets/global/libs/fullcalendar-scheduler/scheduler.min.css' rel='stylesheet' />
+    <script src='theme/assets/global/libs/fullcalendar-scheduler/scheduler.min.js'></script>
+    <!-- context menu -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.contextMenu.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.contextMenu.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.ui.position.min.js"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="theme/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="theme/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="theme/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+    <!-- END APP LEVEL JQUERY SCRIPTS -->
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // App.init(); 
+        // App.initComponents(); // init core components
+        App.setAssetsPath('theme/assets/'); // Set the assets folder path 
 
-        <!-- BEGIN MODULE sandbox -->
-            <script src="modules/sandbox/sandbox.js"></script>
-            <script src="modules/sandbox/controllers/sandboxCtrl.js"></script>
-            <script src="modules/sandbox/controllers/privateFormCtrl.js"></script>
-            <script src="modules/sandbox/controllers/workersCompCtrl.js"></script>
-            <script src="modules/sandbox/controllers/dragTableCtrl.js"></script>
-        <!-- END MODULE sandbox -->
+    });
+    </script>
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
 
-        <!-- begin module admission -->
-            <script src="modules/admission/admission.js"></script>
-            <script src="modules/admission/services/admissionServiecs.js"></script>
-            <script src="modules/admission/controllers/admissionCtrl.js"></script>
-            <script src="modules/admission/controllers/admissionRequestCtrl.js"></script>
-            <script src="modules/admission/controllers/admissionRequestStep1Ctrl.js"></script>
-            <script src="modules/admission/controllers/admissionRequestStep2Ctrl.js"></script>
-            <script src="modules/admission/controllers/admissionRequestStep3Ctrl.js"></script>
-            <script src="modules/admission/controllers/modalAdd1Ctrl.js"></script>
-            <script src="modules/admission/controllers/modalDelete1Ctrl.js"></script>
-            <script src="modules/admission/controllers/modalUpdate1Ctrl.js"></script>
-            <script src="modules/admission/controllers/modalAdd2Ctrl.js"></script>
-            <script src="modules/admission/controllers/modalDelete2Ctrl.js"></script>
-            <script src="modules/admission/controllers/modalUpdate2Ctrl.js"></script>
-            <script src="modules/admission/controllers/admissionDetailCtrl.js"></script>
-            <!-- end module admission -->
-
-            <!-- begin module drawing -->
-            <script src="modules/drawing/drawing.js"></script>
-            <script src="modules/drawing/controllers/drawingCtrl.js"></script>
-            <script src="modules/drawing/controllers/drawingHomeCtrl.js"></script>
-            <!-- end module drawing -->
-
-            <!-- begin module roster -->
-            <script src="modules/roster/roster.js"></script>
-            <script src="modules/roster/controllers/rosterCtrl.js"></script>
-            <script src="modules/roster/services/rosterServices.js"></script>
-            <script src="modules/roster/controllers/rosterHomeCtrl.js"></script>
-            <script src="modules/roster/controllers/calendarCtrl.js"></script>
-            <script src="modules/roster/controllers/calendarCreateCtrl.js"></script>
-            <script src="modules/roster/controllers/calendarEditCtrl.js"></script>
-            <script src="modules/roster/controllers/calendarDeleteCtrl.js"></script>
-        <!-- end module roster -->
-
-        <!-- begin module booking -->
-            <script src="modules/booking/booking.js"></script>
-            <script src="modules/booking/controllers/bookingCtrl.js"></script>
-            <script src="modules/booking/controllers/schedulerCtrl.js"></script>
-            <script src="modules/booking/controllers/schedulerCreateCtrl.js"></script>
-            <script src="modules/booking/controllers/schedulerEditCtrl.js"></script>
-            <script src="modules/booking/controllers/schedulerDeleteCtrl.js"></script>
-            <script src="modules/booking/services/bookingServices.js"></script>
-        <!-- end module booking -->
-
-        <!-- begin module company -->
-            <script src="modules/company/company.js"></script>
-            <script src="modules/company/directives/companyDirective.js"></script>
-            <script src="modules/company/directives/companyListDirective.js"></script>
-            <script src="modules/company/controllers/companyCtrl.js"></script>
-            <script src="modules/company/controllers/companyHomeCtrl.js"></script>
-            <script src="modules/company/controllers/companyListCtrl.js"></script>
-            <script src="modules/company/controllers/companyDetailCtrl.js"></script>
-            <script src="modules/company/controllers/companyCreateCtrl.js"></script>
-            <script src="modules/company/controllers/siteCtrl.js"></script>
-            <script src="modules/company/controllers/insurerCtrl.js"></script>
-            <script src="modules/company/controllers/staffCtrl.js"></script>
-            <script src="modules/company/controllers/userAccountCtrl.js"></script>
-        <!-- end module company -->
-        <!-- begin module onsite -->
-            <script src="modules/onsite/onsite.js"></script>
-            <script src="modules/onsite/directives/onsiteDirective.js"></script>
-            <script src="modules/onsite/directives/onsiteAppointmentDirective.js"></script>
-            <script src="modules/onsite/controllers/onsiteCtrl.js"></script>
-            <script src="modules/onsite/controllers/onsiteHomeCtrl.js"></script>
-            <script src="modules/onsite/controllers/onsiteAppointmentCtrl.js"></script>
-        <!-- end module onsite -->
-
-
-        <!-- END CORE ANGULARJS PLUGINS -->
-
-        <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
-        <!-- END APP LEVEL ANGULARJS SCRIPTS -->
-
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-            <!-- multi select -->
-                <script src="theme/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js" type="text/javascript"></script>
-                <script src="theme/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-        <!-- END PAGE LEVEL PLUGINS -->
-
-        <!-- BEGIN THEME GLOBAL SCRIPTS -->
-            <script src="theme/assets/global/scripts/app.min.js" type="text/javascript"></script>
-        <!-- END THEME GLOBAL SCRIPTS -->
-        
-        <!-- BEGIN PAGE LEVEL SCRIPTS -->
-            <!-- BEGIN Custom Dropdowns -->
-                <script src="./theme/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-                <script src="./theme/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-                <script src="./theme/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
-                <script src="./theme/assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>
-            <!-- END Custom Dropdowns -->
-
-            <!-- BEGIN file input -->
-                <script src="./theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
-            <!-- END file input -->
-
-            <!-- BEGIN datetime picker -->
-                <script src="./theme/assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
-            <!-- END datetime picker -->
-
-            <!-- begin portfilo -->
-                <script src="./theme/assets/admin/pages/scripts/portfolio.js"></script>
-            <!-- end portfilo -->
-
-            <!-- BEGIN table_datatables_editable -->
-            <!--<script src="./theme/assets/pages/scripts/table-datatables-editable.min.js" type="text/javascript"></script>-->
-            <!-- END table_datatables_editable -->
-
-            <!-- begin form wizard -->
-                <script src="theme/assets/pages/scripts/form-wizard.js" type="text/javascript"></script>
-            <!-- end form wizard -->
-
-                <script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6LcrK9cSAAAAALEcjG9gTRPbeA0yAVsKd8sBpFpR"></script>
-
-            <!-- begin sweetalert -->
-                <script type="text/javascript" src="./theme/assets/global/libs/sweetalert/dist/sweetalert.min.js"></script>
-            <!-- end sweetalert -->
-
-
-            <!-- RECAPTCHA -->
-                <script src='https://www.google.com/recaptcha/api.js'></script>
-                <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit"async defer></script>
-                <script src="./theme/assets/global/libs/angular-recaptcha/release/angular-recaptcha.min.js" type="text/javascript"></script>
-            <!-- END RECAPTCHA -->
-
-            <!-- jsTree + canvas blob-->
-            <link rel="stylesheet" type="text/css" href="./assets/global/libs/jstree/dist/themes/default/style.min.css">
-            <script type="text/javascript" src="./assets/global/libs/jstree/dist/jstree.js"></script>
-            <script type="text/javascript" src="./assets/global/libs/jstree/dist/jsTree.directive.js"></script>
-            <script type="text/javascript" src="./assets/global/libs/canvas-toBlob.js/canvas-toBlob.js"></script>
-            <script type="text/javascript" src="./assets/global/libs/FileSaver.js/FileSaver.js"></script>
-
-            <!--<script src="theme/assets/pages/scripts/login.min.js" type="text/javascript"></script>-->
-
-            <!-- multi select -->
-                <script src="theme/assets/pages/scripts/components-multi-select.min.js" type="text/javascript"></script>
-            <!-- end multi select -->
-
-
-            <!-- jsTree -->
-                <link rel="stylesheet" type="text/css" href="theme/assets/global/libs/jsTree/dist/themes/default/style.min.css">
-                <script type="text/javascript" src="theme/assets/global/libs/jsTree/dist/jstree.js"></script>
-                <script type="text/javascript" src="theme/assets/global/libs/jsTree/dist/jsTree.directive.js"></script>
-
-            <!-- angular-ui-calendar -->
-                <link  href='theme/assets/global/libs/fullcalendar-scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
-                <link  href='theme/assets/global/libs/fullcalendar-scheduler/lib/fullcalendar.print.css' rel='stylesheet' media='print' />
-                 
-
-                <script type="text/javascript" src="theme/assets/global/libs/angular-ui-calendar/src/calendar.js"></script>
-                <script type="text/javascript" src="theme/assets/global/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-                <script type="text/javascript" src="theme/assets/global/libs/fullcalendar/dist/gcal.js"></script>
-                
-                <!-- fullCalendar-sheduler -->
-                <link href='theme/assets/global/libs/fullcalendar-scheduler/scheduler.min.css' rel='stylesheet' />    
-                <script src='theme/assets/global/libs/fullcalendar-scheduler/scheduler.min.js'></script> 
-            
-                <!-- context menu -->
-                
-                <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.contextMenu.min.css">
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.contextMenu.min.js"></script>
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.ui.position.min.js"></script>
-        <!-- END PAGE LEVEL SCRIPTS -->
-
-        <!-- BEGIN THEME LAYOUT SCRIPTS -->
-            <script src="theme/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
-            <script src="theme/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
-            <script src="theme/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-        <!-- END THEME LAYOUT SCRIPTS -->
-
-        <!-- END APP LEVEL JQUERY SCRIPTS -->
-            <script type="text/javascript">
-                $(document).ready(function()
-                {
-                    // App.init(); 
-                    // App.initComponents(); // init core components
-                    App.setAssetsPath('theme/assets/'); // Set the assets folder path 
-                    
-                });
-            </script>
-        <!-- END JAVASCRIPTS -->
-    </body>
-    <!-- END BODY -->
 </html>

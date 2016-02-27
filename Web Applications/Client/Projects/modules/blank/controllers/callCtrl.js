@@ -28,26 +28,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     } else {
         alert('Sorry, your browser does not support getUserMedia');
     }
-    // var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
-    // swal({
-    //     title: $scope.opentokData.userName,
-    //     imageUrl: "theme/assets/global/images/E-call_33.png",
-    //     text: "<img src='theme/assets/global/img/loading.gif' />",
-    //     timer: 30000,
-    //     html: true,
-    //     showCancelButton: false,
-    //     confirmButtonColor: "#e74c3c",
-    //     confirmButtonText: "Cancel",
-    //     closeOnConfirm: true
-    // }, function() {
-    //     OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "cancel");
-    //     EndCall();
-    // });
-    // audio.loop = true;
-    // audio.play();
-    $scope.$on('end',function(data){
-        console.log("roi neeeeeeeeeeeeeeeeeee",data);
-    })
+    
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;

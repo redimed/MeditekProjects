@@ -10,62 +10,17 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     $scope.getTelehealthDetail = function(UID) {
         WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
             $scope.wainformation = data.data;
-            console.log("$scope.wainformation", $scope.wainformation);
-        }, function(error) {});
-    };
+            WAAppointmentService.GetDetailPatientByUid({
+                UID: $scope.wainformation.Patients[0].UID
+            }).then(function(data) {
+                console.log("aaaaaaaaaaaaaaaaaaaa",data);
+            })
+        }, function(error) {
 
-    console.log('opentok', $scope.Opentok);
-
-    $scope.getTelehealthDetail($scope.Params.UID);
-
-    /*=========opentok begin=========*/
-    $scope.userInfo = $cookies.getObject('userInfo');
-    console.log(" $scope.userInfo", $scope.userInfo);
-
-    function OpentokSendCall(uidCall, uidUser, message) {
-        console.log("uidCall", uidCall);
-        console.log("uidUser", uidUser);
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-            from: $scope.userInfo.TelehealthUser.UID,
-            to: uidCall,
-            message: message,
-            sessionId: socketTelehealth.opentok.sessionId,
-            fromName: $scope.userInfo.UserName
-        }, function(data) {
-            console.log("send call", data);
         });
     };
 
-    function EndCall() {
-        audio.pause();
-        swal.close();
-    }
-    $scope.opentokData = {
-            userName: null,
-            userCall: null,
-            call: function() {
-                console.log(socketTelehealth.opentok);
-                WAAppointmentService.GetDetailPatientByUid({
-                    UID: $scope.wainformation.Patients[0].UID
-                }).then(function(data) {
-                    console.log(data);
-                    if (data.data[0].TeleUID != null) {
-                        $scope.opentokData.userCall = data.data[0].TeleUID;
-                        $scope.opentokData.userName = data.data[0].FirstName + " " + data.data[0].LastName;
-                        OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "call");
-                        window.open($state.href("blank.call", {
-                            apiKey: socketTelehealth.opentok.apiKey,
-                            sessionId: socketTelehealth.opentok.sessionId,
-                            token: socketTelehealth.opentok.token,
-                            userName: $scope.opentokData.userName
-                        }),"CAll",{directories:"no"});
-                    } else {
-                        toastr.error("Patient Is Not Exist", "error");
-                    };
-                });
-            }
-        }
-        /*=========opentok end=========*/
+    $scope.getTelehealthDetail($scope.Params.UID);
 
     /*==addmission star==*/
     $scope.admissionDetail = {};
@@ -147,7 +102,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         });
     /*==addmission end==*/
     $scope.eForms = function() {
-        $state.go("authentication.eForm.appointment",{UID:$stateParams.UID,UIDPatient:$stateParams.UIDPatient});
+        $state.go("authentication.eForm.appointment", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient });
     };
     $scope.admission = function() {
         $state.go("authentication.consultation.detail.admission.detail");

@@ -23,13 +23,10 @@ passport.deserializeUser(function(sessionUser, done) {
     //từ sessionUser(req.session.passport.user) ==> tạo ra req.user
     //do đó về cơ bản sessionUser và req.user là 2 object khác nhau
     //Tuy nhiên dưới đây đã quy định sessionUser và req.user là cùng 1 object
-    if(o.checkData(sessionUser))
-    {
-        done(null,sessionUser);//set req.user=sessionUser
-    }
-    else
-    {
-        var error=new Error("authentication.deserializeUser.sessionUserNotFound");
+    if (o.checkData(sessionUser)) {
+        done(null, sessionUser); //set req.user=sessionUser
+    } else {
+        var error = new Error("authentication.deserializeUser.sessionUserNotFound");
         done(error);
     }
 });
@@ -47,8 +44,7 @@ passport.use(new LocalStrategy({
     if (o.checkData(loginInfo.UserUID)) {
         //Trường hợp login bằng activation token hoặc PinNumber
         whereClause.UID = loginInfo.UserUID;
-        if(!loginInfo.PinNumber)
-        {
+        if (!loginInfo.PinNumber) {
             //Trường hợp login bằng activation token
             if (!o.checkData(loginInfo.DeviceID)) {
                 var err = new Error("DeviceID.notProvided");
@@ -58,7 +54,7 @@ passport.use(new LocalStrategy({
                 var err = new Error("AppID.notProvided");
                 return done(null, false, err);
             }
-        }        
+        }
     } else {
         //Trường hợp login bằng phương pháp userName, password thông thường
         if (o.isValidEmail(u)) {
@@ -80,145 +76,151 @@ passport.use(new LocalStrategy({
     }
     console.log(whereClause);
     UserAccount.findOne({
-        where: whereClause,
-        include: [
-            {
+            where: whereClause,
+            include: [{
                 model: RelUserRole,
                 attributes: ['ID', 'UserAccountId', 'RoleId', 'SiteId'],
                 include: {
                     model: Role,
                     attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
                 }
-            },
-            {
-                model:TelehealthUser,
-                attributes:['ID','UID'],
+            }, {
+                model: TelehealthUser,
+                attributes: ['ID', 'UID'],
+            }]
+        }).then(function(user) {
+            if (!user) {
+                var err = new Error("User.notFound");
+                return done(null, false, err);
             }
-        ]
-    }).then(function(user) {
-        if (!user) {
-            var err = new Error("User.notFound");
-            return done(null, false, err);
-        }
-        if (user && user.Enable != 'Y') {
-            var err = new Error("User.disabled");
-            return done(null, false, err);
-        }
-        
-        //Chuẩn bị thông tin trả về
-        var listRoles = [];
-        _.each(user.RelUserRoles, function(item) {
-            if(HelperService.CheckExistData(item) &&
-                HelperService.CheckExistData(item.dataValues) &&
-                HelperService.CheckExistData(item.Role) &&
-                HelperService.CheckExistData(item.Role.dataValues)){
-                item.Role.dataValues.SiteId = item.dataValues.SiteId;
+            if (user && user.Enable != 'Y') {
+                var err = new Error("User.disabled");
+                return done(null, false, err);
             }
-            listRoles.push(item.Role);
-        });
-        var returnUser = {
-            ID: user.ID,
-            UID: user.UID,
-            UserName: user.UserName,
-            Activated: user.Activated,
-            roles: listRoles,
-            TelehealthUser:user.TelehealthUser,
-        };
-        //----------------------------
-        //Kiểm tra user login bằng phương pháp thường (password)
-        //hay login bằng activation token (mobile)
-        //hay login bằng PinNumber
-        if (loginInfo.UserUID) {
-            //Nếu login bằng UserUID thì có thể là login bằng activation token
-            //hoặc bằng PinNumber
-            if(loginInfo.PinNumber)
-            {
-                //Login bằng pin number
-                //Kiểm tra Pin có expired hay chưa
-                if(user.ExpiryPin>0)
-                {
-                    //Pin chưa expired
-                    if(user.PinNumber==loginInfo.PinNumber)
-                    {
-                        //Pin hợp lệ
-                        console.log("Login via PinNumber success");
-                        return done(null, returnUser, {
-                            message: 'Logged In via PinNumber Successfully'
-                        });
-                    }
-                    else
-                    {
-                        //Pin không hợp lệ
-                        //Cập nhật lại Pin Expiry
-                        var currentExpiryPin=user.ExpiryPin;
-                        user.updateAttributes({ExpiryPin:currentExpiryPin-1})
-                        .then(function(userUpdated){
-                            var err = new Error("PinNumber.Invalid");
-                            return done(null, false, err);
-                        },function(err){
-                            return done(err);
-                        })                        
-                    }
+            if (!user.TelehealthUser || user.TelehealthUser == null) {
+                return TelehealthUser.create({
+                    UID: UUIDService.Create(),
+                    UserAccountID: user.ID
+                }).then(function(data) {
+                        user.TelehealthUser = data;
+                        return user;
+                    },
+                    function(error) {
+                        return done(null, false, error);
+                    });
+            } else {
+                return user;
+            }
+        }, function(err) {
+            o.exlog(err);
+            var error = new Error("UserAccount.queryError");
+            return done(error);
+        })
+        .then(function(user) {
+            //Chuẩn bị thông tin trả về
+            var listRoles = [];
+            _.each(user.RelUserRoles, function(item) {
+                if (HelperService.CheckExistData(item) &&
+                    HelperService.CheckExistData(item.dataValues) &&
+                    HelperService.CheckExistData(item.Role) &&
+                    HelperService.CheckExistData(item.Role.dataValues)) {
+                    item.Role.dataValues.SiteId = item.dataValues.SiteId;
                 }
-                else
-                {
-                    if(isNaN(user.ExpiryPin))
-                        var err = new Error("ExpiryPin.unknown");
-                    else
-                        var err = new Error("PinNumber.Expired");
-                    return done(null, false, err);
-                }
-            }
-            else
-            {
-                //Nếu login bằng token activation
-                UserActivation.findOne({
-                    where: {
-                        UserAccountID: user.ID,
-                        DeviceID: loginInfo.DeviceID,
-                        AppID:loginInfo.AppID,
+                listRoles.push(item.Role);
+            });
+            var returnUser = {
+                ID: user.ID,
+                UID: user.UID,
+                UserName: user.UserName,
+                Activated: user.Activated,
+                roles: listRoles,
+                TelehealthUser: user.TelehealthUser,
+            };
+            //----------------------------
+            //Kiểm tra user login bằng phương pháp thường (password)
+            //hay login bằng activation token (mobile)
+            //hay login bằng PinNumber
+            if (loginInfo.UserUID) {
+                //Nếu login bằng UserUID thì có thể là login bằng activation token
+                //hoặc bằng PinNumber
+                if (loginInfo.PinNumber) {
+                    //Login bằng pin number
+                    //Kiểm tra Pin có expired hay chưa
+                    if (user.ExpiryPin > 0) {
+                        //Pin chưa expired
+                        if (user.PinNumber == loginInfo.PinNumber) {
+                            //Pin hợp lệ
+                            console.log("Login via PinNumber success");
+                            return done(null, returnUser, {
+                                message: 'Logged In via PinNumber Successfully'
+                            });
+                        } else {
+                            //Pin không hợp lệ
+                            //Cập nhật lại Pin Expiry
+                            var currentExpiryPin = user.ExpiryPin;
+                            user.updateAttributes({ ExpiryPin: currentExpiryPin - 1 })
+                                .then(function(userUpdated) {
+                                    var err = new Error("PinNumber.Invalid");
+                                    return done(null, false, err);
+                                }, function(err) {
+                                    return done(err);
+                                })
+                        }
+                    } else {
+                        if (isNaN(user.ExpiryPin))
+                            var err = new Error("ExpiryPin.unknown");
+                        else
+                            var err = new Error("PinNumber.Expired");
+                        return done(null, false, err);
                     }
-                }).then(function(activation) {
-                    if (activation) {
-                        if (activation.CodeExpired > 0) {
-                            if (loginInfo.VerificationToken == activation.VerificationToken) {
-                                console.log("Login via mobile success");
-                                return done(null, returnUser, {
-                                    message: 'Logged In via Mobile Successfully'
-                                });
+                } else {
+                    //Nếu login bằng token activation
+                    UserActivation.findOne({
+                        where: {
+                            UserAccountID: user.ID,
+                            DeviceID: loginInfo.DeviceID,
+                            AppID: loginInfo.AppID,
+                        }
+                    }).then(function(activation) {
+                        if (activation) {
+                            if (activation.CodeExpired > 0) {
+                                if (loginInfo.VerificationToken == activation.VerificationToken) {
+                                    console.log("Login via mobile success");
+                                    return done(null, returnUser, {
+                                        message: 'Logged In via Mobile Successfully'
+                                    });
+                                } else {
+                                    var err = new Error("VerificationToken.invalid");
+                                    return done(null, false, err);
+                                }
                             } else {
-                                var err = new Error("VerificationToken.invalid");
+                                var err = new Error("Activation.expired");
                                 return done(null, false, err);
                             }
                         } else {
-                            var err = new Error("Activation.expired");
+                            var err = new Error("Activation.notFound");
                             return done(null, false, err);
                         }
-                    } else {
-                        var err = new Error("Activation.notFound");
+                    }, function(err) {
+                        return done(err);
+                    })
+                }
+
+            } else {
+                bcrypt.compare(p, user.Password, function(err, res) {
+                    if (!res) {
+                        var err = new Error("Password.Invalid");
                         return done(null, false, err);
                     }
-                }, function(err) {
-                    return done(err);
-                })
-            }
-            
-        } else {
-            bcrypt.compare(p, user.Password, function(err, res) {
-                if (!res) {
-                    var err = new Error("Password.Invalid");
-                    return done(null, false, err);
-                }
-                console.log("Login via web success");
-                return done(null, returnUser, {
-                    message: 'Logged In via Web Successfully'
+                    console.log("Login via web success");
+                    return done(null, returnUser, {
+                        message: 'Logged In via Web Successfully'
+                    });
                 });
-            });
-        }
-    }, function(err) {
-        o.exlog(err);
-        var error = new Error("UserAccount.queryError");
-        return done(error);
-    })
+            }
+        }, function(err) {
+            o.exlog(err);
+            var error = new Error("UserAccount.queryError");
+            return done(error);
+        })
 }));
-

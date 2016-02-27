@@ -39,8 +39,8 @@ module.exports = function(objCheckOverlap) {
                                         _.forEach(arrRoster, function(valueRosterUser, indexRosterUser) {
                                                 if (!_.isEmpty(valueRosterUser) &&
                                                     !_.isEmpty(valueRosterCheck)) {
-                                                    var fromTimeCheck = moment(valueRosterCheck.FromTime).format('YYYY-MM-DD HH:mm:ss');
-                                                    var toTimeCheck = moment(valueRosterCheck.ToTime).format('YYYY-MM-DD HH:mm:ss');
+                                                    var fromTimeCheck = moment(valueRosterCheck.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
+                                                    var toTimeCheck = moment(valueRosterCheck.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
                                                     var fromTimeUser = moment(valueRosterUser.FromTime).format('YYYY-MM-DD HH:mm:ss');
                                                     var toTimeUser = moment(valueRosterUser.ToTime).format('YYYY-MM-DD HH:mm:ss');
                                                     var rangeRosterCheck = moment.range(fromTimeCheck, toTimeCheck);

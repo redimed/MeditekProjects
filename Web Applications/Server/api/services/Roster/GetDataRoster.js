@@ -72,6 +72,7 @@ module.exports = {
                     var zoneTo = toTime.split(' ')[2];
                     var zoneEndRecurrence = endRecurrence.split(' ')[2];
                     var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
+                    console.log('endRecurrence', endRecurrence);
                     var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneEndRecurrence, 'YYYY-MM-DD HH:mm:ss Z');
                     console.log('startDate', startDate);
                     console.log('endDate', endDate);

@@ -19,15 +19,15 @@ module.exports = {
                 case 'weekly':
                     var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
                     var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
-                    var endRecurrence = moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                    var endRecurrence = data.EndRecurrence;
                     var arrayDateRepeat = [];
                     var timeTo = toTime.split(' ')[1];
                     var timeFrom = fromTime.split(' ')[1];
                     var zoneFrom = fromTime.split(' ')[2];
                     var zoneTo = toTime.split(' ')[2];
-                    var zoneEndRecurrence = endRecurrence.split(' ')[2];
+                     var zoneServer = moment().format('Z');
                     var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
-                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneEndRecurrence, 'YYYY-MM-DD HH:mm:ss Z');
+                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
                     var rangeDateFrom = moment.range(startDate, endDate);
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
@@ -70,9 +70,9 @@ module.exports = {
                     var timeFrom = fromTime.split(' ')[1];
                     var zoneFrom = fromTime.split(' ')[2];
                     var zoneTo = toTime.split(' ')[2];
-                    var zoneEndRecurrence = endRecurrence.split(' ')[2];
+                    var zoneServer = moment().format('Z');
                     var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
-                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneEndRecurrence, 'YYYY-MM-DD HH:mm:ss Z');
+                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
                     var rangeDateFrom = moment.range(startDate, endDate);
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
@@ -107,15 +107,15 @@ module.exports = {
                 case 'weekday':
                     var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
                     var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
-                    var endRecurrence = moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                    var endRecurrence = data.EndRecurrence;
                     var arrayDateRepeat = [];
                     var timeTo = toTime.split(' ')[1];
                     var timeFrom = fromTime.split(' ')[1];
                     var zoneFrom = fromTime.split(' ')[2];
                     var zoneTo = toTime.split(' ')[2];
-                    var zoneEndRecurrence = endRecurrence.split(' ')[2];
+                     var zoneServer = moment().format('Z');
                     var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
-                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneEndRecurrence, 'YYYY-MM-DD HH:mm:ss Z');
+                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
                     var rangeDateFrom = moment.range(startDate, endDate);
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
@@ -173,7 +173,6 @@ module.exports = {
             };
             dataRes.push(objectRoster);
         }
-        console.log('dataRes', dataRes);
         return dataRes;
     },
 };

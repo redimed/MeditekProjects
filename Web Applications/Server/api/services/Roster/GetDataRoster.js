@@ -73,9 +73,12 @@ module.exports = {
                     var zoneEndRecurrence = endRecurrence.split(' ')[2];
                     var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
                     var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneEndRecurrence, 'YYYY-MM-DD HH:mm:ss Z');
+                    console.log('startDate', startDate);
+                    console.log('endDate', endDate);
                     var rangeDateFrom = moment.range(startDate, endDate);
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
+                            console.log('day', moment(day).format('YYYY-MM-DD'));
                             var objectDate = {
                                 fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
                                 toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo

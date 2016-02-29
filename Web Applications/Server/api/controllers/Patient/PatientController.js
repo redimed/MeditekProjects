@@ -158,6 +158,9 @@ module.exports = {
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
+        if (typeof(data) == 'string') {
+            data = JSON.parse(data);
+        }
         var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
@@ -260,6 +263,7 @@ module.exports = {
                                     data: info
                                 });
                             } else {
+                                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",info[0].dataValues);
                                 info[0].dataValues.Signature = null;
                                 info[0].dataValues.ProfileImage = null;
                                 info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;

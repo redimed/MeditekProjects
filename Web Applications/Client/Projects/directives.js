@@ -206,7 +206,9 @@ app.directive('appointmentDetailDirective', function() {
                             apiKey: $scope.opentok.apiKey,
                             sessionId: $scope.opentok.sessionId,
                             token: $scope.opentok.token,
-                            userName: userName
+                            userName: userName,
+                            uidCall: userCall,
+                            uidUser: userInfo.TelehealthUser.UID,
                         }), "CAll", { directories: "no" });
                     } else {
                         toastr.error("Patient Is Not Exist", "Error");

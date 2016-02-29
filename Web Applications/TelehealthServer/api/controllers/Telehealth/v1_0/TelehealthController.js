@@ -57,8 +57,8 @@ module.exports = {
             !_.isEmpty(body.data)) {
             TelehealthService.UpdatePatientDetails(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",response);
-                return res.ok({status:"success"});
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",response.getBody());
+                return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
             });

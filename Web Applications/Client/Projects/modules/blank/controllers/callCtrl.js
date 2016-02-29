@@ -28,16 +28,19 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     } else {
         alert('Sorry, your browser does not support getUserMedia');
     }
-    
+
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
+    var uidCall = $stateParams.uidCall;
+    var uidUser = $stateParams.uidUser;
     $scope.userName = $stateParams.userName;
     OT.registerScreenSharingExtension('chrome', 'pkakgggplhfilfbailbaibljfpalofjn');
     $scope.session = OT.initSession(apiKey, sessionId);
     console.log(apiKey);
     console.log(sessionId);
     console.log(token);
+    console.log("$stateParams",$stateParams);
     o.loadingPage(true);
     //Connect to the session
     $scope.session.connect(token, function(error) {
@@ -62,7 +65,6 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     // Subscribe to a newly created stream
     $scope.session.on('streamCreated', function(event) {
         o.loadingPage(false);
-        // audio.close();
         $scope.subscriber = $scope.session.subscribe(event.stream, 'subscriber', {
             insertMode: 'append',
             width: '100%',
@@ -108,7 +110,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
 
     $scope.aaa = function() {
         $scope.subscriber.subscribeToAudio(false)
-    }
+    };
+
     $scope.bbb = function() {
         $scope.session.signal({
                 data: "end",
@@ -123,6 +126,19 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
             }
         );
         $scope.session.disconnect();
+    };
+
+    $scope.cancel = function() {
+        console.log("socketTelehealth", socketTelehealth);
+        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+            from: uidUser,
+            to: uidCall,
+            message: "cancel"
+        }, function(data) {
+            console.log("send call", data);
+            window.close();
+        });
+        window.close();
     }
 
     $scope.toggle = false;

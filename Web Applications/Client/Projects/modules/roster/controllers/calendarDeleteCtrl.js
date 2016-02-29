@@ -18,10 +18,12 @@ app.controller('calendarDeleteCtrl', function($scope, $stateParams, RosterServic
 		$modalInstance.dismiss('cancel');
 	};
 	$scope.submit = function(){
+		var zone = moment().format('Z');
 		RosterService.DestroyRoster({
 			Roster: {
 				UID: data.UID,
-				CaseOccurance: $scope.case.isOccurance
+				CaseOccurance: $scope.case.isOccurance,
+				EndRecurrence: moment($scope.data.EndRecurrence).format('YYYY-MM-DD')+' 00:00:00 '+zone
 			},
 			UserAccount: {
 				UID:  $stateParams.doctorId

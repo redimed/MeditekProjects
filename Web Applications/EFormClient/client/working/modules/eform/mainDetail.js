@@ -1,6 +1,7 @@
 var ComponentPageBar = require('modules/eform/mainDetail/pageBar');
 var ComponentSection = require('modules/eform/mainDetail/section');
 var EFormService = require('modules/eform/services');
+var Config = require('config');
 
 module.exports = React.createClass({
 	getInitialState: function(){
@@ -9,9 +10,11 @@ module.exports = React.createClass({
             sections: Immutable.List()
         }
 	},
+        patientUID: null,
 	_loadPreview: function(){
         EFormService.formDetail({id: this.props.params.formId})
         .then(function(response){
+            this.refs.pageBar.setName(response.data.Name);
             var EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
             this.setState(function(prevState){
@@ -24,6 +27,9 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         this._loadPreview();
+        var locationParams = Config.parseQueryString(window.location.href);
+        this.patientUID = locationParams.patientUID;
+        this.refs.pageBar.init(this.patientUID);
     },
 	_onComponentPageBarAddNewSection: function(){
 		this.setState(function(prevState){

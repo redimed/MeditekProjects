@@ -9,24 +9,13 @@ var Config = require('config');
 module.exports = React.createClass({
     appointmentUID: null,
     patientUID: null,
-    parseQueryString: function(location){
-        var params = location.split('?');
-        var str = params[1];
-        var objURL = {};
-
-        str.replace(
-            new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
-            function( $0, $1, $2, $3 ){
-                objURL[ $1 ] = $3;
-            }
-        );
-        return objURL;
-    },
+    userUID: null,
     componentDidMount: function() {
-        var locationParams = this.parseQueryString(window.location.href);
+        var locationParams = Config.parseQueryString(window.location.href);
         this.appointmentUID = locationParams.appoinmentUID;
         this.patientUID = locationParams.patientUID;
-        this.refs.formClientList.init(this.appointmentUID, this.patientUID);
+        this.userUID = locationParams.userUID;
+        this.refs.formClientList.init(this.appointmentUID, this.patientUID, this.userUID);
     },
     _onComponentPageBarSelectForm: function() {
         this.refs.modalSelectForm.show();
@@ -43,7 +32,7 @@ module.exports = React.createClass({
         }, function() {
             self.refs.modalSelectForm.hide();
             swal("Success!", "Your can write form like you want!!!", "success");
-            history.push('/eform/detail/appointment/' +self.appointmentUID+ '/patient/'+self.patientUID+'/form/'+item.ID);
+            history.push('/eform/detail/appointment/' +self.appointmentUID+ '/patient/'+self.patientUID+'/form/'+item.ID+'/user/'+self.userUID);
         })
     },
     _onComponentFormClientListRemove: function(item) {
@@ -64,7 +53,7 @@ module.exports = React.createClass({
         })
     },
             _onComponentPageBarPrintForm: function(){
-                    alert('sasaas');
+                    
             },
 	render: function(){
 		return (

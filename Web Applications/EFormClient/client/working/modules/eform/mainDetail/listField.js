@@ -13,6 +13,7 @@ module.exports = React.createClass({
                 {code: 'clh', name: 'Checkbox with Label Horizontal'},
                 {code: 'table', name: 'Table'},
                 {code: 'rlh', name: 'Radio with Label Horizontal'},
+                {code: 'signature', name: 'E-Signature'},
                 {code: 'break', name: 'Break row'}
             ])
         }

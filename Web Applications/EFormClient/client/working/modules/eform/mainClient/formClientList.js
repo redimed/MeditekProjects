@@ -1,5 +1,5 @@
 var EFormService = require('modules/eform/services');
-var Link = ReactRouter.Link;
+var history = ReactRouter.hashHistory;
 var Config = require('config');
 
 module.exports = React.createClass({
@@ -8,9 +8,11 @@ module.exports = React.createClass({
     },
     appointmentUID: null,
     patientUID: null,
-    init: function(appointmentUID, patientUID){
+    userUID: null,
+    init: function(appointmentUID, patientUID, userUID){
         this.appointmentUID = appointmentUID;
         this.patientUID = patientUID;
+        this.userUID = userUID;
         this._serverListForm();
     },
 	getInitialState: function(){
@@ -36,6 +38,9 @@ module.exports = React.createClass({
         if(typeof this.props.onRemove !== 'undefined')
             this.props.onRemove(item);
     },
+    _goToDetail: function(l){
+        history.push("/eform/detail/appointment/"+this.appointmentUID+"/patient/"+this.patientUID+"/user/"+this.userUID+"/client/"+l.ID);
+    },
 	render: function(){
 		var preList = null
         var table = null
@@ -47,22 +52,27 @@ module.exports = React.createClass({
                             <tr>
                                 <th className="bg-blue-dark bg-font-blue-dark">Name</th>
                                 <th className="bg-blue-dark bg-font-blue-dark">Created Date</th>
+                                <th className="bg-blue-dark bg-font-blue-dark">Created By</th>
                                 <th className="bg-blue-dark bg-font-blue-dark">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 this.state.list.map((l,index)=>{
+                                    var userCreated = (l.UserAccount)?l.UserAccount.UserName:'';
                                     return (
                                         <tr key={index}>
-                                            <td>{l.Name}</td>
+                                            <td><a onClick={this._goToDetail.bind(this, l)}>{l.Name}</a></td>
                                             <td>
                                                 {moment(l.CreatedDate).format('DD/MM/YYYY HH:mm:ss')}
                                             </td>
                                             <td>
-                                                <Link to={"/eform/detail/appointment/"+this.appointmentUID+"/patient/"+this.patientUID+"/client/"+l.ID} className="label label-sm label-success">
+                                                {userCreated}
+                                            </td>
+                                            <td>
+                                                <a onClick={this._goToDetail.bind(this, l)} className="label label-sm label-success">
                                                     View Form
-                                                </Link>
+                                                </a>
                                                 &nbsp;
                                                 <a className="label label-sm label-success" onClick={this._onRemoveForm.bind(this, l)}>
                                                     Delete Form

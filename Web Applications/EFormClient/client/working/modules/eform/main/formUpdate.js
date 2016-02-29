@@ -1,5 +1,6 @@
 var EFormService = require('modules/eform/services');
 var CommonInputText = require('common/inputText');
+var Config = require('config');
 
 module.exports = React.createClass({
     item: null,
@@ -28,8 +29,9 @@ module.exports = React.createClass({
         })
     },
     _onSave: function(){
+            var locationParams = Config.parseQueryString(window.location.href);
     	var name = this.refs.inputName.getValue();
-        this._serverUpdateForm({name:name, id: this.item.ID});
+        this._serverUpdateForm({name:name, id: this.item.ID, patientUID: locationParams.patientUID});
     },
 	render: function(){
 		return (

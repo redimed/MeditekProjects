@@ -42,6 +42,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'EFormTemplate',
-        timestamps: false
+        timestamps: false,
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate'
     }
 };

@@ -89,10 +89,11 @@ module.exports = React.createClass({
         var content = JSON.stringify(fields);
         var appointmentId = this.props.params.appointmentId;
         var patientId = this.props.params.patientId;
-        EFormService.formClientSave({id: formId, content: content, name: this.state.name, patientId: patientId})
+        var userId = this.props.params.userId;
+        EFormService.formClientSave({id: formId, content: content, name: this.state.name, patientId: patientId, userId: userId})
         .then(function(){
             swal("Success!", "Your form has been saved.", "success");
-            history.push(Config.getParamsIframe(appointmentId, patientId));
+            history.push(Config.getParamsIframe(appointmentId, patientId, userId));
         })
 	},
             _onComponentPageBarPrintForm: function(){

@@ -1,10 +1,14 @@
 var EFormService = require('modules/eform/services');
-var Link = ReactRouter.Link;
+var history = ReactRouter.hashHistory;
 
 module.exports = React.createClass({
     propTypes: {
         onClickUpdate: React.PropTypes.func,
         onClickRemove: React.PropTypes.func
+    },
+    patientUID: null,
+    init: function(patientUID){
+        this.patientUID = patientUID;
     },
 	getInitialState: function(){
 		return {
@@ -34,6 +38,9 @@ module.exports = React.createClass({
         if(typeof this.props.onClickRemove !== 'undefined')
             this.props.onClickRemove(item);
     },
+    _goToDetail: function(l){
+        history.push("/eformDev/detail/"+l.ID+'?patientUID='+this.patientUID);
+    },
 	render: function(){
 		var preList = null
         var table = null
@@ -43,21 +50,34 @@ module.exports = React.createClass({
             table = <table className="table table-bordered table-striped table-condensed flip-content">
                         <thead className="flip-content">
                             <tr>
+                                <th className="bg-blue-dark bg-font-blue-dark">Index</th>
                                 <th className="bg-blue-dark bg-font-blue-dark">Name</th>
+                                <th className="bg-blue-dark bg-font-blue-dark">Created Date</th>
+                                <th className="bg-blue-dark bg-font-blue-dark">User Created</th>
                                 <th className="bg-blue-dark bg-font-blue-dark">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 this.state.list.map((l,index)=>{
+                                    var userCreated = (l.UserAccount)?l.UserAccount.UserName:'';
                                     return (
                                         <tr key={index}>
-                                            <td>{l.Name}</td>
+                                            <td>{index+1}</td>
                                             <td>
-                                                <Link to={"/eformDev/detail/"+l.ID} 
+                                                <a onClick={this._goToDetail.bind(this, l)}>{l.Name}</a>
+                                            </td>
+                                            <td>
+                                                {moment(l.CreatedDate).format('DD/MM/YY HH:mm:ss')}
+                                            </td>
+                                            <td>
+                                                {userCreated}
+                                            </td>
+                                            <td>
+                                                <a onClick={this._goToDetail.bind(this, l)} 
                                                     className="label label-sm label-success">
                                                     View Form
-                                                </Link>
+                                                </a>
                                                 &nbsp;
                                                 <span className="label label-sm label-success" 
                                                     onClick={this._onClickUpdate.bind(this, l)}

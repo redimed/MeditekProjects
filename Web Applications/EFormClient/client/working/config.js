@@ -10,8 +10,8 @@ module.exports = {
 	apiUrl: domain+':3015/',
 	apiServerUrl: domain+':3005/',
 	apiPDFUrl: domain+':3013/',
-	getParamsIframe: function(appointmentId, patientId){
-		return '/eform?appoinmentUID='+appointmentId+'&patientUID='+patientId;
+	getParamsIframe: function(appointmentId, patientId,userId){
+		return '/eform?appoinmentUID='+appointmentId+'&patientUID='+patientId+'&userUID='+userId;
 	},
 	getDateTimeZone: function(date){
 		if(date === '')
@@ -28,5 +28,18 @@ module.exports = {
 			return '';
 		var dateTZ = moment(date).format('DD/MM/YYYY');
 		return dateTZ;
-	}
+	},
+	parseQueryString: function(location){
+	        var params = location.split('?');
+	        var str = params[1];
+	        var objURL = {};
+
+	        str.replace(
+	            new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+	            function( $0, $1, $2, $3 ){
+	                objURL[ $1 ] = $3;
+	            }
+	        );
+	        return objURL;
+	}	
 }

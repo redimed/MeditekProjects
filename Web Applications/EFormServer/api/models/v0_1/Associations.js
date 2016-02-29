@@ -412,6 +412,13 @@ module.exports = {
         PatientFund.belongsTo(Patient, {
             foreignKey: 'PatientID'
         });
+        //association EFormTemplate - UserAccount
+        EFormTemplate.belongsTo(UserAccount, {
+            foreignKey: 'CreatedBy'
+        });
+        UserAccount.hasOne(EFormTemplate, {
+            foreignKey: 'CreatedBy',
+        });
         //association EFormTemplate - EFormTemplateData
         EFormTemplate.hasOne(EFormTemplateData, {
             foreignKey: 'EFormTemplateID',
@@ -435,6 +442,13 @@ module.exports = {
         EFormData.belongsTo(EForm, {
             foreignKey: 'EFormID',
         })
+        //association EFormTemplate - UserAccount
+        EForm.belongsTo(UserAccount, {
+            foreignKey: 'CreatedBy'
+        });
+        UserAccount.hasOne(EForm, {
+            foreignKey: 'CreatedBy',
+        });
         //association EForm - RelEFormPatient
         EForm.belongsToMany(Patient, {
             through: 'RelEFormPatient',

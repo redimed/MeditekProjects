@@ -50,6 +50,23 @@ module.exports = {
             }
         })
     },
+    UpdatePatientDetails: function(req, res) {
+        var body = req.body;
+        var headers = req.headers;
+        if (!_.isEmpty(body) &&
+            !_.isEmpty(body.data)) {
+            TelehealthService.UpdatePatientDetails(headers, body).then(function(response) {
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",response);
+                return res.ok({status:"success"});
+            }, function(err) {
+                res.json(err.getCode(), err.getBody());
+            });
+        } else {
+            var error = new Error('Telehealth.UpdatePatientDetails.Error');
+            res.serverError(ErrorWrap(error));
+        }
+    },
     GetTelehealthUser: function(req, res) {
         var params = req.params.all();
         if (!params.uid) {

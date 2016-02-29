@@ -158,7 +158,7 @@ app.directive('appointmentDetailDirective', function() {
             apptuid: "="
         },
         templateUrl: 'common/views/appointmentDetailDirective.html',
-        controller: function($scope, WAAppointmentService, AuthenticationService, $cookies, $state) {
+        controller: function($scope, WAAppointmentService, AuthenticationService, $cookies, $state, toastr) {
             WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
                 if (data.data != null) {
                     $scope.appointmentInfo = data.data;
@@ -209,7 +209,7 @@ app.directive('appointmentDetailDirective', function() {
                             userName: userName
                         }), "CAll", { directories: "no" });
                     } else {
-                        toastr.error("Patient Is Not Exist", "error");
+                        toastr.error("Patient Is Not Exist", "Error");
                     };
                 });
             };

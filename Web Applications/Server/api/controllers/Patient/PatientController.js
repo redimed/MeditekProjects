@@ -1,8 +1,8 @@
 module.exports = {
     /*
-    	CreatePatient : create a new patient
-    	input: Patient's information
-    	output: insert Patient's information into table Patient 
+        CreatePatient : create a new patient
+        input: Patient's information
+        output: insert Patient's information into table Patient 
     */
     CreatePatient: function(req, res) {
         var data = req.body.data;
@@ -89,9 +89,9 @@ module.exports = {
     },
 
     /*
-    	SearchPatient : find patient with condition
-    	input: Patient's name or PhoneNumber
-    	output: get patient's list which was found in client 
+        SearchPatient : find patient with condition
+        input: Patient's name or PhoneNumber
+        output: get patient's list which was found in client 
     */
     SearchPatient: function(req, res) {
         var data = req.body.data;
@@ -152,9 +152,9 @@ module.exports = {
 
 
     /*
-    	UpdatePatient : update patient's information
-    	input: patient's information updated
-    	output: update patient'infomation into table Patient 
+        UpdatePatient : update patient's information
+        input: patient's information updated
+        output: update patient'infomation into table Patient 
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
@@ -187,9 +187,9 @@ module.exports = {
     },
 
     /*
-    	GetPatient get a patient with condition
-    	input:  UserAccount's UID
-    	output: Patient's information of Patient's ID if patient has data.
+        GetPatient get a patient with condition
+        input:  UserAccount's UID
+        output: Patient's information of Patient's ID if patient has data.
     */
     GetPatient: function(req, res) {
         var data = req.body.data;
@@ -228,9 +228,9 @@ module.exports = {
     },
 
     /*
-    	DetailPatient: get detail patient with patient UID
-    	input: patient's UID
-    	output: Patient's information
+        DetailPatient: get detail patient with patient UID
+        input: patient's UID
+        output: Patient's information
     */
     DetailPatient: function(req, res) {
         var data = req.body.data;
@@ -263,7 +263,7 @@ module.exports = {
                                     data: info
                                 });
                             } else {
-                                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",info[0].dataValues);
+
                                 info[0].dataValues.Signature = null;
                                 info[0].dataValues.ProfileImage = null;
                                 info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
@@ -299,9 +299,9 @@ module.exports = {
     },
 
     /*
-    	DeletePatient : disable patient who was deleted.
-    	input: Patient's ID
-    	output: attribute Enable of Patient will receive value "N" in table Patient 
+        DeletePatient : disable patient who was deleted.
+        input: Patient's ID
+        output: attribute Enable of Patient will receive value "N" in table Patient 
     */
     DeletePatient: function(req, res) {
         var ID = req.body.data;
@@ -332,9 +332,9 @@ module.exports = {
     },
 
     /*
-    	LoadListPatient: load list patient
-    	input: amount patient
-    	output: get list patient from table Patient
+        LoadListPatient: load list patient
+        input: amount patient
+        output: get list patient from table Patient
     */
     LoadListPatient: function(req, res) {
         var data = req.body.data;
@@ -371,9 +371,9 @@ module.exports = {
     },
 
     /*
-    	CheckPatient : check patient has created ?
-    	input : Patient's PhoneNumber
-    	output: true if patient has created and (false,data:{}) if patient hasn't created
+        CheckPatient : check patient has created ?
+        input : Patient's PhoneNumber
+        output: true if patient has created and (false,data:{}) if patient hasn't created
     */
     CheckPatient: function(req, res) {
         var data = req.body.data;

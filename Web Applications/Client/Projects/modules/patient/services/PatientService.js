@@ -441,8 +441,16 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"PhoneNumber",message:"Phone Number is a 10 digits number. Eg: 04 xxxx xxxx"});
 				}
 			}
-			else{
-				error.push({field:"PhoneNumber",message:"required"});
+			// else{
+			// 	error.push({field:"PhoneNumber",message:"required"});
+			// }
+
+			//validate Email
+			if(info.Email){
+				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
+				if(!EmailPattern.test(info.Email)){
+					error.push({field:"Email",message:"invalid email"});
+				}
 			}
 
 			if(error.length>0){
@@ -462,28 +470,28 @@ angular.module('app.authentication.patient.services',[])
 
 	PatientService.postDatatoDirective = function(info) {
 		postData = angular.copy(info);
-		if(postData.data.Gender !=null && postData.data.Gender !=='Male' && postData.data.Gender !=='Female'){
-			postData.data.Gender = 'Other';
+		if(postData.Gender !=null && postData.Gender !=='Male' && postData.Gender !=='Female'){
+			postData.Gender = 'Other';
 		}
 	};
 
 	PatientService.getDatatoDirective = function(){
 		var returnData = {};
 		var info = {
-			FirstName:postData.data.FirstName,
-			MiddleName:postData.data.MiddleName,
-			Title:postData.data.Title,
-			LastName:postData.data.LastName,
-			PhoneNumber:postData.data.PhoneNumber,
-			DOB:postData.data.DOB,
-			Address1:postData.data.Address1,
-			Address2:postData.data.Address2,
-			State:postData.data.State,
-			Email1:postData.data.Email1,
-			HomePhoneNumber:postData.data.HomePhoneNumber,
-			Gender:postData.data.Gender,
-			Suburb:postData.data.Suburb,
-			Postcode:postData.data.Postcode
+			FirstName:postData.FirstName,
+			MiddleName:postData.MiddleName,
+			Title:postData.Title,
+			LastName:postData.LastName,
+			PhoneNumber:postData.PhoneNumber,
+			DOB:postData.DOB,
+			Address1:postData.Address1,
+			Address2:postData.Address2,
+			State:postData.State,
+			Email1:postData.Email1,
+			HomePhoneNumber:postData.HomePhoneNumber,
+			Gender:postData.Gender,
+			Suburb:postData.Suburb,
+			Postcode:postData.Postcode
 		};
 		returnData.data = info;
 		if(postData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;

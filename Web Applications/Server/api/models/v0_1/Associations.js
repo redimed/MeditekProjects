@@ -421,5 +421,33 @@ module.exports = {
         PatientFund.belongsTo(Patient, {
             foreignKey: 'PatientID'
         });
+
+        //association Company - CompanySite
+        Company.hasMany(CompanySite, {
+            foreignKey: 'CompanyID'
+        });
+        CompanySite.belongsTo(Company, {
+            foreignKey: 'CompanyID'
+        });
+
+        //association Company - UserAccount
+        Company.belongsToMany(UserAccount, {
+            through: 'RelCompanyUserAccount',
+            foreignKey: 'CompanyID'
+        });
+        UserAccount.belongsToMany(Company, {
+            through: 'RelCompanyUserAccount',
+            foreignKey: 'UserAccountID'
+        });
+
+        //association Company - Patient
+        Company.belongsToMany(Patient, {
+            through: 'RelCompanyPatient',
+            foreignKey: 'CompanyID'
+        });
+        Patient.belongsToMany(Company, {
+            through: 'RelCompanyPatient',
+            foreignKey: 'PatientID'
+        });
     }
 };

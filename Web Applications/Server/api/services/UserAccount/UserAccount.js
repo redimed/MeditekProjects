@@ -317,6 +317,7 @@ module.exports = {
 			userInfo.Enable='Y';
 			if(userInfo.PinNumber)
 				userInfo.ExpiryPin=o.const.ExpiryPin;
+			console.log(userInfo);
 			return UserAccount.create(userInfo,{transaction:transaction})
 			.then(function(data){
 				return data;
@@ -556,7 +557,8 @@ module.exports = {
 	 */
 	GetUserAccountDetails:function(criteria,attributes,transaction)
 	{
-		var error=new Error('GetUserAccountDetails.Error');
+		console.log(criteria);
+		var error = new Error('GetUserAccountDetails.Error');
 		var whereClause={Enable:'Y'};
 
 		function Validation()
@@ -565,9 +567,9 @@ module.exports = {
 			try{
 				if(criteria.UID)
 					whereClause.UID=criteria.UID;
-				else if(criteria.UserName)
+				if(criteria.UserName)
 					whereClause.UserName=criteria.UserName;
-				else if(criteria.Email)
+				if(criteria.Email)
 				{
 					if(o.isValidEmail(criteria.Email))
 					{
@@ -578,7 +580,7 @@ module.exports = {
 						error.pushError("GetUserAccountDetails.emailInvalid");
 					}
 				}
-				else if(criteria.PhoneNumber)
+				if(criteria.PhoneNumber)
 				{
 					criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
 					console.log(criteria.PhoneNumber);
@@ -588,10 +590,10 @@ module.exports = {
 						error.pushError("GetUserAccountDetails.phoneNumberInvalid");
 					}
 				}
-				else
-				{
-					error.pushError('GetUserAccountDetails.criteriaNotFound');
-				}
+				// else
+				// {
+				// 	error.pushError('GetUserAccountDetails.criteriaNotFound');
+				// }
 
 				if(error.getErrors().length>0)
 				{
@@ -624,6 +626,7 @@ module.exports = {
 				throw error;
 			})
 		},function(err){
+			console.log("vay la loi o day ????");
 			throw err;
 		})
 	},
@@ -1095,7 +1098,7 @@ module.exports = {
 		});
 	},
 
-	sendMail:function(data,secret,functionA) 
+	sendMail:function(data, secret, transaction, functionA) 
 	{
 		var payload = {
                 UID : data.UID
@@ -1107,17 +1110,17 @@ module.exports = {
        	);
         var emailInfo = {
             from    : 'Redimed <giangvotest2511@gmail.com>',
-            email   : data.email,
+            email   : data.email?data.email:data.Email,
             subject : 'Forgot Password',
             data    : token,
             UID     : data.UID
         };
-        UserForgot.create({
+        return UserForgot.create({
         	UserAccountUID : data.UID,
         	Token          : token
-        })
+        },{transaction: transaction})
         .then(function(success){
-        	return SendMailService.SendMail
+        	SendMailService.SendMail
         		('demo', emailInfo, functionA);
         },function(err){
         	throw err;

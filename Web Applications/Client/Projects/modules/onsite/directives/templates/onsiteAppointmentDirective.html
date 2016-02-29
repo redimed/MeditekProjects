@@ -44,26 +44,121 @@
             <div class="form-body" style="margin-left:1em; margin-right:1em;">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
-                        <h3 class="form-section bold">Basic Information</h3>
                         <div class="row">
-                            <div class="col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <label class="control-label">Appointment Date</label>
-                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d">
+                            <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                                <h3 class="form-section bold">Basic Information</h3>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Status</label>
+                                            <select class="form-control">
+                                                <option value="">Select status</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">&nbsp;</label>
+                                            <div class="checkbox-list">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox"> Correspondence
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <label class="control-label">Appointment Time</label>
-                                    <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Request Date</label>
+                                            <input type="text" class="form-control date-picker"
+                                                data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" readonly="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Appointment Date</label>
+                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d" readonly="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Appointment Time</label>
+                                            <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm" readonly="true">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <label class="control-label">Patient Name</label>
-                                    <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Patient Name</label>
+                                            <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Fund Type</label>
+                                            <select class="form-control">
+                                                <option value="">Select Fund Type</option>
+                                                <option value="WC">Workers' Compensation</option>
+                                                <option value="private">Private</option>
+                                                <option value="public">Public</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Fund</label>
+                                            <select class="form-control">
+                                                <option value="">Select Fund</option>
+                                                <option value='ACA'>ACA Health Benefits Fund</option>
+                                                <option value='AHM'>ahm Health Insurance</option>
+                                                <option value='AUF'>Australian Unity Health Limited</option>
+                                                <option value='BUP'>Bupa Australia Pty Ltd</option>
+                                                <option value='CBH'>CBHS Health Fund Limited</option>
+                                                <option value='CDH'>CDH Benefits Fund</option>
+                                                <option value='CPS'>CUA Health Limited</option>
+                                                <option value='AHB'>Defence Health Limited</option>
+                                                <option value='AMA'>Doctors' Health Fund</option>
+                                                <option value='GMF'>GMF Health</option>
+                                                <option value='GMH'>GMHBA Limited</option>
+                                                <option value='FAI'>Grand United Corporate Health</option>
+                                                <option value='HBF'>HBF Health Limited</option>
+                                                <option value='HCF'>HCF</option>
+                                                <option value='HCI'>Health Care Insurance Limited</option>
+                                                <option value='HIF'>Health Insurance Fund of Australia Limited</option>
+                                                <option value='SPS'>Health Partners</option>
+                                                <option value='HEA'>health.com.au</option>
+                                                <option value='LHS'>Latrobe Health Services</option>
+                                                <option value='MBP'>Medibank Private Limited</option>
+                                                <option value='MDH'>Mildura Health Fund</option>
+                                                <option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
+                                                <option value='NHB'>Navy Health Ltd</option>
+                                                <option value='NIB'>NIB Health Funds Ltd.</option>
+                                                <option value='LHM'>Peoplecare Health Insurance</option>
+                                                <option value='PWA'>Phoenix Health Fund Limited</option>
+                                                <option value='SPE'>Police Health</option>
+                                                <option value='QCH'>Queensland Country Health Fund Ltd</option>
+                                                <option value='RTE'>Railway and Transport Health Fund Limited</option>
+                                                <option value='RBH'>Reserve Bank Health Society Ltd</option>
+                                                <option value='SLM'>St.Lukes Health</option>
+                                                <option value='NTF'>Teachers Health Fund</option>
+                                                <option value='TFS'>Transport Health Pty Ltd</option>
+                                                <option value='QTU'>TUH</option>
+                                                <option value='WFD'>Westfund Limited</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Description</label>
+                                            <textarea class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

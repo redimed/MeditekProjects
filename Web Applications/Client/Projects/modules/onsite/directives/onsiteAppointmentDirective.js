@@ -417,7 +417,9 @@ app.directive('onsiteAppointment', function(){
                 };
 
                 $timeout(function(){
-	              $.uniform.update();
+                    App.initAjax();
+                    ComponentsDateTimePickers.init();
+                    $.uniform.update();
 	            },0);
             }
 		},

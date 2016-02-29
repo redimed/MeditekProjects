@@ -15,7 +15,7 @@ module.exports.connections = {
       charset: 'utf8',
       collation: 'utf8-general_ci',
       options:{
-        host:'meditek.redimed.com.au'
+        host:'192.168.1.2'
         // host:'localhost'
       }
   },

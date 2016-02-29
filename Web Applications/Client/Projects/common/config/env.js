@@ -1,4 +1,4 @@
-var env='meditekServer',socketAuth, socketRest, socketNc, socketTelehealth ={}; //local,meditekServer,testApp,app
+var env='local',socketAuth, socketRest, socketNc, socketTelehealth ={}; //local,meditekServer,testApp,app
 
 var configRestBaseUrl={
 	'local':'http://localhost:3005',
@@ -30,7 +30,6 @@ var configNcBaseUrl={
 
 var configEFormUrl={
 	'local':'https://localhost:3014',
-	// 'local':'http://192.168.1.235:3005',
 	'meditekServer':'https://meditek.redimed.com.au:3014',
 	'testApp':'https://testapp.redimed.com.au:3014',
 	'app':'https://apps.redimed.com.au:3014'

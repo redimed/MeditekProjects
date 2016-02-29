@@ -118,6 +118,7 @@ passport.use(new LocalStrategy({
         })
         .then(function(user) {
             //Chuẩn bị thông tin trả về
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",user.RelUserRoles);
             var listRoles = [];
             _.each(user.RelUserRoles, function(item) {
                 if (HelperService.CheckExistData(item) &&

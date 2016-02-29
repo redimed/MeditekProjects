@@ -158,7 +158,7 @@ app.directive('appointmentDetailDirective', function() {
             apptuid: "="
         },
         templateUrl: 'common/views/appointmentDetailDirective.html',
-        controller: function($scope, WAAppointmentService, AuthenticationService, $cookies) {
+        controller: function($scope, WAAppointmentService, AuthenticationService, $cookies, $state) {
             WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
                 if (data.data != null) {
                     $scope.appointmentInfo = data.data;
@@ -187,7 +187,7 @@ app.directive('appointmentDetailDirective', function() {
                     from: uidUser,
                     to: uidCall,
                     message: "call",
-                    sessionId: opentok.sessionId,
+                    sessionId: $scope.opentok.sessionId,
                     fromName: userInfo.UserName
                 }, function(data) {
                     console.log("send call", data);
@@ -203,9 +203,9 @@ app.directive('appointmentDetailDirective', function() {
                         var userName = data.data[0].FirstName + " " + data.data[0].LastName;
                         funSocketSendCall(userCall, userInfo.TelehealthUser.UID);
                         $scope.opentokWindow = window.open($state.href("blank.call", {
-                            apiKey: opentok.apiKey,
-                            sessionId: opentok.sessionId,
-                            token: opentok.token,
+                            apiKey: $scope.opentok.apiKey,
+                            sessionId: $scope.opentok.sessionId,
+                            token: $scope.opentok.token,
                             userName: userName
                         }), "CAll", { directories: "no" });
                     } else {

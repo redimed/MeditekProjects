@@ -80,8 +80,8 @@ module.exports = {
     RequestAppointmentPatient: function(req, res) {
         var headers = req.headers;
         var body = req.body;
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",headers);
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",body);
+        console.log("111111111111111111111111111111111111111111111111111111111",headers);
+        console.log("222222222222222222222222222222222222222222222222222222222222",body);
         TelehealthService.RequestAppointmentPatient(headers, body)
         .then(function(response){
             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);

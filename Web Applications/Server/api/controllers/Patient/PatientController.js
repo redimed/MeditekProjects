@@ -197,9 +197,9 @@ module.exports = {
                     info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0]?info[0].dataValues.UserAccount.FileUploads[0].UID:null;
                     info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
                     info[0].dataValues.Email = info[0].dataValues.UserAccount.Email;
-                    info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
+                    info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
                     delete info[0].dataValues['UserAccount'];
-                    delete info[0].dataValues['Country'];
+                    delete info[0].dataValues['Country1'];
                     res.ok({
                         status: 200,
                         message: "Success",

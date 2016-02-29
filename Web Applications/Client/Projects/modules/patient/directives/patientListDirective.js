@@ -6,7 +6,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			isShowCreateButton:'=onCreate',
 			isShowSelectButton:'=onSelect',
 			uidReturn:'=',
-			appointment:'='
+			appointment:'=',
+			staff:'=onStaff'
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
@@ -141,17 +142,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			scope.selectPatient = function(patientUID,stt,Enable,FirstName,LastName){
 				console.log(FirstName);
 				if(Enable=='Y'){
-					if(!scope.appointment){
-						if(scope.uidReturn==patientUID){
-							scope.uidReturn='';
-							scope.checked = false;
-						}
-						else{
-							scope.checked = true;
-							scope.uidReturn=patientUID;
-						}
-					}
-					else{
+					if(scope.appointment) {
 
 						scope.uidReturn=patientUID;
 						swal({   
@@ -175,6 +166,41 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 								scope.loadList(scope.searchObjectMap);
 							}
 						});
+					}
+					else if(scope.staff) {
+						console.log(scope.staff);
+						scope.uidReturn=patientUID;
+						swal({   
+							title: "Are you sure?", 
+							text: "Are you want to link this patient to the current company?" ,
+							type: "warning",   
+							showCancelButton: true,   
+							confirmButtonColor: "#DD6B55",   
+							confirmButtonText: "Ok",   
+							cancelButtonText: "Cancel",   
+							closeOnConfirm: true,   
+							closeOnCancel: true 
+						}, 
+						function(isConfirm){   
+							if (isConfirm) {  
+								scope.uidReturn=patientUID;   
+								scope.staff.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
+							}else{
+								scope.uidReturn='';
+								scope.checked = false;
+								scope.loadList(scope.searchObjectMap);
+							}
+						});
+					}
+					else {
+						if(scope.uidReturn==patientUID){
+							scope.uidReturn='';
+							scope.checked = false;
+						}
+						else{
+							scope.checked = true;
+							scope.uidReturn=patientUID;
+						}
 					}
 				}
 				else {
@@ -206,6 +232,31 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 					modalInstance.result.then(function (data) {
 						if (data && data.status == 'success') {
 				      		scope.appointment.runIfSuccess(data.data);
+						};
+				    });
+				}
+				else if (scope.staff) {
+					var modalInstance = $uibModal.open({
+						templateUrl: 'patientCreatemodal',
+						controller: function($scope,$modalInstance){
+							$scope.close = function() {
+								$modalInstance.close();
+							};
+							$scope.staff = {
+								runIfSuccess : function (data) {
+									$modalInstance.close({status:'success',data:data});
+								},
+								runIfClose : function () {
+									$modalInstance.close();
+								}
+							};
+						},
+						windowClass: 'app-modal-window'
+						//size: 'lg',
+					});
+					modalInstance.result.then(function (data) {
+						if (data && data.status == 'success') {
+				      		scope.staff.runIfSuccess(data.data);
 						};
 				    });
 				}else{

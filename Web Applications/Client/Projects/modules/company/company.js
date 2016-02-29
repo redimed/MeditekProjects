@@ -1,6 +1,7 @@
 var app = angular.module('app.authentication.company',[
 	'app.authentication.company.controller',
 	'app.authentication.company.directive',
+	'app.authentication.company.service'
 	// 'app.authentication.company.services',
 ]);
 
@@ -25,7 +26,7 @@ app.config(function($stateProvider){
 			controller: 'companyListCtrl',
 		})
 		.state('authentication.company.detail',{
-			url: '/detail',
+			url: '/detail/:companyUID',
 			data: {pageTitle: 'Company detail'},
 			templateUrl: 'modules/company/views/companyDetail.html',
 			controller: 'companyDetailCtrl',

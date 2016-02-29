@@ -37,6 +37,7 @@ var SendMailService = {
     output: status send mail
     */
     SendMail: function(templateName, emailInfo, fn) {
+        console.log("???????????")
         if (!emailInfo.email) {
             return fn(emailAddressRequiredError);
         }

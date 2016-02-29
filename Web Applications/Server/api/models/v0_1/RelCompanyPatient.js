@@ -11,35 +11,23 @@ module.exports = {
             },
             primaryKey: true
         },
-        UID: {
-            type: Sequelize.STRING(255),
+        CompanyID: {
+            type: Sequelize.BIGINT(20),
             allowNull: false,
             validate: {
-                isUUID: {
-                    args: 4,
-                    msg: 'Must be an UUID V4!'
+                isInt: {
+                    msg: 'Must be an integer!'
                 }
-            }
+            },
         },
-        CompanyName: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
+        PatientID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: false,
             validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
+                isInt: {
+                    msg: 'Must be an integer!'
                 }
-            }
-        },
-        Enable: {
-            type: Sequelize.STRING(1),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 1],
-                    msg: 'Too long!'
-                }
-            }
+            },
         },
         Active: {
             type: Sequelize.STRING(1),
@@ -50,10 +38,6 @@ module.exports = {
                     msg: 'Too long!'
                 }
             }
-        },
-        Description: {
-            type: Sequelize.TEXT,
-            allowNull: true
         },
         CreatedDate: {
             type: Sequelize.DATE,
@@ -94,22 +78,22 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'Company',
+        tableName: 'RelCompanyPatient',
         timestamps: false,
         hooks: {
-            beforeCreate: function(module, options, callback) {
-                module.CreatedDate = new Date();
+            beforeCreate: function(admission, options, callback) {
+                admission.CreatedDate = new Date();
                 callback();
             },
-            beforeBulkCreate: function(modules, options, callback) {
-                modules.forEach(function(module, index) {
-                    modules[index].CreatedDate = new Date();
+            beforeBulkCreate: function(admissions, options, callback) {
+                admissions.forEach(function(admission, index) {
+                    admissions[index].CreatedDate = new Date();
                 });
                 callback();
             },
-            beforeBulkUpdate: function(module, callback) {
-                module.fields.push('ModifiedDate');
-                module.attributes.ModifiedDate = new Date();
+            beforeBulkUpdate: function(admission, callback) {
+                admission.fields.push('ModifiedDate');
+                admission.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

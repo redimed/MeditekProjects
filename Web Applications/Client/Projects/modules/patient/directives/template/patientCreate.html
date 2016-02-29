@@ -65,6 +65,20 @@
 										</div>
 									</div>
 									<!-- End Lastname -->
+									<!-- begin Email -->
+									<div class="form-group">
+										<label class="control-label col-md-4">Email <span class="required">* </span>
+										</label>
+										<div class="col-md-4">
+											<div class="input-icon">
+												<i class="glyphicon glyphicon-phone"></i>
+												<input type="text" class="form-control" name="EmailUser" placeholder="Email" ng-model="data.Email" ng-style="er.Email" ng-disabled="isBlockStep1" ng-change="ermsg.Email=''" />
+												<span style="color:red;">{{ermsg.Email}}</span>
+												<span class="help-block">Provide your Email </span>
+											</div>
+										</div>
+									</div>
+									<!-- end Email -->
 									<!-- begin phone -->
 									<div class="form-group">
 										<label class="control-label col-md-4">MobilePhone <span class="required">* </span>
@@ -78,6 +92,7 @@
 											</div>
 										</div>
 									</div>
+									<!-- end phone -->
 								</div>
 								<div class="tab-pane" id="tab2">
 									<div style="margin:3em;">
@@ -186,7 +201,7 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-envelope"></i>
-															<input type="text" class="form-control" placeholder="Email1" ng-disabled="isShowEmail1?true:false" ng-model="data.Email1" ng-style="er.Email1" ng-change="ermsg.Email1='';checkDataNull('Email1')" />
+															<input type="text" class="form-control" placeholder="Email1" ng-model="data.Email1" ng-style="er.Email1" ng-change="ermsg.Email1='';checkDataNull('Email1')" disabled="true" />
 														<span style="color:red;">{{ermsg.Email1}}</span>
 														</div>
 													</div>

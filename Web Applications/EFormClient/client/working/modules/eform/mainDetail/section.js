@@ -5,6 +5,7 @@ var CommonTextArea = require('common/textarea');
 var CommonCheckbox = require('common/checkbox');
 var CommonRadio = require('common/radio');
 var CommonLabel = require('common/label');
+var CommonSignature = require('common/signature');
 var CommonTable = require('modules/eform/mainDetail/tableField');
 var ComponentFormUpdateSection = require('modules/eform/mainDetail/formUpdateSection');
 var ComponentListField = require('modules/eform/mainDetail/listField');
@@ -317,6 +318,10 @@ module.exports = React.createClass({
                     var value = this.refs[fieldRef].getText();
                     var name = this.refs[fieldRef].getName();
                     results.push({value: value, name: name, ref: fieldRef, type: type});
+                }else if(type === 'signature'){
+                    var value = this.refs[fieldRef].getValue();
+                    var name = this.refs[fieldRef].getName();
+                    results.push({value: value, name: name, ref: fieldRef, type: type});
                 }
             }
         }
@@ -510,6 +515,17 @@ module.exports = React.createClass({
                                                         onDeleteColumn={this._onDeleteColumn}
                                                         onUpdateColumn={this._onUpdateColumn}
                                                         onRightClickItem={this._onRightClickTableItem}/>
+                                                else if(tempField === 'signature'){
+                                                    return <CommonSignature key={index} type={tempField}
+                                                        groupId={'fieldgroup_'+this.props.code+'_'+index}
+                                                        name={field.get('name')}
+                                                        size={field.get('size')}
+                                                        context={displayContextMenu}
+                                                        ref={field.get('ref')}
+                                                        refTemp={field.get('ref')}
+                                                        code={index}
+                                                        onRightClickItem={this._onRightClickItem}/>
+                                                }
                                                 else if(tempField === 'break')
                                                     return <div key={index} style={{clear: 'both'}}/>
 	                                		}, this)	

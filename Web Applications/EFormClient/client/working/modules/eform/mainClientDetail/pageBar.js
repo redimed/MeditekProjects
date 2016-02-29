@@ -8,13 +8,14 @@ module.exports = React.createClass({
 	},
             appointmentId: '',
             patientId: '',
+            userId: '',
             init: function(params){
                 this.appointmentId = params.appointmentId;
                 this.patientId = params.patientId;
+                this.userId = params.userId;
             },
             _onPrintForm: function(){
                 var self = this;
-                    console.log(this.props);
                     swal({
                         title: 'Are you sure?',
                         text: 'You will save this form !!!',
@@ -41,7 +42,7 @@ module.exports = React.createClass({
 		}.bind(this))
 	},
             _goToHome: function(){
-                history.push(Config.getParamsIframe(this.appointmentId, this.patientId));
+                history.push(Config.getParamsIframe(this.appointmentId, this.patientId, this.userId));
             },
 	render: function(){
 		return (

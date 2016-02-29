@@ -5,6 +5,14 @@ module.exports = React.createClass({
 		onAddNewSection: React.PropTypes.func,
 		onSaveForm: React.PropTypes.func
 	},
+            patientUID: null,
+            name: '',
+            init: function(patientUID){
+                this.patientUID = patientUID;
+            },
+            setName: function(name){
+                this.name = name;
+            },
 	_onAddNewSection: function(){
 		var self = this;
 		swal({
@@ -32,18 +40,18 @@ module.exports = React.createClass({
 		}.bind(this))
 	},
             _goToHome: function(){
-                history.push('/eformDev');
+                history.push('/eformDev?patientUID='+this.patientUID);
             },
 	render: function(){
 		return (
 			<div className="page-bar">
 				<ul className="page-breadcrumb">
                     <li>
-                        <a onClick={this._goToHome}>Home</a>
+                        <a onClick={this._goToHome}>EForm Dev List</a>
                         <i className="fa fa-circle"></i>
                     </li>
                     <li>
-                        <span>E-Form Dev</span>
+                        <span>{this.name}</span>
                     </li>
                 </ul>
                 <div className="page-toolbar">

@@ -8,6 +8,6 @@ module.exports = [
 	{path: '/eformDev', component: Main},
 	{path: '/eformDev/detail/:formId', component: MainDetail},
 	{path: '/eform', component: MainClient},
-	{path: '/eform/detail/appointment/:appointmentId/patient/:patientId/form/:formId', component: MainClientDetail},
-	{path: '/eform/detail/appointment/:appointmentId/patient/:patientId/client/:clientId', component: MainClientDetailView}
+	{path: '/eform/detail/appointment/:appointmentId/patient/:patientId/form/:formId/user/:userId', component: MainClientDetail},
+	{path: '/eform/detail/appointment/:appointmentId/patient/:patientId/user/:userId/client/:clientId', component: MainClientDetailView}
 ]

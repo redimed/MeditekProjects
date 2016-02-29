@@ -4,8 +4,16 @@ var ComponentFormCreate = require('modules/eform/main/formCreate');
 var ComponentFormUpdate = require('modules/eform/main/formUpdate');
 var CommonModal = require('common/modal');
 var EFormService = require('modules/eform/services');
+var Config = require('config');
 
 module.exports = React.createClass({
+            patientUID: null,
+            componentDidMount: function(){
+                var locationParams = Config.parseQueryString(window.location.href);
+                this.patientUID = locationParams.patientUID;
+                this.refs.componentPageBar.init(this.patientUID);
+                this.refs.formList.init(this.patientUID);
+            },
 	_onComponentPageBarAddNewForm: function(){
 		this.refs.modalAddForm.show();
 	},

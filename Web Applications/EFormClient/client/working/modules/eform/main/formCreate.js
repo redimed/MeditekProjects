@@ -1,11 +1,12 @@
 var EFormService = require('modules/eform/services');
 var CommonInputText = require('common/inputText');
+var Config = require('config');
 
 module.exports = React.createClass({
 	propTypes: {
 		onSave: React.PropTypes.func
 	},
-	_serverCreateForm: function(data){
+	_serverCreateForm: function(data){        
         var self = this;
         swal({
             title: 'Are you sure?',
@@ -23,8 +24,9 @@ module.exports = React.createClass({
         })
     },
     _onSave: function(){
+            var locationParams = Config.parseQueryString(window.location.href);
     	var name = this.refs.inputName.getValue();
-        this._serverCreateForm({name:name});
+        this._serverCreateForm({name:name, patientUID: locationParams.patientUID});
     },
 	render: function(){
 		return (

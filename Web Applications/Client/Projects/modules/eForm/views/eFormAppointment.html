@@ -1,9 +1,22 @@
 <!-- BEGIN PAGE HEADER-->
 <div class="page-bar ">
     <ul class="page-breadcrumb">
-        <li>
+    	<li>
             <i class="fa fa-home"></i>
-            <a>Home</a>
+            <a href="javascript:;" ui-sref="authentication.home.list">Home</a>
+        </li>
+    	<li>
+            <i class="fa fa-angle-right"></i>
+            <a ui-sref="authentication.consultation.list">Consultation</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a ui-sref="authentication.consultation.detail" ui-sref-opts="{reload:true}">
+            	Consultation Detail</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>E-Form Appointment</b>
         </li>
     </ul>
 </div>

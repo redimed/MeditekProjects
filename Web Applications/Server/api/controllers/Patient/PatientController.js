@@ -237,22 +237,29 @@ module.exports = {
                     return FileUpload.findAll({
                             where: {
                                 UserAccountID: info[0].UserAccountID,
-                                FileType: 'ProfileImage',
+                                FileType: {$in:['ProfileImage','Signature']},
                                 Enable: 'Y'
                             }
                         })
                         .then(function(success) {
+                            console.log(success[0].UID);
                             if (success !== undefined && success !== null && success !== '' && success.length !== 0) {
-                                info[0].dataValues.FileUID = success[0].UID ? success[0].UID : null;
-                                info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
-                                delete info[0].dataValues['Country'];
+                                for(var i = 0; i < success.length; i++) {
+                                    // if(info[0].dataValuesFileType == "ProfileImage") 
+                                        info[0].dataValues.ProfileImage = success[i].FileType=='ProfileImage'?success[i].UID:null;
+                                    // if(info[0].dataValuesFileType == "Signature") 
+                                        info[0].dataValues.Signature = success[i].FileType=='Signature'?success[i].UID:null;
+                                }
+                                info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
+                                delete info[0].dataValues['Country1'];
                                 return res.ok({
                                     status: 200,
                                     message: "success",
                                     data: info
                                 });
                             } else {
-                                info[0].dataValues.FileUID = null;
+                                info[0].dataValues.Signature = null;
+                                info[0].dataValues.ProfileImage = null;
                                 return res.ok({
                                     status: 200,
                                     message: "success",

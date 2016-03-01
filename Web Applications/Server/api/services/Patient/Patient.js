@@ -936,6 +936,7 @@ module.exports = {
             if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
             if(data.CountryID1)  patientInfo.CountryID1 = data.CountryID1;
             if(data.UID)  patientInfo.UID = data.UID;
+            if(data.DOB == null || data.DOB == '') delete patientInfo['DOB'];
             return sequelize.transaction()
                 .then(function(t){
                 return Services.Patient.validation(data)
@@ -952,12 +953,33 @@ module.exports = {
                                 Enable : data.EnableUser
                             },{
                                 where : {
-                                    UID : data.UserAccount.UID
-                                }
+                                    ID : data.UserAccountID
+                                },
+                                transaction:t
                             });
                         }
                         else {
-                            return user;
+                            if(data.Email && data.Email != null && data.Email != ''){
+                                var EmailPattern=new RegExp(check.regexPattern.email);
+                                if(!EmailPattern.test(data.Email)){
+                                    t.rollback();
+                                    var err = new Error("UpdatePatient.Error");
+                                    err.pushError("invalid.Email");
+                                    throw err;
+                                }
+                                else {
+                                    return UserAccount.update({
+                                        Email : data.Email
+                                    },{
+                                        where : {
+                                            ID : data.UserAccountID
+                                        },
+                                        transaction:t
+                                    });
+                                }
+                            }
+                            else
+                                return user;
                         }
                     },function(err){
                         t.rollback();
@@ -968,6 +990,7 @@ module.exports = {
                     throw err;
                 })//update 4 bang patient tai day
                 .then(function(result){
+                    console.log("1");
                     if(other!=null && other != ""){
                         if(other.hasOwnProperty('PatientPension')==true) {
                             return PatientPension.update(other.PatientPension,{
@@ -978,45 +1001,59 @@ module.exports = {
                             });
                         }
                     }
+                    else
+                        return result;
                 },function(err){
                     t.rollback();
                     throw err;
                 })
                 .then(function(updatedPatientPension){
-                    if(other.hasOwnProperty('PatientMedicare')==true) {
-                        return PatientMedicare.update(other.PatientMedicare,{
-                            where:{
-                                PatientID : patientInfo.ID
-                            },
-                            transaction:t
-                        });
+                    if(other!=null && other != ""){
+                        if(other.hasOwnProperty('PatientMedicare')==true) {
+                            return PatientMedicare.update(other.PatientMedicare,{
+                                where:{
+                                    PatientID : patientInfo.ID
+                                },
+                                transaction:t
+                            });
+                        }
                     }
+                    else
+                        return updatedPatientPension;
                 },function(err){
                     t.rollback();
                     throw err;
                 })
                 .then(function(updatedPatientMedicare){
-                    if(other.hasOwnProperty('PatientDVA')==true) {
-                        return PatientDVA.update(other.PatientDVA,{
-                            where:{
-                                PatientID : patientInfo.ID
-                            },
-                            transaction:t
-                        });
+                    if(other!=null && other != "") {
+                        if(other.hasOwnProperty('PatientDVA')==true) {
+                            return PatientDVA.update(other.PatientDVA,{
+                                where:{
+                                    PatientID : patientInfo.ID
+                                },
+                                transaction:t
+                            });
+                        }
                     }
+                    else
+                        return updatedPatientMedicare;
                 },function(err){
                     t.rollback();
                     throw err;
                 })
                 .then(function(updatedPatientDVA){
-                    if(other.hasOwnProperty('PatientKin')==true) {
-                        return PatientKin.update(other.PatientKin,{
-                            where:{
-                                PatientID : patientInfo.ID
-                            },
-                            transaction:t
-                        });
+                    if(other!=null && other != "") {
+                        if(other.hasOwnProperty('PatientKin')==true) {
+                            return PatientKin.update(other.PatientKin,{
+                                where:{
+                                    PatientID : patientInfo.ID
+                                },
+                                transaction:t
+                            });
+                        }
                     }
+                    else
+                        return updatedPatientDVA;
                 },function(err){
                     t.rollback();
                     throw err;
@@ -1050,6 +1087,8 @@ module.exports = {
                             throw err;
                         });
                     }
+                    else
+                        return updatedPatientKin;
                 },function(err){
                     t.rollback();
                     throw err;
@@ -1090,6 +1129,8 @@ module.exports = {
                             throw err;
                         });
                     }
+                    else
+                        return updatedPatientGP;
                 },function(err){
                     t.rollback();
                     throw err;
@@ -1130,6 +1171,7 @@ module.exports = {
                             throw err;
                         });
                     }
+                    else return updatedPatientMedicare;
                 },function(err){
                     t.rollback();
                     throw err;
@@ -1161,6 +1203,7 @@ module.exports = {
                             throw err;
                         });
                     }
+                    else return updatedPatientPension;
                 },function(err){
                     t.rollback();
                     throw err;
@@ -1192,6 +1235,7 @@ module.exports = {
                             throw err;
                         });
                     }
+                    else return updatedPatientFund;
                 },function(err){
                     t.rollback();
                     throw err;

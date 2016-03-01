@@ -8,5 +8,5 @@ app.controller('eFormAppointmentCtrl', function($scope, $stateParams, $cookies){
             $scope.eFormBaseUrl = o.const.eFormBaseUrl;
             var contentHeight = $('.page-content').height()-80;
             $('#eformDev').attr('src', $scope.eFormBaseUrl+'/#/eform?appoinmentUID='+AppointmentUID+'&patientUID='+PatientUID+'&userUID='+UserUID);
-            $('#eformDev').attr('height', contentHeight);
+            //$('#eformDev').attr('height', contentHeight);
 });

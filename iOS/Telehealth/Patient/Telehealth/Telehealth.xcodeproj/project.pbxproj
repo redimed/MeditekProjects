@@ -1,0 +1,1278 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
+		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; };
+		AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */; };
+		AF00C3FB1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */; };
+		AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */; };
+		AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */; };
+		AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */; };
+		AF1BCE4C1C4DCD06002CA9A5 /* RequestTelehealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BCE4B1C4DCD06002CA9A5 /* RequestTelehealthService.swift */; };
+		AF1BCE4E1C4E16DC002CA9A5 /* Suburb.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1BCE4D1C4E16DC002CA9A5 /* Suburb.json */; };
+		AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */; };
+		AF3391731C841EBC00483F36 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3391721C841EBC00483F36 /* UpdateProfileViewController.swift */; };
+		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; };
+		AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */; };
+		AF4498AA1BDF11CE005A905E /* PatientService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498A91BDF11CE005A905E /* PatientService.swift */; };
+		AF4498AC1BDF11FE005A905E /* AppointmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498AB1BDF11FE005A905E /* AppointmentService.swift */; };
+		AF4498AE1BDF1238005A905E /* CallContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498AD1BDF1238005A905E /* CallContainer.swift */; };
+		AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */; };
+		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; };
+		AF73C8471C7BF9030015A625 /* DKCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8341C7BF9030015A625 /* DKCamera.swift */; };
+		AF73C8481C7BF9030015A625 /* DKCameraResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AF73C8351C7BF9030015A625 /* DKCameraResource.bundle */; };
+		AF73C8491C7BF9030015A625 /* DKGroupDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8381C7BF9030015A625 /* DKGroupDataManager.swift */; };
+		AF73C84A1C7BF9030015A625 /* DKAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83A1C7BF9030015A625 /* DKAsset.swift */; };
+		AF73C84B1C7BF9030015A625 /* DKAssetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83B1C7BF9030015A625 /* DKAssetGroup.swift */; };
+		AF73C84C1C7BF9030015A625 /* DKImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83C1C7BF9030015A625 /* DKImageManager.swift */; };
+		AF73C84D1C7BF9030015A625 /* DKImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AF73C83E1C7BF9030015A625 /* DKImagePickerController.bundle */; };
+		AF73C84E1C7BF9030015A625 /* DKImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83F1C7BF9030015A625 /* DKImagePickerController.swift */; };
+		AF73C84F1C7BF9030015A625 /* DKImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8401C7BF9030015A625 /* DKImageResource.swift */; };
+		AF73C8501C7BF9030015A625 /* DKPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8411C7BF9030015A625 /* DKPopoverViewController.swift */; };
+		AF73C8511C7BF9030015A625 /* DKAssetGroupDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8431C7BF9030015A625 /* DKAssetGroupDetailVC.swift */; };
+		AF73C8521C7BF9030015A625 /* DKAssetGroupGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8441C7BF9030015A625 /* DKAssetGroupGridLayout.swift */; };
+		AF73C8531C7BF9030015A625 /* DKAssetGroupListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8451C7BF9030015A625 /* DKAssetGroupListVC.swift */; };
+		AF73C8541C7BF9030015A625 /* DKPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8461C7BF9030015A625 /* DKPermissionView.swift */; };
+		AF73C8561C7BF9A30015A625 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF73C8551C7BF9A30015A625 /* Photos.framework */; };
+		AF7B5F441BE74D6D0043B14D /* AppointmentListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */; };
+		AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */; };
+		AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */ = {isa = PBXBuildFile; fileRef = AF899DF31C1838BD00C85186 /* ringtone.wav */; };
+		AF9317DC1C4887C3005D230F /* ConfigMessageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9317DB1C4887C3005D230F /* ConfigMessageString.swift */; };
+		AF943FF11BBA6221003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF01BBA6221003F3B07 /* OpenTok.framework */; };
+		AF943FF31BBA6376003F3B07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		AF943FF51BBA637F003F3B07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF41BBA637F003F3B07 /* AVFoundation.framework */; };
+		AF943FF71BBA6388003F3B07 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF61BBA6388003F3B07 /* CoreGraphics.framework */; };
+		AF943FF91BBA6391003F3B07 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF81BBA6391003F3B07 /* CoreMedia.framework */; };
+		AF943FFB1BBA6399003F3B07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FFA1BBA6399003F3B07 /* CoreTelephony.framework */; };
+		AF943FFD1BBA63A4003F3B07 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FFC1BBA63A4003F3B07 /* CoreVideo.framework */; };
+		AF943FFF1BBA63B3003F3B07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FFE1BBA63B3003F3B07 /* Foundation.framework */; };
+		AF9440011BBA63BD003F3B07 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440001BBA63BD003F3B07 /* GLKit.framework */; };
+		AF9440031BBA6417003F3B07 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440021BBA6417003F3B07 /* libc++.tbd */; };
+		AF9440051BBA6441003F3B07 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440041BBA6441003F3B07 /* libsqlite3.tbd */; };
+		AF9440071BBA644D003F3B07 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440061BBA644D003F3B07 /* OpenGLES.framework */; };
+		AF9440091BBA6455003F3B07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440081BBA6455003F3B07 /* QuartzCore.framework */; };
+		AF94400B1BBA645E003F3B07 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400A1BBA645E003F3B07 /* SystemConfiguration.framework */; };
+		AF94400D1BBA6468003F3B07 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400C1BBA6468003F3B07 /* UIKit.framework */; };
+		AF94400F1BBA6472003F3B07 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */; };
+		AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440161BBA6972003F3B07 /* OpenTok.framework */; };
+		AF99A5C51C4C7B83006DA3E2 /* SettingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */; };
+		AF99A5C71C4C82C2006DA3E2 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */; };
+		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; };
+		AFA33C971C4CD4C6001E2F7E /* RequestTelehealthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */; };
+		AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */ = {isa = PBXBuildFile; fileRef = AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */; };
+		AFB2FEEB1C4F2E1200B41BDA /* TelehealthContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */; };
+		AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */; };
+		AFC603D01C4FEBB800DEFD2C /* TelehealthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */; };
+		AFD17CE21C7FF952000BF444 /* Other Services.html in Resources */ = {isa = PBXBuildFile; fileRef = AFD17CE11C7FF952000BF444 /* Other Services.html */; };
+		AFE642291C463EB9001F0524 /* PatientContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642281C463EB9001F0524 /* PatientContainer.swift */; };
+		AFE6422B1C46444E001F0524 /* PatientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6422A1C46444E001F0524 /* PatientAPI.swift */; };
+		AFE6422D1C46467F001F0524 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6422C1C46467F001F0524 /* TokenAPI.swift */; };
+		AFE6422F1C4650EC001F0524 /* VerifyPhoneAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6422E1C4650EC001F0524 /* VerifyPhoneAPI.swift */; };
+		AFE642311C465214001F0524 /* AppointmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642301C465214001F0524 /* AppointmentAPI.swift */; };
+		AFE642331C465700001F0524 /* AppointmentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642321C465700001F0524 /* AppointmentContainer.swift */; };
+		AFE642351C473305001F0524 /* CallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642341C473305001F0524 /* CallService.swift */; };
+		AFE642371C4733FC001F0524 /* VerifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642361C4733FC001F0524 /* VerifyService.swift */; };
+		AFE642391C474113001F0524 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642381C474113001F0524 /* SocketService.swift */; };
+		AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */; };
+		AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */; };
+		AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */; };
+		AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */; };
+		AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */; };
+		AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */; };
+		AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D61BB0413600471592 /* AppDelegate.swift */; };
+		AFEE34D91BB0413600471592 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D81BB0413600471592 /* ViewController.swift */; };
+		AFEE34DC1BB0413600471592 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFEE34DA1BB0413600471592 /* Main.storyboard */; };
+		AFEE34DF1BB0413600471592 /* Telehealth.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34DD1BB0413600471592 /* Telehealth.xcdatamodeld */; };
+		AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFEE34E01BB0413600471592 /* Assets.xcassets */; };
+		AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFEE34E21BB0413600471592 /* LaunchScreen.storyboard */; };
+		AFEE34EF1BB0413600471592 /* TelehealthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34EE1BB0413600471592 /* TelehealthTests.swift */; };
+		AFEE34FA1BB0413600471592 /* TelehealthUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34F91BB0413600471592 /* TelehealthUITests.swift */; };
+		AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35081BB0415D00471592 /* AsyncButton.swift */; };
+		AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35091BB0415D00471592 /* AsyncImageView.swift */; };
+		AFEE35281BB0415D00471592 /* AutoTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350A1BB0415D00471592 /* AutoTextView.swift */; };
+		AFEE35291BB0415D00471592 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350B1BB0415D00471592 /* BlurView.swift */; };
+		AFEE352A1BB0415D00471592 /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350C1BB0415D00471592 /* DesignableButton.swift */; };
+		AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350D1BB0415D00471592 /* DesignableImageView.swift */; };
+		AFEE352C1BB0415D00471592 /* DesignableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350E1BB0415D00471592 /* DesignableLabel.swift */; };
+		AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350F1BB0415D00471592 /* DesignableTabBarController.swift */; };
+		AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35101BB0415D00471592 /* DesignableTextField.swift */; };
+		AFEE352F1BB0415D00471592 /* DesignableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35111BB0415D00471592 /* DesignableTextView.swift */; };
+		AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35121BB0415D00471592 /* DesignableView.swift */; };
+		AFEE35311BB0415D00471592 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35131BB0415D00471592 /* ImageLoader.swift */; };
+		AFEE35321BB0415D00471592 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFEE35141BB0415D00471592 /* Info.plist */; };
+		AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35151BB0415D00471592 /* KeyboardLayoutConstraint.swift */; };
+		AFEE35341BB0415D00471592 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35161BB0415D00471592 /* LoadingView.swift */; };
+		AFEE35351BB0415D00471592 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEE35171BB0415D00471592 /* LoadingView.xib */; };
+		AFEE35361BB0415D00471592 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35181BB0415D00471592 /* Misc.swift */; };
+		AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35191BB0415D00471592 /* SoundPlayer.swift */; };
+		AFEE35381BB0415D00471592 /* Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351B1BB0415D00471592 /* Spring.swift */; };
+		AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351C1BB0415D00471592 /* SpringAnimation.swift */; };
+		AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351D1BB0415D00471592 /* SpringButton.swift */; };
+		AFEE353B1BB0415D00471592 /* SpringImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351E1BB0415D00471592 /* SpringImageView.swift */; };
+		AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351F1BB0415D00471592 /* SpringLabel.swift */; };
+		AFEE353D1BB0415D00471592 /* SpringTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35201BB0415D00471592 /* SpringTextField.swift */; };
+		AFEE353E1BB0415D00471592 /* SpringTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35211BB0415D00471592 /* SpringTextView.swift */; };
+		AFEE353F1BB0415D00471592 /* SpringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35221BB0415D00471592 /* SpringView.swift */; };
+		AFEE35401BB0415D00471592 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35231BB0415D00471592 /* TransitionManager.swift */; };
+		AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35241BB0415D00471592 /* TransitionZoom.swift */; };
+		AFEE35421BB0415D00471592 /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35251BB0415D00471592 /* UnwindSegue.swift */; };
+		AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35431BB0577A00471592 /* VerifyViewController.swift */; };
+		AFF10DB21BB241DA005E9838 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DB11BB241DA005E9838 /* InformationViewController.swift */; };
+		AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEA1BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m */; };
+		AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEC1BB24414005E9838 /* TPKeyboardAvoidingScrollView.m */; };
+		AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEE1BB24414005E9838 /* TPKeyboardAvoidingTableView.m */; };
+		AFF10DF41BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DF01BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		AFF18ADB1BC22CC4006F2590 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */; };
+		AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D2F1BB1068A006A190E /* HomeViewController.swift */; };
+		AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */; };
+		AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFEE34EB1BB0413600471592 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFEE34CB1BB0413600471592 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFEE34D21BB0413600471592;
+			remoteInfo = Telehealth;
+		};
+		AFEE34F61BB0413600471592 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFEE34CB1BB0413600471592 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFEE34D21BB0413600471592;
+			remoteInfo = Telehealth;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
+		AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewCell.swift; sourceTree = "<group>"; };
+		AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentDetailsViewController.swift; sourceTree = "<group>"; };
+		AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyUploadViewController.swift; sourceTree = "<group>"; };
+		AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		AF1BCE4B1C4DCD06002CA9A5 /* RequestTelehealthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTelehealthService.swift; sourceTree = "<group>"; };
+		AF1BCE4D1C4E16DC002CA9A5 /* Suburb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Suburb.json; sourceTree = "<group>"; };
+		AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRefferalViewController.swift; sourceTree = "<group>"; };
+		AF3391721C841EBC00483F36 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
+		AF35B1241C5219560044398D /* UTM AvoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UTM AvoBold.ttf"; sourceTree = "<group>"; };
+		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
+		AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAActivityIndicatorView.swift; sourceTree = "<group>"; };
+		AF4498A91BDF11CE005A905E /* PatientService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientService.swift; sourceTree = "<group>"; };
+		AF4498AB1BDF11FE005A905E /* AppointmentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentService.swift; sourceTree = "<group>"; };
+		AF4498AD1BDF1238005A905E /* CallContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallContainer.swift; sourceTree = "<group>"; };
+		AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
+		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
+		AF73C8341C7BF9030015A625 /* DKCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKCamera.swift; sourceTree = "<group>"; };
+		AF73C8351C7BF9030015A625 /* DKCameraResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DKCameraResource.bundle; sourceTree = "<group>"; };
+		AF73C8381C7BF9030015A625 /* DKGroupDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKGroupDataManager.swift; sourceTree = "<group>"; };
+		AF73C83A1C7BF9030015A625 /* DKAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAsset.swift; sourceTree = "<group>"; };
+		AF73C83B1C7BF9030015A625 /* DKAssetGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroup.swift; sourceTree = "<group>"; };
+		AF73C83C1C7BF9030015A625 /* DKImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKImageManager.swift; sourceTree = "<group>"; };
+		AF73C83E1C7BF9030015A625 /* DKImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DKImagePickerController.bundle; sourceTree = "<group>"; };
+		AF73C83F1C7BF9030015A625 /* DKImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKImagePickerController.swift; sourceTree = "<group>"; };
+		AF73C8401C7BF9030015A625 /* DKImageResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKImageResource.swift; sourceTree = "<group>"; };
+		AF73C8411C7BF9030015A625 /* DKPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKPopoverViewController.swift; sourceTree = "<group>"; };
+		AF73C8431C7BF9030015A625 /* DKAssetGroupDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroupDetailVC.swift; sourceTree = "<group>"; };
+		AF73C8441C7BF9030015A625 /* DKAssetGroupGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroupGridLayout.swift; sourceTree = "<group>"; };
+		AF73C8451C7BF9030015A625 /* DKAssetGroupListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroupListVC.swift; sourceTree = "<group>"; };
+		AF73C8461C7BF9030015A625 /* DKPermissionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKPermissionView.swift; sourceTree = "<group>"; };
+		AF73C8551C7BF9A30015A625 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListsViewController.swift; sourceTree = "<group>"; };
+		AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQsViewController.swift; sourceTree = "<group>"; };
+		AF899DF31C1838BD00C85186 /* ringtone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone.wav; sourceTree = "<group>"; };
+		AF9317DB1C4887C3005D230F /* ConfigMessageString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigMessageString.swift; sourceTree = "<group>"; };
+		AF943FF01BBA6221003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "../../../../../OpenTok-iOS-2.6.0/OpenTok.framework"; sourceTree = "<group>"; };
+		AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		AF943FF41BBA637F003F3B07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		AF943FF61BBA6388003F3B07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AF943FF81BBA6391003F3B07 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		AF943FFA1BBA6399003F3B07 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		AF943FFC1BBA63A4003F3B07 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		AF943FFE1BBA63B3003F3B07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AF9440001BBA63BD003F3B07 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		AF9440021BBA6417003F3B07 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		AF9440041BBA6441003F3B07 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		AF9440061BBA644D003F3B07 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		AF9440081BBA6455003F3B07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AF94400A1BBA645E003F3B07 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		AF94400C1BBA6468003F3B07 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		AF9440161BBA6972003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
+		AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Telehealth-Bridging-Header.h"; sourceTree = "<group>"; };
+		AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingNavigationViewController.swift; sourceTree = "<group>"; };
+		AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
+		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
+		AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTelehealthViewController.swift; sourceTree = "<group>"; };
+		AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "ABOUT US.html"; sourceTree = "<group>"; };
+		AFA6F6FF1C0FFFC9007737DF /* UTM Avo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UTM Avo.ttf"; sourceTree = "<group>"; };
+		AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelehealthContainer.swift; sourceTree = "<group>"; };
+		AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmRequestTelehealthViewController.swift; sourceTree = "<group>"; };
+		AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelehealthAPI.swift; sourceTree = "<group>"; };
+		AFD17CE11C7FF952000BF444 /* Other Services.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "Other Services.html"; sourceTree = "<group>"; };
+		AFE642281C463EB9001F0524 /* PatientContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientContainer.swift; sourceTree = "<group>"; };
+		AFE6422A1C46444E001F0524 /* PatientAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientAPI.swift; sourceTree = "<group>"; };
+		AFE6422C1C46467F001F0524 /* TokenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
+		AFE6422E1C4650EC001F0524 /* VerifyPhoneAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneAPI.swift; sourceTree = "<group>"; };
+		AFE642301C465214001F0524 /* AppointmentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentAPI.swift; sourceTree = "<group>"; };
+		AFE642321C465700001F0524 /* AppointmentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentContainer.swift; sourceTree = "<group>"; };
+		AFE642341C473305001F0524 /* CallService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallService.swift; sourceTree = "<group>"; };
+		AFE642361C4733FC001F0524 /* VerifyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyService.swift; sourceTree = "<group>"; };
+		AFE642381C474113001F0524 /* SocketService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
+		AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIVViewController-SLPopup.swift"; path = "../UIVViewController-SLPopup.swift"; sourceTree = "<group>"; };
+		AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPopupViewController.swift; sourceTree = "<group>"; };
+		AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPopupViewController.xib; sourceTree = "<group>"; };
+		AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton_SocketManager.swift; sourceTree = "<group>"; };
+		AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationHomeViewController.swift; sourceTree = "<group>"; };
+		AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationLoginViewController.swift; sourceTree = "<group>"; };
+		AFEE34D31BB0413600471592 /* Telehealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telehealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFEE34D61BB0413600471592 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AFEE34D81BB0413600471592 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AFEE34DB1BB0413600471592 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AFEE34DE1BB0413600471592 /* Telehealth.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Telehealth.xcdatamodel; sourceTree = "<group>"; };
+		AFEE34E01BB0413600471592 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AFEE34E31BB0413600471592 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AFEE34E51BB0413600471592 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFEE34EA1BB0413600471592 /* TelehealthTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TelehealthTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFEE34EE1BB0413600471592 /* TelehealthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelehealthTests.swift; sourceTree = "<group>"; };
+		AFEE34F01BB0413600471592 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFEE34F51BB0413600471592 /* TelehealthUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TelehealthUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFEE34F91BB0413600471592 /* TelehealthUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelehealthUITests.swift; sourceTree = "<group>"; };
+		AFEE34FB1BB0413600471592 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFEE35081BB0415D00471592 /* AsyncButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
+		AFEE35091BB0415D00471592 /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
+		AFEE350A1BB0415D00471592 /* AutoTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoTextView.swift; sourceTree = "<group>"; };
+		AFEE350B1BB0415D00471592 /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		AFEE350C1BB0415D00471592 /* DesignableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableButton.swift; sourceTree = "<group>"; };
+		AFEE350D1BB0415D00471592 /* DesignableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableImageView.swift; sourceTree = "<group>"; };
+		AFEE350E1BB0415D00471592 /* DesignableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableLabel.swift; sourceTree = "<group>"; };
+		AFEE350F1BB0415D00471592 /* DesignableTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTabBarController.swift; sourceTree = "<group>"; };
+		AFEE35101BB0415D00471592 /* DesignableTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
+		AFEE35111BB0415D00471592 /* DesignableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextView.swift; sourceTree = "<group>"; };
+		AFEE35121BB0415D00471592 /* DesignableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableView.swift; sourceTree = "<group>"; };
+		AFEE35131BB0415D00471592 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		AFEE35141BB0415D00471592 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFEE35151BB0415D00471592 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
+		AFEE35161BB0415D00471592 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		AFEE35171BB0415D00471592 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		AFEE35181BB0415D00471592 /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		AFEE35191BB0415D00471592 /* SoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		AFEE351A1BB0415D00471592 /* Spring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spring.h; sourceTree = "<group>"; };
+		AFEE351B1BB0415D00471592 /* Spring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spring.swift; sourceTree = "<group>"; };
+		AFEE351C1BB0415D00471592 /* SpringAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringAnimation.swift; sourceTree = "<group>"; };
+		AFEE351D1BB0415D00471592 /* SpringButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringButton.swift; sourceTree = "<group>"; };
+		AFEE351E1BB0415D00471592 /* SpringImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringImageView.swift; sourceTree = "<group>"; };
+		AFEE351F1BB0415D00471592 /* SpringLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringLabel.swift; sourceTree = "<group>"; };
+		AFEE35201BB0415D00471592 /* SpringTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringTextField.swift; sourceTree = "<group>"; };
+		AFEE35211BB0415D00471592 /* SpringTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringTextView.swift; sourceTree = "<group>"; };
+		AFEE35221BB0415D00471592 /* SpringView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringView.swift; sourceTree = "<group>"; };
+		AFEE35231BB0415D00471592 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
+		AFEE35241BB0415D00471592 /* TransitionZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionZoom.swift; sourceTree = "<group>"; };
+		AFEE35251BB0415D00471592 /* UnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindSegue.swift; sourceTree = "<group>"; };
+		AFEE35431BB0577A00471592 /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		AFF10DB11BB241DA005E9838 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+		AFF10DE91BB24414005E9838 /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
+		AFF10DEA1BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingCollectionView.m; sourceTree = "<group>"; };
+		AFF10DEB1BB24414005E9838 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		AFF10DEC1BB24414005E9838 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		AFF10DED1BB24414005E9838 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
+		AFF10DEE1BB24414005E9838 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		AFF10DEF1BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
+		AFF10DF01BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		AFF21D2F1BB1068A006A190E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenCallingViewController.swift; sourceTree = "<group>"; };
+		AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationSystem.swift; sourceTree = "<group>"; };
+		C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.release.xcconfig"; sourceTree = "<group>"; };
+		F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFEE34D01BB0413600471592 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF73C8561C7BF9A30015A625 /* Photos.framework in Frameworks */,
+				AFF18ADB1BC22CC4006F2590 /* CoreLocation.framework in Frameworks */,
+				AF94400F1BBA6472003F3B07 /* VideoToolbox.framework in Frameworks */,
+				AF94400D1BBA6468003F3B07 /* UIKit.framework in Frameworks */,
+				AF94400B1BBA645E003F3B07 /* SystemConfiguration.framework in Frameworks */,
+				AF9440091BBA6455003F3B07 /* QuartzCore.framework in Frameworks */,
+				AF9440071BBA644D003F3B07 /* OpenGLES.framework in Frameworks */,
+				AF9440051BBA6441003F3B07 /* libsqlite3.tbd in Frameworks */,
+				AF9440031BBA6417003F3B07 /* libc++.tbd in Frameworks */,
+				AF9440011BBA63BD003F3B07 /* GLKit.framework in Frameworks */,
+				AF943FFF1BBA63B3003F3B07 /* Foundation.framework in Frameworks */,
+				AF943FFD1BBA63A4003F3B07 /* CoreVideo.framework in Frameworks */,
+				AF943FFB1BBA6399003F3B07 /* CoreTelephony.framework in Frameworks */,
+				AF943FF91BBA6391003F3B07 /* CoreMedia.framework in Frameworks */,
+				AF943FF71BBA6388003F3B07 /* CoreGraphics.framework in Frameworks */,
+				AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */,
+				AF943FF51BBA637F003F3B07 /* AVFoundation.framework in Frameworks */,
+				AF943FF31BBA6376003F3B07 /* AudioToolbox.framework in Frameworks */,
+				AF943FF11BBA6221003F3B07 /* OpenTok.framework in Frameworks */,
+				50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEE34E71BB0413600471592 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEE34F21BB0413600471592 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08787A27393C4E6115D764A5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */,
+				C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9C8F9A3844FDFD23E44C015B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8551C7BF9A30015A625 /* Photos.framework */,
+				AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */,
+				AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */,
+				AF94400C1BBA6468003F3B07 /* UIKit.framework */,
+				AF94400A1BBA645E003F3B07 /* SystemConfiguration.framework */,
+				AF9440081BBA6455003F3B07 /* QuartzCore.framework */,
+				AF9440061BBA644D003F3B07 /* OpenGLES.framework */,
+				AF9440041BBA6441003F3B07 /* libsqlite3.tbd */,
+				AF9440021BBA6417003F3B07 /* libc++.tbd */,
+				AF9440001BBA63BD003F3B07 /* GLKit.framework */,
+				AF943FFE1BBA63B3003F3B07 /* Foundation.framework */,
+				AF943FFC1BBA63A4003F3B07 /* CoreVideo.framework */,
+				AF943FFA1BBA6399003F3B07 /* CoreTelephony.framework */,
+				AF943FF81BBA6391003F3B07 /* CoreMedia.framework */,
+				AF943FF61BBA6388003F3B07 /* CoreGraphics.framework */,
+				AF943FF41BBA637F003F3B07 /* AVFoundation.framework */,
+				AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */,
+				AF943FF01BBA6221003F3B07 /* OpenTok.framework */,
+				F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AF4498A61BDF111A005A905E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AFE6422A1C46444E001F0524 /* PatientAPI.swift */,
+				AFE6422C1C46467F001F0524 /* TokenAPI.swift */,
+				AFE6422E1C4650EC001F0524 /* VerifyPhoneAPI.swift */,
+				AFE642301C465214001F0524 /* AppointmentAPI.swift */,
+				AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		AF4498A71BDF1141005A905E /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		AF4498A81BDF115B005A905E /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34DA1BB0413600471592 /* Main.storyboard */,
+				AFEE34E21BB0413600471592 /* LaunchScreen.storyboard */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
+		AF73C8331C7BF9030015A625 /* DKCamera */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8341C7BF9030015A625 /* DKCamera.swift */,
+				AF73C8351C7BF9030015A625 /* DKCameraResource.bundle */,
+			);
+			path = DKCamera;
+			sourceTree = "<group>";
+		};
+		AF73C8361C7BF9030015A625 /* DKImageManager */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8371C7BF9030015A625 /* Data */,
+				AF73C83C1C7BF9030015A625 /* DKImageManager.swift */,
+			);
+			path = DKImageManager;
+			sourceTree = "<group>";
+		};
+		AF73C8371C7BF9030015A625 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8381C7BF9030015A625 /* DKGroupDataManager.swift */,
+				AF73C8391C7BF9030015A625 /* Model */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		AF73C8391C7BF9030015A625 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C83A1C7BF9030015A625 /* DKAsset.swift */,
+				AF73C83B1C7BF9030015A625 /* DKAssetGroup.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AF73C83D1C7BF9030015A625 /* DKImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C83E1C7BF9030015A625 /* DKImagePickerController.bundle */,
+				AF73C83F1C7BF9030015A625 /* DKImagePickerController.swift */,
+				AF73C8401C7BF9030015A625 /* DKImageResource.swift */,
+				AF73C8411C7BF9030015A625 /* DKPopoverViewController.swift */,
+				AF73C8421C7BF9030015A625 /* View */,
+			);
+			path = DKImagePickerController;
+			sourceTree = "<group>";
+		};
+		AF73C8421C7BF9030015A625 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8431C7BF9030015A625 /* DKAssetGroupDetailVC.swift */,
+				AF73C8441C7BF9030015A625 /* DKAssetGroupGridLayout.swift */,
+				AF73C8451C7BF9030015A625 /* DKAssetGroupListVC.swift */,
+				AF73C8461C7BF9030015A625 /* DKPermissionView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AF78A2F61BC36807003E4E98 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AF1BCE4D1C4E16DC002CA9A5 /* Suburb.json */,
+				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
+				AF35B1241C5219560044398D /* UTM AvoBold.ttf */,
+				AFA6F6FF1C0FFFC9007737DF /* UTM Avo.ttf */,
+				AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */,
+				AF3902F51BCDE8DD00173A58 /* FAQs.html */,
+				AFD17CE11C7FF952000BF444 /* Other Services.html */,
+				AF899DF31C1838BD00C85186 /* ringtone.wav */,
+				AF9317DB1C4887C3005D230F /* ConfigMessageString.swift */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		AF9440181BBA79AF003F3B07 /* Supporting File */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34E51BB0413600471592 /* Info.plist */,
+				AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */,
+			);
+			name = "Supporting File";
+			sourceTree = "<group>";
+		};
+		AFE642271C463E57001F0524 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				AF4498AD1BDF1238005A905E /* CallContainer.swift */,
+				AFE642281C463EB9001F0524 /* PatientContainer.swift */,
+				AFE642321C465700001F0524 /* AppointmentContainer.swift */,
+				AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */,
+			);
+			name = Container;
+			sourceTree = "<group>";
+		};
+		AFEBD1DE1BD5E112005FE581 /* MyPopupViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */,
+				AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */,
+				AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */,
+				AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */,
+			);
+			path = MyPopupViewController;
+			sourceTree = "<group>";
+		};
+		AFEE34CA1BB0413600471592 = {
+			isa = PBXGroup;
+			children = (
+				AFEE34D51BB0413600471592 /* Telehealth */,
+				AFEE34ED1BB0413600471592 /* TelehealthTests */,
+				AFEE34F81BB0413600471592 /* TelehealthUITests */,
+				AFEE34D41BB0413600471592 /* Products */,
+				08787A27393C4E6115D764A5 /* Pods */,
+				9C8F9A3844FDFD23E44C015B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AFEE34D41BB0413600471592 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34D31BB0413600471592 /* Telehealth.app */,
+				AFEE34EA1BB0413600471592 /* TelehealthTests.xctest */,
+				AFEE34F51BB0413600471592 /* TelehealthUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AFEE34D51BB0413600471592 /* Telehealth */ = {
+			isa = PBXGroup;
+			children = (
+				AF4498A71BDF1141005A905E /* Other */,
+				AF78A2F61BC36807003E4E98 /* Resources */,
+				AFF27DFA1BB39C6600B325E8 /* Utilities */,
+				AFF27DF91BB39C5500B325E8 /* Library */,
+				AFF27DF61BB39C2E00B325E8 /* Views */,
+				AFF27DF71BB39C3A00B325E8 /* Controllers */,
+				AF4498A81BDF115B005A905E /* Layout */,
+				AFF27DF81BB39C4600B325E8 /* Service */,
+				AFE642271C463E57001F0524 /* Container */,
+				AF4498A61BDF111A005A905E /* API */,
+				AFEE34E01BB0413600471592 /* Assets.xcassets */,
+				AFEE34DD1BB0413600471592 /* Telehealth.xcdatamodeld */,
+				AF9440181BBA79AF003F3B07 /* Supporting File */,
+			);
+			path = Telehealth;
+			sourceTree = "<group>";
+		};
+		AFEE34ED1BB0413600471592 /* TelehealthTests */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34EE1BB0413600471592 /* TelehealthTests.swift */,
+				AFEE34F01BB0413600471592 /* Info.plist */,
+			);
+			path = TelehealthTests;
+			sourceTree = "<group>";
+		};
+		AFEE34F81BB0413600471592 /* TelehealthUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34F91BB0413600471592 /* TelehealthUITests.swift */,
+				AFEE34FB1BB0413600471592 /* Info.plist */,
+			);
+			path = TelehealthUITests;
+			sourceTree = "<group>";
+		};
+		AFEE35071BB0415D00471592 /* Spring */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE35081BB0415D00471592 /* AsyncButton.swift */,
+				AFEE35091BB0415D00471592 /* AsyncImageView.swift */,
+				AFEE350A1BB0415D00471592 /* AutoTextView.swift */,
+				AFEE350B1BB0415D00471592 /* BlurView.swift */,
+				AFEE350C1BB0415D00471592 /* DesignableButton.swift */,
+				AFEE350D1BB0415D00471592 /* DesignableImageView.swift */,
+				AFEE350E1BB0415D00471592 /* DesignableLabel.swift */,
+				AFEE350F1BB0415D00471592 /* DesignableTabBarController.swift */,
+				AFEE35101BB0415D00471592 /* DesignableTextField.swift */,
+				AFEE35111BB0415D00471592 /* DesignableTextView.swift */,
+				AFEE35121BB0415D00471592 /* DesignableView.swift */,
+				AFEE35131BB0415D00471592 /* ImageLoader.swift */,
+				AFEE35141BB0415D00471592 /* Info.plist */,
+				AFEE35151BB0415D00471592 /* KeyboardLayoutConstraint.swift */,
+				AFEE35161BB0415D00471592 /* LoadingView.swift */,
+				AFEE35171BB0415D00471592 /* LoadingView.xib */,
+				AFEE35181BB0415D00471592 /* Misc.swift */,
+				AFEE35191BB0415D00471592 /* SoundPlayer.swift */,
+				AFEE351A1BB0415D00471592 /* Spring.h */,
+				AFEE351B1BB0415D00471592 /* Spring.swift */,
+				AFEE351C1BB0415D00471592 /* SpringAnimation.swift */,
+				AFEE351D1BB0415D00471592 /* SpringButton.swift */,
+				AFEE351E1BB0415D00471592 /* SpringImageView.swift */,
+				AFEE351F1BB0415D00471592 /* SpringLabel.swift */,
+				AFEE35201BB0415D00471592 /* SpringTextField.swift */,
+				AFEE35211BB0415D00471592 /* SpringTextView.swift */,
+				AFEE35221BB0415D00471592 /* SpringView.swift */,
+				AFEE35231BB0415D00471592 /* TransitionManager.swift */,
+				AFEE35241BB0415D00471592 /* TransitionZoom.swift */,
+				AFEE35251BB0415D00471592 /* UnwindSegue.swift */,
+			);
+			path = Spring;
+			sourceTree = "<group>";
+		};
+		AFF10DE81BB24414005E9838 /* TPKeyboardAvoiding */ = {
+			isa = PBXGroup;
+			children = (
+				AFF10DE91BB24414005E9838 /* TPKeyboardAvoidingCollectionView.h */,
+				AFF10DEA1BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m */,
+				AFF10DEB1BB24414005E9838 /* TPKeyboardAvoidingScrollView.h */,
+				AFF10DEC1BB24414005E9838 /* TPKeyboardAvoidingScrollView.m */,
+				AFF10DED1BB24414005E9838 /* TPKeyboardAvoidingTableView.h */,
+				AFF10DEE1BB24414005E9838 /* TPKeyboardAvoidingTableView.m */,
+				AFF10DEF1BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
+				AFF10DF01BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
+			);
+			path = TPKeyboardAvoiding;
+			sourceTree = "<group>";
+		};
+		AFF27DF61BB39C2E00B325E8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AFEBD1DE1BD5E112005FE581 /* MyPopupViewController */,
+				AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */,
+				AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		AFF27DF71BB39C3A00B325E8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34D81BB0413600471592 /* ViewController.swift */,
+				AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */,
+				AFF10DB11BB241DA005E9838 /* InformationViewController.swift */,
+				AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */,
+				AFEE35431BB0577A00471592 /* VerifyViewController.swift */,
+				AFF21D2F1BB1068A006A190E /* HomeViewController.swift */,
+				AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */,
+				AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */,
+				AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */,
+				AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */,
+				AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */,
+				AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */,
+				AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */,
+				AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */,
+				AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */,
+				AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */,
+				AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */,
+				AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */,
+				AF3391721C841EBC00483F36 /* UpdateProfileViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		AFF27DF81BB39C4600B325E8 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				AF4498A91BDF11CE005A905E /* PatientService.swift */,
+				AF4498AB1BDF11FE005A905E /* AppointmentService.swift */,
+				AFE642341C473305001F0524 /* CallService.swift */,
+				AFE642361C4733FC001F0524 /* VerifyService.swift */,
+				AFE642381C474113001F0524 /* SocketService.swift */,
+				AF1BCE4B1C4DCD06002CA9A5 /* RequestTelehealthService.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		AFF27DF91BB39C5500B325E8 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8331C7BF9030015A625 /* DKCamera */,
+				AF73C8361C7BF9030015A625 /* DKImageManager */,
+				AF73C83D1C7BF9030015A625 /* DKImagePickerController */,
+				AF9440161BBA6972003F3B07 /* OpenTok.framework */,
+				AFF10DE81BB24414005E9838 /* TPKeyboardAvoiding */,
+				AFEE35071BB0415D00471592 /* Spring */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		AFF27DFA1BB39C6600B325E8 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */,
+				AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */,
+				AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */,
+				AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFEE34D21BB0413600471592 /* Telehealth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFEE34FE1BB0413600471592 /* Build configuration list for PBXNativeTarget "Telehealth" */;
+			buildPhases = (
+				010D2AAFB364786A32815BFB /* Check Pods Manifest.lock */,
+				AFEE34CF1BB0413600471592 /* Sources */,
+				AFEE34D01BB0413600471592 /* Frameworks */,
+				AFEE34D11BB0413600471592 /* Resources */,
+				EA2AB3FC4C8BEB0BB945E336 /* Embed Pods Frameworks */,
+				8D86392C331A67C8216876E6 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Telehealth;
+			productName = Telehealth;
+			productReference = AFEE34D31BB0413600471592 /* Telehealth.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AFEE34E91BB0413600471592 /* TelehealthTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFEE35011BB0413600471592 /* Build configuration list for PBXNativeTarget "TelehealthTests" */;
+			buildPhases = (
+				AFEE34E61BB0413600471592 /* Sources */,
+				AFEE34E71BB0413600471592 /* Frameworks */,
+				AFEE34E81BB0413600471592 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFEE34EC1BB0413600471592 /* PBXTargetDependency */,
+			);
+			name = TelehealthTests;
+			productName = TelehealthTests;
+			productReference = AFEE34EA1BB0413600471592 /* TelehealthTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AFEE34F41BB0413600471592 /* TelehealthUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFEE35041BB0413600471592 /* Build configuration list for PBXNativeTarget "TelehealthUITests" */;
+			buildPhases = (
+				AFEE34F11BB0413600471592 /* Sources */,
+				AFEE34F21BB0413600471592 /* Frameworks */,
+				AFEE34F31BB0413600471592 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFEE34F71BB0413600471592 /* PBXTargetDependency */,
+			);
+			name = TelehealthUITests;
+			productName = TelehealthUITests;
+			productReference = AFEE34F51BB0413600471592 /* TelehealthUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFEE34CB1BB0413600471592 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Giap Vo Duc";
+				TargetAttributes = {
+					AFEE34D21BB0413600471592 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = UA7AB584U5;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+					AFEE34E91BB0413600471592 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = AFEE34D21BB0413600471592;
+					};
+					AFEE34F41BB0413600471592 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = AFEE34D21BB0413600471592;
+					};
+				};
+			};
+			buildConfigurationList = AFEE34CE1BB0413600471592 /* Build configuration list for PBXProject "Telehealth" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AFEE34CA1BB0413600471592;
+			productRefGroup = AFEE34D41BB0413600471592 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFEE34D21BB0413600471592 /* Telehealth */,
+				AFEE34E91BB0413600471592 /* TelehealthTests */,
+				AFEE34F41BB0413600471592 /* TelehealthUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFEE34D11BB0413600471592 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
+				AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */,
+				AF1BCE4E1C4E16DC002CA9A5 /* Suburb.json in Resources */,
+				AF73C8481C7BF9030015A625 /* DKCameraResource.bundle in Resources */,
+				AFD17CE21C7FF952000BF444 /* Other Services.html in Resources */,
+				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
+				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
+				AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */,
+				AF73C84D1C7BF9030015A625 /* DKImagePickerController.bundle in Resources */,
+				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
+				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
+				AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */,
+				AFEE34DC1BB0413600471592 /* Main.storyboard in Resources */,
+				AFEE35351BB0415D00471592 /* LoadingView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEE34E81BB0413600471592 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEE34F31BB0413600471592 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		010D2AAFB364786A32815BFB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8D86392C331A67C8216876E6 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA2AB3FC4C8BEB0BB945E336 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFEE34CF1BB0413600471592 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEE352C1BB0415D00471592 /* DesignableLabel.swift in Sources */,
+				AFEE353B1BB0415D00471592 /* SpringImageView.swift in Sources */,
+				AF73C8511C7BF9030015A625 /* DKAssetGroupDetailVC.swift in Sources */,
+				AFEE35281BB0415D00471592 /* AutoTextView.swift in Sources */,
+				AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */,
+				AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */,
+				AFEE35311BB0415D00471592 /* ImageLoader.swift in Sources */,
+				AF99A5C71C4C82C2006DA3E2 /* SettingTableViewController.swift in Sources */,
+				AFEE35361BB0415D00471592 /* Misc.swift in Sources */,
+				AFEE35291BB0415D00471592 /* BlurView.swift in Sources */,
+				AF73C84B1C7BF9030015A625 /* DKAssetGroup.swift in Sources */,
+				AFEE35421BB0415D00471592 /* UnwindSegue.swift in Sources */,
+				AFEE35341BB0415D00471592 /* LoadingView.swift in Sources */,
+				AFE642331C465700001F0524 /* AppointmentContainer.swift in Sources */,
+				AFEE353D1BB0415D00471592 /* SpringTextField.swift in Sources */,
+				AF9317DC1C4887C3005D230F /* ConfigMessageString.swift in Sources */,
+				AFEE35381BB0415D00471592 /* Spring.swift in Sources */,
+				AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */,
+				AFEE34DF1BB0413600471592 /* Telehealth.xcdatamodeld in Sources */,
+				AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */,
+				AF4498AA1BDF11CE005A905E /* PatientService.swift in Sources */,
+				AFE6422D1C46467F001F0524 /* TokenAPI.swift in Sources */,
+				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
+				AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */,
+				AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */,
+				AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */,
+				AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */,
+				AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */,
+				AF73C8531C7BF9030015A625 /* DKAssetGroupListVC.swift in Sources */,
+				AFEE352A1BB0415D00471592 /* DesignableButton.swift in Sources */,
+				AFEE34D91BB0413600471592 /* ViewController.swift in Sources */,
+				AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */,
+				AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */,
+				AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */,
+				AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */,
+				AFEE35401BB0415D00471592 /* TransitionManager.swift in Sources */,
+				AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */,
+				AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */,
+				AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */,
+				AF73C8491C7BF9030015A625 /* DKGroupDataManager.swift in Sources */,
+				AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */,
+				AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */,
+				AF73C8471C7BF9030015A625 /* DKCamera.swift in Sources */,
+				AF73C84F1C7BF9030015A625 /* DKImageResource.swift in Sources */,
+				AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */,
+				AF7B5F441BE74D6D0043B14D /* AppointmentListsViewController.swift in Sources */,
+				AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */,
+				AF1BCE4C1C4DCD06002CA9A5 /* RequestTelehealthService.swift in Sources */,
+				AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */,
+				AF4498AE1BDF1238005A905E /* CallContainer.swift in Sources */,
+				AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */,
+				AF73C84A1C7BF9030015A625 /* DKAsset.swift in Sources */,
+				AFE642311C465214001F0524 /* AppointmentAPI.swift in Sources */,
+				AFEE352F1BB0415D00471592 /* DesignableTextView.swift in Sources */,
+				AF00C3FB1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift in Sources */,
+				AF3391731C841EBC00483F36 /* UpdateProfileViewController.swift in Sources */,
+				AFF10DF41BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
+				AFE642291C463EB9001F0524 /* PatientContainer.swift in Sources */,
+				AFEE353F1BB0415D00471592 /* SpringView.swift in Sources */,
+				AF99A5C51C4C7B83006DA3E2 /* SettingNavigationViewController.swift in Sources */,
+				AFEE353E1BB0415D00471592 /* SpringTextView.swift in Sources */,
+				AFE642371C4733FC001F0524 /* VerifyService.swift in Sources */,
+				AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */,
+				AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */,
+				AF73C84E1C7BF9030015A625 /* DKImagePickerController.swift in Sources */,
+				AF73C84C1C7BF9030015A625 /* DKImageManager.swift in Sources */,
+				AFC603D01C4FEBB800DEFD2C /* TelehealthAPI.swift in Sources */,
+				AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */,
+				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
+				AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */,
+				AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */,
+				AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */,
+				AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */,
+				AF4498AC1BDF11FE005A905E /* AppointmentService.swift in Sources */,
+				AFE6422F1C4650EC001F0524 /* VerifyPhoneAPI.swift in Sources */,
+				AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */,
+				AFE642391C474113001F0524 /* SocketService.swift in Sources */,
+				AF73C8541C7BF9030015A625 /* DKPermissionView.swift in Sources */,
+				AFB2FEEB1C4F2E1200B41BDA /* TelehealthContainer.swift in Sources */,
+				AFA33C971C4CD4C6001E2F7E /* RequestTelehealthViewController.swift in Sources */,
+				AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */,
+				AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */,
+				AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */,
+				AFF10DB21BB241DA005E9838 /* InformationViewController.swift in Sources */,
+				AFE6422B1C46444E001F0524 /* PatientAPI.swift in Sources */,
+				AF73C8501C7BF9030015A625 /* DKPopoverViewController.swift in Sources */,
+				AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */,
+				AFE642351C473305001F0524 /* CallService.swift in Sources */,
+				AF73C8521C7BF9030015A625 /* DKAssetGroupGridLayout.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEE34E61BB0413600471592 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEE34EF1BB0413600471592 /* TelehealthTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEE34F11BB0413600471592 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEE34FA1BB0413600471592 /* TelehealthUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AFEE34EC1BB0413600471592 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFEE34D21BB0413600471592 /* Telehealth */;
+			targetProxy = AFEE34EB1BB0413600471592 /* PBXContainerItemProxy */;
+		};
+		AFEE34F71BB0413600471592 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFEE34D21BB0413600471592 /* Telehealth */;
+			targetProxy = AFEE34F61BB0413600471592 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AFEE34DA1BB0413600471592 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFEE34DB1BB0413600471592 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AFEE34E21BB0413600471592 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFEE34E31BB0413600471592 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AFEE34FC1BB0413600471592 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AFEE34FD1BB0413600471592 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFEE34FF1BB0413600471592 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Telehealth",
+				);
+				INFOPLIST_FILE = Telehealth/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth/Telehealth-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AFEE35001BB0413600471592 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Telehealth",
+				);
+				INFOPLIST_FILE = Telehealth/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth/Telehealth-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AFEE35021BB0413600471592 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TelehealthTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kreatived.TelehealthTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Telehealth.app/Telehealth";
+			};
+			name = Debug;
+		};
+		AFEE35031BB0413600471592 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TelehealthTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kreatived.TelehealthTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Telehealth.app/Telehealth";
+			};
+			name = Release;
+		};
+		AFEE35051BB0413600471592 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TelehealthUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kreatived.TelehealthUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Telehealth;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		AFEE35061BB0413600471592 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TelehealthUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kreatived.TelehealthUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Telehealth;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFEE34CE1BB0413600471592 /* Build configuration list for PBXProject "Telehealth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEE34FC1BB0413600471592 /* Debug */,
+				AFEE34FD1BB0413600471592 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFEE34FE1BB0413600471592 /* Build configuration list for PBXNativeTarget "Telehealth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEE34FF1BB0413600471592 /* Debug */,
+				AFEE35001BB0413600471592 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFEE35011BB0413600471592 /* Build configuration list for PBXNativeTarget "TelehealthTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEE35021BB0413600471592 /* Debug */,
+				AFEE35031BB0413600471592 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFEE35041BB0413600471592 /* Build configuration list for PBXNativeTarget "TelehealthUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEE35051BB0413600471592 /* Debug */,
+				AFEE35061BB0413600471592 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AFEE34DD1BB0413600471592 /* Telehealth.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AFEE34DE1BB0413600471592 /* Telehealth.xcdatamodel */,
+			);
+			currentVersion = AFEE34DE1BB0413600471592 /* Telehealth.xcdatamodel */;
+			path = Telehealth.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = AFEE34CB1BB0413600471592 /* Project object */;
+}

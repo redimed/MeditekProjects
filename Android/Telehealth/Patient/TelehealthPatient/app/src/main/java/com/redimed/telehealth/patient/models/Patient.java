@@ -40,7 +40,7 @@ public class Patient {
     @SerializedName("State")
     private String State;
 
-    @SerializedName("Email1")
+    @SerializedName("Email")
     private String Email;
 
     @SerializedName("PhoneNumber")
@@ -55,9 +55,11 @@ public class Patient {
     @SerializedName("UserAccount")
     private UserAccount userAccount;
 
-    @SerializedName("FileUID")
-    private String FileUID;
+    @SerializedName("ProfileImage")
+    private String ProfileImage;
 
+    @SerializedName("Signature")
+    private String Signature;
 
     public String getUID() {
         return UID;
@@ -187,11 +189,19 @@ public class Patient {
         this.userAccount = userAccount;
     }
 
-    public String getFileUID() {
-        return FileUID;
+    public String getProfileImage() {
+        return ProfileImage;
     }
 
-    public void setFileUID(String fileUID) {
-        FileUID = fileUID;
+    public void setProfileImage(String profileImage) {
+        ProfileImage = profileImage;
+    }
+
+    public String getSignature() {
+        return Signature;
+    }
+
+    public void setSignature(String signature) {
+        Signature = signature;
     }
 }

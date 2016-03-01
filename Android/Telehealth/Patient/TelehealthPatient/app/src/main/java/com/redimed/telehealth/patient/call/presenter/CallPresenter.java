@@ -180,7 +180,7 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
             sessionOpenTok.disconnect();
     }
 
-    //Initialize connect with subscribe
+    //Initialize connect with subscriber
     private void SubscribeToStream(Stream stream) {
         subscriber = new Subscriber(context, stream);
         subscriber.setVideoListener(this);
@@ -190,7 +190,7 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
         }
     }
 
-    //Disconnect with subscribe
+    //Disconnect with subscriber
     private void UnsubscribeFromStream(Stream stream) {
         streamOpenTok.remove(stream);
         if (subscriber.getStream().getStreamId().equals(stream.getStreamId())) {
@@ -252,6 +252,7 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
     public void onSignalReceived(Session session, String type, String data, Connection connection) {
         String myConnectionId = session.getConnection().getConnectionId();
         String theirConnectionId = connection.getConnectionId();
+
         if (!theirConnectionId.equals(myConnectionId)) {
             if (type.equalsIgnoreCase("endCall") && data.equalsIgnoreCase("end")) {
                 publisher = null;

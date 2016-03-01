@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
         IMainPresenter iMainPresenter = new MainPresenter(this, this);
         iMainPresenter.replaceFragment(new HomeFragment());
-        iMainPresenter.updateToken();
     }
 
     @Override

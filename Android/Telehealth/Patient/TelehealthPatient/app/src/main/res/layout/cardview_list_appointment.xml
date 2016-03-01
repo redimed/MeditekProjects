@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <com.redimed.telehealth.patient.font.RobotoTextView
-            android:id="@+id/lblNo"
+            android:id="@+id/lblDate"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

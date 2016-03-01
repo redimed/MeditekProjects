@@ -3,7 +3,10 @@ package com.redimed.telehealth.patient.request;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,15 +15,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
@@ -33,9 +43,14 @@ import com.redimed.telehealth.patient.utlis.AdapterImageRequest;
 import com.redimed.telehealth.patient.utlis.DeviceUtils;
 import com.redimed.telehealth.patient.utlis.DialogAlert;
 import com.redimed.telehealth.patient.utlis.DialogConnection;
+import com.redimed.telehealth.patient.utlis.FloatingBtnAnimationControl;
 import com.redimed.telehealth.patient.utlis.PreCachingLayoutManager;
+import com.redimed.telehealth.patient.views.SignaturePad;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +65,8 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     private ArrayList<EditText> arrEditText;
     private ArrayList<CustomGallery> customGalleries;
     private IRequestPresenter iRequestPresenter;
-    private String TAG = "REQUEST";
+    private String TAG = "REQUEST", apptType;
+    private FloatingBtnAnimationControl floatingBtnAnimationControl;
 
     @Bind(R.id.tblRequest)
     TableLayout tblRequest;
@@ -64,6 +80,10 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     EditText txtHome;
     @Bind(R.id.autoCompleteSuburb)
     AutoCompleteTextView autoCompleteSuburb;
+    @Bind(R.id.spinnerApptType)
+    Spinner spinnerApptType;
+    @Bind(R.id.lblInvisibleError)
+    TextView lblInvisibleError;
     @Bind(R.id.txtDOB)
     EditText txtDOB;
     @Bind(R.id.txtEmail)
@@ -74,6 +94,26 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     TextView btnSubmit;
     @Bind(R.id.rvRequestImage)
     RecyclerView rvRequestImage;
+    @Bind(R.id.lblImage)
+    TextView lblImage;
+
+    @Bind(R.id.fabUpload)
+    FloatingActionButton fabUpload;
+
+    @Bind(R.id.signaturePad)
+    SignaturePad signaturePad;
+    @Bind(R.id.vfContainer)
+    ViewFlipper vfContainer;
+    @Bind(R.id.lblClear)
+    TextView btnClear;
+    @Bind(R.id.lblSave)
+    TextView btnSave;
+    @Bind(R.id.layoutSignature)
+    LinearLayout layoutSignature;
+    @Bind(R.id.layoutSubmit)
+    LinearLayout layoutSubmit;
+    @Bind(R.id.imgSignature)
+    ImageView imgSignature;
 
     /* Upload */
     @Bind(R.id.layoutUpload)
@@ -96,23 +136,52 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
         View v = inflater.inflate(R.layout.fragment_request, container, false);
         context = v.getContext();
         ButterKnife.bind(this, v);
+
+        iRequestPresenter = new RequestPresenter(context, this, getActivity());
+        iRequestPresenter.hideKeyboardFragment(v);
+
         init();
+        initSpinner();
+        initSignature();
 
         btnUpload.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         txtDOB.setOnFocusChangeListener(this);
 
-        iRequestPresenter = new RequestPresenter(context, this, getActivity());
-        iRequestPresenter.loadJsonData();
-        iRequestPresenter.hideKeyboardFragment(v);
-        iRequestPresenter.loadDataInfoExists();
+        btnClear.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+
+        txtDescription.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        fabUpload.setOnClickListener(this);
+        floatingBtnAnimationControl = new FloatingBtnAnimationControl(fabUpload);
+        floatingBtnAnimationControl.lockScrollingDirection();
 
         return v;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        rvRequestImage.addOnScrollListener(floatingBtnAnimationControl);
+    }
+
     void init() {
+        onLoadData(iRequestPresenter.loadDataInfoExists());
         customGalleries = new ArrayList<CustomGallery>();
 
+        //init array EditText
         arrEditText = new ArrayList<EditText>();
         arrEditText.add(txtFirstName);
         arrEditText.add(txtLastName);
@@ -121,6 +190,54 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
         arrEditText.add(txtEmail);
         arrEditText.add(txtHome);
         arrEditText.add(txtDescription);
+
+        //init Suburb
+        if (iRequestPresenter.loadJsonData() != null) {
+            autoCompleteSuburb.setThreshold(1);
+            autoCompleteSuburb.setAdapter(iRequestPresenter.loadJsonData());
+        }
+    }
+
+    private void initSpinner() {
+        spinnerApptType.setAdapter(iRequestPresenter.setDataApptType());
+        spinnerApptType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItemText = (String) parent.getItemAtPosition(position);
+                // If user change the default selection
+                // First item is disable and it is used for hint
+                if (position == 0) {
+                    apptType = "";
+                } else {
+                    // Notify the selected item text
+                    apptType = selectedItemText;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private void initSignature() {
+        signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+            @Override
+            public void onStartSigning() {
+                Toast.makeText(context, "OnStartSigning", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSigned() {
+                btnSave.setEnabled(true);
+                btnClear.setEnabled(true);
+            }
+
+            @Override
+            public void onClear() {
+                btnSave.setEnabled(false);
+                btnClear.setEnabled(false);
+            }
+        });
     }
 
     @Override
@@ -137,13 +254,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 iRequestPresenter.changeFragment(new HomeFragment());
             }
         });
-    }
-
-    @Override
-    public void onLoadSuburb(String[] suburbs) {
-        ArrayAdapter adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, suburbs);
-        autoCompleteSuburb.setThreshold(1);
-        autoCompleteSuburb.setAdapter(adapter);
     }
 
     @Override
@@ -182,6 +292,14 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     }
 
     @Override
+    public void onResultApptType(boolean apptType) {
+        if (!apptType) {
+            // Set fake TextView to be in error so that the error message appears
+            lblInvisibleError.requestFocus();
+            lblInvisibleError.setError(getResources().getString(R.string.field_empty));
+        }
+    }
+
     public void onLoadData(Patient[] patients) {
         if (patients != null) {
             layoutUpload.setVisibility(View.VISIBLE);
@@ -201,6 +319,8 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Override
     public void onLoadGallery(ArrayList<CustomGallery> customGalleries) {
         this.customGalleries = customGalleries;
+        if (customGalleries.size() > 0)
+            lblImage.setVisibility(View.GONE);
 
         AdapterImageRequest adapterImageRequest = new AdapterImageRequest(customGalleries, context);
 
@@ -213,15 +333,31 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     }
 
     @Override
+    public void onLoadSignature(Bitmap bitmap) {
+        if (bitmap != null) {
+            vfContainer.setDisplayedChild(vfContainer.indexOfChild(layoutSubmit));
+            imgSignature.setImageBitmap(bitmap);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblUpload:
-                Intent i = new Intent("ACTION_MULTIPLE_PICK");
-                startActivityForResult(i, 200);
                 break;
             case R.id.lblSubmit:
 //                iRequestPresenter.checkDataField(tblRequest);
-                iRequestPresenter.uploadImage(customGalleries, arrEditText, autoCompleteSuburb.getText().toString());
+                iRequestPresenter.uploadImage(customGalleries, arrEditText, autoCompleteSuburb.getText().toString(), apptType);
+                break;
+            case R.id.lblClear:
+                signaturePad.clear();
+                break;
+            case R.id.lblSave:
+                iRequestPresenter.saveBitmapSign(signaturePad);
+                break;
+            case R.id.fabUpload:
+                Intent i = new Intent("ACTION_MULTIPLE_PICK");
+                startActivityForResult(i, 200);
                 break;
         }
     }

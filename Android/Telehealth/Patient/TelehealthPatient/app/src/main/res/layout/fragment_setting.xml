@@ -28,7 +28,7 @@
             android:background="@drawable/custom_border">
 
             <com.redimed.telehealth.patient.font.RobotoTextView
-                android:id="@+id/lblEmail"
+                android:id="@+id/lblPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
@@ -108,7 +108,8 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
                     android:id="@+id/btnAddNew"
@@ -132,6 +133,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/layoutAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_border"

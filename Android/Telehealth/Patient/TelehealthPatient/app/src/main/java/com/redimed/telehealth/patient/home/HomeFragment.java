@@ -85,6 +85,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         context = v.getContext();
         ButterKnife.bind(this, v);
+
         initSlider();
 
         iHomePresenter = new HomePresenter(this, context, getActivity());
@@ -112,7 +113,6 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
 
     //Generation Slider Image
     private void initSlider() {
-
         AdapterSlider adapterSlider = new AdapterSlider(context);
         slider.setAdapter(adapterSlider);
         circleIndicator.setViewPager(slider);
@@ -144,6 +144,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                 iHomePresenter.displayRequest();
                 break;
             case R.id.btnServiceNon:
+                iHomePresenter.displayFAQs("Service");
                 break;
 
             /* Patient View */
@@ -157,6 +158,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                 iHomePresenter.displaySetting();
                 break;
             case R.id.btnService:
+                iHomePresenter.displayFAQs("Service");
                 break;
 
             /* Both View */

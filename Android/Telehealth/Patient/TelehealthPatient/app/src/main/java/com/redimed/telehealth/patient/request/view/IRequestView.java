@@ -1,5 +1,7 @@
 package com.redimed.telehealth.patient.request.view;
 
+import android.graphics.Bitmap;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.redimed.telehealth.patient.models.CustomGallery;
@@ -17,9 +19,10 @@ public interface IRequestView {
     void onResultRequest(String msg);
     void onResultEmail(boolean email);
     void onResultMobile(boolean phone);
-    void onLoadSuburb(String[] suburbs);
     void onResultSuburb(boolean suburb);
-    void onLoadData(Patient[] patients);
-    void onResultField(EditText editText);
+    void onResultApptType(boolean apptType);
+    void onLoadSignature(Bitmap bitmap);
     void onLoadGallery(ArrayList<CustomGallery> customGalleries);
+
+    void onResultField(EditText editText);
 }

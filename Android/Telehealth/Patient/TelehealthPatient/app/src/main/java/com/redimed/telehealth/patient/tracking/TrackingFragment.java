@@ -29,6 +29,7 @@ import com.redimed.telehealth.patient.utlis.DialogConnection;
 import com.redimed.telehealth.patient.utlis.AdapterAppointment;
 import com.redimed.telehealth.patient.utlis.EndlessRecyclerOnScrollListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -43,7 +44,10 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     private Context context;
     protected Handler handler;
     private String TAG = "TRACKING";
+    private List<Appointment> data;
     private ITrackingPresenter iTrackingPresenter;
+    private AdapterAppointment adapterAppointment;
+    private LinearLayoutManager linearLayoutManager;
 
     @Bind(R.id.swipeInfo)
     SwipeRefreshLayout swipeInfo;
@@ -62,8 +66,7 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     @Bind(R.id.btnBack)
     Button btnBack;
 
-    public TrackingFragment() {
-    }
+    public TrackingFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class TrackingFragment extends Fragment implements ITrackingView {
 
     private void getListAppointment() {
         handler = new Handler();
+        data = new ArrayList<Appointment>();
         iTrackingPresenter = new TrackingPresenter(context, this, getActivity());
         iTrackingPresenter.setProgressBarVisibility(View.VISIBLE);
         iTrackingPresenter.getListAppointment(offset);
@@ -119,41 +123,39 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     }
 
     @Override
-    public void onLoadListAppt(final List<Appointment> data) {
+    public void onLoadDataTracking(final List<Appointment> data){
         lblNoData.setVisibility(View.GONE);
         iTrackingPresenter.setProgressBarVisibility(View.GONE);
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        final AdapterAppointment adapterAppointment = new AdapterAppointment(context, data, getActivity(), rvListAppointment);
-//        adapterAppointment.setOnLoadMoreListener(new EndlessRecyclerOnScrollListener() {
-//            @Override
-//            public void onLoadMore() {
-//                //add null , so the adapter will check view_type and show progress bar at bottom
-//                data.add(null);
-//                adapterAppointment.notifyItemRemoved(data.size() - 1);
-//
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        // remove progress item
-//                        data.remove(data.size() - 1);
-//                        adapterAppointment.notifyItemRemoved(data.size());
-//
-//                        //  add items one by one
-//                        int start = data.size();
-//                        int end = start + 1;
-//
-//                        Log.d(TAG, start + "======" + end);
-//
-//                        iTrackingPresenter.getListAppointment(end);
-//                        adapterAppointment.notifyItemInserted(data.size());
-//                        adapterAppointment.setLoaded();
-//                    }
-//                }, 2000);
-//
-//            }
-//        });
+        linearLayoutManager = new LinearLayoutManager(context);
+
+        adapterAppointment  = new AdapterAppointment(context, data, getActivity(), rvListAppointment);
+        adapterAppointment.setOnLoadMoreListener(new EndlessRecyclerOnScrollListener() {
+            @Override
+            public void onLoadMore() {
+                //add null , so the adapter will check view_type and show progress bar at bottom
+                data.add(null);
+                adapterAppointment.notifyItemInserted(data.size() - 1);
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //  remove progress item
+                        data.remove(data.size() - 1);
+                        adapterAppointment.notifyItemRemoved(data.size());
+
+                        //  add items one by one
+                        int start = data.size();
+                        int end = start + 1;
+
+                        Log.d(TAG, end + "");
+
+                        adapterAppointment.notifyItemInserted(data.size());
+                        adapterAppointment.setLoaded();
+                    }
+                }, 2000);
+            }
+        });
 
         rvListAppointment.setHasFixedSize(true);
         rvListAppointment.setLayoutManager(linearLayoutManager);
@@ -171,6 +173,7 @@ public class TrackingFragment extends Fragment implements ITrackingView {
         });
         swipeInfo.setRefreshing(false);
     }
+
 
     @Override
     public void onLoadError(String msg) {

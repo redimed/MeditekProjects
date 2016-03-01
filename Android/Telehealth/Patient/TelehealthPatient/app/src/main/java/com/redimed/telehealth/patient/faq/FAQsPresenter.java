@@ -27,10 +27,18 @@ public class FAQsPresenter implements IFAQsPresenter {
         if (bundle != null) {
             String page = bundle.getString("msg");
             assert page != null;
-            if (page.equals("UR")) {
-                url = "file:///android_asset/UrgentCare.html";
-            } else {
-                url = "file:///android_asset/FAQs.html";
+            switch (page){
+                case "UR":
+                    url = "file:///android_asset/AboutUs.html";
+                    break;
+                case "FAQs":
+                    url = "file:///android_asset/FAQs.html";
+                    break;
+                case "Service":
+                    url = "file:///android_asset/UrgentCare.html";
+                    break;
+                default:
+                    break;
             }
         }
         ifaqsView.onViewPage(url);

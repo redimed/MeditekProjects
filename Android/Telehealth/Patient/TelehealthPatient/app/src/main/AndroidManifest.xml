@@ -108,6 +108,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="ACTION_MULTIPLE_PICK" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -115,7 +116,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -130,8 +130,10 @@
             android:name=".receiver.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
+
                 <!-- Receives the actual messages. -->
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
@@ -140,8 +142,10 @@
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
+
                 <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                 <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
@@ -170,8 +174,10 @@
             android:name=".service.GPSTrackerService"
             android:enabled="true"
             android:exported="false" />
-
-
+        <service
+            android:name=".service.UploadService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

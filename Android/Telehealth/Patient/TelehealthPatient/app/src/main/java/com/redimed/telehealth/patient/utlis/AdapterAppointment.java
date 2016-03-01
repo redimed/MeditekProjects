@@ -7,26 +7,22 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.appointment.AppointmentFragment;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.Appointment;
-import com.redimed.telehealth.patient.models.Category;
 import com.redimed.telehealth.patient.models.Doctor;
-import com.redimed.telehealth.patient.tracking.TrackingFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,11 +33,14 @@ import butterknife.ButterKnife;
  */
 public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
 
-    private boolean loading;
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROG = 0;
-    private int visibleThreshold = 5;
+
+    // The minimum amount of items to have below your current scroll position
+    // before loading more.
+    private int visibleThreshold = 10;
     private int lastVisibleItem, totalItemCount;
+    private boolean loading;
     private EndlessRecyclerOnScrollListener onLoadMoreListener;
 
     private Context context;
@@ -66,6 +65,7 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
                     totalItemCount = linearLayoutManager.getItemCount();
                     lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                     if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+
                         // End has been reached
                         // Do something
                         if (onLoadMoreListener != null) {
@@ -79,8 +79,8 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.lblNo)
-        TextView lblNo;
+        @Bind(R.id.lblDate)
+        TextView lblDate;
         @Bind(R.id.lblDoctorRef)
         TextView lblDoctorRef;
         @Bind(R.id.lblDoctorPre)
@@ -99,7 +99,7 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         }
     }
 
-    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+    public class ProgressViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.progressBar)
         ProgressBar progressBar;
 
@@ -107,6 +107,7 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
             super(v);
             ButterKnife.bind(this, v);
         }
+
     }
 
     private void SubTracking(View v, int position) {
@@ -120,6 +121,14 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         return listAppointment.get(position) != null ? VIEW_ITEM : VIEW_PROG;
+    }
+
+    public void setLoaded() {
+        loading = false;
+    }
+
+    public void setOnLoadMoreListener(EndlessRecyclerOnScrollListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
     }
 
     @Override
@@ -140,34 +149,23 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         return vh;
     }
 
-    public void setLoaded() {
-        loading = false;
-    }
-
-    public void setOnLoadMoreListener(EndlessRecyclerOnScrollListener onLoadMoreListener) {
-        this.onLoadMoreListener = onLoadMoreListener;
-    }
-
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         if (viewHolder instanceof AppointmentViewHolder) {
             AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
+
             Doctor[] doctors = listAppointment.get(position).getDoctor();
             for (Doctor doctor : doctors) {
                 firstName = doctor.getFirstName() == null ? "NONE" : doctor.getFirstName();
                 lastName = doctor.getLastName() == null ? "" : doctor.getLastName();
             }
-            int no = position + 1;
-            String ref, refName = "NONE";
-            if (no <= 9) {
-                ref = "Ref0" + no;
-            } else {
-                ref = "Ref" + no;
-            }
-            appointmentViewHolder.lblNo.setText(ref);
+
+            String refName = "";
             if (listAppointment.get(position).getTelehealthAppointment() != null) {
-                refName = listAppointment.get(position).getTelehealthAppointment().getRefName();
+                refName = listAppointment.get(position).getTelehealthAppointment().getRefName() == null
+                        ? "NONE" : listAppointment.get(position).getTelehealthAppointment().getRefName();
             }
+            appointmentViewHolder.lblDate.setText(MyApplication.getInstance().ConvertDate(listAppointment.get(position).getRequestDate()));
             appointmentViewHolder.lblDoctorRef.setText(refName);
             appointmentViewHolder.lblDoctorPre.setText(firstName + " " + lastName);
 

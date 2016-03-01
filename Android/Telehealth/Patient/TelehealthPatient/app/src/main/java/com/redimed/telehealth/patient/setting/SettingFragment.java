@@ -1,38 +1,29 @@
 package com.redimed.telehealth.patient.setting;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.information.presenter.InfoPresenter;
-import com.redimed.telehealth.patient.main.MainActivity;
-import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
-import com.redimed.telehealth.patient.main.presenter.MainPresenter;
+import com.redimed.telehealth.patient.home.presenter.HomePresenter;
+import com.redimed.telehealth.patient.home.presenter.IHomePresenter;
 import com.redimed.telehealth.patient.models.Patient;
-import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.setting.presenter.ISettingPresenter;
 import com.redimed.telehealth.patient.setting.presenter.SettingPresenter;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
 import com.redimed.telehealth.patient.utlis.DialogAlert;
 import com.redimed.telehealth.patient.utlis.DialogConnection;
-
-import org.w3c.dom.Text;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,14 +37,14 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     private ISettingPresenter iSettingPresenter;
     private String TAG = "SETTING", uid;
 
-    @Bind(R.id.lblEmail)
-    TextView lblEmail;
+    @Bind(R.id.lblPhoneNumber)
+    TextView lblPhoneNumber;
     @Bind(R.id.btnLogout)
     TextView btnLogout;
     @Bind(R.id.lblName)
     TextView lblName;
-    @Bind(R.id.lblAbout)
-    TextView lblAbout;
+    @Bind(R.id.layoutAbout)
+    RelativeLayout layoutAbout;
     @Bind(R.id.layoutProfile)
     LinearLayout layoutProfile;
 
@@ -65,8 +56,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     @Bind(R.id.btnBack)
     Button btnBack;
 
-    public SettingFragment() {
-    }
+    public SettingFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +66,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
         initVariable();
 
         btnLogout.setOnClickListener(this);
+        layoutAbout.setOnClickListener(this);
         layoutProfile.setOnClickListener(this);
 
         return v;
@@ -98,7 +89,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
             for (Patient patient : patients) {
                 firstName = patient.getFirstName() == null ? "NONE" : patient.getFirstName();
                 lastName = patient.getLastName() == null ? "" : patient.getLastName();
-                lblEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
+                lblPhoneNumber.setText(patient.getPhoneNumber() == null ? "NONE" : patient.getPhoneNumber());
                 lblName.setText(firstName + " " + lastName);
             }
         }
@@ -139,6 +130,9 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
                 break;
             case R.id.layoutProfile:
                 iSettingPresenter.displayInfoPatient(uid);
+                break;
+            case R.id.layoutAbout:
+                iSettingPresenter.displayAbout();
                 break;
         }
     }

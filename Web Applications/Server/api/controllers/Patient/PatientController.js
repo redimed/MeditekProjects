@@ -161,6 +161,9 @@ module.exports = {
         if (typeof(data) == 'string') {
             data = JSON.parse(data);
         }
+        if('UserAccountUID' in req.body) {
+            data.UserAccountUID = req.body.UserAccountUID;
+        }
         var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
@@ -198,8 +201,8 @@ module.exports = {
 
                 if (info != null && info != undefined && info != '') {
                     for(var i = 0; i < info[0].dataValues.UserAccount.FileUploads.length; i++) {
-                        info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i]=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
-                        info[0].dataValues.Signature = info[0].dataValues.UserAccount.FileUploads[i]=='Signature'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                        info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i].FileType=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                        info[0].dataValues.Signature = info[0].dataValues.UserAccount.FileUploads[i].FileType=='Signature'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
                     }
                     info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
                     info[0].dataValues.Email = info[0].dataValues.UserAccount.Email;

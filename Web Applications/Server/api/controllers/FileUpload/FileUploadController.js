@@ -181,11 +181,35 @@ module.exports = {
             .then(function(result) {
                 if (result != null && result != "" && result.length != 0)
                     res.ok({
-                        mesage: "success"
+                        message: "success"
                     });
                 else
                     res.ok({
-                        mesage: "DisableAllFile.Error.NotFoundUserAccountID"
+                        message: "DisableAllFile.Error.NotFoundUserAccountID"
+                    });
+            })
+            .catch(function(err) {
+                // console.log(err);
+                res.serverError(ErrorWrap(err));
+            });
+    },
+    ChangeStatus: function(req, res) {
+        var data = req.body.data;
+        if (typeof(data) == 'string') {
+            data = JSON.parse(data);
+        }
+        if('UserAccountUID' in req.body) {
+            data.UserAccountUID = req.body.UserAccountUID;
+        }
+        Services.FileUpload.ChangeStatus(data)
+            .then(function(result) {
+                if (result != null && result != "" && result.length != 0)
+                    res.ok({
+                        message: "success"
+                    });
+                else
+                    res.ok({
+                        message: "ChangeStatus.Error.NotFoundUserAccountID"
                     });
             })
             .catch(function(err) {

@@ -87,5 +87,52 @@ module.exports = {
                 throw err;
             });
         }
+    },
+    ChangeStatus: function(data) {
+        if(data.fileType == null || data.fileType == "" || data.fileType.length == 0) {
+            var err = new Error("DisableAllFile.Error");
+            err.pushError("fileType.Null");
+            throw err;
+        }
+        else {
+            var whereClause = [];
+            for(var i = 0; i < data.fileType.length; i++) {
+                whereClause.push({fileType : data.fileType[i]});
+            }
+            return sequelize.transaction()
+            .then(function(t) {
+                return FileUpload.update({
+                    Enable : data.enable
+                },{
+                    include:[
+                        {
+                            model:UserAccount,
+                            where:{
+                                UserAccountID : data.UserAccountUID
+                            }
+                        }
+                    ],
+                    where:{
+                        $and:{
+                            UID :{
+                                $notIn:[data.fileUID]
+                            },
+                            $or: whereClause
+                        }
+                        
+                    },
+                    transaction: t
+                })
+                .then(function(result){
+                    t.commit();
+                    return result;
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+            },function(err){
+                throw err;
+            });
+        }
     }
 }

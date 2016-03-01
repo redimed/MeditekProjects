@@ -953,7 +953,7 @@ module.exports = {
                                 Enable : data.EnableUser
                             },{
                                 where : {
-                                    ID : data.UserAccountID
+                                    UID : data.UserAccountUID
                                 },
                                 transaction:t
                             });
@@ -972,7 +972,7 @@ module.exports = {
                                         Email : data.Email
                                     },{
                                         where : {
-                                            ID : data.UserAccountID
+                                            UID : data.UserAccountUID
                                         },
                                         transaction:t
                                     });
@@ -1351,7 +1351,8 @@ module.exports = {
                                     where:{
                                         FileType:{$in: ['ProfileImage', 'Signature']},  
                                         Enable:'Y'
-                                    }
+                                    },
+                                    order:['CreatedDate DESC']
                                 }
                             ]
                         },

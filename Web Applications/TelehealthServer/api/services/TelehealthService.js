@@ -82,9 +82,21 @@ module.exports = {
     },
     UpdatePatientDetails: function(headers, body) {
         headers['content-type'] = 'application/json';
+        body.data.UserAccountUID = headers.useruid;
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/patient/update-patient',
+            method: 'POST',
+            body: body,
+            headers: headers
+        });
+    },
+    ChangeEnableFile: function(headers, body) {
+        headers['content-type'] = 'application/json';
+        body.UserAccountUID = headers.useruid;
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/change-enable-file',
             method: 'POST',
             body: body,
             headers: headers

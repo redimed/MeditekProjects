@@ -99,7 +99,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     socketTelehealth.funCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal({
-            title: $scope.opentokData.userName,
+            title: "lammmmmmmmmmmmmmm",
             imageUrl: "theme/assets/global/images/E-call_33.png",
             text: "<img src='theme/assets/global/img/loading.gif' />",
             timer: 30000,
@@ -114,4 +114,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         audio.loop = true;
         audio.play();
     };
+
+    socketTelehealth.funConnect = function(){
+        console.log("CONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+        
+    }
 });

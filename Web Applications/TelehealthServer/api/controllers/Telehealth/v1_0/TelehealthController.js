@@ -67,6 +67,23 @@ module.exports = {
             res.serverError(ErrorWrap(error));
         }
     },
+    ChangeEnableFile: function(req, res) {
+        var body = req.body;
+        var headers = req.headers;
+        if (!_.isEmpty(body) &&
+            !_.isEmpty(body.data)) {
+            TelehealthService.ChangeEnableFile(headers, body).then(function(response) {
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",response.getBody());
+                return res.ok(response.getBody());
+            }, function(err) {
+                res.json(err.getCode(), err.getBody());
+            });
+        } else {
+            var error = new Error('Telehealth.ChangeEnableFile.Error');
+            res.serverError(ErrorWrap(error));
+        }
+    },
     GetTelehealthUser: function(req, res) {
         var params = req.params.all();
         if (!params.uid) {

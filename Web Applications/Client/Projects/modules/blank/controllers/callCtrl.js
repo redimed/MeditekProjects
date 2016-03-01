@@ -40,7 +40,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     console.log(apiKey);
     console.log(sessionId);
     console.log(token);
-    console.log("$stateParams",$stateParams);
+    console.log("$stateParams", $stateParams);
     o.loadingPage(true);
     //Connect to the session
     $scope.session.connect(token, function(error) {
@@ -55,7 +55,22 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
                 audioVolume: 100
             });
 
-            $scope.session.publish(publisher);
+            $scope.session.publish(publisher, null, function(error) {
+                if (error) {
+                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error);
+                } else {
+                    console.log("publish Success");
+                    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+                        from: uidUser,
+                        to: uidCall,
+                        message: "call",
+                        sessionId: sessionId,
+                        fromName: $scope.userName
+                    }, function(data) {
+                        console.log("send call", data);
+                    });
+                }
+            });
             console.log("connect", $scope.session);
         } else {
             console.log('There was an error connecting to the session: ', error.code, error.message);

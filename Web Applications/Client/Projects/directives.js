@@ -179,20 +179,6 @@ app.directive('appointmentDetailDirective', function() {
             getDetailRoomOpentok();
 
             var userInfo = $cookies.getObject('userInfo');
-
-            function funSocketSendCall(uidCall, uidUser) {
-                console.log("uidCall", uidCall);
-                console.log("uidUser", uidUser);
-                socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-                    from: uidUser,
-                    to: uidCall,
-                    message: "call",
-                    sessionId: $scope.opentok.sessionId,
-                    fromName: userInfo.UserName
-                }, function(data) {
-                    console.log("send call", data);
-                });
-            };
             $scope.funCallOpentok = function() {
                 WAAppointmentService.GetDetailPatientByUid({
                     UID: $scope.appointmentInfo.Patients[0].UID
@@ -201,7 +187,6 @@ app.directive('appointmentDetailDirective', function() {
                     if (data.data[0].TeleUID != null) {
                         var userCall = data.data[0].TeleUID;
                         var userName = data.data[0].FirstName + " " + data.data[0].LastName;
-                        funSocketSendCall(userCall, userInfo.TelehealthUser.UID);
                         $scope.opentokWindow = window.open($state.href("blank.call", {
                             apiKey: $scope.opentok.apiKey,
                             sessionId: $scope.opentok.sessionId,

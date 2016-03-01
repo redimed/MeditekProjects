@@ -24,6 +24,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'UpdatePatientDetails'
     },
+    'POST /api/telehealth/user/enableFile': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'ChangeEnableFile'
+    },
     'POST /api/telehealth/user/appointments': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserAppointments'

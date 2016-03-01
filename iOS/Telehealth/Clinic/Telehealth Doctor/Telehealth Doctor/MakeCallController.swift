@@ -194,7 +194,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         
         SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.nameLogin!)])
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeOutOffCall", userInfo: nil, repeats: false)
+//        timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeOutOffCall", userInfo: nil, repeats: false)
     }
     
     func lostConnection() {
@@ -246,25 +246,14 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             break
         case 1: // ---end call---
             
-            let maybeErr:AutoreleasingUnsafeMutablePointer<OTError?> = nil
-            
             if ((avAudioPlayer?.playing) != nil) {
                 
                 avAudioPlayer?.stop()
                 avAudioPlayer?.currentTime = 0
                 
             }
-            
-            isClickEnd = true
-            if isAnswer {
-                session?.signalWithType("endCall", string: "end", connection: nil, error:maybeErr)
-                if (maybeErr != nil) {
-                    print("signal error \(maybeErr)")
-                }
-            } else {
-                sendMessEnd()
-            }
-            
+            session?.signalWithType("endCall", string: "end", connection: nil, error: nil)
+            sendMessEnd()
             endCall()
         case 2: // camera call
             publisher!.publishVideo = !publisher!.publishVideo
@@ -304,7 +293,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJSONReToken { response -> Void in
-                print(response)
+                print(response.2)
         }
     }
     
@@ -476,7 +465,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     func session(session: OTSession!, receivedSignalType type: String!, fromConnection connection: OTConnection!, withString string: String!) {
-        print("receivedSignalType \(type.lowercaseString) - withString \(string.lowercaseString)")
         if let typeReceive = type, let str = string {
             if !typeReceive.isEmpty && !str.isEmpty {
                 if typeReceive.lowercaseString == "endcall" && str.lowercaseString == "end" {
@@ -539,7 +527,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSLog("publisher streamCreated %@", stream)
         playSoundCall()
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeOutOffCall", userInfo: nil, repeats: false)
+//        timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeOutOffCall", userInfo: nil, repeats: false)
         // Step 3b: (if YES == subscribeToSelf): Our own publisher is now visible to
         // all participants in the OpenTok session. We will attempt to subscribe to
         // our own stream. Expect to see a slight delay in the subscriber video and

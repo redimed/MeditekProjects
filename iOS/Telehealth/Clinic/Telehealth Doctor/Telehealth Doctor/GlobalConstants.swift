@@ -14,9 +14,9 @@ import SwiftyJSON
 /// ***declare server for all application***
 
 /// Server Australia
-let URL_SERVER_3009 = "http://testapp.redimed.com.au:3009"
-let URL_SERVER_3005 = "http://testapp.redimed.com.au:3005"
-let URL_SERVER_3006 = "http://testapp.redimed.com.au:3006"
+let URL_SERVER_3009 = "https://testapp.redimed.com.au:3009"
+let URL_SERVER_3005 = "https://testapp.redimed.com.au:3005"
+let URL_SERVER_3006 = "https://testapp.redimed.com.au:3006"
 
 /// Server Việt Nam
 //let URL_SERVER_3009 = "http://telehealthvietnam.com.vn:3009"
@@ -153,7 +153,7 @@ func get_full_name() -> String {
         let parseJson = JSON(teleDef)
         SingleTon.nameLogin = "\(parseJson["FirstName"].stringValue) \(parseJson["LastName"].stringValue)"
     }
-    return SingleTon.nameLogin! ?? ""
+    return SingleTon.nameLogin ?? ""
 }
 
 

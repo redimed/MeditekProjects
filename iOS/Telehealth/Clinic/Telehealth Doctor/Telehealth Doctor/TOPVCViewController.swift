@@ -82,9 +82,16 @@ class TOPVCViewController: UINavigationController, UIPopoverPresentationControll
             NSUserDefaults.standardUserDefaults().removeObjectForKey("deviceId")
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as? LoginViewController {
-                    self.presentViewController(loginVC, animated: true, completion: nil)
+                if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                    if let loginVC = UIStoryboard(name: "Main-iPad", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as? LoginViewController {
+                        self.presentViewController(loginVC, animated: true, completion: nil)
+                    }
+                } else if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+                    if let loginVC = UIStoryboard(name: "Main-iPhone", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as? LoginViewController {
+                        self.presentViewController(loginVC, animated: true, completion: nil)
+                    }
                 }
+                
             })
         }))
         

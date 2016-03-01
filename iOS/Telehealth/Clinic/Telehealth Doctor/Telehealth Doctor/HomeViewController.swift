@@ -19,11 +19,6 @@ class HomeViewController: UIViewController {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var userUID: String!
     
-    @IBOutlet weak var buttonAppointment: UIButton!
-    @IBOutlet weak var imageListIcon: UIImageView!
-    @IBOutlet var labelDashboard: [UILabel]!
-    @IBOutlet weak var WAButtonAppointment: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,6 +73,7 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("receiveMessage") { data, ack in
                 let result = JSON(data[0])
+                print(result)
                 if let currCall = self.userDefaults.valueForKey("currentUserCall") {
                     if currCall as! String == result["from"].stringValue {
                         print("uid same go handleCallNotification")
@@ -102,10 +98,7 @@ class HomeViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let trimSegueName = segue.identifier!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        if trimSegueName == "TeleListAppointment" {
-            _ = segue.destinationViewController as! AppointmentListViewController
-            SingleTon.flagSegue = true
-        } else if trimSegueName == "WAListAppointment" {
+        if trimSegueName == "TeleAppointment" {
             _ = segue.destinationViewController as! AppointmentListViewController
             SingleTon.flagSegue = false
         }

@@ -10,10 +10,10 @@ import UIKit
 import SwiftyJSON
 
 class Medi_Infomation: UIViewController {
-
+    
     @IBOutlet var labelOutlet: [UILabel]!
     @IBOutlet var chkOutlet: [UIButton]!
-        var patientAppointment: JSON!
+    var patientAppointment: JSON!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,16 @@ class Medi_Infomation: UIViewController {
             let tlLabel: String! = aLabel.text
             
             if tlLabel == "ExpiryDate" {
-             aLabel.text = FormatStrDate(patientAppointment[tlLabel].stringValue)
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.timeZone = NSTimeZone(name: "UTC")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+                if let datePublished = dateFormatter.dateFromString(patientAppointment[tlLabel].stringValue) {
+                    dateFormatter.dateFormat = "dd/MM/yyyy"
+                    let dateFormated = dateFormatter.stringFromDate(datePublished)
+                    dateFormatter.timeZone = NSTimeZone(name: "UTC")
+                    aLabel.text = dateFormated
+                }
+                
             } else {
                 aLabel.text = patientAppointment[tlLabel].stringValue
             }
@@ -52,7 +61,7 @@ class Medi_Infomation: UIViewController {
             medicareEligible == "Y" && button.tag == 10 ? button.setBackgroundImage(UIImage(named: "checked"), forState: UIControlState.Normal) :             medicareEligible == "N" && button.tag == 11 ? button.setBackgroundImage(UIImage(named: "checked"), forState: UIControlState.Normal) : button.setBackgroundImage(UIImage(named: "check"), forState: UIControlState.Normal)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

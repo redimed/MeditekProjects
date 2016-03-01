@@ -56,6 +56,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
     $scope.loadListContry();
     var ClinicalDetailsTemp = [];
     $scope.requestInfo = {
+        Type:'Telehealth',
         RequestDate: null,
         SiteID: 1,
         TelehealthAppointment: {
@@ -243,6 +244,8 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         if (Boolean(headers.requireupdatetoken) === true) {
             $rootScope.getNewToken();
         }
+        console.log("headers", headers)
+        console.log("response", response)
         if (response.status == 'success') {
             var key = 'Clinical__Details.Telehealth__WAAppointment.Notes.' + fileItem.formData[0].fileTypeClinical;
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {

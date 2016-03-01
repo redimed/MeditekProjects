@@ -143,6 +143,10 @@ module.exports = function(appointmentUID, userInfo) {
                 where: {
                     Enable: 'Y'
                 }
+            }, {
+                attributes: Services.AttributesAppt.OnsiteAppointment(),
+                model: OnsiteAppointment,
+                required: false
             }],
             where: filter.Appointment
         })

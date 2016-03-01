@@ -20,6 +20,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetPatientDetails'
     },
+    'POST /api/telehealth/user/update': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'UpdatePatientDetails'
+    },
     'POST /api/telehealth/user/appointments': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserAppointments'
@@ -72,4 +76,3 @@ module.exports.routes = {
         action: 'TestPushGCM'
     }
 };
-

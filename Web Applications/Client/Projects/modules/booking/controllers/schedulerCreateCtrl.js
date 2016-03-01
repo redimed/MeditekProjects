@@ -122,8 +122,6 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
             var DoctorUID = event.UserAccounts[0].Doctor.UID;
             var PatientUID = $scope.formData.Patient.UID;
 
-            console.log('saassa'+requestDate);
-
             if (PatientUID === '')
                 toastr.error('You must choose Patient');
             else {
@@ -153,7 +151,14 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
                         toastr.success('Create Booking Successfully');
                         $modalInstance.close();
                     }, function(error) {
-
+                        if(typeof error.data !== 'undefined'){
+                            var type = error.data.status;
+                            switch(type){
+                                case 'withoutRoster':
+                                    toastr.error('Booking Appointment Time Wrong !!!');
+                                    break;
+                            }
+                        }
                     })
             }
         }

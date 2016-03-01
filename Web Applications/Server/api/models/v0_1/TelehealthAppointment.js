@@ -44,6 +44,16 @@ module.exports = {
                 }
             }
         },
+        FundType: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
         Correspondence: {
             type: Sequelize.STRING(1),
             comment: 'Y/N',

@@ -128,6 +128,10 @@ module.exports = function(appointmentUID, userInfo) {
                     model: DocumentFile,
                     required: false
                 }]
+            }, {
+                attributes: Services.AttributesAppt.OnsiteAppointment(),
+                model: OnsiteAppointment,
+                required: false
             }],
             where: filter.Appointment
         })

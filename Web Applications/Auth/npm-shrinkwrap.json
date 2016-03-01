@@ -2072,11 +2072,7 @@
       "from": "https://registry.npmjs.org/media-typer/-/media-typer-0.2.0.tgz",
       "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.2.0.tgz"
     },
-    "meditek_library": {
-      "version": "0.0.7",
-      "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master",
-      "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#3e704e8490e336e73d95dcade8e9c341bfc9a319"
-    },
+
     "memoizee": {
       "version": "0.3.9",
       "from": "https://registry.npmjs.org/memoizee/-/memoizee-0.3.9.tgz",

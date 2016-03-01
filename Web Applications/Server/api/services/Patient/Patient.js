@@ -1,8 +1,17 @@
 var $q = require('q');
-
+var config = sails.config.myconf;
+var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 //moment
 var moment = require('moment');
 var check  = require('../HelperService');
+var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
+function SendSMS(toNumber, content, callback) {
+    return twilioClient.messages.create({
+        body: content,
+        to: toNumber,
+        from: config.twilioPhone
+    }, callback());
+};
 
 //default attributes
 var defaultAtrributes = [
@@ -564,6 +573,81 @@ module.exports = {
     },
 
     /*
+        sendMail : service send mail to Patient
+        input : email patient
+        output: send mail if email has existed.
+    */
+    sendMail : function(data, transaction, fn) {
+        return UserAccount.findOne({
+            where : {
+                Email : data.Email
+            },
+            transaction : transaction
+        })
+        .then(function(result){
+            console.log('````````````````````````````````````` ',result);
+            if(result!=null && result!=""){
+                data.UID = result.UID;
+                return Services.UserAccount.sendMail(data,secret,transaction,function(err, responseStatus, html, text){
+                    console.log("toi day ???");
+                    if(err){
+                        console.log("loi~");
+                        transaction.rollback();
+                        fn(err);
+                    }
+                    else{
+                        fn(null);
+                    }
+                });
+            }
+            else {
+                var err = new Error("sendMail");
+                err.pushError("Email.notFound");
+                fn(err);
+            }
+        },function(err){
+            transaction.rollback();
+            fn(err);
+        });
+    },
+
+    sendSMS: function(data, transaction ,fn) {
+        data.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
+        return UserAccount.findOne({
+            where : {
+                PhoneNumber : data.PhoneNumber
+            },
+            transaction : transaction
+        })
+        .then(function(result){
+            if(result != null && result != ""){
+                var phoneNumber = typeof data.PhoneNumber != 'undefined' ? data.PhoneNumber : null;
+                var content = typeof data.content != 'undefined' ? data.content : null;
+                // var phoneRegex = /^\+[0-9]{9,15}$/;
+                if (phoneNumber != null && content != null) {
+                    return SendSMS(phoneNumber, content, function(err, message) {
+                        if (err) {
+                            transaction.rollback();
+                            fn(err);
+                        }
+                        else {
+                            fn(null);
+                        }
+                    });
+                }else fn('error');
+            }
+            else {
+                var err = new Error("sendSMS");
+                err.pushError("PhoneNumber.notFound");
+                fn(err);
+            }
+        },function(err){
+            transaction.rollback();
+            fn(err);
+        });
+    },
+
+    /*
         CreatePatient : service create patient
         input: Patient's information
         output: insert Patient's information into table Patient 
@@ -572,6 +656,8 @@ module.exports = {
         var PatientDetail = {};
         var isCreateByName = false;
         var isCreateByEmail = false;
+        var isCreateByPhoneAndEmail = false;
+        var defer = $q.defer(); 
         var info = {
             Title           : data.Title,
             FirstName       : data.FirstName,
@@ -592,10 +678,18 @@ module.exports = {
             State           : data.State,
             Enable          : "Y"
         };
-        return sequelize.transaction()
+        sequelize.transaction()
         .then(function(t){
             return Services.Patient.validation(data,true)
             .then(function(success){
+                if(data.PhoneNumber && data.Email) {
+                    isCreateByPhoneAndEmail = true;
+                    var checkDatas = {};
+                    checkDatas.Email = data.Email;
+                    checkDatas.PhoneNumber = data.PhoneNumber;
+
+                    return Services.UserAccount.GetUserAccountDetails(checkDatas,null,t);
+                }
                 if(data.PhoneNumber){
                     return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,null,t);
                 }
@@ -603,6 +697,8 @@ module.exports = {
                     if(data.Email){
                         var userInfo = {
                             UserName : data.Email,
+                            Email    : data.Email,
+                            PinNumber: generatePassword(6, false),
                             Password : generatePassword(12, false)
                         };
                         isCreateByEmail = true;
@@ -611,6 +707,7 @@ module.exports = {
                     else{
                         var userInfo = {
                             UserName : info.FirstName+"."+info.LastName+"."+generatePassword(4, false),
+                            PinNumber: generatePassword(6, false),
                             Password : generatePassword(12, false)
                         };
                         isCreateByName = true;
@@ -623,19 +720,54 @@ module.exports = {
                 throw err;
             })
             .then(function(user){
-                if(isCreateByName==false && isCreateByEmail==false){
+                if(isCreateByName==false && isCreateByEmail==false && isCreateByPhoneAndEmail == false){
                     if(user.length > 0) {
-                        info.UserAccountID = user[0].ID;
-                        info.UserAccountUID = user[0].UID;
+                        info.UserAccountID = user.ID;
+                        info.UserAccountUID = user.UID;
                         return Patient.create(info,{transaction:t});
                     }
                     else{
                         data.password = generatePassword(12, false);
+                        data.PinNumber = generatePassword(6, false);
+                        var userInfo = {
+                            UserName    : data.PhoneNumber,
+                            // Email       : data.Email!=null&&data.Email!=''?data.Email:data.Email1,
+                            PhoneNumber : data.PhoneNumber,
+                            Password    : data.password,
+                            PinNumber   : data.PinNumber
+                        };
+                        userInfo.UID = UUIDService.Create();
+                        if(data.hasOwnProperty('PinNumber')== true)
+                            userInfo.PinNumber = data.PinNumber;
+                        else
+                            userInfo.PinNumber = generatePassword(6, false);
+                        //create UserAccount
+                        return Services.UserAccount.CreateUserAccount(userInfo,t)
+                        .then(function(user){
+                            info.UserAccountID = user.ID;
+                            info.UserAccountUID = user.UID;
+                            return Patient.create(info,{transaction:t});
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                }
+                else if(isCreateByPhoneAndEmail == true) {
+                    if(user != null && user != '') {
+                        info.UserAccountID = user.ID;
+                        info.UserAccountUID = user.UID;
+                        return Patient.create(info,{transaction:t});
+                    }
+                    else{
+                        data.password = generatePassword(12, false);
+                        data.PinNumber = generatePassword(6, false);
                         var userInfo = {
                             UserName    : data.PhoneNumber,
                             Email       : data.Email,
                             PhoneNumber : data.PhoneNumber,
-                            Password    : data.password
+                            Password    : data.password,
+                            PinNumber   : data.PinNumber
                         };
                         userInfo.UID = UUIDService.Create();
                         if(data.hasOwnProperty('PinNumber')== true)
@@ -680,22 +812,6 @@ module.exports = {
                                 return PatientPension.create(PatientDetail.PatientPension,{transaction:t});
                             }
                         }
-                        else {
-
-                            t.commit();
-                            return {
-                                result:result,
-                                UserAccountUID:info.UserAccountUID
-                            };
-                        }
-                    }
-                    else {
-
-                        t.commit();
-                        return {
-                            result:result,
-                            UserAccountUID:info.UserAccountUID
-                        };
                     }
                 },function(err){
                     t.rollback();
@@ -725,21 +841,59 @@ module.exports = {
                     t.rollback();
                     throw err;
                 })
-                .then(function(success){
-                    t.commit();
-                    return {
-                        result:result,
-                        UserAccountUID:info.UserAccountUID
-                    };
-                },function(err){
-                    t.rollback();
-                    throw err;
-                });
             }, function(err){
                 t.rollback();
                 throw err;
             })
-        })
+            .then(function(success) {
+                //call send Mail or send SMSs
+                if(isCreateByPhoneAndEmail == true) {
+                    data.content = data.PinNumber;
+                    return Services.Patient.sendSMS(data, t,function(err) {
+                        if(err) {
+                            throw err;
+                        }
+                        else {
+                            return Services.Patient.sendMail(data,t,function(err) {
+                                if(err)
+                                    throw err;
+                                else{
+                                    info.transaction = t;
+                                    defer.resolve(info);
+                                }
+                            });
+                        }
+                    });
+                }
+                else if(isCreateByEmail == true) {
+                    return Services.Patient.sendMail(data,t,function(err) {
+                        if(err){
+                            console.log(err);
+                            throw err;
+                        }
+                        else{
+                            info.transaction = t;
+                            defer.resolve(info);
+                        }
+                    });
+                }
+                else if(isCreateByEmail == false && isCreateByName == false && isCreateByPhoneAndEmail == false) {
+                    data.content = data.PinNumber;
+                    return Services.Patient.sendSMS(data, t,function(err) {
+                        if(err)
+                            throw err;
+                        else{
+                            info.transaction = t;
+                            defer.resolve(info);
+                        }
+                    });
+                }
+            },function(err) {
+                t.rollback();
+                throw err;
+            });
+        });
+        return defer.promise;
     },
 
     /*
@@ -1063,6 +1217,7 @@ module.exports = {
                 .then(function(check){
                     if(isHaveRole==true){
                         if(check==null){
+                            console.log("?????");
                             return RelUserRole.create({
                                 RoleId        : data.RoleId,
                                 UserAccountId : data.UserAccountID,
@@ -1142,15 +1297,15 @@ module.exports = {
                     include: [
                          {
                             model: UserAccount,
-                            attributes: ['PhoneNumber'],
+                            attributes: ['PhoneNumber','Email','ID','UID','Enable'],
                             required: true,
                             include: [
                                 {
                                     model: FileUpload,
-                                    attributes: ['UID'],
+                                    attributes: ['UID','FileType'],
                                     required: false,
                                     where:{
-                                        FileType:'ProfileImage',
+                                        FileType:{$in: ['ProfileImage', 'Signature']},  
                                         Enable:'Y'
                                     }
                                 }
@@ -1158,6 +1313,7 @@ module.exports = {
                         },
                         {
                             model:Country,
+                            as:'Country1',
                             attributes:['ShortName'],
                             required:false
                         }
@@ -1199,6 +1355,7 @@ module.exports = {
                 },
                 {
                     model: Country,
+                    as:'Country1',
                     attributes: ['ShortName'],
                     required: false
                 },
@@ -1323,7 +1480,47 @@ module.exports = {
         var info = {};
         // return Services.Patient.validation(data,false)
         // .then(function(success){
-            if(check.checkData(data.PhoneNumber)){
+            if(check.checkData(data.PhoneNumber) && check.checkData(data.Email)){
+                // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
+                return Services.UserAccount.GetUserAccountDetails(data,null,transaction)
+                .then(function(user){
+                    if(check.checkData(user)){
+                        info.Email = user.Email;
+                        info.PhoneNumber = user.PhoneNumber;
+                        return Patient.findAll({
+                                where :{
+                                    UserAccountID : user.ID
+                                },
+                                transaction:transaction
+                            });
+        
+                    }
+                    else
+                        return ({
+                            isCreated:false
+                        });
+                },function(err){
+                    throw err;
+                })
+                .then(function(result){
+                    if(check.checkData(result) && result.isCreated!==false){
+                        return ({
+                            isCreated:true
+                        });
+                    }
+                    else
+                        return ({
+                            isCreated:false,
+                            data: {
+                                Email : info.Email,
+                                PhoneNumber: info.PhoneNumber
+                            }
+                        });
+                },function(err){
+                    throw err;
+                });
+            }
+            else if(check.checkData(data.PhoneNumber)){
                 // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
                 return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
                 .then(function(user){
@@ -1363,9 +1560,49 @@ module.exports = {
                     throw err;
                 });
             }
+            else if(check.checkData(data.Email)){
+                // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
+                return Services.UserAccount.GetUserAccountDetails(data,null,transaction)
+                .then(function(user){
+                    if(check.checkData(user)){
+                        info.Email = user[0].Email;
+                        info.PhoneNumber = user[0].PhoneNumber;
+                        return Patient.findAll({
+                                where :{
+                                    UserAccountID : user[0].ID
+                                },
+                                transaction:transaction
+                            });
+        
+                    }
+                    else
+                        return ({
+                            isCreated:false
+                        });
+                },function(err){
+                    throw err;
+                })
+                .then(function(result){
+                    if(check.checkData(result) && result.isCreated!==false){
+                        return ({
+                            isCreated:true
+                        });
+                    }
+                    else
+                        return ({
+                            isCreated:false,
+                            data: {
+                                Email : info.Email,
+                                PhoneNumber: info.PhoneNumber
+                            }
+                        });
+                },function(err){
+                    throw err;
+                });
+            }
             else{
                 var error = new Error("CheckPatient.error");
-                error.pushErrors("invalid.PhoneNumber");
+                error.pushErrors("invalid.params");
                 throw error;
             }
         // },function(err){

@@ -9,180 +9,331 @@ module.exports = function(data, userInfo) {
         !_.isEmpty(data.Doctor) &&
         !_.isEmpty(data.Patient)) {
         var objAppt = null;
+        var objTelehealthAppt = null;
         sequelize.transaction()
             .then(function(t) {
-                var whereClauseSite = {};
-                _.forEach(data.Site, function(valueKey, indexKey) {
-                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                        whereClauseSite[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                    } else if (!_.isArray(valueKey) &&
-                        !_.isObject(valueKey)) {
-                        whereClauseSite[indexKey] = valueKey;
-                    }
-                });
-                return Site.findOne({
-                        attributes: ['ID'],
-                        where: whereClauseSite,
-                        transaction: t,
-                        raw: true
-                    })
-                    .then(function(siteRes) {
-                        if (!_.isEmpty(siteRes)) {
-                            var dataAppt = {
-                                UID: UUIDService.Create(),
-                                FromTime: data.Appointment.FromTime,
-                                ToTime: data.Appointment.ToTime,
-                                RequestDate: data.Appointment.RequestDate,
-                                Type: data.Appointment.Type,
-                                Enable: 'Y',
-                                Status: 'Approved',
-                                SiteID: siteRes.ID,
-                                CreatedBy: userInfo.ID
-                            };
-                            return Appointment.create(dataAppt, {
-                                transaction: t
-                            });
-                        } else {
-                            var error = new Error('UpdateRequestBooking.data(Site).not.exist');
-                            defer.reject({
-                                error: error,
-                                transaction: t
-                            });
-                        }
-                    }, function(err) {
-                        defer.reject({
-                            error: err,
-                            transaction: t
+                var objCheckTimeRoster = {
+                    data: {
+                        FromTime: data.Appointment.FromTime,
+                        ToTime: data.Appointment.ToTime
+                    },
+                    where: data.Doctor,
+                    transaction: t
+                };
+                return Services.CheckTimeRoster(objCheckTimeRoster)
+                    .then(function(checkTimeRosterOk) {
+                        var whereClauseSite = {};
+                        _.forEach(data.Site, function(valueKey, indexKey) {
+                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                whereClauseSite[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                            } else if (!_.isArray(valueKey) &&
+                                !_.isObject(valueKey)) {
+                                whereClauseSite[indexKey] = valueKey;
+                            }
                         });
-                    })
-                    .then(function(apptCreated) {
-                        if (!_.isEmpty(apptCreated)) {
-                            objAppt = apptCreated;
-                            var whereClauseDoctor = {};
-                            _.forEach(data.Doctor, function(valueKey, indexKey) {
-                                if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                    moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                    whereClauseDoctor[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                } else if (!_.isArray(valueKey) &&
-                                    !_.isObject(valueKey)) {
-                                    whereClauseDoctor[indexKey] = valueKey;
-                                }
-                            });
-                            return Doctor.findOne({
+                        return Site.findOne({
                                 attributes: ['ID'],
-                                where: whereClauseDoctor,
+                                where: whereClauseSite,
                                 transaction: t,
                                 raw: true
+                            })
+                            .then(function(siteRes) {
+                                if (!_.isEmpty(siteRes)) {
+                                    var dataAppt = {
+                                        UID: UUIDService.Create(),
+                                        FromTime: data.Appointment.FromTime,
+                                        ToTime: data.Appointment.ToTime,
+                                        RequestDate: data.Appointment.RequestDate,
+                                        Type: data.Appointment.Type,
+                                        Enable: 'Y',
+                                        Status: 'Approved',
+                                        SiteID: siteRes.ID,
+                                        CreatedBy: userInfo.ID
+                                    };
+                                    return Appointment.create(dataAppt, {
+                                        transaction: t
+                                    });
+                                } else {
+                                    var error = new Error('UpdateRequestBooking.data(Site).not.exist');
+                                    defer.reject({
+                                        error: error,
+                                        transaction: t
+                                    });
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    error: err,
+                                    transaction: t
+                                });
+                            })
+                            .then(function(apptCreated) {
+                                if (!_.isEmpty(apptCreated)) {
+                                    objAppt = apptCreated;
+                                    var objCreateTelehealthAppt = {
+                                        data: {
+                                            UID: UUIDService.Create(),
+                                            CreatedBy: userInfo.ID
+                                        },
+                                        transaction: t,
+                                        appointmentObject: objAppt
+                                    };
+                                    return Services.CreateTelehealthAppointment(objCreateTelehealthAppt);
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(telehealthApptCreated) {
+                                if (!_.isEmpty(telehealthApptCreated)) {
+                                    objTelehealthAppt = telehealthApptCreated;
+                                    var whereClausePatient = {};
+                                    _.forEach(data.Patient, function(valueKey, indexKey) {
+                                        if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                            moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                            whereClausePatient[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                        } else if (!_.isArray(valueKey) &&
+                                            !_.isObject(valueKey)) {
+                                            whereClausePatient[indexKey] = valueKey;
+                                        }
+                                    });
+                                    return Patient.findOne({
+                                        include: [{
+                                            model: PatientDVA,
+                                            required: false
+                                        }, {
+                                            model: PatientKin,
+                                            required: false
+                                        }, {
+                                            model: PatientMedicare,
+                                            required: false
+                                        }, {
+                                            model: UserAccount,
+                                            required: false
+                                        }, {
+                                            model: Country,
+                                            required: false,
+                                            as: 'Country1'
+                                        }, {
+                                            model: Country,
+                                            required: false,
+                                            as: 'Country2'
+                                        }],
+                                        where: whereClausePatient,
+                                        transaction: t
+                                    });
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(patientInfo) {
+                                if (!_.isEmpty(patientInfo)) {
+                                    patientInfo = JSON.parse(JSON.stringify(patientInfo));
+                                    var dataPatientAppointment =
+                                        Services.GetDataAppointment.PatientAppointmentCreate(patientInfo);
+                                    //add fields exception for PatientAppointment
+                                    if (!_.isEmpty(patientInfo.UserAccount)) {
+                                        dataPatientAppointment.PhoneNumber = patientInfo.UserAccount.PhoneNumber;
+                                    }
+                                    if (!_.isEmpty(patientInfo.Country1)) {
+                                        dataPatientAppointment.Country = patientInfo.Country1.ShortName;
+                                    }
+                                    if (!_.isEmpty(patientInfo.Country2)) {
+                                        dataPatientAppointment.CountryOfBirth = patientInfo.Country2.ShortName;
+                                    }
+                                    if (!_.isEmpty(patientInfo.PatientMedicares)) {
+                                        patientInfo.PatientMedicares = _.sortBy(patientInfo.PatientMedicares, function(PM) {
+                                            return PM.CreatedDate;
+                                        });
+                                        dataPatientAppointment.MedicareNumber = patientInfo.PatientMedicares[patientInfo.PatientMedicares.length - 1].MedicareNumber;
+                                        dataPatientAppointment.MedicareReferenceNumber = patientInfo.PatientMedicares[patientInfo.PatientMedicares.length - 1].MedicareReferenceNumber;
+                                        dataPatientAppointment.MedicareExpiryDate = patientInfo.PatientMedicares[patientInfo.PatientMedicares.length - 1].ExpiryDate;
+                                    }
+                                    if (!_.isEmpty(patientInfo.PatientDVAs)) {
+                                        patientInfo.PatientDVAs = _.sortBy(patientInfo.PatientDVAs, function(PD) {
+                                            return PD.CreatedDate;
+                                        });
+                                        dataPatientAppointment.DVANumber = patientInfo.PatientDVAs[patientInfo.PatientDVAs.length - 1].DVANumber;
+                                    }
+                                    if (!_.isEmpty(patientInfo.PatientKins)) {
+                                        patientInfo.PatientKins = _.sortBy(patientInfo.PatientKins, function(PK) {
+                                            return PK.CreatedDate;
+                                        });
+                                        dataPatientAppointment.PatientKinFirstName = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].FirstName;
+                                        dataPatientAppointment.PatientKinMiddleName = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].MiddleName;
+                                        dataPatientAppointment.PatientKinLastName = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].LastName;
+                                        dataPatientAppointment.PatientKinRelationship = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].Relationship;
+                                        dataPatientAppointment.PatientKinMobilePhoneNumber = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].MobilePhoneNumber;
+                                        dataPatientAppointment.PatientKinHomePhoneNumber = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].HomePhoneNumber;
+                                        dataPatientAppointment.PatientKinWorkPhoneNumber = patientInfo.PatientKins[patientInfo.PatientKins.length - 1].WorkPhoneNumber;
+                                    }
+                                    dataPatientAppointment.UID = UUIDService.Create();
+                                    dataPatientAppointment.CreatedBy = userInfo.ID;
+                                    var objectCreatePatientAppt = {
+                                        data: dataPatientAppointment,
+                                        telehealthAppointmentObject: objTelehealthAppt,
+                                        transaction: t
+                                    };
+                                    return Services.CreatePatientAppointment(objectCreatePatientAppt)
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(patientAppointmentCreated) {
+                                if (data.Appointment.Type === 'Onsite') {
+                                    var objCreateOnsiteAppt = {
+                                        data: {
+                                            Description: data.Appointment.Description
+                                        },
+                                        transaction: t,
+                                        appointmentObject: objAppt
+                                    };
+                                    return Services.CreateOnsiteAppointment(objCreateOnsiteAppt);
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(onsiteApptCreated) {
+                                var whereClauseDoctor = {};
+                                _.forEach(data.Doctor, function(valueKey, indexKey) {
+                                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                        whereClauseDoctor[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                    } else if (!_.isArray(valueKey) &&
+                                        !_.isObject(valueKey)) {
+                                        whereClauseDoctor[indexKey] = valueKey;
+                                    }
+                                });
+                                return Doctor.findOne({
+                                    attributes: ['ID'],
+                                    where: whereClauseDoctor,
+                                    transaction: t,
+                                    raw: true
+                                });
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(doctorRes) {
+                                if (!_.isEmpty(doctorRes)) {
+                                    return objAppt.addDoctor(doctorRes.ID, {
+                                        transaction: t,
+                                        raw: true
+                                    });
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(relApptDoctorCreated) {
+                                var whereClauseService = {};
+                                _.forEach(data.Service, function(valueKey, indexKey) {
+                                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                        whereClauseService[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                    } else if (!_.isArray(valueKey) &&
+                                        !_.isObject(valueKey)) {
+                                        whereClauseService[indexKey] = valueKey;
+                                    }
+                                });
+                                return Service.findOne({
+                                    attributes: ['ID'],
+                                    where: whereClauseService,
+                                    transaction: t,
+                                    raw: true
+                                });
+                            }, function(err) {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            })
+                            .then(function(serviceRes) {
+                                if (!_.isEmpty(serviceRes)) {
+                                    return objAppt.addService(serviceRes.ID, {
+                                        transaction: t,
+                                        raw: true
+                                    });
+                                } else {
+                                    var error = new Error('UpdateRequestBooking.data(Service).not.exist');
+                                    defer.reject({
+                                        error: error,
+                                        transaction: t
+                                    });
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    error: err,
+                                    transaction: t
+                                });
+                            })
+                            .then(function(relApptServiceCreated) {
+                                var whereClausePatient = {};
+                                _.forEach(data.Patient, function(valueKey, indexKey) {
+                                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                        whereClausePatient[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                    } else if (!_.isArray(valueKey) &&
+                                        !_.isObject(valueKey)) {
+                                        whereClausePatient[indexKey] = valueKey;
+                                    }
+                                });
+                                return Patient.findOne({
+                                    attributes: ['ID'],
+                                    where: whereClausePatient,
+                                    transaction: t,
+                                    raw: true
+                                });
+                            }, function(err) {
+                                defer.reject({
+                                    error: err,
+                                    transaction: t
+                                });
+                            })
+                            .then(function(patientRes) {
+                                if (!_.isEmpty(patientRes)) {
+                                    return objAppt.addPatient(patientRes.ID, {
+                                        transaction: t
+                                    });
+                                } else {
+                                    var error = new Error('UpdateRequestBooking.data(Patient).not.exist');
+                                    defer.reject({
+                                        error: error,
+                                        transaction: t
+                                    });
+                                }
+                            }, function(err) {
+                                defer.reject({
+                                    error: err,
+                                    transaction: t
+                                });
+                            })
+                            .then(function(relApptPatientCreated) {
+                                defer.resolve({
+                                    transaction: t,
+                                    status: 'success'
+                                });
+                            }, function(err) {
+                                defer.reject({
+                                    error: err,
+                                    transaction: t
+                                });
                             });
-                        }
-                    }, function(err) {
-                        defer.reject({
-                            transaction: t,
-                            error: err
-                        });
-                    })
-                    .then(function(doctorRes) {
-                        if (!_.isEmpty(doctorRes)) {
-                            return objAppt.addDoctor(doctorRes.ID, {
-                                transaction: t,
-                                raw: true
-                            });
-                        }
-                    }, function(err) {
-                        defer.reject({
-                            transaction: t,
-                            error: err
-                        });
-                    })
-                    .then(function(relApptDoctorCreated) {
-                        var whereClauseService = {};
-                        _.forEach(data.Service, function(valueKey, indexKey) {
-                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                whereClauseService[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                            } else if (!_.isArray(valueKey) &&
-                                !_.isObject(valueKey)) {
-                                whereClauseService[indexKey] = valueKey;
-                            }
-                        });
-                        return Service.findOne({
-                            attributes: ['ID'],
-                            where: whereClauseService,
-                            transaction: t,
-                            raw: true
-                        });
-                    }, function(err) {
-                        defer.reject({
-                            transaction: t,
-                            error: err
-                        });
-                    })
-                    .then(function(serviceRes) {
-                        if (!_.isEmpty(serviceRes)) {
-                            return objAppt.addService(serviceRes.ID, {
-                                transaction: t,
-                                raw: true
-                            });
-                        } else {
-                            var error = new Error('UpdateRequestBooking.data(Service).not.exist');
-                            defer.reject({
-                                error: error,
-                                transaction: t
-                            });
-                        }
-                    }, function(err) {
-                        defer.reject({
-                            error: err,
-                            transaction: t
-                        });
-                    })
-                    .then(function(relApptServiceCreated) {
-                        var whereClausePatient = {};
-                        _.forEach(data.Patient, function(valueKey, indexKey) {
-                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                whereClausePatient[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                            } else if (!_.isArray(valueKey) &&
-                                !_.isObject(valueKey)) {
-                                whereClausePatient[indexKey] = valueKey;
-                            }
-                        });
-                        return Patient.findOne({
-                            attributes: ['ID'],
-                            where: whereClausePatient,
-                            transaction: t,
-                            raw: true
-                        });
-                    }, function(err) {
-                        defer.reject({
-                            error: err,
-                            transaction: t
-                        });
-                    })
-                    .then(function(patientRes) {
-                        if (!_.isEmpty(patientRes)) {
-                            return objAppt.addPatient(patientRes.ID, {
-                                transaction: t
-                            });
-                        } else {
-                            var error = new Error('UpdateRequestBooking.data(Patient).not.exist');
-                            defer.reject({
-                                error: error,
-                                transaction: t
-                            });
-                        }
-                    }, function(err) {
-                        defer.reject({
-                            error: err,
-                            transaction: t
-                        });
-                    })
-                    .then(function(relApptPatientCreated) {
-                        defer.resolve({
-                            transaction: t,
-                            status: 'success'
-                        });
                     }, function(err) {
                         defer.reject({
                             error: err,

@@ -39,22 +39,24 @@ module.exports = function(objCheckOverlap) {
                                 _.forEach(arrRoster, function(valueRosterUser, indexRosterUser) {
                                     if (!_.isEmpty(valueRosterUser) &&
                                         !_.isEmpty(valueRosterCheck)) {
-                                        var fromTimeCheck = moment(valueRosterCheck.FromTime).format('YYYY-MM-DD HH:mm:ss');
-                                        var toTimeCheck = moment(valueRosterCheck.ToTime).format('YYYY-MM-DD HH:mm:ss');
+                                        var fromTimeCheck = moment(valueRosterCheck.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
+                                        var toTimeCheck = moment(valueRosterCheck.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
                                         var fromTimeUser = moment(valueRosterUser.FromTime).format('YYYY-MM-DD HH:mm:ss');
                                         var toTimeUser = moment(valueRosterUser.ToTime).format('YYYY-MM-DD HH:mm:ss');
                                         var rangeRosterCheck = moment.range(fromTimeCheck, toTimeCheck);
                                         var rangeRosterUser = moment.range(fromTimeUser, toTimeUser);
                                         if (rangeRosterCheck.overlaps(rangeRosterUser) === true &&
-                                            valueRosterCheck.UID !== valueRosterUser.UID &&
-                                            valueRosterUser.UID !== null) {
+                                            (objCheckOverlap.action === 'create' ||
+                                                (objCheckOverlap.action === 'update' &&
+                                                    valueRosterCheck.UID !== valueRosterUser.UID) &&
+                                                HelperService.CheckExistData(valueRosterUser.UID))) {
                                             arrayRosterOverlap.push(valueRosterCheck);
                                         }
                                     }
                                 });
                             });
                             if (!_.isEmpty(arrayRosterOverlap)) {
-                                arrayRosterOverlap = _.uniq(arrayRosterOverlap, 'UID');
+                                arrayRosterOverlap = _.uniq(arrayRosterOverlap, _.isEqual);
                                 defer.reject({
                                     status: 'overlaps',
                                     dataOverlap: arrayRosterOverlap

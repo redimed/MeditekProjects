@@ -1,0 +1,222 @@
+<!-- content page -->
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-list"></i>
+            <span class="caption-subject bold uppercase">Company Detail</span>
+        </div>
+        <!-- <div class="tools hidden-xs">
+            <a href="javascript:;" class="collapse"></a>
+            <a href="javascript:;" class="fullscreen"> </a>
+        </div> -->
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="index.html#tab_4" data-toggle="tab"> User Account </a>
+            </li>
+            <li>
+                <a href="index.html#tab_3" data-toggle="tab"> Staff List </a>
+            </li>
+            <li>
+                <a href="index.html#tab_2" data-toggle="tab"> Insurer List </a>
+            </li>
+            <li class="active">
+                <a href="index.html#tab_1" data-toggle="tab"> Basic Information </a>
+            </li>
+        </ul>
+    </div>
+    <div class="portlet-body form">
+            <div class="form-body" style="margin-left:1em; margin-right:1em;">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <h3 class="form-section bold">Basic info</h3>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Company Name</label>
+                                    <input type="text" class="form-control" ng-model="info.CompanyName" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Description</label>
+                                    <textarea class="form-control" ng-model="info.Description" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="form-section bold">Site info
+                            <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="openmodal('CompanySite','create',null)">
+                                <i class="glyphicon glyphicon-plus"></i> Add</a>
+                        </h3>
+                        <div class="table-scrollable margin-top-30">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr style="width:100%;">
+                                        <th width="1">#</th>
+                                        <th>Site Name</th>
+                                        <th>Address</th>
+                                        <th>Contact Name</th>
+                                        <th>Contact Number</th>
+                                        <th width="1"></th>
+                                        <th width="1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="s in info.CompanySites">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{s.SiteName}}</td>
+                                        <td>{{s.Address1}}</td>
+                                        <td>{{s.ContactName}}</td>
+                                        <td>{{s.HomePhoneNumber}}</td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" 
+                                                ng-click="openmodal('CompanySite','update',s.UID)">
+                                                <i class="glyphicon glyphicon-pencil"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
+                                                ng-click="openmodal('CompanySite','delete',s.UID)">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        <h3 class="form-section bold">
+                            Insurer List
+                            <a class="btn btn-lg green pull-right" ng-click="openmodal('Insurer','create',-1)">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </h3>
+                        <div class="table-scrollable margin-top-30">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr style="width:100%;">
+                                        <th width="1">#</th>
+                                        <th>Name</th>
+                                        <th width="1"></th>
+                                        <th width="1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="c in companys.insurers">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{c.name}}</td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" 
+                                                ng-click="openmodal('Insurer','update',$index)">
+                                                <i class="glyphicon glyphicon-pencil"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
+                                                ng-click="openmodal('Insurer','delete',$index)">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_3">
+                        <h3 class="form-section bold">
+                            Staff List
+                            <a class="btn btn-lg green pull-right" ng-click="openmodal('Staff','create',-1)">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </h3>
+                        <div class="table-scrollable margin-top-30">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr style="width:100%;">
+                                        <th width="1">#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>DOB</th>
+                                        <th>Gender</th>
+                                        <th>Home Phone</th>
+                                        <th width="1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="s in info.Patients">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{s.FirstName}}</td>
+                                        <td>{{s.LastName}}</td>
+                                        <td>{{s.DOB}}</td>
+                                        <td>{{s.Gender}}</td>
+                                        <td>{{s.HomePhoneNumber}}</td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
+                                                ng-click="openmodal('Staff','delete',s.ID)">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_4">
+                        <h3 class="form-section bold">
+                            User Account
+                            <a class="btn btn-lg green pull-right" ng-click="openmodal('UserAccount','create',null)">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </h3>
+                        <div class="table-scrollable margin-top-30">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr style="width:100%;">
+                                        <th width="1">#</th>
+                                        <th>User Name</th>
+                                        <th>PhoneNumber</th>
+                                        <th>Email</th>
+                                        <th>Enable</th>
+                                        <th width="1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="u in info.UserAccounts">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{u.UserName}}</td>
+                                        <td>{{u.PhoneNumber}}</td>
+                                        <td>{{u.Email}}</td>
+                                        <td>{{u.Enable}}</td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
+                                                ng-click="openmodal('UserAccount','delete',u.UID)">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button class="btn btn-lg green">
+                    Submit <i class="glyphicon glyphicon-save"></i></button>
+            </div>
+        </div>
+    </div>
+<!-- end content page -->
+<script type="text/ng-template " id="CompanySitemodal">
+    <company-site on-type="type" on-uid="uid" on-comp="Compuid" on-cancel="cancel" on-load-again="loadagain" ></company-site>
+</script>
+
+<script type="text/ng-template " id="Usermodal">
+    <company-user on-type="type" on-uid="uid" on-comp="Compuid" on-cancel="cancel" on-load-again="loadagain" ></company-user>
+</script>
+
+<script type="text/ng-template " id="Staffmodal">
+    <company-staff on-type="type" on-uid="uid" on-comp="Compuid" on-compid="Compid" on-cancel="cancel" on-load-again="loadagain" ></company-staff>
+</script>
+
+<!-- <script type="text/ng-template " id="Insuresmodal">
+    <company-site on-type="type" on-uid="Siteuid" on-comp="Compuid" on-cancel="cancel" on-load-again="loadagain" ></company-site>
+</script> -->

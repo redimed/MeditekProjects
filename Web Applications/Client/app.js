@@ -38,15 +38,23 @@ app.use(express.static(path.join(__dirname, 'Projects')));
 app.use('/Projects', express.static(__dirname + '/Projects'));
 
 // development only
-if (process.argv.indexOf("--prod") >= 0) {
-    console.log("============================== production");
-    https.createServer(ssl_options, app).listen(app.get('port'), function() {
-        console.log('Express server listening on port https ' + app.get('port'));
-    });
-} else {
-    console.log("============================== development");
-    app.use(express.errorHandler());
-    http.createServer(app).listen(app.get('port'), function() {
-        console.log('Express server listening on port http ' + app.get('port'));
-    });
-}
+// if (process.argv.indexOf("--prod") >= 0) {
+//     console.log("============================== production");
+//     https.createServer(ssl_options, app).listen(app.get('port'), function() {
+//         console.log('Express server listening on port https ' + app.get('port'));
+//     });
+// } else {
+//     console.log("============================== development");
+//     app.use(express.errorHandler());
+//     http.createServer(app).listen(app.get('port'), function() {
+//         console.log('Express server listening on port http ' + app.get('port'));
+//     });
+// }
+
+app.use(express.errorHandler());
+https.createServer(ssl_options, app).listen(app.get('port'), function() {
+	console.log('Express server listening on port https ' + app.get('port'));
+});
+//http.createServer(app).listen(app.get('port'), function() {
+//	console.log('Express server listening on port http ' + app.get('port'));
+//});

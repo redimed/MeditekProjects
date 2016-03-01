@@ -11,7 +11,10 @@ if(isTest)
 		auth:{
 			user:'meditek.hcm@gmail.com',
 			pass:'meditek123'
-		}
+		},
+		tls: {
+            rejectUnauthorized: false
+        }
 	})
 }
 else
@@ -56,7 +59,7 @@ module.exports={
 	            html: mailOptions.html,
 	            text: mailOptions.text
 	        }, function(err, info) {
-	            
+	            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",err);
 	            if (err) {
 	                throw err;
 	            }

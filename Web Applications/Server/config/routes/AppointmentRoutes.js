@@ -35,6 +35,10 @@ module.exports = {
         controller: 'Appointment/WAAppointmentController',
         action: 'GetDetailWAAppointment'
     },
+    'get /api/appointment-wa-detail/eform/:UID': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'GetDetailWAAppointmentforEform'
+    },
     'post /api/appointment-wa-update': {
         controller: 'Appointment/WAAppointmentController',
         action: 'UpdateRequestWAAppointment'

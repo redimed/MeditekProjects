@@ -13,22 +13,15 @@
                 </div>
                 <div class="row margin-left-right-0 padding-10">
                     <div class="pull-right">
-                        <div id="publisher"></div>
+                        <div id="publisher">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--  <div class="calling">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <h3 class="text-center page-title">
-                        <span>{{counter|formatTimer}}</span>
-                    </h3>
-            </div>
-        </div>
-    </div> -->
-    <div class="actions">
+    <div class="actions" ng-if="subscriber">
         <div class="row">
             <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
                 <img src="theme/assets/global/images/E-call_17.png" class="my-button">
@@ -104,6 +97,13 @@
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
                 <img src="theme/assets/global/images/E-call_14.png" class="my-button">
+            </div>
+        </div>
+    </div>
+    <div class="actions" ng-if="!subscriber" style="z-index: 999999">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                <img src="theme/assets/global/images/E-call_18.png" class="my-button" ng-click="cancel()">
             </div>
         </div>
     </div>

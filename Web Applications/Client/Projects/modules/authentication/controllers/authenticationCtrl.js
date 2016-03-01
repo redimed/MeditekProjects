@@ -90,39 +90,28 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }, {
         name: 'Silver Savings Account'
     }];
-
-
-    console.log("=======================", $cookies.getObject('userInfo'));
-
-    //phan quoc chien get detail open tok
-    function OpentokCreateSession() {
-        AuthenticationService.getDetailOpentok().then(function(data) {
-            $scope.Opentok = {
-                apiKey: data.data.apiKey,
-                sessionId: data.data.sessionId,
-                token: data.data.token
-            }
-        });
+    
+    socketTelehealth.funCall = function(msg) {
+        console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
     };
 
-    OpentokCreateSession();
 
-    //phan quoc chien join room
-    // function OpenTokJoinRoom() {
-    //     console.log('user UID', $cookies.getObject('userInfo').TelehealthUser.UID);
-    //     // io.socket.get('/api/telehealth/socket/joinRoom', {
-    //     socketTelehealth.get('/api/telehealth/socket/joinRoom', {
-    //         uid: $cookies.getObject('userInfo').TelehealthUser.UID
-    //     }, function(data) {
-    //         console.log("JoinRoom", data);
-    //     });
-    // };
-    // if ($cookies.getObject('userInfo').TelehealthUser != null) {
-    //     OpenTokJoinRoom();
-    // };
-    // // io.socket.on('receiveMessage', function(msg) {
-    // socketTelehealth.on('receiveMessage', function(msg) {
-    //     console.log("===================================",msg.message);
-    //     $scope.$broadcast("end",{a:"asdasd"});
+
+    // var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
+    // swal({
+    //     title: $scope.opentokData.userName,
+    //     imageUrl: "theme/assets/global/images/E-call_33.png",
+    //     text: "<img src='theme/assets/global/img/loading.gif' />",
+    //     timer: 30000,
+    //     html: true,
+    //     showCancelButton: false,
+    //     confirmButtonColor: "#e74c3c",
+    //     confirmButtonText: "Cancel",
+    //     closeOnConfirm: true
+    // }, function() {
+    //     OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "cancel");
+    //     EndCall();
     // });
+    // audio.loop = true;
+    // audio.play();
 });

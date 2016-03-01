@@ -1,8 +1,9 @@
 var app = angular.module('app.authentication.patient.create.directive', []);
-app.directive('patientCreate', function(toastr, PatientService, $state, $timeout, $rootScope, $cookies, AuthenticationService) {
+app.directive('patientCreate', function(toastr, PatientService, $state, $timeout, $rootScope, $cookies, AuthenticationService, UnauthenticatedService) {
     return {
         scope: {
             appointment: '=',
+            staff:'=onStaff',
             abc: '=onItem'
         },
         restrict: "EA",
@@ -113,7 +114,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             if (scope.appointment) {
                 var input = PatientService.getDatatoDirective();
                 if (input) {
-                    scope.data = angular.copy(input.info);
+                    scope.data = angular.copy(input);
                 }
             }
             // Back
@@ -152,11 +153,31 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     Address2: data.Address2,
                     Suburb: data.Suburb,
                     Postcode: data.Postcode,
-                    Email1: data.Email1,
+                    Email1: data.Email,
+                    Email : data.Email,
                     HomePhoneNumber: data.HomePhoneNumber,
                     Gender: data.Gender
                 };
-                PatientService.validateCheckPhone(data)
+                if((data.Email == null || data.Email == '') &&
+                   (data.PhoneNumber == null || data.PhoneNumber == '')){
+                    if(data.FirstName == null || data.FirstName == ''){
+                        scope.er['FirstName'] = { 'border': '2px solid #DCA7B0' };
+                        scope.ermsg['FirstName'] = 'required';
+                    }
+                    if(data.LastName == null || data.LastName == ''){
+                        scope.er['LastName'] = { 'border': '2px solid #DCA7B0' };
+                        scope.ermsg['LastName'] = 'required';
+                    }
+                    toastr.error("Please check data again.", "ERROR");
+                    scope.loadingCheck = false;
+                    scope.er['Email'] = { 'border': '2px solid #DCA7B0' };
+                    scope.ermsg['Email'] = 'required';
+                    scope.er['PhoneNumber'] = { 'border': '2px solid #DCA7B0' };
+                    scope.ermsg['PhoneNumber'] = 'required';
+                }
+                else{
+                    console.log(data);
+                    PatientService.validateCheckPhone(data)
                     .then(function(success) {
                         scope.er = '';
                         scope.ermsg = '';
@@ -169,9 +190,9 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                         scope.er = '';
                                         scope.ermsg = '';
                                         scope.loadingCheck = false;
-                                        toastr.success("Phone Number can be choose to create patient", "SUCCESS");
+                                        toastr.success("Information can be choose to create patient", "SUCCESS");
                                         scope.isShowEmail1 = result.data.data.Email1;
-                                        scope.data.Email1 = verifyData.Email1;
+                                        scope.data.Email1 = verifyData.Email;
                                         scope.isShowNext = true;
                                         scope.data.CountryID1 = 14;
                                         scope.data.Title = verifyData.Title;
@@ -184,7 +205,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                         scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
                                         // scope.data.DOB = new Date('1/1/1990');
                                     } else {
-                                        toastr.error("Phone Number was used to create patient", "ERROR");
+                                        toastr.error("Information was used to create patient", "ERROR");
                                         scope.isBlockStep1 = false;
                                         scope.loadingCheck = false;
                                     }
@@ -213,12 +234,15 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                             scope.ermsg[err[i].field] = err[i].message;
                         }
                     });
-
+                }
             };
             //Cancel : cancel create patient
             scope.Cancel = function() {
                 if (scope.appointment) {
                     scope.appointment.runIfClose();
+                }
+                else if(scope.staff){
+                    scope.staff.runIfClose();
                 } else {
                     $state.go('authentication.patient.list', null, {
                         'reload': true
@@ -242,6 +266,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                         //service call API create patient
                         return PatientService.createPatient(data)
                             .then(function(success) {
+                                console.log(success);
                                 scope.loadingCreate = false;
                                 //check if patient has avatar, upload avatar
                                 if (scope.uploader.queue[0] !== undefined && scope.uploader.queue[0] !== null &&
@@ -256,6 +281,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                 //****else show notification success and back state list patient
                                 if (scope.appointment) {
                                     scope.appointment.runIfSuccess(success.data);
+                                }else if(scope.staff){
+                                    scope.staff.runIfSuccess(success.data);
                                 } else {
                                     toastr.success("Create Successful!!", "SUCCESS");
                                     $state.go('authentication.patient.list', null, {
@@ -266,6 +293,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                 scope.er = {};
                                 scope.ermsg = {};
                                 scope.loadingCreate = false;
+                                // Email.duplicate
                                 toastr.error("Please check data again.", "ERROR");
                                 if (err.data.message.ErrorsList[0].field != undefined) {
                                     for (var i = 0; i < err.data.message.ErrorsList.length; i++) {

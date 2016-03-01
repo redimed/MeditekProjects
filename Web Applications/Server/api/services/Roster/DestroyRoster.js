@@ -7,7 +7,8 @@ module.exports = function(data, userInfo) {
             if (!_.isEmpty(data) &&
                 !_.isEmpty(data.Roster) &&
                 !_.isEmpty(data.UserAccount) &&
-                HelperService.CheckExistData(data.Roster.UID)) {
+                HelperService.CheckExistData(data.Roster.UID) &&
+                HelperService.CheckExistData(data.Roster.EndRecurrence)) {
                 var arrayRosterUID = null;
                 if (data.Roster.CaseOccurance == 'Y') {
                     return Roster.findOne({
@@ -23,7 +24,9 @@ module.exports = function(data, userInfo) {
                             if (!_.isEmpty(rosterRes)) {
                                 rosterRes.FromTime = moment(rosterRes.FromTime).format('YYYY-MM-DD HH:mm:ss Z');
                                 rosterRes.ToTime = moment(rosterRes.ToTime).format('YYYY-MM-DD HH:mm:ss Z');
-                                rosterRes.EndRecurrence = moment(rosterRes.EndRecurrence).format('YYYY-MM-DD HH:mm:ss Z');
+                                var zoneServer = moment().format('Z');
+                                rosterRes.EndRecurrence =
+                                    moment(data.Roster.EndRecurrence.split(' ')[0] + ' ' + data.Roster.EndRecurrence.split(' ')[1] + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
                                 var rosterRepeat = Services.GetDataRoster.GetRosterRepeat(rosterRes, userInfo);
                                 if (!_.isEmpty(rosterRepeat) &&
                                     _.isArray(rosterRepeat)) {
@@ -56,8 +59,10 @@ module.exports = function(data, userInfo) {
                                             }],
                                             where: {
                                                 $or: arrWhereClauseRoster,
-                                                Enable: 'Y'
+                                                Enable: 'Y',
+                                                IsRecurrence: 'Y'
                                             },
+                                            transaction: t,
                                             raw: true
                                         });
                                     } else {
@@ -96,7 +101,7 @@ module.exports = function(data, userInfo) {
                                     return subGrouped[0].UID;
                                 });
                                 var objCheckExistAppointment = {
-                                    data: arrayRosterUID,
+                                    where: arrRosterDestroy,
                                     userAccount: data.UserAccount,
                                     transaction: t
                                 };
@@ -117,7 +122,8 @@ module.exports = function(data, userInfo) {
                         .then(function(checkExistApptOk) {
                             if (!_.isEmpty(arrayRosterUID)) {
                                 return Roster.update({
-                                    Enable: 'N'
+                                    Enable: 'N',
+                                    ModifiedBy: userInfo.ID,
                                 }, {
                                     where: {
                                         UID: {
@@ -146,7 +152,7 @@ module.exports = function(data, userInfo) {
                         });
                 } else if (data.Roster.CaseOccurance == 'N') {
                     var objCheckExistAppointment = {
-                        data: [data.Roster.UID],
+                        where: [data.Roster],
                         userAccount: data.UserAccount,
                         transaction: t
                     };
@@ -154,7 +160,8 @@ module.exports = function(data, userInfo) {
                         .then(function(responseCheckOk) {
                             //destoy Roster
                             return Roster.update({
-                                Enable: 'N'
+                                Enable: 'N',
+                                ModifiedBy: userInfo.ID,
                             }, {
                                 where: {
                                     UID: data.Roster.UID

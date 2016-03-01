@@ -1,0 +1,77 @@
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" 
+            aria-hidden="true" ng-click="cancel()"></button>
+        <h4 class="modal-type uppercase bold font-red-thunderbird">
+            <i class="icon-settings"></i> {{type}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-body" ng-if="type != 'delete'">
+            <div class="form-group">
+                <label class="control-label">Site Name</label>
+                <input type="text" name="site_name" class="form-control" ng-model="data.SiteName" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Address1</label>
+                <input type="text" name="address1" class="form-control" ng-model="data.Address1" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">address2</label>
+                <input type="text" name="address2" class="form-control" ng-model="data.Address2" />
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group">
+                        <label class="control-label">suburb</label>
+                        <input type="text" name="suburb" class="form-control" ng-model="data.Suburb" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">postcode</label>
+                        <input type="text" name="postcode" class="form-control" ng-model="data.Postcode" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">State</label>
+                        <input type="text" name="state" class="form-control" ng-model="data.State" />
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Country</label>
+                        <input type="text" name="country" class="form-control" ng-model="data.Country" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group">
+                        <label class="control-label">Contact Name</label>
+                        <input type="text" name="contact_name" class="form-control" ng-model="data.ContactName" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">Contact Number</label>
+                        <input type="text" name="contact_number" class="form-control" ng-model="data.HomePhoneNumber" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-body" ng-if="type == 'delete'">
+            <p>
+                Do you want to delete <b class="font-red-thunderbird">{{data.SiteName}}</b> ?
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer" style="background: #f5f5f5">
+        <div class="form-actions right">
+            <button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+                ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+            <button class="btn btn-lg red-thunderbird" ng-click="click()">
+                {{type}} <i class="glyphicon glyphicon-save"></i></button>
+        </div>
+    </div>

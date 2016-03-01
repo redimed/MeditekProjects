@@ -441,8 +441,16 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"PhoneNumber",message:"Phone Number is a 10 digits number. Eg: 04 xxxx xxxx"});
 				}
 			}
-			else{
-				error.push({field:"PhoneNumber",message:"required"});
+			// else{
+			// 	error.push({field:"PhoneNumber",message:"required"});
+			// }
+
+			//validate Email
+			if(info.Email){
+				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
+				if(!EmailPattern.test(info.Email)){
+					error.push({field:"Email",message:"invalid email"});
+				}
 			}
 
 			if(error.length>0){

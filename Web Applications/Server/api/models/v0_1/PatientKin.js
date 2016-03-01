@@ -176,11 +176,63 @@ module.exports = {
                 key: 'ID'
             }
         },
+        CreatedDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
+        CreatedBy: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
+        },
+        ModifiedDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
+        ModifiedBy: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
+        }
     },
     associations: function() {},
     options: {
         tableName: 'PatientKin',
         timestamps: false,
-        hooks: {}
+        hooks: {
+             beforeCreate: function(module, options, callback) {
+                module.CreatedDate = new Date();
+                callback();
+            },
+            beforeBulkCreate: function(modules, options, callback) {
+                modules.forEach(function(module, index) {
+                    modules[index].CreatedDate = new Date();
+                });
+                callback();
+            },
+            beforeBulkUpdate: function(module, callback) {
+                module.fields.push('ModifiedDate');
+                module.attributes.ModifiedDate = new Date();
+                callback();
+            }
+        }
     }
 };

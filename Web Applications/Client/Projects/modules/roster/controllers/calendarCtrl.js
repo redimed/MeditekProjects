@@ -5,6 +5,19 @@ var app = angular.module('app.authentication.roster.calendar.controller', [
 ]);
 
 app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterService, $scope, $compile, $filter, $timeout, uiCalendarConfig, $uibModal){
+    $('#datepicker-inline').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $('#datepicker-inline').datepicker().on('changeDate', function (ev) {
+        var date = ev.target.value;
+        if(date){
+            var dateMoment = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')+' 00:00:00';
+            $scope.$apply(function(){
+                uiCalendarConfig.calendars['bookingCalendar'].fullCalendar('gotoDate', dateMoment);
+            })
+        }        
+    });
     var userRole = 0;
     if(typeof $cookies.getObject('userInfo')){
         userRole = $cookies.getObject('userInfo').roles[0].ID;

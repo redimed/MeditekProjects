@@ -16,7 +16,8 @@ module.exports = function(data, userInfo) {
                         data: rosterRepeat,
                         transaction: t,
                         userAccount: data.UserAccount,
-                        Bookable: data.Service.Bookable
+                        Bookable: data.Service.Bookable,
+                        action: 'create'
                     };
                     return Services.CheckOverlap(objectCheckOverlap)
                         .then(function(checkOk) {

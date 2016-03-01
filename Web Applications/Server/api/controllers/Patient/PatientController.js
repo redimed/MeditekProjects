@@ -1,8 +1,8 @@
 module.exports = {
     /*
-    	CreatePatient : create a new patient
-    	input: Patient's information
-    	output: insert Patient's information into table Patient 
+        CreatePatient : create a new patient
+        input: Patient's information
+        output: insert Patient's information into table Patient 
     */
     CreatePatient: function(req, res) {
         var data = req.body.data;
@@ -89,9 +89,9 @@ module.exports = {
     },
 
     /*
-    	SearchPatient : find patient with condition
-    	input: Patient's name or PhoneNumber
-    	output: get patient's list which was found in client 
+        SearchPatient : find patient with condition
+        input: Patient's name or PhoneNumber
+        output: get patient's list which was found in client 
     */
     SearchPatient: function(req, res) {
         var data = req.body.data;
@@ -152,12 +152,15 @@ module.exports = {
 
 
     /*
-    	UpdatePatient : update patient's information
-    	input: patient's information updated
-    	output: update patient'infomation into table Patient 
+        UpdatePatient : update patient's information
+        input: patient's information updated
+        output: update patient'infomation into table Patient 
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
+        if (typeof(data) == 'string') {
+            data = JSON.parse(data);
+        }
         var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
@@ -184,9 +187,9 @@ module.exports = {
     },
 
     /*
-    	GetPatient get a patient with condition
-    	input:  UserAccount's UID
-    	output: Patient's information of Patient's ID if patient has data.
+        GetPatient get a patient with condition
+        input:  UserAccount's UID
+        output: Patient's information of Patient's ID if patient has data.
     */
     GetPatient: function(req, res) {
         var data = req.body.data;
@@ -194,11 +197,15 @@ module.exports = {
             .then(function(info) {
 
                 if (info != null && info != undefined && info != '') {
-                    info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0]?info[0].dataValues.UserAccount.FileUploads[0].UID:null;
+                    for(var i = 0; i < info[0].dataValues.UserAccount.FileUploads.length; i++) {
+                        info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i]=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                        info[0].dataValues.Signature = info[0].dataValues.UserAccount.FileUploads[i]=='Signature'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                    }
                     info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
-                    info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
+                    info[0].dataValues.Email = info[0].dataValues.UserAccount.Email;
+                    info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
                     delete info[0].dataValues['UserAccount'];
-                    delete info[0].dataValues['Country'];
+                    delete info[0].dataValues['Country1'];
                     res.ok({
                         status: 200,
                         message: "Success",
@@ -221,9 +228,9 @@ module.exports = {
     },
 
     /*
-    	DetailPatient: get detail patient with patient UID
-    	input: patient's UID
-    	output: Patient's information
+        DetailPatient: get detail patient with patient UID
+        input: patient's UID
+        output: Patient's information
     */
     DetailPatient: function(req, res) {
         var data = req.body.data;
@@ -236,22 +243,31 @@ module.exports = {
                     return FileUpload.findAll({
                             where: {
                                 UserAccountID: info[0].UserAccountID,
-                                FileType: 'ProfileImage',
+                                FileType: {$in:['ProfileImage','Signature']},
                                 Enable: 'Y'
                             }
                         })
                         .then(function(success) {
                             if (success !== undefined && success !== null && success !== '' && success.length !== 0) {
-                                info[0].dataValues.FileUID = success[0].UID ? success[0].UID : null;
-                                info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
-                                delete info[0].dataValues['Country'];
+                                for(var i = 0; i < success.length; i++) {
+                                    // if(info[0].dataValuesFileType == "ProfileImage") 
+                                        info[0].dataValues.ProfileImage = success[i].FileType=='ProfileImage'?success[i].UID:null;
+                                    // if(info[0].dataValuesFileType == "Signature") 
+                                        info[0].dataValues.Signature = success[i].FileType=='Signature'?success[i].UID:null;
+                                }
+                                info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
+                                delete info[0].dataValues['Country1'];
                                 return res.ok({
                                     status: 200,
                                     message: "success",
                                     data: info
                                 });
                             } else {
-                                info[0].dataValues.FileUID = null;
+
+                                info[0].dataValues.Signature = null;
+                                info[0].dataValues.ProfileImage = null;
+                                info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
+                                delete info[0].dataValues['Country1'];
                                 return res.ok({
                                     status: 200,
                                     message: "success",
@@ -283,9 +299,9 @@ module.exports = {
     },
 
     /*
-    	DeletePatient : disable patient who was deleted.
-    	input: Patient's ID
-    	output: attribute Enable of Patient will receive value "N" in table Patient 
+        DeletePatient : disable patient who was deleted.
+        input: Patient's ID
+        output: attribute Enable of Patient will receive value "N" in table Patient 
     */
     DeletePatient: function(req, res) {
         var ID = req.body.data;
@@ -316,9 +332,9 @@ module.exports = {
     },
 
     /*
-    	LoadListPatient: load list patient
-    	input: amount patient
-    	output: get list patient from table Patient
+        LoadListPatient: load list patient
+        input: amount patient
+        output: get list patient from table Patient
     */
     LoadListPatient: function(req, res) {
         var data = req.body.data;
@@ -355,9 +371,9 @@ module.exports = {
     },
 
     /*
-    	CheckPatient : check patient has created ?
-    	input : Patient's PhoneNumber
-    	output: true if patient has created and (false,data:{}) if patient hasn't created
+        CheckPatient : check patient has created ?
+        input : Patient's PhoneNumber
+        output: true if patient has created and (false,data:{}) if patient hasn't created
     */
     CheckPatient: function(req, res) {
         var data = req.body.data;

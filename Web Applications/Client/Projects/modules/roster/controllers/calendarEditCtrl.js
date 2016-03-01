@@ -164,6 +164,8 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 					                                        $scope.events.splice(0, $scope.events.length);
 					                                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
 					                                }, function() {}); 
+						}else if(response.status === 'existAppt'){
+							toastr.error('Appointment Booking Existed');
 						}else{
 							toastr.success('Update Booking Successfully');
 							$modalInstance.close();

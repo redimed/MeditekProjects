@@ -1,0 +1,25 @@
+<!-- <patient-list on-select="true" on-staff="staff"></patient-list> -->
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" 
+            aria-hidden="true" ng-click="cancel()"></button>
+        <h4 class="modal-type uppercase bold font-red-thunderbird">
+            <i class="icon-settings"></i> {{type}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-body" ng-if="type != 'delete'">
+            <patient-list on-select="true" on-staff="staff"></patient-list>
+        </div>
+        <div class="form-body" ng-if="type == 'delete'">
+            <p>
+                Do you want to delete <b class="font-red-thunderbird">{{uid}}</b> ?
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer" style="background: #f5f5f5">
+        <div class="form-actions right">
+            <button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+                ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+            <button class="btn btn-lg red-thunderbird" ng-click="click()">
+                {{type}} <i class="glyphicon glyphicon-save"></i></button>
+        </div>
+    </div>

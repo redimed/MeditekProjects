@@ -4,6 +4,18 @@ var app = angular.module('app.authentication.booking.scheduler.controller', [
     'app.authentication.booking.scheduler.delete.controller',
 ]);
 app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, RosterService, BookingService, toastr) {
+    $('#datepicker-inline').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+    $('#datepicker-inline').datepicker().on('changeDate', function (ev) {
+        var date = ev.target.value;
+        if(date){
+            var dateMoment = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')+' 00:00:00';
+            $('#calendar').fullCalendar('gotoDate', dateMoment);
+        }        
+    });
+
     function getListSite() {
         RosterService.GetListSite()
             .then(function(response) {
@@ -66,7 +78,18 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                         ServerListBooking(today);
                         swal.close();
                         toastr.success('Update Booking Successfully');
-                    }, function(error){})
+                    }, function(error){
+                        if(typeof error.data !== 'undefined'){
+                            var type = error.data.status;
+                            switch(type){
+                                case 'withoutRoster':
+                                    toastr.error('Booking Appointment Time Wrong !!!');
+                                    revertFunc();
+                                    swal.close();
+                                    break;
+                            }
+                        }
+                    })
                 }else{
                     revertFunc();
                 }
@@ -142,6 +165,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                         resourceId: doctor.UID,
                         start: FromTime,
                         end: EndTime,
+                        enddate: EndTime,
                         color: roster.Services[0].Colour,
                         rendering: 'background',
                         Services: roster.Services,
@@ -156,7 +180,6 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                     });
                     events.push(event);
                 });
-                console.log(events);
                 $('#calendar').fullCalendar('addEventSource', events);
 
                 var bookingData = {
@@ -190,6 +213,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                                 resourceId: doctor.UID,
                                 start: FromTime,
                                 end: EndTime,
+                                enddate: EndTime,
                                 color: statuses[appointment.Status],
                                 Patient: patient,
                                 Service: service,
@@ -230,7 +254,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
 
     $scope.eventAfterRender = function(event, element, view) {
         if (typeof event.Patient !== 'undefined') {
-            element.find('.fc-content').html(moment(event.start).format('HH:mm').toLowerCase() + '-' + moment(event.end).format('HH:mm').toLowerCase());
+            element.find('.fc-content').html(moment(event.start).format('HH:mm').toLowerCase() + '-' + moment(event.enddate).format('HH:mm').toLowerCase());
             element.find('.fc-content').append(' <b>' + event.Patient.FirstName + ' ' + event.Patient.LastName + '</b>');
         }
 
@@ -393,6 +417,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
     $scope.scheduler = angular.element('#calendar').fullCalendar({
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
         timezone: 'UTC',
+        eventStartEditable: false,
         defaultView: 'agendaDay', // the hien trong ngay // 'agendaWeek' the hien trong tuan
         ignoreTimezone: false,
         defaultDate: todayNotTZ,

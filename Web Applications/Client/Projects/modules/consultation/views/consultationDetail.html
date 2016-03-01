@@ -3,17 +3,15 @@
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="javascript:;" ui-sref="authentication.home.list">
-                    Home</a>
+                <a href="javascript:;" ui-sref="authentication.home.list">Home</a>
             </li>
             <li>
                 <i class="fa fa-angle-right"></i>
-                <a href="javascript:;" ui-sref="authentication.consultation.list">
-                    Consultation List</a>
+                <a href="javascript:;" ui-sref="authentication.consultation.list">Consultation</a>
             </li>
             <li>
                 <i class="fa fa-angle-right"></i>
-                <b>Consultation</b>
+                <b>Consultation Detail</b>
             </li>
         </ul>
     </div>
@@ -83,7 +81,7 @@
                                 <div class="details">
                                     <div class="number">Telehealth Detail</div>
                                 </div>
-                                <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.telehealth">
+                                <a class="more" href="javascript:;" ng-click="telehealthDetail()">
                                     View  <i class="m-icon-swapright m-icon-white"></i>
                                 </a>
                             </div>
@@ -94,7 +92,7 @@
         </div>
         <div class="col-md-3 col-sm-3">
             <patient-detail-directive apptuid="Params.UID"></patient-detail-directive>
-            <appointment-detail-directive apptuid="Params.UID" opentok="opentokData"></appointment-detail-directive>
+            <appointment-detail-directive apptuid="Params.UID"></appointment-detail-directive>
             <medicare-directive apptuid="Params.UID"></medicare-directive>
             <div class="portlet portlet-fit box grey-mint">
                 <div class="portlet-title">

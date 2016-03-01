@@ -64,7 +64,7 @@ module.exports = {
                             to: uid,
                             message: 'call'
                         });
-                        sails.sockets.emit(req.socket.id, 'receiveMessage', arrTemp[index]);
+                        sails.sockets.emit(req.socket.id, '-', arrTemp[index]);
                     }
                 } else error = "User Is Not Exist";
             }).catch(function(err) {
@@ -142,22 +142,20 @@ module.exports = {
             var index = _.findIndex(arrTemp, {
                 to: to
             });
-            // console.log("1111111111111111111111111111111111111111111111111111111111");
-            // console.log(data);
             if (message.toLowerCase() == 'call' && index == -1) arrTemp.push(data);
             else arrTemp.splice(index, 1);
-            // console.log("8888888888888888888888888888",_.contains(roomList, to));
-            // console.log(roomList);
-            // console.log(to);
+            console.log(roomList);
+            console.log(to);
+            console.log("8888888888888888888888888888", _.contains(roomList, to));
             if (_.contains(roomList, to)) {
-                // console.log("222222222222222222222222222222222");
+                console.log("0000000000000000000000000000000000000000", data);
                 sails.sockets.broadcast(to, 'receiveMessage', data);
             }
-            // console.log("8888888888888888888888888888",sails.sockets.subscribers(from).length);
+            console.log("8888888888888888888888888888", sails.sockets.subscribers(from).length);
             if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
-                // console.log("333333333333333333333333333333333");
                 data.message = 'decline';
                 data.to = from;
+                console.log("333333333333333333333333333333333", data);
                 sails.sockets.broadcast(from, 'receiveMessage', data, req.socket);
             }
         }
@@ -172,8 +170,8 @@ module.exports = {
             var sessionId = session.sessionId;
             var tokenOptions = {
                 role: 'moderator',
-                expireTime : (new Date().getTime() / 1000)+(7 * 24 * 60 * 60),
-                data :'name=Johnny'
+                expireTime: (new Date().getTime() / 1000) + (7 * 24 * 60 * 60),
+                data: 'name=Johnny'
             };
             var token = opentok.generateToken(sessionId, tokenOptions);
             if (token != null && sessionId != null) res.ok({

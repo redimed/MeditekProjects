@@ -24,5 +24,10 @@ angular.module("app.blank.services", [])
                 data: data
             });
         }
+        services.PatientRequestAppointment = function(data) {
+           return api.all('appointment-wa-request/patient').post({
+                    data: data
+                });
+        }
         return services;
     });

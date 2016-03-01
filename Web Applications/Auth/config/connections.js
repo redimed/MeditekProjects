@@ -1,6 +1,5 @@
 module.exports.connections = {
-    disk: {
-        module: 'sails-disk'
+    disk: {        module: 'sails-disk'
     },
     mysql: {
         adapter: 'sails-mysql',
@@ -16,6 +15,6 @@ module.exports.connections = {
         options: {
             host: '192.168.1.2'
             // host: 'localhost'
-        }
+        },
     },
 };

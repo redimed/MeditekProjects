@@ -35,7 +35,13 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    res.serverError(ErrorWrap(err.error || err));
+                    if (!_.isEmpty(err) &&
+                        !_.isEmpty(err.error) &&
+                        err.error.status === 'withoutRoster') {
+                        res.serverError({ status: err.error.status });
+                    } else {
+                        res.serverError(ErrorWrap(err.error || err));
+                    }
                 });
         }
     },
@@ -58,7 +64,13 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    res.serverError(ErrorWrap(err.error || err));
+                    if (!_.isEmpty(err) &&
+                        !_.isEmpty(err.error) &&
+                        err.error.status === 'withoutRoster') {
+                        res.serverError({ status: err.error.status });
+                    } else {
+                        res.serverError(ErrorWrap(err.error || err));
+                    }
                 });
         }
     },

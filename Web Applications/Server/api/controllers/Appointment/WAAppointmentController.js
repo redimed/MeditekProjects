@@ -147,6 +147,7 @@ module.exports = {
     },
     RequestWAAppointmentPatient: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
+        console.log("33333333333333333333333333333333333333333333333333333333333333",data);
         if (data === false) {
             res.serverError('data failed');
         } else {
@@ -165,5 +166,21 @@ module.exports = {
                     }
                 });
         }
+    },
+    GetDetailWAAppointmentforEform: function(req, res) {
+        var UID = req.params.UID;
+        Services.GetDetailWAAppointmentforEform(UID)
+            .then(function(success) {
+                res.ok(success);
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
+                    err.transaction.rollback();
+                    res.serverError(ErrorWrap(err.error));
+                } else {
+                    res.serverError(ErrorWrap(err));
+                }
+            });
     }
 };

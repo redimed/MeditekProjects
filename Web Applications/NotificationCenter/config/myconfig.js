@@ -7,7 +7,7 @@ module.exports.myconf = {
 	},
 
 	beanstalkd:{
-		host:'192.168.232.139',
+		host:'192.168.1.2',
 		port:11300,
 	},
 	

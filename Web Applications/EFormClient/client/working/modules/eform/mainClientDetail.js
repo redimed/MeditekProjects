@@ -41,6 +41,7 @@ module.exports = React.createClass({
         var self = this;
         EFormService.preFormDetail({UID: self.props.params.appointmentId})
         .then(function(response){
+            console.log(response.data);
             var data = null;
             if(typeof response.data.Patients !== 'undefined'){
                 data = response.data.Patients[0];

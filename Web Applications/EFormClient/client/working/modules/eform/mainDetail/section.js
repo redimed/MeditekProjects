@@ -54,10 +54,11 @@ module.exports = React.createClass({
     	var self = this;
     	this.drakeField = dragula([].slice.apply(document.querySelectorAll('.dragula')),{
             copy: false,
-            revertOnSpill: true,
+             revertOnSpill: true,  // spilling will put the element back where it was dragged from, if this is true
+            removeOnSpill: true,
             invalid: function (el, handle) {
                 return false; // don't prevent any drags from initiating by default
-              },
+              }
         });
     	this.drakeField.on('drop', function(el,target,source,sibling){
     		if (el.parentNode == target) {

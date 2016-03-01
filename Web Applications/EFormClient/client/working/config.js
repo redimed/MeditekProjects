@@ -1,4 +1,5 @@
 var domain = 'https://meditek.redimed.com.au';
+//var domain = 'https://localhost';
 
 module.exports = {
 	//apiUrl: 'https://testapp.redimed.com.au:3015/',
@@ -41,5 +42,5 @@ module.exports = {
 	            }
 	        );
 	        return objURL;
-	}	
+	}
 }

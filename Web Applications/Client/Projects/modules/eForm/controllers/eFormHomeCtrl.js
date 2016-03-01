@@ -6,6 +6,6 @@ app.controller('eFormHomeCtrl', function($scope, $cookies){
         $scope.eFormBaseUrl = o.const.eFormBaseUrl;
         var contentHeight = $('.page-content').height()-80;
         $('#eformDev').attr('src', $scope.eFormBaseUrl+'/#/eformDev?patientUID='+userUID);
-        $('#eformDev').attr('height', contentHeight);
+        //$('#eformDev').attr('height', contentHeight);
 
 });

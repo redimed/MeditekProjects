@@ -80,7 +80,6 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     }
     
     func paramFilter(dataFilter:[String: String], completion: ((result: [String: String]) -> Void)?) {
-        print(strStatusApt)
         let fromtime = dataFilter["aptFrom"] == "" ? "" : "\(dataFilter["aptFrom"]! as String) \(getReFormat().timeZone)"
         let totime = dataFilter["aptTo"] == "" ? "" : "\(dataFilter["aptTo"]! as String) \(getReFormat().timeZone)"
         let data = ["aptFrom": fromtime, "aptTo": totime, "status": strStatusApt == nil ? "" : strStatusApt! ]

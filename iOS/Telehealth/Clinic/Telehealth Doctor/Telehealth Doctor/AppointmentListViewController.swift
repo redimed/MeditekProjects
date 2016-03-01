@@ -31,7 +31,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable:", name: "reloadDataTable", object: nil)
         
         SingleTon.onlineUser_Singleton.removeAll()
-        paramFilter(0, valueFilter: getReFormat().filterFormat, "", "")
+        paramFilter(0, valueFilter: "", "", "")
         titleView2 = "Telehealth Appointment"
         
         // add refresh control for appointment list
@@ -41,7 +41,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         self.tableView.addSubview(refreshControl)
         
         getAppointmentList(APPOINTMENTLIST)
-        tableView.estimatedRowHeight = 90.0
+        tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
@@ -75,8 +75,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
             aptFrom = data["data"]["aptFrom"].stringValue
             aptTo = data["data"]["aptTo"].stringValue
             status = data["data"]["status"].stringValue
-//            paramFilter(0, aptFrom: aptFrom, aptTo: aptTo, status: status)
-            paramFilter(0, valueFilter: aptFrom, aptTo, status)
+            paramFilter(0, valueFilter: aptFrom != nil ? aptFrom : "", aptTo != nil ? aptTo : "", status != nil ? status : "")
             
             getAppointmentList(APPOINTMENTLIST)
         }
@@ -121,7 +120,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
             cell.waAppointment.hidden = true
             cell.teleAppointment.tag = Int(indexPath.row)
         } else {
-            cell.teleAppointment.hidden = true
+//            cell.teleAppointment.hidden = true
             cell.waAppointment.tag = Int(indexPath.row)
         }
         
@@ -142,16 +141,13 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
         if let offSet = SingleTon.filterParam["data"]?.valueForKey("Offset") as? Int {
             if offSet == 0 && indexPath.row == 15 {
-//                paramFilter(offSet + 20, aptFrom: aptFrom, aptTo: aptTo, status: status)
-                paramFilter(offSet + 20, valueFilter: aptFrom, aptTo, status)
+                paramFilter(offSet + 20, valueFilter: aptFrom != nil ? aptFrom : "", aptTo != nil ? aptTo : "", status != nil ? status : "")
                 getAppointmentList(APPOINTMENTLIST)
             }
             if offSet != 0 && indexPath.row == offSet - 5 {
-//                paramFilter(offSet + 20, aptFrom: aptFrom, aptTo: aptTo, status: status)
-                paramFilter(offSet + 20, valueFilter: aptFrom, aptTo, status)
+                paramFilter(offSet + 20, valueFilter: aptFrom != nil ? aptFrom : "", aptTo != nil ? aptTo : "", status != nil ? status : "")
                 getAppointmentList(APPOINTMENTLIST)
             }
         }

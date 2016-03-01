@@ -18,13 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var state = false
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+    
         if let _: NSDictionary = userDefault.valueForKey("teleUserInfo") as? NSDictionary {
-            let homeviewVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as UIViewController
-            self.window?.rootViewController = homeviewVC
+            if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                let homeviewVC: UIViewController = UIStoryboard(name: "Main-iPad", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as UIViewController
+                self.window?.rootViewController = homeviewVC
+            } else if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+                let homeviewVC: UIViewController = UIStoryboard(name: "Main-iPhone", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as UIViewController
+                self.window?.rootViewController = homeviewVC
+            }
         } else {
-            let loginVC : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
-            self.window?.rootViewController = loginVC
+            if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                let loginVC : UIViewController = UIStoryboard(name: "Main-iPad", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
+                self.window?.rootViewController = loginVC
+            } else if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+                let loginVC : UIViewController = UIStoryboard(name: "Main-iPhone", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
+                self.window?.rootViewController = loginVC
+            }
         }
         
         return true

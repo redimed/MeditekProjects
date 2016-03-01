@@ -14,7 +14,7 @@ class Appointment: UIViewController {
     
     @IBOutlet var label: [UILabel]!
     @IBOutlet var checkBoxBtn: [UIButton]!
-    @IBOutlet weak var waView: UIView!
+//    @IBOutlet weak var waView: UIView!
     @IBOutlet weak var teleView: UIView!
     
     var fullName: String!
@@ -38,7 +38,8 @@ class Appointment: UIViewController {
             teleView.hidden = false
         } else {
             preferredPractitioners = teleAppoint["PreferredPractitioners"][0]
-            waView.hidden = false
+//            waView.hidden = false
+            
         }
         
         loadData()

@@ -20,6 +20,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var viewModal: DesignableView!
     @IBOutlet weak var errorLoginLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak var viewLogin: DesignableView!
+    @IBOutlet weak var viewForgot: DesignableView!
     
     let customUIViewController : CustomViewController = CustomViewController()
     let reachability = Reachability.reachabilityForInternetConnection()
@@ -240,8 +242,14 @@ class LoginViewController: UIViewController {
                                     user[key] = object.stringValue
                                 }
                                 self.userDefault.setObject(user, forKey: "teleUserInfo")
-                                let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
-                                self.presentViewController(initViewController, animated: true, completion: nil)
+                                
+                                if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                                    let initViewController : UIViewController = UIStoryboard(name: "Main-iPad", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
+                                    self.presentViewController(initViewController, animated: true, completion: nil)
+                                } else if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+                                    let initViewController : UIViewController = UIStoryboard(name: "Main-iPhone", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
+                                    self.presentViewController(initViewController, animated: true, completion: nil)
+                                }
                                 self.loading.stopActivity(true)
                             }
                     }
@@ -296,6 +304,17 @@ class LoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func forgotPass(sender: UIButton) {
+        if sender.titleLabel!.text!.containsString("Forgot") {
+            viewLogin.hidden = !sender.hidden
+            viewForgot.hidden = sender.hidden
+        } else if sender.titleLabel!.text!.containsString("BACK") {
+            viewForgot.hidden = !sender.hidden
+            viewLogin.hidden = sender.hidden
+        }
+        
     }
 }
 

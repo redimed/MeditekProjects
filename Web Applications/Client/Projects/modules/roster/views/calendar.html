@@ -3,17 +3,21 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a ui-sref="authentication.appointment.list">Roster</a>
+            <a ui-sref="authentication.home.list">Home</a>
         </li>
         <li>
             <i class="fa fa-angle-right"></i>
-            <label class="text-primary">{{doctorName}}</label>
+            <a ui-sref="authentication.roster.home">Roster</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>{{doctorName}}</b>
         </li>
     </ul>
 </div>
 <!-- END PAGE BAR -->
 <!-- BEGIN PAGE TITLE-->
-<center><h3 class="page-title">Roster Calendar of <small>{{doctorName}}</small></h3></center>
+<h3 class="page-title bold text-center">Roster Calendar of <small>{{doctorName}}</small></h3>
 <!-- END PAGE TITLE-->
 <div class="row">
     <div class="col-md-4 col-sm-4 form-group">

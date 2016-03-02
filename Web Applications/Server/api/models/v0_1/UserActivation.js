@@ -145,22 +145,8 @@ module.exports = {
     options: {
         tableName: 'UserActivation',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(useractivation, options, callback) {
-                useractivation.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(useractivations, options, callback) {
-                useractivations.forEach(function(useractivation, index) {
-                    useractivations[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(useractivation, callback) {
-                useractivation.fields.push('ModifiedDate');
-                useractivation.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

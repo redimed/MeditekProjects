@@ -249,22 +249,8 @@ module.exports = {
     options: {
         tableName: 'TelehealthAppointment',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(telehealthappointment, options, callback) {
-                telehealthappointment.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(telehealthappointments, options, callback) {
-                telehealthappointments.forEach(function(telehealthappointment, index) {
-                    telehealthappointments[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(telehealthappointment, callback) {
-                telehealthappointment.fields.push('ModifiedDate');
-                telehealthappointment.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

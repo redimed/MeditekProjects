@@ -143,22 +143,8 @@ module.exports = {
     options: {
         tableName: 'MessageQueue',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(messagequeue, options, callback) {
-                messagequeue.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(messagequeues, options, callback) {
-                messagequeues.forEach(function(messagequeue, index) {
-                    messagequeues[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(messagequeue, callback) {
-                messagequeue.fields.push('ModifiedDate');
-                messagequeue.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

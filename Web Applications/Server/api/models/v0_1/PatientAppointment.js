@@ -467,22 +467,8 @@ module.exports = {
     options: {
         tableName: 'PatientAppointment',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(patientappointment, options, callback) {
-                patientappointment.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(patientappointments, options, callback) {
-                patientappointments.forEach(function(patientappointment, index) {
-                    patientappointments[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(patientappointment, callback) {
-                patientappointment.fields.push('ModifiedDate');
-                patientappointment.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

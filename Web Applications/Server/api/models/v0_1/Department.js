@@ -118,22 +118,8 @@ module.exports = {
     options: {
         tableName: 'Department',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(department, options, callback) {
-                department.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(departments, options, callback) {
-                departments.forEach(function(department, index) {
-                    departments[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(department, callback) {
-                department.fields.push('ModifiedDate');
-                department.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

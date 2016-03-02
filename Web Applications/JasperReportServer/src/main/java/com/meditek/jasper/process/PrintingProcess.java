@@ -40,6 +40,10 @@ public class PrintingProcess {
         try {
             // Get populated data
             Hashtable data = dataParsing.iTextDataParse(formData);
+            for (Enumeration data1 = data.keys(); data1.hasMoreElements();){
+                String key= (String)data1.nextElement();
+                System.out.println("Key: "+key+" Value: "+ data.get(key));
+            }
             //Get correct pdf template
             String pdfTemplateFile = "/com/meditek/itexttemplate/"+formUID+".pdf";
             PdfReader pdfTemplate = new PdfReader(pdfTemplateFile);
@@ -64,21 +68,25 @@ public class PrintingProcess {
     }
     
     public ByteArrayOutputStream jasperPrinting(List<FormDataModel> formData, String formUID){
-        try {
+//        try {
             ReportDataWrapperModel parsedData = dataParsing.jasperDataParse(formData);
-            String templateFileName = formUID + ".jasper";
-            HashMap params = new HashMap();
-            params.put("data", parsedData);
-            //Fill pdf
-            JasperPrint print = JasperFillManager.fillReport(templateFileName, params, new JREmptyDataSource());
-            //Export to ByteArrayOutputStream
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            JasperExportManager.exportReportToPdfStream(print, baos);
-            return baos;
-        } catch (JRException ex) {
-            Logger.getLogger(PrintingProcess.class.getName()).log(Level.SEVERE, null, ex);
+            for (Enumeration data = parsedData.getOtherFormData().keys(); data.hasMoreElements();){
+                String key= (String)data.nextElement();
+                System.out.println("Key: "+key+" Value: "+ parsedData.getOtherFormData().get(key));
+            }
+//            String templateFileName = formUID + ".jasper";
+//            HashMap params = new HashMap();
+//            params.put("data", parsedData);
+//            //Fill pdf
+//            JasperPrint print = JasperFillManager.fillReport(templateFileName, params, new JREmptyDataSource());
+//            //Export to ByteArrayOutputStream
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            JasperExportManager.exportReportToPdfStream(print, baos);
             return null;
-        }
+//        } catch (JRException ex) {
+//            Logger.getLogger(PrintingProcess.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
     }
 
     

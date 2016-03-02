@@ -87,7 +87,7 @@ public class JasperReportController {
                 baos = pdfPrinting.iTextPrinting(requestData.getData(), requestData.getTemplateUID());
             }
             else{
-                baos = null;
+                baos = pdfPrinting.jasperPrinting(requestData.getData(), requestData.getTemplateUID());
             }
             //Return the filled pdf file.
             res.setContentType("application/pdf");

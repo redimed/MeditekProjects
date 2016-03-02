@@ -112,19 +112,20 @@ module.exports = function(data, userInfo) {
                                     where: {
                                         UserAccountID: userInfo.ID
                                     },
-                                    transaction: t
+                                    transaction: t,
+                                    raw: true
                                 });
                             }
                         }, function(err) {
                             defer.reject({
                                 error: err,
-                                transaction: t,
-                                raw: true
+                                transaction: t
                             });
                         })
                         .then(function(patientRes) {
                             if (!_.isEmpty(patientRes) &&
                                 !_.isEmpty(appointmentObject)) {
+                                console.log('patientRes', patientRes);
                                 return appointmentObject.setPatients(patientRes.ID, {
                                     transaction: t
                                 });
@@ -133,16 +134,32 @@ module.exports = function(data, userInfo) {
                             defer.reject(err);
                         })
                         .then(function(relPatientApptCreated) {
-                            defer.resolve({
-                                status: 'success',
-                                transaction: t
-                            })
+                            if (!_.isEmpty(data.Doctor) &&
+                                !_.isEmpty(appointmentObject)) {
+                                var objRelDoctorAppt = {
+                                    appointmentObject: appointmentObject,
+                                    where: data.Doctor.UID,
+                                    transaction: t
+                                };
+                                return RelDoctorAppointment(objRelDoctorAppt);
+                            }
                         }, function(err) {
                             defer.reject({
                                 error: err,
                                 transaction: t
                             });
                         })
+                        .then(function(relDoctorApptCreated) {
+                            defer.resolve({
+                                status: 'success',
+                                transaction: t
+                            });
+                        }, function(err) {
+                            defer.reject({
+                                error: err,
+                                transaction: t
+                            });
+                        });
                 },
                 function(err) {
                     defer.reject(err);

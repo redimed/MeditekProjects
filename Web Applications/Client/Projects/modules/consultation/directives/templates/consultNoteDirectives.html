@@ -215,10 +215,10 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4">
-                                    <input type="checkbox" ng-model="requestOther.RelevantOthers" ng-click="CheckBox('Consultation__Details.Appointment.Relevant.Others')"> OTHER
+                                    <input type="checkbox" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Others'].Value"> OTHER
                                 </label>
-                                <div class="col-md-8 col-sm-8" ng-show="requestOther.RelevantOthers == true">
-                                    <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Others'].Value" ng-show="requestOther.RelevantOthers == true">
+                                <div class="col-md-8 col-sm-8" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Others'].Value==true">
+                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.OthersValue'].Value">
                                 </div>
                             </div>
                         </div>
@@ -301,7 +301,7 @@
                                     </div>
                                     <div class="col-md-2 col-sm-2">
                                         <label class="checkbox-inline bold">
-                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Melanonia'].Value"> Melanonia
+                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Melanonia'].Value">Melanonia
                                         </label>
                                     </div>
                                     <div class="col-md-2 col-sm-2">
@@ -311,11 +311,11 @@
                                     </div>
                                     <div class="col-md-2 col-sm-2" align="right">
                                         <label class="checkbox-inline bold">
-                                            <input type="checkbox" ng-model="requestOther.DDXOther" ng-click="CheckBox('Consultation__Details.Appointment.DDX.Other')"> Other
+                                            <input type="checkbox"  ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value"> Other
                                         </label>
                                     </div>
-                                    <div class="col-md-2 col-sm-2">
-                                        <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value" ng-show="requestOther.DDXOther == true">
+                                    <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value == true">
+                                        <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.OtherValue'].Value" >
                                     </div>
                                 </div>
                             </div>

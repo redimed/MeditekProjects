@@ -192,10 +192,9 @@ app.directive('telehealthDetail', function() {
                     $scope.ClinicalDetails();
                     console.log($scope.wainformation)
                     WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
-                        console.log('saveWaAppointment', data);
                         toastr.success("Update appointment successfully !");
                         swal.close();
-                        $state.go("authentication.WAAppointment.detail", {}, {
+                        $state.go("authentication.WAAppointment.detail", {
                             reload: true
                         });
                     }, function(err) {
@@ -204,7 +203,7 @@ app.directive('telehealthDetail', function() {
                         } else {
                             swal.close();
                             toastr.error('Update Appointment Failed');
-                            $state.go("authentication.WAAppointment.detail", {}, {
+                            $state.go("authentication.WAAppointment.detail", {
                                 reload: true
                             });
                         }
@@ -236,9 +235,6 @@ app.directive('telehealthDetail', function() {
                     } else {
                         $scope.wainformation.FromTime = null;
                     };
-                    console.log("$scope.wainformation.FromTime",$scope.wainformation.FromTime)
-                    alert('222')
-                    console.log($scope.wainformation.TelehealthAppointment.PatientAppointment)
                     if ($scope.info.MedicareExpiryDate != null && $scope.info.MedicareExpiryDate != '') {
                         $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
                     } else {

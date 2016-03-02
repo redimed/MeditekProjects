@@ -318,17 +318,18 @@ module.exports = {
 			if(userInfo.PinNumber)
 				userInfo.ExpiryPin=o.const.ExpiryPin;
 			console.log(userInfo);
-			return UserAccount.create(userInfo,{transaction:transaction})
-			.then(function(data){
-				return data;
-			},function(e){
-				o.exlog(e);
-				err.pushError("UserName.createError");
-				throw err;
-			})
+			return UserAccount.create(userInfo,{transaction:transaction});
+			
 		},function(e){
 			throw e;
 		})
+		.then(function(data){
+			return data;
+		},function(e){
+			o.exlog(e);
+			err.pushError("UserName.createError");
+			throw err;
+		});
 	},
 	
 	/**

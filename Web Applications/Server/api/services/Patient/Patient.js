@@ -722,9 +722,15 @@ module.exports = {
             .then(function(user){
                 if(isCreateByName==false && isCreateByEmail==false && isCreateByPhoneAndEmail == false){
                     if(user.length > 0) {
-                        info.UserAccountID = user.ID;
-                        info.UserAccountUID = user.UID;
-                        return Patient.create(info,{transaction:t});
+                        console.log(user);
+                        info.UserAccountID = user[0].ID;
+                        info.UserAccountUID = user[0].UID;
+                        return Patient.findOne({
+                            where:{
+                                UserAccountID : info.UserAccountID
+                            },
+                            transaction :t
+                        });
                     }
                     else{
                         data.password = generatePassword(12, false);
@@ -746,7 +752,12 @@ module.exports = {
                         .then(function(user){
                             info.UserAccountID = user.ID;
                             info.UserAccountUID = user.UID;
-                            return Patient.create(info,{transaction:t});
+                            return Patient.findOne({
+                                where:{
+                                    UserAccountID : info.UserAccountID
+                                },
+                                transaction :t
+                            });
                         },function(err){
                             t.rollback();
                             throw err;
@@ -757,7 +768,12 @@ module.exports = {
                     if(user != null && user != '') {
                         info.UserAccountID = user.ID;
                         info.UserAccountUID = user.UID;
-                        return Patient.create(info,{transaction:t});
+                        return Patient.findOne({
+                            where:{
+                                UserAccountID : info.UserAccountID
+                            },
+                            transaction :t
+                        });
                     }
                     else{
                         data.password = generatePassword(12, false);
@@ -777,7 +793,12 @@ module.exports = {
                         .then(function(user){
                             info.UserAccountID = user.ID;
                             info.UserAccountUID = user.UID;
-                            return Patient.create(info,{transaction:t});
+                            return Patient.findOne({
+                                where:{
+                                    UserAccountID : info.UserAccountID
+                                },
+                                transaction :t
+                            });
                         },function(err){
                             t.rollback();
                             throw err;
@@ -787,9 +808,27 @@ module.exports = {
                 else{
                     info.UserAccountID = user.ID;
                     info.UserAccountUID = user.UID;
-                    return Patient.create(info,{transaction:t});
+                    return Patient.findOne({
+                        where:{
+                            UserAccountID : info.UserAccountID
+                        },
+                        transaction :t
+                    });
                 }
             },function(err){
+                t.rollback();
+                throw err;
+            })
+            .then(function(got_patient) {
+                if(got_patient == null || got_patient == ''){
+                    return Patient.create(info,{transaction:t});
+                }
+                else {
+                    var err = new Error("CreatePatient.Error");
+                    err.pushError("UserAccount.Has.Used");
+                    throw err;
+                }
+            },function(err) {
                 t.rollback();
                 throw err;
             })
@@ -842,7 +881,7 @@ module.exports = {
                     throw err;
                 })
             }, function(err){
-                t.rollback();
+                // t.rollback();
                 throw err;
             })
             .then(function(success) {
@@ -890,7 +929,8 @@ module.exports = {
                 }
             },function(err) {
                 t.rollback();
-                throw err;
+                defer.reject(err);
+                // throw err;
             });
         });
         return defer.promise;

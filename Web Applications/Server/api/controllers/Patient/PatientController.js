@@ -57,13 +57,14 @@ module.exports = {
             .then(function(patient) {
 
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
+                    patient.transaction.commit();
                     var info = {
-                        UID: patient.result.UID,
-                        FirstName: patient.result.FirstName,
-                        LastName: patient.result.LastName,
-                        DOB: patient.result.DOB,
-                        Address1: patient.result.Address1,
-                        Address2: patient.result.Address2,
+                        UID: patient.UID,
+                        FirstName: patient.FirstName,
+                        LastName: patient.LastName,
+                        DOB: patient.DOB,
+                        Address1: patient.Address1,
+                        Address2: patient.Address2,
                         UserAccountUID: patient.UserAccountUID
                     };
                     res.ok({

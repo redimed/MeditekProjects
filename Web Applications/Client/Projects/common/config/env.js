@@ -94,6 +94,7 @@ var _configStateBlank = [
 	,"unAuthentication.searchPatient"
 	,"blank.call"
 	,"blank.welcome"
+	,"blank.welcomeCampaign"
 	,"blank.registerPatient"
 	,"blank.searchPatient"
 	,"blank.drawing.home"

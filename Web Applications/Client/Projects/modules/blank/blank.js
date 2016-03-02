@@ -36,6 +36,16 @@ app.config(function($stateProvider){
 				},
 			},
 		})
+		.state('blank.welcomeCampaign',{
+			data: {pageTitle: 'Welcome Compaign'},
+			url: '/welcomeCampaign',
+			views:{
+				'blank':{
+					templateUrl: 'modules/blank/views/welcomeCampaign.html',
+					// controller: 'welcomeCampaignCtrl',
+				},
+			},
+		})
 		.state('blank.registerPatient',{
 			data: {pageTitle: 'registerPatient'},
 			url: '/registerPatient',

@@ -510,7 +510,7 @@ img.profile-imge {
 /*end consultation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
 /*BEGIN Register Patient>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    html, body.full-background {
+    html, body.full-background, body.full-background-compaign {
         min-height: 768px;
         min-width: 1024px;
         height:100%;
@@ -519,6 +519,14 @@ img.profile-imge {
     body.full-background {
         background-color: white;
         background-image: url(../../../global/images/patient1.jpg);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: left top;
+        position: relative;
+    }
+    body.full-background-compaign {
+        background-color: white;
+        background-image: url(../../../global/images/patient2.jpg);
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: left top;

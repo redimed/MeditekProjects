@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Telehealth Patient MVP</string>
+    <string name="app_name">Telehealth Patient</string>
 
     <!-- Launcher-->
     <string name="welcome">Welcome to REDiMED</string>
@@ -126,7 +126,7 @@
     <string name="list_appt_title">Tracking Referral</string>
     <string name="no_data_result">No Data Result</string>
     <string name="no_image_result">No Image</string>
-    <string name="ref_no">Referral No</string>
+    <string name="req_date">Request Date</string>
     <string name="ref_pra">Referring Practitioner</string>
     <string name="pre_pra">Preferred Practitioner</string>
 
@@ -142,8 +142,9 @@
     <!-- Profile Layout-->
     <string name="profile_title">Patient Profile</string>
     <string name="profile_logout">Unregistered</string>
+    <string name="profile_mobile">Mobile:</string>
     <string name="profile_dob">DOB:</string>
-    <string name="profile_email">Email:</string>
+    <string name="profile_email">Email</string>
     <string name="profile_home_phone">Home Phone</string>
     <string name="profile_address">Address</string>
     <string name="profile_suburb">Suburb</string>
@@ -179,10 +180,17 @@
     <string name="phone_format">Mobile Number wrong formatted</string>
     <string name="email_valid">Email address not valid</string>
 
+    <string-array name="appt__type_arrays">
+        <item>Appointment Type *</item>
+        <item>Onsite</item>
+        <item>Telehealth</item>
+    </string-array>
+
     <!-- Mix-->
     <string name="none">NONE</string>
     <string name="back">Back</string>
     <string name="btn_submit">Submit</string>
+    <string name="btn_cancel">Cancel</string>
     <string name="btn_upload">Upload Photos</string>
     <string name="fileName">suburb.json</string>
 

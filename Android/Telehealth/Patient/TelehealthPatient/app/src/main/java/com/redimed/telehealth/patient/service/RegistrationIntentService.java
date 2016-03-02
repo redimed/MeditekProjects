@@ -40,6 +40,7 @@ import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;
 import com.redimed.telehealth.patient.network.Config;
+import com.redimed.telehealth.patient.waiting.WaitingActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,7 +104,7 @@ public class RegistrationIntentService extends IntentService {
         try {
             JSONObject msg = new JSONObject(message);
             if (msg.get("message").toString().equalsIgnoreCase("call")) {
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, WaitingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("apiKey", msg.get("apiKey").toString());
                 intent.putExtra("sessionId", msg.get("sessionId").toString());

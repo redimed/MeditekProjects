@@ -11,5 +11,6 @@ public interface ISettingPresenter {
     void getInfoPatient(String dataPatient);
     void displayInfoPatient(String teleUID);
     void changeFragment(Fragment fragment);
+    void displayAbout();
     void logout();
 }

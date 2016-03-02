@@ -30,11 +30,17 @@ public class RetrofitErrorHandler implements ErrorHandler {
         String errorDescription;
 
         if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-            if (cause.getCause() instanceof SocketTimeoutException
-                    || cause.getCause() instanceof InterruptedIOException) {
-                errorDescription = "Network Timeout";
-            } else {
+            String err = cause.getCause().getLocalizedMessage();
+//            if (cause.getCause() instanceof SocketTimeoutException
+//                    || cause.getCause() instanceof InterruptedIOException) {
+//                errorDescription = "Network Timeout";
+//            } else
+//            Log.d(TAG, err);
+//            Log.d(TAG, err.substring(err.lastIndexOf(":") + 3));
+            if (err.substring(err.lastIndexOf(":") + 2).equals("ENETUNREACH (Network is unreachable)")){
                 errorDescription = "Network Error";
+            } else {
+                errorDescription = "Network Timeout";
             }
         } else {
             if (cause.getResponse() == null) {

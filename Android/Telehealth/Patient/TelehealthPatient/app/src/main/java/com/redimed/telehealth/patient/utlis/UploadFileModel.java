@@ -1,10 +1,7 @@
 package com.redimed.telehealth.patient.utlis;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
@@ -23,7 +20,7 @@ import retrofit.client.Response;
 /**
  * Created by Fox on 1/20/2016.
  */
-public class UploadProgress extends AsyncTask<Integer, Integer, Void> {
+public class UploadFileModel extends AsyncTask<Integer, Integer, Void> {
 
     private Gson gson;
     private ProgressBar pb;
@@ -34,7 +31,7 @@ public class UploadProgress extends AsyncTask<Integer, Integer, Void> {
     private CountingTypedFile.ProgressListener listener;
     private String TAG = "UPLOAD_PROGRESS", bodyPart, picturePath, appointmentUID;
 
-    public UploadProgress(ProgressBar pb, String picturePath, String appointmentUID, String bodyPart, SharedPreferences uidTelehealth, IModelView iModelView) {
+    public UploadFileModel(ProgressBar pb, String picturePath, String appointmentUID, String bodyPart, SharedPreferences uidTelehealth, IModelView iModelView) {
         this.pb = pb;
         this.picturePath = picturePath;
         this.appointmentUID = appointmentUID;
@@ -64,7 +61,7 @@ public class UploadProgress extends AsyncTask<Integer, Integer, Void> {
             }
         };
 
-        registerApiCore.uploadFile(userUID, fileType, bodyPart, description, new CountingTypedFile("image/*", file, listener), new Callback<JsonObject>() {
+        registerApiCore.uploadFileModel(userUID, fileType, bodyPart, description, new CountingTypedFile("image/*", file, listener), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String status = jsonObject.get("status").getAsString();

@@ -13,7 +13,6 @@ public interface IAppointmentPresenter {
     void getAppointmentDetails(String appointmentUID);
     void changeFragment(Fragment fragment);
     Uri getOutputMediaFileUri(int type);
-    void uploadPhotos(int requestCode, Intent data, Fragment fragment);
     void getListImage(JsonObject jsonObject);
     void viewStatus(String status, String apptTime);
 }

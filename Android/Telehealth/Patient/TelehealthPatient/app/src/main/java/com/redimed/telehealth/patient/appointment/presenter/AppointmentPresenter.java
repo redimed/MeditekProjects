@@ -128,46 +128,6 @@ public class AppointmentPresenter implements IAppointmentPresenter {
     }
 
     @Override
-    public void uploadPhotos(int requestCode, Intent data, Fragment fragment) {
-        Cursor cursor;
-        int columnIndex;
-        String picturePath = "";
-        boolean flagLayout = false;
-        try {
-            switch (requestCode) {
-                case RESULT_PHOTO:
-                    //Get uri image
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    //Get cursor
-                    cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    //Get path form cursor index
-                    columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    picturePath = cursor.getString(columnIndex);
-                    cursor.close();
-                    flagLayout = true;
-                    break;
-
-                case RESULT_CAMERA:
-                    // Downsizing image as it throws OutOfMemory Exception for larger images
-                    picturePath = fileUri.getPath();
-                    flagLayout = true;
-                    break;
-
-                case RESULT_RELOAD:
-                    flagLayout = false;
-                    FragmentTransaction ft = fragment.getFragmentManager().beginTransaction();
-                    ft.detach(fragment).attach(fragment).commit();
-                    break;
-            }
-            iAppointmentView.onResultUpload(picturePath, flagLayout);
-        } catch (Exception ex) {
-            Log.d(TAG, ex.getLocalizedMessage());
-        }
-    }
-
-    @Override
     public void getListImage(JsonObject jsonObject) {
 
         //Get image from ClinicalDetails

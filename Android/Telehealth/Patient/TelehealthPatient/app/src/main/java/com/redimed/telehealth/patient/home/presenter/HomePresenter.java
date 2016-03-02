@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.activation.ActivationFragment;
@@ -38,13 +39,14 @@ import retrofit.client.Response;
  */
 public class HomePresenter implements IHomePresenter {
 
+    private Gson gson;
     private Bundle bundle;
     private Context context;
     private Fragment fragment;
     private IHomeView iHomeView;
     private RegisterApi registerApi;
     private IMainPresenter iMainPresenter;
-    private SharedPreferences uidTelehealth;
+    private SharedPreferences uidTelehealth, spDevice;
     private String TAG = "HOME_PRESENTER", dataPatient;
 
     //Constructor
@@ -53,9 +55,11 @@ public class HomePresenter implements IHomePresenter {
         this.context = context;
 
         //init variable
+        gson = new Gson();
         bundle = new Bundle();
         registerApi = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
+        spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
@@ -100,8 +104,25 @@ public class HomePresenter implements IHomePresenter {
         File xmlUser = new File("/data/data/" + context.getPackageName() + "/shared_prefs/TelehealthUser.xml");
         if (xmlUser.exists()) {
             iHomeView.changeView(true);
+            updateToken();
             context.startService(new Intent(context, SocketService.class));
         }
+    }
+
+    public void updateToken() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("token", spDevice.getString("gcmToken", ""));
+        jsonObject.addProperty("uid", uidTelehealth.getString("uid", ""));
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("data", gson.toJson(jsonObject));
+
+        RESTClient.getRegisterApi().updateToken(dataJson, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {}
+
+            @Override
+            public void failure(RetrofitError error) {}
+        });
     }
 
     @Override
@@ -159,13 +180,21 @@ public class HomePresenter implements IHomePresenter {
     @Override
     public void displayFAQs(String content) {
         fragment = new FAQsFragment();
-        if (content.equalsIgnoreCase("UR")) {
-            bundle.putString("msg", "UR");
-            fragment.setArguments(bundle);
-        } else {
-            Bundle bundle = new Bundle();
-            bundle.putString("msg", "FAQs");
-            fragment.setArguments(bundle);
+        switch (content){
+            case "UR":
+                bundle.putString("msg", "UR");
+                fragment.setArguments(bundle);
+                break;
+            case "FAQs":
+                bundle.putString("msg", "FAQs");
+                fragment.setArguments(bundle);
+                break;
+            case "Service":
+                bundle.putString("msg", "Service");
+                fragment.setArguments(bundle);
+                break;
+            default:
+                break;
         }
         iMainPresenter.replaceFragment(fragment);
     }

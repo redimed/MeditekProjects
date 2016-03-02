@@ -1,34 +1,13 @@
 package com.redimed.telehealth.patient.model.presenter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
-import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.model.view.IModelView;
-import com.redimed.telehealth.patient.models.FileUpload;
-import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.utlis.CountingTypedFile;
-import com.redimed.telehealth.patient.utlis.UploadProgress;
-
-import java.io.File;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import com.redimed.telehealth.patient.utlis.UploadFileModel;
 
 /**
  * Created by Fox on 1/20/2016.
@@ -67,6 +46,6 @@ public class ModelPresenter implements IModelPresenter {
 
     @Override
     public void uploadProgress(ProgressBar progressBar, String picturePath, String appointmentUID, String bodyPart, SharedPreferences uidTelehealth, IModelView iModelView) {
-        new UploadProgress(progressBar, picturePath, appointmentUID, bodyPart, uidTelehealth, iModelView).execute();
+        new UploadFileModel(progressBar, picturePath, appointmentUID, bodyPart, uidTelehealth, iModelView).execute();
     }
 }

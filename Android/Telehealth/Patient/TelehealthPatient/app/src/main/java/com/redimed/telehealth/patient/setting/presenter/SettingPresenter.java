@@ -1,17 +1,22 @@
 package com.redimed.telehealth.patient.setting.presenter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.faq.FAQsFragment;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.information.InformationFragment;
 import com.redimed.telehealth.patient.information.presenter.InfoPresenter;
@@ -83,6 +88,15 @@ public class SettingPresenter implements ISettingPresenter {
     }
 
     @Override
+    public void displayAbout() {
+        FAQsFragment fragment = new FAQsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("msg", "UR");
+        fragment.setArguments(bundle);
+        iMainPresenter.replaceFragment(fragment);
+    }
+
+    @Override
     public void logout() {
 //        JsonObject jsonObject = new JsonObject();
 //        jsonObject.addProperty("token", "");
@@ -111,8 +125,26 @@ public class SettingPresenter implements ISettingPresenter {
 //            }
 //            });
 //        } else {
-        clearApplication();
-        iMainPresenter.replaceFragment(new HomeFragment());
+
+        final AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
+        alertDialog.setTitle(context.getResources().getString(R.string.unregistered));
+        alertDialog.setMessage(context.getResources().getString(R.string.un_title));
+
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Unregistered", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                clearApplication();
+                iMainPresenter.replaceFragment(new HomeFragment());
+            }
+        });
+
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.cancel();
+            }
+        });
+        alertDialog.show();
 //        }
     }
 

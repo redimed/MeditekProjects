@@ -1,8 +1,8 @@
 package com.redimed.telehealth.patient.information.view;
 
 import android.graphics.Bitmap;
+import android.widget.EditText;
 
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.redimed.telehealth.patient.models.Patient;
 
 /**
@@ -13,4 +13,8 @@ public interface IInfoView {
     void onLoadAvatar(Bitmap bitmap);
     void onLoadToolbar();
     void onLoadError(String msg);
+    void onResultField(EditText editText);
+    void onResultEmail(boolean email);
+    void onLoadSignature(Bitmap bitmap);
+    void onResultUpload(String msg);
 }

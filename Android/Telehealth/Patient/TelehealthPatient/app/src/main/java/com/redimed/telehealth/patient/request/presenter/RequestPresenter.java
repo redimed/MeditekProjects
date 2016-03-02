@@ -3,7 +3,13 @@ package com.redimed.telehealth.patient.request.presenter;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -11,8 +17,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -27,15 +35,17 @@ import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.models.PatientAppointment;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.request.view.IRequestView;
-import com.redimed.telehealth.patient.utlis.AdapterGallery;
 import com.redimed.telehealth.patient.utlis.CountingTypedFile;
-import com.redimed.telehealth.patient.utlis.UploadProgress;
+import com.redimed.telehealth.patient.views.SignaturePad;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -60,10 +70,10 @@ public class RequestPresenter implements IRequestPresenter {
     private IRequestView iRequestView;
     private SimpleDateFormat dateFormat;
     private IMainPresenter iMainPresenter;
-    private SharedPreferences uidTelehealth;
+    SharedPreferences.Editor editorFileUpload;
     private RegisterApi registerApiCore, registerApi;
-    private CountingTypedFile.ProgressListener listener;
-    private String TAG = "REQUEST_PRESENTER", firstName, lastName, mobile, home, suburb, dob, email, des;
+    private SharedPreferences uidTelehealth, sharedFileUpload;
+    private String TAG = "REQUEST_PRESENTER", firstName, lastName, mobile, home, dob, email, des;
 
     public RequestPresenter(Context context, IRequestView iRequestView, FragmentActivity activity) {
         this.context = context;
@@ -75,11 +85,13 @@ public class RequestPresenter implements IRequestPresenter {
         registerApiCore = RESTClient.getRegisterApiCore();
         iMainPresenter = new MainPresenter(context, activity);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        sharedFileUpload = context.getSharedPreferences("fileUploads", Context.MODE_PRIVATE);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
     @Override
-    public void loadJsonData() {
+    public ArrayAdapter loadJsonData() {
+        ArrayAdapter adapter = null;
         try {
             file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
                     context.getResources().getString(R.string.fileName));
@@ -94,21 +106,23 @@ public class RequestPresenter implements IRequestPresenter {
                 JsonParser parser = new JsonParser();
                 JsonObject obj = (JsonObject) parser.parse(mResponse);
                 String[] suburbs = gson.fromJson(obj.get("data"), String[].class);
-                iRequestView.onLoadSuburb(suburbs);
+                adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, suburbs);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return adapter;
     }
 
     @Override
-    public void loadDataInfoExists() {
+    public Patient[] loadDataInfoExists() {
+        Patient[] patients = null;
         file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/shared_prefs/PatientInfo.xml");
         if (file.exists()) {
             SharedPreferences spPatientInfo = context.getSharedPreferences("PatientInfo", Context.MODE_PRIVATE);
-            Patient[] patients = gson.fromJson(spPatientInfo.getString("info", ""), Patient[].class);
-            iRequestView.onLoadData(patients);
+            patients = gson.fromJson(spPatientInfo.getString("info", ""), Patient[].class);
         }
+        return patients;
     }
 
     @Override
@@ -155,7 +169,7 @@ public class RequestPresenter implements IRequestPresenter {
         }
     }
 
-    //Check
+    //Check all element
     @Override
     public EditText checkDataField(View v) {
         EditText invalid = null;
@@ -191,39 +205,128 @@ public class RequestPresenter implements IRequestPresenter {
     }
 
     @Override
-    public void uploadImage(ArrayList<CustomGallery> customGalleries, ArrayList<EditText> arrEditText, String suburb) {
+    public void uploadImage(ArrayList<CustomGallery> customGalleries, ArrayList<EditText> arrEditText, String suburb, String apptType) {
         final List<FileUpload> fileUploads = new ArrayList<FileUpload>();
-        if (isValidateForm(arrEditText) && !suburb.equalsIgnoreCase("")) {
+        if (isValidateForm(arrEditText) && !suburb.equalsIgnoreCase("") && !apptType.equalsIgnoreCase("")) {
             if (customGalleries.size() > 0) {
-                TypedFile typedFile;
-                final FileUpload fileUpload = new FileUpload();
+//                TypedFile typedFile;
+//                final FileUpload fileUpload = new FileUpload();
+                editorFileUpload = sharedFileUpload.edit();
                 for (int i = 0; i < customGalleries.size(); i++) {
-                    typedFile = new TypedFile("multipart/form-data", new File(customGalleries.get(i).sdcardPath));
-                    registerApiCore.uploadFile(uidTelehealth.getString("userUID", ""), "MedicalImage", "", "", typedFile, new Callback<JsonObject>() {
-                        @Override
-                        public void success(JsonObject jsonObject, Response response) {
-                            String status = jsonObject.get("status").getAsString();
-                            if (status.equalsIgnoreCase("success")) {
-                                fileUpload.setFileUID(jsonObject.get("fileUID").getAsString());
-                                fileUploads.add(fileUpload);
-                            }
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            iRequestView.onErrorUpload(error.getLocalizedMessage());
-                        }
-                    });
+//                    typedFile = new TypedFile("multipart/form-data", new File(customGalleries.get(i).sdcardPath));
+//                    registerApiCore.uploadFile(uidTelehealth.getString("userUID", ""), "MedicalImage", "", "", typedFile, new Callback<JsonObject>() {
+//                        @Override
+//                        public void success(JsonObject jsonObject, Response response) {
+//                            String status = jsonObject.get("status").getAsString();
+//                            if (status.equalsIgnoreCase("success")) {
+//                                fileUpload.setFileUID(jsonObject.get("fileUID").getAsString());
+//                                fileUploads.add(fileUpload);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void failure(RetrofitError error) {
+//                            iRequestView.onErrorUpload(error.getLocalizedMessage());
+//                        }
+//                    });
+                    editorFileUpload.putString(String.valueOf(i) + "", customGalleries.get(i).sdcardPath);
                 }
+                editorFileUpload.apply();
             }
-            getDataField(arrEditText, suburb, fileUploads);
+            getDataField(arrEditText, suburb, apptType, fileUploads);
         } else if (suburb.equalsIgnoreCase("")) {
             iRequestView.onResultSuburb(false);
+        } else if (apptType.equalsIgnoreCase("")) {
+            iRequestView.onResultApptType(false);
         }
     }
 
-    private void getDataField(ArrayList<EditText> arrEditText, String suburb, List<FileUpload> fileUploads) {
-        this.suburb = suburb;
+    @Override
+    public ArrayAdapter<String> setDataApptType() {
+        final Boolean[] flag = {true};
+        List<String> apptType = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.appt__type_arrays)));
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, apptType){
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0){
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                if (position == 0){
+                    textView.setTextColor(Color.GRAY);
+                } else {
+                    textView.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (flag[0]){
+                    flag[0] = false;
+                    View view = super.getView(position, convertView, parent);
+                    ((TextView) view).setTextColor(Color.GRAY);
+                    return view;
+                }
+                return super.getView(position, convertView, parent);
+            }
+        };
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        return spinnerArrayAdapter;
+    }
+
+    @Override
+    public void saveBitmapSign(SignaturePad signaturePad) {
+        Bitmap signatureBitmap = signaturePad.getSignatureBitmap();
+        if (addSignatureToGallery(signatureBitmap)) {
+            iRequestView.onLoadSignature(signatureBitmap);
+        }
+    }
+
+    public File getAlbumStorageDir(String albumName) {
+        // Get the directory for the user's public pictures directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), albumName);
+        if (!file.mkdirs()) {
+            Log.d("SignaturePad", "Directory not created");
+        }
+        return file;
+    }
+
+    public void saveBitmapToJPG(Bitmap bitmap, File photo) throws IOException {
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(newBitmap);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(bitmap, 0, 0, null);
+        OutputStream stream = new FileOutputStream(photo);
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+        stream.close();
+    }
+
+    private boolean addSignatureToGallery(Bitmap signature) {
+        boolean result = false;
+        try {
+            File photo = new File(getAlbumStorageDir("SignaturePad"), String.format("Signature_%d.jpg", System.currentTimeMillis()));
+            saveBitmapToJPG(signature, photo);
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri contentUri = Uri.fromFile(photo);
+            mediaScanIntent.setData(contentUri);
+            context.sendBroadcast(mediaScanIntent);
+            result = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private void getDataField(ArrayList<EditText> arrEditText, String suburb, String apptType, List<FileUpload> fileUploads) {
         PatientAppointment patientAppointment = null;
         for (EditText editText : arrEditText) {
             switch (editText.getId()) {
@@ -258,22 +361,23 @@ public class RequestPresenter implements IRequestPresenter {
             patientAppointment.setSuburd(suburb);
             patientAppointment.setEmail(email);
         }
-        makeRequest(patientAppointment, des, fileUploads);
+        makeRequest(patientAppointment, des, apptType, fileUploads);
     }
 
-    private void makeRequest(PatientAppointment patientAppointment, String des, List<FileUpload> fileUploads) {
+    private void makeRequest(PatientAppointment patientAppointment, String des, String apptType, List<FileUpload> fileUploads) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = sdf.format(new Date());
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("RequestDate", currentDate);
         jsonObject.addProperty("Description", des);
+        jsonObject.addProperty("Type", apptType);
         jsonObject.addProperty("PatientAppointment", gson.toJson(patientAppointment));
         jsonObject.addProperty("FileUploads", gson.toJson(fileUploads));
 
         JsonObject dataRequest = new JsonObject();
         dataRequest.addProperty("data", gson.toJson(jsonObject));
-        Log.d(TAG, jsonObject + "");
+
         registerApi.requestTelehealth(dataRequest, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -334,7 +438,7 @@ public class RequestPresenter implements IRequestPresenter {
     public boolean isContactValid(EditText editText) {
         boolean isValid = false;
         String editTextContactNo = editText.getText().toString();
-        String expression = "^(\61|0061|0)?4[0-9]{8}$";
+        String expression = "^(\\+61|0061|0)?4[0-9]{8}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(editTextContactNo);
         if (matcher.matches()) {

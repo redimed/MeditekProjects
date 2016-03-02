@@ -51,7 +51,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     }
 
     @Override
-    public void getListAppointment(int offset) {
+    public void getListAppointment(final int offset) {
         if (offset == 0)
             listAppointment.clear();
 
@@ -67,7 +67,7 @@ public class TrackingPresenter implements ITrackingPresenter {
         JsonObject jData = new JsonObject();
         jData.addProperty("data", gson.toJson(strData));
 
-        registerApi.getTrackingReferrals(jData, new Callback<JsonObject>() {
+       registerApi.getTrackingReferrals(jData, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String data = jsonObject.get("rows").toString();
@@ -77,7 +77,8 @@ public class TrackingPresenter implements ITrackingPresenter {
                         listAppointment.add(appointment);
                     }
                 }
-                iTrackingView.onLoadListAppt(listAppointment);
+                if (offset <= 10)
+                    iTrackingView.onLoadDataTracking(listAppointment);
             }
 
             @Override
@@ -85,6 +86,11 @@ public class TrackingPresenter implements ITrackingPresenter {
                 iTrackingView.onLoadError(error.getLocalizedMessage());
             }
         });
+    }
+
+    @Override
+    public void getListMoreAppointment(int offset){
+
     }
 
     @Override

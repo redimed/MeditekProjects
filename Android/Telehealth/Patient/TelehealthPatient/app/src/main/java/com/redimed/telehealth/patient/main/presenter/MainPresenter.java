@@ -28,8 +28,7 @@ public class MainPresenter implements IMainPresenter {
     private Context context;
     private IMainView iMainView;
     private FragmentActivity activity;
-    private String TAG = "MAIN", msg = "";
-    private SharedPreferences uidTelehealth, spDevice;
+    private String TAG = "MAIN";
 
     //Constructor
     public MainPresenter(Context context, FragmentActivity activity) {
@@ -37,8 +36,6 @@ public class MainPresenter implements IMainPresenter {
         this.activity = activity;
 
         gson = new Gson();
-        spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
-        uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -66,28 +63,5 @@ public class MainPresenter implements IMainPresenter {
                 }
             });
         }
-    }
-
-    @Override
-    public String updateToken() {
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("token", spDevice.getString("gcmToken", ""));
-        jsonObject.addProperty("uid", uidTelehealth.getString("uid", ""));
-        JsonObject dataJson = new JsonObject();
-        dataJson.addProperty("data", gson.toJson(jsonObject));
-
-        RESTClient.getRegisterApi().updateToken(dataJson, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jsonObject, Response response) {
-                msg = jsonObject.get("status").getAsString();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                msg = "error";
-            }
-        });
-        return msg;
     }
 }

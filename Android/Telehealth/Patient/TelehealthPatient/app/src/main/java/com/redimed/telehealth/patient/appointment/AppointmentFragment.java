@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.appointment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -241,16 +242,13 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == getActivity().RESULT_OK) {
-//            iAppointmentPresenter.uploadPhotos(requestCode, data, this);
-//        } else {
-//            Toast.makeText(context, "You haven't picked Image", Toast.LENGTH_LONG).show();
-//        }
+
         Cursor cursor;
         int columnIndex;
         String picturePath = "";
         try {
-            if (resultCode == getActivity().RESULT_OK) {
+            getActivity();
+            if (resultCode == Activity.RESULT_OK) {
                 switch (requestCode) {
                     case RESULT_PHOTO:
                         //Get uri image
@@ -258,6 +256,7 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
                         //Get cursor
                         cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                        assert cursor != null;
                         cursor.moveToFirst();
                         //Get path form cursor index
                         columnIndex = cursor.getColumnIndex(filePathColumn[0]);

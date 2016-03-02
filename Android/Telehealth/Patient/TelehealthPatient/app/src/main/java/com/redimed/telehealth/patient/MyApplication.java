@@ -25,8 +25,8 @@ import java.util.Date;
  */
 public class MyApplication extends Application {
 
+    private String TAG = "MyApplication";
     private static MyApplication myApplication;
-    private String TAG = "MyApplication", result;
     private static SharedPreferences.Editor editor;
     private static SharedPreferences appPreferences;
 

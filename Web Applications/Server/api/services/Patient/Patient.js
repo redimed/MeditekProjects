@@ -698,7 +698,7 @@ module.exports = {
                         var userInfo = {
                             UserName : data.Email,
                             Email    : data.Email,
-                            PinNumber: generatePassword(6, false),
+                            PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
                             Password : generatePassword(12, false)
                         };
                         isCreateByEmail = true;
@@ -707,7 +707,7 @@ module.exports = {
                     else{
                         var userInfo = {
                             UserName : info.FirstName+"."+info.LastName+"."+generatePassword(4, false),
-                            PinNumber: generatePassword(6, false),
+                            PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
                             Password : generatePassword(12, false)
                         };
                         isCreateByName = true;
@@ -734,13 +734,13 @@ module.exports = {
                     }
                     else{
                         data.password = generatePassword(12, false);
-                        data.PinNumber = generatePassword(6, false);
+                        // data.PinNumber = generatePassword(6, false);
                         var userInfo = {
                             UserName    : data.PhoneNumber,
                             // Email       : data.Email!=null&&data.Email!=''?data.Email:data.Email1,
                             PhoneNumber : data.PhoneNumber,
                             Password    : data.password,
-                            PinNumber   : data.PinNumber
+                            PinNumber   : data.PinNumber?data.PinNumber:generatePassword(6, false)
                         };
                         userInfo.UID = UUIDService.Create();
                         if(data.hasOwnProperty('PinNumber')== true)

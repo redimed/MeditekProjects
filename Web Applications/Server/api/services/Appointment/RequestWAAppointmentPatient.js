@@ -125,7 +125,6 @@ module.exports = function(data, userInfo) {
                         .then(function(patientRes) {
                             if (!_.isEmpty(patientRes) &&
                                 !_.isEmpty(appointmentObject)) {
-                                console.log('patientRes', patientRes);
                                 return appointmentObject.setPatients(patientRes.ID, {
                                     transaction: t
                                 });
@@ -141,7 +140,7 @@ module.exports = function(data, userInfo) {
                                     where: data.Doctor.UID,
                                     transaction: t
                                 };
-                                return RelDoctorAppointment(objRelDoctorAppt);
+                                return Services.RelDoctorAppointment(objRelDoctorAppt);
                             }
                         }, function(err) {
                             defer.reject({

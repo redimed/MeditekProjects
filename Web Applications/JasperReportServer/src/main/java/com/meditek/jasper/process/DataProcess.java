@@ -37,10 +37,30 @@ public class DataProcess {
                     System.out.println("run false");
 
                 }
-                
+            }
+            else if(d.getType().equals("table")){
+                parsedData = iTextTableParse(d, parsedData, data);
             }
             else if(d.getType().equals("break")) continue;
             else parsedData.put(d.getName().toLowerCase(), d.getValue());
+        }
+        return parsedData;
+    }
+    
+    private Hashtable iTextTableParse (FormDataModel tableTypeObj, Hashtable parsedData, List<FormDataModel> data){
+        String name = tableTypeObj.getName();
+        String parent = tableTypeObj.getRef();
+        for(FormDataModel d : data){
+            if(d.getRef().equals(parent)){
+                if(d.getType().equals("rlh")) {
+                    if(d.getChecked()==Boolean.TRUE){
+                        parsedData.put(name+"_"+d.getRefChild().toLowerCase(), d.getValue());
+                    }
+                }
+                else{
+                    parsedData.put(name+"_"+d.getRefChild().toLowerCase(), d.getValue());
+                }
+            }
         }
         return parsedData;
     }

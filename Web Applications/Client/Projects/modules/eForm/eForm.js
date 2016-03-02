@@ -6,13 +6,14 @@ var app = angular.module('app.authentication.eForm',[
 
 app.config(function($stateProvider){
 	$stateProvider
-		.state('authentication.eForm',{
+		.state('authentication.consultation.detail.eForm',{
 			url: '/eForm',
+			abstract: true,
 			data: {pageTitle: 'E-Form'},
 			templateUrl: 'modules/eForm/views/eForm.html',
 			controller: 'eFormCtrl',
 		})
-		.state('authentication.eForm.home',{
+		.state('authentication.consultation.detail.eForm.home',{
 			url: '/home',
 			data: {pageTitle: 'E-Forms Home'},
 			templateUrl: 'modules/eForm/views/eFormHome.html',
@@ -36,11 +37,17 @@ app.config(function($stateProvider){
 			templateUrl: 'modules/eForm/views/eFormCreate.html',
 			controller: 'eFormCreateCtrl',
 		})
-		.state('authentication.eForm.appointment',{
+		.state('authentication.consultation.detail.eForm.appointment',{
 			url: '/appointment/:UID/:UIDPatient',
 			data: {pageTitle: 'E-Forms Appointment'},
 			templateUrl: 'modules/eForm/views/eFormAppointment.html',
 			controller: 'eFormAppointmentCtrl',
+		})
+		.state('authentication.consultation.detail.eForm.LoadForm',{
+			url: '/loadForm/:UID/:UIDPatient/:UIDFormTemplate',
+			data: {pageTitle: 'E-Forms LoadForm'},
+			templateUrl: 'modules/eForm/views/eFormLoadForm.html',
+			controller: 'eFormLoadFormCtrl',
 		})
 		;
 });

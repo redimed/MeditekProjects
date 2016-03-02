@@ -173,22 +173,8 @@ module.exports = {
     options: {
         tableName: 'Country',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(country, options, callback) {
-                country.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(countrys, options, callback) {
-                countrys.forEach(function(country, index) {
-                    countrys[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(country, callback) {
-                country.fields.push('ModifiedDate');
-                country.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

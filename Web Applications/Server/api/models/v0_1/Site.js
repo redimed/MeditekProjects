@@ -145,22 +145,8 @@ module.exports = {
     options: {
         tableName: 'Site',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(site, options, callback) {
-                site.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(sites, options, callback) {
-                sites.forEach(function(site, index) {
-                    sites[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(site, callback) {
-                site.fields.push('ModifiedDate');
-                site.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

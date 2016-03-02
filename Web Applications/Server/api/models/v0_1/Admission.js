@@ -62,22 +62,8 @@ module.exports = {
     options: {
         tableName: 'Admission',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(admission, options, callback) {
-                admission.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(admissions, options, callback) {
-                admissions.forEach(function(admission, index) {
-                    admissions[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(admission, callback) {
-                admission.fields.push('ModifiedDate');
-                admission.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

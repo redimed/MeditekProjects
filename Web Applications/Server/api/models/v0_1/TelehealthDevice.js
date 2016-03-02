@@ -105,22 +105,8 @@ module.exports = {
     options: {
         tableName: 'TelehealthDevice',
         timestamps: false,
-        hooks: {
-            beforeCreate: function(telehealthdevice, options, callback) {
-                telehealthdevice.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(telehealthdevices, options, callback) {
-                telehealthdevices.forEach(function(telehealthdevice, index) {
-                    telehealthdevices[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(telehealthdevice, callback) {
-                telehealthdevice.fields.push('ModifiedDate');
-                telehealthdevice.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

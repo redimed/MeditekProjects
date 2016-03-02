@@ -171,9 +171,9 @@ module.exports = {
                 }
             }
         },
-        PinNumber:{
-            type:Sequelize.STRING(45),
-            allowNull:true,
+        PinNumber: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
             validate: {
                 len: {
                     args: [0, 45],
@@ -181,7 +181,7 @@ module.exports = {
                 }
             }
         },
-        ExpiryPin:{
+        ExpiryPin: {
             type: Sequelize.INTEGER(11),
             allowNull: true,
             validate: {
@@ -195,9 +195,10 @@ module.exports = {
     options: {
         tableName: 'UserAccount',
         timestamps: false,
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
         hooks: {
             beforeCreate: function(useraccount, options, callback) {
-                useraccount.CreatedDate = new Date();
                 bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(useraccount.Password, salt, null, function(err, hash) {
                         if (err) {
@@ -210,22 +211,11 @@ module.exports = {
                     });
                 });
             },
-            beforeBulkCreate: function(useraccounts, options, callback) {
-                useraccounts.forEach(function(useraccount, index) {
-                    useraccounts[index].CreatedDate = new Date();
-                });
-                callback();
-            },
             beforeBulkUpdate: function(useraccount, callback) {
-                //
-                useraccount.fields.push('ModifiedDate');
-                useraccount.attributes.ModifiedDate = new Date();
-
                 useraccount.fields.push('Password');
                 console.log(useraccount.attributes.Password);
 
-                if(useraccount.attributes.Password)
-                {
+                if (useraccount.attributes.Password) {
                     bcrypt.genSalt(10, function(err, salt) {
                         bcrypt.hash(useraccount.attributes.Password, salt, null, function(err, hash) {
                             if (err) {
@@ -237,12 +227,9 @@ module.exports = {
                             }
                         });
                     });
-                }
-                else
-                {
+                } else {
                     callback();
                 }
-                //callback();
             }
         }
     }

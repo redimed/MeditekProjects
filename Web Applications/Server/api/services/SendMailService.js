@@ -5,7 +5,7 @@ var templateDirs = path.resolve(__dirname, 'GenerateTemplateEmail');
 var emailTemplates = require('email-templates');
 var emailAddressRequiredError = new Error('email address required');
 
-var transport, isTestApp = 1;
+var transport, isTestApp = 0;
 if (isTestApp === 1) {
     transport = nodemailer.createTransport(smtpTransport({
         host: "mail.redimed.com.au",
@@ -24,8 +24,8 @@ if (isTestApp === 1) {
     transport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'timesheetnotification@gmail.com',
-            pass: 'timesheet1234'
+            user: 'meditekcompany@gmail.com',
+            pass: 'meditek123456'
         }
     });
 }

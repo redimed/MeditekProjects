@@ -80,7 +80,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'EForm',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

@@ -102,23 +102,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'RelUserRole',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(reluserrole, options, callback) {
-                reluserrole.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(reluserroles, options, callback) {
-                reluserroles.forEach(function(reluserrole, index) {
-                    reluserroles[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(reluserrole, callback) {
-                reluserrole.fields.push('ModifiedDate');
-                reluserrole.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

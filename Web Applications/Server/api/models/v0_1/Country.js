@@ -172,7 +172,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Country',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

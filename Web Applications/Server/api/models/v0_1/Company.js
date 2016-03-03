@@ -95,7 +95,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Company',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate'
     }

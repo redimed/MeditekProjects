@@ -104,7 +104,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'TelehealthDevice',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

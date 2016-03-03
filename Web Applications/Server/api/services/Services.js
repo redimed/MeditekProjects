@@ -115,6 +115,10 @@ module.exports = {
     //begin Roster
     //Begin Company
     GetListCompany: require('./Company/GetListCompany'),
-    CreateCompany: require('./Company/CreateCompany')
-        //End Company
+    CreateCompany: require('./Company/CreateCompany'),
+    //End Company
+    //begin EForm
+    GetListEFormTemplate: require('./EForm/GetListEFormTemplate'),
+    AttributesEForm: require('./EForm/AttributesEForm'),
+    //end EForm
 };

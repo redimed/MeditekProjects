@@ -142,7 +142,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'MessageQueue',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

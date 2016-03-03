@@ -140,7 +140,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Appointment',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

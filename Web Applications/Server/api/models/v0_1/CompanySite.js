@@ -184,23 +184,7 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'CompanySite',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(module, options, callback) {
-                module.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(modules, options, callback) {
-                modules.forEach(function(module, index) {
-                    modules[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(module, callback) {
-                module.fields.push('ModifiedDate');
-                module.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate'
     }
 };

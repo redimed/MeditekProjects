@@ -15,7 +15,7 @@ var configAuthBaseUrl={
 };
 
 var configTelehealthBaseUrl = {
-	'local':'https://192.168.1.235:3009',
+	'local':'http://localhost:3009',
 	'meditekServer':'https://meditek.redimed.com.au:3009',
 	'testApp':'https://testapp.redimed.com.au:3009',
 	'app':'https://apps.redimed.com.au:3009',

@@ -104,11 +104,13 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             text: "<img src='theme/assets/global/img/loading.gif' />",
             timer: 30000,
             html: true,
-            showCancelButton: true,
-            confirmButtonColor: "#e74c3c",
+            showCancelButton: false,
+            confirmButtonColor: "#26C281",
             confirmButtonText: "Answer",
-            closeOnConfirm: true
+            cancelButtonText: "Cancel",
+            cancelButtonColor: "#D91E18"
         }, function() {
+            console.log("11111111111111111111111111111111111111");
             EndCall();
         });
         audio.loop = true;

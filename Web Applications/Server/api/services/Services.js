@@ -114,7 +114,7 @@ module.exports = {
     CheckTimeRoster: require('./Booking/CheckTimeRoster'),
     //begin Roster
     //Begin Company
-    Company: require('./Company/Company')
+    Company: require('./Company/Company'),
     //End Company
     //begin EForm
     GetListEFormTemplate: require('./EForm/GetListEFormTemplate'),

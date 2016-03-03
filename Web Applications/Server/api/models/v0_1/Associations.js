@@ -449,5 +449,23 @@ module.exports = {
             through: 'RelCompanyPatient',
             foreignKey: 'PatientID'
         });
+
+        //association Company - Fund
+        Company.belongsToMany(Fund, {
+            through: 'RelFundCompany',
+            foreignKey: 'CompanyID'
+        });
+        Fund.belongsToMany(Company, {
+            through: 'RelFundCompany',
+            foreignKey: 'FundID'
+        });
+
+        //association Patient - FileUpload
+        Patient.hasOne(FileUpload, {
+            foreignKey: 'Signature'
+        });
+        FileUpload.belongsTo(Patient, {
+            foreignKey: 'Signature'
+        });
     }
 };

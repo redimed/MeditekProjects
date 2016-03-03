@@ -57,6 +57,7 @@ module.exports = {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
                     console.log("JoinConferenceRoom Successfully", uid);
+                    console.log("===============================================",arrTemp);
                     if (_.some(arrTemp, {
                             to: uid
                         })) {
@@ -65,6 +66,7 @@ module.exports = {
                             message: 'call'
                         });
                         sails.sockets.emit(req.socket.id, '-', arrTemp[index]);
+                        console.log("============= sails.sockets.emit",sails.sockets.emit);
                     }
                 } else error = "User Is Not Exist";
             }).catch(function(err) {
@@ -144,6 +146,8 @@ module.exports = {
             });
             if (message.toLowerCase() == 'call' && index == -1) arrTemp.push(data);
             else arrTemp.splice(index, 1);
+
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> arrTemp", arrTemp);
             console.log(roomList);
             console.log(to);
             console.log("8888888888888888888888888888", _.contains(roomList, to));

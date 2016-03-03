@@ -164,6 +164,12 @@ app
             RestangularConfigurer.setBaseUrl(o.const.telehealthBaseURL);
         });
     })
+     //SETTING RESTANGULAR FOR AUTHENTICATION
+    .factory('PDFFormUrlRestangular', function(Restangular) {
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setBaseUrl(o.const.PDFFormUrl);
+        });
+    })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
         $('#loading').css("display", "none");
         // RESTANGULAR ERROR HANDLING

@@ -27,7 +27,7 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
    
     $scope.ListTodayConsultation = function(data) {
         if (data == 'todaylist') {
-            $state.go("authentication.consultation.list", {
+            $state.go("authentication.consultation.listRoleid", {
                 roleid: 'roleid'
             });
         } else if (data == 'today') {

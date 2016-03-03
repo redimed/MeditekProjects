@@ -3,7 +3,9 @@ angular.module("app.common.CommonService", [])
         var commonService = {};
         var api = Restangular.all("api");
         var apiFile=FileRestangular.all('api');
+
         //FUNCTION MẪU
+
         commonService.getTitles = function() {
             var list = [{
                 id: 1,
@@ -267,6 +269,11 @@ angular.module("app.common.CommonService", [])
         // commonService.API = "http://telehealthvietnam.com.vn:3005";
         commonService.contentVerify = "Your REDiMED account verification code is";
 
+        commonService.DoctorUID = function(){
+            var DoctorMeditek = "c2352016-3ca7-4d3a-a8dc-e8faacaca8cd";
+            var DoctorTestApp = "c2352016-3ca7-4d3a-a8dc-e8faacaca8cd";
+            return DoctorMeditek
+        }
 
         /**
          * getFile

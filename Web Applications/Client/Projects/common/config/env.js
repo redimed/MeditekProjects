@@ -1,4 +1,4 @@
-var env='meditekServer',socketAuth, socketRest, socketNc, socketTelehealth ={}; //local,meditekServer,testApp,app
+var env='local',socketAuth, socketRest, socketNc, socketTelehealth ={}; //local,meditekServer,testApp,app
 
 var configRestBaseUrl={
 	'local':'https://192.168.1.235:3005',
@@ -15,7 +15,7 @@ var configAuthBaseUrl={
 };
 
 var configTelehealthBaseUrl = {
-	'local':'http://localhost:3009',
+	'local':'https://192.168.1.235:3009',
 	'meditekServer':'https://meditek.redimed.com.au:3009',
 	'testApp':'https://testapp.redimed.com.au:3009',
 	'app':'https://apps.redimed.com.au:3009',
@@ -29,10 +29,17 @@ var configNcBaseUrl={
 };
 
 var configEFormUrl={
-	'local':'https://localhost:3014',
+	'local':'https://192.168.1.235:3014',
 	'meditekServer':'https://meditek.redimed.com.au:3014',
 	'testApp':'https://testapp.redimed.com.au:3014',
 	'app':'https://apps.redimed.com.au:3014'
+};
+
+var PDFFormUrl={
+	'local':'https://192.168.1.173:3013',
+	'meditekServer':'https://192.168.1.173:3013',
+	'testApp':'https://192.168.1.173:3013',
+	'app':'https://192.168.1.173:3013'
 };
 
 if(env == "local")
@@ -43,6 +50,7 @@ if(env == "local")
 	var _telehealthBaseURL=configTelehealthBaseUrl.local;
 	var _eFormBaseURL=configEFormUrl.local;
 	var _ncBaseURL=configNcBaseUrl.local;
+	var _PDFFormUrl=PDFFormUrl.meditekServer;
 }
 else if(env == 'meditekServer')
 {
@@ -51,7 +59,7 @@ else if(env == 'meditekServer')
 	var _authBaseURL=configAuthBaseUrl.meditekServer;
 	var _telehealthBaseURL=configTelehealthBaseUrl.meditekServer;
 	var _eFormBaseURL=configEFormUrl.meditekServer;
-	var _ncBaseURL=configNcBaseUrl.meditekServer;
+	var _PDFFormUrl=PDFFormUrl.meditekServer;
 }
 else if(env == 'testApp')
 {
@@ -61,6 +69,7 @@ else if(env == 'testApp')
 	var _telehealthBaseURL=configTelehealthBaseUrl.testApp;
 	var _eFormBaseURL=configEFormUrl.testApp;
 	var _ncBaseURL=configNcBaseUrl.testApp;
+	var _PDFFormUrl=PDFFormUrl.meditekServer;
 }
 else if (env == 'testAppLocal')
 {
@@ -70,6 +79,7 @@ else if (env == 'testAppLocal')
 	var _telehealthBaseURL=configTelehealthBaseUrl.local;
 	var _eFormBaseURL=configEFormUrl.local;
 	var _ncBaseURL=configNcBaseUrl.local;
+	var _PDFFormUrl=PDFFormUrl.meditekServer;
 }
 else if(env =='app')
 {
@@ -78,6 +88,8 @@ else if(env =='app')
 	var _authBaseURL=configAuthBaseUrl.app;
 	var _telehealthBaseURL=configTelehealthBaseUrl.app;
 	var _ncBaseURL=configNcBaseUrl.app;
+	var _PDFFormUrl=PDFFormUrl.meditekServer;
+
 }
 
 

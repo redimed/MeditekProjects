@@ -43,6 +43,7 @@ var o = {
         eFormBaseUrl: _eFormBaseURL,
 
         ncBaseUrl:_ncBaseURL,
+        PDFFormUrl:_PDFFormUrl,
     },
 
     checkData: function(value) {

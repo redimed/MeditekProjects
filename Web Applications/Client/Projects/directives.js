@@ -162,9 +162,8 @@ app.directive('appointmentDetailDirective', function() {
             WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
                 if (data.data != null) {
                     $scope.appointmentInfo = data.data;
-                    console.log("appointmentDetailDirective",$scope.appointmentInfo);
-                    $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('DD/MM/YYYY') : 'N/A';
-                    $scope.apptTime = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('HH:mm') : 'N/A';
+                    $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).format('DD/MM/YYYY') : 'N/A';
+                    $scope.apptTime = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).format('HH:mm') : 'N/A';
                 };
             }, function(error) {});
 

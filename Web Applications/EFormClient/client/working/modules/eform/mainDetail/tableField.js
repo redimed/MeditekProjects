@@ -9,6 +9,7 @@ module.exports = React.createClass({
         context: React.PropTypes.string,
         code: React.PropTypes.any,
         type: React.PropTypes.string,
+        name: React.PropTypes.string,
         groupId: React.PropTypes.string,
         onDeleteColumn: React.PropTypes.func,
         onUpdateColumn: React.PropTypes.func
@@ -95,11 +96,19 @@ module.exports = React.createClass({
             cols.map(function(col, indexCol){
                 var refChild = "field_"+i+"_"+indexCol;
                 var value = self.refs[refChild].getValue();
-                var type = self.refs[refChild].getType();
-                results.push({refChild: refChild, value: value, type: type, ref: self.props.refTemp});
+                var typeChild = self.refs[refChild].getType();
+                var type = 'table';
+                var name = self.getName();
+                results.push({refChild: refChild, value: value, type: type, typeChild: typeChild, ref: self.props.refTemp, name: name});
             })
         }
         return results;
+    },
+    getName: function(){
+        return this.props.name;
+    },
+    getSize: function(){
+        return  this.props.size;
     },
     setValue: function(fieldRef, value){
         if(typeof this.refs[fieldRef] !== 'undefined')

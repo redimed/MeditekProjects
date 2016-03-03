@@ -77,7 +77,7 @@ module.exports = React.createClass({
                     <div className={"dragula col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <textarea className={this.props.className} name={this.props.name} id={this.props.id} ref="input" placeholder={this.props.placeholder}/>
+                                <textarea title={this.props.name} className={this.props.className} name={this.props.name} id={this.props.id} ref="input" placeholder={this.props.placeholder}/>
                             </div>
                         </div>
                     </div>

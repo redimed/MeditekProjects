@@ -84,7 +84,7 @@ module.exports = React.createClass({
                             <div className="col-xs-12">
                                 <div className="icheck-inline">
                                     <label>
-                                        <input type="checkbox" className="icheck" name={this.props.name} ref="input"/>
+                                        <input type="checkbox" className="icheck" name={this.props.name} ref="input" title={this.props.name}/>
                                         &nbsp;
                                         {this.props.label}
                                     </label>

@@ -17,6 +17,15 @@ app.config(function($stateProvider) {
             controller: 'consultationCtrl',
         })
         .state('authentication.consultation.list', {
+            url: '/list',
+            data: {
+                title: 'Consultation List',
+                pageTitle: 'Consultation List'
+            },
+            templateUrl: 'modules/consultation/views/consultationList.html',
+            controller: 'consultationListCtrl',
+        })
+        .state('authentication.consultation.listRoleid', {
             url: '/list/:roleid',
             data: {
                 title: 'Consultation List',

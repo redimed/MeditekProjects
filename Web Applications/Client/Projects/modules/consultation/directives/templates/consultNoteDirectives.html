@@ -13,6 +13,7 @@
             <a href="javascript:;" class="fullscreen"> </a>
         </div> -->
     </div>
+    <button ng-click="PrintPDF()">PrintPDF</button>
     <div class="portlet-body form" id="ctrl">
         <form name="form" class="form-horizontal" novalidate ng-submit="submit()">
             <fieldset ng-disabled="checkRoleUpdate">
@@ -311,11 +312,11 @@
                                     </div>
                                     <div class="col-md-2 col-sm-2" align="right">
                                         <label class="checkbox-inline bold">
-                                            <input type="checkbox"  ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value"> Other
+                                            <input type="checkbox" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value"> Other
                                         </label>
                                     </div>
                                     <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value == true">
-                                        <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.OtherValue'].Value" >
+                                        <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.OtherValue'].Value">
                                     </div>
                                 </div>
                             </div>
@@ -625,12 +626,12 @@
                         <div class="checkbox-list">
                             <div class="row">
                                 <div class="col-md-3 col-sm-3" align="right">
-                                    <label class="checkbox-inline" >
+                                    <label class="checkbox-inline">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Specialist'].Value"> Refer to specialist :
                                     </label>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
-                                   <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.SpecialistValue'].Value">
+                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.SpecialistValue'].Value">
                                 </div>
                             </div>
                         </div>
@@ -644,7 +645,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
-                                   <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue'].Value">
+                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue'].Value">
                                 </div>
                             </div>
                         </div>

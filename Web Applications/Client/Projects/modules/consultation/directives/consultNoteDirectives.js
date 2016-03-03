@@ -8,6 +8,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
             $scope.checkRoleUpdate = true;
+            $scope.DataPrintPDF = null;
             var Window;
             if ($cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
                 $scope.checkRoleUpdate = false;
@@ -108,6 +109,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         $scope.requestInfo = null;
                         $scope.requestOther = {};
                         if (response.data !== null) {
+                            $scope.DataPrintPDF = angular.copy(response.data)
                             $scope.loadData(response.data);
                         } else {
                             toastr.error("Detail Empty");
@@ -119,7 +121,92 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     });
                 };
             });
+            $scope.PrintPDF = function() {
+                var ConsultationDataTemp = [];
+                for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
+                    var newkey = key.split("__").join(" ");
+                    var res = newkey.split(".");
+                    var otherkey = res[2] + res[3] + 'Other';
+                    var object = {
+                        Section: res[0],
+                        Category: res[1],
+                        Type: res[2],
+                        Name: res[3],
+                        Value: ($scope.requestInfo.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : $scope.requestInfo.Consultations[0].ConsultationData[key].Value,
+                        FileUploads: $scope.requestInfo.Consultations[0].ConsultationData[key].FileUploads
+                    };
+                    var isExist = false;
 
+                    ConsultationDataTemp.forEach(function(valueTemp, keyTemp) {
+                        if (object.Value !== null) {
+                            if (valueTemp.Section == object.Section &&
+                                valueTemp.Category == object.Category &&
+                                valueTemp.Type == object.Type &&
+                                valueTemp.Name == object.Name) {
+                                isExist = true;
+                            }
+                        } else {
+                            isExist = true;
+                        };
+                    });
+                    if (!isExist) {
+                        if (object.Value !== null && object.Value !== "") {
+                            ConsultationDataTemp.push(object);
+                        };
+                    };
+                };
+                consultationServices.getPatientDetail($stateParams.UIDPatient).then(function(response) {
+                    var PDFData = null;
+                    var postData = []
+                    var PDFData = angular.copy(ConsultationDataTemp);
+                    PDFData.forEach(function(valueTemp, keyTemp) {
+                        var object = {
+                            value: valueTemp.Value,
+                            name: valueTemp.Name
+                        };
+                        postData.push(object)
+                    })
+
+                    var firstname = {
+                        name: "firstname",
+                        value: response.data[0].FirstName
+                    }
+                    postData.push(firstname)
+                    var lastname = {
+                        name: "lastname",
+                        value: response.data[0].LastName
+                    }
+                    postData.push(lastname)
+                    var DOB = {
+                        name: "DOB",
+                        value: response.data[0].DOB
+                    }
+                    postData.push(DOB)
+                    var gender = {
+                        name: "gender",
+                        value: response.data[0].Gender
+                    }
+                    postData.push(gender)
+                    var consultationdate = {
+                        name: "consultation_date",
+                        value: moment().format('DD/MM/YYYY')
+                    }
+                    postData.push(consultationdate)
+                    var dataPost = {
+                        printMethod: "jasper",
+                        templateUID: "consult_note",
+                        data: postData
+                    }
+                    consultationServices.PrintPDF(dataPost).then(function(responsePrintPDF) {
+                        console.log(responsePrintPDF)
+                        var blob = new Blob([responsePrintPDF.data], {
+                            type: 'application/pdf'
+                        });
+                        saveAs(blob, "ConsultationNote_" + response.data[0].FirstName + response.data[0].LastName);
+                    }, function(err) {
+                    });
+                })
+            }
             $scope.Reset = function() {
                 $state.go("authentication.consultation.detail.consultNote", {}, {
                     reload: true
@@ -177,18 +264,35 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 $scope.ConsultationDataCreate();
                 if ($scope.requestInfo.Consultations[0].ConsultationData.length !== 0 || $scope.requestInfo.Consultations[0].FileUploads.length !== 0) {
                     if ($scope.requestInfo.Consultations[0].FileUploads.length !== 0 && $scope.requestInfo.Consultations[0].ConsultationData.length == 0) {
-                         var FileUploads = {
-                            Category : "Appointment",
-                            FileUploads:null,
-                            Name:"FileUploads",
-                            Section:"Consultation Details",
-                            Type:"FileUploads",
-                            Value:$scope.requestInfo.Consultations[0].FileUploads.length
-                         }
-                         $scope.requestInfo.Consultations[0].ConsultationData.push(FileUploads);
+                        var FileUploads = {
+                            Category: "Appointment",
+                            FileUploads: null,
+                            Name: "FileUploads",
+                            Section: "Consultation Details",
+                            Type: "FileUploads",
+                            Value: $scope.requestInfo.Consultations[0].FileUploads.length
+                        }
+                        $scope.requestInfo.Consultations[0].ConsultationData.push(FileUploads);
                     }
+                    console.log('$scope.requestInfo', $scope.requestInfo)
                     o.loadingPage(true);
                     consultationServices.createConsultation($scope.requestInfo).then(function(response) {
+                        o.loadingPage(false);
+                        consultationServices.detailConsultation(response.data[0].UID).then(function(response) {
+                            $scope.checkRoleUpdate = false;
+                            $scope.requestInfo = null;
+                            $scope.requestOther = {};
+                            if (response.data !== null) {
+                                $scope.DataPrintPDF = angular.copy(response.data)
+                                $scope.loadData(response.data);
+                            } else {
+                                toastr.error("Detail Empty");
+                                $scope.Reset();
+                            };
+                        }, function(err) {
+                            o.loadingPage(false);
+                            toastr.error('Detail Consultation Fail');
+                        });
                         if (response == 'success') {
                             o.loadingPage(false);
                             $state.go("authentication.consultation.detail", {

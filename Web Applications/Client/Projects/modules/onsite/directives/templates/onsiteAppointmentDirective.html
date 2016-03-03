@@ -1,4 +1,3 @@
-
 <!-- content page -->
 <div class="portlet box green">
     <div class="portlet-title">
@@ -140,7 +139,7 @@
                                     <div class="col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">Description</label>
-                                           <textarea class="form-control" rows="5" ng-model="wainformation.TelehealthAppointment.Description"></textarea>
+                                            <textarea class="form-control" rows="5" ng-model="wainformation.TelehealthAppointment.Description"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -504,6 +503,9 @@
                 </div>
             </div>
             <div class="form-actions right">
+                <a class="btn red" ng-click="selectPatient()" ng-hide="checkRoleUpdate">
+                    <i class="glyphicon glyphicon-plus"></i> Link Patient
+                </a>
                 <button type="submit" class="btn green" ng-click="submitUpdate()">
                     <i class="glyphicon glyphicon-save"></i> Save change
                 </button>

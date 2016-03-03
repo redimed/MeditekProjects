@@ -5,14 +5,16 @@ angular.module("app.authentication.consultation.services", [])
         var apiFile = FileRestangular.all("api");
 
         services.PrintPDF = function(data) {
-            var result = PDFFormUrlRestangular.all('print').post({ data })
-
-            result.withHttpConfig({
-                headers: {'Content-Type': 'Application/Json'}
+            var apiPDF = PDFFormUrlRestangular.all('print')
+            apiPDF.withHttpConfig({
+                 responseType: 'arraybuffer'
             })
+            var result = apiPDF.post(JSON.stringify(data))
             return result
         }
-
+        services.getPatientDetail = function(UID){
+             return api.all('patient/detail-patient').post({ data: {UID:UID} });
+        }
         services.listAppointment = function(data) {
             return api.all('appointment/list').post({ data: data });
         }

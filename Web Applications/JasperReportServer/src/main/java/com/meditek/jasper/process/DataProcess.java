@@ -65,37 +65,38 @@ public class DataProcess {
         return parsedData;
     }
     
-    public ReportDataWrapperModel jasperDataParse(List<FormDataModel> data){
-        ReportDataWrapperModel parsedData = new ReportDataWrapperModel();
+    public Hashtable jasperDataParse(List<FormDataModel> data){
+        Hashtable parsedData = new Hashtable();
         for(FormDataModel d : data){
-            //For patient info
-            if(d.getName().contains("p_")){
-                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getPatient().put(d.getName().toLowerCase(), d.getValue());
-                else if(d.getType().equals("break")) continue;
-                else parsedData.getPatient().put(d.getName().toLowerCase(), d.getValue());
-            }
-            // For patient kin info
-            else if (d.getName().contains("k_")){
-                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getPatientKin().put(d.getName().toLowerCase(), d.getValue());
-                else if(d.getType().equals("break")) continue;
-                else parsedData.getPatientKin().put(d.getName().toLowerCase(), d.getValue());
-            }
-            // For employee/employment info
-            else if (d.getName().contains("e_")){
-                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getEmployment().put(d.getName().toLowerCase(), d.getValue());
-                else if(d.getType().equals("break")) continue;
-                else parsedData.getEmployment().put(d.getName().toLowerCase(), d.getValue());
-            }
-            // For other form data
-            else{
-                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getOtherFormData().put(d.getName().toLowerCase(), d.getValue());
-                else if(d.getType().equals("break")) continue;
-                else if (d.getType().equals("table")){
-                    List<Hashtable> tableData = this.tableDataParse(data, d.getRef(), d.getColumns());
-                    parsedData.getOtherFormData().put(d.getName(), tableData);
-                }
-                else parsedData.getOtherFormData().put(d.getName().toLowerCase(), d.getValue());
-            }
+              parsedData.put(d.getName().toLowerCase(), d.getValue());
+//            //For patient info
+//            if(d.getName().contains("p_")){
+//                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getPatient().put(d.getName().toLowerCase(), d.getValue());
+//                else if(d.getType().equals("break")) continue;
+//                else parsedData.getPatient().put(d.getName().toLowerCase(), d.getValue());
+//            }
+//            // For patient kin info
+//            else if (d.getName().contains("k_")){
+//                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getPatientKin().put(d.getName().toLowerCase(), d.getValue());
+//                else if(d.getType().equals("break")) continue;
+//                else parsedData.getPatientKin().put(d.getName().toLowerCase(), d.getValue());
+//            }
+//            // For employee/employment info
+//            else if (d.getName().contains("e_")){
+//                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getEmployment().put(d.getName().toLowerCase(), d.getValue());
+//                else if(d.getType().equals("break")) continue;
+//                else parsedData.getEmployment().put(d.getName().toLowerCase(), d.getValue());
+//            }
+//            // For other form data
+//            else{
+//                if(d.getType().equals("rlh") && d.getChecked()==Boolean.TRUE) parsedData.getOtherFormData().put(d.getName().toLowerCase(), d.getValue());
+//                else if(d.getType().equals("break")) continue;
+//                else if (d.getType().equals("table")){
+//                    List<Hashtable> tableData = this.tableDataParse(data, d.getRef(), d.getColumns());
+//                    parsedData.getOtherFormData().put(d.getName(), tableData);
+//                }
+//                else parsedData.getOtherFormData().put(d.getName().toLowerCase(), d.getValue());
+//            }
         }
         return parsedData;
     }

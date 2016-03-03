@@ -76,4 +76,9 @@ _.extend(routes, BookingRoster);
 var PaperlessRoutes = require('./routes/PaperlessRoutes');
 _.extend(routes, PaperlessRoutes);
 //end module Roster
+
+//begin module EForm
+var EFormRoutes = require('./routes/EFormRoutes');
+_.extend(routes, EFormRoutes);
+//end module EForm
 module.exports.routes = routes;

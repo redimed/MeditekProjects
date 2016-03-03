@@ -102,7 +102,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'EFormQuestionTemplate',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

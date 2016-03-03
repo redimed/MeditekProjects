@@ -84,7 +84,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'EFormData',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

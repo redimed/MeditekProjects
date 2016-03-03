@@ -332,7 +332,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'UrgentRequest',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

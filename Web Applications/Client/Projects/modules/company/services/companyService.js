@@ -210,5 +210,15 @@ angular.module('app.authentication.company.service', [])
 		return createStaff.post({data:data});
 	};
 
+	services.getlistFund = function(data) {
+        var getlistFund = api.all('company/get-list-fund');
+        return getlistFund.post({data:data});
+    };
+
+    services.createFund = function(data) {
+    	var createFund = api.all('company/create-fund');
+    	return createFund.post({data:data});
+    };
+
 	return services;
 });

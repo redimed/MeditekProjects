@@ -375,14 +375,14 @@ module.exports = {
 				include:[
 					{
 						all:true,
-						where:{Enable:'Y'},
+
 						required:false
 					},
 					{
 						model:Patient,
 						through:
 						{
-							where:{Active:'Y'},
+
 							required:true
 						},
 						required:false
@@ -660,7 +660,7 @@ module.exports = {
 			return model.findOne({
 				where:{
 					// UID: data.info.UID,
-					$and: data.whereClause
+					$and: data.whereClauses
 				},
 				transaction : t
 			})
@@ -678,7 +678,7 @@ module.exports = {
 						data.info
 					,{
 						where:{
-							$and: data.whereClause
+							$and: data.whereClauses
 						},
 						transaction:t
 					});
@@ -817,6 +817,117 @@ module.exports = {
 		},function(err) {
 			throw err;
 		});
+	},
+
+	CreateFund : function(data) {
+		var CompanyID,FundID;
+		if(!data.FundUID || data.FundUID == null || data.FundUID == '') {
+			var err = new Error("CreateFund.Error");
+			err.pushError("FundUID.invalid.params");
+			throw err;
+		}
+		if(!data.CompanyUID || data.CompanyUID == null || data.CompanyUID == '') {
+			var err = new Error("CreateFund.Error");
+			err.pushError("CompanyUID.invalid.params");
+			throw err;
+		}
+		return sequelize.transaction()
+		.then(function(t) {
+			return Company.findOne({
+				where: {
+					UID : data.CompanyUID
+				},
+				transaction : t
+			})
+			.then(function(got_company) {
+				if(got_company == null || got_company == ''){
+					t.rollback();
+					var err = new Error("CreateFund.Error");
+					err.pushError("Company.notFound");
+					throw err;
+				}
+				else {
+					CompanyID = got_company.ID;
+					return Fund.findOne({
+						where :{
+							UID : data.FundUID
+						},
+						transaction : t
+					});
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+			.then(function(got_fund) {
+				if(got_fund == null || got_fund == ''){
+					t.rollback();
+					var err = new Error("CreateFund.Error");
+					err.pushError("Fund.notFound");
+					throw err;
+				}
+				else {
+					FundID = got_fund.ID;
+					return RelFundCompany.findOne({
+						where :{
+							CompanyID : CompanyID,
+							FundID    : FundID
+						},
+						transaction :t
+					});
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+			.then(function(got_rel) {
+				if(got_rel == null || got_rel == '') {
+					return RelFundCompany.create({
+						CompanyID : CompanyID,
+						FundID    : FundID,
+						Active    : 'Y'
+					},{transaction : t});
+				}
+				else {
+					if(got_rel.Active == 'N') {
+						return RelFundCompany.update({
+							Active:'Y'
+						},{
+							where: {
+								CompanyID : CompanyID,
+								FundID    : FundID
+							},
+							transaction : t
+						});
+					}
+					else {
+						t.rollback();
+						var err = new Error("CreateFund.Error");
+						err.pushError("Company.HasAssociation.Fund");
+						throw err;
+					}
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+			.then(function(created) {
+				if(created == null || created == ''){
+					t.rollback();
+					var err = new Error("CreateFund.Error");
+					err.pushError("create.Queryerror");
+					throw err;
+				}
+				else {
+					t.commit();
+					return created;
+				}
+			},function(err) {
+				throw err;
+			});
+		},function(err) {
+			throw err;
+		})
 	},
 
 	Test: function() {

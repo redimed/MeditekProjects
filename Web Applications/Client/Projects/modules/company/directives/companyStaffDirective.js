@@ -40,15 +40,18 @@ app.directive('companyStaff', function($uibModal, $timeout, $state, companyServi
 			};
 			scope.click = function() {
 				if(scope.type == 'delete') {
-					scope.postData = {
-						Active : 'N'
+					console.log(scope.uid);
+					scope.postData = {};
+					if(scope.uid.RelCompanyPatient.Active == 'N')
+						scope.postData.Active = 'Y';
+					else
+						scope.postData.Active = 'N';
+					scope.whereClauses = {
+						PatientID : scope.uid.ID,
+						CompanyID : scope.compid
+						// Active    : 'Y'
 					};
-					scope.whereClause = {
-						PatientID : scope.uid,
-						CompanyID : scope.compid,
-						Active    : 'Y'
-					};
-					companyService.changestatus({whereClause:scope.whereClause, info:scope.postData, model:'RelCompanyPatient'})
+					companyService.changestatus({whereClauses:scope.whereClauses, info:scope.postData, model:'RelCompanyPatient'})
 					.then(function(response) {
 						console.log(response);
 						toastr.success("Delete Successfully","success");

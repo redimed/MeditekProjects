@@ -8,6 +8,7 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 		},
 		templateUrl: 'modules/company/directives/templates/companyDetailDirective.html',
 		link: function(scope, elem, attrs){
+			scope.styles = {};
 			scope.info = {};
 			scope.updatedata = {};
 			//load company detail
@@ -15,13 +16,15 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 				companyService.detailcompany({UID:scope.uid})
 				.then(function(response) {
 					console.log(response);
-					if(response.data.Patients) {
-						for(var i = 0; i < response.data.Patients.length; i++) {
-							if(response.data.Patients[i].Active == 'N') 
-								response.data.Patients.splice(i, 1);
-						}
-					}
 					scope.info = response.data;
+					for(var i = 0; i < scope.info.CompanySites.length; i++) {
+						if(scope.info.CompanySites[i].Enable == 'Y') {
+							scope.styles = {width:1}
+						}
+						else
+							scope.styles = {};
+					}
+
 				}, function(err) {
 					console.log(err);
 				});
@@ -30,7 +33,7 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 			scope.init();
 
 			scope.openmodal = function(model, type, uid) {
-				console.log(uid);
+				// console.log(uid);
 				var Url = 
 				model=='CompanySite'?'CompanySitemodal':model=='UserAccount'?'Usermodal':model=='Staff'?'Staffmodal':'Insuresmodal';
 				// console.log(type," ",uid);
@@ -52,71 +55,6 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 					windowClass: model=='Staff'?'app-modal-window':null
 				});
 			}
-
-			scope.companys = {
-				insurers: [],
-				staffs: [],
-			};
-			// insurer list
-			scope.insurer = function(action, index){
-				var modalInstance = $uibModal.open({
-					animation: true,
-					templateUrl: 'modules/company/views/insurer.html',
-					controller: 'insurerCtrl',
-					size: action === 'delete' ? 'md' : 'lg',
-					resolve: {
-						modal_action: function(){
-							return action;
-						}, 
-						modal_data: function(){
-							return scope.companys.insurers;
-						}, 
-						modal_index: function(){
-							return index;
-						},
-					},
-				});
-				modalInstance.result
-			        .then(function(result) {
-			        	if(action === 'update'){
-			            	scope.companys.insurers[result.index] = result.data;
-			            }else if(action === 'delete'){
-			            	scope.companys.insurers.splice(result.index, 1);
-			            }
-					}, function(result) {
-						// dismiss
-					});
-			};
-			// staff list
-			scope.staff = function(action, index){
-				var modalInstance = $uibModal.open({
-					animation: true,
-					templateUrl: 'modules/company/views/staff.html',
-					controller: 'staffCtrl',
-					size: action === 'delete' ? 'md' : 'lg',
-					resolve: {
-						modal_action: function(){
-							return action;
-						}, 
-						modal_data: function(){
-							return scope.companys.staffs;
-						}, 
-						modal_index: function(){
-							return index;
-						},
-					},
-				});
-				modalInstance.result
-			        .then(function(result) {
-			        	if(action === 'update'){
-			            	scope.companys.staffs[result.index] = result.data;
-			            }else if(action === 'delete'){
-			            	scope.companys.staffs.splice(result.index, 1);
-			            }
-					}, function(result) {
-						// dismiss
-					});
-			};
 		},
 	};
 });

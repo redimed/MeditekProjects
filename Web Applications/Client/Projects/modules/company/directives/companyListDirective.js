@@ -63,6 +63,9 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 						$scope.cancel = function(){
 							$modalInstance.dismiss('cancel');
 						};
+						$scope.load = function() {
+							scope.loadlist(scope.searchObjectMap);
+						};
 					},
 					// windowClass: 'app-modal-window'
 					size: 'lg',

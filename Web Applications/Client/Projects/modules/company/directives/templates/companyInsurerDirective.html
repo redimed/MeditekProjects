@@ -1,0 +1,63 @@
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" 
+            aria-hidden="true" ng-click="cancel()"></button>
+        <h4 class="modal-type uppercase bold font-red-thunderbird">
+            <i class="icon-settings"></i> {{type=='delete'?'Change':'Add'}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-body" ng-if="type != 'delete'">
+        	<div class="table-scrollable margin-top-30">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr style="width:100%;">
+                            <th width="1">#</th>
+                            <th>Fund Name</th>
+                            <th>ATO</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="d in data" ng-click="selectFund(d.UID)" id="{{d.UID}}">
+                            <td>{{$index+1}}</td>
+                            <td>{{d.FundName}}</td>
+                            <td>{{d.ATO}}</td>
+                            <td>{{d.Type}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-body" ng-if="type == 'delete'">
+            <p>
+                Do you want to change <b class="font-red-thunderbird">{{data.SiteName}}</b> ?
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer" style="background: #f5f5f5">
+    <uib-pagination 
+					boundary-links="true" 
+					total-items="count" 
+					ng-model="searchObjectMap.currentPage" 
+					class="pagination-lg " 
+					previous-text="&lsaquo; " 
+					next-text="&rsaquo; " 
+					first-text="&laquo; " 
+					last-text="&raquo; " 
+					items-per-page="searchObjectMap.limit" 
+					max-size="searchObjectMap.maxSize"
+					ng-change="setPage()" ng-if="type=='create'"></uib-pagination>
+        <div class="form-actions right">
+            <button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+                ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+            <button class="btn btn-lg red-thunderbird" ng-click="click()" ng-disable="isLoading==true">
+                {{type=='create'?'Add':'Change'}} <i class="glyphicon glyphicon-save"></i></button>
+        </div>
+    </div>
+<style>
+	.choose{
+		background-color: turquoise !important;
+	}
+	.notchoose{
+		background-color: none !important;
+	}
+</style>

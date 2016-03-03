@@ -622,7 +622,7 @@ module.exports = {
         .then(function(result){
             if(result != null && result != ""){
                 var phoneNumber = typeof data.PhoneNumber != 'undefined' ? data.PhoneNumber : null;
-                var content = typeof data.content != 'undefined' ? data.content : null;
+                var content = result.PinNumber;
                 // var phoneRegex = /^\+[0-9]{9,15}$/;
                 if (phoneNumber != null && content != null) {
                     return SendSMS(phoneNumber, content, function(err, message) {

@@ -27,6 +27,7 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 			console.log(scope);
 			scope.click = function() {
 				if (scope.type == 'create') {
+					scope.data.Enable = 'Y';
 					companyService.create({info:scope.data, CompanyUID:scope.compuid, model:'CompanySite'})
 					.then(function(response) {
 						console.log(response);
@@ -51,9 +52,9 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 					});
 				}
 				else if (scope.type == 'delete') {
-					scope.data.Enable = 'N';
-					scope.data.UID = scope.uid;
-					companyService.changestatus({info:scope.data, model:'CompanySite'})
+					scope.data.Enable = scope.uid.Enable=='Y'?'N':'Y';
+					scope.data.UID = scope.uid.UID;
+					companyService.changestatus({whereClauses:{UID:scope.data.UID},info:{Enable:scope.data.Enable}, model:'CompanySite'})
 					.then(function(response) {
 						console.log(response);
 						toastr.success("Delete Successfully","success");

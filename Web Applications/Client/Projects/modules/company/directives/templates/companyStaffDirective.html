@@ -11,7 +11,7 @@
         </div>
         <div class="form-body" ng-if="type == 'delete'">
             <p>
-                Do you want to delete <b class="font-red-thunderbird">{{uid}}</b> ?
+                Do you want to change status <b class="font-red-thunderbird"></b> ?
             </p>
         </div>
     </div>
@@ -19,7 +19,7 @@
         <div class="form-actions right">
             <button type="button" class="btn btn-lg dark" data-dismiss="modal" 
                 ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
-            <button class="btn btn-lg red-thunderbird" ng-click="click()">
-                {{type}} <i class="glyphicon glyphicon-save"></i></button>
+            <button class="btn btn-lg red-thunderbird" ng-click="click()" ng-if="type !='create'">
+                {{type=='delete'?'Change':'Add'}} <i class="glyphicon glyphicon-save"></i></button>
         </div>
     </div>

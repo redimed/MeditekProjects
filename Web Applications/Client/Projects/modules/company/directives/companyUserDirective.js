@@ -38,9 +38,10 @@ app.directive('companyUser', function($uibModal, $timeout, $state, companyServic
 					});
 				}
 				else if (scope.type == 'delete') {
-					scope.data.Enable = 'N';
-					scope.data.UID = scope.uid;
-					companyService.changestatus({info:scope.data, model:'UserAccount'})
+					// scope.data.Enable = 'N';
+					scope.data.UID = scope.uid.UID;
+					scope.data.Enable = scope.uid.Enable=='Y'?'N':'Y';
+					companyService.changestatus({whereClauses:{UID:scope.data.UID},info:{Enable:scope.data.Enable}, model:'UserAccount'})
 					.then(function(response) {
 						console.log(response);
 						toastr.success("Delete Successfully","success");

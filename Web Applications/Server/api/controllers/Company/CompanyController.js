@@ -117,7 +117,31 @@ module.exports = {
         });
     },
 
-    Test: function(req, res ) {
+    GetListFund : function(req, res) {
+        var data = req.body.data;
+        return Fund.findAndCountAll({
+            // attributes : attributes,
+            limit      : data.limit,
+            offset     : data.offset
+        })
+        .then(function(result){
+            res.ok({mesage:"success",data:result.rows,count:result.count});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
+
+    CreateFund : function(req, res) {
+        var data = req.body.data;
+        Services.Company.CreateFund(data)
+        .then(function(result) {
+            res.ok({mesage:"success",data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
+    Test: function(req, res) {
         return UserAccount.findAll({
             include: [{
                 model: Company,

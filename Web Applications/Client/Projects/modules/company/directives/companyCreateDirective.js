@@ -35,6 +35,7 @@ app.directive('companyCreate', function($uibModal, $timeout, $state, companyServ
 					companyService.createCompany(scope.info)
 					.then(function(success){
 						toastr.success('Create Successfully','Success');
+						scope.load();
 						scope.cancel();
 					},function(err){
 						toastr.error('Please check data again !!!','error');

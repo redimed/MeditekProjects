@@ -102,6 +102,16 @@ module.exports = {
             headers: headers
         });
     },
+    GetListDoctor: function(headers, body) {
+        headers['content-type'] = 'application/json';
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/doctor/loadlist-doctor',
+            method: 'POST',
+            body: body,
+            headers: headers
+        });
+    },
     GetWAAppointmentDetails: function(apptUID, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({

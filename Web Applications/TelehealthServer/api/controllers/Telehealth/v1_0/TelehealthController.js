@@ -57,13 +57,14 @@ module.exports = {
             !_.isEmpty(body.data)) {
             TelehealthService.UpdatePatientDetails(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",response.getBody());
+                console.log("UpdatePatientDetails",response.getBody());
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
             });
         } else {
             var error = new Error('Telehealth.UpdatePatientDetails.Error');
+            err.pushError("Invalid Params");
             res.serverError(ErrorWrap(error));
         }
     },
@@ -74,13 +75,34 @@ module.exports = {
             !_.isEmpty(body.data)) {
             TelehealthService.ChangeEnableFile(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",response.getBody());
+                console.log("ChangeEnableFile",response.getBody());
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
             });
         } else {
             var error = new Error('Telehealth.ChangeEnableFile.Error');
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(error));
+        }
+    },
+    GetListDoctor: function(req, res) {
+        var body = req.body;
+        var headers = req.headers;
+        console.log("1111111111111111111111111111",body);
+        console.log("222222222222222222",headers);
+        if (!_.isEmpty(body) &&
+            !_.isEmpty(body.data)) {
+            TelehealthService.GetListDoctor(headers, body).then(function(response) {
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                console.log("GetListDoctor",response.getBody());
+                return res.ok(response.getBody());
+            }, function(err) {
+                res.json(err.getCode(), err.getBody());
+            });
+        } else {
+            var error = new Error('Telehealth.GetListDoctor.Error');
+            err.pushError("Invalid Params");
             res.serverError(ErrorWrap(error));
         }
     },

@@ -167,6 +167,8 @@ app
      //SETTING RESTANGULAR FOR AUTHENTICATION
     .factory('PDFFormUrlRestangular', function(Restangular) {
         return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setFullResponse(true);
+            RestangularConfigurer.setDefaultHeaders({'Content-Type': 'application/json'});
             RestangularConfigurer.setBaseUrl(o.const.PDFFormUrl);
         });
     })

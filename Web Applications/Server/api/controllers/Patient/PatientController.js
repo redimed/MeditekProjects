@@ -200,21 +200,33 @@ module.exports = {
         var data = req.body.data;
         Services.Patient.GetPatient(data)
             .then(function(info) {
-
                 if (info != null && info != undefined && info != '') {
-                    for(var i = 0; i < info[0].dataValues.UserAccount.FileUploads.length; i++) {
-                        info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i].FileType=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
-                        info[0].dataValues.Signature = info[0].dataValues.UserAccount.FileUploads[i].FileType=='Signature'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                    var responseData = [];
+                    responseData.push(info.Patient);
+                    responseData[0].dataValues.ProfileImage = null;
+                    responseData[0].dataValues.Signature = null;
+
+                    responseData[0].dataValues.PhoneNumber = info.PhoneNumber;
+                    responseData[0].dataValues.Email = info.Email;
+                    responseData[0].dataValues.CountryName = info.Patient.Country1.ShortName;
+                    delete responseData[0].dataValues['Country1'];
+                    for(var i = 0; i < info.dataValues.FileUploads.length; i++) {
+                        // info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i].FileType=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                        // info[0].dataValues.Signature = info[0].dataValues.UserAccount.FileUploads[i].FileType=='Signature'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                        if(responseData[0].dataValues.ProfileImage == null || responseData[0].dataValues.ProfileImage == '') {
+                            responseData[0].dataValues.ProfileImage = info.dataValues.FileUploads[i].FileType=='ProfileImage'?info.dataValues.FileUploads[i].UID:null;
+                        }
+                        if(responseData[0].dataValues.Signature == null || responseData[0].dataValues.Signature == '') {
+                            responseData[0].dataValues.Signature = info.dataValues.FileUploads[i].FileType=='Signature'?info.dataValues.FileUploads[i].UID:null;
+                        }
+
                     }
-                    info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
-                    info[0].dataValues.Email = info[0].dataValues.UserAccount.Email;
-                    info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
-                    delete info[0].dataValues['UserAccount'];
-                    delete info[0].dataValues['Country1'];
+                    // delete info[0].dataValues['UserAccount'];
+                    
                     res.ok({
                         status: 200,
                         message: "Success",
-                        data: info
+                        data: responseData
                     });
                 } else {
                     var err = new Error("SERVER ERROR");

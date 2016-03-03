@@ -1397,37 +1397,72 @@ module.exports = {
         .then(function(user){
             //check if UserAccount is found in table UserAccount, get UserAccountID to find patient
             if(check.checkData(user)){
-                return Patient.findAll({
-                    where: {
-                        UserAccountID : user.ID
+                // return Patient.findAll({
+                //     where: {
+                //         UserAccountID : user.ID
+                //     },
+                //     transaction:transaction,
+                //     attributes:attributes,
+                //     include: [
+                //          {
+                //             model: UserAccount,
+                //             attributes: ['PhoneNumber','Email','ID','UID','Enable'],
+                //             required: true,
+                //             include: [
+                //                 {
+                //                     model: FileUpload,
+                //                     attributes: ['ID','UID','FileType'],
+                //                     required: false,
+                //                     where:{
+                //                         FileType:{$in: ['ProfileImage', 'Signature']},  
+                //                         Enable:'Y'
+                //                     },
+                //                     // order:['CreatedDate ASC']
+                //                 }
+                //             ],
+                //             order:[[FileUpload,'CreatedDate','ASC']]
+                //         },
+                //         {
+                //             model:Country,
+                //             as:'Country1',
+                //             attributes:['ShortName'],
+                //             required:false
+                //         }
+                //     ],
+
+                // });
+                return UserAccount.findOne({
+                    where:{
+                        ID : user.ID
                     },
                     transaction:transaction,
-                    attributes:attributes,
+                    attributes : ['PhoneNumber','Email','ID','UID','Enable'],
                     include: [
-                         {
-                            model: UserAccount,
-                            attributes: ['PhoneNumber','Email','ID','UID','Enable'],
-                            required: true,
+                        {
+                            model: Patient,
+                            attributes:attributes,
+                            required : true,
                             include: [
                                 {
-                                    model: FileUpload,
-                                    attributes: ['UID','FileType'],
-                                    required: false,
-                                    where:{
-                                        FileType:{$in: ['ProfileImage', 'Signature']},  
-                                        Enable:'Y'
-                                    },
-                                    order:['CreatedDate DESC']
+                                    model : Country,
+                                    as:'Country1',
+                                    attributes:['ShortName'],
+                                    required:false
                                 }
                             ]
                         },
                         {
-                            model:Country,
-                            as:'Country1',
-                            attributes:['ShortName'],
-                            required:false
+                            model: FileUpload,
+                            attributes: ['ID','UID','FileType'],
+                            required: false,
+                            where:{
+                                FileType:{$in: ['ProfileImage', 'Signature']},  
+                                Enable:'Y'
+                            },
+                                // order:['CreatedDate ASC']
                         }
-                    ]
+                    ],
+                    order:[[FileUpload,'CreatedDate','DESC']]
                 });
             }
             else{

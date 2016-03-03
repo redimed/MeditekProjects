@@ -89,6 +89,8 @@ module.exports = React.createClass({
                     sections: prevState.sections.updateIn([codeSection,'fields'], val => val.push(
                         Immutable.fromJS({
                             code: codeField,
+                            name: '',
+                            size: '12',
                             ref: ref,
                             content: {
                                 cols: [{label: 'Label Table', type: 'it'}],

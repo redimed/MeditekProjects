@@ -53,7 +53,7 @@ module.exports = React.createClass({
     _dragAndDropFields: function(){
     	var self = this;
     	this.drakeField = dragula([].slice.apply(document.querySelectorAll('.dragula')),{
-            copy: false,
+            copy: true,
              revertOnSpill: true,  // spilling will put the element back where it was dragged from, if this is true
             removeOnSpill: true,
             invalid: function (el, handle) {
@@ -230,7 +230,7 @@ module.exports = React.createClass({
             self.refs.modalFieldDetail.hide()
         })
 	},
-	_onRightClickTableItem: function(code, e){
+	_onRightClickTableItem: function(code, e, refTemp){
 		var id = $(e.target).attr('id');
         if(typeof id === 'undefined')
             id = $(e.target).parent().attr('id');
@@ -284,6 +284,13 @@ module.exports = React.createClass({
                 }, function(){
                     self.props.onCreateTableColumn(self.props.code, code);
                 })
+                break;
+                case 'editTable':
+                    var name = self.refs[refTemp].getName();
+                    var size = self.refs[refTemp].getSize();
+                    self.refs.modalFieldDetail.show();
+                    var dataFieldDetail = {name: name, size: size, code: code, type: 'table', ref: refTemp}
+                    self.refs.fieldDetail.init(dataFieldDetail);
                 break;
         }
 	},
@@ -354,6 +361,7 @@ module.exports = React.createClass({
                 </div>
                 <div id="contextTableMenu">
                     <ul className="dropdown-menu" role="menu">
+                        <li><a id="editTable"><i className="icon-calendar"/> Edit Table Name</a></li>
                         <li><a id="addCol"><i className="icon-note"/> Add Column</a></li>
                         <li><a id="addRow"><i className="icon-note"/> Add Row</a></li>
                         <li><a id="deleteRow"><i className="icon-trash"/> Delete Row</a></li>
@@ -507,6 +515,7 @@ module.exports = React.createClass({
                                                         onRightClickItem={this._onRightClickItem}/>
                                                 else if(tempField === 'table')
                                                     return <CommonTable key={index} type={tempField}
+                                                        name={field.get('name')}
                                                         content={field.get('content')}
                                                         groupId={'fieldgroup_'+this.props.code+'_'+index}
                                                         context={displayContextTableMenu}

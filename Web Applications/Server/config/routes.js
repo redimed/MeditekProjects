@@ -81,4 +81,8 @@ _.extend(routes, PaperlessRoutes);
 var EFormRoutes = require('./routes/EFormRoutes');
 _.extend(routes, EFormRoutes);
 //end module EForm
+//begin module SystemSetting
+var SystemSettingRoutes = require('./routes/SystemSettingRoutes');
+_.extend(routes, SystemSettingRoutes);
+//end module SystemSetting
 module.exports.routes = routes;

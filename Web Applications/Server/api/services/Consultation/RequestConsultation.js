@@ -82,7 +82,8 @@
 	                    .then(function(relAppointmentConsultationCreated) {
 	                        defer.resolve({
 	                            transaction: t,
-	                            status: 'success'
+	                            status: 'success',
+	                            data: consultationObject
 	                        });
 	                    }, function(err) {
 	                        defer.reject({

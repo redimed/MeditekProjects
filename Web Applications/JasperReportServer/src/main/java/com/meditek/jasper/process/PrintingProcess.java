@@ -12,6 +12,7 @@ import com.meditek.jasper.model.FormDataModel;
 import com.meditek.jasper.model.ReportDataWrapperModel;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -68,25 +69,29 @@ public class PrintingProcess {
     }
     
     public ByteArrayOutputStream jasperPrinting(List<FormDataModel> formData, String formUID){
-//        try {
-            ReportDataWrapperModel parsedData = dataParsing.jasperDataParse(formData);
-            for (Enumeration data = parsedData.getOtherFormData().keys(); data.hasMoreElements();){
+        try {
+            Hashtable parsedData = dataParsing.jasperDataParse(formData);
+            for (Enumeration data = parsedData.keys(); data.hasMoreElements();){
                 String key= (String)data.nextElement();
-                System.out.println("Key: "+key+" Value: "+ parsedData.getOtherFormData().get(key));
+                System.out.println("Key: "+key+"                    Value: "+ parsedData.get(key));
             }
-//            String templateFileName = formUID + ".jasper";
-//            HashMap params = new HashMap();
-//            params.put("data", parsedData);
-//            //Fill pdf
-//            JasperPrint print = JasperFillManager.fillReport(templateFileName, params, new JREmptyDataSource());
-//            //Export to ByteArrayOutputStream
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            JasperExportManager.exportReportToPdfStream(print, baos);
+            String realPath = "com/meditek/jaspertemplate/";
+//            String templateFileName = realPath+formUID+".jasper";
+            InputStream templateFile = this.getClass().getResourceAsStream("/"+realPath+formUID+".jasper");
+//            String templateFileName = "/home/rockmanexe1994/Projects/JasperReportWorkspace/MyReports/consult_note.jasper";
+            HashMap params = new HashMap();
+            params.put("data", parsedData);
+            params.put("realPath", realPath);
+            //Fill pdf
+            JasperPrint print = JasperFillManager.fillReport(templateFile, params, new JREmptyDataSource());
+            //Export to ByteArrayOutputStream
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            JasperExportManager.exportReportToPdfStream(print, baos);
+            return baos;
+        } catch (JRException ex) {
+            Logger.getLogger(PrintingProcess.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-//        } catch (JRException ex) {
-//            Logger.getLogger(PrintingProcess.class.getName()).log(Level.SEVERE, null, ex);
-//            return null;
-//        }
+        }
     }
 
     

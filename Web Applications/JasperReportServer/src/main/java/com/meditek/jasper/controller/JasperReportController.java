@@ -94,7 +94,7 @@ public class JasperReportController {
             res.addHeader("Content-Disposition","inline");
             res.setContentLength(baos.toByteArray().length);
             res.getOutputStream().write(baos.toByteArray());
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(JasperReportController.class.getName()).log(Level.SEVERE, null, ex);
             
         }

@@ -72,6 +72,9 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
                 "PatientKinRelationship": null,
                 "PatientKinWorkPhoneNumber": null,
                 "DVANumber": $scope.postData.otherData.PatientDVA.DVANumber
+            },
+            "Doctor":{
+                "UID": CommonService.DoctorUID()
             }
         }
     }
@@ -138,6 +141,7 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
         if ($scope.step3.$valid) {
             $scope.FormatDate();
             $scope.GetDataAppointment();
+            console.log("$scope.dataCreateAppointment",$scope.dataCreateAppointment)
             blankServices.registerPatient($scope.postData).then(function(response) {
                 console.log("registerPatient", response)
                 if (response.data.status = 200) {

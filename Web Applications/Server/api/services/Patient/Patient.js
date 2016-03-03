@@ -981,54 +981,78 @@ module.exports = {
                 .then(function(t){
                 return Services.Patient.validation(data)
                 .then(function(success){
-                    return Patient.update(patientInfo,{
-                        where:{
-                            UID : patientInfo.UID
-                        },
-                        transaction:t
-                    })
-                    .then(function(user){
-                        if(data.EnableUser!=undefined && data.EnableUser!=null && data.EnableUser!=""){
-                            return UserAccount.update({
-                                Enable : data.EnableUser
-                            },{
-                                where : {
-                                    UID : data.UserAccountUID
-                                },
-                                transaction:t
-                            });
-                        }
-                        else {
-                            if(data.Email && data.Email != null && data.Email != ''){
-                                var EmailPattern=new RegExp(check.regexPattern.email);
-                                if(!EmailPattern.test(data.Email)){
-                                    t.rollback();
-                                    var err = new Error("UpdatePatient.Error");
-                                    err.pushError("invalid.Email");
-                                    throw err;
-                                }
-                                else {
-                                    return UserAccount.update({
-                                        Email : data.Email
-                                    },{
-                                        where : {
-                                            UID : data.UserAccountUID
-                                        },
-                                        transaction:t
-                                    });
-                                }
-                            }
-                            else
-                                return user;
-                        }
-                    },function(err){
-                        t.rollback();
-                        throw err;
-                    });
+                    if(data.Signature != null && data.Signature != '') {
+                        return FileUpload.findOne({
+                            where :{
+                                UID : data.Signature
+                            },
+                            transaction : t
+                        });
+                    }
+                    else {
+                        return success;
+                    }
+
                 }, function(err){
                     t.rollback();
                     throw err;
-                })//update 4 bang patient tai day
+                })
+                .then(function(checkedSign) {
+                    if(checkedSign == null || checkedSign == ''){
+                        return checkedSign;
+                    }
+                    else {
+                        patientInfo.Signature = checkedSign.ID;
+                         return Patient.update(patientInfo,{
+                            where:{
+                                UID : patientInfo.UID
+                            },
+                            transaction:t
+                        })
+                    }
+                },function(err) {
+                    t.rollback();
+                    throw err;
+                })
+                .then(function(user){
+                    if(data.EnableUser!=undefined && data.EnableUser!=null && data.EnableUser!=""){
+                        return UserAccount.update({
+                            Enable : data.EnableUser
+                        },{
+                            where : {
+                                ID : data.UserAccountID
+                            },
+                            transaction:t
+                        });
+                    }
+                    else {
+                        if(data.Email && data.Email != null && data.Email != ''){
+                            var EmailPattern=new RegExp(check.regexPattern.email);
+                            if(!EmailPattern.test(data.Email)){
+                                t.rollback();
+                                var err = new Error("UpdatePatient.Error");
+                                err.pushError("invalid.Email");
+                                throw err;
+                            }
+                            else {
+                                return UserAccount.update({
+                                    Email : data.Email
+                                },{
+                                    where : {
+                                        ID : data.UserAccountID
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        }
+                        else
+                            return user;
+                    }
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                //update 4 bang patient tai day
                 .then(function(result){
                     console.log("1");
                     if(other!=null && other != ""){
@@ -1290,9 +1314,9 @@ module.exports = {
                         return Services.Doctor.checkUserRole(data.UserAccountID,t);
                     }
                     else{
-                        t.commit();
-                        var message = "success";
-                        return message;
+                        // t.commit();
+                        // var message = "success";
+                        return result;
                     }
                 },function(err){
                     t.rollback();
@@ -1336,6 +1360,7 @@ module.exports = {
                         return message;
                     }
                     else{
+                        t.commit();
                         var message = "success";
                         return message;
                     }

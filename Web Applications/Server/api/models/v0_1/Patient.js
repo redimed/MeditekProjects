@@ -350,6 +350,16 @@ module.exports = {
                 }
             }
         },
+        Signature: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                },
+                isNumeric: true
+            }
+        },
         CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true,

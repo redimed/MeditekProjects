@@ -459,13 +459,5 @@ module.exports = {
             through: 'RelFundCompany',
             foreignKey: 'FundID'
         });
-
-        //association Patient - FileUpload
-        Patient.hasOne(FileUpload, {
-            foreignKey: 'Signature'
-        });
-        FileUpload.belongsTo(Patient, {
-            foreignKey: 'Signature'
-        });
     }
 };

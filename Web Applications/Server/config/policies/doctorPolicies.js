@@ -2,7 +2,7 @@ module.exports={
 	'Doctor/DoctorController':{
 
 		'ListCountry': true,
-		'LoadlistDoctor':['isAuthenticated'],
+		'LoadlistDoctor':true,
 		'CreateDoctorByNewAccount': ['isAuthenticated','isAdmin']
 		
 	}

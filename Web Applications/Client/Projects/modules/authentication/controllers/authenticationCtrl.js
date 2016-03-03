@@ -99,24 +99,29 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     socketTelehealth.funCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal({
-            title: "lammmmmmmmmmmmmmm",
+            title: msg.fromName,
             imageUrl: "theme/assets/global/images/E-call_33.png",
             text: "<img src='theme/assets/global/img/loading.gif' />",
             timer: 30000,
             html: true,
             showCancelButton: false,
-            confirmButtonColor: "#e74c3c",
-            confirmButtonText: "Cancel",
-            closeOnConfirm: true
+            confirmButtonColor: "#26C281",
+            confirmButtonText: "Answer",
+            cancelButtonText: "Cancel",
+            cancelButtonColor: "#D91E18"
         }, function() {
+            console.log("11111111111111111111111111111111111111");
             EndCall();
         });
         audio.loop = true;
         audio.play();
     };
 
-    socketTelehealth.funConnect = function(){
+    socketTelehealth.funConnect = function() {
         console.log("CONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
-        
+        // join room telehealth server
+        console.log("+++++++++++++++++++++++++++++++++++",$cookies.getObject('userInfo'));
+        socketTelehealth.get('/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
     }
 });
+

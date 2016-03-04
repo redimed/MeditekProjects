@@ -114,7 +114,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             if (scope.appointment) {
                 var input = PatientService.getDatatoDirective();
                 if (input) {
-                    scope.data = angular.copy(input);
+                    scope.data = angular.copy(input.data);
+                    //console.log(scope.data);
                 }
             }
             // Back

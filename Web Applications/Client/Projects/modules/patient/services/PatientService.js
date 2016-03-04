@@ -469,6 +469,7 @@ angular.module('app.authentication.patient.services',[])
 	};
 
 	PatientService.postDatatoDirective = function(info) {
+
 		postData = angular.copy(info);
 		if(postData.Gender !=null && postData.Gender !=='Male' && postData.Gender !=='Female'){
 			postData.Gender = 'Other';
@@ -476,30 +477,33 @@ angular.module('app.authentication.patient.services',[])
 	};
 
 	PatientService.getDatatoDirective = function(){
+
 		var returnData = {};
 		var info = {
-			FirstName:postData.FirstName,
-			MiddleName:postData.MiddleName,
-			Title:postData.Title,
-			LastName:postData.LastName,
-			PhoneNumber:postData.PhoneNumber,
-			DOB:postData.DOB,
-			Address1:postData.Address1,
-			Address2:postData.Address2,
-			State:postData.State,
-			Email1:postData.Email1,
-			HomePhoneNumber:postData.HomePhoneNumber,
-			Gender:postData.Gender,
-			Suburb:postData.Suburb,
-			Postcode:postData.Postcode
+			FirstName:postData.data.FirstName,
+			MiddleName:postData.data.MiddleName,
+			Title:postData.data.Title,
+			LastName:postData.data.LastName,
+			PhoneNumber:postData.data.PhoneNumber,
+			DOB:postData.data.DOB,
+			Address1:postData.data.Address1,
+			Address2:postData.data.Address2,
+			State:postData.data.State,
+			Email1:postData.data.Email1,
+			HomePhoneNumber:postData.data.HomePhoneNumber,
+			Gender:postData.data.Gender,
+			Suburb:postData.data.Suburb,
+			Postcode:postData.data.Postcode
 		};
+
 		returnData.data = info;
-		if(postData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
-		if(postData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
-		if(postData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;
-		if(postData.hasOwnProperty('PatientFund')== true) returnData.PatientFund = postData.PatientFund;
-		if(postData.hasOwnProperty('PatientKin')== true) returnData.PatientKin = postData.PatientKin;
-		if(postData.hasOwnProperty('PatientGP')== true) returnData.PatientGP = postData.PatientGP;
+		if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
+		if(postData.otherData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
+		if(postData.otherData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;
+		if(postData.otherData.hasOwnProperty('PatientFund')== true) returnData.PatientFund = postData.PatientFund;
+		if(postData.otherData.hasOwnProperty('PatientKin')== true) returnData.PatientKin = postData.PatientKin;
+		if(postData.otherData.hasOwnProperty('PatientGP')== true) returnData.PatientGP = postData.PatientGP;
+		console.log('returnData',returnData);
 		return returnData;
 	}
 

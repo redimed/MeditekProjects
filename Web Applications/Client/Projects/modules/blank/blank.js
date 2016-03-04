@@ -1,6 +1,5 @@
 var app = angular.module('app.blank',[
 	'app.blank.controller',
-	'app.blank.directives',
 	'app.blank.services',
 	'app.blank.drawing',
 ]);

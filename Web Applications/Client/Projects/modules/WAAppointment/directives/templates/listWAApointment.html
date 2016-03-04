@@ -22,12 +22,6 @@
             <span class="caption-subject">{{$state.current.data.pageTitle}}</span>
             <!-- <span class="caption-helper font-yellow-lemon"></span> -->
         </div>
-        <div class="actions">
-            <a href="javascript:;" class="btn red-thunderbird btn-sm" ng-click="toggleFilter()">
-                <i class="fa fa-filter"></i> Filter
-            </a>
-            <!-- <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
-        </div>
     </div>
     <div class="portlet-body">
         <div class="table-scrollable margin-top-10">
@@ -35,6 +29,7 @@
                 <thead>
                     <tr>
                         <th width="1">#</th>
+                        <th width="1">Code</th>
                         <th>Patient</th>
                         <th>Treating Practitioner</th>
                         <th>
@@ -59,6 +54,9 @@
                     </tr>
                     <tr ng-hide="info.toggle">
                         <td>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="info.data.Filter[0].Appointment.Code" ng-enter="reloadData()" capitalize>
                         </td>
                         <td>
                             <input type="text" class="form-control" ng-model="info.data.Search[0].PatientAppointment.FullName" ng-enter="reloadData()">
@@ -95,6 +93,7 @@
                     <tbody>
                         <tr ng-click="WAAppointmentDetail(appt.UID,appt.Type)" ng-repeat="appt in info.listWaapointment.rows">
                             <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
+                            <td>{{appt.Code}}</td>
                             <td>
                                 <span ng-if="appt.Patients.length === 0">{{(appt.TelehealthAppointment.PatientAppointment.FirstName !== null)?appt.TelehealthAppointment.PatientAppointment.FirstName:""}} 
                             {{(appt.TelehealthAppointment.PatientAppointment.LastName !== null)?appt.TelehealthAppointment.PatientAppointment.LastName:""}}

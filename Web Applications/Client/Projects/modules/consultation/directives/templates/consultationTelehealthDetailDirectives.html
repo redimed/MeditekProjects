@@ -46,7 +46,8 @@
                                         <div class="row">
                                             <!-- col 1 -->
                                             <div class="col-md-6 col-sm-6 col-md-offset-1 col-sm-offset-1">
-                                                <h4 class="form-section bold">Basic Information</h4>
+                                                <h4 class="form-section bold">Appointment:
+                                                {{(wainformation.Code===null || wainformation.Code==='' || wainformation.Code===undefined)?"N/A":wainformation.Code}}</h4>
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group form-md-line-input">

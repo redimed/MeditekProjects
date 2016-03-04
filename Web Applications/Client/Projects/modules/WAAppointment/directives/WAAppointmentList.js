@@ -1,8 +1,8 @@
 var app = angular.module('app.authentication.WAAppointment.directives.listWAAppoint', []);
 app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies, toastr, $state) {
     return {
-        scope:{
-            data:"="
+        scope: {
+            data: "="
         },
         restrict: 'E',
         templateUrl: "modules/WAAppointment/directives/templates/listWAApointment.html",
@@ -46,16 +46,13 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                     }]
                 },
                 listWaapointment: null,
-                toggle: true
-            };
-            scope.toggleFilter = function() {
-                scope.info.toggle = scope.info.toggle === false ? true : false;
+                toggle: false
             };
             scope.WAAppointmentDetail = function(UID, AppointmentType) {
                 if (AppointmentType == 'Onsite') {
                     $state.go("authentication.onsite.appointment", { UID: UID })
                 } else {
-                     $state.go("authentication.WAAppointment.detail", { UID: UID })
+                    $state.go("authentication.WAAppointment.detail", { UID: UID })
                 };
 
             };

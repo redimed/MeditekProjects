@@ -46,7 +46,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                     }]
                 },
                 listWaapointment: null,
-                toggle: true
+                toggle: false
             };
             if ($stateParams.roleid == 'roleid') {
                 var today = new Date();

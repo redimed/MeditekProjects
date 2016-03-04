@@ -7,11 +7,6 @@
             <span class="caption-subject">{{$state.current.data.pageTitle}}</span>
             <!-- <span class="caption-helper font-yellow-lemon"></span> -->
         </div>
-        <div class="actions">
-            <a href="javascript:;" class="btn red-thunderbird btn-sm" ng-click="toggleFilter()">
-                <i class="fa fa-filter"></i> Filter
-            </a>
-        </div>
     </div>
     
     <div class="portlet-body">
@@ -20,6 +15,7 @@
                 <thead>
                     <tr>
                         <th width="1">#</th>
+                        <th width="1">Code</th>
                         <th>Patient Name</th>
                         <th>
                             Date Enrolled
@@ -32,6 +28,9 @@
                     </tr>
                     <tr ng-hide="info.toggle">
                         <td>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="info.data.Filter[0].Appointment.Code" ng-enter="reloadData()" capitalize>
                         </td>
                         <td>
                             <input type="text" class="form-control" ng-model="info.data.Search[0].Patient.FullName" ng-enter="reloadData()">
@@ -51,6 +50,7 @@
                     <tbody>
                         <tr ng-click="Detail(appt)" ng-repeat="appt in info.listWaapointment.rows">
                             <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
+                            <td>{{appt.Code}}</td>
                             <td>
                                 </span>
                                 {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}

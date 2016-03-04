@@ -21,6 +21,16 @@ module.exports = {
                 }
             }
         },
+        Code: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
         SiteID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
@@ -142,6 +152,26 @@ module.exports = {
         tableName: 'Appointment',
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
-        hooks: {}
+        hooks: {
+            afterCreate: function(appointment, options, callback) {
+                if (!_.isEmpty(appointment) &&
+                    !_.isEmpty(appointment.dataValues) &&
+                    HelperService.CheckExistData(appointment.dataValues.ID)) {
+                    Appointment.update({
+                            Code: HashIDService.Create(appointment.dataValues.ID)
+                        }, {
+                            where: {
+                                ID: appointment.dataValues.ID
+                            },
+                            transaction: options.transaction
+                        })
+                        .then(function(apptCodeUpdated) {
+                            callback();
+                        }, function(err) {
+                            callback(err);
+                        });
+                }
+            }
+        }
     }
 };

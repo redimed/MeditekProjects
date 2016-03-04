@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
 
+import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 
 import java.io.File;
@@ -66,12 +67,16 @@ public class UploadFile extends AsyncTask<Integer, Integer, Void> {
                 String status = jsonObject.get("status").getAsString();
                 if (status.equalsIgnoreCase("success")) {
 
-                    JsonObject fileUpload = new JsonObject();
-                    fileUpload.addProperty("fileType", fileType);
-                    fileUpload.addProperty("fileUID", jsonObject.get("fileUID").getAsString());
-                    fileUpload.addProperty("Enable", "N");
+                    if (fileType.equalsIgnoreCase("Signature")) {
+                        UpdateSignatureProfile(jsonObject.get("fileUID").getAsString());
+                    } else {
+                        JsonObject fileUpload = new JsonObject();
+                        fileUpload.addProperty("fileType", fileType);
+                        fileUpload.addProperty("fileUID", jsonObject.get("fileUID").getAsString());
+                        fileUpload.addProperty("Enable", "N");
 
-                    ChangeStatusFile(fileUpload);
+                        ChangeStatusFile(fileUpload);
+                    }
                 }
             }
 
@@ -84,10 +89,33 @@ public class UploadFile extends AsyncTask<Integer, Integer, Void> {
     }
 
     private void ChangeStatusFile(JsonObject fileUpload) {
+
         JsonObject jData = new JsonObject();
         jData.addProperty("data", gson.toJson(fileUpload));
 
         registerApi.changeEnableFile(jData, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                Log.d(TAG, jsonObject.get("message").getAsString() + "");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, error.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void UpdateSignatureProfile(String fileUID) {
+
+        Patient jPatient = new Patient();
+        jPatient.setSignature(fileUID);
+        jPatient.setUID(uidTelehealth.getString("patientUID", ""));
+
+        JsonObject jData = new JsonObject();
+        jData.addProperty("data", gson.toJson(jPatient));
+
+        registerApi.updateProfile(jData, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 Log.d(TAG, jsonObject.get("message").getAsString() + "");

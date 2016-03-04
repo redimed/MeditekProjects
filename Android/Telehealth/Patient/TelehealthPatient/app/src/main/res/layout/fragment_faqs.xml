@@ -9,16 +9,35 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:elevation="1dp">
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/icon_back" />
+        <LinearLayout
+            android:id="@+id/layoutBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true">
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_back"
+                style="?android:attr/borderlessButtonStyle"/>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HOME"
+                android:textSize="15dp"
+                android:layout_gravity="center"
+                android:textColor="@color/lightFont"/>
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/logo_work"

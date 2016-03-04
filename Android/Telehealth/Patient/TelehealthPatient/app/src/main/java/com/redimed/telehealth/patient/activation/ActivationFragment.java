@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -51,8 +53,6 @@ public class ActivationFragment extends Fragment implements View.OnClickListener
     //======Layout 2==========
     @Bind(R.id.btnSubmitCode)
     Button btnSubmitCode;
-    @Bind(R.id.btnBack)
-    RelativeLayout btnBack;
     @Bind(R.id.txtVerifyCode)
     EditText txtVerifyCode;
 
@@ -61,6 +61,16 @@ public class ActivationFragment extends Fragment implements View.OnClickListener
     @Bind(R.id.layoutRegisterFone)
     LinearLayout layoutRegisterFone;
 
+    /* Toolbar */
+    @Bind(R.id.toolBar)
+    Toolbar toolBar;
+    @Bind(R.id.layoutBack)
+    LinearLayout layoutBack;
+    @Bind(R.id.lblTitle)
+    TextView lblTitle;
+    @Bind(R.id.lblSubTitle)
+    TextView lblSubTitle;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_activation, container, false);
@@ -68,6 +78,7 @@ public class ActivationFragment extends Fragment implements View.OnClickListener
         ButterKnife.bind(this, v);
 
         //init variable
+        initToolbar();
         iActivationPresenter = new ActivationPresenter(this, context, getActivity());
         iActivationPresenter.hideKeyboardFragment(v);
         layoutContainer.setAnimateFirstView(true);
@@ -81,9 +92,24 @@ public class ActivationFragment extends Fragment implements View.OnClickListener
         //set listener
         btnSubmitCode.setOnClickListener(this);
         btnRequestCode.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
 
         return v;
+    }
+
+    private void initToolbar(){
+        //init toolbar
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolBar);
+
+        //Set text  and icon title appointment details
+        lblTitle.setText(getResources().getString(R.string.login));
+        lblSubTitle.setText(getResources().getString(R.string.home_title));
+        layoutBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iActivationPresenter.changeFragment(new HomeFragment());
+            }
+        });
     }
 
     @Override
@@ -96,9 +122,7 @@ public class ActivationFragment extends Fragment implements View.OnClickListener
             case R.id.btnSubmitCode:
                 iActivationPresenter.verifyCode(txtVerifyCode.getText().toString());
                 break;
-            case R.id.btnBack:
-                txtPhone.setText("");
-                switchView(R.anim.in_from_right, R.anim.out_to_left, layoutRegisterFone);
+            default:
                 break;
         }
     }
@@ -116,6 +140,18 @@ public class ActivationFragment extends Fragment implements View.OnClickListener
     @Override
     public void onRequestCode() {
         switchView(R.anim.in_from_left, R.anim.out_to_right, layoutRegisterFone);
+
+        //Set text  and icon title appointment details
+        lblTitle.setText(getResources().getString(R.string.activation_title));
+        lblSubTitle.setText(getResources().getString(R.string.back));
+        layoutBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtPhone.setText("");
+                btnRequestCode.setEnabled(true);
+                switchView(R.anim.in_from_right, R.anim.out_to_left, layoutRegisterFone);
+            }
+        });
     }
 
     @Override
@@ -127,9 +163,11 @@ public class ActivationFragment extends Fragment implements View.OnClickListener
     public void onLoadError(String msg) {
         if (msg.equalsIgnoreCase("Network Error")) {
             new DialogConnection(context).show();
-        } else {
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
+        } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
+            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
         }
+        txtPhone.setText("");
+        btnRequestCode.setEnabled(true);
     }
 
     public void animationLogo() {

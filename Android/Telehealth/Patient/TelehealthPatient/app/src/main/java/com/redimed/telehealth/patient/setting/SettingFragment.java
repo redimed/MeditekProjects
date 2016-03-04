@@ -51,10 +51,10 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
+    @Bind(R.id.layoutBack)
+    LinearLayout layoutBack;
     @Bind(R.id.lblTitle)
     TextView lblTitle;
-    @Bind(R.id.btnBack)
-    Button btnBack;
 
     public SettingFragment() {}
 
@@ -103,7 +103,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
 
         //Set text  and icon title appointment details
         lblTitle.setText(getResources().getString(R.string.setting_title));
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iSettingPresenter.changeFragment(new HomeFragment());

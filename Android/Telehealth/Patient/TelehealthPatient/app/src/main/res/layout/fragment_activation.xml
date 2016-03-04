@@ -4,16 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activation.ActivationFragment"
-    android:background="@drawable/bg_activation">
+    android:background="@drawable/slider2">
+
+    <include android:id="@+id/toolBar" layout="@layout/custom_toolbar"/>
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="320dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:layout_below="@+id/toolBar"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/logo_redimed"
-        android:contentDescription="@string/welcome" />
+        android:contentDescription="@string/welcome"/>
 
     <ViewFlipper
         android:id="@+id/layoutContainer"
@@ -35,7 +38,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:text="@string/text_contains"
-                android:textColor="@color/greyFont" />
+                android:textColor="@color/lightFont" />
 
             <LinearLayout
                 android:layout_width="320dp"
@@ -140,29 +143,28 @@
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/btnBack"
-                    android:layout_width="?android:actionBarSize"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="#6fff0003"
-                    android:clickable="true">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/btnBack"-->
+                    <!--android:layout_width="?android:actionBarSize"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:background="#6fff0003"-->
+                    <!--android:clickable="true">-->
 
-                    <com.redimed.telehealth.patient.font.MaterialDesignIconsTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/material_icon_back"
-                        android:textColor="@android:color/white"
-                        android:textSize="30sp" />
+                    <!--<com.redimed.telehealth.patient.font.MaterialDesignIconsTextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:text="@string/material_icon_back"-->
+                        <!--android:textColor="@android:color/white"-->
+                        <!--android:textSize="30sp" />-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
                 <Button
                     android:id="@+id/btnSubmitCode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/btn_VerifyCode"
                     android:textAllCaps="false"

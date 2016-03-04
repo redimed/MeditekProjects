@@ -127,10 +127,10 @@ public class SettingPresenter implements ISettingPresenter {
 //        } else {
 
         final AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
-        alertDialog.setTitle(context.getResources().getString(R.string.unregistered));
+        alertDialog.setTitle(context.getResources().getString(R.string.logout));
         alertDialog.setMessage(context.getResources().getString(R.string.un_title));
 
-        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Unregistered", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Logout", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 clearApplication();

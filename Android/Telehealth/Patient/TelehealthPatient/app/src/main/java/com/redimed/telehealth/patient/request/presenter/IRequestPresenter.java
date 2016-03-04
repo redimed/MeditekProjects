@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.request.presenter;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,16 +16,28 @@ import java.util.ArrayList;
  * Created by Fox on 1/22/2016.
  */
 public interface IRequestPresenter {
+
+    void changeActivity();
+
     ArrayAdapter loadJsonData();
-    ArrayAdapter<String> setDataApptType();
+
     Patient[] loadDataInfoExists();
+
     void displayDatePickerDialog();
+
     void hideKeyboardFragment(View v);
+
+    ArrayAdapter<String> setDataApptType();
+
     void setImageGallery(String[] allPath);
+
     void changeFragment(Fragment fragment);
-    void uploadImage(ArrayList<CustomGallery> customGalleries, ArrayList<EditText> arrEditText, String suburb, String apptType);
 
     void saveBitmapSign(SignaturePad signaturePad);
 
-    EditText checkDataField(View v);
+    void checkFields(ArrayList<EditText> arrEditText, String suburb, String apptType);
+
+    void uploadImage(ArrayList<CustomGallery> customGalleries);
+
+    void loadSignature(String url);
 }

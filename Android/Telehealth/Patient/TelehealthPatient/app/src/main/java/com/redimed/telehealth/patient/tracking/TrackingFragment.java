@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -61,10 +62,12 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
+    @Bind(R.id.layoutBack)
+    LinearLayout layoutBack;
     @Bind(R.id.lblTitle)
     TextView lblTitle;
-    @Bind(R.id.btnBack)
-    Button btnBack;
+    @Bind(R.id.lblSubTitle)
+    TextView lblSubTitle;
 
     public TrackingFragment() {}
 
@@ -94,7 +97,7 @@ public class TrackingFragment extends Fragment implements ITrackingView {
 
         //Set text  and icon title appointment details
         lblTitle.setText(getResources().getString(R.string.list_appt_title));
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iTrackingPresenter.changeFragment(new HomeFragment());

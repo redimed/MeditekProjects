@@ -42,6 +42,7 @@ import com.redimed.telehealth.patient.information.view.IInfoView;
 import com.redimed.telehealth.patient.model.ModelActivity;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.Config;
+import com.redimed.telehealth.patient.setting.SettingFragment;
 import com.redimed.telehealth.patient.utlis.DialogAlert;
 import com.redimed.telehealth.patient.utlis.DialogConnection;
 import com.redimed.telehealth.patient.utlis.UploadFile;
@@ -116,6 +117,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     LinearLayout layoutSignature;
     @Bind(R.id.signaturePad)
     SignaturePad signaturePad;
+    @Bind(R.id.layoutButtonUpdate)
+    LinearLayout layoutButtonUpdate;
 
     /* Button */
     @Bind(R.id.lblSubmit)
@@ -130,13 +133,14 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
+    @Bind(R.id.layoutBack)
+    LinearLayout layoutBack;
     @Bind(R.id.lblTitle)
     TextView lblTitle;
-    @Bind(R.id.btnBack)
-    Button btnBack;
+    @Bind(R.id.lblSubTitle)
+    TextView lblSubTitle;
 
-    public InformationFragment() {
-    }
+    public InformationFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -260,6 +264,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                     String str = "No Signature to show <u><i>click here</i></u> to generate";
                     lblNoSign.setText(Html.fromHtml(str));
                     lblNoSign.setVisibility(View.VISIBLE);
+                } else {
+                    iInfoPresenter.downloadSignature(Config.apiURLDownload + patient.getSignature());
                 }
             }
         }
@@ -282,7 +288,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
         //Set text  and icon title appointment details
         lblTitle.setText(getResources().getString(R.string.profile_title));
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        lblSubTitle.setText(getResources().getString(R.string.home_title));
+        layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iInfoPresenter.changeFragment(new HomeFragment());
@@ -299,6 +306,15 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     }
 
     @Override
+    public void onResultSignature(Bitmap bitmap) {
+        if (bitmap != null){
+            imgSignature.setImageBitmap(bitmap);
+            lblNoSign.setVisibility(View.VISIBLE);
+            vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutImg));
+        }
+    }
+
+    @Override
     public void onResultEmail(boolean email) {
         if (!email) {
             txtEmail.setText("");
@@ -308,17 +324,13 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     }
 
     @Override
-    public void onLoadSignature(Bitmap bitmap) {
+    public void onLoadSignature(Bitmap bitmap, String pathSign) {
         if (bitmap != null) {
-            lblNoSign.setVisibility(View.VISIBLE);
             imgSignature.setImageBitmap(bitmap);
+            lblNoSign.setVisibility(View.VISIBLE);
+            new UploadFile(context, progressBarUpload, "Signature", pathSign).execute();
             vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutImg));
         }
-    }
-
-    @Override
-    public void onResultUpload(String msg) {
-
     }
 
     @Override
@@ -355,8 +367,9 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblUpdateProfile:
-                vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
                 iInfoPresenter.changeViewUpdate(arrEditText);
+                layoutButtonUpdate.setVisibility(View.VISIBLE);
+                vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
                 break;
             case R.id.lblSubmit:
                 iInfoPresenter.updateProfile(arrEditText);

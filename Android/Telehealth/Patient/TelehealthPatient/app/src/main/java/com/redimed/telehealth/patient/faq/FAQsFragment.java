@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
@@ -30,8 +31,8 @@ public class FAQsFragment extends Fragment implements IFAQsView, View.OnClickLis
 
     @Bind(R.id.webFAQs)
     WebView webViewFAQs;
-    @Bind(R.id.btnBack)
-    Button btnBack;
+    @Bind(R.id.layoutBack)
+    LinearLayout layoutBack;
 
     public FAQsFragment() {}
 
@@ -42,7 +43,7 @@ public class FAQsFragment extends Fragment implements IFAQsView, View.OnClickLis
         ButterKnife.bind(this, v);
 
         ifaqsPresenter = new FAQsPresenter(this, context) ;
-        btnBack.setOnClickListener(this);
+        layoutBack.setOnClickListener(this);
 
         //init Bundle
         getDataBundle();
@@ -68,7 +69,7 @@ public class FAQsFragment extends Fragment implements IFAQsView, View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btnBack:
+            case R.id.layoutBack:
                 ifaqsPresenter.backToHome(getActivity());
                 break;
         }

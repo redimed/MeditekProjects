@@ -13,16 +13,26 @@ import java.util.ArrayList;
  * Created by Fox on 1/22/2016.
  */
 public interface IRequestView {
+
+    void onFieldOk();
+
     void onLoadToolbar();
+
     void onLoadDOB(String dob);
-    void onErrorUpload(String msg);
-    void onResultRequest(String msg);
+
+    void onLoadSign(Bitmap bitmap);
+
     void onResultEmail(boolean email);
+
     void onResultMobile(boolean phone);
+
     void onResultSuburb(boolean suburb);
-    void onResultApptType(boolean apptType);
+
     void onLoadSignature(Bitmap bitmap);
-    void onLoadGallery(ArrayList<CustomGallery> customGalleries);
 
     void onResultField(EditText editText);
+
+    void onResultApptType(boolean apptType);
+
+    void onLoadGallery(ArrayList<CustomGallery> customGalleries);
 }

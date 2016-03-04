@@ -49,10 +49,10 @@
 
                         <ProgressBar
                             android:id="@+id/progressBarUpload"
+                            style="?android:attr/progressBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            style="?android:attr/progressBarStyleSmall"/>
+                            android:layout_gravity="center" />
 
                         <ImageView
                             android:id="@+id/avatarPatient"
@@ -320,62 +320,65 @@
                     android:id="@+id/vfContainerProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center">
 
                     <RelativeLayout
                         android:id="@+id/layoutImg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@android:color/white"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        android:background="@android:color/white">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/imgSignature"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:layout_gravity="center"
-                            android:layout_marginTop="10dp"/>
+                            android:layout_marginTop="10dp" />
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
                             android:id="@+id/lblNoSign"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="visible"
-                            android:layout_centerInParent="true"/>
+                            android:layout_centerInParent="true"
+                            android:visibility="visible" />
 
                         <LinearLayout
+                            android:id="@+id/layoutButtonUpdate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgSignature"
+                            android:layout_centerHorizontal="true"
                             android:layout_gravity="center"
                             android:layout_marginTop="10dp"
                             android:orientation="horizontal"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/imgSignature">
+                            android:visibility="gone">
 
                             <com.redimed.telehealth.patient.font.RobotoTextView
                                 android:id="@+id/lblCancel"
                                 android:layout_width="130dp"
                                 android:layout_height="wrap_content"
-                                android:padding="15dp"
-                                android:gravity="center"
                                 android:layout_marginEnd="15dp"
                                 android:layout_marginRight="15dp"
+                                android:background="@color/greyFont"
+                                android:gravity="center"
+                                android:padding="15dp"
                                 android:text="@string/btn_cancel"
-                                android:textColor="@color/lightFont"
-                                android:background="@color/greyFont" />
+                                android:textColor="@color/lightFont" />
 
                             <com.redimed.telehealth.patient.font.RobotoTextView
                                 android:id="@+id/lblSubmit"
                                 android:layout_width="130dp"
                                 android:layout_height="wrap_content"
-                                android:padding="15dp"
+                                android:background="@color/greyFont"
                                 android:gravity="center"
+                                android:padding="15dp"
                                 android:text="@string/btn_submit"
-                                android:textColor="@color/lightFont"
-                                android:background="@color/greyFont" />
+                                android:textColor="@color/lightFont" />
 
                         </LinearLayout>
 
@@ -396,17 +399,17 @@
                             <FrameLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
+                                android:layout_above="@+id/signature_pad_description"
                                 android:layout_marginBottom="8dp"
-                                android:background="@android:color/darker_gray"
-                                android:layout_above="@+id/signature_pad_description" />
+                                android:background="@android:color/darker_gray" />
 
                             <TextView
                                 android:id="@+id/signature_pad_description"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_centerHorizontal="true"
                                 android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="16dp"
                                 android:text="I agree the terms and conditions."
                                 android:textColor="@android:color/darker_gray" />
 
@@ -420,31 +423,31 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_marginTop="10dp"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <com.redimed.telehealth.patient.font.RobotoTextView
                                 android:id="@+id/lblClear"
                                 android:layout_width="130dp"
                                 android:layout_height="wrap_content"
-                                android:enabled="true"
-                                android:padding="15dp"
-                                android:gravity="center"
-                                android:text="Clear Pad"
                                 android:layout_marginEnd="15dp"
                                 android:layout_marginRight="15dp"
-                                android:background="@color/greyFont" />
+                                android:background="@color/greyFont"
+                                android:enabled="true"
+                                android:gravity="center"
+                                android:padding="15dp"
+                                android:text="Clear Pad" />
 
                             <com.redimed.telehealth.patient.font.RobotoTextView
                                 android:id="@+id/lblSave"
                                 android:layout_width="130dp"
                                 android:layout_height="wrap_content"
+                                android:background="@color/greyFont"
                                 android:enabled="false"
-                                android:padding="15dp"
                                 android:gravity="center"
-                                android:text="Save Signature"
-                                android:background="@color/greyFont"/>
+                                android:padding="15dp"
+                                android:text="Save Signature" />
 
                         </LinearLayout>
 

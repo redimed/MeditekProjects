@@ -104,26 +104,27 @@
                         android:layout_weight="1"
                         android:background="@drawable/custom_border_table"
                         android:hint="@string/res_mobile"
-                        android:inputType="number"
-                        android:maxLength="13"
                         android:maxLines="1"
                         android:padding="15dp"
+                        android:maxLength="13"
                         android:singleLine="true"
+                        android:inputType="number"
                         android:textColorHint="@color/hintFont" />
 
                     <EditText
                         android:id="@+id/txtHome"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:width="180dp"
+                        android:padding="15dp"
                         android:layout_column="2"
                         android:layout_weight="1"
-                        android:width="180dp"
-                        android:background="@drawable/custom_border_table"
-                        android:hint="@string/res_home"
-                        android:maxLines="1"
-                        android:padding="15dp"
                         android:singleLine="true"
-                        android:textColorHint="@color/hintFont" />
+                        android:inputType="number"
+                        android:hint="@string/res_home"
+                        android:textColorHint="@color/hintFont"
+                        android:background="@drawable/custom_border_table" />
                 </TableRow>
 
                 <TableRow
@@ -273,20 +274,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     android:scrollbarStyle="insideOverlay" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabUpload"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:src="@drawable/icon_plus"
-                    app:elevation="6dp"
-                    app:backgroundTint="@android:color/holo_blue_light"/>
 
             </RelativeLayout>
 

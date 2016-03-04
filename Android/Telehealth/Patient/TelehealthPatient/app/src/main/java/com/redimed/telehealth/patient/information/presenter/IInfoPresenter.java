@@ -13,12 +13,22 @@ import java.util.ArrayList;
  * Created by Fox on 1/14/2016.
  */
 public interface IInfoPresenter {
-    void hideKeyboardFragment(View view);
-    void getInfoPatient(String uid);
+
     void loadAvatar(String url);
-    void changeFragment(Fragment fragment);
-    void changeViewUpdate(ArrayList<EditText> arrEditText);
-    void updateProfile(ArrayList<EditText> arrEditText);
-    void saveBitmapSign(SignaturePad signaturePad);
+
+    void getInfoPatient(String uid);
+
     Uri getOutputMediaFileUri(int type);
+
+    void hideKeyboardFragment(View view);
+
+    void downloadSignature(String url);
+
+    void changeFragment(Fragment fragment);
+
+    void saveBitmapSign(SignaturePad signaturePad);
+
+    void updateProfile(ArrayList<EditText> arrEditText);
+
+    void changeViewUpdate(ArrayList<EditText> arrEditText);
 }

@@ -138,6 +138,7 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
 
     private Runnable updateTimerThread = new Runnable() {
         String timer = "";
+
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
@@ -231,11 +232,9 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
 
     @Override
     public void onStreamDropped(Session session, Stream stream) {
-        if (!SUBSCRIBE_TO_SELF) {
-            if (subscriber != null) {
-                UnsubscribeFromStream(stream);
-            }
-        }
+//        if (!SUBSCRIBE_TO_SELF) {
+            UnsubscribeFromStream(stream);
+//        }
     }
 
     @Override
@@ -279,7 +278,6 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
     //Subscriber's Video is Disabled
     @Override
     public void onVideoDisabled(SubscriberKit subscriberKit, String s) {
-
     }
 
     @Override

@@ -26,7 +26,7 @@
     <color name="foreignCallBtn">#1f78f3</color>
 
     <!-- Status Bar Color-->
-    <color name="colorPrimaryDark">#1f78f3</color>
+    <color name="colorPrimaryDark">#3c4f59</color>
     <color name="colorPrimary">#2196f3</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>

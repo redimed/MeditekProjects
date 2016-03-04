@@ -95,6 +95,7 @@ var modules=[
 		order:'7',
 		roles:[
 			'ADMIN',
+			'INTERNAL_PRACTITIONER'
 		]
 	},
 	{

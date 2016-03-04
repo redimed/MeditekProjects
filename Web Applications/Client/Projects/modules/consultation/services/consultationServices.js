@@ -49,6 +49,9 @@ angular.module("app.authentication.consultation.services", [])
                 })
 
         }
+        services.getDoctorCampaign = function(Name){
+             return api.one('system/setting/detail/' + Name).get();
+        }
         services.createConsultation = function(data) {
             return api.all('consultation/create').post({ data: data });
         }

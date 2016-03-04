@@ -35,6 +35,7 @@ import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.utlis.UploadFile;
 import com.redimed.telehealth.patient.views.SignaturePad;
 
 import java.io.File;
@@ -58,6 +59,7 @@ import retrofit.client.Response;
 public class InfoPresenter implements IInfoPresenter {
 
     private Gson gson;
+    private String pathSign;
     private Context context;
     private Patient[] patients;
     private IInfoView iInfoView;
@@ -163,16 +165,15 @@ public class InfoPresenter implements IInfoPresenter {
                     break;
             }
         }
-        Log.d(TAG, home + " == " + address);
 
         if (isValidateForm(arrEditText)){
             Patient patient = new Patient();
-            patient.setHomePhoneNumber(home);
-            patient.setAddress1(address);
+            patient.setEmail(email);
             patient.setSuburb(suburb);
+            patient.setAddress1(address);
             patient.setPostCode(postCode);
             patient.setCountryName(country);
-            patient.setEmail(email);
+            patient.setHomePhoneNumber(home);
             patient.setUID(patientSharedPreferences.getString("patientUID", ""));
 
             JsonObject jPatient = new JsonObject();
@@ -255,10 +256,38 @@ public class InfoPresenter implements IInfoPresenter {
     }
 
     @Override
+    public void downloadSignature(String url) {
+        GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
+                .addHeader("SystemType", "ARD")
+                .addHeader("AppID", "com.redimed.telehealth.patient")
+                .addHeader("Cookie", patientSharedPreferences.getString("cookie", ""))
+                .addHeader("DeviceID", patientSharedPreferences.getString("deviceID", ""))
+                .addHeader("Authorization", "Bearer " + patientSharedPreferences.getString("token", ""))
+                .build());
+
+        int myWidth = 300;
+        int myHeight = 300;
+        Glide.with(context).load(glideUrl)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>(myWidth, myHeight) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                        iInfoView.onResultSignature(resource);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        Bitmap errorBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_error_image);
+                        iInfoView.onResultSignature(errorBitmap);
+                    }
+                });
+    }
+
+    @Override
     public void saveBitmapSign(SignaturePad signaturePad) {
         Bitmap signatureBitmap = signaturePad.getSignatureBitmap();
         if (addSignatureToGallery(signatureBitmap)) {
-            iInfoView.onLoadSignature(signatureBitmap);
+            iInfoView.onLoadSignature(signatureBitmap, pathSign);
         }
     }
 
@@ -285,6 +314,7 @@ public class InfoPresenter implements IInfoPresenter {
         boolean result = false;
         try {
             File photo = new File(getAlbumStorageDir("SignaturePad"), String.format("Signature_%d.jpg", System.currentTimeMillis()));
+            pathSign = photo.getPath();
             saveBitmapToJPG(signature, photo);
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri contentUri = Uri.fromFile(photo);

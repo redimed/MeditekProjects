@@ -149,9 +149,7 @@
                     android:gravity="left"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="5dp"
-                    android:orientation="vertical"
-                    android:showDividers="middle"
-                    android:divider="@drawable/custom_empty_tall_divider">
+                    android:orientation="vertical">
 
                     <com.redimed.telehealth.patient.font.RobotoTextView
                         android:layout_width="wrap_content"
@@ -184,9 +182,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:layout_marginRight="5dp"
-                    android:orientation="vertical"
-                    android:showDividers="middle"
-                    android:divider="@drawable/custom_empty_tall_divider">
+                    android:orientation="vertical">
 
                     <com.redimed.telehealth.patient.font.RobotoTextView
                         android:id="@+id/lblApp_Time"

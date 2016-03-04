@@ -10,10 +10,11 @@
     <string name="title_activity_contact">ContactActivity</string>
 
     <!-- Main-->
-    <string name="unregistered">Unregistered</string>
+    <string name="login">Login</string>
     <string name="un_title">Are you sure you want to unregister? This will delete your user account on this device.</string>
 
     <!-- Activation-->
+    <string name="activation_title">Activation</string>
     <string name="text_contains">Enter your phone number and click continue</string>
     <string name="phone_code">+61</string>
     <string name="hint_phone">Phone Number</string>
@@ -93,7 +94,7 @@
     <!-- Home Layout-->
     <string name="home_title">Home</string>
     <string name="green_btn">Request Telehealth</string>
-    <string name="blue_btn">Tracking Referrals</string>
+    <string name="blue_btn">Tracking Booking</string>
     <string name="red_btn">Setting</string>
     <string name="phone_call">0892300900</string>
     <string name="orange_btn">Other Services</string>
@@ -123,7 +124,7 @@
     <string name="title_activity_model">ModelActivity</string>
 
     <!-- List Appointment-->
-    <string name="list_appt_title">Tracking Referral</string>
+    <string name="list_appt_title">Tracking Booking</string>
     <string name="no_data_result">No Data Result</string>
     <string name="no_image_result">No Image</string>
     <string name="req_date">Request Date</string>
@@ -141,7 +142,6 @@
 
     <!-- Profile Layout-->
     <string name="profile_title">Patient Profile</string>
-    <string name="profile_logout">Unregistered</string>
     <string name="profile_mobile">Mobile:</string>
     <string name="profile_dob">DOB:</string>
     <string name="profile_email">Email</string>
@@ -203,5 +203,11 @@
     <!--Gallery -->
     <string name="title_activity_gallery">GalleryActivity</string>
     <string name="title_gallery">Gallery</string>
+
+    <!-- Confirm -->
+    <string name="confirm_title">Confirm your Request</string>
+    <string name="confirm_sub_title">Summary Information</string>
+    <string name="confirm_complete">Complete Request</string>
+
 
 </resources>

@@ -9,12 +9,20 @@ import com.redimed.telehealth.patient.models.Patient;
  * Created by Fox on 1/14/2016.
  */
 public interface IInfoView {
-    void displayInfo(Patient[] patient);
-    void onLoadAvatar(Bitmap bitmap);
+
     void onLoadToolbar();
+
     void onLoadError(String msg);
-    void onResultField(EditText editText);
+
+    void onLoadAvatar(Bitmap bitmap);
+
     void onResultEmail(boolean email);
-    void onLoadSignature(Bitmap bitmap);
-    void onResultUpload(String msg);
+
+    void displayInfo(Patient[] patient);
+
+    void onResultField(EditText editText);
+
+    void onResultSignature(Bitmap bitmap);
+
+    void onLoadSignature(Bitmap bitmap, String pathSign);
 }

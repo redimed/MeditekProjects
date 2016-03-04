@@ -4,24 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,22 +31,15 @@ import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.models.CustomGallery;
 import com.redimed.telehealth.patient.models.Patient;
+import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.request.presenter.IRequestPresenter;
 import com.redimed.telehealth.patient.request.presenter.RequestPresenter;
 import com.redimed.telehealth.patient.request.view.IRequestView;
 import com.redimed.telehealth.patient.utlis.AdapterImageRequest;
 import com.redimed.telehealth.patient.utlis.DeviceUtils;
-import com.redimed.telehealth.patient.utlis.DialogAlert;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
-import com.redimed.telehealth.patient.utlis.FloatingBtnAnimationControl;
 import com.redimed.telehealth.patient.utlis.PreCachingLayoutManager;
 import com.redimed.telehealth.patient.views.SignaturePad;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -61,12 +49,10 @@ import butterknife.ButterKnife;
 public class RequestFragment extends Fragment implements IRequestView, View.OnClickListener, View.OnFocusChangeListener {
 
     private Context context;
-    private boolean isImage = false;
     private ArrayList<EditText> arrEditText;
     private ArrayList<CustomGallery> customGalleries;
     private IRequestPresenter iRequestPresenter;
     private String TAG = "REQUEST", apptType;
-    private FloatingBtnAnimationControl floatingBtnAnimationControl;
 
     @Bind(R.id.tblRequest)
     TableLayout tblRequest;
@@ -97,9 +83,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Bind(R.id.lblImage)
     TextView lblImage;
 
-    @Bind(R.id.fabUpload)
-    FloatingActionButton fabUpload;
-
     @Bind(R.id.signaturePad)
     SignaturePad signaturePad;
     @Bind(R.id.vfContainer)
@@ -124,10 +107,12 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
+    @Bind(R.id.layoutBack)
+    LinearLayout layoutBack;
     @Bind(R.id.lblTitle)
     TextView lblTitle;
-    @Bind(R.id.btnBack)
-    Button btnBack;
+    @Bind(R.id.lblSubTitle)
+    TextView lblSubTitle;
 
     public RequestFragment() {}
 
@@ -164,17 +149,12 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
             }
         });
 
-        fabUpload.setOnClickListener(this);
-        floatingBtnAnimationControl = new FloatingBtnAnimationControl(fabUpload);
-        floatingBtnAnimationControl.lockScrollingDirection();
-
         return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        rvRequestImage.addOnScrollListener(floatingBtnAnimationControl);
     }
 
     void init() {
@@ -215,7 +195,8 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -248,7 +229,7 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
 
         //Set text  and icon title appointment details
         lblTitle.setText(getResources().getString(R.string.res_title));
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iRequestPresenter.changeFragment(new HomeFragment());
@@ -312,6 +293,11 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 txtEmail.setText(patient.getEmail() == null ? "" : patient.getEmail());
                 autoCompleteSuburb.setText(patient.getSuburb() == null ? "" : patient.getSuburb());
                 txtHome.setText(patient.getHomePhoneNumber() == null ? "" : patient.getHomePhoneNumber());
+
+                if (patient.getSignature() != null){
+                    //Call presenter load signature
+                    iRequestPresenter.loadSignature(Config.apiURLDownload + patient.getSignature());
+                }
             }
         }
     }
@@ -344,10 +330,11 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblUpload:
+                Intent i = new Intent("ACTION_MULTIPLE_PICK");
+                startActivityForResult(i, 200);
                 break;
             case R.id.lblSubmit:
-//                iRequestPresenter.checkDataField(tblRequest);
-                iRequestPresenter.uploadImage(customGalleries, arrEditText, autoCompleteSuburb.getText().toString(), apptType);
+                iRequestPresenter.checkFields(arrEditText, autoCompleteSuburb.getText().toString(), apptType);
                 break;
             case R.id.lblClear:
                 signaturePad.clear();
@@ -355,11 +342,15 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
             case R.id.lblSave:
                 iRequestPresenter.saveBitmapSign(signaturePad);
                 break;
-            case R.id.fabUpload:
-                Intent i = new Intent("ACTION_MULTIPLE_PICK");
-                startActivityForResult(i, 200);
-                break;
         }
+    }
+
+    @Override
+    public void onFieldOk() {
+        if (customGalleries.size() > 0) {
+            iRequestPresenter.uploadImage(customGalleries);
+        } else
+            iRequestPresenter.changeActivity();
     }
 
     @Override
@@ -385,26 +376,10 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     }
 
     @Override
-    public void onErrorUpload(String msg) {
-        if (msg.equalsIgnoreCase("Network Error")) {
-            new DialogConnection(context).show();
-        } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
-        } else {
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
-        }
-    }
-
-    @Override
-    public void onResultRequest(String msg) {
-        if (msg.equalsIgnoreCase("success")) {
-            iRequestPresenter.changeFragment(new HomeFragment());
-        } else if (msg.equalsIgnoreCase("Network Error")) {
-            new DialogConnection(context).show();
-        } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
-        } else {
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
+    public void onLoadSign(Bitmap bitmap) {
+        if (bitmap != null) {
+            vfContainer.setDisplayedChild(vfContainer.indexOfChild(layoutSubmit));
+            imgSignature.setImageBitmap(bitmap);
         }
     }
 

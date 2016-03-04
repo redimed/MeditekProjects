@@ -71,7 +71,6 @@
         <activity
             android:name=".LauncherActivity"
             android:label="@string/title_activity_launcher"
-            android:screenOrientation="portrait"
             android:theme="@style/MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,12 +81,10 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTask" />
         <activity
             android:name=".model.ModelActivity"
-            android:label="@string/title_activity_model"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_model" />
         <activity
             android:name=".waiting.WaitingActivity"
             android:alwaysRetainTaskState="true"
@@ -100,12 +97,12 @@
             android:clearTaskOnLaunch="true"
             android:keepScreenOn="true"
             android:label="@string/title_activity_call"
-            android:launchMode="singleTask"
-            android:screenOrientation="sensorPortrait" />
+            android:launchMode="singleTask" />
+        <activity android:name=".confirm.ConfirmActivity"/>
+
         <activity
             android:name=".gallery.GalleryActivity"
-            android:label="@string/title_activity_gallery"
-            android:screenOrientation="portrait">
+            android:label="@string/title_activity_gallery">
             <intent-filter>
                 <action android:name="ACTION_MULTIPLE_PICK" />
 
@@ -174,10 +171,7 @@
             android:name=".service.GPSTrackerService"
             android:enabled="true"
             android:exported="false" />
-        <service
-            android:name=".service.UploadService"
-            android:enabled="true"
-            android:exported="true"></service>
+
     </application>
 
 </manifest>

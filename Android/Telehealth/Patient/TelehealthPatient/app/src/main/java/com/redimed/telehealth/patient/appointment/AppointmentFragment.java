@@ -84,10 +84,12 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
+    @Bind(R.id.layoutBack)
+    LinearLayout layoutBack;
     @Bind(R.id.lblTitle)
     TextView lblTitle;
-    @Bind(R.id.btnBack)
-    Button btnBack;
+    @Bind(R.id.lblSubTitle)
+    TextView lblSubTitle;
 
     public AppointmentFragment() {}
 
@@ -127,7 +129,8 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
 
         //Set text  and icon title appointment details
         lblTitle.setText(getResources().getString(R.string.appt_title));
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        lblSubTitle.setText(getResources().getString(R.string.list_appt_title));
+        layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iAppointmentPresenter.changeFragment(new TrackingFragment());

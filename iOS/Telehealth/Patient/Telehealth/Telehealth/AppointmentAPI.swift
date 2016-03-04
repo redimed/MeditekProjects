@@ -66,13 +66,14 @@ class AppointmentAPI:TokenAPI {
     }
     
     //GIap:Upload Image
-    func uploadImage(image:UIImage,userUID:String,completionHandler:(JSON) -> Void)
+    func uploadImage(image:UIImage,userUID:String,fileType:String = "MedicalImage",completionHandler:(JSON) -> Void)
     {
         config.invalidSertificate()
-        print(image)
+        print(fileType)
         print(userUID)
+        
         config.setHeader()
-        config.headers["fileType"] = "MedicalImage"
+        config.headers["fileType"] = fileType
         config.headers["useruid"] = userUID
         let imageData = UIImageJPEGRepresentation(image,1.0)
     
@@ -82,7 +83,7 @@ class AppointmentAPI:TokenAPI {
             ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImage,headers:config.headers,
             multipartFormData: { multipartFormData in
                 
-                multipartFormData.appendBodyPart(data: "MedicalImage".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
+                multipartFormData.appendBodyPart(data: fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
                 multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
                
                

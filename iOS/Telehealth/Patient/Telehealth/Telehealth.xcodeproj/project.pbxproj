@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
 		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; };
+		AF00A6221C86EF6100104E0B /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00A6211C86EF6100104E0B /* SignatureViewController.swift */; };
 		AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */; };
 		AF00C3FB1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */; };
 		AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */; };
@@ -154,6 +155,7 @@
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
 		AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewCell.swift; sourceTree = "<group>"; };
+		AF00A6211C86EF6100104E0B /* SignatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
 		AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentDetailsViewController.swift; sourceTree = "<group>"; };
 		AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
@@ -654,6 +656,7 @@
 				AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */,
 				AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */,
 				AF3391721C841EBC00483F36 /* UpdateProfileViewController.swift */,
+				AF00A6211C86EF6100104E0B /* SignatureViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -917,6 +920,7 @@
 				AFEE34DF1BB0413600471592 /* Telehealth.xcdatamodeld in Sources */,
 				AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */,
 				AF4498AA1BDF11CE005A905E /* PatientService.swift in Sources */,
+				AF00A6221C86EF6100104E0B /* SignatureViewController.swift in Sources */,
 				AFE6422D1C46467F001F0524 /* TokenAPI.swift in Sources */,
 				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
 				AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */,

@@ -31,6 +31,8 @@ class SocketService {
             // Socket Events
             sharedSocket.socket.on("connect") {data, ack in
                 print("socket connected")
+                print(data)
+                print(ack)
                 complete("socket connected")
                 let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]

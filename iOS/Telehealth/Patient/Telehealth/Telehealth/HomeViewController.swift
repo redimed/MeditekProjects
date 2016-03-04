@@ -52,12 +52,12 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
        
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-            showloading("Please wait...")
+//            showloading("Please wait...")
             self.socketService.openSocket(uuid,complete: {
                 complete in
                 if complete == "socket connected" {
-//                    self.dismissViewControllerAnimated(false, completion: nil)
-                    self.hideLoading()
+
+//                    self.hideLoading()
                 }
             })
             getInformationPatient()
@@ -69,6 +69,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     
     override func viewWillAppear(animated: Bool) {
         checkLogin()
+     
     }
     
     

@@ -33,7 +33,8 @@ class PatientContainer{
         var HomePhoneNumber : String!
         var Image : UIImage!
         var ImageUID : String!
-        init(MiddleName:String,Address2:String,Title:String,WorkPhoneNumber:String,Enable:String,PhoneNumber:String,Occupation:String,LastName:String,Postcode:String,UID:String,UserAccountID:String,Gender:String,FirstName:String,State:String,ModifiedDate:String,Email1:String,Country:String,ID:String,Address1:String,CountryID:String,DOB:String,Suburb:String,HomePhoneNumber:String,ImageUID:String){
+        var SignatureUID : String!
+    init(MiddleName:String,Address2:String,Title:String,WorkPhoneNumber:String,Enable:String,PhoneNumber:String,Occupation:String,LastName:String,Postcode:String,UID:String,UserAccountID:String,Gender:String,FirstName:String,State:String,ModifiedDate:String,Email1:String,Country:String,ID:String,Address1:String,CountryID:String,DOB:String,Suburb:String,HomePhoneNumber:String,ImageUID:String,SignatureUID:String){
         
             self.MiddleName = MiddleName
             self.Address2 = Address2
@@ -57,6 +58,7 @@ class PatientContainer{
             self.HomePhoneNumber = HomePhoneNumber
             self.Address1 = Address1
             self.ImageUID = ImageUID
+            self.SignatureUID = SignatureUID
         }
         init(){
             

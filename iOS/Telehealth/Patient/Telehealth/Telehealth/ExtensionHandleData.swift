@@ -261,6 +261,11 @@ extension ConfigurationSystem {
         
     }
     
+    func radiusAvatar(imageView:UIImageView){
+        imageView.layer.cornerRadius = CGRectGetWidth(imageView.frame) / 4.0
+        imageView.clipsToBounds = true
+    }
+    
     
  
 

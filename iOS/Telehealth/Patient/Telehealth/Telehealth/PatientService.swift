@@ -46,8 +46,10 @@ class PatientService{
                 let DOB = jsonInformation["DOB"].string ?? ""
                 let Suburb = jsonInformation["Suburb"].string ?? ""
                 let HomePhoneNumber = jsonInformation["HomePhoneNumber"].string ?? ""
-                let ImageUID = jsonInformation["FileUID"].string ?? ""
-                let patientData  = PatientContainer(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender, FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber, ImageUID: ImageUID)
+                let ImageUID = jsonInformation["ProfileImage"].string ?? ""
+                let Signature = jsonInformation["Signature"].string ?? ""
+                
+                let patientData  = PatientContainer(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender, FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber, ImageUID: ImageUID,SignatureUID:Signature)
                 let message = JSON(["message":"success"])
                 completionHandler(message,patientData)
                 
@@ -77,7 +79,7 @@ class PatientService{
                 "LastName" : infoPatient.LastName,
                 "HomePhoneNumber" : infoPatient.HomePhoneNumber,
                 "DOB" : infoPatient.DOB,
-                "Email1" : infoPatient.Email1,
+                "Email" : infoPatient.Email1,
                 "Address1" : infoPatient.Address1,
                 "Suburb" : infoPatient.Suburb,
                 "Postcode" : infoPatient.Postcode,
@@ -91,6 +93,39 @@ class PatientService{
             completionHandler(response)
         })
         
+    }
+    
+    func updateSignature(fileUID:String,patientUID:String,completionHandler:(JSON) -> Void){
+        let FileUID : String! = fileUID
+        let parameters = [
+            "data": [
+                "UID" : patientUID,
+                "Signature" : FileUID
+            ]
+        ]
+        patientAPI.updateInfomationPatient(parameters, completionHandler: {
+            response in
+            
+            completionHandler(response)
+        })
+
+
+    }
+    
+    func updateAvatar(fileImageUID:String, completionHandler:(JSON) -> Void){
+        
+        let parameters = [
+            "data": [
+                "enable" : "N",
+                "fileUID" : fileImageUID,
+                "fileType":"ProfileImage"
+            ]
+        ]
+        patientAPI.updateAvarta(parameters, completionHandler: {
+            response in
+            
+            completionHandler(response)
+        })
     }
     
     func logOut(){

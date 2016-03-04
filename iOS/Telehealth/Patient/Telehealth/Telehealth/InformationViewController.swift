@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InformationViewController: UIViewController {
+class InformationViewController: UIViewController,signatureDelegate {
     
     let patientService = PatientService()
     let alertView = UIAlertView()
@@ -23,13 +23,19 @@ class InformationViewController: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var homePhoneLabel: UILabel!
     @IBOutlet weak var avarta: UIImageView!
+    @IBOutlet weak var imageSignature: UIImageView!
+    
     
     @IBOutlet weak var phoneNumberLabel: UILabel!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        avarta.layer.cornerRadius = CGRectGetWidth(avarta.frame) / 4.0
-        avarta.clipsToBounds = true
+//        avarta.layer.cornerRadius = CGRectGetWidth(avarta.frame) / 4.0
+//        avarta.clipsToBounds = true
+        config.radiusAvatar(avarta)
+        
         
     }
     override func viewWillAppear(animated: Bool) {
@@ -40,7 +46,26 @@ class InformationViewController: UIViewController {
     func getInformationPatient(){
         
         if patientInformation != nil {
-            self.avarta.image = UIImage(named: "A1a Copy 2.png")!
+            
+            if patientInformation.Image == nil {
+                self.avarta.image =  UIImage(named: "A1a Copy 2.png")!
+                self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
+                    self.avarta.image = image
+                    self.patientInformation.Image = image
+                })
+            }else {
+                self.avarta.image = patientInformation.Image
+            }
+            if patientInformation.SignatureUID != nil {
+                if imageSignature.image == nil {
+                    self.patientService.getImage((patientInformation.SignatureUID)!, completionHandler: { image in
+                        self.imageSignature.image = image
+                        
+                    })
+                }
+                
+
+            }
             self.fullName.text = patientInformation!.FirstName + " " + patientInformation!.MiddleName + " " + patientInformation!.LastName
             self.dobLabel.text = (patientInformation!.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
             self.suburbLabel.text = patientInformation!.Suburb
@@ -50,10 +75,8 @@ class InformationViewController: UIViewController {
             self.emailLabel.text = patientInformation!.Email1
             self.homePhoneLabel.text = patientInformation!.HomePhoneNumber
             self.phoneNumberLabel.text = patientInformation.PhoneNumber
-            self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
-                self.avarta.image = image
-                self.patientInformation.Image = image
-            })
+           
+
         }
         
     }
@@ -61,13 +84,14 @@ class InformationViewController: UIViewController {
         if segue.identifier == "updateProfileSegue" {
             let updateProfile = segue.destinationViewController as! UpdateProfileViewController
             updateProfile.patientInformation = patientInformation
+        }else if segue.identifier == "updateSignatureSegue"{
+            let updateSignature = segue.destinationViewController as! SignatureViewController
+            updateSignature.delegate = self
+            updateSignature.patientUID = patientInformation.UID
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
+ 
     
     
     
@@ -82,6 +106,15 @@ class InformationViewController: UIViewController {
         
         
     }
+    
+    func updateSignature(controller: SignatureViewController, sender: UIImage,imageUID:String) {
+        
+        patientInformation.SignatureUID = imageUID
+        imageSignature.image = sender
+        
+    }
+    
+    
     
 }
 

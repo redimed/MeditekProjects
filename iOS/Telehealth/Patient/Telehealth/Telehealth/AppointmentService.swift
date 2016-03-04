@@ -81,7 +81,7 @@ class AppointmentService {
         let FirstName = app["FirstName"] == nil ? "" : app["FirstName"].string
         let LastName = app["LastName"] == nil ? "" : app["LastName"].string
         let Suburb = app["Suburb"] == nil ? "" : app["Suburb"].string
-        let Email =  app["UserAccount"]["Email"] ? "" : app["UserAccount"]["Email"].string
+        let Email =  app["UserAccount"]["Email"] == nil ? "" : app["UserAccount"]["Email"].string
         let DOB =  app["DOB"] == nil ? "" : app["DOB"].string
         let HomePhoneNumber = app["HomePhoneNumber"] == nil ? "" : app["HomePhoneNumber"].string
         let PhoneNumber = app["UserAccount"]["PhoneNumber"] == nil ? "" : app["UserAccount"]["PhoneNumber"].string
@@ -124,13 +124,11 @@ class AppointmentService {
     }
     
     
-    func uploadImage(image:UIImage,userUID:String,compailer:(JSON) -> Void){
-//        let ima = UIImage(data: (image.lowestQualityJPEGNSData))
-//        let data = UIImageJPEGRepresentation(ima!, 1)
-//        _ = data?.length
-        api.uploadImage(image,userUID: userUID){
+    func uploadImage(image:UIImage,userUID:String,fileType:String = "MedicalImage",compailer:(JSON) -> Void){
+
+        api.uploadImage(image,userUID: userUID,fileType:fileType){
             response in
-            print("aaa--",response)
+          
            
             if response["status"] == "success"{
                 let fileUID =  response["fileUID"].string!

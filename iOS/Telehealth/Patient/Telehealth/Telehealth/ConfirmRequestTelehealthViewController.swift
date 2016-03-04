@@ -19,35 +19,16 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var dateTime: UILabel!
-//    ----------------------Signiture-----------------
-    @IBOutlet weak var mainImageView: UIImageView!
-    @IBOutlet weak var tempImageView: UIImageView!
-    
-    @IBOutlet weak var signitureView: UIView!
-    var lastPoint = CGPoint.zero
-    var red: CGFloat = 0.0
-    var green: CGFloat = 0.0
-    var blue: CGFloat = 0.0
-    var brushWidth: CGFloat = 1.0
-    var opacity: CGFloat = 1.0
-    var swiped = false
-    
-    
-    let colors: [(CGFloat, CGFloat, CGFloat)] = [
-        (0, 0, 0),
-        (105.0 / 255.0, 105.0 / 255.0, 105.0 / 255.0),
-        (1.0, 0, 0),
-        (0, 0, 1.0),
-        (51.0 / 255.0, 204.0 / 255.0, 1.0),
-        (102.0 / 255.0, 204.0 / 255.0, 0),
-        (102.0 / 255.0, 1.0, 0),
-        (160.0 / 255.0, 82.0 / 255.0, 45.0 / 255.0),
-        (1.0, 102.0 / 255.0, 0),
-        (1.0, 1.0, 0),
-        (1.0, 1.0, 1.0),
-    ]
 
-   //-----------------------------------------
+    @IBOutlet weak var btn1: UIButton!
+    @IBOutlet weak var btn2: UIButton!
+    @IBOutlet weak var btn3: UIButton!
+    var b1  = false
+    var b2  = false
+    var b3  = false
+    
+    var imageOn = UIImage(named: "check on.png")
+    var imageOff = UIImage(named: "check off.png")
     
     var dateText : String?
     var fileUpload = [[String:String]]()
@@ -76,9 +57,12 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     
     
     @IBAction func completeRequestAction(sender: AnyObject) {
-
-        showloading("Please wait...")
-        uploadImage()
+        if b1 == false || b2 == false ||  b3 == false {
+            alertView.alertMessage("", message: "Please accept consent and submit booking request")
+        }else{
+           self.view.showLoading()
+            uploadImage()
+        }
     }
     
    //Checkupload Image
@@ -115,7 +99,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
                     }
                 }else {
 
-                    self.hideLoading()
+                    self.view.hideLoading()
                     let error = response["ErrorType"].string
                     self.alertView.alertMessage("Error", message: error!)
                 }
@@ -124,93 +108,77 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     }
     
     func requestTelehealth(){
+       
+            requestTelehealthService.requestTelehealth(dateText!, Type: telehealthData.typeTelehealth, Description: telehealthData.description, FirstName: telehealthData.FirstName, LastName: telehealthData.LastName, PhoneNumber: telehealthData.PhoneNumber, HomePhoneNumber: telehealthData.HomePhoneNumber, Suburd: telehealthData.Suburb, DOB: telehealthData.DOB, Email: telehealthData.Email1,FileUploads:fileUpload,handler: {
+                response in
+                if response["status"] == "success"{
+                    
+                    self.hideLoading()
+                    self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
+                    self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
+                }else {
+                    self.hideLoading()
+                    self.alertView.alertMessage("Error", message: "\(response["ErrorType"])")
+                }
+            })
+        
       
-        requestTelehealthService.requestTelehealth(dateText!, Type: telehealthData.typeTelehealth, Description: telehealthData.description, FirstName: telehealthData.FirstName, LastName: telehealthData.LastName, PhoneNumber: telehealthData.PhoneNumber, HomePhoneNumber: telehealthData.HomePhoneNumber, Suburd: telehealthData.Suburb, DOB: telehealthData.DOB, Email: telehealthData.Email1,FileUploads:fileUpload,handler: {
-            response in
-            if response["status"] == "success"{
-
-               self.hideLoading()
-                self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
-                self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
+        
+        
+    }
+    
+    @IBAction func buttonAction(sender: AnyObject) {
+        if sender.tag == 0 {
+            if b1 == false {
+                btn1.setImage(imageOn , forState: .Normal)
+                b1 = true
             }else {
-                self.hideLoading()
-                self.alertView.alertMessage("Error", message: "\(response["ErrorType"])")
+                btn1.setImage(imageOff , forState: .Normal)
+                b1 = false
             }
-        })
-        
-    }
-    
-    
-    //------------Signiture
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        swiped = false
-        if let touch = touches.first {
-            lastPoint = touch.locationInView(self.signitureView)
+        }else if sender.tag == 1 {
+            if b2 == false {
+                btn2.setImage(imageOn , forState: .Normal)
+                b2 = true
+            }else {
+                btn2.setImage(imageOff , forState: .Normal)
+                b2 = false
+            }
+
+        }else {
+            if b3 == false {
+                btn3.setImage(imageOn , forState: .Normal)
+                b3 = true
+            }else {
+                btn3.setImage(imageOff , forState: .Normal)
+                b3 = false
+            }
+
         }
-    }
-    
-    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
-        
-        // 1
-        UIGraphicsBeginImageContext(signitureView.frame.size)
-        let context = UIGraphicsGetCurrentContext()
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: signitureView.frame.size.width, height: signitureView.frame.size.height))
-        
-        // 2
-        CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
-        CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
-        
-        // 3
-        CGContextSetLineCap(context, CGLineCap.Round)
-        CGContextSetLineWidth(context, brushWidth)
-        CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
-        CGContextSetBlendMode(context, CGBlendMode.Normal)
-        
-        // 4
-        CGContextStrokePath(context)
-        
-        // 5
-        tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        tempImageView.alpha = opacity
-        UIGraphicsEndImageContext()
+  
         
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        // 6
-        swiped = true
-        if let touch = touches.first {
-            let currentPoint = touch.locationInView(signitureView)
-            drawLineFrom(lastPoint, toPoint: currentPoint)
-            
-            // 7
-            lastPoint = currentPoint
+    func checkRadiobtn(index:Int){
+        var arr = [btn1,btn2,btn3]
+        var check =  [b1,b2,b3]
+        for var i = 0 ; i < arr.count; i++ {
+            if i == index {
+                arr[i].setImage(imageOn , forState: .Normal)
+                check[i] = true
+                print( check[i])
+                print("please check",b1 )
+                print("please check",b2 )
+                print("please check",b3 )
+            }else {
+                arr[i].setImage(imageOff , forState: .Normal)
+                check[i] = false
+            }
         }
+
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        if !swiped {
-            // draw a single point
-            drawLineFrom(lastPoint, toPoint: lastPoint)
-        }
-        
-        // Merge tempImageView into mainImageView
-        UIGraphicsBeginImageContext(mainImageView.frame.size)
-        mainImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: signitureView.frame.size.width, height: signitureView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: signitureView.frame.size.width, height: signitureView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
-        mainImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        tempImageView.image = nil
-        print(mainImageView.image)
-        print(tempImageView.image)
-    }
-    
- 
-    
-    @IBAction func resetSignature(sender: AnyObject) {
-        mainImageView.image = nil
-    }
+
+   
     
 }

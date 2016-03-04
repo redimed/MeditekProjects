@@ -29,6 +29,8 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+   
     var allFields=[UITextField]()
     var assets: [DKAsset]?
     
@@ -51,7 +53,6 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     let alertView = UIAlertView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let uid = defaults.valueForKey("userUID") as? String {
             userUID = uid
             selectOptionImage.hidden = false
@@ -73,8 +74,9 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         
         pickerView.delegate = self
         pastUrls = autocompleteUrls
-        textView.text = MessageString.placeHolderDescription
+//        textView.text = MessageString.placeHolderDescription
         textView.textColor = UIColor.lightGrayColor()
+        addCustomView()
         DatepickerMode()
         PickerView()
        
@@ -121,16 +123,16 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     
 
 
+    @IBAction func suburbEndEdit(sender: AnyObject) {
+        self.viewSuburb.alpha = 0
+    }
     
     @IBAction func suburbSearchAction(sender: AnyObject) {
-        addCustomView()
         searchAutocompleteEntriesWithSubstring(suburbTextField.text!)
         if suburbTextField.text == "" || autocompleteUrls.count == 0 {
             self.viewSuburb.alpha = 0
         }else {
-            
             self.viewSuburb.alpha = 1
-            
         }
         
     }
@@ -138,8 +140,10 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     func searchAutocompleteEntriesWithSubstring(substring: String)
     {
         autocompleteUrls = requestTelehealthService.handleSearchData(pastUrls, substring: substring)
+  
         if substring == "" {
             autocompleteUrls = pastUrls
+            
         }
         tableView.reloadData()
     }
@@ -164,6 +168,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         
     }
     
+  
 
     
     func addCustomView() {
@@ -172,7 +177,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         viewSuburb.backgroundColor = UIColor.blackColor()
         viewSuburb.translatesAutoresizingMaskIntoConstraints = false
         self.viewSuburb.alpha = 0
-        view.addSubview(viewSuburb)
+        scrollView.addSubview(viewSuburb)
         
         
         tableView.delegate      =   self

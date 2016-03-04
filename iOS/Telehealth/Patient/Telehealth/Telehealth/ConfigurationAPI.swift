@@ -29,7 +29,8 @@ struct UrlInformationPatient  {
     static let updateTokenPush : String = "/api/telehealth/user/updateToken"
     static let pushNotify : String = "/api/telehealth/user/pushNotification"
     static let logOut : String = "/api/logout"
-    static let updateProfile : String = "/api/telehealth/user/update" 
+    static let updateProfile : String = "/api/telehealth/user/update"
+    static let updateAvatar : String = "/api/telehealth/user/enableFile"
 }
 
 struct UrlTelehealth {

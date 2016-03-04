@@ -20,8 +20,10 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var countryTxt: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var viewUpdateForm: UIView!
     var requestTelehealthService = RequestTelehealthService()
     let patientService = PatientService()
+    let appointmentService = AppointmentService()
     let colorCustomRed = UIColor.colorRBGValue(redValue: 232, greenValue: 145, blueValue: 147, alphaValue: 1.0)
     let colorAthenGray = UIColor.colorRBGValue(redValue: 202, greenValue: 202, blueValue: 208, alphaValue: 1.0)
     let alertView = UIAlertView()
@@ -36,8 +38,15 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
     var autocompleteUrls = [String]()
     var pastUrls : [String] = []
     
+    var assets: [DKAsset]?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        config.radiusAvatar(imageView)
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
+        imageView.userInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
         if patientInformation != nil {
             firstNameTxt.text = patientInformation.FirstName
             lastNameTxt.text = patientInformation.LastName
@@ -48,15 +57,15 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
             suburbbTxt.text = patientInformation.Suburb
             postCodeTxt.text = patientInformation.Postcode
             countryTxt.text = patientInformation.Country
-            //            self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
-            self.imageView.image = patientInformation.Image
-            //            })
+            self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
+                self.imageView.image = image
+            })
             
         }
         autocompleteUrls = requestTelehealthService.loadDataJson()
         pastUrls = autocompleteUrls
         DatepickerMode()
-        //        addCustomView()
+        addCustomView()
         // Do any additional setup after loading the view.
     }
     
@@ -65,8 +74,152 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func imageTapped(img: AnyObject)
+    {
+        let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Take Photo", style: UIAlertActionStyle.Default)
+            {
+                UIAlertAction in
+                self.openCamera()
+                
+        }
+        let galleryAction = UIAlertAction(title: "Choose From Photos", style: UIAlertActionStyle.Default)
+            {
+                UIAlertAction in
+                self.openGallery()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel)
+            {
+                UIAlertAction in
+                
+        }
+        
+        // Add the actions
+        
+        alert.addAction(cameraAction)
+        alert.addAction(galleryAction)
+        alert.addAction(cancelAction)
+        // Present the controller
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+        {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            
+        }
+    }
+    
+    func openCamera()
+    {
+        
+        let assetType = DKOption.types[1]
+        let allowMultipleType = true
+        let sourceType: DKImagePickerControllerSourceType = DKImagePickerControllerSourceType.Camera
+        let allowsLandscape = false
+        let singleSelect = false
+        showImagePickerWithAssetType(
+            assetType,
+            allowMultipleType: allowMultipleType,
+            sourceType: sourceType,
+            allowsLandscape: allowsLandscape,
+            singleSelect: singleSelect
+        )
+    }
+    
+    func openGallery()
+    {
+        
+        
+        let assetType = DKOption.types[1]
+        let allowMultipleType = true
+        let sourceType: DKImagePickerControllerSourceType = DKImagePickerControllerSourceType.Photo
+        let allowsLandscape = false
+        let singleSelect = true
+        
+        showImagePickerWithAssetType(
+            assetType,
+            allowMultipleType: allowMultipleType,
+            sourceType: sourceType,
+            allowsLandscape: allowsLandscape,
+            singleSelect: singleSelect
+        )
+        
+        
+    }
+    
+    func showImagePickerWithAssetType(
+        assetType: DKImagePickerControllerAssetType,
+        allowMultipleType: Bool,
+        sourceType: DKImagePickerControllerSourceType = [.Camera, .Photo],
+        allowsLandscape: Bool,
+        singleSelect: Bool) {
+            let pickerController = DKImagePickerController()
+            pickerController.assetType = assetType
+            pickerController.allowsLandscape = allowsLandscape
+            pickerController.allowMultipleTypes = allowMultipleType
+            pickerController.sourceType = sourceType
+            pickerController.singleSelect = singleSelect
+            pickerController.showsCancelButton = true
+            pickerController.showsEmptyAlbums = false
+            
+            
+            // Clear all the selected assets if you used the picker controller as a single instance.
+            //			pickerController.defaultSelectedAssets = nil
+            pickerController.defaultSelectedAssets = self.assets
+            
+            pickerController.didSelectAssets = { [unowned self] (assets: [DKAsset]) in
+                print("didSelectAssets")
+                if assets.count > 0 {
+                    assets[0].fetchFullScreenImage(true, completeBlock: { image, info in
+                        self.imageView.image = image
+                        self.patientInformation.Image = image
+                        if let uuid = defaults.valueForKey("userUID") as? String {
+                            
+                            self.uploadImage(image!, userUID: uuid)
+                        }
+                        
+                        
+                        
+                    })
+                    
+                }
+                
+                
+            }
+            
+            
+            self.presentViewController(pickerController, animated: true) {}
+    }
+    
+    //Upload image to user
+    func uploadImage(image:UIImage,userUID:String){
+        
+        appointmentService.uploadImage(image, userUID: userUID,fileType:"ProfileImage" , compailer: {
+            response in
+            if response["message"] == "success"{
+                //                let  data = response["data"].string
+                
+                self.patientService.updateAvatar(self.patientInformation.ImageUID, completionHandler: {
+                    response in
+                    print("2222",response)
+                    if response["message"] == "success"{
+                    }
+                })
+            }else {
+                self.view.hideLoading()
+                print("error",response["ErrorType"])
+                let error = response["ErrorType"].string
+                self.alertView.alertMessage("Error", message: error!)
+            }
+        })
+        
+    }
+    
+    
     @IBAction func updateProfileButton(sender: AnyObject) {
-        showloading("Please wait...")
+        self.view.showLoading()
         patientInformation.FirstName = firstNameTxt.text
         patientInformation.LastName = lastNameTxt.text
         patientInformation.HomePhoneNumber = homePhoneTxt.text
@@ -80,15 +233,16 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
         patientService.updateInfomationPatient(patientInformation, completionHandler: {
             data in
             if data["message"] == "success"{
-                self.hideLoading()
+                self.view.hideLoading()
                 self.alertView.alertMessage("", message: "Update Success")
                 self.performSegueWithIdentifier("unwindToProfileSegue", sender: self)
             }else{
-                self.hideLoading()
+                self.view.hideLoading()
+                print(data)
                 self.alertView.alertMessage("", message: "Update Error")
             }
         })
-       
+        
     }
     
     
@@ -104,6 +258,10 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
         
     }
     
+ 
+    @IBAction func suburbEndEdit(sender: AnyObject) {
+        self.viewSuburb.alpha = 0
+    }
     func searchAutocompleteEntriesWithSubstring(substring: String)
     {
         autocompleteUrls = requestTelehealthService.handleSearchData(pastUrls, substring: substring)
@@ -120,7 +278,7 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
         viewSuburb.backgroundColor = UIColor.blackColor()
         viewSuburb.translatesAutoresizingMaskIntoConstraints = false
         self.viewSuburb.alpha = 0
-        view.addSubview(viewSuburb)
+        viewUpdateForm.addSubview(viewSuburb)
         
         
         tableView.delegate      =   self
@@ -133,7 +291,7 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
         // view autolayout
         NSLayoutConstraint(item: viewSuburb, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 120).active = true
         NSLayoutConstraint(item: viewSuburb, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1.0, constant: 2).active = true
-        NSLayoutConstraint(item: viewSuburb, attribute: .Top, relatedBy: .Equal, toItem: suburbbTxt, attribute: .BottomMargin, multiplier: 1.0, constant: 0).active = true
+        NSLayoutConstraint(item: viewSuburb, attribute: .Top, relatedBy: .Equal, toItem: suburbbTxt, attribute: .BottomMargin, multiplier: 1.0, constant: 10).active = true
         NSLayoutConstraint(item: viewSuburb, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
         
         

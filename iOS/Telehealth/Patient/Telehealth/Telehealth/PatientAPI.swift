@@ -48,6 +48,7 @@ class PatientAPI:TokenAPI {
                     }
                 }
                 let data = JSON(JSONData)
+                
                 completionHandler(data)
             case .Failure(let error):
                 print("Request failed with error: \(error)")
@@ -56,6 +57,31 @@ class PatientAPI:TokenAPI {
             }
         }
 
+    }
+    
+    func updateAvarta(parameter:[String : Dictionary<String, String>],completionHandler:(JSON) -> Void){
+        config.setHeader()
+        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.updateAvatar,parameters: parameter,headers:config.headers,encoding: .JSON).responseJSON{
+            response in
+            
+            switch response.result {
+            case .Success(let JSONData):
+                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                    if requireupdatetoken as! String == "true" {
+                        print("Update token",requireupdatetoken)
+                        self.getNewToken()
+                    }
+                }
+                let data = JSON(JSONData)
+                
+                completionHandler(data)
+            case .Failure(let error):
+                print("Request failed with error: \(error)")
+                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+                
+            }
+        }
+        
     }
 
 }

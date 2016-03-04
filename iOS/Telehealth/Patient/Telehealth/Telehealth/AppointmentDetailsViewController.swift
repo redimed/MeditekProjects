@@ -80,6 +80,7 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
     func getDetailsAppointment(UIDAppointment:String,Type:String){
         appointmentService.getAppointmentDetails(UIDAppointment, Type: Type,compailer: {
             response in
+            print("----appointment---",response)
             if response["message"] == "success"{
                 self.getAllImageInAppointmentDetails(response["data"])
                 let infoAppointment = self.appointmentService.getInformationAppointment(response["data"])

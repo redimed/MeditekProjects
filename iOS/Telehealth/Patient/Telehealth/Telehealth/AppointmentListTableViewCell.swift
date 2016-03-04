@@ -22,9 +22,8 @@ class AppointmentListTableViewCell: UITableViewCell {
     
     func configAppointment(Appointment:AppointmentContainer,indexPath:Int){
         appointmentDate.text = Appointment.CreatedDate.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
-        
-        doctorName.text = Appointment.refName
-        status.text =  Appointment.NameDoctor
+        doctorName.text = Appointment.refName == "" ? "N/A" :   Appointment.refName
+        status.text =  Appointment.NameDoctor == "" ? "N/A" :   Appointment.NameDoctor
         UIDAppointment = Appointment.UIDApointment
         
     }

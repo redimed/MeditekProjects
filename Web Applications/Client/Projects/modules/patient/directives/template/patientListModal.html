@@ -303,7 +303,7 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-md-4 col-sm-4">
+									<!-- <div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Custom</label>
 											<input type="text" class="form-control" ng-model="info.Custom" ng-change="checkDataNull('Custom')" />
@@ -316,7 +316,7 @@
 												<option></option>
 											</select>
 										</div>
-									</div>
+									</div> -->
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Language</label>
@@ -325,12 +325,12 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-md-4 col-sm-4">
+									<!-- <div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Fee Type</label>
 											<input type="text" class="form-control" ng-model="info.FeeType" ng-change="checkDataNull('FeeType')" />
 										</div>
-									</div>
+									</div> -->
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Gradute</label>
@@ -339,29 +339,41 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-4 col-sm-4">
+									<!-- <div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Driver License</label>
 											<input type="text" class="form-control" ng-model="info.DriverLicense" ng-change="checkDataNull('DriverLicense')" />
 										</div>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<div class="tab-pane" id="tab_fund">
 								<div class="row margin-top-30">
-									<div class="col-md-6 col-sm-6">
+									<!-- <div class="col-md-6 col-sm-6">
 										<label class="control-label">Mineral Resources</label>
 										<select class="form-control">
 											<option value="">Mineral Resources (Manulife)</option>
 										</select>
-									</div>
-									<div class="col-md-3 col-sm-3">
+									</div> -->
+									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Account Type</label>
 											<input type="text" class="form-control" ng-model="info.PatientFund.AccountType" ng-change="checkDataNull('PatientFund.AccountType')" />
 										</div>
 									</div>
-									<div class="col-md-1 col-sm-1">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Private Fund</label>
+											<input type="text" class="form-control" ng-model="info.PatientFund.PrivateFund" ng-change="checkDataNull('PatientFund.PrivateFund')" />
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">UPI</label>
+											<input type="text" class="form-control" ng-model="info.PatientFund.UPI" ng-change="checkDataNull('PatientFund.UPI')" />
+										</div>
+									</div>
+									<!-- <div class="col-md-1 col-sm-1">
 										<div class="form-group">
 											<label class="control-label">&nbsp;</label>
 											<div class="checkbox-list">
@@ -376,85 +388,186 @@
 												<label><input type="checkbox"> Is Lock</label>
 											</div>
 										</div>
-									</div>
+									</div> -->
 								</div>
 								<div class="row">
-									<div class="col-md-3 col-sm-3">
+									<!-- <div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Account Seft</label>
 											<input type="text" class="form-control">
 										</div>
-									</div>
-									<div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">Private Fund</label>
-											<input type="text" class="form-control" ng-model="info.PatientFund.PrivateFund" ng-change="checkDataNull('PatientFund.PrivateFund')" />
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3">
+									</div> -->
+									
+									<!-- <div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Membership Number</label>
 											<input type="text" class="form-control">
 										</div>
-									</div>
-									<div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">UPI</label>
-											<input type="text" class="form-control" ng-model="info.PatientFund.UPI" ng-change="checkDataNull('PatientFund.UPI')" />
-										</div>
-									</div>
+									</div> -->
+									
 								</div>
 								<div class="row">
-									<div class="col-md-3 col-sm-3">
+									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">HCC Pension Number</label>
 											<input type="text" class="form-control" ng-model="info.PatientPension.HCCPensionNumber" ng-change="checkDataNull('PatientPension.HCCPensionNumber')" />
 										</div>
 									</div>
-									<div class="col-md-3 col-sm-3">
+									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Pension Expire</label>
 											<input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" ng-model="info.PatientPension.ExpiryDate" id="ExpiryDate" ng-change="checkDataNull('PatientPension.ExpiryDate')" />
 										</div>
 									</div>
-									<div class="col-md-3 col-sm-3">
+									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">DVA Number</label>
 											<input type="text" class="form-control" ng-model="info.PatientDVA.DVANumber" ng-change="checkDataNull('PatientDVA.DVANumber')" />
 										</div>
 									</div>
-									<div class="col-md-3 col-sm-3">
+									<!-- <div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Balance</label>
 											<input type="text" class="form-control">
 										</div>
-									</div>
+									</div> -->
 								</div>
 								<div class="row">
-									<div class="col-md-3 col-sm-3">
+									<!-- <div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">PaysGap Only</label>
 											<input type="text" class="form-control">
 										</div>
-									</div>
-									<div class="col-md-3 col-sm-3">
+									</div> -->
+									<!-- <div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Is Enable</label>
 											<input type="text" class="form-control">
 										</div>
-									</div>
-									<div class="col-md-3 col-sm-3">
+									</div> -->
+									<!-- <div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Passport</label>
 											<input type="text" class="form-control">
 										</div>
-									</div>
+									</div> -->
 									<div class="col-md-3 col-sm-3">
 									</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="tab_kod">
-								<div class="row">
+								<div class="row margin-top-30">
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Kin/Guardian List</label>
+											<select class="form-control" size="27">
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-9 col-sm-9">
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Firstname</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Middlename</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Lastname</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
+												<div class="form-group">
+													<label class="control-label">Relationship</label>
+													<select class="form-control">
+														<option value="">Select Relationship</option>
+														<option value="parent">Parent</option>
+														<option value="partner">Partner</option>
+														<option value="siblings">Siblings</option>
+														<option value="descendant">Descendant</option>
+														<option value="other">Other</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Homephone</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Mobilephone</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Workphone</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12 col-sm-12">
+												<div class="form-group">
+													<label class="control-label">Address1</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-12 col-sm-12">
+												<div class="form-group">
+													<label class="control-label">Address2</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-8 col-sm-8">
+												<div class="form-group">
+													<label class="control-label">Suburb</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Postcode</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<div class="form-group">
+													<label class="control-label">State</label>
+													<select class="form-control">
+														<option></option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<div class="form-group">
+													<label class="control-label">Country</label>
+													<select class="form-control">
+														<option></option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="row">
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Partner Name</label>
@@ -549,7 +662,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 							<div class="tab-pane" id="tab_gp">
 								<div class="row">

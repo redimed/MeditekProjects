@@ -2,6 +2,7 @@ var app = angular.module('app.blank',[
 	'app.blank.controller',
 	'app.blank.services',
 	'app.blank.drawing',
+	'app.blank.directive',
 ]);
 
 app.config(function($stateProvider){
@@ -42,7 +43,7 @@ app.config(function($stateProvider){
 			views:{
 				'blank':{
 					templateUrl: 'modules/blank/views/welcomeCampaign.html',
-					// controller: 'welcomeCampaignCtrl',
+					controller: 'welcomeCampaignCtrl',
 				},
 			},
 		})
@@ -63,6 +64,16 @@ app.config(function($stateProvider){
 				'blank':{
 					templateUrl: 'modules/blank/views/searchPatient.html',
 					controller: 'searchPatientCtrl',
+				},
+			},
+		})
+		.state('blank.registerPatientCampaign',{
+			data: {pageTitle: 'registerPatientCampaign'},
+			url: '/registerPatientCampaign',
+			views:{
+				'blank':{
+					templateUrl: 'modules/blank/views/registerPatientCampaign.html',
+					controller: 'registerPatientCampaignCtrl',
 				},
 			},
 		})

@@ -52,7 +52,7 @@ module.exports = React.createClass({
         return $(this.refs.input).prop('checked');
     },
     getValue: function(){
-        return this.value;
+        return this.props.value;
     },
     getName: function(){
         return this.props.name;
@@ -75,14 +75,15 @@ module.exports = React.createClass({
                     <input type="radio" className="icheck" name={this.props.name} id={this.props.id} ref="input"/>
                 )
                 break;
-            case 'rlh':
+            case 'eform_input_check_radio':
                 html = (
-                    <div className={"dragula col-xs-"+this.props.size} ref="group">
+                    <div className={"dragField col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <div className="icheck-inline">
                                     <label>
-                                        <input type="radio" className="icheck" name={this.props.name} ref="input" title={this.props.name}/>
+                                        <input type="radio" className="icheck" name={this.props.name} ref="input" title={this.props.name}
+                                            value={this.props.value}/>
                                         &nbsp;
                                         {this.props.label}
                                     </label>

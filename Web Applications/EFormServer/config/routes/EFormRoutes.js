@@ -39,6 +39,10 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostDetail'
     },
+    'post /eform/checkDetail': {
+        controller: 'EForm/EFormController',
+        action: 'PostCheckDetail'
+    },
     'post /eform/update': {
         controller: 'EForm/EFormController',
         action: 'PostUpdate'

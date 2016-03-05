@@ -19,7 +19,7 @@ module.exports = {
 		});
 		return p;
 	},
-	formCreate: function(data){
+	eformTemplateCreate: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
@@ -30,7 +30,7 @@ module.exports = {
 		});
 		return p;
 	},
-	formList: function(){
+	eformTemplateList: function(){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'GET',
@@ -40,7 +40,7 @@ module.exports = {
 		})
 		return p;
 	},
-	formSave: function(data){
+	eformTemplateSave: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
@@ -51,7 +51,7 @@ module.exports = {
 		})
 		return p;
 	},
-	formDetail: function(data){
+	eformTemplateDetail: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
@@ -62,7 +62,7 @@ module.exports = {
 		})
 		return p;
 	},
-	formUpdate: function(data){
+	eformTemplateUpdate: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
@@ -90,11 +90,11 @@ module.exports = {
 				type: 'GET',
 				url: Config.apiUrl+'api/appointment-wa-detail/'+data.UID,
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
-	formClientSave: function(data){
+	formSave: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
@@ -127,7 +127,18 @@ module.exports = {
 		})
 		return p;
 	},
-	formClientDetail: function(data){
+	eformCheckDetail: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eform/checkDetail',
+				success: resolve
+			})	
+		})
+		return p;	
+	},
+	eformDetail: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
@@ -138,7 +149,7 @@ module.exports = {
 		})
 		return p;	
 	},
-	formClientUpdate: function(data){
+	formUpdate: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
@@ -147,6 +158,6 @@ module.exports = {
 				success: resolve
 			})	
 		})
-		return p;	
+		return p;
 	}
 }

@@ -8,7 +8,8 @@ module.exports = React.createClass({
     ],
     code: '',
     propTypes: {
-        onSave: React.PropTypes.func.isRequired
+        onSave: React.PropTypes.func.isRequired,
+        onCloseModal: React.PropTypes.func
     },
     init: function(col, code){
         this.refs.formLabel.setValue(col.get('label'))
@@ -23,8 +24,8 @@ module.exports = React.createClass({
         }
         this.props.onSave(data)
     },
-	render: function(){
-		return (
+    render: function(){
+	return (
             <div className="row">
                 <div className="col-md-12">
                     <form>
@@ -38,7 +39,7 @@ module.exports = React.createClass({
                                 <CommonDropdown ref="formType" code="code" name="name" list={this.types}/>                 
                             </div>
                             <div className="form-group" style={{float:'right'}}>
-                                <button type="button" data-dismiss="modal" className="btn btn-default">Close</button>
+                                <button type="button" onClick={this.props.onCloseModal} className="btn btn-default">Close</button>
                                 &nbsp;
                                 <button type="button" className="btn btn-primary" onClick={this._onSave}>Save</button>
                             </div>

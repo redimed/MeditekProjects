@@ -1,5 +1,5 @@
 var ComponentPageBar = require('modules/eform/mainClientDetail/pageBar');
-var ComponentSection = require('modules/eform/mainDetail/section');
+var ComponentSection = require('modules/eform/eformTemplateDetail/section');
 var EFormService = require('modules/eform/services');
 var history = ReactRouter.hashHistory;
 var Config = require('config');
@@ -74,8 +74,8 @@ module.exports = React.createClass({
             }
         })
     },
-	_onComponentPageBarSaveForm: function(){
-		var formId = this.props.params.formId;
+    _onComponentPageBarSaveForm: function(){
+    var formId = this.props.params.formId;
         var sections = this.state.sections.toJS();
         var self = this;
         var fields = [];
@@ -91,7 +91,7 @@ module.exports = React.createClass({
         var appointmentId = this.props.params.appointmentId;
         var patientId = this.props.params.patientId;
         var userId = this.props.params.userId;
-        EFormService.formClientSave({id: formId, content: content, name: this.state.name, patientId: patientId, userId: userId})
+        EFormService.formClientSave({id: formId, content: content, name: this.state.name, patientUID: patientId, userId: userId})
         .then(function(){
             swal("Success!", "Your form has been saved.", "success");
             history.push(Config.getParamsIframe(appointmentId, patientId, userId));

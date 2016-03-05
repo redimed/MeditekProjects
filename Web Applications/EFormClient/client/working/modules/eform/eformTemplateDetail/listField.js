@@ -5,16 +5,15 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             list: Immutable.fromJS([
-                {code: 'label', name: 'Label'},
-                {code: 'labelh', name: 'Label HTML'},
-                {code: 'itnl', name: 'Input Text'},
-                {code: 'idnl', name: 'Input Date'},
-                {code: 'tnl', name: 'Textarea'},
-                {code: 'clh', name: 'Checkbox with Label Horizontal'},
+                {code: 'eform_input_check_label', name: 'Label'},
+                {code: 'eform_input_check_label_html', name: 'Label HTML'},
+                {code: 'eform_input_text', name: 'Input Text'},
+                {code: 'eform_input_date', name: 'Input Date'},
+                {code: 'eform_input_textarea', name: 'Textarea'},
+                {code: 'eform_input_check_checkbox', name: 'Checkbox'},
+                {code: 'eform_input_check_radio', name: 'Radio'},
                 {code: 'table', name: 'Table'},
-                {code: 'rlh', name: 'Radio with Label Horizontal'},
-                {code: 'signature', name: 'E-Signature'},
-                {code: 'break', name: 'Break row'}
+                {code: 'eform_input_signature', name: 'E-Signature'}
             ])
         }
     },
@@ -31,8 +30,8 @@ module.exports = React.createClass({
             self.props.onSelectItem(item)
         })
     },
-	render: function(){
-		return (
+    render: function(){
+        return (
             <div className="row">
                 <div className="col-md-12">
                     <ul className="list-group">
@@ -49,6 +48,6 @@ module.exports = React.createClass({
                     </ul>
                 </div>
             </div>
-		)
-	}
+        )   
+    }
 })

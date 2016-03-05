@@ -36,7 +36,9 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
+        valueArr = value.join(",");
+        if(valueArr !== "image/jsignature;base30,")
+            $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
     },
     getValue: function(){
         return $(this.refs.signature).jSignature("getData", "base30")
@@ -57,20 +59,15 @@ module.exports = React.createClass({
         var type = this.props.type;
         var html = null;
         switch(type){
-            case 'default':
+            case 'eform_input_signature':
                 html = (
-                    <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
-                )
-                break;
-            case 'signature':
-                html = (
-                    <div className={"col-xs-"+this.props.size} ref="group">
+                    <div className={"dragField col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <a className="btn btn-primary btn-sm" onClick={this._onReset}>
                                     Reset
                                 </a>
-                                <div ref="signature"/>
+                                <div ref="signature" style={{background: '#EEEEEE'}}/>
                             </div>
                         </div>
                     </div>

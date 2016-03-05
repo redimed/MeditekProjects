@@ -1,7 +1,7 @@
 var CommonModal = require('common/modal');
 var CommonInputText = require('common/inputText');
 var CommonCheckbox = require('common/checkbox');
-var ComponentFormEditTableColumn = require('modules/eform/mainDetail/formUpdateTableColumn');
+var ComponentFormEditTableColumn = require('modules/eform/eformTemplateDetail/formUpdateTableColumn');
 
 module.exports = React.createClass({
     propTypes: {
@@ -114,27 +114,27 @@ module.exports = React.createClass({
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].setValue(value);
     },
-	render: function(){
+    render: function(){
         var content = this.props.content
         var rows = Immutable.List()
         for(var i = 0; i < content.get('rows'); i++){
             rows = rows.push(Immutable.Map({col: content.get('cols')}))
         }
         return (
-            <div className="col-md-12 dragula">
+            <div className="col-md-12 dragField">
                 <div id="contextColumnMenu">
                     <ul className="dropdown-menu" role="menu">
                         <li><a id="editCol"><i className="icon-pencil"/> Edit Column</a></li>
                         <li><a id="deleteCol"><i className="icon-trash"/> Delete Column</a></li>
                     </ul>
                 </div>
-                <CommonModal ref="modalEditTableColumn" portal="modalEditTableColumn">
-                    <div className="modal-header">
-                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <CommonModal ref="modalEditTableColumn">
+                    <div className="header">
                         <h4 className="modal-title">Edit Column Table</h4>
                     </div>
-                    <div className="modal-body">
-                        <ComponentFormEditTableColumn ref="formEditTableColumn" onSave={this._onSaveColumn}/>
+                    <div className="content">
+                        <ComponentFormEditTableColumn ref="formEditTableColumn" onSave={this._onSaveColumn}
+                            onCloseModal={function(){this.refs.modalEditTableColumn.hide()}.bind(this)}/>
                     </div>
                 </CommonModal>
                 <div className="form-group" id={this.props.groupId}>

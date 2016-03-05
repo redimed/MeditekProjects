@@ -6,48 +6,44 @@ module.exports = React.createClass({
         onClickUpdate: React.PropTypes.func,
         onClickRemove: React.PropTypes.func
     },
-    patientUID: null,
-    init: function(patientUID){
-        this.patientUID = patientUID;
+    userUID: null,
+    setUserUID: function(userUID) {
+        this.userUID = userUID;
     },
-	getInitialState: function(){
-		return {
-			list: []
-		}
-	},
-	componentDidMount: function(){
-		this._serverListForm();
-	},
-	refresh: function(){
-		this._serverListForm();
-	},
-	_serverListForm: function(){
-		var self = this;
+    getInitialState: function() {
+        return {
+            list: []
+        }
+    },
+    componentDidMount: function() {
+        this._serverListForm();
+    },
+    refresh: function() {
+        this._serverListForm();
+    },
+    _serverListForm: function() {
+        var self = this;
         App.blockUI()
-        EFormService.formList()
-        .then(function(response){
-            self.setState({list: response.data});
-            App.unblockUI();
-        })
-	},
-    _onClickUpdate: function(item){
-        if(typeof this.props.onClickUpdate !== 'undefined')
+        EFormService.eformTemplateList()
+            .then(function(response) {
+                self.setState({ list: response.data });
+                App.unblockUI();
+            })
+    },
+    _onClickUpdate: function(item) {
+        if (typeof this.props.onClickUpdate !== 'undefined')
             this.props.onClickUpdate(item);
     },
-    _onClickRemove: function(item){
-        if(typeof this.props.onClickRemove !== 'undefined')
+    _onClickRemove: function(item) {
+        if (typeof this.props.onClickRemove !== 'undefined')
             this.props.onClickRemove(item);
     },
-    _goToDetail: function(l){
-        history.push("/eformDev/detail/"+l.ID+'?patientUID='+this.patientUID);
+    _goToDetail: function(l) {
+        history.push("/eformTemplate/detail/" + l.UID + '/' + this.userUID);
     },
-	render: function(){
-		var preList = null
+    render: function(){
         var table = null
-        if(this.state.list.length === 0)
-            preList = <p className="font-red-thunderbird">There is no data here</p>
-        else
-            table = <table className="table table-bordered table-striped table-condensed flip-content">
+        table = <table className="table table-bordered table-striped table-condensed flip-content">
                         <thead className="flip-content">
                             <tr>
                                 <th className="bg-blue-dark bg-font-blue-dark">Index</th>
@@ -61,6 +57,7 @@ module.exports = React.createClass({
                             {
                                 this.state.list.map((l,index)=>{
                                     var userCreated = (l.UserAccount)?l.UserAccount.UserName:'';
+                                    console.log(l);
                                     return (
                                         <tr key={index}>
                                             <td>{index+1}</td>
@@ -97,13 +94,12 @@ module.exports = React.createClass({
                             }
                         </tbody>
                     </table>
-		return (
-			<div className="row">
-                <div className="col-md-12">
-                    {preList}
-                    {table}
+            return (
+	   <div className="row">
+                    <div className="col-md-12">
+                        {table}
+                    </div>
                 </div>
-            </div>
-		)
-	}
+	)
+    }
 })

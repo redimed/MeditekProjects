@@ -5304,7 +5304,7 @@ button.close {
   overflow: hidden; }
 
 .modal {
-  display: none;
+  /*display: none;
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -5327,7 +5327,7 @@ button.close {
     -webkit-transform: translate(0, 0);
     -ms-transform: translate(0, 0);
     -o-transform: translate(0, 0);
-    transform: translate(0, 0); }
+    transform: translate(0, 0);*/ }
 
 .modal-open .modal {
   overflow-x: hidden;

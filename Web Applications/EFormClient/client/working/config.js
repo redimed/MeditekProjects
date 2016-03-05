@@ -27,9 +27,31 @@ module.exports = {
 			return split[2]+'-'+split[1]+'-'+split[0]+' 00:00:00 '+z;
 		}
 	},
+	getPrefixField: function(typeString, findString){
+		return typeString.indexOf(findString);
+	},
+	getArrayConcat: function(concatString){
+		var res = [];
+		var substring = concatString.substring(7, concatString.length-1);
+		var substringRes = substring.split(',');
+		for(var i = 0; i < substringRes.length; i++){
+			res.push(substringRes[i]);
+		}
+		return res;
+	},
+	getArrayDefault: function(defaultString){
+		var res = [];
+		var substring = defaultString.substring(8, defaultString.length-1);
+		var substringRes = substring.split(',');
+		for(var i = 0; i < substringRes.length; i++){
+			res.push(substringRes[i]);
+		}
+		return res;
+	},
 	setDate: function(date){
 		if(date === '')
 			return '';
+		console.log(date);
 		var dateTZ = moment(date).format('DD/MM/YYYY');
 		return dateTZ;
 	},

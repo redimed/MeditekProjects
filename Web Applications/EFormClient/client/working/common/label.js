@@ -37,7 +37,7 @@ module.exports = React.createClass({
     getType: function(){
         return this.props.type
     },
-	render: function(){
+    render: function(){
         var type = this.props.type;
         var html = null;
         switch(type){
@@ -46,7 +46,7 @@ module.exports = React.createClass({
                     <label>Label nay</label>
                 )
                 break;
-            case 'labelh':
+            case 'eform_input_check_label_html':
                 html = (
                     <div className={"dragula col-md-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
@@ -58,7 +58,7 @@ module.exports = React.createClass({
                     </div>
                 )
                 break;
-            case 'label':
+            case 'eform_input_check_label':
                 html = (
                     <div className={"dragula col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>

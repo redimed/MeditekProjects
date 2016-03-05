@@ -22,7 +22,7 @@ module.exports = {
         var userAccount = null;
         return sequelize.transaction(function(t){
             return UserAccount.findOne({
-                where: {UID: req.body.patientUID},
+                where: {UID: req.body.userUID},
                 attributes: ['ID'],
                 transaction: t
             })
@@ -56,7 +56,7 @@ module.exports = {
         .then(function(EFormTemplate){
             if(EFormTemplate){
                 UserAccount.findOne({
-                    where: {UID: req.body.patientUID},
+                    where: {UID: req.body.userUID},
                     attributes: ['ID'],
                 })
                 .then(function(UserAccount){
@@ -72,7 +72,7 @@ module.exports = {
         })
     },
     PostDetailEFormTemplate: function(req, res){
-        EFormTemplate.find({ where: {ID: req.body.id}, 
+        EFormTemplate.find({ where: {UID: req.body.uid}, 
             include: [{
                 model: EFormTemplateData,
                 required: false,
@@ -99,20 +99,25 @@ module.exports = {
         })
     },
     PostSaveEFormTemplate: function(req, res){
-        EFormTemplateData.find({where: {EFormTemplateID: req.body.id}})
-        .then(function(EFormTemplateData){
-            if(EFormTemplateData){
-                UserAccount.findOne({
-                    where: {UID: req.body.patientUID},
-                    attributes: ['ID'],
-                })
-                .then(function(UserAccount){
-                    EFormTemplateData.update({
-                        TemplateData: req.body.content
-                    })
-                    .then(function(){
-                        res.json({data: EFormTemplateData});    
-                    })
+        EFormTemplate.findOne({ where: {UID: req.body.uid}, attributes: ['ID'] })
+        .then(function(EFormTemplate){
+            if(EFormTemplate){
+                EFormTemplateData.find({where: {EFormTemplateID: EFormTemplate.ID}})
+                .then(function(EFormTemplateData){
+                    if(EFormTemplateData){
+                        UserAccount.findOne({
+                            where: {UID: req.body.userUID},
+                            attributes: ['ID'],
+                        })
+                        .then(function(UserAccount){
+                            EFormTemplateData.update({
+                                TemplateData: req.body.content
+                            })
+                            .then(function(){
+                                res.json({data: EFormTemplateData});    
+                            })
+                        })
+                    }
                 })
             }
         })
@@ -139,12 +144,14 @@ module.exports = {
     PostSave: function(req, res){
         var eform = null;
         var userAccount = null;
-        EFormTemplate.find({where:  {ID: req.body.id}})
+        var eformTemplate = null;
+        EFormTemplate.find({where:  {UID: req.body.templateUID}})
         .then(function(EFormTemplate){
+            eformTemplate = EFormTemplate;
             if(EFormTemplate){
                 return sequelize.transaction(function(t){
                     return UserAccount.findOne({
-                        where: {UID: req.body.userId},
+                        where: {UID: req.body.userUID},
                         attributes: ['ID'],
                         transaction: t
                     })
@@ -152,10 +159,13 @@ module.exports = {
                         userAccount = UserAccount;
                         return EForm.create({
                             Name: req.body.name,
-                            EFormTemplateID: req.body.id,
+                            EFormTemplateID: eformTemplate.ID,
                             CreatedBy: UserAccount.ID,
                             ModifiedBy: UserAccount.ID
                         }, {transaction: t})
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback();
                     })
                     .then(function(EForm){
                         eform = EForm;
@@ -165,7 +175,7 @@ module.exports = {
                             CreatedBy: userAccount.ID,
                             ModifiedBy: userAccount.ID
                         }, {transaction: t})
-                    }, function(error){
+                    }, function(err){
                         res.status(400).json({err: err});
                         return t.rollback();
                     })
@@ -173,11 +183,11 @@ module.exports = {
                         return Patient.find(
                             {
                                 attributes: ['ID'],
-                                where: {UID: req.body.patientId},
+                                where: {UID: req.body.patientUID},
                                 transaction: t
                             }
                         )
-                    }, function(error){
+                    }, function(err){
                         res.status(400).json({err: err});
                         return t.rollback();
                     })
@@ -185,11 +195,15 @@ module.exports = {
                         return eform.addPatient(patient.ID,{
                                 transaction: t
                         })
-                    }, function(error){
+                    }, function(err){
+                       res.status(400).json({err: err});
+                        return t.rollback(); 
                     })
                     .then(function(data){
-                        res.json({data: data});
-                        return t.commit();
+                        return res.json({data: data});
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback(); 
                     })
                 })
             }
@@ -209,14 +223,37 @@ module.exports = {
         })
     },
     PostUpdate: function(req, res){
-        EFormData.find({ where: {EFormID: req.body.id} })
-        .then(function(EFormData){
-            if(EFormData){
-                EFormData.update({
-                    FormData: req.body.content
+        EForm.find({ where: {UID: req.body.UID} })
+        .then(function(EForm){
+            if(EForm){
+                EFormData.find({where: {EFormID: EForm.ID}})
+                .then(function(EFormData){
+                    if(EFormData){
+                        EFormData.update({
+                            FormData: req.body.content
+                        })
+                        .then(function(EFormData){
+                            res.json({data: EFormData});
+                        })
+                    }
                 })
-                .then(function(){
-                    res.json({data: EFormData});
+            }
+        }, function(error){
+            res.status(400).json({err: error});
+        })
+    },
+    PostCheckDetail: function(req, res){
+        EFormTemplate.findOne({where: {UID: req.body.templateUID} })
+        .then(function(EFormTemplate){
+            if(EFormTemplate){
+                EForm.findOne({
+                    where: {EFormTemplateID: EFormTemplate.ID},
+                    include: [
+                        {model: EFormData, required: false, as: 'EFormData'}
+                    ]
+                })
+                .then(function(EForm){
+                    res.json({data: EForm});
                 })
             }
         }, function(error){
@@ -224,7 +261,7 @@ module.exports = {
         })
     },
     PostDetail: function(req, res){
-        EForm.find({ where: {ID: req.body.id}, 
+        EForm.find({ where: {ID: req.body.id},
             include: [{
                 model: EFormData,
                 required: false,

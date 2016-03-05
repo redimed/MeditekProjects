@@ -3,34 +3,43 @@ var CommonInputText = require('common/inputText');
 var Config = require('config');
 
 module.exports = React.createClass({
-	propTypes: {
-		onSave: React.PropTypes.func
-	},
-	_serverCreateForm: function(data){        
+    item: null,
+    userUID: null,
+    propTypes: {
+        onSave: React.PropTypes.func,
+        onCloseModal: React.PropTypes.func
+    },
+    init: function(item) {
+        this.item = item;
+        this.refs.inputName.setValue(this.item.Name);
+    },
+    setUserUID: function(userUID){
+        this.userUID = userUID;
+    },
+    _serverUpdateForm: function(data) {
         var self = this;
         swal({
             title: 'Are you sure?',
-            text: 'You will add new eform',
+            text: 'You will update eform',
             type: 'warning',
             showCancelButton: true,
             closeOnConfirm: false,
             allowOutsideClick: true,
             showLoaderOnConfirm: true
-        }, function(){
-            EFormService.formCreate(data)
-            .then(function(response){
-                self.props.onSave();
-            })
+        }, function() {
+            EFormService.eformTemplateUpdate(data)
+                .then(function(response) {
+                    self.props.onSave();
+                })
         })
     },
-    _onSave: function(){
-            var locationParams = Config.parseQueryString(window.location.href);
-    	var name = this.refs.inputName.getValue();
-        this._serverCreateForm({name:name, patientUID: locationParams.patientUID});
+    _onSave: function() {
+        var name = this.refs.inputName.getValue();
+        this._serverUpdateForm({ name: name, id: this.item.ID, userUID: this.userUID});
     },
-	render: function(){
-		return (
-			<div className="row">
+    render: function(){
+        return (
+            <div className="row">
                 <div className="col-md-12">
                     <form>
                         <div className="form-body">
@@ -39,7 +48,7 @@ module.exports = React.createClass({
                                 <CommonInputText placeholder="Form Name..." ref="inputName"/>
                             </div>
                             <div className="form-group" style={{float:'right'}}>
-                                <button type="button" data-dismiss="modal" className="btn btn-default">Close</button>
+                                <button type="button" className="btn btn-default" onClick={this.props.onCloseModal}>Close</button>
                                 &nbsp;
                                 <button type="button" className="btn btn-primary" onClick={this._onSave}>Save</button>
                             </div>
@@ -47,6 +56,6 @@ module.exports = React.createClass({
                     </form>
                 </div>
             </div>
-		)
-	}
+        )
+    }
 })

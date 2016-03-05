@@ -45,6 +45,9 @@ module.exports = React.createClass({
                 }.bind(this)
             })
         }
+        if(this.props.permission === 'eformDev'){
+            $(this.refs.input).prop('disabled', true);
+        }
     },
     setValue: function(value){
         this.value = value;
@@ -77,9 +80,9 @@ module.exports = React.createClass({
                     <input type="checkbox" className="icheck" name={this.props.name} id={this.props.id} ref="input"/>
                 )
                 break;
-            case 'clh':
+            case 'eform_input_check_checkbox':
                 html = (
-                    <div className={"dragula col-xs-"+this.props.size} ref="group">
+                    <div className={"dragField col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <div className="icheck-inline">

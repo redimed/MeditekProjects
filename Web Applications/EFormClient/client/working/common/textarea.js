@@ -1,6 +1,5 @@
 module.exports = React.createClass({
     propTypes: {
-        label: React.PropTypes.string,
         name: React.PropTypes.string,
         size: React.PropTypes.any,
         groupId: React.PropTypes.string,
@@ -8,7 +7,10 @@ module.exports = React.createClass({
         code: React.PropTypes.number,
         type: React.PropTypes.string,
         context: React.PropTypes.string,
-        onRightClickItem: React.PropTypes.func
+        refTemp: React.PropTypes.string,
+        onRightClickItem: React.PropTypes.func,
+        permission: React.PropTypes.string,
+        rows: React.PropTypes.any
     },
     getDefaultProps: function(){
         return {
@@ -32,6 +34,9 @@ module.exports = React.createClass({
                 }.bind(this)
             })
         }
+        if(this.props.permission === 'eformDev'){
+            $(this.refs.input).prop('disabled', true);
+        }
     },
     setValue: function(value){
         $(this.refs.input).val(value)
@@ -42,16 +47,19 @@ module.exports = React.createClass({
     getName: function(){
         return this.props.name;
     },
-    getLabel: function(){
-        return this.props.label;
-    },
     getSize: function(){
         return this.props.size;
     },
     getType: function(){
         return this.props.type;
     },
-	render: function(){
+    getCode: function(){
+        return this.props.code;
+    },
+    getRows: function(){
+        return this.props.rows;
+    },
+    render: function(){
         var type = this.props.type
         var html = null
         switch(type){
@@ -60,24 +68,14 @@ module.exports = React.createClass({
                     <textarea className={this.props.className} name={this.props.name} id={this.props.id} ref="input" placeholder={this.props.placeholder}/>
                 )
                 break;
-            case 'tlh':
+            case 'eform_input_textarea':
                 html = (
-                    <div className={"dragula col-md-"+this.props.size} ref="group">
-                        <div className="form-group" id={this.props.groupId}>
-                            <label className="control-label col-md-3">{this.props.label}</label>
-                            <div className="col-md-9">
-                                <textarea className={this.props.className} name={this.props.name} id={this.props.id} ref="input" placeholder={this.props.placeholder}/>
-                            </div>
-                        </div>
-                    </div>
-                )
-                break;
-            case 'tnl':
-                html = (
-                    <div className={"dragula col-xs-"+this.props.size} ref="group">
+                    <div className={"dragField col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <textarea title={this.props.name} className={this.props.className} name={this.props.name} id={this.props.id} ref="input" placeholder={this.props.placeholder}/>
+                                <textarea title={this.props.name} className={this.props.className} 
+                                    name={this.props.name} ref="input" placeholder={this.props.placeholder}
+                                    rows={this.props.rows}/>
                             </div>
                         </div>
                     </div>

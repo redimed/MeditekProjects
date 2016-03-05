@@ -5,13 +5,13 @@ module.exports = React.createClass({
         name: React.PropTypes.string
     },
     componentDidMount: function(){
-        this.refs.inputName.setValue(this.props.name)
+        this.refs.inputName.setValue(this.props.name);
     },
     getName: function(){
-        return this.refs.inputName.getValue()
+        return this.refs.inputName.getValue();
     },
-	render: function(){
-		return (
+    render: function(){
+        return (
             <div className="row">
                 <div className="col-md-12">
                     <form>

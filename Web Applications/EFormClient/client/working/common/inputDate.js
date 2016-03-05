@@ -2,7 +2,6 @@ var Config = require('config');
 
 module.exports = React.createClass({
     propTypes: {
-        label: React.PropTypes.string,
         name: React.PropTypes.string,
         size: React.PropTypes.any,
         groupId: React.PropTypes.string,
@@ -10,7 +9,10 @@ module.exports = React.createClass({
         code: React.PropTypes.number,
         type: React.PropTypes.string,
         context: React.PropTypes.string,
-        onRightClickItem: React.PropTypes.func
+        refTemp: React.PropTypes.string,
+        onRightClickItem: React.PropTypes.func,
+        permission: React.PropTypes.string,
+        preCal: React.PropTypes.string
     },
     getDefaultProps: function(){
         return {
@@ -38,9 +40,12 @@ module.exports = React.createClass({
                 }.bind(this)
             })
         }
+        if(this.props.permission === 'eformDev'){
+            $(this.refs.input).prop('disabled', true);
+        }
     },
     setValue: function(value){
-        value = Config.setDate(value);
+        //value = Config.setDate(value);
         $(this.refs.input).datepicker("update", value);
     },
     getValue: function(){
@@ -54,16 +59,19 @@ module.exports = React.createClass({
     getName: function(){
         return this.props.name;
     },
-    getLabel: function(){
-        return this.props.label;
-    },
     getSize: function(){
         return this.props.size;
     },
     getType: function(){
         return this.props.type;
     },
-	render: function(){
+    getCode: function(){
+        return this.props.code;
+    },
+    getPreCal: function(){
+        return this.props.preCal;
+    },
+    render: function(){
         var type = this.props.type;
         var html = null;
         switch(type){
@@ -72,21 +80,9 @@ module.exports = React.createClass({
                     <input type="text" className={this.props.className} name={this.props.name} ref="input" placeholder={this.props.placeholder}/>
                 )
                 break;
-            case 'idlh':
+            case 'eform_input_date':
                 html = (
-                    <div className={"dragula col-md-"+this.props.size} ref="group">
-                        <div className="form-group" id={this.props.groupId}>
-                            <label className="control-label col-md-3">{this.props.label}</label>
-                            <div className="col-md-9">
-                                <input type="text" className={this.props.className} name={this.props.name} ref="input" placeholder={this.props.placeholder}/>
-                            </div>
-                        </div>
-                    </div>
-                )
-                break;
-            case 'idnl':
-                html = (
-                    <div className={"dragula col-xs-"+this.props.size} ref="group">
+                    <div className={"dragField col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <input title={this.props.name} type="text" className={this.props.className} name={this.props.name} ref="input" placeholder={this.props.placeholder}/>

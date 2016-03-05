@@ -69,19 +69,20 @@ module.exports = {
        */
     GetDetailWAAppointment: function(req, res) {
         var UID = req.params.UID;
-        Services.GetDetailWAAppointment(UID, req.user)
-            .then(function(success) {
-                res.ok(success);
-            }, function(err) {
-                if (HelperService.CheckExistData(err) &&
-                    HelperService.CheckExistData(err.transaction) &&
-                    HelperService.CheckExistData(err.error)) {
-                    err.transaction.rollback();
-                    res.serverError(ErrorWrap(err.error));
-                } else {
-                    res.serverError(ErrorWrap(err));
-                }
-            });
+        Appointment.findOne({
+            where: {UID: UID},
+            include: [{
+                model: Patient,
+                required: false
+            }]
+        })
+        .then(function(response){
+            response.dataValues.PatientFirstName = response.dataValues.Patients[0].FirstName;
+            response.dataValues.PatientLastName = response.dataValues.Patients[0].LastName;
+            res.ok({data: response});
+        }, function(error){
+            res.serverError(ErrorWrap(err));
+        })
     },
     /*
     UpdateRequestWAAppointment - Controller: Update information WA Appointment

@@ -1,5 +1,5 @@
 var ComponentPageBar = require('modules/eform/mainClientDetail/pageBar');
-var ComponentSection = require('modules/eform/mainDetail/section');
+var ComponentSection = require('modules/eform/eformTemplateDetail/section');
 var EFormService = require('modules/eform/services');
 var history = ReactRouter.hashHistory;
 var Config = require('config');

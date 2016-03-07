@@ -13,7 +13,7 @@ module.exports = {
     },
     PatientAppointment: function() {
         return ['UID', 'Title', 'MaritalStatus', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
-            'PreviousName', 'Suburb', 'Postcode', 'State', 'Country','CountryOfBirth',
+            'PreviousName', 'Suburb', 'Postcode', 'State', 'Country', 'CountryOfBirth',
             'DOB', 'Gender', 'Indigenous', 'Address1', 'Address2', 'Email1',
             'Email2', 'PhoneNumber', 'HomePhoneNumber', 'WorkPhoneNumber',
             'FaxNumber', 'InterpreterRequired', 'InterpreterLanguage',
@@ -73,8 +73,11 @@ module.exports = {
         return ['UID', 'UserAccountID', 'FileName', 'FileLocation', 'FileType',
             'FileExtension', 'Description'
         ];
-    }, 
+    },
     OnsiteAppointment: function() {
         return ['Description'];
+    },
+    AppointmentData: function() {
+        return ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'Note', 'Description'];
     }
 };

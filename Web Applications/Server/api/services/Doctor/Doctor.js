@@ -1008,7 +1008,40 @@ module.exports = {
 			return Services.Doctor.validation(data.info)
 			.then(function(result){
 				if(result!=undefined && result!=null&& result!=''){
-					return Doctor.update(data.info,{
+					if(data.Signature != null && data.Signature != '') {
+						return FileUpload.findOne({
+                            where :{
+                                UID : data.Signature
+                            },
+                            transaction : t
+                        })
+                        .then(function(got_file) {
+                        	if(got_file == null || got_file == '') {
+                        		t.rollback();
+                        		var err = new Error("UpdateDoctor.Error");
+                        		err.pushError("Signature.error");
+                        		throw err;
+                        	}
+                        	else {
+                        		return got_file;
+                        	}
+                        },function(err) {
+                        	t.rollback();
+                        	throw err;
+                        })
+					}
+					else {
+						return result;
+					}
+				}
+			},function(err){
+				throw err;
+			})
+			.then(function(got_data) {
+				if(data.Signature != null && data.Signature != '') {
+					data.info.Signature = got_data.ID;
+				}
+				return Doctor.update(data.info,{
 						where:{
 							UID : data.UID
 						},
@@ -1031,8 +1064,9 @@ module.exports = {
 						t.rollback();
 						throw err;
 					});
-				}
+
 			},function(err){
+				t.rollback();
 				throw err;
 			})
 			.then(function(doctor){

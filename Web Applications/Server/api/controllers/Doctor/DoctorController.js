@@ -49,10 +49,10 @@ module.exports = {
 	*/
 	DetailDoctor: function(req, res) {
 		var data = req.body.data;
-		Services.Doctor.DetailDoctor(data)
+		return Services.Doctor.DetailDoctor(data)
 		.then(function(info){
 			if(info!=null && info!=""){
-				FileUpload.findAll({
+				return FileUpload.findAll({
 					where:{
 						UserAccountID : info.UserAccountID,
 						FileType : {$in: ["ProfileImage", "Signature"]},

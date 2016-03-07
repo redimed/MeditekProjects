@@ -92,26 +92,39 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
     var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
 
-    function EndCall() {
-        audio.pause();
-        swal.close();
-    }
     socketTelehealth.funCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal({
             title: msg.fromName,
             imageUrl: "theme/assets/global/images/E-call_33.png",
-            text: "<img src='theme/assets/global/img/loading.gif' />",
             timer: 30000,
-            html: true,
-            showCancelButton: false,
+            html: "<img src='theme/assets/global/img/loading.gif' />",
+            showCancelButton: true,
             confirmButtonColor: "#26C281",
             confirmButtonText: "Answer",
             cancelButtonText: "Cancel",
-            cancelButtonColor: "#D91E18"
-        }, function() {
-            console.log("11111111111111111111111111111111111111");
-            EndCall();
+            cancelButtonColor: "#D91E18",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $scope.opentokReceiveWindow = window.open($state.href("blank.receive", {
+                    apiKey: msg.apiKey,
+                    sessionId: msg.sessionId,
+                    token: msg.token,
+                    userName: msg.fromName
+                }), "CAll", { directories: "no" });
+            } else {
+                socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+                    from: msg.to,
+                    to: msg.from,
+                    message: "decline"
+                }, function(data) {
+                    console.log("send call", data);
+                });
+            };
+            audio.pause();
+            swal.close();
         });
         audio.loop = true;
         audio.play();
@@ -120,8 +133,12 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     socketTelehealth.funConnect = function() {
         console.log("CONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
         // join room telehealth server
-        console.log("+++++++++++++++++++++++++++++++++++",$cookies.getObject('userInfo'));
+        console.log("+++++++++++++++++++++++++++++++++++", $cookies.getObject('userInfo'));
         socketTelehealth.get('/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
+    };
+
+    socketTelehealth.funCancel = function(msg) {
+        console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
+        swal.close();
     }
 });
-

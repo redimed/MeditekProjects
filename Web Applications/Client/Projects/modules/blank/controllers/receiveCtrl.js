@@ -1,44 +1,23 @@
-var app = angular.module('app.blank.call.controller', []);
+var app = angular.module('app.blank.receive.controller', []);
 
-app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
-
+app.controller('receiveCtrl', function($scope, $stateParams, $timeout) {
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
-    var uidCall = $stateParams.uidCall;
-    var uidUser = $stateParams.uidUser;
+    var uidCall = ($stateParams.uidCall) ? $stateParams.uidCall : null;
+    var uidUser = ($stateParams.uidUser) ? $stateParams.uidUser : null;
     $scope.userName = $stateParams.userName;
-    session = OT.initSession(apiKey, sessionId);
-    var userInfo = $cookies.getObject('userInfo');
-    console.log("userInfo", userInfo);
+    var session = OT.initSession(apiKey, sessionId);
     console.log(apiKey);
     console.log(sessionId);
     console.log(token);
     console.log("$stateParams", $stateParams);
     o.loadingPage(true);
-    //Connect to the session
     session.connect(token, function(error) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
             var publisherOptions = { insertMode: 'append', publishAudio: true, publishVideo: true, audioVolume: 100 };
-            $scope.publisher = OT.initPublisher('publisher', publisherOptions, function(error) {
-                if (!error) {
-                    console.log("publish Success");
-                    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-                        from: uidUser,
-                        to: uidCall,
-                        message: "call",
-                        sessionId: sessionId,
-                        fromName: userInfo.UserName
-                    }, function(data) {
-                        console.log("send call", data);
-                    });
-                    // audio.loop = true;
-                    // audio.play();
-                } else {
-                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
-                }
-            });
+            $scope.publisher = OT.initPublisher('publisher', publisherOptions);
             session.publish($scope.publisher);
         } else {
             console.log('There was an error connecting to the session: ', error.code, error.message);
@@ -49,15 +28,15 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
     session.on('streamCreated', function(event) {
         var stream = event.stream;
         displayStream(stream);
-        o.loadingPage(false);
     });
 
     function displayStream(stream) {
-        // audio.pause();
+        o.loadingPage(false);
         var subscriberOptions = { insertMode: 'append', width: '100%', height: '100%', subscribeToAudio: true, subscribeToVideo: true, audioVolume: 100 };
         $scope.subscriber = session.subscribe(stream, 'subscriber', subscriberOptions);
         var mytimeout = $timeout($scope.onTimeout, 1000);
     }
+
 
     //disconect
     session.on('sessionDisconnected', function(event) {
@@ -135,7 +114,6 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
         $scope.size = $scope.size === '100%' ? '900px' : '100%';
         $scope.zoom = $scope.zoom === false ? true : false;
     };
-
 });
 
 app.filter('formatTimer', function() {

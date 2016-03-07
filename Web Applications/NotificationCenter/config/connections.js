@@ -46,7 +46,6 @@ module.exports.connections = {
       port: 3306,
       user: 'meditek_db',
       password: 'meditekdb123456',
-      // password: 'tz!@9\8$3a?=G].T',
       database: 'Redimed',
       charset: 'utf8',
       collation: 'utf8-general_ci',
@@ -54,6 +53,16 @@ module.exports.connections = {
           host: '192.168.1.2'
       }
   },
+  // mysql: {
+  //     dialect: 'mysql',
+  //     host: 'localhost',
+  //     port: 3306,
+  //     user: 'root',
+  //     password: 'root',
+  //     database: 'Redimed',
+  //     charset: 'utf8',
+  //     collation: 'utf8-general_ci'
+  // },
 
   /***************************************************************************
   *                                                                          *

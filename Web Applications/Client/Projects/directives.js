@@ -186,7 +186,7 @@ app.directive('appointmentDetailDirective', function() {
                     if (data.data[0].TeleUID != null) {
                         var userCall = data.data[0].TeleUID;
                         var userName = data.data[0].FirstName + " " + data.data[0].LastName;
-                        $scope.opentokWindow = window.open($state.href("blank.call", {
+                        $scope.opentokCallWindow = window.open($state.href("blank.call", {
                             apiKey: $scope.opentok.apiKey,
                             sessionId: $scope.opentok.sessionId,
                             token: $scope.opentok.token,
@@ -201,7 +201,8 @@ app.directive('appointmentDetailDirective', function() {
             };
             socketTelehealth.funDecline = function(msg) {
                 console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK", msg);
-                $scope.opentokWindow.close();
+                $scope.opentokCallWindow.close();
+                // audio.pause();
             }
         },
     };

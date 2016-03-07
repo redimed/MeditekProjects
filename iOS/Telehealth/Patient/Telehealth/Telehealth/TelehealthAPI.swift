@@ -22,22 +22,41 @@ class TelehealthAPI : TokenAPI{
                 "Type" : Type,
                 "Description": Description,
                 "PatientAppointment" :
-                [
-                    "FirstName" : FirstName,
-                    "LastName" : LastName,
-                    "PhoneNumber" : PhoneNumber,
-                    "HomePhoneNumber" : HomePhoneNumber,
-                    "Suburb" : Suburd,
-                    "DOB" : DOB,
-                    "Email1" : Email
+                    [
+                        "FirstName" : FirstName,
+                        "LastName" : LastName,
+                        "PhoneNumber" : PhoneNumber,
+                        "HomePhoneNumber" : HomePhoneNumber,
+                        "Suburb" : Suburd,
+                        "DOB" : DOB,
+                        "Email1" : Email
                 ],
-            "FileUploads": FileUploads
+                "AppointmentData": [[
+                    "Section": "Telehealth",
+                    "Category": "Appointment",
+                    "Type": "RequestPatient",
+                    "Name": "PatientConsent1",
+                    "Value": "Y"
+                    ],[
+                        "Section": "Telehealth",
+                        "Category": "Appointment",
+                        "Type": "RequestPatient",
+                        "Name": "PatientConsent2",
+                        "Value": "Y"
+                    ],[
+                        "Section": "Telehealth",
+                        "Category": "Appointment",
+                        "Type": "RequestPatient",
+                        "Name": "PatientConsent3",
+                        "Value": "Y"
+                    ]],
+                "FileUploads": FileUploads
             ]
         ]
         print(parameter)
         
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlTelehealth.requestTelehealth ,headers:config.headers,parameters:parameter,encoding: .JSON).responseJSON{
-             response in
+            response in
             switch response.result {
             case .Success(let JSONData):
                 if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {

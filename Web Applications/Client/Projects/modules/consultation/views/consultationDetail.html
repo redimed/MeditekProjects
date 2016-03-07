@@ -89,6 +89,38 @@
                     </div>
                 </div>
             </div>
+            <!-- EFORM -->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-bubbles font-blue"></i>
+                        <span class="caption-subject bold uppercase font-blue">EForm List</span>
+                        <span class="caption-helper">EForm</span>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                        <a href="javascript:;" class="fullscreen"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="eformTemplate in eformTemplates" style="margin-bottom: 10px;">
+                            <div class="dashboard-stat blue-steel" ng-click="eFormTemplate(eformTemplate)">
+                                <div class="visual">
+                                    <i class="fa fa-file-text-o"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number">{{eformTemplate.Name}}</div>
+                                </div>
+                                <a class="more" href="javascript:;" ng-click="eFormTemplate(eformTemplate)">
+                                    View  <i class="m-icon-swapright m-icon-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END EFORM -->
         </div>
         <div class="col-md-3 col-sm-3">
             <patient-detail-directive apptuid="Params.UID"></patient-detail-directive>

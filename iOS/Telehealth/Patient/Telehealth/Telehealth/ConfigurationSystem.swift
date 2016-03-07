@@ -20,7 +20,7 @@ var cookies :String = String()
 let manager = Alamofire.Manager.sharedInstance
 
 struct ConfigurationSystem {
-    static let http :String = httpUrl.httpTestApp
+    static let http :String = httpUrl.httpChien
     static let Http_3009 :String = "\(http):3009"
     static let Http_3005 :String =  "\(http):3005"
     static let Http_3006 :String =  "\(http):3006"

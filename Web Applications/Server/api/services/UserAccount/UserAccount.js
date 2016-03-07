@@ -615,7 +615,7 @@ module.exports = {
 		return Validation()
 		.then(function(data){
 			return UserAccount.findOne({
-				where:whereClause,
+				where:{$or:whereClause},
 				attributes:attributes,
 				transaction:transaction,
 			})

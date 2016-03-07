@@ -4,7 +4,30 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
     'app.authentication.consultation.detail.eForms.controller',
     'app.authentication.consultation.directives.consultNoteDirectives'
 ]);
-app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr) {
+app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr, EFormService) {
+    /* EFORM */
+    var postData = {
+            Filter: [
+                    {
+                        EFormTemplate: {
+                            Enable: 'Y'
+                        }
+                    }
+            ]
+    }
+    EFormService.PostListEFormTemplate(postData)
+    .then(function(response){
+            $scope.eformTemplates = response.data.rows;
+    }, function(error){
+            
+    })
+
+    $scope.eFormTemplate = function(eformTemplate) {
+        $state.go("authentication.consultation.detail.eForm.LoadForm", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient,  UIDFormTemplate: eformTemplate.UID});
+    };
+    /* END EFORM */
+
+
     $scope.Params = $stateParams;
     console.log("$scope.Params", $scope.Params.UID);
     $scope.getTelehealthDetail = function(UID) {

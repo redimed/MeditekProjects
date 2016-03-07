@@ -50,7 +50,6 @@ public interface RegisterApi {
     @POST("/api/refresh-token/GetNewToken")
     void getNewToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
-
     @POST("/api/login")
     void login(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 

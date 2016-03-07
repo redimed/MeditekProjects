@@ -2,6 +2,7 @@ package com.redimed.telehealth.patient.confirm.presenter;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.widget.CheckBox;
 
 import java.util.ArrayList;
 
@@ -15,4 +16,6 @@ public interface IConfirmPresenter {
     void changeFragment(Fragment fragment);
 
     void completeRequest(Intent i, ArrayList<String> fileUploads, String currentDate);
+
+    boolean isCheckPatientConsent(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3);
 }

@@ -2,55 +2,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:showDividers="middle"
-    android:divider="@drawable/custom_empty_tall_divider"
+    android:orientation="vertical"
     tools:context="com.redimed.telehealth.patient.confirm.ConfirmActivity">
 
-    <include layout="@layout/custom_toolbar"/>
+    <include layout="@layout/custom_toolbar" />
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/confirm_sub_title"/>
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblRequestDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/custom_empty_tall_divider"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblNamePatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_sub_title" />
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblRequestDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblSuburb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblNamePatient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblDOB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblSuburb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblComplete"
-        android:gravity="center"
-        android:layout_width="280dp"
-        android:layout_height="30dp"
-        android:text="@string/confirm_complete"
-        android:background="@android:color/holo_green_light"/>
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblDOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:id="@+id/chkConsent1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="patientConsent1"
+                android:paddingTop="5dp"
+                android:layout_gravity="start"
+                android:layout_marginBottom="5dp"
+                android:text="@string/confirm_option1" />
+
+            <CheckBox
+                android:id="@+id/chkConsent2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="patientConsent2"
+                android:paddingTop="5dp"
+                android:layout_gravity="start"
+                android:layout_marginBottom="5dp"
+                android:text="@string/confirm_option2" />
+
+            <CheckBox
+                android:id="@+id/chkConsent3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="patientConsent3"
+                android:paddingTop="5dp"
+                android:layout_gravity="start"
+                android:layout_marginBottom="5dp"
+                android:text="@string/confirm_option3" />
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblComplete"
+                style="@android:style/Widget.Button"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_green_light"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="@string/confirm_complete" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

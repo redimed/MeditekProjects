@@ -73,7 +73,15 @@ module.exports = React.createClass({
     },
     render: function(){
         var type = this.props.type
-        var html = null
+        var html = null;
+        var display_name = null;
+        if(this.props.permission === 'eformDev'){
+            display_name = (
+                <div style={{position: 'absolute', top: -30, left: 0, backgroundColor: 'green', color: 'white', padding: 5}}>
+                    {this.props.name}
+                </div>
+            )
+        }
         switch(type){
             case 'default':
                 html = (
@@ -83,6 +91,7 @@ module.exports = React.createClass({
             case 'eform_input_check_checkbox':
                 html = (
                     <div className={"dragField col-xs-"+this.props.size} ref="group">
+                        {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <div className="icheck-inline">

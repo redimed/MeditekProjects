@@ -76,13 +76,12 @@ module.exports = React.createClass({
     },
     _checkServerEFormDetail: function(){
         var self = this;
-        EFormService.eformCheckDetail({templateUID: this.templateUID})
+        EFormService.eformCheckDetail({templateUID: this.templateUID, patientUID: this.patientUID})
         .then(function(response){
             if(response.data){
                 self.formUID = response.data.UID;
                 var EFormDataContent = JSON.parse(response.data.EFormData.FormData);
                 EFormDataContent.map(function(field, indexField){
-                    console.log(field);
                     var fieldRef = field.ref;
                     var fieldData = field.value;
                     var rowRef = field.refRow;

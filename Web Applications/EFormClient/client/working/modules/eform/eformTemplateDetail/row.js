@@ -289,7 +289,7 @@ module.exports = React.createClass({
                         </div>
                     </CommonModal>
                     <div className="col-md-12 dragRow">
-                        <div className="portlet light" id={"dragRow_"+this.props.code}>
+                        <div className="portlet light" id={"dragRow_"+this.props.codeSection+'_'+this.props.code}>
                             <div className="portlet-title">
                                     <div className="caption">
                                             <span className="label label-sm label-primary dragRowHandler">

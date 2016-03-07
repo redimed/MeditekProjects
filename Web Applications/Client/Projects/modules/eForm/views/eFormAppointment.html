@@ -22,5 +22,35 @@
 </div>
 <br>
 <!-- END PAGE HEADER-->
-<iframe width="100%" height="760" frameBorder="0" scrolling="yes"
-        id="eformDev"></iframe>
+<div class="col-md-12 col-sm-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bubbles font-blue"></i>
+                    <span class="caption-subject bold uppercase font-blue">EForm List</span>
+                    <span class="caption-helper">List of EForm</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-repeat="eformTemplate in eformTemplates">
+                        <div class="dashboard-stat purple-medium" ng-click="eFormTemplate(eformTemplate)">
+                            <div class="visual">
+                                <i class="fa fa-file-text-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">{{eformTemplate.Name}}</div>
+                            </div>
+                            <a class="more" href="javascript:;" ng-click="eFormTemplate(eformTemplate)">
+                                View  <i class="m-icon-swapright m-icon-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

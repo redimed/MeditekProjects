@@ -1,7 +1,7 @@
 var app = angular.module('app.authentication.eForm',[
 	'app.authentication.eForm.controller',
 	'app.authentication.eForm.directive',
-	// 'app.authentication.eForm.services',
+	 'app.authentication.eForm.services',
 ]);
 
 app.config(function($stateProvider){

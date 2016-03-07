@@ -34,16 +34,17 @@ var o = {
 
         uploadFileUrl: _uploadURL,
 
-        authBaseUrl:_authBaseURL,
-        
-        telehealthBaseURL:_telehealthBaseURL,
+        authBaseUrl: _authBaseURL,
 
-        configStateBlank:_configStateBlank,
+        telehealthBaseURL: _telehealthBaseURL,
+
+        configStateBlank: _configStateBlank,
 
         eFormBaseUrl: _eFormBaseURL,
 
-        ncBaseUrl:_ncBaseURL,
-        PDFFormUrl:_PDFFormUrl,
+        ncBaseUrl: _ncBaseURL,
+
+        PDFFormUrl: _PDFFormUrl,
     },
 
     checkData: function(value) {
@@ -77,4 +78,5 @@ var o = {
             angular.element('.loading-page').css("display", "none");
         };
     },
+    audio: new Audio('theme/assets/global/audio/ringtone.mp3'),
 }

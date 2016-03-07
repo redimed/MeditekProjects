@@ -33,8 +33,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
                     }, function(data) {
                         console.log("send call", data);
                     });
-                    // audio.loop = true;
-                    // audio.play();
+                    o.audio.loop = true;
+                    o.audio.play();
                 } else {
                     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
                 }
@@ -53,7 +53,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
     });
 
     function displayStream(stream) {
-        // audio.pause();
+        o.audio.pause();
         var subscriberOptions = { insertMode: 'append', width: '100%', height: '100%', subscribeToAudio: true, subscribeToVideo: true, audioVolume: 100 };
         $scope.subscriber = session.subscribe(stream, 'subscriber', subscriberOptions);
         var mytimeout = $timeout($scope.onTimeout, 1000);

@@ -202,7 +202,7 @@ app.directive('appointmentDetailDirective', function() {
             socketTelehealth.funDecline = function(msg) {
                 console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK", msg);
                 $scope.opentokCallWindow.close();
-                // audio.pause();
+                o.audio.pause();
             }
         },
     };

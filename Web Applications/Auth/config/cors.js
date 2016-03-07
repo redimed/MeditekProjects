@@ -48,7 +48,10 @@ module.exports.cors = {
      ***************************************************************************/
 
     //For local testing
-    origin: 'https://localhost:3001, https://localhost:3004, https://localhost:3005, https://localhost:3007, https://localhost:3009, http://localhost:3001, http://localhost:3004, http://localhost:3005, http://localhost:3007, http://localhost:3009, http://192.168.1.217:3001, http://192.168.1.217:3004, http://192.168.1.217:3005, http://192.168.1.217:3007, http://192.168.1.217:3009, https://192.168.1.215:3001, https://192.168.1.216:3004, https://192.168.1.216:3005, https://192.168.1.216:3007, https://192.168.1.216:3009, http://telehealthvietnam.com.vn:3001, http://telehealthvietnam.com.vn:3004, http://telehealthvietnam.com.vn:3007, http://telehealthvietnam.com.vn:3009, http://telehealthvietnam.com.vn:3006',
+    origin: 'http://localhost:3001, http://localhost:3004, http://localhost:3005, http://localhost:3007, http://localhost:3009, '+
+            'https://localhost:3001, https://localhost:3004, https://localhost:3005, https://localhost:3007, https://localhost:3009, '+
+            'http://192.168.1.215:3001, http://192.168.1.215:3004, http://192.168.1.215:3005, http://192.168.1.215:3007, http://192.168.1.215:3009, '+
+            'https://192.168.1.215:3001, https://192.168.1.215:3004, https://192.168.1.215:3005, https://192.168.1.215:3007, https://192.168.1.215:3009,',
     //For TestApp deployment
     //origin: 'http://testapp.redimed.com.au:3001, http://testapp.redimed.com.au:3004, http://testapp.redimed.com.au:3007, http://testapp.redimed.com.au:3009',
 

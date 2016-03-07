@@ -132,6 +132,11 @@ module.exports = function(appointmentUID, userInfo) {
                 attributes: Services.AttributesAppt.OnsiteAppointment(),
                 model: OnsiteAppointment,
                 required: false
+            }, {
+                attributes: Services.AttributesAppt.AppointmentData(),
+                model: AppointmentData,
+                as: 'AppointmentData',
+                required: false
             }],
             where: filter.Appointment
         })

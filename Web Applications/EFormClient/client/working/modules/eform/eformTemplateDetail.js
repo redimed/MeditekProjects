@@ -60,14 +60,12 @@ module.exports = React.createClass({
     _onComponentSectionDrag: function(fromObj, toObj) {
         var fromImmutable = this.state.sections.get(fromObj.codeSection);
         var toImmutable = this.state.sections.get(toObj.codeSection);
+        var sections = this.state.sections;
+        sections = sections.updateIn([fromObj.codeSection], val => toImmutable);
+        sections = sections.updateIn([toObj.codeSection], val => fromImmutable);
         this.setState(function(prevState) {
             return {
-                sections: prevState.sections.updateIn([fromObj.codeSection], val => toImmutable)
-            }
-        })
-        this.setState(function(prevState) {
-            return {
-                sections: prevState.sections.updateIn([toObj.codeSection], val => fromImmutable)
+                sections: sections
             }
         })
         swal("Success!", "Drag change section successfully.", "success");
@@ -116,20 +114,27 @@ module.exports = React.createClass({
         }
         swal("Success!", "Add field successfully.", "success")
     },
-    _onComponentSectionDragField: function(fromObj, toObj) {
-        var fromImmutable = this.state.sections.get(fromObj.codeSection).get('fields').get(fromObj.codeField);
-        var toImmutable = this.state.sections.get(toObj.codeSection).get('fields').get(toObj.codeField);
-
-        this.setState(function(prevState) {
+    _onComponentSectionDragRow: function(fromObj, toObj) {
+        var fromImmutable = this.state.sections.get(fromObj.codeSection).get('rows').get(fromObj.codeRow);
+        var toImmutable = this.state.sections.get(toObj.codeSection).get('rows').get(toObj.codeRow);
+        var sections = this.state.sections;
+        sections = sections.updateIn([fromObj.codeSection, 'rows', fromObj.codeRow], val => toImmutable);
+        sections = sections.updateIn([toObj.codeSection, 'rows', toObj.codeRow], val => fromImmutable);
+         this.setState(function(prevState) {
             return {
-                sections: prevState.sections.updateIn([fromObj.codeSection, 'fields', fromObj.codeField], val => toImmutable)
+                sections: sections
+            }
+        })
+        /*this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([fromObj.codeSection, 'rows', fromObj.codeRow], val => toImmutable)
             }
         })
         this.setState(function(prevState) {
             return {
-                sections: prevState.sections.updateIn([toObj.codeSection, 'fields', toObj.codeField], val => fromImmutable)
+                sections: prevState.sections.updateIn([toObj.codeSection, 'rows', toObj.codeRow], val => fromImmutable)
             }
-        })
+        })*/
         swal("Success!", "Drag change field successfully.", "success");
     },
     _onComponentSectionRemoveField: function(codeSection, codeRow, codeField) {
@@ -316,7 +321,8 @@ module.exports = React.createClass({
                                     			onRemoveTableRow={this._onComponentSectionRemoveTableRow}
                                     			onCreateTableColumn={this._onComponentSectionCreateTableColumn}
                                     			onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
-                                    			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}/>
+                                    			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
+                                                                 onDragRow={this._onComponentSectionDragRow}/>
                                     	}, this)
                                 }
                                 <ComponentPageBar ref="pageBarBottom"

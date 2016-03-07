@@ -243,22 +243,53 @@ module.exports = {
         })
     },
     PostCheckDetail: function(req, res){
-        EFormTemplate.findOne({where: {UID: req.body.templateUID} })
-        .then(function(EFormTemplate){
-            if(EFormTemplate){
-                EForm.findOne({
-                    where: {EFormTemplateID: EFormTemplate.ID},
+        Patient.findOne({
+            where: {UID: req.body.patientUID}
+        })
+        .then(function(patient){
+            EFormTemplate.findOne({
+                where: {UID: req.body.templateUID}
+            })
+            .then(function(eFormTemplate){
+                EForm.find({
+                    where: {EFormTemplateID: eFormTemplate.ID},
                     include: [
-                        {model: EFormData, required: false, as: 'EFormData'}
+                        {model: EFormData, required: false, as: 'EFormData'},
+                        {model: Patient,
+                            required: true,
+                            through: {
+                                where: {PatientID: patient.ID}
+                            } 
+                        }
                     ]
                 })
                 .then(function(EForm){
                     res.json({data: EForm});
                 })
-            }
-        }, function(error){
-            res.status(400).json({err: error});
+            })
         })
+            /*RelEFormPatient.findOne({
+                where: {PatientID: Patient.ID}
+            })
+            .then(function(RelEFormPatient){
+                if(RelEFormPatient){
+                    EFormData.findOne({
+                        where: {EFormID: RelEFormPatient.EFormID},
+                    })
+                    .then(function(eFormData){
+                        EForm.findOne({
+                        where: {ID: eFormData.ID},
+                        include: [
+                            {model: EFormData, required: false, as: 'EFormData'}
+                        ]
+                        })
+                        .then(function(EForm){
+                            res.json({data: EForm});
+                        })
+                    })
+                }else{ 
+                    res.json({data: RelEFormPatient});
+                }*/   
     },
     PostDetail: function(req, res){
         EForm.find({ where: {ID: req.body.id},

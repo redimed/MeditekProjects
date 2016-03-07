@@ -12,6 +12,7 @@ module.exports = React.createClass({
         onUpdateSection: React.PropTypes.func,
         onRemoveSection: React.PropTypes.func,
         onDragSection: React.PropTypes.func,
+        onDragRow: React.PropTypes.func,
         onCreateRow: React.PropTypes.func,
         onRemoveRow: React.PropTypes.func,
         onSelectField: React.PropTypes.func,
@@ -36,67 +37,26 @@ module.exports = React.createClass({
         return this.props.permission;
     },
     componentDidMount: function() {
-        if (this.props.type === 'eformDev') {
-            //this._dragAndDropSections();
-            //this._dragAndDropFields();
+        if (this.props.permission === 'eformDev') {
+            this._dragAndDropSections();
+            this._dragAndDropRows();
         }
     },
     componentDidUpdate: function(prevProps, prevState) {
-        /*if (this.props.type === 'dev') {
+        if (this.props.permission === 'eformDev') {
             this.drakeSection.destroy();
-            this.drakeField.destroy();
+            this.drakeRow.destroy();
             this._dragAndDropSections();
-            this._dragAndDropFields();
-        }*/
+            this._dragAndDropRows();
+        }
     },
-    _dragAndDropFields: function() {
+    _dragAndDropSections: function() {
         var self = this;
-        this.drakeField = dragula([].slice.apply(document.querySelectorAll('.dragula')), {
-            copy: true,
-            revertOnSpill: true, // spilling will put the element back where it was dragged from, if this is true
-            removeOnSpill: true,
-            invalid: function(el, handle) {
-                return false; // don't prevent any drags from initiating by default
-            }
-        });
-        this.drakeField.on('drop', function(el, target, source, sibling) {
-            if (el.parentNode == target) {
-                target.removeChild(el)
-            }
-            swal({
-                title: 'Are you sure?',
-                text: 'You will change this field',
-                type: 'warning',
-                showCancelButton: true,
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-                    var fromEl = el.id;
-                    var targetArray = $(target).find('.form-group')
-                    $.each(targetArray, function(index, value) {
-                        var tempId = $(value).attr('id')
-                        if (tempId !== fromEl) {
-                            var fromArr = fromEl.split('_')
-                            var toArr = tempId.split('_')
-                            var fromObj = { codeSection: fromArr[1], codeField: fromArr[2] }
-                            var toObj = { codeSection: toArr[1], codeField: toArr[2] }
-                            self.props.onDragField(fromObj, toObj)
-                        }
-                    })
-                } else {
-                    swal("No change", "Form will refresh.", "success")
-                }
-            })
-        })
-    },
-    _dragAndDropSections() {
-        var self = this;
-        this.drakeSection = dragula([].slice.apply(document.querySelectorAll('.dragulaSection')), {
+        this.drakeSection = dragula([].slice.apply(document.querySelectorAll('.dragSection')), {
             copy: false,
             revertOnSpill: true,
             moves: function(el, container, handle) {
-                return handle.className.indexOf('dragulaSectionHandler') > -1;
+                return handle.className.indexOf('dragSectionHandler') > -1;
             }
         });
         this.drakeSection.on('drop', function(el, target, source, sibling) {
@@ -120,8 +80,51 @@ module.exports = React.createClass({
                             var fromArr = fromEl.split('_')
                             var toArr = tempId.split('_')
                             var fromObj = { codeSection: fromArr[1] }
-                            var toObj = { codeSection: toArr[1] }
-                            self.props.onDragSection(fromObj, toObj)
+                            var toObj = { codeSection: toArr[1] };
+                            self.props.onDragSection(fromObj, toObj);
+                            return false;
+                        }
+                    })
+                } else {
+                    swal("No change", "Form will refresh.", "success")
+                }
+            })
+        })
+    },
+    _dragAndDropRows: function() {        
+        var self = this;
+        this.drakeRow = dragula([].slice.apply(document.querySelectorAll('.dragRow')), {
+            copy: true,
+            revertOnSpill: true, // spilling will put the element back where it was dragged from, if this is true
+            removeOnSpill: true,
+            moves: function(el, container, handle) {
+                return handle.className.indexOf('dragRowHandler') > -1;
+            }
+        });
+        this.drakeRow.on('drop', function(el, target, source, sibling) {
+            if (el.parentNode == target) {
+                target.removeChild(el)
+            }
+            swal({
+                title: 'Are you sure?',
+                text: 'You will change this row',
+                type: 'warning',
+                showCancelButton: true,
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    var fromEl = el.id;
+                    var targetArray = $(target).find('.form-group')
+                    $.each(targetArray, function(index, value) {
+                        var tempId = $(value).attr('id')
+                        if (tempId !== fromEl) {
+                            var fromArr = fromEl.split('_')
+                            var toArr = tempId.split('_')
+                            var fromObj = { codeSection: fromArr[1], codeRow: fromArr[2] }
+                            var toObj = { codeSection: toArr[1], codeRow: toArr[2] }
+                            self.props.onDragRow(fromObj, toObj);
+                            return false;
                         }
                     })
                 } else {

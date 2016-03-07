@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.confirm.presenter.ConfirmPresenter;
@@ -46,6 +50,12 @@ public class ConfirmActivity extends AppCompatActivity implements IConfirmView, 
     @Bind(R.id.lblEmail)
     TextView lblEmail;
 
+    @Bind(R.id.chkConsent1)
+    CheckBox chkConsent1;
+    @Bind(R.id.chkConsent2)
+    CheckBox chkConsent2;
+    @Bind(R.id.chkConsent3)
+    CheckBox chkConsent3;
     @Bind(R.id.lblComplete)
     TextView btnComplete;
 
@@ -66,8 +76,8 @@ public class ConfirmActivity extends AppCompatActivity implements IConfirmView, 
         setContentView(R.layout.activity_confirm);
         ButterKnife.bind(this);
 
-        onLoadToolbar();
         init();
+        onLoadToolbar();
 
         btnComplete.setOnClickListener(this);
     }
@@ -79,11 +89,11 @@ public class ConfirmActivity extends AppCompatActivity implements IConfirmView, 
 
         //Set text  and icon title appointment details
         lblTitle.setText(getResources().getString(R.string.confirm_title));
+        lblSubTitle.setText(getResources().getString(R.string.back));
         layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                iConfirmPresenter.changeFragment(new HomeFragment());
             }
         });
     }
@@ -121,9 +131,13 @@ public class ConfirmActivity extends AppCompatActivity implements IConfirmView, 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.lblComplete:
-                iConfirmPresenter.completeRequest(i, fileUploads, currentDate);
+                if (!iConfirmPresenter.isCheckPatientConsent(chkConsent1, chkConsent2, chkConsent3)) {
+                    Toast.makeText(ConfirmActivity.this, "Please accept consent and submit booking request", Toast.LENGTH_SHORT).show();
+                } else {
+                    iConfirmPresenter.completeRequest(i, fileUploads, currentDate);
+                }
                 break;
         }
     }

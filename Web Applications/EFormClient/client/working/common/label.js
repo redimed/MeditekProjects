@@ -34,6 +34,9 @@ module.exports = React.createClass({
     getSize: function(){
         return this.props.size
     },
+    getValue: function(){
+        return '';
+    },
     getType: function(){
         return this.props.type
     },

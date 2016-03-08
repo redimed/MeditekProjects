@@ -181,9 +181,9 @@ module.exports = React.createClass({
         if(typeof this.refs[refRow] !== 'undefined')
             this.refs[refRow].setValue(fieldRef, value);
     },
-    setValueForRadio: function(refRow, fieldRef){
+    setValueForRadio: function(refRow, fieldRef, fieldChecked){
         if(typeof this.refs[refRow] !== 'undefined')
-            this.refs[refRow].setValueForRadio(fieldRef);
+            this.refs[refRow].setValueForRadio(fieldRef, fieldChecked);
     },
     setValueForTable: function(refRow, fieldRef, fieldRefChild, value){
         if(typeof this.refs[refRow] !== 'undefined')

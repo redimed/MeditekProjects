@@ -22,8 +22,6 @@ module.exports = React.createClass({
             }
             if(Config.getPrefixField(this.type, 'check') > -1){
                 this.refs.formLabel.setValue(object.label);
-            }
-            if(Config.getPrefixField(this.type, 'radio') > -1){
                 this.refs.formValue.setValue(object.value);
             }
             if(Config.getPrefixField(this.type, 'html') > -1){
@@ -50,10 +48,10 @@ module.exports = React.createClass({
             }
             if(Config.getPrefixField(this.type, 'textarea') > -1)
                 data.rows = this.refs.formRows.getValue();
-            if(Config.getPrefixField(this.type, 'check') > -1)
+            if(Config.getPrefixField(this.type, 'check') > -1){
                 data.label = this.refs.formLabel.getValue();
-            if(Config.getPrefixField(this.type, 'radio') > -1)
                 data.value = this.refs.formValue.getValue();
+            }
             if(Config.getPrefixField(this.type, 'label') > -1){
                 delete data.name;
                 delete data.preCal;
@@ -83,10 +81,10 @@ module.exports = React.createClass({
             display_name = 'block';
             if(Config.getPrefixField(this.type, 'textarea') > -1)
                 display_rows = 'block';
-            if(Config.getPrefixField(this.type, 'check') > -1)
+            if(Config.getPrefixField(this.type, 'check') > -1){
                 display_label = 'block';
-            if(Config.getPrefixField(this.type, 'radio') > -1)
                 display_value = 'block';
+            }
             if(Config.getPrefixField(this.type, 'label') > -1){
                 display_name = 'none';
                 display_precal = 'none';

@@ -28,6 +28,7 @@ module.exports = React.createClass({
         var self = this;
         EFormService.preFormDetail({UID: this.appointmentUID})
         .then(function(response){
+            console.log(response.data);
             for(var section_index = 0; section_index < content.length; section_index++){
                 var section = content[section_index];
                 for(var row_index = 0; row_index < section.rows.length; row_index++){
@@ -47,7 +48,14 @@ module.exports = React.createClass({
                                     preCalRes.map(function(preCalResItem){
                                         for(var key in response.data){
                                             if(key === preCalResItem){
-                                                value += response.data[key]+' ';
+                                                if(Config.getPrefixField(field.type,'checkbox') > -1){
+                                                    if(field.value === response.data[key]){
+                                                        value = 'yes';
+                                                    }
+                                                }
+                                                else{
+                                                    value += response.data[key]+' ';
+                                                }
                                                 break;
                                             }
                                         }
@@ -89,9 +97,8 @@ module.exports = React.createClass({
                     for(var i = 0; i < sections.length; i++){
                         var section = sections[i];
                         if(typeof field.refChild === 'undefined'){
-                            if(Config.getPrefixField(field.type, 'radio') > -1){
-                                if(field.checked)
-                                    self.refs[section.ref].setValueForRadio(rowRef, fieldRef);
+                            if(Config.getPrefixField(field.type, 'radio') > -1 || Config.getPrefixField(field.type, 'checkbox') > -1){
+                                self.refs[section.ref].setValueForRadio(rowRef, fieldRef, field.checked);
                             }else{
                                 self.refs[section.ref].setValue(rowRef, fieldRef, fieldData);
                             }
@@ -135,7 +142,6 @@ module.exports = React.createClass({
         }
         var content = JSON.stringify(fields);
         var appointmentUID = this.appointmentUID;
-        console.log(this.formUID);
         if(this.formUID === null){
             EFormService.formSave({templateUID: this.templateUID, content: content, name: this.state.name, patientUID: this.patientUID, userUID: this.userUID})
             .then(function(){

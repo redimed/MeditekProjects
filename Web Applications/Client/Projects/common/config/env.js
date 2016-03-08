@@ -36,6 +36,7 @@ var configEFormUrl={
 	// 'local':'https://192.168.1.235:3014',
 	'local':'http://192.168.1.215:3014',
 	'meditekServer':'https://meditek.redimed.com.au:3014',
+	//'meditekServer': 'https://localhost:3014',
 	'testApp':'https://testapp.redimed.com.au:3014',
 	'app':'https://apps.redimed.com.au:3014'
 };

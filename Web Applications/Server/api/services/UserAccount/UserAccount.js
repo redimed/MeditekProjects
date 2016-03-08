@@ -560,7 +560,7 @@ module.exports = {
 	{
 		console.log(criteria);
 		var error = new Error('GetUserAccountDetails.Error');
-		var whereClause={Enable:'Y'};
+		var whereClause={};
 
 		function Validation()
 		{
@@ -615,7 +615,7 @@ module.exports = {
 		return Validation()
 		.then(function(data){
 			return UserAccount.findOne({
-				where:{$or:whereClause},
+				where:{$or:whereClause,Enable:'Y'},
 				attributes:attributes,
 				transaction:transaction,
 			})

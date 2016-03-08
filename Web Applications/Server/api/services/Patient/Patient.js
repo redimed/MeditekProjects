@@ -831,8 +831,9 @@ module.exports = {
                 //         transaction :t
                 //     });
                 // }
-                info.UserAccountID = user[0].ID;
-                info.UserAccountUID = user[0].UID;
+                console.log(user);
+                info.UserAccountID = user.ID;
+                info.UserAccountUID = user.UID;
                 return Patient.findOne({
                     where:{
                         UserAccountID : info.UserAccountID

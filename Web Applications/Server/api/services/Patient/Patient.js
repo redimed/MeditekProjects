@@ -670,8 +670,8 @@ module.exports = {
             DOB             : data.DOB?data.DOB:null,
             Gender          : data.Gender,
             Occupation      : data.Occupation,
-            HomePhoneNumber : data.HomePhoneNumber==''||data.HomePhoneNumber==null?null:data.HomePhoneNumber,
-            WorkPhoneNumber : data.WorkPhoneNumber==''||data.WorkPhoneNumber==null?null:data.WorkPhoneNumber,
+            HomePhoneNumber : data.HomePhoneNumber,
+            WorkPhoneNumber : data.WorkPhoneNumber,
             CountryID1      : data.CountryID1,
             Suburb          : data.Suburb,
             Postcode        : data.Postcode,
@@ -711,7 +711,7 @@ module.exports = {
                     return success;
                 }
             },function(err) {
-                t.rollback();
+                // t.rollback();
                 throw err;
             })
             .then(function(got_user) {
@@ -735,7 +735,7 @@ module.exports = {
                     transaction :t
                 });
             },function(err){
-                t.rollback();
+                // t.rollback();
                 throw err;
             })
             .then(function(got_patient) {
@@ -748,7 +748,7 @@ module.exports = {
                     throw err;
                 }
             },function(err) {
-                t.rollback();
+                // t.rollback();
                 throw err;
             })
             .then(function(result){
@@ -772,7 +772,7 @@ module.exports = {
                         }
                     }
                 },function(err){
-                    t.rollback();
+                    // t.rollback();
                     throw err;
                 })
                 .then(function(result){
@@ -780,7 +780,7 @@ module.exports = {
                         return PatientMedicare.create(PatientDetail.PatientMedicare,{transaction:t});
                     }
                 },function(err){
-                   t.rollback();
+                   // t.rollback();
                    throw err; 
                 })
                 .then(function(result){
@@ -788,7 +788,7 @@ module.exports = {
                         return PatientKin.create(PatientDetail.PatientKin,{transaction:t});
                     }
                 },function(err){
-                    t.rollback();
+                    // t.rollback();
                     throw err;
                 })
                 .then(function(result){
@@ -796,7 +796,7 @@ module.exports = {
                         return PatientDVA.create(PatientDetail.PatientDVA,{transaction:t});
                     }
                 },function(err){
-                    t.rollback();
+                    // t.rollback();
                     throw err;
                 })
             }, function(err){
@@ -819,6 +819,7 @@ module.exports = {
                                         throw err;
                                     else{
                                         info.transaction = t;
+                                        info.dataValues.PinNumber = userInfo.PinNumber;
                                         defer.resolve(info);
                                     }
                                 });

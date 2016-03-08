@@ -717,7 +717,7 @@ module.exports = {
             .then(function(got_user) {
                 if(got_user == '' || got_user == null) {
                     userInfo.Password = generatePassword(12,false);
-                    userInfo.PinNumber = generatePassword(6, false);
+                    userInfo.PinNumber = data.PinNumber?data.PinNumber:generatePassword(6, false);
                     return Services.UserAccount.CreateUserAccount(userInfo,t);
                 }
                 else {

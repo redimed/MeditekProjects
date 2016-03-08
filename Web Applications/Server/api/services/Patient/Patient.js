@@ -807,7 +807,6 @@ module.exports = {
                 //call send Mail or send SMSs
                 console.log("ishaveUser ",ishaveUser);
                 if(ishaveUser == false) {
-                    con
                     if(isCreateByPhoneAndEmail == true) {
                         data.content = data.PinNumber;
                         return Services.Patient.sendSMS(data, t,function(err) {

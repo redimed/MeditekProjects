@@ -670,8 +670,8 @@ module.exports = {
             DOB             : data.DOB?data.DOB:null,
             Gender          : data.Gender,
             Occupation      : data.Occupation,
-            HomePhoneNumber : data.HomePhoneNumber,
-            WorkPhoneNumber : data.WorkPhoneNumber,
+            HomePhoneNumber : data.HomePhoneNumber==''||data.HomePhoneNumber==null?null:data.HomePhoneNumber,
+            WorkPhoneNumber : data.WorkPhoneNumber==''||data.WorkPhoneNumber==null?null:data.WorkPhoneNumber,
             CountryID1      : data.CountryID1,
             Suburb          : data.Suburb,
             Postcode        : data.Postcode,
@@ -717,7 +717,7 @@ module.exports = {
             .then(function(got_user) {
                 if(got_user == '' || got_user == null) {
                     userInfo.Password = generatePassword(12,false);
-                    userInfo.PinNumber = generatePassword(6, false);
+                    userInfo.PinNumber = data.PinNumber?data.PinNumber:generatePassword(6, false);
                     return Services.UserAccount.CreateUserAccount(userInfo,t);
                 }
                 else {

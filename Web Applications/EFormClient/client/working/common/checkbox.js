@@ -1,5 +1,5 @@
 module.exports = React.createClass({
-    value: 'no',
+    value: '',
     propTypes: {
         label: React.PropTypes.string,
         name: React.PropTypes.string,
@@ -9,7 +9,8 @@ module.exports = React.createClass({
         code: React.PropTypes.number,
         type: React.PropTypes.string,
         context: React.PropTypes.string,
-        onRightClickItem: React.PropTypes.func
+        onRightClickItem: React.PropTypes.func,
+        preCal: React.PropTypes.string
     },
     getDefaultProps: function(){
         return {
@@ -28,10 +29,10 @@ module.exports = React.createClass({
             checkboxClass: 'icheckbox_square-green'
         })
         $(this.refs.input).on('ifChecked', function(event){
-            self.value = 'yes';
+            //self.value = 'yes';
         })
         $(this.refs.input).on('ifUnchecked', function(event){
-            self.value = 'no';
+            //self.value = 'no';
         })
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
@@ -49,15 +50,24 @@ module.exports = React.createClass({
             $(this.refs.input).prop('disabled', true);
         }
     },
-    setValue: function(value){
-        this.value = value;
-        if(this.value === 'yes')
+    isChecked: function(){
+        return $(this.refs.input).prop('checked');
+    },
+    setChecked: function(checked){
+        if(checked)
+            $(this.refs.input).iCheck('check');
+        else{
+             $(this.refs.input).iCheck('uncheck');
+        }
+    },
+    setValue: function(checked){
+        if(checked === 'yes')
             $(this.refs.input).iCheck('check');
         else
-            $(this.refs.input).iCheck('uncheck');
+           $(this.refs.input).iCheck('uncheck'); 
     },
     getValue: function(){
-        return this.value;
+        return this.props.value;
     },
     getName: function(){
         return this.props.name;
@@ -70,6 +80,9 @@ module.exports = React.createClass({
     },
     getType: function(){
         return this.props.type;
+    },
+    getPreCal: function(){
+        return this.props.preCal;
     },
     render: function(){
         var type = this.props.type

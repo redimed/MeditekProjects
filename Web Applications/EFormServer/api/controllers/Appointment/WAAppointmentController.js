@@ -71,14 +71,34 @@ module.exports = {
         var UID = req.params.UID;
         Appointment.findOne({
             where: {UID: UID},
-            include: [{
-                model: Patient,
-                required: false
-            }]
+            include: [
+                {
+                    model: Patient,
+                    required: false,
+                    include: [
+                        {model: UserAccount, required: false}
+                    ]
+                },
+                {
+                    model: TelehealthAppointment,
+                    required: false
+                }
+            ]
         })
         .then(function(response){
             response.dataValues.PatientFirstName = response.dataValues.Patients[0].FirstName;
             response.dataValues.PatientLastName = response.dataValues.Patients[0].LastName;
+            response.dataValues.PatientTitle = response.dataValues.Patients[0].Title;
+            response.dataValues.PatientAddress1 = response.dataValues.Patients[0].Address1;
+            response.dataValues.PatientAddress2 = response.dataValues.Patients[0].Address2;
+            response.dataValues.PatientPostcode = response.dataValues.Patients[0].Postcode;
+            response.dataValues.PatientSuburd = response.dataValues.Patients[0].Suburb;
+            response.dataValues.PatientEmail1 = response.dataValues.Patients[0].Email1;
+            response.dataValues.PatientDOB = response.dataValues.Patients[0].DOB;
+            response.dataValues.PatientHomePhoneNumber = response.dataValues.Patients[0].HomePhoneNumber;
+            response.dataValues.PatientWorkPhoneNumber = response.dataValues.Patients[0].WorkPhoneNumber;
+            response.dataValues.UserAccountPhoneNumber = response.dataValues.Patients[0].UserAccount.PhoneNumber;
+
             res.ok({data: response});
         }, function(error){
             res.serverError(ErrorWrap(err));

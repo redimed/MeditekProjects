@@ -50,9 +50,9 @@ module.exports = React.createClass({
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].setValue(value);
     },
-    setValueForRadio: function(fieldRef){
+    setValueForRadio: function(fieldRef, fieldChecked){
         if(typeof this.refs[fieldRef] !== 'undefined')
-            this.refs[fieldRef].setChecked();  
+            this.refs[fieldRef].setChecked(fieldChecked);
     },
     setValueForTable: function(fieldRef, fieldRefChild, value){
         if(typeof this.refs[fieldRef] !== 'undefined')
@@ -98,8 +98,6 @@ module.exports = React.createClass({
             }
             if(Config.getPrefixField(type, 'check') > -1){
                 dataFieldDetail.label = this.refs[ref].getLabel();
-            }
-            if(Config.getPrefixField(type, 'radio') > -1){
                 dataFieldDetail.value = this.refs[ref].getValue();
             }
             if(Config.getPrefixField(type, 'label') > -1){
@@ -221,7 +219,7 @@ module.exports = React.createClass({
                 var type = this.refs[fieldRef].getType();
                 if(type !== 'table' && 
                     Config.getPrefixField(type, 'label') === -1 && 
-                    Config.getPrefixField(type, 'radio') === -1 && 
+                    Config.getPrefixField(type, 'check') === -1 && 
                     Config.getPrefixField(type, 'date') === -1){
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
@@ -232,7 +230,7 @@ module.exports = React.createClass({
                         tableField.refRow = self.props.refTemp;
                         results.push(tableField);
                     })
-                }else if(Config.getPrefixField(type, 'radio') > -1){
+                }else if(Config.getPrefixField(type, 'checkbox') > -1 || Config.getPrefixField(type, 'radio') > -1){
                     var isChecked = this.refs[fieldRef].isChecked();
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
@@ -364,6 +362,7 @@ module.exports = React.createClass({
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
                                                                 onRightClickItem={this._onRightClickItem}
+                                                                preCal={field.get('preCal')}
                                                                 rows={field.get('rows')}/>
                                                     else if(type === 'eform_input_check_checkbox')
                                                             return <CommonCheckbox key={index} type={type}
@@ -375,6 +374,8 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                value={field.get('value')}
+                                                                preCal={field.get('preCal')}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 label={field.get('label')}/>
                                                     else if(type === 'eform_input_check_radio')
@@ -389,6 +390,7 @@ module.exports = React.createClass({
                                                                 code={index}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 label={field.get('label')}
+                                                                preCal={field.get('preCal')}
                                                                 value={field.get('value')}/>
                                                     else if(type === 'eform_input_check_label')
                                                             return <CommonLabel key={index} type={type}
@@ -500,7 +502,8 @@ module.exports = React.createClass({
                                             refTemp={field.get('ref')}
                                             code={index}
                                             onRightClickItem={this._onRightClickItem}
-                                            label={field.get('label')}/>
+                                            label={field.get('label')}
+                                            value={field.get('value')}/>
                                 else if(type === 'eform_input_check_radio')
                                         return <CommonRadio key={index} type={type}
                                             groupId={groupId}

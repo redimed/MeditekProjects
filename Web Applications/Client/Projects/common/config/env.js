@@ -1,4 +1,4 @@
-var env='meditekServer',socketAuth, socketRest, socketNc, socketTelehealth ={}; //local,meditekServer,testApp,app
+var env='local',socketAuth, socketRest, socketNc, socketTelehealth ={}; //local,meditekServer,testApp,app
 
 var configRestBaseUrl={
 	// 'local':'https://192.168.1.235:3005',

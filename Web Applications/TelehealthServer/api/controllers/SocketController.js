@@ -4,6 +4,7 @@ var $q = require('q');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
 var arrTemp = [];
+var redisKey = "TelehealthServer";
 
 function emitError(socket, msg) {
     var err = new Error("Socket.Error");
@@ -57,7 +58,7 @@ module.exports = {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
                     console.log("JoinConferenceRoom Successfully", uid);
-                    console.log("===============================================",arrTemp);
+                    console.log("===============================================", arrTemp);
                     if (_.some(arrTemp, {
                             to: uid
                         })) {
@@ -66,7 +67,7 @@ module.exports = {
                             message: 'call'
                         });
                         sails.sockets.emit(req.socket.id, '-', arrTemp[index]);
-                        console.log("============= sails.sockets.emit",sails.sockets.emit);
+                        console.log("============= sails.sockets.emit", sails.sockets.emit);
                     }
                 } else error = "User Is Not Exist";
             }).catch(function(err) {
@@ -144,8 +145,12 @@ module.exports = {
             var index = _.findIndex(arrTemp, {
                 to: to
             });
-            if (message.toLowerCase() == 'call' && index == -1) arrTemp.push(data);
-            else arrTemp.splice(index, 1);
+            if (message.toLowerCase() == 'call' && index == -1)
+                arrTemp.push(data);
+            else
+                arrTemp.splice(index, 1);
+
+            RedisWrap.hset(redisKey, from, data);
 
             console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> arrTemp", arrTemp);
             console.log(roomList);

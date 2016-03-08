@@ -735,102 +735,110 @@ module.exports = {
                 throw err;
             })
             .then(function(user){
-                if(isCreateByName==false && isCreateByEmail==false && isCreateByPhoneAndEmail == false){
-                    if(user.length > 0) {
+                // if(isCreateByName==false && isCreateByEmail==false && isCreateByPhoneAndEmail == false){
+                //     if(user.length > 0) {
 
-                        info.UserAccountID = user[0].ID;
-                        info.UserAccountUID = user[0].UID;
-                        ishaveUser = true;
-                        return Patient.findOne({
-                            where:{
-                                UserAccountID : info.UserAccountID
-                            },
-                            transaction :t
-                        });
-                    }
-                    else{
-                        data.password = generatePassword(12, false);
-                        // data.PinNumber = generatePassword(6, false);
-                        var userInfo = {
-                            UserName    : data.PhoneNumber,
-                            // Email       : data.Email!=null&&data.Email!=''?data.Email:data.Email1,
-                            PhoneNumber : data.PhoneNumber,
-                            Password    : data.password,
-                            PinNumber   : data.PinNumber?data.PinNumber:generatePassword(6, false)
-                        };
-                        userInfo.UID = UUIDService.Create();
-                        if(data.hasOwnProperty('PinNumber')== true)
-                            userInfo.PinNumber = data.PinNumber;
-                        else
-                            userInfo.PinNumber = generatePassword(6, false);
-                        //create UserAccount
-                        return Services.UserAccount.CreateUserAccount(userInfo,t)
-                        .then(function(user){
-                            info.UserAccountID = user.ID;
-                            info.UserAccountUID = user.UID;
-                            return Patient.findOne({
-                                where:{
-                                    UserAccountID : info.UserAccountID
-                                },
-                                transaction :t
-                            });
-                        },function(err){
-                            t.rollback();
-                            throw err;
-                        });
-                    }
-                }
-                else if(isCreateByPhoneAndEmail == true) {
-                    if(user != null && user != '') {
-                        info.UserAccountID = user.ID;
-                        info.UserAccountUID = user.UID;
-                        return Patient.findOne({
-                            where:{
-                                UserAccountID : info.UserAccountID
-                            },
-                            transaction :t
-                        });
-                    }
-                    else{
-                        data.password = generatePassword(12, false);
-                        data.PinNumber = generatePassword(6, false);
-                        var userInfo = {
-                            UserName    : data.PhoneNumber,
-                            Email       : data.Email,
-                            PhoneNumber : data.PhoneNumber,
-                            Password    : data.password,
-                            PinNumber   : data.PinNumber
-                        };
-                        userInfo.UID = UUIDService.Create();
-                        if(data.hasOwnProperty('PinNumber')== true)
-                            userInfo.PinNumber = data.PinNumber;
-                        //create UserAccount
-                        return Services.UserAccount.CreateUserAccount(userInfo,t)
-                        .then(function(user){
-                            info.UserAccountID = user.ID;
-                            info.UserAccountUID = user.UID;
-                            return Patient.findOne({
-                                where:{
-                                    UserAccountID : info.UserAccountID
-                                },
-                                transaction :t
-                            });
-                        },function(err){
-                            t.rollback();
-                            throw err;
-                        });
-                    }
-                }
-                else{
-                    info.UserAccountID = user.ID;
-                    info.UserAccountUID = user.UID;
-                    return Patient.findOne({
-                        where:{
-                            UserAccountID : info.UserAccountID
-                        },
-                        transaction :t
-                    });
-                }
+                //         info.UserAccountID = user[0].ID;
+                //         info.UserAccountUID = user[0].UID;
+                //         ishaveUser = true;
+                //         return Patient.findOne({
+                //             where:{
+                //                 UserAccountID : info.UserAccountID
+                //             },
+                //             transaction :t
+                //         });
+                //     }
+                //     else{
+                //         data.password = generatePassword(12, false);
+                //         // data.PinNumber = generatePassword(6, false);
+                //         var userInfo = {
+                //             UserName    : data.PhoneNumber,
+                //             // Email       : data.Email!=null&&data.Email!=''?data.Email:data.Email1,
+                //             PhoneNumber : data.PhoneNumber,
+                //             Password    : data.password,
+                //             PinNumber   : data.PinNumber?data.PinNumber:generatePassword(6, false)
+                //         };
+                //         userInfo.UID = UUIDService.Create();
+                //         if(data.hasOwnProperty('PinNumber')== true)
+                //             userInfo.PinNumber = data.PinNumber;
+                //         else
+                //             userInfo.PinNumber = generatePassword(6, false);
+                //         //create UserAccount
+                //         return Services.UserAccount.CreateUserAccount(userInfo,t)
+                //         .then(function(user){
+                //             info.UserAccountID = user.ID;
+                //             info.UserAccountUID = user.UID;
+                //             return Patient.findOne({
+                //                 where:{
+                //                     UserAccountID : info.UserAccountID
+                //                 },
+                //                 transaction :t
+                //             });
+                //         },function(err){
+                //             t.rollback();
+                //             throw err;
+                //         });
+                //     }
+                // }
+                // else if(isCreateByPhoneAndEmail == true) {
+                //     if(user != null && user != '') {
+                //         info.UserAccountID = user.ID;
+                //         info.UserAccountUID = user.UID;
+                //         return Patient.findOne({
+                //             where:{
+                //                 UserAccountID : info.UserAccountID
+                //             },
+                //             transaction :t
+                //         });
+                //     }
+                //     else{
+                //         data.password = generatePassword(12, false);
+                //         data.PinNumber = generatePassword(6, false);
+                //         var userInfo = {
+                //             UserName    : data.PhoneNumber,
+                //             Email       : data.Email,
+                //             PhoneNumber : data.PhoneNumber,
+                //             Password    : data.password,
+                //             PinNumber   : data.PinNumber
+                //         };
+                //         userInfo.UID = UUIDService.Create();
+                //         if(data.hasOwnProperty('PinNumber')== true)
+                //             userInfo.PinNumber = data.PinNumber;
+                //         //create UserAccount
+                //         return Services.UserAccount.CreateUserAccount(userInfo,t)
+                //         .then(function(user){
+                //             info.UserAccountID = user.ID;
+                //             info.UserAccountUID = user.UID;
+                //             return Patient.findOne({
+                //                 where:{
+                //                     UserAccountID : info.UserAccountID
+                //                 },
+                //                 transaction :t
+                //             });
+                //         },function(err){
+                //             t.rollback();
+                //             throw err;
+                //         });
+                //     }
+                // }
+                // else{
+                //     info.UserAccountID = user.ID;
+                //     info.UserAccountUID = user.UID;
+                //     return Patient.findOne({
+                //         where:{
+                //             UserAccountID : info.UserAccountID
+                //         },
+                //         transaction :t
+                //     });
+                // }
+                info.UserAccountID = user[0].ID;
+                info.UserAccountUID = user[0].UID;
+                return Patient.findOne({
+                    where:{
+                        UserAccountID : info.UserAccountID
+                    },
+                    transaction :t
+                });
             },function(err){
                 t.rollback();
                 throw err;

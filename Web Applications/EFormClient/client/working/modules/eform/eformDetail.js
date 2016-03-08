@@ -46,15 +46,30 @@ module.exports = React.createClass({
                                     var preCalRes = Config.getArrayConcat(preCal);
                                     var value = '';
                                     preCalRes.map(function(preCalResItem){
-                                        for(var key in response.data){
-                                            if(key === preCalResItem){
+                                        var preCalResItemArr = preCalResItem.split('.');
+                                        var responseTemp = null;
+                                        var preCalResItemTemp = '';
+                                        if(preCalResItemArr.length > 1){
+                                            responseTemp = response.data[preCalResItemArr[0]];
+                                            preCalResItemTemp = preCalResItemArr[1];
+                                        }else{
+                                            responseTemp = response.data;
+                                            preCalResItemTemp = preCalResItem;
+                                        }
+                                        for(var key in responseTemp){
+                                            if(key === preCalResItemTemp){
                                                 if(Config.getPrefixField(field.type,'checkbox') > -1){
-                                                    if(field.value === response.data[key]){
+                                                    if(field.value === responseTemp[key]){
                                                         value = 'yes';
                                                     }
                                                 }
-                                                else{
-                                                    value += response.data[key]+' ';
+                                                else if(Config.getPrefixField(field.type,'radio') > -1){
+                                                    if(field.value === responseTemp[key]){
+                                                        value = 'yes';
+                                                    }
+                                                }else{
+                                                    if(responseTemp[key] !== null)
+                                                        value += responseTemp[key]+' ';
                                                 }
                                                 break;
                                             }
@@ -155,7 +170,34 @@ module.exports = React.createClass({
         }
     },
     _onComponentPageBarPrintForm: function(){
+        var sections = this.state.sections.toJS();
+        var self = this;
+        var fields = [];
+        for(var i = 0; i < sections.length; i++){
+            var section = sections[i];
+            var sectionRef = section.ref;
+            var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation();
+            tempFields.map(function(field, index){
+                fields.push(field);
+            })
+        }
+        var data = {
+            printMethod: 'itext',
+            data: fields,
+            templateUID: this.templateUID
+        }
 
+        EFormService.createPDFForm(data)
+        .then(function(response){
+            var fileName = 'report_'+moment().format('X');
+            var blob = new Blob([response], {
+                type: 'application/pdf'
+            });
+            saveAs(blob, fileName);
+            swal("Success!", "Your form has been printed to PDF.", "success");
+        }, function(error){
+
+        })
     },
     render: function(){
         return (

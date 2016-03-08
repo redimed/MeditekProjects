@@ -69,6 +69,25 @@ module.exports = {
        */
     GetDetailWAAppointment: function(req, res) {
         var UID = req.params.UID;
+        Services.GetDetailWAAppointment(UID)
+        .then(function(success) {
+            success.dataValues.Patient = success.dataValues.Patients[0];
+            success.dataValues.UserAccount = success.dataValues.Patients[0].UserAccount;
+            success.dataValues.Doctor = success.dataValues.Doctors[0];
+            delete success.dataValues.Patients;
+            delete success.dataValues.Doctors;
+            res.ok({data: success});
+        }, function(err) {
+            if (HelperService.CheckExistData(err) &&
+                HelperService.CheckExistData(err.transaction) &&
+                HelperService.CheckExistData(err.error)) {
+                err.transaction.rollback();
+                res.serverError(ErrorWrap(err.error));
+            } else {
+                res.serverError(ErrorWrap(err));
+            }
+        });
+        /*var UID = req.params.UID;
         Appointment.findOne({
             where: {UID: UID},
             include: [
@@ -86,23 +105,13 @@ module.exports = {
             ]
         })
         .then(function(response){
-            response.dataValues.PatientFirstName = response.dataValues.Patients[0].FirstName;
-            response.dataValues.PatientLastName = response.dataValues.Patients[0].LastName;
-            response.dataValues.PatientTitle = response.dataValues.Patients[0].Title;
-            response.dataValues.PatientAddress1 = response.dataValues.Patients[0].Address1;
-            response.dataValues.PatientAddress2 = response.dataValues.Patients[0].Address2;
-            response.dataValues.PatientPostcode = response.dataValues.Patients[0].Postcode;
-            response.dataValues.PatientSuburd = response.dataValues.Patients[0].Suburb;
-            response.dataValues.PatientDOB = response.dataValues.Patients[0].DOB;
-            response.dataValues.PatientHomePhoneNumber = response.dataValues.Patients[0].HomePhoneNumber;
-            response.dataValues.PatientWorkPhoneNumber = response.dataValues.Patients[0].WorkPhoneNumber;
-            response.dataValues.UserAccountPhoneNumber = response.dataValues.Patients[0].UserAccount.PhoneNumber;
-            response.dataValues.UserAccountEmail = response.dataValues.Patients[0].UserAccount.Email;
+            response.dataValues.Patient = response.dataValues.Patients[0];
+            response.dataValues.UserAccount = response.dataValues.Patients[0].UserAccount;
 
             res.ok({data: response});
         }, function(error){
             res.serverError(ErrorWrap(err));
-        })
+        })*/
     },
     /*
     UpdateRequestWAAppointment - Controller: Update information WA Appointment

@@ -39,14 +39,14 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        valueArr = value.join(",");
-        if(valueArr !== "image/jsignature;base30,"){
+        //valueArr = value.join(",");
+        /*if(valueArr !== "image/jsignature;base30,"){
             if(typeof $(this.refs.signature).jSignature !== 'undefined')
                 $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
-        }
+        }*/
     },
     getValue: function(){
-        return $(this.refs.signature).jSignature("getData", "base30")
+        return "chu ky";
     },
     getName: function(){
         return this.props.name;

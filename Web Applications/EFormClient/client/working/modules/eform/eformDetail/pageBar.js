@@ -15,18 +15,7 @@ module.exports = React.createClass({
                 this.userUID = params.userUID;
             },
             _onPrintForm: function(){
-                var self = this;
-                    swal({
-                        title: 'Are you sure?',
-                        text: 'You will save this form !!!',
-                        type: 'warning',
-                        showCancelButton: true,
-                        closeOnConfirm: false,
-                        allowOutsideClick: false,
-                        showLoaderOnConfirm: true
-                    }, function(){
-                        self.props.onPrintForm();
-                    }.bind(this))
+                    this.props.onPrintForm();
             },
 	_onSaveForm: function(){
         	   swal({

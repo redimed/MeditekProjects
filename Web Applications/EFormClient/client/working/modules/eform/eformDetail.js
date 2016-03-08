@@ -154,6 +154,9 @@ module.exports = React.createClass({
             })  
         }
     },
+    _onComponentPageBarPrintForm: function(){
+
+    },
     render: function(){
         return (
             <div className="page-content">

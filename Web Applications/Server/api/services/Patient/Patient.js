@@ -722,6 +722,7 @@ module.exports = {
             .then(function(got_user) {
                 if(got_user == null || got_user == '') {
                     console.log("khong co user");
+                    data.Password = data.Password?data.Password:generatePassword(12, false);
                     return Services.UserAccount.CreateUserAccount(data,t);
                 }
                 else {

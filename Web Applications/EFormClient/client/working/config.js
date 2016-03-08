@@ -51,7 +51,6 @@ module.exports = {
 	setDate: function(date){
 		if(date === '')
 			return '';
-		console.log(date);
 		var dateTZ = moment(date).format('DD/MM/YYYY');
 		return dateTZ;
 	},

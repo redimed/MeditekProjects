@@ -93,11 +93,11 @@ module.exports = {
             response.dataValues.PatientAddress2 = response.dataValues.Patients[0].Address2;
             response.dataValues.PatientPostcode = response.dataValues.Patients[0].Postcode;
             response.dataValues.PatientSuburd = response.dataValues.Patients[0].Suburb;
-            response.dataValues.PatientEmail1 = response.dataValues.Patients[0].Email1;
             response.dataValues.PatientDOB = response.dataValues.Patients[0].DOB;
             response.dataValues.PatientHomePhoneNumber = response.dataValues.Patients[0].HomePhoneNumber;
             response.dataValues.PatientWorkPhoneNumber = response.dataValues.Patients[0].WorkPhoneNumber;
             response.dataValues.UserAccountPhoneNumber = response.dataValues.Patients[0].UserAccount.PhoneNumber;
+            response.dataValues.UserAccountEmail = response.dataValues.Patients[0].UserAccount.Email;
 
             res.ok({data: response});
         }, function(error){

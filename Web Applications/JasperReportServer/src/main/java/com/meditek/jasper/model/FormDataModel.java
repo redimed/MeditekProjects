@@ -12,50 +12,60 @@ package com.meditek.jasper.model;
 public class FormDataModel {
     String name;
     String value;
+    String type;
     Boolean checked;
     String ref;
     String refChild;
+    String refRow;
     int columns;
+    int rows;
 
+    public String getRefRow() {
+        return (refRow==null)?"":refRow;
+    }
+
+    public void setRefRow(String refRow) {
+        this.refRow = (refRow==null)?"":refRow;
+    }
+    
     public String getRef() {
-        return ref;
+        return (ref==null)?"":ref;
     }
 
     public void setRef(String ref) {
-        this.ref = ref;
+        this.ref = (ref==null)?"":ref;
     }
 
     public String getRefChild() {
-        return refChild;
+        return (refChild==null)?"":refChild;
     }
 
     public void setRefChild(String refChild) {
-        this.refChild = refChild;
+        this.refChild = (refChild==null)?"":refChild;
     }
 
     public String getType() {
-        return type;
+        return (type==null)?"":type;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = (type==null)?"":type;
     }
-    String type;
 
     public String getName() {
-        return name;
+        return (name==null)?"":name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = (name==null)?"":name;
     }
 
     public String getValue() {
-        return value;
+        return (value==null)?"":value;
     }
 
     public void setValue(String value) {
-        this.value = value;
+        this.value = (value==null)?"":value;
     }
 
     public Boolean getChecked() {
@@ -72,6 +82,14 @@ public class FormDataModel {
 
     public void setColumns(int columns) {
         this.columns = columns;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
     }
     
     

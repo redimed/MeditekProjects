@@ -7,3 +7,4 @@ com/meditek/jasper/process/DataProcess.class
 com/meditek/jasper/model/ReportDataWrapperModel.class
 com/meditek/jasper/model/RequestDataModel.class
 com/meditek/jasper/model/FormDataModel.class
+.netbeans_automatic_build

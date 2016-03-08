@@ -159,10 +159,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-actions right">
-						<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcome">
+					<div class="form-actions right" >
+						<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcome" ng-show="typedoctor!='typedoctor'">
 							<i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
-						<button type="submit" class="btn btn-lg btn-primary">
+						<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcomeCampaign" ng-show="typedoctor=='typedoctor'">
+							<i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
+						<button type=registerPatientCampaign"submit" class="btn btn-lg btn-primary">
 							Next <i class="glyphicon glyphicon-arrow-right"></i></button>
 					</div>
 				</form>

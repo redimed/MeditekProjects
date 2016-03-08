@@ -105,9 +105,6 @@ public class SettingPresenter implements ISettingPresenter {
 //        JsonObject dataJson = new JsonObject();
 //        dataJson.addProperty("data", gson.toJson(jsonObject));
 //
-//        String result = iMainPresenter.updateToken();
-//        Log.d(TAG, result);
-//        if (result.equalsIgnoreCase("success")) {
 //            registerApiLogin.logout(new Callback<JsonObject>() {
 //                @Override
 //                public void success(JsonObject jsonObject, Response response) {
@@ -124,7 +121,6 @@ public class SettingPresenter implements ISettingPresenter {
 //                }
 //            }
 //            });
-//        } else {
 
         final AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
         alertDialog.setTitle(context.getResources().getString(R.string.logout));
@@ -145,7 +141,6 @@ public class SettingPresenter implements ISettingPresenter {
             }
         });
         alertDialog.show();
-//        }
     }
 
     public void clearApplication() {

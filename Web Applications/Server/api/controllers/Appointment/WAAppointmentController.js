@@ -147,7 +147,6 @@ module.exports = {
     },
     RequestWAAppointmentPatient: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
-        console.log("33333333333333333333333333333333333333333333333333333333333333",data);
         if (data === false) {
             res.serverError('data failed');
         } else {

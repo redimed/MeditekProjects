@@ -459,5 +459,14 @@ module.exports = {
             through: 'RelFundCompany',
             foreignKey: 'FundID'
         });
+
+        //association Appointment -AppointmentData
+        Appointment.hasMany(AppointmentData, {
+            foreignKey: 'AppointmentID',
+            as: 'AppointmentData'
+        });
+        AppointmentData.belongsTo(Appointment, {
+            foreignKey: 'AppointmentID'
+        });
     }
 };

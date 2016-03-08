@@ -90,7 +90,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }, {
         name: 'Silver Savings Account'
     }];
-    var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
 
     socketTelehealth.funCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
@@ -123,11 +122,11 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     console.log("send call", data);
                 });
             };
-            audio.pause();
+            o.audio.pause();
             swal.close();
         });
-        audio.loop = true;
-        audio.play();
+        o.audio.loop = true;
+        o.audio.play();
     };
 
     socketTelehealth.funConnect = function() {
@@ -140,5 +139,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     socketTelehealth.funCancel = function(msg) {
         console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal.close();
+        o.audio.pause();
     }
 });

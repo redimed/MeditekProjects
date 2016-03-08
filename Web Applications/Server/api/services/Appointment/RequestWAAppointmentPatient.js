@@ -135,6 +135,9 @@ module.exports = function(data, userInfo) {
                         .then(function(relPatientApptCreated) {
                             if (!_.isEmpty(data.Doctor) &&
                                 !_.isEmpty(appointmentObject)) {
+                                if (_.isString(data.Doctor)) {
+                                    data.Doctor = JSON.parse(data.Doctor);
+                                }
                                 var objRelDoctorAppt = {
                                     appointmentObject: appointmentObject,
                                     where: data.Doctor.UID,
@@ -149,6 +152,33 @@ module.exports = function(data, userInfo) {
                             });
                         })
                         .then(function(relDoctorApptCreated) {
+                            if (!_.isEmpty(data.AppointmentData)) {
+                                if (_.isString(data.AppointmentData)) {
+                                    data.AppointmentData = JSON.parse(data.AppointmentData);
+                                }
+                                if (_.isArray(data.AppointmentData)) {
+                                    _.forEach(data.AppointmentData, function(valueApptData, indexApptData) {
+                                        data.AppointmentData[indexApptData].AppointmentID =
+                                            (!_.isEmpty(appointmentObject) &&
+                                                !_.isEmpty(appointmentObject.dataValues)) ?
+                                            appointmentObject.dataValues.ID : null;
+                                        data.AppointmentData[indexApptData].UID = UUIDService.Create();
+                                        data.AppointmentData[indexApptData].CreatedBy = (!_.isEmpty(userInfo)) ? userInfo.ID : null;
+                                    });
+                                    var objCreateAppointmentData = {
+                                        data: data.AppointmentData,
+                                        transaction: t
+                                    };
+                                    return Services.CreateAppointmentData(objCreateAppointmentData);
+                                }
+                            }
+                        }, function(err) {
+                            defer.reject({
+                                error: err,
+                                transaction: t
+                            });
+                        })
+                        .then(function(apptDataCreated) {
                             defer.resolve({
                                 status: 'success',
                                 transaction: t
@@ -158,7 +188,7 @@ module.exports = function(data, userInfo) {
                                 error: err,
                                 transaction: t
                             });
-                        });
+                        })
                 },
                 function(err) {
                     defer.reject(err);

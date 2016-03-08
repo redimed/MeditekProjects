@@ -6,6 +6,7 @@ var moment = require('moment');
 var check  = require('../HelperService');
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
 function SendSMS(toNumber, content, callback) {
+
     return twilioClient.messages.create({
         body: content,
         to: toNumber,
@@ -657,6 +658,7 @@ module.exports = {
         var isCreateByName = false;
         var isCreateByEmail = false;
         var isCreateByPhoneAndEmail = false;
+        var ishaveUser = false;
         var defer = $q.defer(); 
         var info = {
             Title           : data.Title,
@@ -690,41 +692,54 @@ module.exports = {
 
                     return Services.UserAccount.GetUserAccountDetails(checkDatas,null,t);
                 }
-                if(data.PhoneNumber){
+                else if(data.PhoneNumber){
                     return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,null,t);
                 }
+                else if(data.Email){
+                    var checkDatas = {
+                        // UserName : data.Email,
+                        Email    : data.Email,
+                        // PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
+                        // Password : generatePassword(12, false)
+                    };
+                    isCreateByEmail = true;
+                    return Services.UserAccount.GetUserAccountDetails(checkDatas,null,t);
+                }
                 else{
-                    if(data.Email){
-                        var userInfo = {
-                            UserName : data.Email,
-                            Email    : data.Email,
-                            PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
-                            Password : generatePassword(12, false)
-                        };
-                        isCreateByEmail = true;
-                        return Services.UserAccount.CreateUserAccount(userInfo,t);
-                    }
-                    else{
-                        var userInfo = {
-                            UserName : info.FirstName+"."+info.LastName+"."+generatePassword(4, false),
-                            PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
-                            Password : generatePassword(12, false)
-                        };
-                        isCreateByName = true;
-                        return Services.UserAccount.CreateUserAccount(userInfo,t);
-                    }
+                    var checkDatas = {
+                        UserName : info.FirstName+"."+info.LastName+"."+generatePassword(4, false),
+                        // PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
+                        // Password : generatePassword(12, false)
+                    };
+                    isCreateByName = true;
+                    return Services.UserAccount.GetUserAccountDetails(checkDatas,null,t);
                 }
                 //return Patient.create(data);
             },function(err){
                 t.rollback();
                 throw err;
             })
+            .then(function(got_user) {
+                if(got_user == null || got_user == '') {
+                    console.log("khong co user");
+                    return Services.UserAccount.CreateUserAccount(data,t);
+                }
+                else {
+                    console.log("co user");
+                    ishaveUser = true;
+                    return got_user;
+                }
+            },function(err) {
+                t.rollback();
+                throw err;
+            })
             .then(function(user){
                 if(isCreateByName==false && isCreateByEmail==false && isCreateByPhoneAndEmail == false){
                     if(user.length > 0) {
-                        console.log(user);
+
                         info.UserAccountID = user[0].ID;
                         info.UserAccountUID = user[0].UID;
+                        ishaveUser = true;
                         return Patient.findOne({
                             where:{
                                 UserAccountID : info.UserAccountID
@@ -886,46 +901,53 @@ module.exports = {
             })
             .then(function(success) {
                 //call send Mail or send SMSs
-                if(isCreateByPhoneAndEmail == true) {
-                    data.content = data.PinNumber;
-                    return Services.Patient.sendSMS(data, t,function(err) {
-                        if(err) {
-                            throw err;
-                        }
-                        else {
-                            return Services.Patient.sendMail(data,t,function(err) {
-                                if(err)
-                                    throw err;
-                                else{
-                                    info.transaction = t;
-                                    defer.resolve(info);
-                                }
-                            });
-                        }
-                    });
+                console.log("ishaveUser ",ishaveUser);
+                if(ishaveUser == false) {
+                    if(isCreateByPhoneAndEmail == true) {
+                        data.content = data.PinNumber;
+                        return Services.Patient.sendSMS(data, t,function(err) {
+                            if(err) {
+                                throw err;
+                            }
+                            else {
+                                return Services.Patient.sendMail(data,t,function(err) {
+                                    if(err)
+                                        throw err;
+                                    else{
+                                        info.transaction = t;
+                                        defer.resolve(info);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else if(isCreateByEmail == true) {
+                        return Services.Patient.sendMail(data,t,function(err) {
+                            if(err){
+                                console.log(err);
+                                throw err;
+                            }
+                            else{
+                                info.transaction = t;
+                                defer.resolve(info);
+                            }
+                        });
+                    }
+                    else if(isCreateByEmail == false && isCreateByName == false && isCreateByPhoneAndEmail == false) {
+                        data.content = data.PinNumber;
+                        return Services.Patient.sendSMS(data, t,function(err) {
+                            if(err)
+                                throw err;
+                            else{
+                                info.transaction = t;
+                                defer.resolve(info);
+                            }
+                        });
+                    }
                 }
-                else if(isCreateByEmail == true) {
-                    return Services.Patient.sendMail(data,t,function(err) {
-                        if(err){
-                            console.log(err);
-                            throw err;
-                        }
-                        else{
-                            info.transaction = t;
-                            defer.resolve(info);
-                        }
-                    });
-                }
-                else if(isCreateByEmail == false && isCreateByName == false && isCreateByPhoneAndEmail == false) {
-                    data.content = data.PinNumber;
-                    return Services.Patient.sendSMS(data, t,function(err) {
-                        if(err)
-                            throw err;
-                        else{
-                            info.transaction = t;
-                            defer.resolve(info);
-                        }
-                    });
+                else {
+                    info.transaction = t;
+                    defer.resolve(info);
                 }
             },function(err) {
                 t.rollback();

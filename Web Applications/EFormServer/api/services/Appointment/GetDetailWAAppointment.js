@@ -117,9 +117,9 @@ module.exports = function(appointmentUID, userInfo) {
             where: filter.Appointment
         })
         .then(function(detailApptTelehealth) {
-            defer.resolve({
-                data: detailApptTelehealth
-            });
+            defer.resolve(
+                detailApptTelehealth
+            );
         }, function(err) {
             defer.reject(err);
         });

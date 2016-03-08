@@ -12,8 +12,8 @@ module.exports = {
 	//apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
 	apiUrl: domain+':3015/',
 	apiServerUrl: domain+':3005/',
-	//apiPDFUrl: domain+':3013/',
-	apiPDFUrl: 'https://192.168.1.172:3013/',
+	apiPDFUrl: domain+':3013/',
+	//apiPDFUrl: 'https://192.168.1.171:3013/',
 	getParamsIframe: function(appointmentId, patientId,userId){
 		return '/eform?appoinmentUID='+appointmentId+'&patientUID='+patientId+'&userUID='+userId;
 	},

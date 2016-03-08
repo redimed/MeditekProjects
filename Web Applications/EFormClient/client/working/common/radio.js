@@ -49,9 +49,11 @@ module.exports = React.createClass({
              $(this.refs.input).iCheck('uncheck');
         }
     },
-    setValue: function(value){
-        this.value = value;
-        $(this.refs.input).val(value);
+    setValue: function(checked){
+        if(checked === 'yes')
+            $(this.refs.input).iCheck('check');
+        else
+           $(this.refs.input).iCheck('uncheck'); 
     },
     isChecked: function(){
         return $(this.refs.input).prop('checked');

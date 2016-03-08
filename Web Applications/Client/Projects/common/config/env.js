@@ -114,4 +114,5 @@ var _configStateBlank = [
 	,"blank.registerPatient"
 	,"blank.searchPatient"
 	,"blank.drawing.home"
+	,"blank.registerPatientCampaign"
 ];

@@ -17,17 +17,19 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-md-9 col-sm-9">
+        <div class="col-md-9 col-sm-9" id="col9">
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="icon-bubbles font-blue"></i>
-                        <span class="caption-subject bold uppercase font-blue">Consultation List</span>
+                        <span class="caption-subject bold uppercase font-blue">Consultation Detail</span>
                         <span class="caption-helper">Consultation</span>
                     </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse"> </a>
-                        <a href="javascript:;" class="fullscreen"> </a>
+                    <div class="actions">
+                        <a href="javascript:;" class="btn btn-default btn-circle" ng-click="fullScreen()">
+                            <span id="label_name">{{iconCol}}</span>
+                        </a>
+                        <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"> </a>
                     </div>
                 </div>
                 <div class="portlet-body">
@@ -35,10 +37,11 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <div class="dashboard-stat purple-medium" ng-click="eForms()">
                                 <div class="visual">
-                                    <i class="fa fa-file-text-o"></i>
+                                    <i class="icon-docs"></i>
                                 </div>
                                 <div class="details">
-                                    <div class="number">E-Forms</div>
+                                    <div class="number">&nbsp;</div>
+                                    <div class="desc bold uppercase" style="font-size:1.5em;">e-forms</div>
                                 </div>
                                 <a class="more" href="javascript:;" ng-click="eForms()">
                                     View  <i class="m-icon-swapright m-icon-white"></i>
@@ -48,10 +51,11 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <div class="dashboard-stat green-jungle" ng-click="admission()">
                                 <div class="visual">
-                                    <i class="glyphicon glyphicon-user"></i>
+                                    <i class="icon-drawer"></i>
                                 </div>
                                 <div class="details">
-                                    <div class="number">Patient Admission</div>
+                                    <div class="number">&nbsp;</div>
+                                    <div class="desc bold uppercase" style="font-size:1.5em;">Patient Admission</div>
                                 </div>
                                 <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.admission.detail">
                                     View  <i class="m-icon-swapright m-icon-white"></i>
@@ -61,10 +65,11 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <div class="dashboard-stat red-thunderbird" ng-click="consultNote()">
                                 <div class="visual">
-                                    <i class="fa fa-gear"></i>
+                                    <i class="icon-notebook"></i>
                                 </div>
                                 <div class="details">
-                                    <div class="number">Consult Note</div>
+                                    <div class="number">&nbsp;</div>
+                                    <div class="desc bold uppercase" style="font-size:1.5em;">Consult Note</div>
                                 </div>
                                 <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.consultNote">
                                     Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
@@ -76,10 +81,11 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <div class="dashboard-stat blue-steel" ng-click="telehealthDetail()">
                                 <div class="visual">
-                                    <i class="fa fa-plus-circle"></i>
+                                    <i class=" icon-rocket"></i>
                                 </div>
                                 <div class="details">
-                                    <div class="number">Telehealth Detail</div>
+                                    <div class="number">&nbsp;</div>
+                                    <div class="desc bold uppercase" style="font-size:1.5em;">Telehealth Detail</div>
                                 </div>
                                 <a class="more" href="javascript:;" ng-click="telehealthDetail()">
                                     View  <i class="m-icon-swapright m-icon-white"></i>
@@ -122,7 +128,7 @@
             </div>
             <!-- END EFORM -->
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-3 col-sm-3" id="col3">
             <patient-detail-directive apptuid="Params.UID"></patient-detail-directive>
             <appointment-detail-directive apptuid="Params.UID"></appointment-detail-directive>
             <medicare-directive apptuid="Params.UID"></medicare-directive>

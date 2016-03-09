@@ -208,7 +208,7 @@ module.exports = React.createClass({
                 break;
         }
     },
-    getAllFieldValueWithValidation: function(){
+    getAllFieldValueWithValidation: function(stringType){
         var fields = this.props.fields.toJS();
         var results = [];
         var self = this;
@@ -220,7 +220,8 @@ module.exports = React.createClass({
                 if(type !== 'table' && 
                     Config.getPrefixField(type, 'label') === -1 && 
                     Config.getPrefixField(type, 'check') === -1 && 
-                    Config.getPrefixField(type, 'date') === -1){
+                    Config.getPrefixField(type, 'date') === -1 &&
+                    Config.getPrefixField(field.type, 'signature') === -1){
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
                     results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
@@ -239,10 +240,17 @@ module.exports = React.createClass({
                     var value = this.refs[fieldRef].getText();
                     var name = this.refs[fieldRef].getName();
                     results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
-                }else if(Config.getPrefixField(type, 'signature') > -1){
-                    var value = this.refs[fieldRef].getValue();
-                    var name = this.refs[fieldRef].getName();
-                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
+                }else if(Config.getPrefixField(field.type, 'signature') > -1){
+                    if(stringType !== 'print'){
+                        var value = this.refs[fieldRef].getValue();
+                        var name = this.refs[fieldRef].getName();
+                        results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
+                    }
+                    else{
+                        var value = this.refs[fieldRef].getBase64Value();
+                        var name = this.refs[fieldRef].getName();
+                        results.push({base64Data: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, value: ''});
+                    }
                 }
             }
         }
@@ -563,6 +571,7 @@ module.exports = React.createClass({
                                         ref={field.get('ref')}
                                         refTemp={field.get('ref')}
                                         code={index}
+                                        type={type}
                                         onRightClickItem={this._onRightClickItem}/>
                             }, this)
                         }

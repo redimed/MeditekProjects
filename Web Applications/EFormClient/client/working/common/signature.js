@@ -39,14 +39,19 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        //valueArr = value.join(",");
-        /*if(valueArr !== "image/jsignature;base30,"){
-            if(typeof $(this.refs.signature).jSignature !== 'undefined')
-                $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
-        }*/
+        if(value !== null && value !== ''){
+            valueArr = value.join(",");
+            if(valueArr !== "image/jsignature;base30,"){
+                if(typeof $(this.refs.signature).jSignature !== 'undefined')
+                    $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
+            }
+        }
     },
     getValue: function(){
-        return "chu ky";
+        return $(this.refs.signature).jSignature('getData', 'base30');
+    },
+    getBase64Value: function(){
+       return $(this.refs.signature).jSignature('getData', 'default');
     },
     getName: function(){
         return this.props.name;

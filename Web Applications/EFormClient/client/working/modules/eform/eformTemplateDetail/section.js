@@ -189,13 +189,13 @@ module.exports = React.createClass({
         if(typeof this.refs[refRow] !== 'undefined')
             this.refs[refRow].setValueForTable(fieldRef, fieldRefChild, value);
     },
-    getAllFieldValueWithValidation: function(){
+    getAllFieldValueWithValidation: function(stringType){
         var rows = this.props.rows.toJS();
         var fields = [];
         for(var i = 0; i < rows.length; i++){
             var row = rows[i];
             var rowRef = row.ref;
-            var tempFields = this.refs[rowRef].getAllFieldValueWithValidation();
+            var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
             tempFields.map(function(field, index){
                 fields.push(field);
             })

@@ -222,8 +222,9 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
         $scope.admissionDetail.allergies_alerts_substances_list = "";
     };
 
-    $scope.parse = function(obj, array_data, rows, table_name, col) {
+    $scope.parse = function(obj, array_data, rows, table_name) {
         var array_attributes = [];
+        var col = 0;
         if(table_name == 'PREVIOUS_SURGERY_PROCEDURES') {
             col = 4;
             array_attributes = ['operation','appros_year','surgeon','notes'];
@@ -246,7 +247,8 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
                     });
                 }
             }
-         }
+        }
+        return col;
     }
 
     $scope.click = function() {
@@ -259,6 +261,22 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
         // var data = [];
         // console.log($scope.admissionDetail);
         if($scope.wainformation.Patients.length > 0) {
+            postdata.data.push({
+                name:'FirstName',
+                value:$scope.wainformation.Patients[0].FirstName
+            });
+            postdata.data.push({
+                name:'LastName',
+                value:$scope.wainformation.Patients[0].LastName
+            });
+            postdata.data.push({
+                name:'DOB',
+                value:$scope.wainformation.Patients[0].DOB
+            });
+            postdata.data.push({
+                name:'Gender',
+                value:$scope.wainformation.Patients[0].Gender
+            });
             if($scope.wainformation.Patients[0].PatientMedicares.length > 0) {
                 postdata.data.push({
                     name:'MedicareEligible',
@@ -279,11 +297,11 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
             }
             if($scope.wainformation.Patients[0].PatientKins.length > 0) {
                 postdata.data.push({
-                    name:'FirstName',
+                    name:'KinFirstName',
                     value:$scope.wainformation.Patients[0].PatientKins[$scope.wainformation.Patients[0].PatientKins.length-1].FirstName
                 });
                 postdata.data.push({
-                    name:'LastName',
+                    name:'KinLastName',
                     value:$scope.wainformation.Patients[0].PatientKins[$scope.wainformation.Patients[0].PatientKins.length-1].LastName
                 });
                 postdata.data.push({
@@ -310,7 +328,7 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
                 var i = 0;
                 var col = 0;
                 for(var j = 0; j < $scope.admissionDetail[key].length; j++) {
-                    $scope.parse($scope.admissionDetail[key][j],postdata.data,i,key, col);
+                    col = $scope.parse($scope.admissionDetail[key][j],postdata.data,i,key, col);
                     i++;
                     // for(var prop in $scope.admissionDetail[key][j]) {
                     //     if(prop != '$$hashKey'){
@@ -324,7 +342,8 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
                     //     }
                     // }
                 }
-                postdata.data.push({ref:key+'_table',name:key,rows:i,columm:col,type:'table'});
+                console.log(col);
+                postdata.data.push({ref:key+'_table',name:key,rows:i,columns:col,type:'table'});
             }
         }
         consultationServices.PrintPDF(postdata).then(function(responsePrintPDF) {

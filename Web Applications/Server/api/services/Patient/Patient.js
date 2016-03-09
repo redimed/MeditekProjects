@@ -819,7 +819,7 @@ module.exports = {
                                         throw err;
                                     else{
                                         info.transaction = t;
-                                        info.dataValues.PinNumber = userInfo.PinNumber;
+                                        info.PinNumber = userInfo.PinNumber;
                                         defer.resolve(info);
                                     }
                                 });

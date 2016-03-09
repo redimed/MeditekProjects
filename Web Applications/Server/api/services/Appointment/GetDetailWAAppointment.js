@@ -136,6 +136,33 @@ module.exports = function(appointmentUID, userInfo) {
                     attributes: Services.AttributesAppt.UserAccount(),
                     required: !_.isEmpty(filter.UserAccount),
                     where: filter.UserAccount
+                }, {
+                    attributes: Services.AttributesAppt.PatientDVA(),
+                    model: PatientDVA,
+                    required: false
+                }, {
+                    attributes: Services.AttributesAppt.PatientFund(),
+                    model: PatientFund,
+                    where: {
+                        Enable: 'Y'
+                    },
+                    required: false
+                }, {
+                    attributes: Services.AttributesAppt.PatientGP(),
+                    model: PatientGP,
+                    required: false
+                }, {
+                    attributes: Services.AttributesAppt.PatientKin(),
+                    model: PatientKin,
+                    required: false
+                }, {
+                    attributes: Services.AttributesAppt.PatientMedicare(),
+                    model: PatientMedicare,
+                    required: false
+                }, {
+                    attributes: Services.AttributesAppt.PatientPension(),
+                    model: PatientPension,
+                    required: false
                 }]
             }, {
                 model: FileUpload,

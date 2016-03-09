@@ -9,7 +9,7 @@
 				<div class="tab-content" id="tabContent1">
 					<div class="tabbable" id="tabBable">
 						<!-- header tab -->
-						<ul class="nav nav-tabs nav-tabs-lg" ng-if="isShowFull==true" >
+						<ul class="nav nav-tabs nav-tabs-lg" >
 							<li class="active">
 								<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
 							</li>
@@ -41,7 +41,7 @@
 													<img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.ProfileImage==null || info.ProfileImage==undefined) && isChoseAvatar==false" style="width:275px; height:300px; ">
 												</div>
 												<div class="container">
-													<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+													<label for="imageAvatar" style="float:left; padding-right: 1%;" ng-if="isShowFull==true"> 
 														<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
 														<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
 													</label> 

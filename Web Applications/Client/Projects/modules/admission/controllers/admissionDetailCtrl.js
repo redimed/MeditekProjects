@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.admission.detail.controller', []);
-app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, AdmissionService, $stateParams) {
+app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices) {
     $timeout(function() {
         App.initAjax();
     }, 0);
@@ -220,5 +220,122 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
     };
     $scope.resertSubstancesData = function() {
         $scope.admissionDetail.allergies_alerts_substances_list = "";
+    };
+
+    $scope.parse = function(obj, array_data, rows, table_name, col) {
+        var array_attributes = [];
+        if(table_name == 'PREVIOUS_SURGERY_PROCEDURES') {
+            col = 4;
+            array_attributes = ['operation','appros_year','surgeon','notes'];
+        }
+        else if(table_name == 'MEDICATIONS') {
+            col = 6;
+            array_attributes = ['medication','frequency','daily_dose','cessation_intruction','date_ceased','nursing_notes'];
+        }
+        else {
+            console.log("table_name.Error");
+        }
+        for(var key in obj) {
+            for(var i = 0; i < array_attributes.length; i++) {
+                if(key === array_attributes[i]) {
+                    array_data.push({
+                        ref:table_name+'_table',
+                        refChild:'field_'+rows+'_'+i,
+                        name:key,
+                        value:obj[key]
+                    });
+                }
+            }
+         }
+    }
+
+    $scope.click = function() {
+        console.log($scope.wainformation);
+        var postdata ={
+            printMethod:'jasper',
+            templateUID:'patient_admission',
+            data: []
+        };
+        // var data = [];
+        // console.log($scope.admissionDetail);
+        if($scope.wainformation.Patients.length > 0) {
+            if($scope.wainformation.Patients[0].PatientMedicares.length > 0) {
+                postdata.data.push({
+                    name:'MedicareEligible',
+                    value:$scope.wainformation.Patients[0].PatientMedicares[$scope.wainformation.Patients[0].PatientMedicares.length-1].MedicareEligible
+                });
+                postdata.data.push({
+                    name:'MedicareNumber',
+                    value:$scope.wainformation.Patients[0].PatientMedicares[$scope.wainformation.Patients[0].PatientMedicares.length-1].MedicareNumber
+                });
+                postdata.data.push({
+                    name:'MedicareReferenceNumber',
+                    value:$scope.wainformation.Patients[0].PatientMedicares[$scope.wainformation.Patients[0].PatientMedicares.length-1].MedicareReferenceNumber
+                });
+                postdata.data.push({
+                    name:'ExpiryDate',
+                    value:$scope.wainformation.Patients[0].PatientMedicares[$scope.wainformation.Patients[0].PatientMedicares.length-1].ExpiryDate
+                });
+            }
+            if($scope.wainformation.Patients[0].PatientKins.length > 0) {
+                postdata.data.push({
+                    name:'FirstName',
+                    value:$scope.wainformation.Patients[0].PatientKins[$scope.wainformation.Patients[0].PatientKins.length-1].FirstName
+                });
+                postdata.data.push({
+                    name:'LastName',
+                    value:$scope.wainformation.Patients[0].PatientKins[$scope.wainformation.Patients[0].PatientKins.length-1].LastName
+                });
+                postdata.data.push({
+                    name:'Relationship',
+                    value:$scope.wainformation.Patients[0].PatientKins[$scope.wainformation.Patients[0].PatientKins.length-1].Relationship
+                });
+                postdata.data.push({
+                    name:'MobilePhoneNumber',
+                    value:$scope.wainformation.Patients[0].PatientKins[$scope.wainformation.Patients[0].PatientKins.length-1].MobilePhoneNumber
+                });
+            }
+            if($scope.wainformation.Patients[0].PatientDVAs.length > 0) {
+                postdata.data.push({
+                    name:'DVANumber',
+                    value:$scope.wainformation.Patients[0].PatientDVAs[$scope.wainformation.Patients[0].PatientDVAs.length-1].DVANumber
+                });
+            }
+        }
+        for(var key in $scope.admissionDetail){
+            if(typeof $scope.admissionDetail[key] == 'string'){
+                postdata.data.push({name:key,value:$scope.admissionDetail[key]});
+            }
+            else if(Array.isArray($scope.admissionDetail[key]) == true) {
+                var i = 0;
+                var col = 0;
+                for(var j = 0; j < $scope.admissionDetail[key].length; j++) {
+                    $scope.parse($scope.admissionDetail[key][j],postdata.data,i,key, col);
+                    i++;
+                    // for(var prop in $scope.admissionDetail[key][j]) {
+                    //     if(prop != '$$hashKey'){
+                    //         postdata.data.push({
+                    //             ref:key+'_table',
+                    //             refChild:'field_'+j+'_'+i,
+                    //             name:prop,
+                    //             value:$scope.admissionDetail[key][j][prop]
+                    //         });
+                    //         i++;
+                    //     }
+                    // }
+                }
+                postdata.data.push({ref:key+'_table',name:key,rows:i,columm:col,type:'table'});
+            }
+        }
+        consultationServices.PrintPDF(postdata).then(function(responsePrintPDF) {
+            console.log(responsePrintPDF)
+            var blob = new Blob([responsePrintPDF.data], {
+                type: 'application/pdf'
+            });
+            saveAs(blob, "PatientAdmission");
+        }, function(err) {
+            console.log(err);
+        });
+        console.log(postdata);
     }
 });

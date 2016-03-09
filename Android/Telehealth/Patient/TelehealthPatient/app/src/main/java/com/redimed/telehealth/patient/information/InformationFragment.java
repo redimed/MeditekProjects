@@ -63,11 +63,11 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     private Uri fileUri;
     private Context context;
     private IInfoPresenter iInfoPresenter;
-    private String TAG = "INFORMATION", uid;
     private ArrayList<EditText> arrEditText;
     private static final int RESULT_PHOTO = 1;
     private static final int RESULT_CAMERA = 2;
     private static final int MEDIA_TYPE_IMAGE = 1;
+    private String TAG = "======INFORMATION=====";
 
     @Bind(R.id.progressBarUpload)
     ProgressBar progressBarUpload;
@@ -98,6 +98,15 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     EditText txtPostCode;
     @Bind(R.id.txtCountry)
     EditText txtCountry;
+
+    @Bind(R.id.layoutPatientName)
+    LinearLayout layoutPatientName;
+    @Bind(R.id.txtFirstName)
+    EditText txtFirstName;
+    @Bind(R.id.txtLastName)
+    EditText txtLastName;
+    @Bind(R.id.txtDOB)
+    EditText txtDOB;
 
     @Bind(R.id.lblUpdateProfile)
     TextView lblUpdateProfile;
@@ -163,6 +172,16 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         avatarPatient.setOnClickListener(this);
         lblUpdateProfile.setOnClickListener(this);
 
+        txtDOB.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    txtDOB.setError(null);
+                    iInfoPresenter.displayDatePickerDialog();
+                }
+            }
+        });
+
         return v;
     }
 
@@ -189,12 +208,14 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            uid = bundle.getString("telehealthUID", "");
-            iInfoPresenter.getInfoPatient(uid);
+            iInfoPresenter.getInfoPatient(bundle.getString("telehealthUID", ""));
         }
 
         //init array EditText
         arrEditText = new ArrayList<EditText>();
+        arrEditText.add(txtFirstName);
+        arrEditText.add(txtLastName);
+        arrEditText.add(txtDOB);
         arrEditText.add(txtHomePhone);
         arrEditText.add(txtAddress);
         arrEditText.add(txtSuburb);
@@ -205,12 +226,10 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
     //Refresh information patient
     private void SwipeRefresh() {
-        final Fragment fragment = this;
         swipeInfo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(fragment).attach(fragment).commit();
+                onReload();
             }
         });
 
@@ -236,6 +255,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 } else swipeInfo.setEnabled(false);
             }
         });
+        swipeInfo.setRefreshing(false);
     }
 
     //Show information Patient
@@ -256,6 +276,10 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 txtPostCode.setText(patient.getPostCode() == null ? "NONE" : patient.getPostCode());
                 txtCountry.setText(patient.getCountryName() == null ? "NONE" : patient.getCountryName());
 
+                txtFirstName.setText(firstName);
+                txtLastName.setText(lastName);
+                txtDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
+
                 //Call presenter load avatar
                 iInfoPresenter.loadAvatar(Config.apiURLDownload + patient.getProfileImage());
 
@@ -269,7 +293,6 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 }
             }
         }
-        swipeInfo.setRefreshing(false);
     }
 
     //Load image avatar
@@ -278,6 +301,12 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         if (bitmap != null) {
             avatarPatient.setImageBitmap(bitmap);
         }
+    }
+
+    @Override
+    public void onReload() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 
     @Override
@@ -295,6 +324,11 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 iInfoPresenter.changeFragment(new HomeFragment());
             }
         });
+    }
+
+    @Override
+    public void onLoadDOB(String dob) {
+        txtDOB.setText(dob);
     }
 
     @Override
@@ -342,7 +376,6 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         } else {
             new DialogAlert(context, DialogAlert.State.Error, msg).show();
         }
-        swipeInfo.setRefreshing(false);
     }
 
     //Handler back button
@@ -368,6 +401,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         switch (v.getId()) {
             case R.id.lblUpdateProfile:
                 iInfoPresenter.changeViewUpdate(arrEditText);
+                layoutPatientName.setVisibility(View.VISIBLE);
                 layoutButtonUpdate.setVisibility(View.VISIBLE);
                 vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
                 break;

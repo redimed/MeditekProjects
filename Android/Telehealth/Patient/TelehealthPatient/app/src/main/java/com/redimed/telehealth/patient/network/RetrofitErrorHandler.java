@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
@@ -19,7 +20,7 @@ import retrofit.mime.TypedByteArray;
 public class RetrofitErrorHandler implements ErrorHandler {
 
     private Context context;
-    private String TAG = "RETROFIT_ERROR";
+    private String TAG = "=========RETROFIT_ERROR===========";
 
     public RetrofitErrorHandler(Context ctx) {
         context = ctx;
@@ -28,20 +29,10 @@ public class RetrofitErrorHandler implements ErrorHandler {
     @Override
     public Throwable handleError(RetrofitError cause) {
         String errorDescription;
-
-        if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-            String err = cause.getCause().getLocalizedMessage();
-//            if (cause.getCause() instanceof SocketTimeoutException
-//                    || cause.getCause() instanceof InterruptedIOException) {
-//                errorDescription = "Network Timeout";
-//            } else
-//            Log.d(TAG, err);
-//            Log.d(TAG, err.substring(err.lastIndexOf(":") + 3));
-            if (err.substring(err.lastIndexOf(":") + 2).equals("ENETUNREACH (Network is unreachable)")){
-                errorDescription = "Network Error";
-            } else {
-                errorDescription = "Network Timeout";
-            }
+        if (cause.getCause() instanceof ConnectException || cause.getCause() instanceof UnknownHostException) {
+            errorDescription = "Network Error";
+        } else if (cause.getCause() instanceof SocketTimeoutException){
+            errorDescription = "Network Timeout";
         } else {
             if (cause.getResponse() == null) {
                 errorDescription = "No Response From Server";
@@ -53,15 +44,12 @@ public class RetrofitErrorHandler implements ErrorHandler {
                     try {
                         String json = new String(((TypedByteArray) cause.getResponse().getBody()).getBytes());
                         JSONObject dataObject = new JSONObject(json);
-                        String strError = dataObject.optString("ErrorsList");
-                        Log.d(TAG, strError);
-                        if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]") || strError.equalsIgnoreCase("[\"isAuthenticated.oldRefreshCodeExpired\"]")){
+                        String strError = dataObject.optString("ErrorsList") == null ? "" : dataObject.optString("ErrorsList");
+                        if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]") || strError.equalsIgnoreCase("[\"isAuthenticated.oldRefreshCodeExpired\"]")) {
                             errorDescription = "Sorry for inconvenience, please activation application again!";
-                        }
-                        else if (strError.equalsIgnoreCase("[\"isAuthenticated.sessionUserMismatchedUserAccess\"]")){
+                        } else if (strError.equalsIgnoreCase("[\"isAuthenticated.sessionUserMismatchedUserAccess\"]")) {
                             errorDescription = "Session Mismatched, please refresh again!";
-                        }
-                        else {
+                        } else {
                             errorDescription = strError;
                         }
                     } catch (Exception ex2) {

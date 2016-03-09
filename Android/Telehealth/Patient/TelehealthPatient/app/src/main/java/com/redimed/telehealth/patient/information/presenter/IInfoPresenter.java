@@ -16,6 +16,8 @@ public interface IInfoPresenter {
 
     void loadAvatar(String url);
 
+    void displayDatePickerDialog();
+
     void getInfoPatient(String uid);
 
     Uri getOutputMediaFileUri(int type);

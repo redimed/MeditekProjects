@@ -49,12 +49,11 @@ public class AdapterImageAppointment extends RecyclerView.Adapter<AdapterImageAp
         holder.progressBar.setVisibility(View.VISIBLE);
 
         GlideUrl glideUrl = new GlideUrl(fileUploads.get(position), new LazyHeaders.Builder()
+                .addHeader("SystemType", "ARD")
                 .addHeader("AppID", "com.redimed.telehealth.patient")
-                .addHeader("Authorization", "Bearer " + telehealthPatient.getString("token", ""))
-                .addHeader("Content-Type", "application/json; charset=utf-8")
                 .addHeader("Cookie", telehealthPatient.getString("cookie", ""))
                 .addHeader("DeviceID", telehealthPatient.getString("deviceID", ""))
-                .addHeader("SystemType", "ARD")
+                .addHeader("Authorization", "Bearer " + telehealthPatient.getString("token", ""))
                 .build());
 
         int myWidth = 300;

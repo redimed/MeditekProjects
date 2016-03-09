@@ -35,7 +35,6 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
 
     private Context context;
     private ICallView iCallView;
-
     private String sessionId, token, apiKey;
     private static final boolean SUBSCRIBE_TO_SELF = false;
 
@@ -232,9 +231,11 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
 
     @Override
     public void onStreamDropped(Session session, Stream stream) {
-//        if (!SUBSCRIBE_TO_SELF) {
-            UnsubscribeFromStream(stream);
-//        }
+        if (!SUBSCRIBE_TO_SELF) {
+            if (subscriber != null) {
+                UnsubscribeFromStream(stream);
+            }
+        }
     }
 
     @Override

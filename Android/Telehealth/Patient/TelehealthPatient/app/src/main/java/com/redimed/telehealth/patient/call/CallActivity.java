@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient.call;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,8 +21,10 @@ import com.redimed.telehealth.patient.call.view.ICallView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CallActivity extends AppCompatActivity implements ICallView, View.OnClickListener {
+public class CallActivity extends AppCompatActivity implements ICallView, View.OnClickListener, View.OnTouchListener {
 
+    private int xDelta;
+    private int yDelta;
     private ICallPresenter iCallPresenter;
 
     @Bind(R.id.lblNameDoctor)
@@ -36,6 +39,8 @@ public class CallActivity extends AppCompatActivity implements ICallView, View.O
     Button btnMutePub;
     @Bind(R.id.btnMuteSub)
     Button btnMuteSub;
+    @Bind(R.id.callLayout)
+    RelativeLayout callLayout;
     @Bind(R.id.publisherView)
     RelativeLayout publisherView;
     @Bind(R.id.subscriberView)
@@ -68,7 +73,7 @@ public class CallActivity extends AppCompatActivity implements ICallView, View.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnHold:
                 iCallPresenter.holdCommunication();
                 break;
@@ -101,13 +106,44 @@ public class CallActivity extends AppCompatActivity implements ICallView, View.O
 
     @Override
     public void onAttachPublisherView(Publisher publisher) {
-        RelativeLayout.LayoutParams layoutPublisher = new RelativeLayout.LayoutParams(500, 500);
+        RelativeLayout.LayoutParams layoutPublisher = new RelativeLayout.LayoutParams(300, 300);
         layoutPublisher.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
         layoutPublisher.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
         layoutPublisher.topMargin = dpToPx(8);
         layoutPublisher.rightMargin = dpToPx(8);
 
         publisherView.addView(publisher.getView(), layoutPublisher);
+        publisherView.setOnTouchListener(this);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        final int X = (int) event.getRawX();
+        final int Y = (int) event.getRawY();
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                xDelta = X - lParams.leftMargin;
+                yDelta = Y - lParams.topMargin;
+                break;
+            case MotionEvent.ACTION_UP:
+
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                layoutParams.leftMargin = X - xDelta;
+                layoutParams.topMargin = Y - yDelta;
+                layoutParams.rightMargin = 1024;
+                layoutParams.bottomMargin = 768;
+                v.setLayoutParams(layoutParams);
+                break;
+        }
+        callLayout.invalidate();
+        return true;
     }
 
     private void enableButton() {
@@ -140,7 +176,7 @@ public class CallActivity extends AppCompatActivity implements ICallView, View.O
 
     @Override
     public void onRemoveView(String viewer, View view) {
-        switch (viewer){
+        switch (viewer) {
             case "publisher":
                 publisherView.removeView(view);
                 break;

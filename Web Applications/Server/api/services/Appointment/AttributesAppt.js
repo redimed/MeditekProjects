@@ -79,5 +79,32 @@ module.exports = {
     },
     AppointmentData: function() {
         return ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'Note', 'Description'];
+    },
+    PatientDVA: function() {
+        return ['UID', 'DVANumber', 'DVADisability', 'DVACardColour', 'CreatedDate'];
+    },
+    PatientFund: function() {
+        return ['UID', 'AccountNumber', 'AccountType',
+            'PrivateFund', 'UPI', 'ExpiryDate', 'CreatedDate'
+        ];
+    },
+    PatientGP: function() {
+        return ['UID', 'GPFirstName', 'GPLastName', 'Memo', 'CreatedDate'];
+    },
+    PatientKin: function() {
+        return ['UID', 'FirstName', 'MiddleName', 'LastName',
+            'Relationship', 'MobilePhoneNumber', 'HomePhoneNumber',
+            'WorkPhoneNumber', 'Address1', 'Address2', 'Suburb',
+            'Postcode', 'State'
+        ];
+    },
+    PatientMedicare: function() {
+        return ['UID', 'MedicareEligible', 'MedicareNumber',
+            'MedicareReferenceNumber', 'ExpiryDate', 'InjuryType',
+            'CreatedDate'
+        ];
+    },
+    PatientPension: function() {
+        return ['HCCPensionNumber', 'ExpiryDate', 'CreatedDate'];
     }
 };

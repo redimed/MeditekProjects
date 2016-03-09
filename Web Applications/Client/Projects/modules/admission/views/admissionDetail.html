@@ -40,6 +40,28 @@
             <div class="portlet-body">
                 <form name="form" novalidate role="form" ng-submit="submit()">
                     <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12 form-inline">
+                                <div class="col-md-3">
+                                    <label>
+                                        <input type="radio" class="form-control" name="motor_vehicle_accident_or_work_injury" ng-value="1" ng-model="admissionDetail.motor_vehicle_accident_or_work_injury" />Motor Vehicle Accident?
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>
+                                        <input type="radio" class="form-control" name="motor_vehicle_accident_or_work_injury" ng-value="2" ng-model="admissionDetail.motor_vehicle_accident_or_work_injury" />Work Injury?
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Claim Number:</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.claim_number" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>INS:</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.ins" />
+                                </div>
+                            </div>
+                        </div>
                         <h4 class="form-section bold">PREVIOUS SURGERY/PROCEDURES (e.g.joint replacement, transplants, implants, colonoscopy)</h4>
                         <div class="table-scrollable">
                             <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
@@ -755,6 +777,7 @@
                         <button class="btn btn-lg btn-danger" ng-click="UpdateAdmission()">
                             Submit <span class="glyphicon glyphicon-save"></span>
                         </button>
+                        <div class="btn btn-lg btn-success" ng-click="click()">PrintPDF</div>
                     </div>
                 </form>
             </div>

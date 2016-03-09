@@ -193,11 +193,11 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				scope.isShowFull = scope.isShowFull!=undefined&&scope.isShowFull!=null?scope.isShowFull:true;
 				if(scope.isShowFull==false){
 					document.getElementById("modalContent").className = "";
-					document.getElementById("modalBody").className = "";
-					document.getElementById("tabContent1").className = "";
-					document.getElementById("tabBable").className = "";
-					document.getElementById("tabContent2").className = "";
-					document.getElementById("Personal_info").className = "";
+					// document.getElementById("modalBody").className = "";
+					// document.getElementById("tabContent1").className = "";
+					// document.getElementById("tabBable").className = "";
+					// document.getElementById("tabContent2").className = "";
+					// document.getElementById("Personal_info").className = "";
 				};
 				App.initAjax();
     			ComponentsDateTimePickers.init(); // init todo page

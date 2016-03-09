@@ -107,7 +107,7 @@
 					<img alt="" dimage dimage-uid="info.fileupload[0].UID" dimage-size="'300'" class="img-circle" ng-if="info.fileupload.length > 0" />
 					<img alt="" src="theme/assets/global/images/no_person.jpg" class="img-circle" ng-if="info.fileupload.length == 0">
 					<span class="username username-hide-on-mobile">
-					{{info.patient?info.patient.FirstName+' '+info.patient.LastName:info.doctor.FirstName+' '+info.doctor.LastName}} </span>
+					{{info.doctor?info.doctor.FirstName+' '+info.doctor.LastName:info.patient.FirstName+' '+info.patient.LastName}} </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-default">

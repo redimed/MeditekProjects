@@ -1,9 +1,0 @@
-com/meditek/jasper/process/PrintingProcess.class
-com/meditek/jasper/model/PatientKinModel.class
-com/meditek/jasper/model/PatientModel.class
-com/meditek/jasper/controller/JasperReportController.class
-com/meditek/jasper/JasperReportApplication.class
-com/meditek/jasper/process/DataProcess.class
-com/meditek/jasper/model/ReportDataWrapperModel.class
-com/meditek/jasper/model/RequestDataModel.class
-com/meditek/jasper/model/FormDataModel.class

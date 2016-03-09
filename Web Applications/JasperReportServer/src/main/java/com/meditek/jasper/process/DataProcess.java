@@ -27,8 +27,8 @@ public class DataProcess {
     public Hashtable iTextDataParse (List<FormDataModel> data){
         Hashtable parsedData = new Hashtable();
         for (FormDataModel d: data){
-            if(d.getType().equals("clh")) parsedData.put(d.getName().toLowerCase(), d.getValue());
-            else if(d.getType().equals("rlh")) {
+            if(d.getType().equals("eform_input_check_checkbox")) parsedData.put(d.getName().toLowerCase(), d.getChecked()==Boolean.FALSE?"no":"yes");
+            else if(d.getType().equals("eform_input_check_radio")) {
                 if(d.getChecked()==Boolean.TRUE){
                     System.out.println("run true");
                     parsedData.put(d.getName().toLowerCase(), d.getValue());

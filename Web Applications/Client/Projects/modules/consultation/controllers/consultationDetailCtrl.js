@@ -7,27 +7,29 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr, EFormService) {
     /* EFORM */
     var postData = {
-            Filter: [
-                    {
-                        EFormTemplate: {
-                            Enable: 'Y'
-                        }
-                    }
-            ]
+        Filter: [{
+            EFormTemplate: {
+                Enable: 'Y'
+            }
+        }]
     }
     EFormService.PostListEFormTemplate(postData)
-    .then(function(response){
+        .then(function(response) {
             $scope.eformTemplates = response.data.rows;
-    }, function(error){
-            
-    })
+        }, function(error) {
+
+        })
 
     $scope.eFormTemplate = function(eformTemplate) {
-        $state.go("authentication.consultation.detail.eForm.LoadForm", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient,  UIDFormTemplate: eformTemplate.UID});
+        $state.go("authentication.consultation.detail.eForm.LoadForm", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient, UIDFormTemplate: eformTemplate.UID });
     };
     /* END EFORM */
-
-
+    //
+    $scope.checkRoleUpdate = true;
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN') {
+        $scope.checkRoleUpdate = false;
+    };
+    //
     $scope.Params = $stateParams;
     console.log("$scope.Params", $scope.Params.UID);
     $scope.getTelehealthDetail = function(UID) {
@@ -36,7 +38,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             WAAppointmentService.GetDetailPatientByUid({
                 UID: $scope.wainformation.Patients[0].UID
             }).then(function(data) {
-                console.log("aaaaaaaaaaaaaaaaaaaa",data);
+                console.log("aaaaaaaaaaaaaaaaaaaa", data);
             })
         }, function(error) {
 
@@ -134,21 +136,21 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         $state.go("authentication.consultation.detail.consultNote");
     };
     $scope.telehealthDetail = function() {
-        if($scope.wainformation.Type == 'Onsite'){
-             $state.go("authentication.onsite.appointment", { UID: $scope.wainformation.UID })
-        }else{
-            $state.go("authentication.consultation.detail.telehealth",{ UID: $scope.wainformation.UID });
+        if ($scope.wainformation.Type == 'Onsite') {
+            $state.go("authentication.onsite.appointment", { UID: $scope.wainformation.UID })
+        } else {
+            $state.go("authentication.consultation.detail.telehealth", { UID: $scope.wainformation.UID });
         }
     };
 
     var col9 = "col-md-9 col-sm-9";
     var col3 = "col-md-3 col-sm-3";
     $scope.iconCol = "Hide Detail"
-    $scope.fullScreen = function(){
+    $scope.fullScreen = function() {
         col9 = col9 === "col-md-9 col-sm-9" ? "col-md-12 col-sm-12" : "col-md-9 col-sm-9";
         col3 = col3 === "col-md-3 col-sm-3" ? "hide" : "col-md-3 col-sm-3";
         $scope.iconCol = $scope.iconCol === "Hide Detail" ? "Show Detail" : "Hide Detail";
-        angular.element("#col9").attr("class",col9);
-        angular.element("#col3").attr("class",col3);
+        angular.element("#col9").attr("class", col9);
+        angular.element("#col3").attr("class", col3);
     };
 });

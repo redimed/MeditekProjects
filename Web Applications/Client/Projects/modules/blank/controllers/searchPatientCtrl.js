@@ -1,5 +1,9 @@
 var app = angular.module('app.blank.searchPatient.controller', []);
-app.controller('searchPatientCtrl', function($scope, blankServices, toastr, UnauthenticatedService, $rootScope, $state, $cookies) {
+app.controller('searchPatientCtrl', function($scope, blankServices, toastr, UnauthenticatedService, $rootScope, $state, $cookies, $stateParams) {
+    console.log('$stateParams',$stateParams.typePatient)
+   if ($stateParams.typePatient == 'PatientCampaign') {
+     $scope.typePatient = $stateParams.typePatient
+   };
     $scope.number = 1;
     $scope.submitted = false;
     $scope.logInData = {
@@ -37,16 +41,27 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
     };
     $scope.submit = function() {
         $scope.submitted = true;
+         o.loadingPage(true);
         if ($scope.step2.$valid) {
             $scope.logInData.PinNumber = $scope.postData.data.PinNumber
-            console.log($scope.logInData)
             blankServices.login($scope.logInData).then(function(response) {
+                console.log("response", response)
+                o.loadingPage(false);
                 $cookies.putObject("userInfo", response.user);
                 $cookies.put("token", response.token);
                 $rootScope.refreshCode = response.refreshCode;
                 $state.go("authentication.home.list")
             }, function(err) {
-                toastr.error('Patient Login Fail');
+                 o.loadingPage(false);
+                if (err.data.ErrorType == "PinNumber.Invalid") {
+                    toastr.error('Password Invalid');
+                } else if (err.data.ErrorType == "PinNumber.Expired") {
+
+                    toastr.error('Password Invalid');
+                } else {
+                    toastr.error('Patient Login Fail');
+                }
+                $state.go('blank.searchPatient')
             })
         }
     };

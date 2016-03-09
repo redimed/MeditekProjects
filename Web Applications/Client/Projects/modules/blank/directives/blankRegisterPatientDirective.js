@@ -92,12 +92,15 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         console.log('Campaign01',response)
                         $scope.dataCreateAppointment.Doctor.UID = response.data.Value;
                         blankServices.PatientRequestAppointment($scope.dataCreateAppointment).then(function(response) {
+                            o.loadingPage(false);
                             $state.go("authentication.home.list")
                         }, function(err) {
+                            o.loadingPage(false);
                             $state.go("authentication.home.list")
                             toastr.error('Request Appointment fail');
                         })
                     }, function(err) {
+                        o.loadingPage(false);
                         $state.go("authentication.home.list")
                         toastr.error('Set campaign doctor for Appointment fail');
                     })
@@ -105,8 +108,10 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                     $scope.dataCreateAppointment.Doctor = null;
                     console.log("$scope.dataCreateAppointment",$scope.dataCreateAppointment);
                     blankServices.PatientRequestAppointment($scope.dataCreateAppointment).then(function(response) {
+                        o.loadingPage(false);
                         $state.go("authentication.home.list")
                     }, function(err) {
+                        o.loadingPage(false);
                         $state.go("authentication.home.list")
                         toastr.error('Request Appointment fail');
                     })
@@ -173,6 +178,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 $scope.submitted = true;
                 if ($scope.step3.$valid) {
                     $scope.FormatDate();
+                    o.loadingPage(true);
                     blankServices.registerPatient($scope.postData).then(function(response) {
                         if (response.data.status = 200) {
                             $scope.logInData.UserUID = response.data.UserAccountUID;
@@ -183,10 +189,12 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                                 $rootScope.refreshCode = response.refreshCode;
                                 $scope.GetDataAppointment();
                             }, function(err) {
+                                o.loadingPage(false);
                                 toastr.error('Patient login fail');
                             })
                         };
                     }, function(err) {
+                        o.loadingPage(false);
                         toastr.error('Create Patient fail');
                     })
                 }

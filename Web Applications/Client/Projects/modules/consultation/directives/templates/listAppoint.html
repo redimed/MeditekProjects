@@ -15,8 +15,9 @@
                 <thead>
                     <tr>
                         <th width="1">#</th>
-                        <th width="1">Code</th>
+                        <th >Code</th>
                         <th>Patient Name</th>
+                        <th>Treating Practitioner</th>
                         <th>
                             Date Enrolled
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
@@ -34,6 +35,9 @@
                         </td>
                         <td>
                             <input type="text" class="form-control" ng-model="info.data.Search[0].Patient.FullName" ng-enter="reloadData()">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="info.data.Search[1].Doctor.FullName" ng-enter="reloadData()">
                         </td>
                         <td class="form-inline" align="center">
                             <input type="text" class="form-control date-picker input-small" style="width: 100% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="reloadData()">
@@ -56,6 +60,7 @@
                                 {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
                                 </span>
                             </td>
+                            <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
                             <td>{{appt.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
                             <td>
                                 <span ng-if="appt.Status === info.apptStatus[3].value"><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>

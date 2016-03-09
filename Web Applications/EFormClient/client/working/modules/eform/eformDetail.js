@@ -150,7 +150,7 @@ module.exports = React.createClass({
         for(var i = 0; i < sections.length; i++){
             var section = sections[i];
             var sectionRef = section.ref;
-            var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation();
+            var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation('form');
             tempFields.map(function(field, index){
                 fields.push(field);
             })
@@ -176,7 +176,7 @@ module.exports = React.createClass({
         for(var i = 0; i < sections.length; i++){
             var section = sections[i];
             var sectionRef = section.ref;
-            var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation();
+            var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation('print');
             tempFields.map(function(field, index){
                 fields.push(field);
             })

@@ -80,13 +80,13 @@ public class DataProcess {
         // populate all tables
         for(FormDataModel d : tableIdentity){
             List<Hashtable> tableHash = jasperTableDataParse(d, d.getColumns(), d.getRows(), data);
-            parsedData.put(d.getName(), tableHash);
+            parsedData.put(d.getName().toLowerCase(), tableHash);
         }
         //populate remaning data (non-table)
         for(FormDataModel d : data){
             //only if it's not table identity or not a cell in a table
             if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
-                parsedData.put(d.getName(), d.getValue());
+                parsedData.put(d.getName().toLowerCase(), d.getValue());
             }
         }
         return parsedData;

@@ -9,7 +9,8 @@ module.exports = React.createClass({
         code: React.PropTypes.number,
         type: React.PropTypes.string,
         context: React.PropTypes.string,
-        onRightClickItem: React.PropTypes.func
+        onRightClickItem: React.PropTypes.func,
+        preCal: React.PropTypes.string
     },
     getDefaultProps: function(){
         return {
@@ -41,12 +42,18 @@ module.exports = React.createClass({
             })
         }
     },
-    setChecked: function(){
-        $(this.refs.input).iCheck('check');
+    setChecked: function(checked){
+        if(checked)
+            $(this.refs.input).iCheck('check');
+        else{
+             $(this.refs.input).iCheck('uncheck');
+        }
     },
-    setValue: function(value){
-        this.value = value;
-        $(this.refs.input).val(value);
+    setValue: function(checked){
+        if(checked === 'yes')
+            $(this.refs.input).iCheck('check');
+        else
+           $(this.refs.input).iCheck('uncheck'); 
     },
     isChecked: function(){
         return $(this.refs.input).prop('checked');
@@ -65,6 +72,9 @@ module.exports = React.createClass({
     },
     getType: function(){
         return this.props.type;
+    },
+    getPreCal: function(){
+        return this.props.preCal;
     },
     render: function(){
         var type = this.props.type;

@@ -655,10 +655,12 @@ module.exports = {
     */
     CreatePatient : function(data, other, transaction) {
         var PatientDetail = {};
+        var isCreateByPhoneNumber = false;
         var isCreateByName = false;
         var isCreateByEmail = false;
         var isCreateByPhoneAndEmail = false;
         var ishaveUser = false;
+        var userInfo ={};
         var defer = $q.defer(); 
         var info = {
             Title           : data.Title,
@@ -682,157 +684,58 @@ module.exports = {
         };
         sequelize.transaction()
         .then(function(t){
-            return Services.Patient.validation(data,true)
+             Services.Patient.validation(data,true)
             .then(function(success){
-                if(data.PhoneNumber && data.Email) {
+                if(data.Email && data.PhoneNumber) {
                     isCreateByPhoneAndEmail = true;
-                    var checkDatas = {};
-                    checkDatas.Email = data.Email;
-                    checkDatas.PhoneNumber = data.PhoneNumber;
-
-                    return Services.UserAccount.GetUserAccountDetails(checkDatas,null,t);
+                    userInfo.UserName = check.parseAuMobilePhone(data.PhoneNumber);
+                    userInfo.PhoneNumber = data.PhoneNumber;
+                    userInfo.Email   = data.Email;
+                    return Services.UserAccount.GetUserAccountDetails(data,null,t);
                 }
-                else if(data.PhoneNumber){
-                    return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,null,t);
-                }
-                else if(data.Email){
-                    var checkDatas = {
-                        // UserName : data.Email,
-                        Email    : data.Email,
-                        // PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
-                        // Password : generatePassword(12, false)
-                    };
+                else if(data.Email) {
                     isCreateByEmail = true;
-                    return Services.UserAccount.GetUserAccountDetails(checkDatas,null,t);
+                    userInfo.UserName = data.Email;
+                    userInfo.Email = data.Email;
+                    return Services.UserAccount.GetUserAccountDetails(data,null,t);
                 }
-                else{
-                    var checkDatas = {
-                        UserName : info.FirstName+"."+info.LastName+"."+generatePassword(4, false),
-                        // PinNumber: data.PinNumber?data.PinNumber:generatePassword(6, false),
-                        // Password : generatePassword(12, false)
-                    };
+                else if(data.PhoneNumber) {
+                    isCreateByPhoneNumber = true;
+                    userInfo.UserName = check.parseAuMobilePhone(data.PhoneNumber);
+                    userInfo.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
+                    return Services.UserAccount.GetUserAccountDetails(data,null,t);
+                }
+                else {
                     isCreateByName = true;
-                    return Services.UserAccount.GetUserAccountDetails(checkDatas,null,t);
+                    userInfo.UserName = data.FirstName+"."+data.LastName+"."+generatePassword(4, false);
+                    return success;
                 }
-                //return Patient.create(data);
-            },function(err){
-                t.rollback();
+            },function(err) {
+                // t.rollback();
                 throw err;
             })
             .then(function(got_user) {
-                if(got_user == null || got_user == '') {
-                    console.log("khong co user");
-                    data.Password = data.Password?data.Password:generatePassword(12, false);
-                    return Services.UserAccount.CreateUserAccount(data,t);
+                if(got_user == '' || got_user == null) {
+                    userInfo.Password = generatePassword(12,false);
+                    userInfo.PinNumber = data.PinNumber?data.PinNumber:generatePassword(6, false);
+                    return Services.UserAccount.CreateUserAccount(userInfo,t);
                 }
                 else {
-                    console.log("co user");
-                    ishaveUser = true;
                     return got_user;
                 }
-            },function(err) {
-                t.rollback();
-                throw err;
             })
             .then(function(user){
-                if(isCreateByName==false && isCreateByEmail==false && isCreateByPhoneAndEmail == false){
-                    if(user.length > 0) {
-
-                        info.UserAccountID = user[0].ID;
-                        info.UserAccountUID = user[0].UID;
-                        ishaveUser = true;
-                        return Patient.findOne({
-                            where:{
-                                UserAccountID : info.UserAccountID
-                            },
-                            transaction :t
-                        });
-                    }
-                    else{
-                        data.password = generatePassword(12, false);
-                        // data.PinNumber = generatePassword(6, false);
-                        var userInfo = {
-                            UserName    : data.PhoneNumber,
-                            // Email       : data.Email!=null&&data.Email!=''?data.Email:data.Email1,
-                            PhoneNumber : data.PhoneNumber,
-                            Password    : data.password,
-                            PinNumber   : data.PinNumber?data.PinNumber:generatePassword(6, false)
-                        };
-                        userInfo.UID = UUIDService.Create();
-                        if(data.hasOwnProperty('PinNumber')== true)
-                            userInfo.PinNumber = data.PinNumber;
-                        else
-                            userInfo.PinNumber = generatePassword(6, false);
-                        //create UserAccount
-                        return Services.UserAccount.CreateUserAccount(userInfo,t)
-                        .then(function(user){
-                            info.UserAccountID = user.ID;
-                            info.UserAccountUID = user.UID;
-                            return Patient.findOne({
-                                where:{
-                                    UserAccountID : info.UserAccountID
-                                },
-                                transaction :t
-                            });
-                        },function(err){
-                            t.rollback();
-                            throw err;
-                        });
-                    }
-                }
-                else if(isCreateByPhoneAndEmail == true) {
-                    if(user != null && user != '') {
-                        info.UserAccountID = user.ID;
-                        info.UserAccountUID = user.UID;
-                        return Patient.findOne({
-                            where:{
-                                UserAccountID : info.UserAccountID
-                            },
-                            transaction :t
-                        });
-                    }
-                    else{
-                        data.password = generatePassword(12, false);
-                        data.PinNumber = generatePassword(6, false);
-                        var userInfo = {
-                            UserName    : data.PhoneNumber,
-                            Email       : data.Email,
-                            PhoneNumber : data.PhoneNumber,
-                            Password    : data.password,
-                            PinNumber   : data.PinNumber
-                        };
-                        userInfo.UID = UUIDService.Create();
-                        if(data.hasOwnProperty('PinNumber')== true)
-                            userInfo.PinNumber = data.PinNumber;
-                        //create UserAccount
-                        return Services.UserAccount.CreateUserAccount(userInfo,t)
-                        .then(function(user){
-                            info.UserAccountID = user.ID;
-                            info.UserAccountUID = user.UID;
-                            return Patient.findOne({
-                                where:{
-                                    UserAccountID : info.UserAccountID
-                                },
-                                transaction :t
-                            });
-                        },function(err){
-                            t.rollback();
-                            throw err;
-                        });
-                    }
-                }
-                else{
-                    info.UserAccountID = user.ID;
-                    info.UserAccountUID = user.UID;
-                    return Patient.findOne({
-                        where:{
-                            UserAccountID : info.UserAccountID
-                        },
-                        transaction :t
-                    });
-                }
+                console.log(user);
+                info.UserAccountID = user.ID;
+                info.UserAccountUID = user.UID;
+                return Patient.findOne({
+                    where:{
+                        UserAccountID : info.UserAccountID
+                    },
+                    transaction :t
+                });
             },function(err){
-                t.rollback();
+                // t.rollback();
                 throw err;
             })
             .then(function(got_patient) {
@@ -845,7 +748,7 @@ module.exports = {
                     throw err;
                 }
             },function(err) {
-                t.rollback();
+                // t.rollback();
                 throw err;
             })
             .then(function(result){
@@ -869,7 +772,7 @@ module.exports = {
                         }
                     }
                 },function(err){
-                    t.rollback();
+                    // t.rollback();
                     throw err;
                 })
                 .then(function(result){
@@ -877,7 +780,7 @@ module.exports = {
                         return PatientMedicare.create(PatientDetail.PatientMedicare,{transaction:t});
                     }
                 },function(err){
-                   t.rollback();
+                   // t.rollback();
                    throw err; 
                 })
                 .then(function(result){
@@ -885,7 +788,7 @@ module.exports = {
                         return PatientKin.create(PatientDetail.PatientKin,{transaction:t});
                     }
                 },function(err){
-                    t.rollback();
+                    // t.rollback();
                     throw err;
                 })
                 .then(function(result){
@@ -893,7 +796,7 @@ module.exports = {
                         return PatientDVA.create(PatientDetail.PatientDVA,{transaction:t});
                     }
                 },function(err){
-                    t.rollback();
+                    // t.rollback();
                     throw err;
                 })
             }, function(err){
@@ -916,6 +819,7 @@ module.exports = {
                                         throw err;
                                     else{
                                         info.transaction = t;
+                                        info.dataValues.PinNumber = userInfo.PinNumber;
                                         defer.resolve(info);
                                     }
                                 });
@@ -934,7 +838,7 @@ module.exports = {
                             }
                         });
                     }
-                    else if(isCreateByEmail == false && isCreateByName == false && isCreateByPhoneAndEmail == false) {
+                    else if(isCreateByPhoneNumber == true) {
                         data.content = data.PinNumber;
                         return Services.Patient.sendSMS(data, t,function(err) {
                             if(err)
@@ -944,6 +848,10 @@ module.exports = {
                                 defer.resolve(info);
                             }
                         });
+                    }
+                    else {
+                        info.transaction = t;
+                        defer.resolve(info);
                     }
                 }
                 else {

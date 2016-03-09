@@ -119,6 +119,7 @@ module.exports = {
 	 */
 	CreateUserAccount:function(userInfo,transaction)
 	{
+		console.log("userInfo ",userInfo);
 		userInfo.UID=UUIDService.Create();
 		var err=new Error('CreateUserAccount.Error');
 		function Validate()
@@ -317,7 +318,6 @@ module.exports = {
 			userInfo.Enable='Y';
 			if(userInfo.PinNumber)
 				userInfo.ExpiryPin=o.const.ExpiryPin;
-			console.log(userInfo);
 			return UserAccount.create(userInfo,{transaction:transaction});
 			
 		},function(e){

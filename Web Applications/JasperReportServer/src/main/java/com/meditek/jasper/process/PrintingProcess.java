@@ -13,6 +13,7 @@ import com.meditek.jasper.model.ReportDataWrapperModel;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -79,6 +82,8 @@ public class PrintingProcess {
 //            String templateFileName = realPath+formUID+".jasper";
             InputStream templateFile = this.getClass().getResourceAsStream("/"+realPath+formUID+".jasper");
 //            String templateFileName = "/home/rockmanexe1994/Projects/JasperReportWorkspace/MyReports/consult_note.jasper";
+            
+            
             HashMap params = new HashMap();
             params.put("data", parsedData);
             params.put("realPath", realPath);
@@ -94,7 +99,7 @@ public class PrintingProcess {
         }
     }
 
-    
+    		
 //    public ByteArrayOutputStream jasperPrinting(Dictionary data){
 //        try {
 //            ReportDataWrapperModel fillData = dataParsing.DataParse(data);

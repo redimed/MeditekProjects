@@ -10,7 +10,8 @@ module.exports = React.createClass({
         refTemp: React.PropTypes.string,
         onRightClickItem: React.PropTypes.func,
         permission: React.PropTypes.string,
-        rows: React.PropTypes.any
+        rows: React.PropTypes.any,
+        preCal: React.PropTypes.string
     },
     getDefaultProps: function(){
         return {
@@ -58,6 +59,9 @@ module.exports = React.createClass({
     },
     getRows: function(){
         return this.props.rows;
+    },
+    getPreCal: function(){
+        return this.props.preCal;
     },
     render: function(){
         var type = this.props.type;

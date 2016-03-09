@@ -20,7 +20,10 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        $(this.refs.signature).jSignature();
+        var self = this;
+        setTimeout(function(){
+            $(self.refs.signature).jSignature();
+        })
 
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
@@ -36,12 +39,14 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        valueArr = value.join(",");
-        if(valueArr !== "image/jsignature;base30,")
-            $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
+        //valueArr = value.join(",");
+        /*if(valueArr !== "image/jsignature;base30,"){
+            if(typeof $(this.refs.signature).jSignature !== 'undefined')
+                $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
+        }*/
     },
     getValue: function(){
-        return $(this.refs.signature).jSignature("getData", "base30")
+        return "chu ky";
     },
     getName: function(){
         return this.props.name;

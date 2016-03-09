@@ -79,8 +79,6 @@ module.exports = React.createClass({
                 object.rows = 1;
             if(Config.getPrefixField(typeField, 'check') > -1){
                 object.label = 'New Check';
-            }
-            if(Config.getPrefixField(typeField, 'radio') > -1){
                 object.value = 'new_value';
             }
             if(Config.getPrefixField(typeField, 'label') > -1){
@@ -125,16 +123,6 @@ module.exports = React.createClass({
                 sections: sections
             }
         })
-        /*this.setState(function(prevState) {
-            return {
-                sections: prevState.sections.updateIn([fromObj.codeSection, 'rows', fromObj.codeRow], val => toImmutable)
-            }
-        })
-        this.setState(function(prevState) {
-            return {
-                sections: prevState.sections.updateIn([toObj.codeSection, 'rows', toObj.codeRow], val => fromImmutable)
-            }
-        })*/
         swal("Success!", "Drag change field successfully.", "success");
     },
     _onComponentSectionRemoveField: function(codeSection, codeRow, codeField) {
@@ -154,6 +142,7 @@ module.exports = React.createClass({
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
                             .set('rows', dataField.rows)
+                            .set('preCal', dataField.preCal)
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'checkbox') > -1){
@@ -162,6 +151,8 @@ module.exports = React.createClass({
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
                             .set('label', dataField.label)
+                            .set('value', dataField.value)
+                            .set('preCal', dataField.preCal)
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'radio') > -1){
@@ -171,6 +162,7 @@ module.exports = React.createClass({
                             .set('size', dataField.size)
                             .set('label', dataField.label)
                             .set('value', dataField.value)
+                            .set('preCal', dataField.preCal)
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'label') > -1){

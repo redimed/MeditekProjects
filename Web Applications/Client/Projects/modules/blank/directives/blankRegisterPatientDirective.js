@@ -89,7 +89,8 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 }
                 if ($scope.typedoctor == 'typedoctor') {
                     consultationServices.getDoctorCampaign('Campaign01').then(function(response) {
-                        $scope.dataCreateAppointment.Doctor.UID = response.data.UID;
+                        console.log('Campaign01',response)
+                        $scope.dataCreateAppointment.Doctor.UID = response.data.Value;
                         blankServices.PatientRequestAppointment($scope.dataCreateAppointment).then(function(response) {
                             $state.go("authentication.home.list")
                         }, function(err) {

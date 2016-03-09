@@ -3,7 +3,6 @@ var config = sails.config.myconf;
 var $q = require('q');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
-var arrTemp = [];
 var redisKey = "TelehealthServer";
 
 function emitError(socket, msg) {
@@ -58,17 +57,12 @@ module.exports = {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
                     console.log("JoinConferenceRoom Successfully", uid);
-                    console.log("===============================================", arrTemp);
-                    if (_.some(arrTemp, {
-                            to: uid
-                        })) {
-                        var index = _.findIndex(arrTemp, {
-                            to: uid,
-                            message: 'call'
-                        });
-                        sails.sockets.emit(req.socket.id, '-', arrTemp[index]);
-                        console.log("============= sails.sockets.emit", sails.sockets.emit);
-                    }
+                    RedisWrap.hget(redisKey, uid).then(function(data) {
+                        console.log("==================================================", data);
+                        if (data != null) {
+                            sails.sockets.broadcast(uid, 'receiveMessage', data);
+                        }
+                    });
                 } else error = "User Is Not Exist";
             }).catch(function(err) {
                 error = err;
@@ -142,20 +136,19 @@ module.exports = {
             data.from = from;
             data.message = message;
             data.to = to;
-            var index = _.findIndex(arrTemp, {
-                to: to
-            });
-            if (message.toLowerCase() == 'call' && index == -1)
-                arrTemp.push(data);
-            else
-                arrTemp.splice(index, 1);
-
-            RedisWrap.hset(redisKey, from, data);
-
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> arrTemp", arrTemp);
+            // RedisWrap.hget(redisKey, to).then(function(obj) {
+            //     console.log("redissssssssssssssssssssssssssssssssssssssssssssss 111111",data);
+            //     console.log("redissssssssssssssssssssssssssssssssssssssssssssss 222222222",message.toLowerCase());
+            //     console.log("redissssssssssssssssssssssssssssssssssssssssssssss 33333333", data);
+            //     if (obj == null && message.toLowerCase() == 'call') {
+            //     } else {
+            //         RedisWrap.hdel(redisKey, to);
+            //     }
+            // });
             console.log(roomList);
             console.log(to);
             console.log("8888888888888888888888888888", _.contains(roomList, to));
+            RedisWrap.hset(redisKey, to, data);
             if (_.contains(roomList, to)) {
                 console.log("0000000000000000000000000000000000000000", data);
                 sails.sockets.broadcast(to, 'receiveMessage', data);

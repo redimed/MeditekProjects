@@ -1,6 +1,7 @@
 package com.redimed.telehealth.patient.information.presenter;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.bumptech.glide.Glide;
@@ -44,6 +46,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -64,10 +67,11 @@ public class InfoPresenter implements IInfoPresenter {
     private Patient[] patients;
     private IInfoView iInfoView;
     private RegisterApi restClient;
+    private SimpleDateFormat dateFormat;
     private IMainPresenter iMainPresenter;
     private static final int MEDIA_TYPE_IMAGE = 1;
     private SharedPreferences patientSharedPreferences;
-    private String TAG = "INFORMATION_PRESENTER", home, email, address, suburb, postCode, country;
+    private String TAG = "=====INFORMATION_PRESENTER=====", firstName, lastName, dob, home, email, address, suburb, postCode, country;
 
     public InfoPresenter(IInfoView iInfoView, Context context, FragmentActivity activity) {
         this.context = context;
@@ -77,6 +81,7 @@ public class InfoPresenter implements IInfoPresenter {
         iInfoView.onLoadToolbar();
         restClient = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         patientSharedPreferences = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
@@ -123,8 +128,23 @@ public class InfoPresenter implements IInfoPresenter {
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         Bitmap errorBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_error_image);
                         iInfoView.onLoadAvatar(errorBitmap);
+                        Log.d(TAG, e.getLocalizedMessage());
                     }
                 });
+    }
+
+    @Override
+    public void displayDatePickerDialog() {
+        Calendar birthdayCalendar = Calendar.getInstance();
+        DatePickerDialog birthdayPickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newCalendar = Calendar.getInstance();
+                newCalendar.set(year, monthOfYear, dayOfMonth);
+                iInfoView.onLoadDOB(dateFormat.format(newCalendar.getTime()));
+            }
+        }, birthdayCalendar.get(Calendar.YEAR), birthdayCalendar.get(Calendar.MONTH), birthdayCalendar.get(Calendar.DATE));
+        birthdayPickerDialog.show();
     }
 
     @Override
@@ -145,6 +165,15 @@ public class InfoPresenter implements IInfoPresenter {
     public void updateProfile(ArrayList<EditText> arrEditText) {
         for (EditText editText : arrEditText){
             switch (editText.getId()) {
+                case R.id.txtFirstName:
+                    firstName = editText.getText().toString();
+                    break;
+                case R.id.txtLastName:
+                    lastName = editText.getText().toString();
+                    break;
+                case R.id.txtDOB:
+                    dob = editText.getText().toString();
+                    break;
                 case R.id.txtHomePhone:
                     home = editText.getText().toString();
                     break;
@@ -168,6 +197,9 @@ public class InfoPresenter implements IInfoPresenter {
 
         if (isValidateForm(arrEditText)){
             Patient patient = new Patient();
+            patient.setFirstName(firstName);
+            patient.setLastName(lastName);
+            patient.setDOB(dob);
             patient.setEmail(email);
             patient.setSuburb(suburb);
             patient.setAddress1(address);
@@ -182,7 +214,7 @@ public class InfoPresenter implements IInfoPresenter {
             restClient.updateProfile(jPatient, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
-
+                    iInfoView.onReload();
                 }
 
                 @Override

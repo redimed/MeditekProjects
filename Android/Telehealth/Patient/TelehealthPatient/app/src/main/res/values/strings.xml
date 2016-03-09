@@ -141,15 +141,18 @@
     <string name="logout">Log Out</string>
 
     <!-- Profile Layout-->
+    <string name="profile_first_name">First Name</string>
+    <string name="profile_last_name">Last Name</string>
     <string name="profile_title">Patient Profile</string>
     <string name="profile_mobile">Mobile:</string>
-    <string name="profile_dob">DOB:</string>
+    <string name="profile_dob">DOB</string>
     <string name="profile_email">Email</string>
     <string name="profile_home_phone">Home Phone</string>
     <string name="profile_address">Address</string>
     <string name="profile_suburb">Suburb</string>
     <string name="profile_post_code">Post Code</string>
     <string name="profile_country">Country</string>
+    <string name="profile_update">Update Profile</string>
 
     <!-- Sub Tracking Layout-->
     <string name="sub_tracking_received">Received</string>

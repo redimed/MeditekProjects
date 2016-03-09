@@ -5,6 +5,8 @@
  */
 package com.meditek.jasper.model;
 
+import java.util.Base64;
+
 /**
  *
  * @author rockmanexe1994
@@ -17,9 +19,18 @@ public class FormDataModel {
     String ref;
     String refChild;
     String refRow;
+    String base64Data;
     int columns;
     int rows;
 
+//    public byte[] getBase64Data() {
+//        return Base64.getDecoder().decode(base64Data);
+//    }
+//
+//    public void setBase64Data(String base64Data) {
+//        this.base64Data = base64Data;
+//    }
+    
     public String getRefRow() {
         return (refRow==null)?"":refRow;
     }
@@ -91,8 +102,4 @@ public class FormDataModel {
     public void setRows(int rows) {
         this.rows = rows;
     }
-    
-    
-    
-    
 }

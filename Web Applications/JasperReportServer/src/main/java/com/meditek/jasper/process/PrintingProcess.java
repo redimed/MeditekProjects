@@ -79,10 +79,7 @@ public class PrintingProcess {
                 System.out.println("Key: "+key+"                    Value: "+ parsedData.get(key));
             }
             String realPath = "com/meditek/jaspertemplate/";
-//            String templateFileName = realPath+formUID+".jasper";
             InputStream templateFile = this.getClass().getResourceAsStream("/"+realPath+formUID+".jasper");
-//            String templateFileName = "/home/rockmanexe1994/Projects/JasperReportWorkspace/MyReports/consult_note.jasper";
-            
             
             HashMap params = new HashMap();
             params.put("data", parsedData);

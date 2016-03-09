@@ -39,13 +39,6 @@ public class JasperReportController {
         return "Hello World!";
     }
     
-    @CrossOrigin("*")
-    @RequestMapping(value="/struct", method=RequestMethod.POST)
-    public String getDataStructure(HttpServletResponse res, @RequestBody RequestDataModel requestData){
-        res.setContentType("application/pdf");
-        return requestData.toString();
-    }
-    
 //    @CrossOrigin("*")
 //    @RequestMapping(value="/print", method=RequestMethod.POST)
 //    public void print (HttpServletResponse res, @RequestBody RequestDataModel requestData){

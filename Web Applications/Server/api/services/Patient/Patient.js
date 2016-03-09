@@ -1711,6 +1711,9 @@ module.exports = {
 
 
     SearchPatient : function(whereClause, transaction) {
+    	if(whereClause.Email1 == '' || whereClause.Email1 == null) {
+    		whereClause.Email1 = null;
+    	}
         var UserAccountWhereClause = {};
         if('PhoneNumber' in whereClause) {
             var PhoneNumber = whereClause.PhoneNumber[0] == '0' ? '+61'+ whereClause.PhoneNumber.substr(1,whereClause.PhoneNumber.length) : whereClause.PhoneNumber;

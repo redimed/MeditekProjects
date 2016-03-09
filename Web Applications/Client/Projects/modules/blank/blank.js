@@ -69,7 +69,7 @@ app.config(function($stateProvider) {
         })
         .state('blank.searchPatient', {
             data: { pageTitle: 'searchPatient' },
-            url: '/searchPatient',
+            url: '/searchPatient/:typePatient',
             views: {
                 'blank': {
                     templateUrl: 'modules/blank/views/searchPatient.html',

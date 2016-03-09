@@ -64,7 +64,7 @@ app
                         "isAuthenticated.someoneElseLoggedIn": "401:010: Someone else is logged in.",
                         "isAuthenticated.notAuthenticated": "401:011: You are not logged in.",
                     };
-                    if (response.status === 401 || response.status === 403) {
+                    if ((response.status === 401 || response.status === 403) && (response.data.ErrorType != "PinNumber.Invalid" && response.data.ErrorType != "PinNumber.Expired")) {
                         if (response.data.ErrorsList && response.data.ErrorsList[0]) {
                             if (message[response.data.ErrorsList[0]]) {
                                 alert(message[response.data.ErrorsList[0]]);

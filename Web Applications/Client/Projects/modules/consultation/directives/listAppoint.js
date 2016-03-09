@@ -108,6 +108,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             scope.reloadData = function() {
                 scope.info.data.Offset = (scope.info.paging.currentPage - 1) * scope.info.paging.itemsPerPage;
                 (scope.info.data.Search[0].Patient.FullName !== "") ? scope.info.data.Search[0].Patient.FullName: scope.info.data.Search[0].Patient.FullName = null;
+                (scope.info.data.Search[1].Doctor.FullName !== "" && scope.info.data.Search[1].Doctor.FullName !== undefined) ? scope.info.data.Search[1].Doctor.FullName: scope.info.data.Search[1].Doctor.FullName = null;
                 (scope.fromCreateDate && scope.fromCreateDate !== null) ? scope.info.data.Filter[0].Appointment.CreatedDate = moment(scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): scope.info.data.Filter[0].Appointment.CreatedDate = null;
                 console.log('scope.info.data', scope.info.data);
                 scope.LoadData();

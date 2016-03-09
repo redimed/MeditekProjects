@@ -122,6 +122,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 };
             });
             $scope.PrintPDF = function() {
+                o.loadingPage(true);
                 var ConsultationDataTemp = [];
                 for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
@@ -198,14 +199,20 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         data: postData
                     }
                     consultationServices.PrintPDF(dataPost).then(function(responsePrintPDF) {
+                        o.loadingPage(false);
                         console.log(responsePrintPDF)
                         var blob = new Blob([responsePrintPDF.data], {
                             type: 'application/pdf'
                         });
                         saveAs(blob, "ConsultationNote_" + response.data[0].FirstName + response.data[0].LastName);
                     }, function(err) {
+                        o.loadingPage(false);
+                        toastr.error("Print PDF Fail");
                     });
-                })
+                }, function(err) {
+                    o.loadingPage(false);
+                    toastr.error("Print PDF Fail");
+                });
             }
             $scope.Reset = function() {
                 $state.go("authentication.consultation.detail.consultNote", {}, {

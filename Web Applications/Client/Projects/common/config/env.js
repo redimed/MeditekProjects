@@ -42,10 +42,10 @@ var configEFormUrl={
 };
 
 var PDFFormUrl={
-	'local':'https://192.168.1.173:3013',
-	'meditekServer':'https://192.168.1.173:3013',
-	'testApp':'https://192.168.1.173:3013',
-	'app':'https://192.168.1.173:3013'
+	'local':'https://192.168.1.171:3013',
+	'meditekServer':'https://192.168.1.171:3013',
+	'testApp':'https://192.168.1.171:3013',
+	'app':'https://192.168.1.171:3013'
 };
 
 if(env == "local")

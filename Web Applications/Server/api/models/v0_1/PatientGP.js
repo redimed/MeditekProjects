@@ -228,7 +228,7 @@ module.exports = {
                 }
             }
         },
-        Memo: {
+        Note: {
             type: Sequelize.TEXT,
             allowNull: true
         },

@@ -82,7 +82,9 @@ module.exports = {
     },
     UpdatePatientDetails: function(headers, body) {
         headers['content-type'] = 'application/json';
-        body.data.UserAccountUID = headers.useruid;
+        body.UserAccountUID = headers.useruid;
+        console.log("headers . . . ",headers.useruid);
+        console.log("body ..... ",body);
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/patient/update-patient',

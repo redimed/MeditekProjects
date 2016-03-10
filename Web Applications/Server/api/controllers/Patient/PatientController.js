@@ -166,6 +166,7 @@ module.exports = {
         if('UserAccountUID' in req.body) {
             data.UserAccountUID = req.body.UserAccountUID;
         }
+        console.log("body ..... ",req.body);
         var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {

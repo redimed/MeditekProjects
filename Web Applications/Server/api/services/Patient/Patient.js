@@ -897,7 +897,7 @@ module.exports = {
                 Suburb              : data.Suburb,
                 Postcode            : data.Postcode,
                 State               : data.State,
-                Email1              : data.Email1,
+                Email1              : data.Email,
                 Occupation          : data.Occupation,
                 HomePhoneNumber     : data.HomePhoneNumber,
                 WorkPhoneNumber     : data.WorkPhoneNumber,
@@ -954,7 +954,7 @@ module.exports = {
                             Enable : data.EnableUser
                         },{
                             where : {
-                                ID : data.UserAccountID
+                                UID : data.UserAccountUID
                             },
                             transaction:t
                         });
@@ -973,7 +973,7 @@ module.exports = {
                                     Email : data.Email
                                 },{
                                     where : {
-                                        ID : data.UserAccountID
+                                        UID : data.UserAccountUID
                                     },
                                     transaction:t
                                 });

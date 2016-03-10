@@ -17,7 +17,7 @@ struct MessageString  {
     static let Cancel : String = "cancel"
     static let VersionAndBuild : String = "© REDIMED 2015 \(UIApplication.sharedApplication().versionBuild()) – App Design by Meditek"
     static let QuestionCallPhone : String = "You want to contact us?"
-    static let MessageLogout : String = "Are you sure you want to unregister? This will delete your user account on this device."
+    static let MessageLogout : String = "Do you want to logout the system?"
     static let StringHealthCare:String = "Personalised + Customised, HEALTHCARE anywhere"
     static let phoneNumberCallUs : String = "tel://0892300900"
     static let savedPictureMessage : String = "Your picture was saved to Camera Roll"

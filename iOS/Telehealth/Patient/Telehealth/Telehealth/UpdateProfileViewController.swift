@@ -52,7 +52,7 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
             lastNameTxt.text = patientInformation.LastName
             homePhoneTxt.text = patientInformation.HomePhoneNumber
             dobTxt.text = patientInformation.DOB
-            emailTxt.text = patientInformation.Email1
+            emailTxt.text = patientInformation.Email
             addressTxt.text = patientInformation.Address1
             suburbbTxt.text = patientInformation.Suburb
             postCodeTxt.text = patientInformation.Postcode
@@ -224,7 +224,7 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
         patientInformation.LastName = lastNameTxt.text
         patientInformation.HomePhoneNumber = homePhoneTxt.text
         patientInformation.DOB = dobTxt.text
-        patientInformation.Email1 = emailTxt.text
+        patientInformation.Email = emailTxt.text
         patientInformation.Address1 = addressTxt.text
         patientInformation.Suburb = suburbbTxt.text
         patientInformation.Postcode = postCodeTxt.text

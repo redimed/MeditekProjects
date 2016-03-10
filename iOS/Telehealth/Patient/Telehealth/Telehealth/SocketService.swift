@@ -12,31 +12,37 @@ import SwiftyJSON
 
 protocol SocketDelegate{
     func receiveMessage(controller:SocketService,message:String,data:AnyObject)
+    func ShowLoading()
+    func HideLoading()
 }
 let sharedSocket = Singleton_SocketManager()
 class SocketService {
     
     var delegate : SocketDelegate! = nil
-    
     func openSocket(uid:String,complete:(String) -> Void) {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             // Called on every event
-    
             sharedSocket.socket.onAny {
-                //print("got event: \($0.event) with items \($0.items)")
+                print("got event: \($0.event) with items \($0.items)")
                 _ = $0.event
                 _ = $0.items
+                if($0.event ==  "error" ){
+                    if($0.items![0] as! String == "The network connection was lost."){
+                        self.delegate.ShowLoading()
+
+                    }
+                }
             }
             // Socket Events
             sharedSocket.socket.on("connect") {data, ack in
+                
                 print("socket connected")
-                print(data)
-                print(ack)
                 complete("socket connected")
                 let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]
                 sharedSocket.socket.emit("get", dictionNary)
+                self.delegate.HideLoading()
             }
             
             sharedSocket.socket.on("receiveMessage"){data, ack in

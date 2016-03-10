@@ -39,7 +39,7 @@ struct UrlTelehealth {
 
 struct httpUrl{
     static let httpTestApp :String = "https://testapp.redimed.com.au"
-    static let httpTelehealth :String = "http://telehealthvietnam.com.vn"
+    static let httpMeditek :String = "https://meditek.redimed.com.au"
     static let httpChien : String = "http://192.168.1.215"
 }
 
@@ -78,7 +78,8 @@ struct FAIcon {
 }
 struct formatTime {
     static let dateTime : String = "yyyy-MM-dd HH:mm:ss"
-    static let dateTimeZone : String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    static let dateTimeZone : String = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+    
     static let formatDate : String = "dd/MM/yyyy"
     static let formatDateTime : String = "dd/MM/yyyy HH:mm"
     static let formatTime : String = "HH:mm"

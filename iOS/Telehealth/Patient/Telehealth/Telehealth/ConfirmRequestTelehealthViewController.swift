@@ -19,7 +19,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var dateTime: UILabel!
-
+    
     @IBOutlet weak var btn1: UIButton!
     @IBOutlet weak var btn2: UIButton!
     @IBOutlet weak var btn3: UIButton!
@@ -43,7 +43,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
         phoneNumberLabel.text = "Phone: " + telehealthData.PhoneNumber
         surburbLabel.text = "Suburb: " + telehealthData.Suburb
         dobLabel.text = "DOB: " + telehealthData.DOB
-        emailLabel.text = "Email: " + telehealthData.Email1
+        emailLabel.text = "Email: " + telehealthData.Email
         
         
     }
@@ -60,12 +60,12 @@ class ConfirmRequestTelehealthViewController: UIViewController {
         if b1 == false || b2 == false ||  b3 == false {
             alertView.alertMessage("", message: "Please accept consent and submit booking request")
         }else{
-           self.view.showLoading()
+            self.view.showLoading()
             uploadImage()
         }
     }
     
-   //Checkupload Image
+    //Checkupload Image
     
     func uploadImage(){
         if let userUID = defaults.valueForKey("userUID") as? String {
@@ -98,7 +98,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
                         self.requestTelehealth()
                     }
                 }else {
-
+                
                     self.view.hideLoading()
                     let error = response["ErrorType"].string
                     self.alertView.alertMessage("Error", message: error!)
@@ -108,21 +108,22 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     }
     
     func requestTelehealth(){
-       
-            requestTelehealthService.requestTelehealth(dateText!, Type: telehealthData.typeTelehealth, Description: telehealthData.description, FirstName: telehealthData.FirstName, LastName: telehealthData.LastName, PhoneNumber: telehealthData.PhoneNumber, HomePhoneNumber: telehealthData.HomePhoneNumber, Suburd: telehealthData.Suburb, DOB: telehealthData.DOB, Email: telehealthData.Email1,FileUploads:fileUpload,handler: {
-                response in
-                if response["status"] == "success"{
-                    
-                    self.hideLoading()
-                    self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
-                    self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
-                }else {
-                    self.hideLoading()
-                    self.alertView.alertMessage("Error", message: "\(response["ErrorType"])")
-                }
-            })
         
-      
+        requestTelehealthService.requestTelehealth(dateText!, Type: telehealthData.typeTelehealth, Description: telehealthData.description, FirstName: telehealthData.FirstName, LastName: telehealthData.LastName, PhoneNumber: telehealthData.PhoneNumber, HomePhoneNumber: telehealthData.HomePhoneNumber, Suburd: telehealthData.Suburb, DOB: telehealthData.DOB, Email: telehealthData.Email,FileUploads:fileUpload,handler: {
+            response in
+            if response["status"] == "success"{
+                self.view.hideLoading()
+                self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
+                self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
+                
+                
+            }else {
+                self.view.hideLoading()
+                self.alertView.alertMessage("Error", message: "\(response["ErrorType"])")
+            }
+        })
+        
+        
         
         
     }
@@ -144,7 +145,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
                 btn2.setImage(imageOff , forState: .Normal)
                 b2 = false
             }
-
+            
         }else {
             if b3 == false {
                 btn3.setImage(imageOn , forState: .Normal)
@@ -153,9 +154,9 @@ class ConfirmRequestTelehealthViewController: UIViewController {
                 btn3.setImage(imageOff , forState: .Normal)
                 b3 = false
             }
-
+            
         }
-  
+        
         
     }
     
@@ -175,10 +176,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
                 check[i] = false
             }
         }
-
+        
     }
-    
-
-   
     
 }

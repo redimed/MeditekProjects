@@ -23,7 +23,8 @@ class VerifyPhoneAPI:TokenAPI {
         if ConfigurationSystem.http == httpUrl.httpTestApp {
             phoneConfig = "+61"+phoneNumber
         }else {
-            phoneConfig = "+61412345678"
+            //phoneConfig = "+61412345678"
+              phoneConfig = "+61400000002"
         }
         let parameters = [
             "data": [
@@ -58,7 +59,8 @@ class VerifyPhoneAPI:TokenAPI {
         if ConfigurationSystem.http == httpUrl.httpTestApp {
             phoneConfig = "+61"+phoneNumber
         }else {
-            phoneConfig = "+61412345678"
+            //phoneConfig = "+61412345678"
+            phoneConfig = "+61400000002"
         }
         let parameters = [
             "data": [

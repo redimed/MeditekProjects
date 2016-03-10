@@ -4,12 +4,22 @@ module.exports = function(data, userInfo) {
     var pagination = PaginationService(data, EFormTemplate);
     EFormTemplate.findAndCountAll({
             attributes: Services.AttributesEForm.EFormTemplate(),
+            include: [{
+                attributes: ['ID'],
+                model: EForm,
+                include: [{
+                    attributes: ['ID', 'UID'],
+                    model: Patient,
+                    where: pagination.Patient,
+                    required: false
+                }],
+                required: false
+            }],
             where: pagination.EFormTemplate,
             subQuery: false,
             order: pagination.order,
             limit: pagination.limit,
-            offset: pagination.offset,
-            raw: true
+            offset: pagination.offset
         })
         .then(function(eformTemplateList) {
             defer.resolve({ data: eformTemplateList });

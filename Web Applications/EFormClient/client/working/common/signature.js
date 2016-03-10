@@ -51,7 +51,9 @@ module.exports = React.createClass({
         return $(this.refs.signature).jSignature('getData', 'base30');
     },
     getBase64Value: function(){
-       return $(this.refs.signature).jSignature('getData', 'default');
+        var data = $(this.refs.signature).jSignature('getData', 'default');
+        data = data.replace('data:image/png;base64,','');        
+       return data;
     },
     getName: function(){
         return this.props.name;

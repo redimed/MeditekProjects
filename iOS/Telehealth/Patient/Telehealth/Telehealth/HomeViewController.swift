@@ -52,12 +52,12 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-           ShowLoading()
+            //ShowLoading()
             self.socketService.openSocket(uuid,complete: {
                 complete in
                 if complete == "socket connected" {
 
-//                    self.hideLoading()
+                   // self.hideLoading()
                 }
             })
             getInformationPatient()

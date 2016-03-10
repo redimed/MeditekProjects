@@ -35,7 +35,7 @@ public class FAQsPresenter implements IFAQsPresenter {
                     url = "file:///android_asset/FAQs.html";
                     break;
                 case "Service":
-                    url = "file:///android_asset/UrgentCare.html";
+                    url = "file:///android_asset/Other.html";
                     break;
                 default:
                     break;

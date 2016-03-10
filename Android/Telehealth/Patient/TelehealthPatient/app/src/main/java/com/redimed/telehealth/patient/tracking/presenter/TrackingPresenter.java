@@ -36,7 +36,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     private IMainPresenter iMainPresenter;
     private List<Appointment> listAppointment;
     private SharedPreferences telehealthPatient;
-    private String TAG = "TRACKING_PRESENTER";
+    private String TAG = "=====TRACKING_PRESENTER=====";
 
     public TrackingPresenter(Context context, ITrackingView iTrackingView, FragmentActivity activity) {
         this.context = context;

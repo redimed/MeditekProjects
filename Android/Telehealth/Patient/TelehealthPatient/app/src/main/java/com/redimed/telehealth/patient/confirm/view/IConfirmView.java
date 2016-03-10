@@ -5,5 +5,7 @@ package com.redimed.telehealth.patient.confirm.view;
  */
 public interface IConfirmView {
 
+    void onLoadSuccess();
+
     void onLoadError(String msg);
 }

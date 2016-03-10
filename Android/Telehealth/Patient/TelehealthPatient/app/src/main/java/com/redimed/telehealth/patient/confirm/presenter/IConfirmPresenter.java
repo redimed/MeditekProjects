@@ -13,8 +13,6 @@ public interface IConfirmPresenter {
 
     String getCurrentDateSystem();
 
-    void changeFragment(Fragment fragment);
-
     void completeRequest(Intent i, ArrayList<String> fileUploads, String currentDate);
 
     boolean isCheckPatientConsent(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3);

@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.request.view;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,6 +26,8 @@ public interface IRequestView {
     void onResultEmail(boolean email);
 
     void onResultMobile(boolean phone);
+
+    void startActivityResult(Intent i);
 
     void onResultSuburb(boolean suburb);
 

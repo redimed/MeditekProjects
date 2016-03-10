@@ -385,7 +385,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:enabled="false"
-                        android:hint="@string/profile_country"
+                        android:hint="@string/profile_email"
                         android:inputType="textEmailAddress"
                         android:singleLine="true"
                         android:text="@string/none"

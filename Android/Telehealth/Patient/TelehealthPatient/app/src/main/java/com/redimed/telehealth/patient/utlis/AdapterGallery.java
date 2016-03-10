@@ -22,7 +22,7 @@ public class AdapterGallery extends BaseAdapter {
     private LayoutInflater inflater;
     private boolean isActionMultiplePick;
     private ArrayList<CustomGallery> data;
-    private String TAG = "GALLERY_ADAPTER";
+    private String TAG = "=====GALLERY_ADAPTER=====";
 
     public AdapterGallery(Context context) {
         this.context = context;
@@ -52,7 +52,7 @@ public class AdapterGallery extends BaseAdapter {
 
     public void selectAll(boolean selection) {
         for (int i = 0; i < data.size(); i++) {
-            data.get(i).isSeleted = selection;
+            data.get(i).isSelected = selection;
 
         }
         notifyDataSetChanged();
@@ -61,7 +61,7 @@ public class AdapterGallery extends BaseAdapter {
     public boolean isAllSelected() {
         boolean isAllSelected = true;
         for (int i = 0; i < data.size(); i++) {
-            if (!data.get(i).isSeleted) {
+            if (!data.get(i).isSelected) {
                 isAllSelected = false;
                 break;
             }
@@ -72,7 +72,7 @@ public class AdapterGallery extends BaseAdapter {
     public boolean isAnySelected() {
         boolean isAnySelected = false;
         for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).isSeleted) {
+            if (data.get(i).isSelected) {
                 isAnySelected = true;
                 break;
             }
@@ -94,7 +94,7 @@ public class AdapterGallery extends BaseAdapter {
     public ArrayList<CustomGallery> getSelected() {
         ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
         for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).isSeleted) {
+            if (data.get(i).isSelected) {
                 dataT.add(data.get(i));
             }
         }
@@ -102,12 +102,12 @@ public class AdapterGallery extends BaseAdapter {
     }
 
     public void changeSelection(View v, int position) {
-        if (data.get(position).isSeleted) {
-            data.get(position).isSeleted = false;
+        if (data.get(position).isSelected) {
+            data.get(position).isSelected = false;
         } else {
-            data.get(position).isSeleted = true;
+            data.get(position).isSelected = true;
         }
-        ((ViewHolder) v.getTag()).imgQueueMultiSelected.setSelected(data.get(position).isSeleted);
+        ((ViewHolder) v.getTag()).imgQueueMultiSelected.setSelected(data.get(position).isSelected);
     }
 
     @Override
@@ -124,14 +124,13 @@ public class AdapterGallery extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-//        holder.imgQueue.setTag(position);
         try {
             Glide.with(context).load("file://" + data.get(position).sdcardPath)
                     .centerCrop()
                     .into(holder.imgQueue);
 
             if (isActionMultiplePick) {
-                holder.imgQueueMultiSelected.setSelected(data.get(position).isSeleted);
+                holder.imgQueueMultiSelected.setSelected(data.get(position).isSelected);
             }
         } catch (Exception e) {
             e.printStackTrace();

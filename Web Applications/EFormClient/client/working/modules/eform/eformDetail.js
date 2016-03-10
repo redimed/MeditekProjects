@@ -28,7 +28,6 @@ module.exports = React.createClass({
         var self = this;
         EFormService.preFormDetail({UID: this.appointmentUID})
         .then(function(response){
-            console.log(response.data);
             for(var section_index = 0; section_index < content.length; section_index++){
                 var section = content[section_index];
                 for(var row_index = 0; row_index < section.rows.length; row_index++){
@@ -166,7 +165,7 @@ module.exports = React.createClass({
             EFormService.formUpdate({UID: this.formUID, content: content})
             .then(function(){
                 swal("Success!", "Your form has been saved.", "success");
-            })  
+            })
         }
     },
     _onComponentPageBarPrintForm: function(){

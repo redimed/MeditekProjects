@@ -7,11 +7,18 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr, EFormService) {
     /* EFORM */
     var postData = {
-        Filter: [{
-            EFormTemplate: {
-                Enable: 'Y'
-            }
-        }]
+            Filter: [
+                    {
+                        EFormTemplate: {
+                            Enable: 'Y'
+                        }
+                    },
+                    {
+                        Patient: {
+                            UID: $stateParams.UIDPatient
+                        }
+                    }
+            ]
     }
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
@@ -23,6 +30,32 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     $scope.eFormTemplate = function(eformTemplate) {
         $state.go("authentication.consultation.detail.eForm.LoadForm", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient, UIDFormTemplate: eformTemplate.UID });
     };
+
+    var userInfo =  JSON.parse($cookies.get('userInfo'));
+    $scope.checkPatient = 'N';
+    for(var i = 0; i < userInfo.roles.length; i++){
+        var role = userInfo.roles[i];
+        if(role.UID === '333'){
+            $scope.checkPatient = 'Y';
+            break;
+        }
+    }
+
+    $scope.styleFunction = function(EForms){
+        var check = false;
+        for(var i = 0; i < EForms.length; i++){
+            var EForm = EForms[i];
+            var Patients = EForm.Patients;
+            for(var j = 0; j < Patients.length; j++){
+               var Patient = Patients[j];
+               if(Patient.UID === $stateParams.UIDPatient){
+                    check = true;
+                    break;
+               } 
+            }
+        }
+        return (check)?'green-jungle':'blue-steel';
+    }
     /* END EFORM */
     //
     $scope.checkRoleUpdate = true;

@@ -6,14 +6,20 @@
 package com.meditek.jasper.process;
 
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PushbuttonField;
+import com.itextpdf.text.pdf.parser.PdfImageObject;
 import com.meditek.jasper.model.FormDataModel;
 import com.meditek.jasper.model.ReportDataWrapperModel;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -40,8 +46,11 @@ public class PrintingProcess {
     public PrintingProcess() {
     }
     
-    public ByteArrayOutputStream iTextPrinting(List<FormDataModel> formData, String formUID){
+    public ByteArrayOutputStream iTextPrinting(List<FormDataModel> formData, String formUID) throws Exception{
         try {
+            // init params
+            String basePath = "com/meditek/itexttemplate/";
+            String pdfTemplateFile = "/"+basePath+formUID+".pdf";
             // Get populated data
             Hashtable data = dataParsing.iTextDataParse(formData);
             for (Enumeration data1 = data.keys(); data1.hasMoreElements();){
@@ -49,15 +58,23 @@ public class PrintingProcess {
                 System.out.println("Key: "+key+" Value: "+ data.get(key));
             }
             //Get correct pdf template
-            String pdfTemplateFile = "/com/meditek/itexttemplate/"+formUID+".pdf";
+          
             PdfReader pdfTemplate = new PdfReader(pdfTemplateFile);
             // Fill pdf
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             PdfStamper stamper = new PdfStamper(pdfTemplate, out);
+            AcroFields form = stamper.getAcroFields();
             stamper.setFormFlattening(true);
             for(Enumeration d = data.keys(); d.hasMoreElements();){
                 String key = (String)d.nextElement();
-                stamper.getAcroFields().setField(key, data.get(key).toString());
+                if(key.contains("base64")){
+                    PushbuttonField base64Field = form.getNewPushbuttonFromField(key);
+                    base64Field.setLayout(PushbuttonField.LAYOUT_ICON_ONLY);
+                    base64Field.setProportionalIcon(true);
+                    base64Field.setImage(Image.getInstance((byte[])data.get(key)));   
+                    form.replacePushbuttonField(key, base64Field.getField());
+                }
+                else stamper.getAcroFields().setField(key, data.get(key).toString());
             }
             stamper.close();
             pdfTemplate.close();

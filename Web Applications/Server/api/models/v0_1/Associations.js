@@ -468,5 +468,23 @@ module.exports = {
         AppointmentData.belongsTo(Appointment, {
             foreignKey: 'AppointmentID'
         });
+
+        //association EForm - EFormTemplate
+        EForm.belongsTo(EFormTemplate, {
+            foreignKey: 'EFormTemplateID'
+        });
+        EFormTemplate.hasMany(EForm, {
+            foreignKey: 'EFormTemplateID'
+        });
+
+        //association EForm - Patient
+        EForm.belongsToMany(Patient, {
+            through: 'RelEFormPatient',
+            foreignKey: 'EFormID'
+        });
+        Patient.belongsToMany(EForm, {
+            through: 'RelEFormPatient',
+            foreignKey: 'PatientID'
+        });
     }
 };

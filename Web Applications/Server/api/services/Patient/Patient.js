@@ -834,6 +834,7 @@ module.exports = {
                             }
                             else{
                                 info.transaction = t;
+								info.PinNumber = userInfo.PinNumber;
                                 defer.resolve(info);
                             }
                         });
@@ -845,12 +846,14 @@ module.exports = {
                                 throw err;
                             else{
                                 info.transaction = t;
+								info.PinNumber = userInfo.PinNumber;
                                 defer.resolve(info);
                             }
                         });
                     }
                     else {
                         info.transaction = t;
+						info.PinNumber = userInfo.PinNumber;
                         defer.resolve(info);
                     }
                 }
@@ -1711,14 +1714,19 @@ module.exports = {
 
 
     SearchPatient : function(whereClause, transaction) {
-    	if(whereClause.Email1 == '' || whereClause.Email1 == null) {
-    		whereClause.Email1 = null;
-    	}
+
         var UserAccountWhereClause = {};
         if('PhoneNumber' in whereClause) {
             var PhoneNumber = whereClause.PhoneNumber[0] == '0' ? '+61'+ whereClause.PhoneNumber.substr(1,whereClause.PhoneNumber.length) : whereClause.PhoneNumber;
             UserAccountWhereClause.PhoneNumber = PhoneNumber;
             delete whereClause['PhoneNumber'];
+        }
+        if(whereClause.Email1 == null || whereClause.Email1 == '') {
+            delete whereClause['Email1'];
+        }
+        else {
+            UserAccountWhereClause.Email = whereClause.Email1;
+            delete whereClause['Email1'];
         }
         return Patient.findOne({
             include:[

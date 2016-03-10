@@ -22,15 +22,15 @@ public class FormDataModel {
     String base64Data;
     int columns;
     int rows;
-
-//    public byte[] getBase64Data() {
-//        return Base64.getDecoder().decode(base64Data);
-//    }
-//
-//    public void setBase64Data(String base64Data) {
-//        this.base64Data = base64Data;
-//    }
     
+    public String getBase64Data() {
+        return (base64Data==null)?"":base64Data;
+    }
+
+    public void setBase64Data(String base64Data) {    
+        this.base64Data = (base64Data==null)?"":base64Data;
+    }
+
     public String getRefRow() {
         return (refRow==null)?"":refRow;
     }

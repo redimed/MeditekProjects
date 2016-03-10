@@ -21,7 +21,7 @@ class TelehealthContainer : PatientContainer{
         self.typeTelehealth = type
         Suburb = suburb
         DOB = dob
-        Email1 = email
+        Email = email
         self.description = description
         self.imageTelehealth = imageArray
     }

@@ -15,7 +15,7 @@ class TelehealthAPI : TokenAPI{
     func requestTelehealth(RequestDate:String,Type:String,Description:String,FirstName:String,LastName:String,PhoneNumber:String,HomePhoneNumber:String,Suburd:String,DOB:String,Email:String,FileUploads:[[String:String]], compailer:(JSON) -> Void){
         config.setHeader()
         
-        print(FileUploads)
+        //print(FileUploads)
         let parameter : [String:AnyObject] = [
             "data": [
                 "RequestDate" : RequestDate,
@@ -29,7 +29,7 @@ class TelehealthAPI : TokenAPI{
                         "HomePhoneNumber" : HomePhoneNumber,
                         "Suburb" : Suburd,
                         "DOB" : DOB,
-                        "Email1" : Email
+                        "Email" : Email
                 ],
                 "AppointmentData": [[
                     "Section": "Telehealth",
@@ -53,7 +53,7 @@ class TelehealthAPI : TokenAPI{
                 "FileUploads": FileUploads
             ]
         ]
-        print(parameter)
+        //print(parameter)
         
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlTelehealth.requestTelehealth ,headers:config.headers,parameters:parameter,encoding: .JSON).responseJSON{
             response in

@@ -62,10 +62,11 @@ module.exports = {
                         if (data != null) {
                             var awaitTime = moment(new Date()) - moment(data.timeCall);
                             console.log("++++++++++++++++++++++++++++++++++++++++++++",awaitTime);
-                            if (awaitTime > 2000) {
+                            if (awaitTime > 120000) {
                                 data.message = "misscall";
                             }
                             sails.sockets.broadcast(uid, 'receiveMessage', data);
+                            RedisWrap.hdel(redisKey, uid);
                         }
                     });
                 } else error = "User Is Not Exist";

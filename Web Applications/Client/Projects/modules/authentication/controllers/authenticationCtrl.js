@@ -151,4 +151,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         swal.close();
         o.audio.pause();
     }
+    socketTelehealth.funMisscall = function(msg){
+        alert("Miss Call");
+    }
 });

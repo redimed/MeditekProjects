@@ -1,6 +1,7 @@
 var config = sails.config.myconf;
 //======== Initialize Opentok module ==========
 var $q = require('q');
+var moment = require('moment');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
 var redisKey = "TelehealthServer";
@@ -58,9 +59,14 @@ module.exports = {
                     sails.sockets.leave(req.socket, req.socket.id);
                     console.log("JoinConferenceRoom Successfully", uid);
                     RedisWrap.hget(redisKey, uid).then(function(data) {
-                        console.log("==================================================", data);
                         if (data != null) {
+                            var awaitTime = moment(new Date()) - moment(data.timeCall);
+                            console.log("++++++++++++++++++++++++++++++++++++++++++++",awaitTime);
+                            if (awaitTime > 120000) {
+                                data.message = "misscall";
+                            }
                             sails.sockets.broadcast(uid, 'receiveMessage', data);
+                            RedisWrap.hdel(redisKey, uid);
                         }
                     });
                 } else error = "User Is Not Exist";
@@ -71,6 +77,7 @@ module.exports = {
         if (error) emitError(req.socket, error);
     },
     MessageTransfer: function(req, res) {
+
         if (!req.isSocket) {
             var err = new Error("Socket.MessageTransfer.Error");
             err.pushError("Socket Request Only!");
@@ -136,39 +143,34 @@ module.exports = {
             data.from = from;
             data.message = message;
             data.to = to;
-            // RedisWrap.hget(redisKey, to).then(function(obj) {
-            //     console.log("redissssssssssssssssssssssssssssssssssssssssssssss 111111",data);
-            //     console.log("redissssssssssssssssssssssssssssssssssssssssssssss 222222222",message.toLowerCase());
-            //     console.log("redissssssssssssssssssssssssssssssssssssssssssssss 33333333", data);
-            //     if (obj == null && message.toLowerCase() == 'call') {
-            //     } else {
-            //         RedisWrap.hdel(redisKey, to);
-            //     }
-            // });
-            console.log(roomList);
-            console.log(to);
-            console.log("8888888888888888888888888888", _.contains(roomList, to));
-            RedisWrap.hset(redisKey, to, data);
+            data.timeCall = new Date();
+            //if uid to online telehealth server
+            // RedisWrap.setex(redisKey, to, data);
+            switch (message.toLowerCase()) {
+                case "call":
+                    RedisWrap.hset(redisKey, to, data);
+                    break;
+                default:
+                    RedisWrap.hdel(redisKey, from);
+                    console.log("DELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+            }
+
             if (_.contains(roomList, to)) {
-                console.log("0000000000000000000000000000000000000000", data);
                 sails.sockets.broadcast(to, 'receiveMessage', data);
             }
-            console.log("8888888888888888888888888888", sails.sockets.subscribers(from).length);
+
             if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
                 data.message = 'decline';
                 data.to = from;
-                console.log("333333333333333333333333333333333", data);
                 sails.sockets.broadcast(from, 'receiveMessage', data, req.socket);
             }
         }
     },
     GenerateConferenceSession: function(req, res) {
-        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
         opentok.createSession({
             mediaMode: "routed"
         }, function(err, session) {
             if (err) return res.serverError(ErrorWrap(err));
-            console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             var sessionId = session.sessionId;
             var tokenOptions = {
                 role: 'moderator',
@@ -176,6 +178,7 @@ module.exports = {
                 data: 'name=Johnny'
             };
             var token = opentok.generateToken(sessionId, tokenOptions);
+            console.log("Generate Session Successfully");
             if (token != null && sessionId != null) res.ok({
                 message: 'Generate Session Successfully!',
                 data: {

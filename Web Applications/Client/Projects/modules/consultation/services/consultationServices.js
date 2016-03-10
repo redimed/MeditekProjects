@@ -13,7 +13,7 @@ angular.module("app.authentication.consultation.services", [])
             return result
         }
         services.getPatientDetail = function(UID){
-             return api.all('patient/detail-patient').post({ data: {UID:UID} });
+            return api.all('patient/detail-patient').post({ data: {UID:UID} });
         }
         services.listAppointment = function(data) {
             return api.all('appointment/list').post({ data: data });

@@ -89,7 +89,7 @@ module.exports = {
         ];
     },
     PatientGP: function() {
-        return ['UID', 'GPFirstName', 'GPLastName', 'Memo', 'CreatedDate'];
+        return ['UID', 'FirstName', 'LastName', 'Note', 'CreatedDate'];
     },
     PatientKin: function() {
         return ['UID', 'FirstName', 'MiddleName', 'LastName',

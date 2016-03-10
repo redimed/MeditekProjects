@@ -189,15 +189,6 @@ module.exports = {
                 }
             }
         },
-        Signature: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
-            validate: {
-                isInt: {
-                    msg: 'Must be an integer!'
-                }
-            },
-        },
         HealthLink: {
             type: Sequelize.STRING(255),
             allowNull: true,

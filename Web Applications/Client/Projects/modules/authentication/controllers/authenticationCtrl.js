@@ -91,6 +91,16 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         name: 'Silver Savings Account'
     }];
 
+    function messageTransfer(from, to, message){
+        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+            from: from,
+            to: to,
+            message: message
+        }, function(data) {
+            console.log("send call", data);
+        });
+    }
+
     socketTelehealth.funCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal({
@@ -113,14 +123,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     token: msg.token,
                     userName: msg.fromName
                 }), "CAll", { directories: "no" });
+                messageTransfer(msg.to, msg.from, "answer");
             } else {
-                socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-                    from: msg.to,
-                    to: msg.from,
-                    message: "decline"
-                }, function(data) {
-                    console.log("send call", data);
-                });
+                messageTransfer(msg.to, msg.from, "decline");
             };
             o.audio.pause();
             swal.close();
@@ -130,15 +135,23 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     };
 
     socketTelehealth.funConnect = function() {
-        console.log("CONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+        console.log("connectttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
         // join room telehealth server
         console.log("+++++++++++++++++++++++++++++++++++", $cookies.getObject('userInfo'));
         socketTelehealth.get('/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
     };
 
     socketTelehealth.funCancel = function(msg) {
-        console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
+        console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal.close();
         o.audio.pause();
+    }
+    socketTelehealth.funDecline = function(msg){
+        console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
+        swal.close();
+        o.audio.pause();
+    }
+    socketTelehealth.funMisscall = function(msg){
+        alert("Miss Call");
     }
 });

@@ -17,11 +17,11 @@ extension String
     {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = time//this your string date format
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        ///dateFormatter.timeZone = NSTimeZone(name: "UTC")
         let date = dateFormatter.dateFromString(self)
         if date != nil {
             dateFormatter.dateFormat = format///this is you want to convert format
-            dateFormatter.timeZone = NSTimeZone(name: "UTC")
+            ///dateFormatter.timeZone = NSTimeZone(name: "UTC")
             let timeStamp = dateFormatter.stringFromDate(date!)
             return String(timeStamp)
         }else {

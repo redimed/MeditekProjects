@@ -11,7 +11,7 @@ import SocketIOClientSwift
 import SwiftyJSON
 import AVFoundation
 
-class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate,MyPopupViewControllerDelegate,UIPageViewControllerDataSource,ContentViewDelegate,AVAudioPlayerDelegate,SocketDelegate{
+class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate,MyPopupViewControllerDelegate,UIPageViewControllerDataSource,ContentViewDelegate,AVAudioPlayerDelegate,SocketDelegate {
     let api = TokenAPI()
     let socketService = SocketService()
     let callService = CallService()
@@ -45,14 +45,14 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
        super.viewDidLoad()
         
        labelHealthCare.attributedText = config.setLabelAttribute(MessageString.StringHealthCare)
-        typeTelehelth = requestTelehealthService.loadDataJson()
+       typeTelehelth = requestTelehealthService.loadDataJson()
         
         //Connect Socket
         socketService.delegate = self
-       
+        
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-//            showloading("Please wait...")
+           ShowLoading()
             self.socketService.openSocket(uuid,complete: {
                 complete in
                 if complete == "socket connected" {
@@ -66,7 +66,12 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         pagingImage()
         resetTimer()
     }
-    
+    func ShowLoading(){
+        showloading("Connecting to server..")
+    }
+    func HideLoading() {
+        hideLoading()
+    }
     override func viewWillAppear(animated: Bool) {
         checkLogin()
      

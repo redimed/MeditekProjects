@@ -60,13 +60,12 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
             if (patientInformation != nil) {
                 firstNameTextField.text = patientInformation.FirstName
                 lastNameTextField.text = patientInformation.LastName
-                emailTextField.text = patientInformation.Email1
+                emailTextField.text = patientInformation.Email
                 mobileTextField.text = patientInformation.PhoneNumber
                 dobTextField.text = patientInformation.DOB
                 homePhoneTextField.text = patientInformation.HomePhoneNumber
                 suburbTextField.text = patientInformation.Suburb.uppercaseString
             }
-            
         }else {
             selectOptionImage.hidden = true
             collectionView.hidden = true

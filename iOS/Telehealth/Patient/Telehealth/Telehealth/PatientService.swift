@@ -38,7 +38,7 @@ class PatientService{
                 let FirstName = jsonInformation["FirstName"].string ?? ""
                 let State = jsonInformation["State"].string ?? ""
                 let ModifiedDate = jsonInformation["ModifiedDate"].string ?? ""
-                let Email1 = jsonInformation["Email"].string ?? ""
+                let Email = jsonInformation["Email"].string ?? ""
                 let Country = jsonInformation["CountryName"].string ?? ""
                 let ID = jsonInformation["ID"].string ?? ""
                 let Address1 = jsonInformation["Address1"].string ?? ""
@@ -49,7 +49,7 @@ class PatientService{
                 let ImageUID = jsonInformation["ProfileImage"].string ?? ""
                 let Signature = jsonInformation["Signature"].string ?? ""
                 
-                let patientData  = PatientContainer(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender, FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber, ImageUID: ImageUID,SignatureUID:Signature)
+                let patientData  = PatientContainer(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender, FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email: Email, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber, ImageUID: ImageUID,SignatureUID:Signature)
                 let message = JSON(["message":"success"])
                 completionHandler(message,patientData)
                 
@@ -79,7 +79,7 @@ class PatientService{
                 "LastName" : infoPatient.LastName,
                 "HomePhoneNumber" : infoPatient.HomePhoneNumber,
                 "DOB" : infoPatient.DOB,
-                "Email" : infoPatient.Email1,
+                "Email" : infoPatient.Email,
                 "Address1" : infoPatient.Address1,
                 "Suburb" : infoPatient.Suburb,
                 "Postcode" : infoPatient.Postcode,

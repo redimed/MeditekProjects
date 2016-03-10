@@ -72,7 +72,7 @@ class InformationViewController: UIViewController,signatureDelegate {
             self.postCodeLabel.text = patientInformation!.Postcode
             self.countryLabel.text = patientInformation!.Country
             self.addressLabel.text = patientInformation!.Address1
-            self.emailLabel.text = patientInformation!.Email1
+            self.emailLabel.text = patientInformation!.Email
             self.homePhoneLabel.text = patientInformation!.HomePhoneNumber
             self.phoneNumberLabel.text = patientInformation.PhoneNumber
            

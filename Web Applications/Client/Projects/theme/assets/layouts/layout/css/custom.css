@@ -596,6 +596,11 @@ img.profile-imge {
 .dashboard-stat:hover{
     cursor: pointer;
 }
+
+.dashboard-stat .details .number{
+    font-size: 23px;
+    font-weight: bolder;
+}
 /*phan quoc chien================================================================================*/
 
 .margin-left-right-0 {

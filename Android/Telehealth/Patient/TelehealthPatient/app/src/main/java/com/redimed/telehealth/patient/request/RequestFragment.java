@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -50,9 +51,9 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
 
     private Context context;
     private ArrayList<EditText> arrEditText;
-    private ArrayList<CustomGallery> customGalleries;
     private IRequestPresenter iRequestPresenter;
-    private String TAG = "REQUEST", apptType;
+    private ArrayList<CustomGallery> customGalleries;
+    private String TAG = "=====REQUEST=====", apptType;
 
     @Bind(R.id.tblRequest)
     TableLayout tblRequest;
@@ -354,11 +355,25 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     }
 
     @Override
+    public void startActivityResult(Intent i) {
+        startActivityForResult(i, 1);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
-            String[] allPath = data.getStringArrayExtra("all_path");
-            iRequestPresenter.setImageGallery(allPath);
+        if (resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case 200:
+                    String[] allPath = data.getStringArrayExtra("all_path");
+                    iRequestPresenter.setImageGallery(allPath);
+                    break;
+                case 1:
+                    iRequestPresenter.changeFragment(new HomeFragment());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

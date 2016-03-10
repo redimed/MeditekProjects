@@ -1,8 +1,11 @@
 package com.redimed.telehealth.patient.call;
 
 import android.content.Intent;
+import android.graphics.PointF;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,9 +26,9 @@ import butterknife.ButterKnife;
 
 public class CallActivity extends AppCompatActivity implements ICallView, View.OnClickListener, View.OnTouchListener {
 
-    private int xDelta;
-    private int yDelta;
+    private int xDelta, yDelta;
     private ICallPresenter iCallPresenter;
+    private String TAG = "======CALL======";
 
     @Bind(R.id.lblNameDoctor)
     TextView lblNameDoctor;
@@ -118,13 +121,15 @@ public class CallActivity extends AppCompatActivity implements ICallView, View.O
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        final int X = (int) event.getRawX();
-        final int Y = (int) event.getRawY();
+        int X = (int) event.getRawX();
+        int Y = (int) event.getRawY();
+        Log.d(TAG, X + " X===Y " + Y);
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
-                xDelta = X - lParams.leftMargin;
+                xDelta = X - lParams.rightMargin;
                 yDelta = Y - lParams.topMargin;
+                Log.d(TAG, xDelta + " === " + yDelta);
                 break;
             case MotionEvent.ACTION_UP:
 

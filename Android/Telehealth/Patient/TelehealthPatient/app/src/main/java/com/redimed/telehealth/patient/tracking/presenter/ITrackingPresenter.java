@@ -10,8 +10,13 @@ import java.util.List;
  * Created by Fox on 1/18/2016.
  */
 public interface ITrackingPresenter {
+
     void getListAppointment(int offset);
-    void getListMoreAppointment(int offset);
+
     void changeFragment(Fragment fragment);
+
+    void getListMoreAppointment(int offset);
+
     void setProgressBarVisibility(int visibility);
+
 }

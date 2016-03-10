@@ -38,16 +38,16 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
 
     // The minimum amount of items to have below your current scroll position
     // before loading more.
+    private boolean loading;
     private int visibleThreshold = 10;
     private int lastVisibleItem, totalItemCount;
-    private boolean loading;
     private EndlessRecyclerOnScrollListener onLoadMoreListener;
 
     private Context context;
     private int lastPosition;
     private IMainPresenter iMainPresenter;
     private List<Appointment> listAppointment;
-    private static String firstName, lastName, TAG = "AdapterAppointment";
+    private static String firstName, lastName, TAG = "=====AdapterAppointment=====";
 
     public AdapterAppointment(Context context, List<Appointment> data, FragmentActivity fragmentActivity, RecyclerView recyclerView) {
         this.context = context;

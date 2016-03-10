@@ -17,6 +17,7 @@ import java.util.Collections;
 public class GalleryPresenter implements IGalleryPresenter {
 
     private Context context;
+    private Cursor imageCursor;
     private IGalleryView iGalleryView;
 
     public GalleryPresenter(Context context, IGalleryView iGalleryView) {
@@ -33,8 +34,7 @@ public class GalleryPresenter implements IGalleryPresenter {
             final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID};
             final String orderBy = MediaStore.Images.Media._ID;
 
-            Cursor imageCursor = context.getContentResolver().query(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null, null, orderBy);
+            imageCursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null, null, orderBy);
 
             if (imageCursor != null && imageCursor.getCount() > 0) {
                 while (imageCursor.moveToNext()) {
@@ -46,6 +46,8 @@ public class GalleryPresenter implements IGalleryPresenter {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            imageCursor.close();
         }
 
         // show newest photo at beginning of the list

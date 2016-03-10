@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.confirm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,10 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,14 +16,10 @@ import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.confirm.presenter.ConfirmPresenter;
 import com.redimed.telehealth.patient.confirm.presenter.IConfirmPresenter;
 import com.redimed.telehealth.patient.confirm.view.IConfirmView;
-import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.utlis.DialogAlert;
 import com.redimed.telehealth.patient.utlis.DialogConnection;
 
-import java.nio.Buffer;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +29,7 @@ public class ConfirmActivity extends AppCompatActivity implements IConfirmView, 
     private Intent i;
     private ArrayList<String> fileUploads;
     private IConfirmPresenter iConfirmPresenter;
-    private String TAG = "CONFIRM", firstName, lastName, mobile, home, suburb, apptType, dob, email, des, currentDate;
+    private String TAG = "=====CONFIRM=====", firstName, lastName, mobile, home, suburb, apptType, dob, email, des, currentDate;
 
     @Bind(R.id.lblRequestDate)
     TextView lblRequestDate;
@@ -143,6 +137,13 @@ public class ConfirmActivity extends AppCompatActivity implements IConfirmView, 
     }
 
     @Override
+    public void onLoadSuccess() {
+        Intent returnIntent = new Intent(Intent.ACTION_PICK);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    @Override
     public void onLoadError(String msg) {
         if (msg.equalsIgnoreCase("Network Error")) {
             new DialogConnection(this).show();
@@ -151,5 +152,10 @@ public class ConfirmActivity extends AppCompatActivity implements IConfirmView, 
         } else {
             new DialogAlert(this, DialogAlert.State.Error, msg).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

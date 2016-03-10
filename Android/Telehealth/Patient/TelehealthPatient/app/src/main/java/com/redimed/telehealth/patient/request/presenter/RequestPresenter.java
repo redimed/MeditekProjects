@@ -106,8 +106,7 @@ public class RequestPresenter implements IRequestPresenter {
     public ArrayAdapter loadJsonData() {
         ArrayAdapter adapter = null;
         try {
-            file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
-                    context.getResources().getString(R.string.fileName));
+            file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" + context.getResources().getString(R.string.fileName));
             if (file.exists()) {
                 FileInputStream is = new FileInputStream(file);
                 int size = is.available();
@@ -196,19 +195,16 @@ public class RequestPresenter implements IRequestPresenter {
         i.putExtra("des", des);
         i.putExtra("fileUploads", fileUploads);
 
-        context.startActivity(i);
+        iRequestView.startActivityResult(i);
     }
 
     @Override
     public void checkFields(ArrayList<EditText> arrEditText, String suburb, String apptType) {
         if (isValidateForm(arrEditText) && !suburb.equalsIgnoreCase("") && !apptType.equalsIgnoreCase("")) {
-
             this.suburb = suburb;
             this.apptType = apptType;
             getDataField(arrEditText);
-
             iRequestView.onFieldOk();
-
         } else if (suburb.equalsIgnoreCase("")) {
             iRequestView.onResultSuburb(false);
         } else if (apptType.equalsIgnoreCase("")) {
@@ -304,11 +300,7 @@ public class RequestPresenter implements IRequestPresenter {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, apptType) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override

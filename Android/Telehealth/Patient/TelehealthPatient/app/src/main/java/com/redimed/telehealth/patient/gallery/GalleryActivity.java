@@ -23,9 +23,8 @@ import butterknife.ButterKnife;
 
 public class GalleryActivity extends AppCompatActivity implements IGalleryView, View.OnClickListener {
 
-    private String action;
     private IGalleryPresenter iGalleryPresenter;
-    private String TAG = "GALLERY";
+    private String TAG = "=====GALLERY_ACTIVITY=====";
 
     private Handler handler;
     private AdapterGallery adapterGallery;
@@ -49,7 +48,7 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
         setContentView(R.layout.activity_gallery_gridview);
         ButterKnife.bind(this);
 
-        action = getIntent().getAction();
+        String action = getIntent().getAction();
         if (action == null) {
             finish();
         }
@@ -76,8 +75,8 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
         iGalleryPresenter = new GalleryPresenter(this, this);
 
         adapterGallery = new AdapterGallery(this);
-        gridGallery.setAdapter(adapterGallery);
         adapterGallery.setMultiplePick(true);
+        gridGallery.setAdapter(adapterGallery);
 
         handler = new Handler();
         new Thread() {

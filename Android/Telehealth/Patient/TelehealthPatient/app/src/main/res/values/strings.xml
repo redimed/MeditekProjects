@@ -11,7 +11,7 @@
 
     <!-- Main-->
     <string name="login">Login</string>
-    <string name="un_title">Are you sure you want to unregister? This will delete your user account on this device.</string>
+    <string name="un_title">Do you want to logout the system?</string>
 
     <!-- Activation-->
     <string name="activation_title">Activation</string>

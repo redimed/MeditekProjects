@@ -349,109 +349,55 @@
 							</div>
 							<div class="tab-pane" id="tab_fund">
 								<div class="row margin-top-30">
-									<!-- <div class="col-md-6 col-sm-6">
-										<label class="control-label">Mineral Resources</label>
-										<select class="form-control">
-											<option value="">Mineral Resources (Manulife)</option>
-										</select>
-									</div> -->
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Account Type</label>
-											<input type="text" class="form-control" ng-model="info.PatientFund.AccountType" ng-change="checkDataNull('PatientFund.AccountType')" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Private Fund</label>
-											<input type="text" class="form-control" ng-model="info.PatientFund.PrivateFund" ng-change="checkDataNull('PatientFund.PrivateFund')" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">UPI</label>
-											<input type="text" class="form-control" ng-model="info.PatientFund.UPI" ng-change="checkDataNull('PatientFund.UPI')" />
-										</div>
-									</div>
-									<!-- <div class="col-md-1 col-sm-1">
-										<div class="form-group">
-											<label class="control-label">&nbsp;</label>
-											<div class="checkbox-list">
-												<label><input type="checkbox"> SMS</label>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-1 col-sm-1">
-										<div class="form-group">
-											<label class="control-label">&nbsp;</label>
-											<div class="checkbox-list">
-												<label><input type="checkbox"> Is Lock</label>
-											</div>
-										</div>
-									</div> -->
-								</div>
-								<div class="row">
-									<!-- <div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">Account Seft</label>
-											<input type="text" class="form-control">
-										</div>
-									</div> -->
-									
-									<!-- <div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">Membership Number</label>
-											<input type="text" class="form-control">
-										</div>
-									</div> -->
-									
-								</div>
-								<div class="row">
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">HCC Pension Number</label>
-											<input type="text" class="form-control" ng-model="info.PatientPension.HCCPensionNumber" ng-change="checkDataNull('PatientPension.HCCPensionNumber')" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Pension Expire</label>
-											<input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" ng-model="info.PatientPension.ExpiryDate" id="ExpiryDate" ng-change="checkDataNull('PatientPension.ExpiryDate')" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">DVA Number</label>
-											<input type="text" class="form-control" ng-model="info.PatientDVA.DVANumber" ng-change="checkDataNull('PatientDVA.DVANumber')" />
-										</div>
-									</div>
-									<!-- <div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">Balance</label>
-											<input type="text" class="form-control">
-										</div>
-									</div> -->
-								</div>
-								<div class="row">
-									<!-- <div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">PaysGap Only</label>
-											<input type="text" class="form-control">
-										</div>
-									</div> -->
-									<!-- <div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">Is Enable</label>
-											<input type="text" class="form-control">
-										</div>
-									</div> -->
-									<!-- <div class="col-md-3 col-sm-3">
-										<div class="form-group">
-											<label class="control-label">Passport</label>
-											<input type="text" class="form-control">
-										</div>
-									</div> -->
 									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Fund/Payment List</label>
+											<select class="form-control" size="6">
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-9 col-sm-9">
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Account Type</label>
+													<input type="text" class="form-control" ng-model="info.PatientFund.AccountType" ng-change="checkDataNull('PatientFund.AccountType')" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Private Fund</label>
+													<input type="text" class="form-control" ng-model="info.PatientFund.PrivateFund" ng-change="checkDataNull('PatientFund.PrivateFund')" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">UPI</label>
+													<input type="text" class="form-control" ng-model="info.PatientFund.UPI" ng-change="checkDataNull('PatientFund.UPI')" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">HCC Pension Number</label>
+													<input type="text" class="form-control" ng-model="info.PatientPension.HCCPensionNumber" ng-change="checkDataNull('PatientPension.HCCPensionNumber')" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Pension Expire</label>
+													<input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" ng-model="info.PatientPension.ExpiryDate" id="ExpiryDate" ng-change="checkDataNull('PatientPension.ExpiryDate')" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">DVA Number</label>
+													<input type="text" class="form-control" ng-model="info.PatientDVA.DVANumber" ng-change="checkDataNull('PatientDVA.DVANumber')" />
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -665,23 +611,77 @@
 								</div> -->
 							</div>
 							<div class="tab-pane" id="tab_gp">
-								<div class="row">
-									<div class="col-md-4 col-sm-4">
+								<div class="row margin-top-30">
+									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
-											<label class="control-label">GP First Name</label>
-											<input type="text" class="form-control" ng-model="info.PatientGP.GPFirstName" ng-change="checkDataNull('PatientGP.GPFirstName')" />
+											<label class="control-label">GP/Clinical List</label>
+											<select class="form-control" size="15">
+												<option value=""></option>
+											</select>
 										</div>
 									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">GP Sur Name</label>
-											<input type="text" class="form-control" ng-model="info.PatientGP.GPLastName" ng-change="checkDataNull('PatientGP.GPLastName')" />
+									<div class="col-md-9 col-sm-9">
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">GP First Name</label>
+													<input type="text" class="form-control" ng-model="info.PatientGP.GPFirstName" ng-change="checkDataNull('PatientGP.GPFirstName')" />
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">GP Last Name</label>
+													<input type="text" class="form-control" ng-model="info.PatientGP.GPLastName" ng-change="checkDataNull('PatientGP.GPLastName')" />
+												</div>
+											</div>
 										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Memo</label>
-											<input type="text" class="form-control" ng-model="info.PatientGP.Memo" ng-change="checkDataNull('PatientGP.Memo')" />
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Health Link</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Provider Number</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Email</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Mobile</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Home Phone</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Work phone</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12 col-sm-12">
+												<div class="form-group">
+													<label class="control-label">Note</label>
+													<textarea class="form-control" ng-model="info.PatientGP.Memo" ng-change="checkDataNull('PatientGP.Memo')" ></textarea>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>

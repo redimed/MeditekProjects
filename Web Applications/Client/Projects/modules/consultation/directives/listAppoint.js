@@ -32,6 +32,10 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                         Patient: {
                             FullName: null
                         }
+                    },{
+                        Doctor: {
+                            FullName: null
+                        }
                     }],
                     Range: [{
                         Appointment: {

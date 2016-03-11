@@ -27,6 +27,9 @@ module.exports = React.createClass({
             if(Config.getPrefixField(this.type, 'html') > -1){
                 this.refs.formEditorLabel.setValue(object.value);
             }
+            if(Config.getPrefixField(this.type, 'signature') > -1){
+                this.refs.formHeight.setValue(object.height);
+            }
             this.forceUpdate();
         }else if(this.type === 'table'){
              this.refs.formName.setValue(object.name);
@@ -59,6 +62,9 @@ module.exports = React.createClass({
             if(Config.getPrefixField(this.type, 'html') > -1){
                 data.label = this.refs.formEditorLabel.getValue();
             }
+            if(Config.getPrefixField(this.type, 'signature') > -1){
+                data.height = this.refs.formHeight.getValue();
+            }
         }else if(this.type === 'table'){
             data = {
                 name: this.refs.formName.getValue(),
@@ -76,6 +82,7 @@ module.exports = React.createClass({
         var display_label = 'none';
         var display_rows = 'none';
         var display_precal = 'block';
+        var display_height = 'none';
 
         if(Config.getPrefixField(this.type, 'eform_input') > -1){
             display_name = 'block';
@@ -93,7 +100,9 @@ module.exports = React.createClass({
                 display_label = 'none';
                 display_labelh = 'block';
             }
-
+            if(Config.getPrefixField(this.type, 'signature') > -1){
+                display_height = 'block';
+            }
         }else if(this.type === 'table'){
             display_name = 'block';
         }
@@ -130,6 +139,10 @@ module.exports = React.createClass({
                             <div className="form-group">
                                 <label>Size</label>
                                 <CommonInputText placeholder="Type size" ref="formSize"/>
+                            </div>
+                            <div className="form-group" style={{display: display_height}}>
+                                <label>Height</label>
+                                <CommonInputText placeholder="Type size" ref="formHeight"/>
                             </div>
                             <div className="form-group" style={{float:'right'}}>
                                 <button type="button" className="btn btn-default" onClick={this.props.onCloseModal}>Close</button>

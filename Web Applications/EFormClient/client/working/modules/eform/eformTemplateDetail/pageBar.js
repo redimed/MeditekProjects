@@ -27,7 +27,8 @@ module.exports = React.createClass({
 		})
 	},
 	_onSaveForm: function(){
-		swal({
+                         this.props.onSaveForm();
+		/*swal({
 			title: 'Are you sure?',
 			text: 'You will save this form !!!',
 			type: 'warning',
@@ -36,8 +37,7 @@ module.exports = React.createClass({
 			allowOutsideClick: false,
 			showLoaderOnConfirm: true
 		}, function(){
-			this.props.onSaveForm();
-		}.bind(this))
+		}.bind(this))*/
 	},
             _goToHome: function(){
                 history.push('/eformTemplate?userUID='+this.userUID);

@@ -24,6 +24,6 @@ module.exports = React.createClass({
                     </form>
                 </div>
             </div>
-		)
-	}
+        )
+    }
 })

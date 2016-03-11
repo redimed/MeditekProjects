@@ -103,6 +103,9 @@ module.exports = React.createClass({
             if(Config.getPrefixField(type, 'label') > -1){
                 delete dataFieldDetail.name;
             }
+            if(Config.getPrefixField(type, 'signature') > -1){
+                dataFieldDetail.height = this.refs[ref].getHeight();
+            }
         }
         switch (id) {
             case 'editField':
@@ -436,7 +439,7 @@ module.exports = React.createClass({
                                                                 onDeleteColumn={this._onDeleteColumn}
                                                                 onUpdateColumn={this._onUpdateColumn}
                                                                 onRightClickItem={this._onRightClickTableItem}/>
-                                                    else if(type === 'eform_input_signature')
+                                                    else if(type === 'eform_input_signature'){
                                                         return <CommonSignature key={index} type={type}
                                                             groupId={groupId}
                                                             permission={this.props.permission}
@@ -446,7 +449,9 @@ module.exports = React.createClass({
                                                             ref={field.get('ref')}
                                                             refTemp={field.get('ref')}
                                                             code={index}
+                                                            height={field.get('height')}
                                                             onRightClickItem={this._onRightClickItem}/>
+                                                    }
                                                 }, this)
                                             }
                                         </div>
@@ -561,7 +566,7 @@ module.exports = React.createClass({
                                             onDeleteColumn={this._onDeleteColumn}
                                             onUpdateColumn={this._onUpdateColumn}
                                             onRightClickItem={this._onRightClickTableItem}/>
-                                else if(type === 'eform_input_signature')
+                                else if(type === 'eform_input_signature'){
                                     return <CommonSignature key={index} type={type}
                                         groupId={groupId}
                                         permission={this.props.permission}
@@ -572,7 +577,9 @@ module.exports = React.createClass({
                                         refTemp={field.get('ref')}
                                         code={index}
                                         type={type}
+                                        height={field.get('height')}
                                         onRightClickItem={this._onRightClickItem}/>
+                                }
                             }, this)
                         }
                 </div>

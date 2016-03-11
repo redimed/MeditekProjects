@@ -34,49 +34,51 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     var pageTitles: NSArray!
     var pageImages: NSArray!
     var page = 0
-   
+    
     var backMusic: AVAudioPlayer!
     var uid = String()
     
     var typeTelehelth = [String]()
     var patientInformation : PatientContainer!
-  
+    
     override func viewDidLoad() {
-       super.viewDidLoad()
+        super.viewDidLoad()
         
-       labelHealthCare.attributedText = config.setLabelAttribute(MessageString.StringHealthCare)
-       typeTelehelth = requestTelehealthService.loadDataJson()
+        labelHealthCare.attributedText = config.setLabelAttribute(MessageString.StringHealthCare)
+        typeTelehelth = requestTelehealthService.loadDataJson()
         
         //Connect Socket
         socketService.delegate = self
         
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-            //ShowLoading()
+            ShowLoading()
             self.socketService.openSocket(uuid,complete: {
                 complete in
                 if complete == "socket connected" {
-
-                   // self.hideLoading()
+                    //self.socketService.hideLoading()
                 }
             })
             getInformationPatient()
         }
-
+        
         pagingImage()
         resetTimer()
     }
     func ShowLoading(){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setValue("1", forKey: "loading")
         showloading("Connecting to server..")
     }
     func HideLoading() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setValue("0", forKey: "loading")
         hideLoading()
     }
     override func viewWillAppear(animated: Bool) {
         checkLogin()
-     
+        
     }
-    
     
     func checkLogin(){
         if let uuid = defaults.valueForKey("uid") as? String {
@@ -100,7 +102,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             trackingReferral.hidden = true
             settingView.hidden = true
         }
-
+        
     }
     
     
@@ -181,7 +183,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
-
+        
         let startVC = self.viewControllerAtIndex(0) as ContentViewController
         let viewControllers = NSArray(object: startVC)
         
@@ -366,19 +368,19 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         }
     }
     
-//    override func loading(){
-//        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .Alert)
-//        
-//        alert.view.tintColor = UIColor.blackColor()
-//        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(10, 5, 50, 50)) as UIActivityIndicatorView
-//        loadingIndicator.hidesWhenStopped = true
-//        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        loadingIndicator.startAnimating();
-//        
-//        alert.view.addSubview(loadingIndicator)
-//        presentViewController(alert, animated: true, completion: nil)
-//    
-//    }
+    //    override func loading(){
+    //        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .Alert)
+    //
+    //        alert.view.tintColor = UIColor.blackColor()
+    //        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(10, 5, 50, 50)) as UIActivityIndicatorView
+    //        loadingIndicator.hidesWhenStopped = true
+    //        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+    //        loadingIndicator.startAnimating();
+    //
+    //        alert.view.addSubview(loadingIndicator)
+    //        presentViewController(alert, animated: true, completion: nil)
+    //
+    //    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "FAQsegue" {

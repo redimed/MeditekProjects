@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */; };
 		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
 		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; };
 		AF00A6221C86EF6100104E0B /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00A6211C86EF6100104E0B /* SignatureViewController.swift */; };
@@ -154,6 +155,7 @@
 
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
+		3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewCell.swift; sourceTree = "<group>"; };
 		AF00A6211C86EF6100104E0B /* SignatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
 		AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -637,6 +639,7 @@
 		AFF27DF71BB39C3A00B325E8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */,
 				AFEE34D81BB0413600471592 /* ViewController.swift */,
 				AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */,
 				AFF10DB11BB241DA005E9838 /* InformationViewController.swift */,
@@ -925,6 +928,7 @@
 				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
 				AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */,
 				AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */,
+				3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */,
 				AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */,
 				AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */,
 				AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */,

@@ -66,7 +66,7 @@ class TelehealthAPI : TokenAPI{
                     }
                 }
                 let data : JSON = JSON(JSONData)
-                print("---data---",data)
+               // print("---data---",data)
                 compailer(data)
             case .Failure(let error):
                 print("Request failed with error: \(error)")

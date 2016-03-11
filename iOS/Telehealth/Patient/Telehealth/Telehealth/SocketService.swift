@@ -19,11 +19,13 @@ let sharedSocket = Singleton_SocketManager()
 class SocketService {
     
     var delegate : SocketDelegate! = nil
+    func hideLoading(){
+        self.delegate.HideLoading()
+    }
     func openSocket(uid:String,complete:(String) -> Void) {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             // Called on every event
-            self.delegate.ShowLoading()
             sharedSocket.socket.onAny {
                 print("got event: \($0.event) with items \($0.items)")
                 _ = $0.event
@@ -31,8 +33,9 @@ class SocketService {
                 if($0.event ==  "error" ){
                     if($0.items![0] as! String == "The network connection was lost."){
                         self.delegate.ShowLoading()
-
                     }
+                }else if($0.event ==  "connect"){
+                    self.delegate.ShowLoading()
                 }
             }
             // Socket Events
@@ -43,7 +46,10 @@ class SocketService {
                 let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]
                 sharedSocket.socket.emit("get", dictionNary)
-                self.delegate.HideLoading()
+                if(defaults.valueForKey("loading") as! String == "1"){
+                    self.delegate.HideLoading()
+                }
+                print(defaults.valueForKey("loading"))
             }
             
             sharedSocket.socket.on("receiveMessage"){data, ack in
@@ -52,7 +58,9 @@ class SocketService {
                 print("message----",data)
                 self.delegate.receiveMessage(self, message: message,data:data)
             }
+            
         })
+        
         //Socket connecting
         sharedSocket.socket.connect()
         

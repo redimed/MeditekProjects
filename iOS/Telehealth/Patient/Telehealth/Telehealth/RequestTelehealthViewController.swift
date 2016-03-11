@@ -9,7 +9,7 @@
 import UIKit
 
 
-class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
+class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
     var requestTelehealthService = RequestTelehealthService()
     var telehealthContainer = TelehealthContainer?()
     var patientInformation : PatientContainer!
@@ -30,7 +30,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var scrollView: UIScrollView!
-   
+    
     var allFields=[UITextField]()
     var assets: [DKAsset]?
     
@@ -70,16 +70,24 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
             selectOptionImage.hidden = true
             collectionView.hidden = true
         }
-        
+        delegateTextField()
+        textView.delegate = self
         pickerView.delegate = self
         pastUrls = autocompleteUrls
-//        textView.text = MessageString.placeHolderDescription
         textView.textColor = UIColor.lightGrayColor()
         addCustomView()
         DatepickerMode()
         PickerView()
-       
-        
+    }
+    
+    func delegateTextField(){
+        addDoneButton(mobileTextField)
+        addDoneButton(firstNameTextField)
+        addDoneButton(lastNameTextField)
+        addDoneButton(homePhoneTextField)
+        addDoneButton(suburbTextField)
+        addDoneButton(emailTextField)
+        addDoneButton(typeRequest)
     }
     
     func showImagePickerWithAssetType(
@@ -96,7 +104,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
             pickerController.singleSelect = singleSelect
             pickerController.showsCancelButton = true
             pickerController.showsEmptyAlbums = false
-
+            
             
             // Clear all the selected assets if you used the picker controller as a single instance.
             //			pickerController.defaultSelectedAssets = nil
@@ -113,15 +121,15 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
                         self.ArrayImageUID.append((image)!)
                     })
                 }
-               
+                
             }
-
+            
             
             self.presentViewController(pickerController, animated: true) {}
     }
     
-
-
+    
+    
     @IBAction func suburbEndEdit(sender: AnyObject) {
         self.viewSuburb.alpha = 0
     }
@@ -139,7 +147,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     func searchAutocompleteEntriesWithSubstring(substring: String)
     {
         autocompleteUrls = requestTelehealthService.handleSearchData(pastUrls, substring: substring)
-  
+        
         if substring == "" {
             autocompleteUrls = pastUrls
             
@@ -154,10 +162,14 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         toolBar.tintColor = UIColor.blackColor()
         toolBar.sizeToFit()
         
+        
+        
         // Adds the buttons
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
-        toolBar.setItems([cancelButton,spaceButton], animated: false)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
+            target: view, action: Selector("endEditing:"))
+        //        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
+        toolBar.setItems([spaceButton,doneBarButton], animated: false)
         toolBar.userInteractionEnabled = true
         
         
@@ -167,8 +179,8 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         
     }
     
-  
-
+    
+    
     
     func addCustomView() {
         
@@ -183,7 +195,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         tableView.dataSource    =   self
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
-    
+        
         viewSuburb.addSubview(tableView)
         
         // view autolayout
@@ -249,7 +261,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         suburbTextField.resignFirstResponder()
         typeRequest.resignFirstResponder()
     }
-
+    
     func textViewDidBeginEditing(textView: UITextView) {
         if textView.textColor == UIColor.lightGrayColor() {
             textView.text = nil
@@ -266,6 +278,10 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         // Combine the textView text and the replacement text to
         // create the updated text string
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
         let currentText:NSString = textView.text
         let updatedText = currentText.stringByReplacingCharactersInRange(range, withString:text)
         // If updated text view will be empty, add the placeholder
@@ -285,10 +301,11 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-         view.endEditing(true)
+        view.endEditing(true)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
         view.endEditing(true)
         return false
     }
@@ -300,9 +317,9 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
             }
         }
         
-//        if textField == typeRequest {
-//            typeRequest.text = "Telehealth"
-//        }
+        //        if textField == typeRequest {
+        //            typeRequest.text = "Telehealth"
+        //        }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
@@ -346,7 +363,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
             }else {
                 requestTelehealthService.borderTextFieldValid(typeRequest, color: colorAthenGray,check: true)
             }
-
+            
             break;
         case suburbTextField:
             self.viewSuburb.alpha = 0
@@ -377,7 +394,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         allFields = [firstNameTextField,lastNameTextField,mobileTextField,typeRequest,suburbTextField,dobTextField,emailTextField]
         checkField(allFields)
     }
-   
+    
     
     func checkField(arr:[UITextField]){
         if firstNameTextField.text == "" || lastNameTextField.text == "" || mobileTextField.text == "" || typeRequest.text == "" || suburbTextField.text == "" || dobTextField.text == "" || emailTextField.text == "" {
@@ -394,9 +411,9 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
                 alertView.alertMessage("", message: "Please check mobile phone number!")
                 print("erro mobileTextField")
             } else if homePhoneTextField.text! != "" && config.validateRegex(homePhoneTextField.text!, regex: Regex.PhoneNumber)  == false{
-                    requestTelehealthService.borderTextFieldValid(homePhoneTextField, color: colorCustomRed)
-                    alertView.alertMessage("", message: "Please check home phone number!")
-             
+                requestTelehealthService.borderTextFieldValid(homePhoneTextField, color: colorCustomRed)
+                alertView.alertMessage("", message: "Please check home phone number!")
+                
             }else if !(requestTelehealthService.compareDate(datePicker.date)){
                 requestTelehealthService.borderTextFieldValid(dobTextField, color: colorCustomRed)
                 print("erro date")
@@ -407,11 +424,11 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
                 alertView.alertMessage("", message: "Please check Email!")
             }else {
                 print("ok")
-                    telehealthContainer = TelehealthContainer(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, mobilePhone: mobileTextField.text!, homePhone: homePhoneTextField.text!, type: typeRequest.text!, suburb: suburbTextField.text!, dob: dobTextField.text!, email: emailTextField.text!, description: textView.text, imageArray: ArrayImageUID)
-                 view.endEditing(true)
-                 performSegueWithIdentifier("ConfirmRequestSegue", sender: self)
+                telehealthContainer = TelehealthContainer(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, mobilePhone: mobileTextField.text!, homePhone: homePhoneTextField.text!, type: typeRequest.text!, suburb: suburbTextField.text!, dob: dobTextField.text!, email: emailTextField.text!, description: textView.text, imageArray: ArrayImageUID)
+                view.endEditing(true)
+                performSegueWithIdentifier("ConfirmRequestSegue", sender: self)
             }
-
+            
         }
     }
     
@@ -422,7 +439,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         }
     }
     
-  
+    
     
 }
 
@@ -445,10 +462,10 @@ extension RequestTelehealthViewController : UICollectionViewDataSource, UICollec
             cell.imageView.layer.shadowOpacity = 0.5
             cell.imageView.layer.shadowOffset = CGSize.zero
         })
-//        let data = ArrayImageUID[indexPath.row]
-//        cell.imageView.image = data
-
-
+        //        let data = ArrayImageUID[indexPath.row]
+        //        cell.imageView.image = data
+        
+        
         return cell
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -490,8 +507,9 @@ extension RequestTelehealthViewController: UITableViewDelegate, UITableViewDataS
         })
         
     }
-
+    
 }
+
 
 //picker
 extension RequestTelehealthViewController: UIPickerViewDataSource, UIPickerViewDelegate {
@@ -508,7 +526,7 @@ extension RequestTelehealthViewController: UIPickerViewDataSource, UIPickerViewD
         print(row)
         typeRequest.text = pickOption[row]
     }
-
+    
 }
 
 extension RequestTelehealthViewController : UIViewControllerTransitioningDelegate,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverControllerDelegate {
@@ -553,7 +571,7 @@ extension RequestTelehealthViewController : UIViewControllerTransitioningDelegat
     
     func openCamera()
     {
-
+        
         let assetType = DKOption.types[1]
         let allowMultipleType = true
         let sourceType: DKImagePickerControllerSourceType = DKImagePickerControllerSourceType.Camera
@@ -570,14 +588,14 @@ extension RequestTelehealthViewController : UIViewControllerTransitioningDelegat
     
     func openGallery()
     {
-
+        
         
         let assetType = DKOption.types[1]
         let allowMultipleType = true
         let sourceType: DKImagePickerControllerSourceType = DKImagePickerControllerSourceType.Photo
         let allowsLandscape = false
         let singleSelect = false
-
+        
         showImagePickerWithAssetType(
             assetType,
             allowMultipleType: allowMultipleType,

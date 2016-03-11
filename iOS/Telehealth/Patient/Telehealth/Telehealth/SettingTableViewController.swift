@@ -74,7 +74,7 @@ class SettingTableViewController: UITableViewController {
     @IBAction func logoutButton(sender: AnyObject) {
         print("logout")
         
-        let alertController = UIAlertController(title: "Unregistered", message: MessageString.MessageLogout, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Logout", message: MessageString.MessageLogout, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
@@ -91,7 +91,6 @@ class SettingTableViewController: UITableViewController {
                     self.patientService.logOut()
                     self.performSegueWithIdentifier("logOutUnwind", sender: self)
                 }
-                
             })
         }
         alertController.addAction(OKAction)

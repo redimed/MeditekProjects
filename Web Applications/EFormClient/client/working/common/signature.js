@@ -8,7 +8,8 @@ module.exports = React.createClass({
         code: React.PropTypes.number,
         type: React.PropTypes.string,
         context: React.PropTypes.string,
-        onRightClickItem: React.PropTypes.func
+        onRightClickItem: React.PropTypes.func,
+        height: React.PropTypes.string
     },
     getDefaultProps: function(){
         return {
@@ -16,13 +17,14 @@ module.exports = React.createClass({
             type: 'default',
             name: '',
             className: 'form-control',
-            size: '12'
+            size: '12',
+            height: 'auto'
         }
     },
     componentDidMount: function(){
         var self = this;
         setTimeout(function(){
-            $(self.refs.signature).jSignature();
+            $(self.refs.signature).jSignature({width: '100%', height: self.props.height});
         })
 
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
@@ -47,6 +49,9 @@ module.exports = React.createClass({
             }
         }
     },
+    setHeight: function(height){
+        $(this.refs.signature).jSignature({height: height});
+    },
     getValue: function(){
         return $(this.refs.signature).jSignature('getData', 'base30');
     },
@@ -63,6 +68,9 @@ module.exports = React.createClass({
     },
     getType: function(){
         return this.props.type;
+    },
+    getHeight: function(){
+        return this.props.height;
     },
     _onReset: function(){
         $(this.refs.signature).jSignature("reset");
@@ -88,7 +96,7 @@ module.exports = React.createClass({
                                 <a className="btn btn-primary btn-sm" onClick={this._onReset}>
                                     Reset
                                 </a>
-                                <div ref="signature" style={{background: '#EEEEEE'}}/>
+                                <div ref="signature" style={{background: '#EEEEEE', height: this.props.height}}/>
                             </div>
                         </div>
                     </div>

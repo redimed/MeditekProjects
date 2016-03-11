@@ -193,7 +193,7 @@ module.exports = React.createClass({
                 type: 'application/pdf'
             });
             saveAs(blob, fileName);
-            swal("Success!", "Your form has been printed to PDF.", "success");
+            //swal("Success!", "Your form has been printed to PDF.", "success");
         }, function(error){
 
         })

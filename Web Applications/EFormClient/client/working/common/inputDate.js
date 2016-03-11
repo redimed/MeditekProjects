@@ -102,5 +102,5 @@ module.exports = React.createClass({
                 break;
         }
         return html;
-	}
+    }
 })

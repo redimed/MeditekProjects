@@ -18,7 +18,8 @@ module.exports = React.createClass({
                     this.props.onPrintForm();
             },
 	_onSaveForm: function(){
-        	   swal({
+                this.props.onSaveForm();
+        	   /*swal({
         	       title: 'Are you sure?',
         	       text: 'You will save this form !!!',
         	       type: 'warning',
@@ -28,7 +29,7 @@ module.exports = React.createClass({
         	       showLoaderOnConfirm: true
         	       }, function(){
         		this.props.onSaveForm();
-        	       }.bind(this))
+        	       }.bind(this))*/
 	},
 	render: function(){
 	   return (

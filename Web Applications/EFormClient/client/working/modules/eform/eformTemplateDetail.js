@@ -173,6 +173,16 @@ module.exports = React.createClass({
                             .set('value', dataField.value)
                         )
                     }
+                }else if(Config.getPrefixField(dataField.type, 'signature') > -1){
+                    var sections = prevState.sections;
+                    sections = sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                            val.set('name', dataField.name)
+                            .set('size', dataField.size)
+                            .set('preCal', dataField.preCal)
+                            .set('height', dataField.height))
+                    return {
+                        sections: sections
+                   }
                 }else{
                     return {
                         sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
@@ -184,15 +194,6 @@ module.exports = React.createClass({
                 }
             })
         }else if(dataField.type === 'table'){
-            this.setState(function(prevState) {
-                return {
-                    sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                        val.set('name', dataField.name)
-                        .set('size', dataField.size)
-                    )
-                }
-            })
-        }else if(dataField.type === 'signature'){
             this.setState(function(prevState) {
                 return {
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>

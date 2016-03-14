@@ -187,7 +187,7 @@ module.exports = {
             DeviceID:req.headers.deviceid,
             AppID:req.headers.appid,
         }
-        
+        console.log("++++++++++++++++++++++++++++++",userAccess);
         Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){
             var connectInfo=_.cloneDeep(userAccess);

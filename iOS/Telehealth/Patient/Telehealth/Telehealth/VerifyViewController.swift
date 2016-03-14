@@ -84,11 +84,5 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
         }else{
             return true
         }
-    }
-    
-    
-    
-    
-    
-    
+    }  
 }

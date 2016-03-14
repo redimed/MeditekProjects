@@ -40,6 +40,7 @@ class SettingTableViewController: UITableViewController {
     
     //get information patient
     func getInformationPatient(){
+        self.view.showLoading()
         if let uuid = defaults.valueForKey("uid") as? String {
             
             patientService.getInformationPatientByUUID(uuid){

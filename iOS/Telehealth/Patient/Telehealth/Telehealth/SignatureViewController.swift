@@ -44,8 +44,8 @@ class SignatureViewController: UIViewController {
         (1.0, 1.0, 0),
         (1.0, 1.0, 1.0),
     ]
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("bb",patientUID)
@@ -118,11 +118,8 @@ class SignatureViewController: UIViewController {
         
         tempImageView.image = nil
     }
-
+    
     @IBAction func doneButton(sender: AnyObject) {
-//        print(self.mainImageView.image)
-        self.performSegueWithIdentifier("unwindToProfileSegue", sender: self)
-       
         if let uuid = defaults.valueForKey("userUID") as? String {
             self.uploadImage(self.mainImageView.image!, userUID: uuid)
         }
@@ -130,21 +127,23 @@ class SignatureViewController: UIViewController {
     
     //Upload image to user
     func uploadImage(image:UIImage,userUID:String){
-        
+        self.view.showLoading()
         appointmentService.uploadImage(image, userUID: userUID,fileType:"Signature" , compailer: {
             response in
             if response["message"] == "success"{
+                self.view.hideLoading()
                 let  data = response["data"].string
                 print("sssssssss",data)
-
+                
                 self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:data!)
                 self.patientService.updateSignature(data!, patientUID: self.patientUID, completionHandler: {
                     response in
                     print("update success",response)
+                    self.performSegueWithIdentifier("unwindToProfileSegue", sender: self)
                 })
                 
             }else {
-               
+                self.view.hideLoading()
                 print("error",response["ErrorType"])
                 let error = response["ErrorType"].string
                 self.alertView.alertMessage("Error", message: error!)
@@ -152,7 +151,4 @@ class SignatureViewController: UIViewController {
         })
         
     }
-
-
-
 }

@@ -34,8 +34,7 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 
 			scope.openmodal = function(model, type, uid) {
 				// console.log(uid);
-				var Url = 
-				model=='CompanySite'?'CompanySitemodal':model=='UserAccount'?'Usermodal':model=='Staff'?'Staffmodal':'Insuresmodal';
+				var Url = model=='CompanySite'?'CompanySitemodal':model=='UserAccount'?'Usermodal':model=='Staff'?'Staffmodal':'Insuresmodal';
 				// console.log(type," ",uid);
 				var modalInstance = $uibModal.open({
 					templateUrl: Url,

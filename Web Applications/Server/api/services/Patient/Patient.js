@@ -954,7 +954,7 @@ module.exports = {
                             Enable : data.EnableUser
                         },{
                             where : {
-                                UID : data.UserAccountUID
+                                ID : data.UserAccountID
                             },
                             transaction:t
                         });
@@ -973,7 +973,7 @@ module.exports = {
                                     Email : data.Email
                                 },{
                                     where : {
-                                        UID : data.UserAccountUID
+                                        ID : data.UserAccountID
                                     },
                                     transaction:t
                                 });
@@ -993,7 +993,7 @@ module.exports = {
                         if(other.hasOwnProperty('PatientPension')==true) {
                             return PatientPension.update(other.PatientPension,{
                                 where:{
-                                    PatientID : patientInfo.ID
+                                    ID : other.PatientPension.ID
                                 },
                                 transaction:t
                             });
@@ -1010,7 +1010,7 @@ module.exports = {
                         if(other.hasOwnProperty('PatientMedicare')==true) {
                             return PatientMedicare.update(other.PatientMedicare,{
                                 where:{
-                                    PatientID : patientInfo.ID
+                                    ID : other.PatientMedicare.ID
                                 },
                                 transaction:t
                             });
@@ -1027,7 +1027,7 @@ module.exports = {
                         if(other.hasOwnProperty('PatientDVA')==true) {
                             return PatientDVA.update(other.PatientDVA,{
                                 where:{
-                                    PatientID : patientInfo.ID
+                                    ID : other.PatientDVA.ID
                                 },
                                 transaction:t
                             });
@@ -1044,7 +1044,7 @@ module.exports = {
                         if(other.hasOwnProperty('PatientKin')==true) {
                             return PatientKin.update(other.PatientKin,{
                                 where:{
-                                    PatientID : patientInfo.ID
+                                    ID : other.PatientKin.ID
                                 },
                                 transaction:t
                             });
@@ -1052,42 +1052,8 @@ module.exports = {
                     }
                     else
                         return updatedPatientDVA;
-                },function(err){
-                    t.rollback();
-                    throw err;
-                })
-
-                //add data into patientGP table
-                .then(function(updatedPatientKin){
-                    if(data.hasOwnProperty('PatientGP')==true) {
-                        return PatientGP.findAll({
-                            where:{
-                                PatientID : patientInfo.ID
-                            },
-                            transaction : t
-                        })
-                        .then(function(has_patientGP){
-                            if(has_patientGP == null || has_patientGP == ""){
-                                data.GP.PatientID = patientInfo.ID;
-                                data.GP.UID       = UUIDService.Create();
-                                return PatientGP.create(data.PatientGP,{transaction:t});
-                            }
-                            else {
-                                return PatientGP.update(data.PatientGP,{
-                                    where:{
-                                        PatientID : patientInfo.ID
-                                    },
-                                    transaction:t
-                                });
-                            }
-                        },function(err){
-                            t.rollback();
-                            throw err;
-                        });
-                    }
-                    else
-                        return updatedPatientKin;
-                },function(err){
+                
+					},function(err){
                     t.rollback();
                     throw err;
                 })
@@ -1095,7 +1061,7 @@ module.exports = {
                     if(data.hasOwnProperty('PatientMedicare')==true) {
                         return PatientMedicare.findAll({
                             where:{
-                                PatientID : patientInfo.ID
+                                ID : data.PatientMedicare.ID
                             },
                             transaction : t
                         })
@@ -1117,7 +1083,7 @@ module.exports = {
                                 }
                                 return PatientMedicare.update(data.PatientMedicare,{
                                     where:{
-                                        PatientID : patientInfo.ID
+                                        ID : data.PatientMedicare.ID
                                     },
                                     transaction:t
                                 });
@@ -1137,7 +1103,7 @@ module.exports = {
                     if(data.hasOwnProperty('PatientPension')==true) {
                         return PatientPension.findAll({
                             where:{
-                                PatientID : patientInfo.ID
+                                ID : data.PatientPension.ID
                             },
                             transaction : t
                         })
@@ -1159,7 +1125,7 @@ module.exports = {
                                 }
                                 return PatientPension.update(data.PatientPension,{
                                     where:{
-                                        PatientID : patientInfo.ID
+                                        ID : data.PatientPension.ID
                                     },
                                     transaction:t
                                 });
@@ -1178,7 +1144,7 @@ module.exports = {
                     if(data.hasOwnProperty('PatientFund')==true) {
                         return PatientFund.findAll({
                             where:{
-                                PatientID : patientInfo.ID
+                                ID : data.PatientFund.ID
                             },
                             transaction : t
                         })
@@ -1189,9 +1155,12 @@ module.exports = {
                                 return PatientFund.create(data.PatientFund,{transaction:t});
                             }
                             else {
+                                var id = data.PatientFund.ID;
+                                delete data.PatientFund['ID'];
+                                delete data.PatientFund['UID'];
                                 return PatientFund.update(data.PatientFund,{
                                     where:{
-                                        PatientID : patientInfo.ID
+                                        ID : id
                                     },
                                     transaction:t
                                 });
@@ -1210,7 +1179,7 @@ module.exports = {
                     if(data.hasOwnProperty('PatientDVA')==true) {
                         return PatientDVA.findAll({
                             where:{
-                                PatientID : patientInfo.ID
+                                ID : data.PatientDVA.ID
                             },
                             transaction : t
                         })
@@ -1221,9 +1190,12 @@ module.exports = {
                                 return PatientDVA.create(data.PatientDVA,{transaction:t});
                             }
                             else {
+                                var DVAid = data.PatientDVA.ID;
+                                delete data.PatientDVA['ID'];
+                                delete data.PatientDVA['UID'];
                                 return PatientDVA.update(data.PatientDVA,{
                                     where:{
-                                        PatientID : patientInfo.ID
+                                        ID : DVAid
                                     },
                                     transaction:t
                                 });
@@ -1234,6 +1206,76 @@ module.exports = {
                         });
                     }
                     else return updatedPatientFund;
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                .then(function(updatedPatientDVA){
+                    if(data.hasOwnProperty('PatientGP')==true) {
+                        return PatientGP.findAll({
+                            where:{
+                                ID : data.PatientGP.ID
+                            },
+                            transaction : t
+                        })
+                        .then(function(has_PatientGP){
+                            if(has_PatientGP == null || has_PatientGP == ""){
+                                data.PatientGP.PatientID = patientInfo.ID;
+                                data.PatientGP.UID       = UUIDService.Create();
+                                return PatientGP.create(data.PatientGP,{transaction:t});
+                            }
+                            else {
+                                var GPid = data.PatientGP.ID;
+                                delete data.PatientGP['ID'];
+                                delete data.PatientGP['UID'];
+                                return PatientGP.update(data.PatientGP,{
+                                    where:{
+                                        ID : GPid
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                    else return updatedPatientDVA;
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                .then(function(updatedPatientGP){
+                    if(data.hasOwnProperty('PatientKin')==true) {
+                        return PatientKin.findAll({
+                            where:{
+                                ID : data.PatientKin.ID
+                            },
+                            transaction : t
+                        })
+                        .then(function(has_PatientKin){
+                            if(has_PatientKin == null || has_PatientKin == ""){
+                                data.PatientKin.PatientID = patientInfo.ID;
+                                data.PatientKin.UID       = UUIDService.Create();
+                                return PatientKin.create(data.PatientKin,{transaction:t});
+                            }
+                            else {
+                                var Kinid = data.PatientKin.ID;
+                                delete data.PatientKin['ID'];
+                                delete data.PatientKin['UID'];
+                                return PatientKin.update(data.PatientKin,{
+                                    where:{
+                                        ID : Kinid
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                    else return updatedPatientGP;
                 },function(err){
                     t.rollback();
                     throw err;
@@ -1744,6 +1786,38 @@ module.exports = {
         },function(err){
             throw err;
         })
+    },
+
+    AddChild : function(data) {
+        if(data.model == null || data.model =='') {
+            var err = new Error('AddChild.error');
+            err.pushError('model.invalid');
+            throw err;
+        }
+        else {
+            var model = sequelize.models[data.model];
+            return sequelize.transaction()
+            .then(function(t) {
+                data.data.UID = UUIDService.Create();
+                return model.create(data.data,{transaction:t})
+                .then(function(created_model) {
+                    if(created_model == null || created_model == ''){
+                        var err = new Error('AddChild.error');
+                        err.pushError('CreateModel.Error');
+                        throw err;
+                    }
+                    else {
+                        t.commit();
+                        return created_model;
+                    }
+                },function(err) {
+                    t.rollback();
+                    throw err;
+                })
+            },function(err) {
+                throw err;
+            });
+        }
     }
 
 

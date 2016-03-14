@@ -178,7 +178,7 @@
 													<label class="control-label">Email</label>
 													<div class="input-icon">
 														<i class="glyphicon glyphicon-envelope"></i>
-														<input type="text" class="form-control" ng-disabled="true" ng-model="info.Email1">
+														<input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.Email">
 													</div>
 												</div>
 												<!-- end Email -->
@@ -352,10 +352,11 @@
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Fund/Payment List</label>
-											<select class="form-control" size="6">
-												<option value=""></option>
+											<select class="form-control" size="4">
+												<option ng-repeat="s in info.PatientFunds" ng-click="view('Fund',s)">{{'Fund'+($index+1)}}</option>
 											</select>
 										</div>
+										<button class="btn btn-success pull-right" ng-click="Add('PatientFund',info.PatientFund)" ng-disable="isHaveKins!=null">Add</button>
 									</div>
 									<div class="col-md-9 col-sm-9">
 										<div class="row">
@@ -406,29 +407,30 @@
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Kin/Guardian List</label>
-											<select class="form-control" size="27">
-												<option value=""></option>
+											<select class="form-control" size="25">
+												<option ng-repeat="s in info.PatientKins" ng-click="view('Kin',s)">{{((s.FirstName != null)?s.FirstName:"") +" "+((s.LastName != null)?s.LastName:"")}}</option>
 											</select>
 										</div>
+										<button class="btn btn-success pull-right" ng-click="Add('PatientKin',info.PatientKin)" ng-disable="isHaveKins!=null">Add</button>
 									</div>
 									<div class="col-md-9 col-sm-9">
 										<div class="row">
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
-													<label class="control-label">Firstname</label>
-													<input type="text" class="form-control">
+													<label class="control-label">FirstName</label>
+													<input type="text" class="form-control" ng-model="info.PatientKin.FirstName" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
-													<label class="control-label">Middlename</label>
-													<input type="text" class="form-control">
+													<label class="control-label">MiddleName</label>
+													<input type="text" class="form-control" ng-model="info.PatientKin.MiddleName" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
-													<label class="control-label">Lastname</label>
-													<input type="text" class="form-control">
+													<label class="control-label">LastName</label>
+													<input type="text" class="form-control" ng-model="info.PatientKin.LastName" />
 												</div>
 											</div>
 										</div>
@@ -436,7 +438,7 @@
 											<div class="col-md-6 col-sm-6">
 												<div class="form-group">
 													<label class="control-label">Relationship</label>
-													<select class="form-control">
+													<select class="form-control" ng-model="info.PatientKin.Relationship">
 														<option value="">Select Relationship</option>
 														<option value="parent">Parent</option>
 														<option value="partner">Partner</option>
@@ -450,20 +452,20 @@
 										<div class="row">
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
-													<label class="control-label">Homephone</label>
-													<input type="text" class="form-control">
+													<label class="control-label">HomePhone</label>
+													<input type="text" class="form-control" ng-model="info.PatientKin.HomePhoneNumber" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
-													<label class="control-label">Mobilephone</label>
-													<input type="text" class="form-control">
+													<label class="control-label">MobilePhone</label>
+													<input type="text" class="form-control" ng-model="info.PatientKin.MobilePhoneNumber" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
-													<label class="control-label">Workphone</label>
-													<input type="text" class="form-control">
+													<label class="control-label">WorkPhone</label>
+													<input type="text" class="form-control" ng-model="info.PatientKin.WorkPhoneNumber" />
 												</div>
 											</div>
 										</div>
@@ -471,13 +473,13 @@
 											<div class="col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="control-label">Address1</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientKin.Address1" />
 												</div>
 											</div>
 											<div class="col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="control-label">Address2</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientKin.Address2" />
 												</div>
 											</div>
 										</div>
@@ -485,19 +487,19 @@
 											<div class="col-md-8 col-sm-8">
 												<div class="form-group">
 													<label class="control-label">Suburb</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientKin.Suburb" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Postcode</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientKin.Postcode" />
 												</div>
 											</div>
 											<div class="col-md-6 col-sm-6">
 												<div class="form-group">
 													<label class="control-label">State</label>
-													<select class="form-control">
+													<select class="form-control" ng-model="info.PatientKin.State" ng-options="s.code as s.name for s in state" />
 														<option></option>
 													</select>
 												</div>
@@ -505,12 +507,13 @@
 											<div class="col-md-6 col-sm-6">
 												<div class="form-group">
 													<label class="control-label">Country</label>
-													<select class="form-control">
+													<select class="form-control" ng-model="info.PatientKin.CountryID" ng-options="c.ID as c.ShortName for c in countries">
 														<option></option>
 													</select>
 												</div>
 											</div>
 										</div>
+										
 									</div>
 								</div>
 								<!-- <div class="row">
@@ -615,23 +618,24 @@
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">GP/Clinical List</label>
-											<select class="form-control" size="15">
-												<option value=""></option>
+											<select class="form-control" size="13">
+												<option ng-repeat="s in info.PatientGPs" ng-click="view('GP',s)">{{((s.FirstName != null)?s.FirstName:"") +" "+((s.LastName != null)?s.LastName:"")}}</option>
 											</select>
 										</div>
+										<button class="btn btn-success pull-right" ng-click="Add('PatientGP',info.PatientGP)" ng-disable="isHaveGPs!=null">Add</button>
 									</div>
 									<div class="col-md-9 col-sm-9">
 										<div class="row">
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">GP First Name</label>
-													<input type="text" class="form-control" ng-model="info.PatientGP.GPFirstName" ng-change="checkDataNull('PatientGP.GPFirstName')" />
+													<input type="text" class="form-control" ng-model="info.PatientGP.FirstName" ng-change="checkDataNull('PatientGPs.GPFirstName')" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">GP Last Name</label>
-													<input type="text" class="form-control" ng-model="info.PatientGP.GPLastName" ng-change="checkDataNull('PatientGP.GPLastName')" />
+													<input type="text" class="form-control" ng-model="info.PatientGP.LastName" ng-change="checkDataNull('PatientGPs.GPLastName')" />
 												</div>
 											</div>
 										</div>
@@ -639,19 +643,19 @@
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Health Link</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientGP.HealthLink" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Provider Number</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientGP.ProviderNumber" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Email</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientGP.Email" />
 												</div>
 											</div>
 										</div>
@@ -659,19 +663,19 @@
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Mobile</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientGP.PhoneNumber" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Home Phone</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientGP.HomePhoneNumber" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Work phone</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientGP.WorkPhoneNumber" />
 												</div>
 											</div>
 										</div>
@@ -679,7 +683,7 @@
 											<div class="col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="control-label">Note</label>
-													<textarea class="form-control" ng-model="info.PatientGP.Memo" ng-change="checkDataNull('PatientGP.Memo')" ></textarea>
+													<textarea class="form-control" ng-model="info.PatientGP.Note" ng-change="checkDataNull('PatientGP.Note')" ></textarea>
 												</div>
 											</div>
 										</div>

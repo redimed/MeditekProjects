@@ -29,7 +29,7 @@ module.exports = {
         }
         TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
-               return teleUser.getUserAccount().then(function(user) {
+                return teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
                             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
@@ -57,7 +57,7 @@ module.exports = {
             !_.isEmpty(body.data)) {
             TelehealthService.UpdatePatientDetails(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                console.log("UpdatePatientDetails",response.getBody());
+                console.log("UpdatePatientDetails", response.getBody());
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
@@ -75,7 +75,7 @@ module.exports = {
             !_.isEmpty(body.data)) {
             TelehealthService.ChangeEnableFile(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                console.log("ChangeEnableFile",response.getBody());
+                console.log("ChangeEnableFile", response.getBody());
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
@@ -89,13 +89,13 @@ module.exports = {
     GetListDoctor: function(req, res) {
         var body = req.body;
         var headers = req.headers;
-        console.log("1111111111111111111111111111",body);
-        console.log("222222222222222222",headers);
+        console.log("1111111111111111111111111111", body);
+        console.log("222222222222222222", headers);
         if (!_.isEmpty(body) &&
             !_.isEmpty(body.data)) {
             TelehealthService.GetListDoctor(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                console.log("GetListDoctor",response.getBody());
+                console.log("GetListDoctor", response.getBody());
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
@@ -249,6 +249,61 @@ module.exports = {
             })
         } else {
             var err = new Error("Telehealth.UpdateDeviceToken.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
+    },
+    Logout: function(req, res) {
+        console.log("================================", req.body.data);
+        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
+            var err = new Error("Telehealth.Logout.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body.data);
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.systemtype;
+        var deviceToken = info.token || null;
+        var uid = info.uid;
+        if (uid && deviceType && deviceId) {
+            console.log("+++++++++++++++++++++++++++++++++++++", uid, deviceType, deviceId, deviceToken);
+            return TelehealthService.FindByUID(uid).then(function(teleUser) {
+                return TelehealthDevice.findOrCreate({
+                    where: {
+                        TelehealthUserID: teleUser.ID,
+                        DeviceID: deviceId,
+                        Type: deviceType
+                    },
+                    defaults: {
+                        UID: UUIDService.Create(),
+                        DeviceToken: deviceToken
+                    }
+                }).spread(function(device, created) {
+                    console.log("neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", device);
+                    return device.update({
+                        DeviceToken: null
+                    }).then(function() {
+                        return TelehealthService.MakeRequest({
+                            host: config.AuthAPI,
+                            path: '/api/logout',
+                            method: 'GET',
+                            headers: req.headers
+                        }).then(function(response) {
+                            res.ok({
+                                status: 'success',
+                                message: 'Success!'
+                            })
+                        }).catch(function(err) {
+                            res.serverError(err.getBody());
+                        });
+                    }).catch(function(err) {
+                        res.serverError(ErrorWrap(err));
+                    })
+                })
+            })
+        } else {
+            var err = new Error("Telehealth.Logout.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
         }

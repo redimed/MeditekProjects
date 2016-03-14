@@ -61,7 +61,7 @@ module.exports = {
                     RedisWrap.hget(redisKey, uid).then(function(data) {
                         if (data != null) {
                             var awaitTime = moment(new Date()) - moment(data.timeCall);
-                            console.log("++++++++++++++++++++++++++++++++++++++++++++",awaitTime);
+                            console.log("++++++++++++++++++++++++++++++++++++++++++++", awaitTime);
                             if (awaitTime > 120000) {
                                 data.message = "misscall";
                             }
@@ -129,11 +129,18 @@ module.exports = {
                         var androidDevices = [];
                         if (devices) {
                             for (var i = 0; i < devices.length; i++) {
-                                if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
-                                else androidDevices.push(devices[i].DeviceToken);
+                                console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", devices[i].DeviceToken);
+                                if (devices[i].DeviceToken != null) {
+                                    if (devices[i].Type == 'IOS')
+                                        iosDevices.push(devices[i].DeviceToken);
+                                    else
+                                        androidDevices.push(devices[i].DeviceToken);
+                                }
                             }
-                            if (androidDevices.length > 0) pushGCMNotification(pushInfo, androidDevices);
-                            if (iosDevices.length > 0) pushAPNNotification(pushInfo, iosDevices);
+                            if (androidDevices.length > 0)
+                                pushGCMNotification(pushInfo, androidDevices);
+                            if (iosDevices.length > 0)
+                                pushAPNNotification(pushInfo, iosDevices);
                         }
                     })
                 }

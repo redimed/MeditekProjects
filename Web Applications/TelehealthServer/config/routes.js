@@ -4,6 +4,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'UpdateDeviceToken'
     },
+    'POST /api/telehealth/user/logout': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'Logout'
+    },
     'POST /api/telehealth/user/requestActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'RequestActivationCode'

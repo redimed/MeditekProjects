@@ -332,23 +332,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'UrgentRequest',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(urgentrequest, options, callback) {
-                urgentrequest.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(urgentrequests, options, callback) {
-                urgentrequests.forEach(function(urgentrequest, index) {
-                    urgentrequests[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(urgentrequest, callback) {
-                urgentrequest.fields.push('ModifiedDate');
-                urgentrequest.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

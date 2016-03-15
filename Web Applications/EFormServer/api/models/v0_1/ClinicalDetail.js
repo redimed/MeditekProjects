@@ -144,23 +144,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'ClinicalDetail',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(clinicaldetail, options, callback) {
-                clinicaldetail.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(clinicaldetails, options, callback) {
-                clinicaldetails.forEach(function(clinicaldetail, index) {
-                    clinicaldetails[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(clinicaldetail, callback) {
-                clinicaldetail.fields.push('ModifiedDate');
-                clinicaldetail.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

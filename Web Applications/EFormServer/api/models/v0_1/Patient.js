@@ -135,7 +135,7 @@ module.exports = {
                     msg: 'Too long!'
                 },
                 isIn: [
-                    ['Male', 'Female','Other']
+                    ['Male', 'Female', 'Other']
                 ]
             }
         },
@@ -340,14 +340,24 @@ module.exports = {
                 }
             }
         },
-        Education:{
+        Education: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                len:{
-                    args: [0,255],
+                len: {
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
+            }
+        },
+        Signature: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                },
+                isNumeric: true
             }
         },
         CreatedDate: {
@@ -390,23 +400,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Patient',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(patient, options, callback) {
-                patient.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(patients, options, callback) {
-                patients.forEach(function(patient, index) {
-                    patients[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(patient, callback) {
-                patient.fields.push('ModifiedDate');
-                patient.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

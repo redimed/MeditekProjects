@@ -11,7 +11,17 @@ module.exports = {
             },
             primaryKey: true
         },
-        UserAccountID: {
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
+        },
+        AppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
             validate: {
@@ -20,11 +30,21 @@ module.exports = {
                 }
             },
             references: {
-                model: 'UserAccount',
+                model: 'Appointment',
                 key: 'ID'
             }
         },
-        VerificationCode: {
+        Section: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Category: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -35,17 +55,6 @@ module.exports = {
             }
         },
         Type: {
-            type: Sequelize.STRING(45),
-            allowNull: true,
-            comment: 'IOS: IOS; Website: WEB; Android: ARD',
-            validate: {
-                len: {
-                    args: [0, 45],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        VerificationToken: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -55,7 +64,17 @@ module.exports = {
                 }
             }
         },
-        DeviceID: {
+        Name: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Value: {
             type: Sequelize.TEXT,
             validate: {
 
@@ -65,42 +84,23 @@ module.exports = {
                 }
             }
         },
-        AppID: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
+        Note: {
+            type: Sequelize.TEXT,
             validate: {
+
                 len: {
-                    args: [0, 255],
+                    args: [0, 2048],
                     msg: 'Too long!'
                 }
             }
         },
-        TokenCreatedDate: {
-            type: Sequelize.DATE,
-            allowNull: true,
-            validate: {
-                isDate: {
-                    msg: 'Invalid!'
-                }
-            }
-        },
-        TokenExpired: {
-            type: Sequelize.INTEGER(11),
-            allowNull: true,
+        Description: {
+            type: Sequelize.TEXT,
             validate: {
 
-                isInt: {
-                    msg: 'Must be an integer!'
-                }
-            }
-        },
-        CodeExpired: {
-            type: Sequelize.INTEGER(11),
-            allowNull: true,
-            validate: {
-
-                isInt: {
-                    msg: 'Must be an integer!'
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
                 }
             }
         },
@@ -143,7 +143,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'UserActivation',
+        tableName: 'AppointmentData',
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

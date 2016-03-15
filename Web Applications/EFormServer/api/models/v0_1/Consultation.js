@@ -61,23 +61,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Consultation',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(consultation, options, callback) {
-                consultation.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(consultations, options, callback) {
-                consultations.forEach(function(consultation, index) {
-                    consultations[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(consultation, callback) {
-                consultation.fields.push('ModifiedDate');
-                consultation.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

@@ -81,7 +81,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'FeeType',
-        timestamps: false,
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

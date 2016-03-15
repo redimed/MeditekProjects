@@ -11,31 +11,31 @@ module.exports = {
             },
             primaryKey: true
         },
-        PatientID: {
+        CompanyID: {
             type: Sequelize.BIGINT(20),
-            allowNull: true,
+            allowNull: false,
             validate: {
                 isInt: {
                     msg: 'Must be an integer!'
                 }
-            }
+            },
         },
-        HCCPensionNumber: {
-            type: Sequelize.STRING(45),
+        PatientID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: false,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
+        },
+        Active: {
+            type: Sequelize.STRING(1),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 45],
+                    args: [0, 1],
                     msg: 'Too long!'
-                }
-            }
-        },
-        ExpiryDate: {
-            type: Sequelize.DATE,
-            allowNull: true,
-            validate: {
-                isDate: {
-                    msg: 'Invalid!'
                 }
             }
         },
@@ -78,7 +78,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'PatientPension',
+        tableName: 'RelCompanyPatient',
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

@@ -11,20 +11,26 @@ module.exports = {
             },
             primaryKey: true
         },
-        UserAccountID: {
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
+        },
+        CompanyID: {
             type: Sequelize.BIGINT(20),
-            allowNull: true,
+            allowNull: false,
             validate: {
                 isInt: {
                     msg: 'Must be an integer!'
                 }
-            },
-            references: {
-                model: 'UserAccount',
-                key: 'ID'
             }
         },
-        VerificationCode: {
+        SiteName: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -34,18 +40,7 @@ module.exports = {
                 }
             }
         },
-        Type: {
-            type: Sequelize.STRING(45),
-            allowNull: true,
-            comment: 'IOS: IOS; Website: WEB; Android: ARD',
-            validate: {
-                len: {
-                    args: [0, 45],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        VerificationToken: {
+        Address1: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -55,17 +50,7 @@ module.exports = {
                 }
             }
         },
-        DeviceID: {
-            type: Sequelize.TEXT,
-            validate: {
-
-                len: {
-                    args: [0, 2048],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        AppID: {
+        Address2: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -75,34 +60,89 @@ module.exports = {
                 }
             }
         },
-        TokenCreatedDate: {
-            type: Sequelize.DATE,
+        Postcode: {
+            type: Sequelize.STRING(10),
             allowNull: true,
             validate: {
-                isDate: {
-                    msg: 'Invalid!'
+                len: {
+                    args: [0, 10],
+                    msg: 'Too long!'
                 }
             }
         },
-        TokenExpired: {
-            type: Sequelize.INTEGER(11),
+        Suburb: {
+            type: Sequelize.STRING(100),
             allowNull: true,
             validate: {
-
-                isInt: {
-                    msg: 'Must be an integer!'
+                len: {
+                    args: [0, 100],
+                    msg: 'Too long!'
                 }
             }
         },
-        CodeExpired: {
-            type: Sequelize.INTEGER(11),
+        State: {
+            type: Sequelize.STRING(100),
             allowNull: true,
             validate: {
-
-                isInt: {
-                    msg: 'Must be an integer!'
+                len: {
+                    args: [0, 100],
+                    msg: 'Too long!'
                 }
             }
+        },
+        Country: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Email: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        HomePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        FaxNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 10],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ContactName: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
         },
         CreatedDate: {
             type: Sequelize.DATE,
@@ -143,9 +183,8 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'UserActivation',
+        tableName: 'CompanySite',
         createdAt: 'CreatedDate',
-        updatedAt: 'ModifiedDate',
-        hooks: {}
+        updatedAt: 'ModifiedDate'
     }
 };

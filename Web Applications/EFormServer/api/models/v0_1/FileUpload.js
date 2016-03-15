@@ -137,23 +137,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'FileUpload',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(fileupload, options, callback) {
-                fileupload.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(fileuploads, options, callback) {
-                fileuploads.forEach(function(fileupload, index) {
-                    fileuploads[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(fileupload, callback) {
-                fileupload.fields.push('ModifiedDate');
-                fileupload.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

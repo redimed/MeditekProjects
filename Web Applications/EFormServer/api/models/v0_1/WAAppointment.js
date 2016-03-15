@@ -249,23 +249,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'WAAppointment',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(waappointment, options, callback) {
-                waappointment.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(waappointments, options, callback) {
-                waappointments.forEach(function(waappointment, index) {
-                    waappointments[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(waappointment, callback) {
-                waappointment.fields.push('ModifiedDate');
-                waappointment.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

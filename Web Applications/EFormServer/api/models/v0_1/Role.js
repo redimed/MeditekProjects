@@ -91,23 +91,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Role',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(role, options, callback) {
-                role.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(roles, options, callback) {
-                roles.forEach(function(role, index) {
-                    roles[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(role, callback) {
-                role.fields.push('ModifiedDate');
-                role.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

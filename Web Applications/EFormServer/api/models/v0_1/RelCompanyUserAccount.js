@@ -11,30 +11,29 @@ module.exports = {
             },
             primaryKey: true
         },
-        UID: {
-            type: Sequelize.STRING(255),
+        CompanyID: {
+            type: Sequelize.BIGINT(20),
             allowNull: false,
             validate: {
-                isUUID: {
-                    args: 4,
-                    msg: 'Must be an UUID V4!'
+                isInt: {
+                    msg: 'Must be an integer!'
                 }
-            }
+            },
         },
-        Name: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
+        UserAccountID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: false,
             validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
+                isInt: {
+                    msg: 'Must be an integer!'
                 }
-            }
+            },
         }
     },
     associations: function() {},
     options: {
-        tableName: 'Speciality',
+        tableName: 'RelCompanyUserAccount',
         timestamps: false,
+        hooks: {}
     }
 };

@@ -32,8 +32,8 @@ class InformationViewController: UIViewController,signatureDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        avarta.layer.cornerRadius = CGRectGetWidth(avarta.frame) / 4.0
-//        avarta.clipsToBounds = true
+        //        avarta.layer.cornerRadius = CGRectGetWidth(avarta.frame) / 4.0
+        //        avarta.clipsToBounds = true
         config.radiusAvatar(avarta)
         
         
@@ -63,8 +63,6 @@ class InformationViewController: UIViewController,signatureDelegate {
                         
                     })
                 }
-                
-
             }
             self.fullName.text = patientInformation!.FirstName + " " + patientInformation!.MiddleName + " " + patientInformation!.LastName
             self.dobLabel.text = (patientInformation!.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
@@ -75,8 +73,8 @@ class InformationViewController: UIViewController,signatureDelegate {
             self.emailLabel.text = patientInformation!.Email
             self.homePhoneLabel.text = patientInformation!.HomePhoneNumber
             self.phoneNumberLabel.text = patientInformation.PhoneNumber
-           
-
+            
+            
         }
         
     }
@@ -91,7 +89,7 @@ class InformationViewController: UIViewController,signatureDelegate {
         }
     }
     
- 
+    
     
     
     

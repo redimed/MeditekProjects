@@ -73,7 +73,7 @@ class TokenAPI {
                         }
                     }
                     let data = JSON(JSONData)
-                    print("data---",data)
+                    //print("data---",data)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 
@@ -102,7 +102,7 @@ class TokenAPI {
                         }
                     }
                     let data = JSON(JSONData)
-                    print("data---",data)
+                    //print("data---",data)
                     
                 case .Failure(let error):
                     print("Request failed with error: \(error)")

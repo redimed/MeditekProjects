@@ -59,12 +59,12 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
             config.borderTextFieldValid(textFieldVerifyCode, color: colorCustom)
             
         } else {
-            self.view.showLoading()
+           self.view.showLoading()
             verifyService.verifyPhoneNumber(textFieldVerifyCode.text!, phoneNumber: phoneNumber, compailer: {
                 response in
                 if response["message"] == "success"{
-                    self.view.showLoading()
                     //Change to home view by segue
+        
                     self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
                 }else {
                     self.view.hideLoading()
@@ -85,11 +85,5 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
         }else{
             return true
         }
-    }
-    
-    
-    
-    
-    
-    
+    }  
 }

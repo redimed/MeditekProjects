@@ -64,6 +64,60 @@ class AppointmentAPI:TokenAPI {
         }
         
     }
+    //
+    func uploadImageNotLogin(image:UIImage,userUID:String,fileType:String = "MedicalImage",completionHandler:(JSON) -> Void)
+    {
+        config.invalidSertificate()
+        print(fileType)
+        print(userUID)
+        
+        config.setHeader()
+        config.headers["fileType"] = fileType
+        config.headers["useruid"] = userUID
+        print(config.headers)
+        let imageData = UIImageJPEGRepresentation(image,1.0)
+        
+        
+        Alamofire.upload(
+            .POST,
+            ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImageNotLogin,headers:config.headers,
+            multipartFormData: { multipartFormData in
+                
+                multipartFormData.appendBodyPart(data: fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
+                multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
+                
+                multipartFormData.appendBodyPart(
+                    data: imageData!,
+                    name: "uploadFile",
+                    fileName: "SignatureImage_\(image.hash).png",
+                    mimeType: "image/png"
+                )
+                
+            },
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .Success(let upload, _, _):
+                    upload.responseJSON { response in
+                        if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
+                            if requireupdatetoken as! String == "true" {
+                                print("Update token",requireupdatetoken)
+                            }
+                        }
+                        if (response.response?.statusCode)!  == 200 {
+                            completionHandler(JSON(response.result.value!))
+                            print("result:",response.result.value)
+                        }else {
+                            print("result:",response.result.debugDescription)
+                        }
+                    }
+                case .Failure(let encodingError):
+                    print("error11",encodingError)
+                }
+            }
+        )
+        
+    }
+
     
     //GIap:Upload Image
     func uploadImage(image:UIImage,userUID:String,fileType:String = "MedicalImage",completionHandler:(JSON) -> Void)
@@ -75,6 +129,7 @@ class AppointmentAPI:TokenAPI {
         config.setHeader()
         config.headers["fileType"] = fileType
         config.headers["useruid"] = userUID
+        print(config.headers)
         let imageData = UIImageJPEGRepresentation(image,1.0)
     
         
@@ -85,8 +140,7 @@ class AppointmentAPI:TokenAPI {
                 
                 multipartFormData.appendBodyPart(data: fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
                 multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
-               
-               
+                
                 multipartFormData.appendBodyPart(
                     data: imageData!,
                     name: "uploadFile",

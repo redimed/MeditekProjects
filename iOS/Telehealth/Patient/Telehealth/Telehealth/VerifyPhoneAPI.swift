@@ -23,8 +23,8 @@ class VerifyPhoneAPI:TokenAPI {
         if ConfigurationSystem.http == httpUrl.httpTestApp {
             phoneConfig = "+61"+phoneNumber
         }else {
-            //phoneConfig = "+61412345678"
-              phoneConfig = "+61400000002"
+            phoneConfig = "+61412345678"
+            //  phoneConfig = "+61400000002"
         }
         let parameters = [
             "data": [
@@ -59,8 +59,8 @@ class VerifyPhoneAPI:TokenAPI {
         if ConfigurationSystem.http == httpUrl.httpTestApp {
             phoneConfig = "+61"+phoneNumber
         }else {
-            //phoneConfig = "+61412345678"
-            phoneConfig = "+61400000002"
+            phoneConfig = "+61412345678"
+            //phoneConfig = "+61400000002"
         }
         let parameters = [
             "data": [
@@ -121,7 +121,7 @@ class VerifyPhoneAPI:TokenAPI {
                     }
                 }
                 let data = JSON(JSONData)
-                print(data)
+                //print(data)
                 self.informationUser(data,patientUID: patientUID){
                     dataResponse in
                     completionHandler(dataResponse)
@@ -135,9 +135,14 @@ class VerifyPhoneAPI:TokenAPI {
         
     }
     
-    func logOut(completionHandler:(JSON)-> Void){
+    func logOut(telehealthIUD:String,completionHandler:(JSON)-> Void){
         config.setHeader()
-        Alamofire.request(.GET, ConfigurationSystem.Http_3006 + UrlInformationPatient.logOut ,headers:config.headers).responseJSON{
+        let parameters = [
+            "data": [
+            "uid":telehealthIUD
+            ]
+        ]
+        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.logOut ,headers:config.headers,parameters: parameters).responseJSON{
              response in
            
             switch response.result {

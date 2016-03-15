@@ -81,8 +81,8 @@ class RequestTelehealthService {
     }
     
     
-    func requestTelehealth(RequestDate:String,Type:String,Description:String,FirstName:String,LastName:String,PhoneNumber:String,HomePhoneNumber:String,Suburd:String,DOB:String,Email:String,FileUploads:[[String:String]],handler:(JSON) -> Void){
-        telehealthAPI.requestTelehealth(RequestDate, Type: Type, Description: Description, FirstName: FirstName, LastName: LastName, PhoneNumber: PhoneNumber, HomePhoneNumber: HomePhoneNumber, Suburd: Suburd, DOB: DOB, Email: Email ,FileUploads:FileUploads, compailer: {
+    func requestTelehealth(RequestDate:String,Type:String,Description:String,FirstName:String,LastName:String,PhoneNumber:String,HomePhoneNumber:String,Suburd:String,DOB:String,Email:String,FileUploads:[[String:String]],AppointmentSignatureUID:String,handler:(JSON) -> Void){
+        telehealthAPI.requestTelehealth(RequestDate, Type: Type, Description: Description, FirstName: FirstName, LastName: LastName, PhoneNumber: PhoneNumber, HomePhoneNumber: HomePhoneNumber, Suburd: Suburd, DOB: DOB, Email: Email ,FileUploads:FileUploads,AppointmentSignatureUID:AppointmentSignatureUID, compailer: {
             response in
             handler(response)
         })

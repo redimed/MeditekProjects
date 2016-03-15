@@ -136,6 +136,7 @@ class PatientService{
         defaults.removeObjectForKey("patientUID")
         defaults.removeObjectForKey("userUID")
         defaults.removeObjectForKey("refreshCode")
+        defaults.removeObjectForKey("deviceToken")
         defaults.synchronize()
         sharedSocket.socket.disconnect()
     }

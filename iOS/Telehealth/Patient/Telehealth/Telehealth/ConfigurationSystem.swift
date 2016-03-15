@@ -25,6 +25,10 @@ struct ConfigurationSystem {
     static let Http_3005 :String =  "\(http):3005"
     static let Http_3006 :String =  "\(http):3006"
     
+    //
+    static let uploadfileID = "2d0626f3-e741-11e5-8fab-0050569f3a15"
+    //
+    
     var headers = [
         "Authorization": "Bearer \(tokens)",
         "Version" : "1.0",

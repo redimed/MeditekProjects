@@ -40,6 +40,7 @@ class SettingTableViewController: UITableViewController {
     
     //get information patient
     func getInformationPatient(){
+        self.view.showLoading()
         if let uuid = defaults.valueForKey("uid") as? String {
             
             patientService.getInformationPatientByUUID(uuid){
@@ -74,7 +75,7 @@ class SettingTableViewController: UITableViewController {
     @IBAction func logoutButton(sender: AnyObject) {
         print("logout")
         
-        let alertController = UIAlertController(title: "Unregistered", message: MessageString.MessageLogout, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Logout", message: MessageString.MessageLogout, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
@@ -84,14 +85,13 @@ class SettingTableViewController: UITableViewController {
             if let uuid = defaults.valueForKey("uid") as? String {
                 self.api.updateTokenPush(uuid,deviceToken:"")
             }
-            self.verifyPhoneAPI.logOut({
+            self.verifyPhoneAPI.logOut((defaults.valueForKey("uid") as? String)!,completionHandler: {
                 response in
                 print(response)
                 if response["status"] == "success"{
                     self.patientService.logOut()
                     self.performSegueWithIdentifier("logOutUnwind", sender: self)
                 }
-                
             })
         }
         alertController.addAction(OKAction)

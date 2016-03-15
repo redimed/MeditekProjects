@@ -8,10 +8,12 @@
 
 import UIKit
 import SwiftyJSON
-class ConfirmRequestTelehealthViewController: UIViewController {
+class ConfirmRequestTelehealthViewController: UIViewController ,signatureDelegate {
     var telehealthData = TelehealthContainer!()
     let requestTelehealthService = RequestTelehealthService()
     let appointmentService  = AppointmentService()
+    var patientInformation =  PatientContainer()
+    let patientService = PatientService()
     let alertView = UIAlertView()
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var dobLabel: UILabel!
@@ -19,6 +21,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var dateTime: UILabel!
+    @IBOutlet weak var imageSignature: UIImageView!
     
     @IBOutlet weak var btn1: UIButton!
     @IBOutlet weak var btn2: UIButton!
@@ -34,7 +37,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     var fileUpload = [[String:String]]()
     var countImage = 0
     var UserUID = String()
-    
+    var AppointmentSignatureUID :String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         dateText = requestTelehealthService.NowDate()
@@ -45,23 +48,46 @@ class ConfirmRequestTelehealthViewController: UIViewController {
         dobLabel.text = "DOB: " + telehealthData.DOB
         emailLabel.text = "Email: " + telehealthData.Email
         
-        
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        if let uuid = defaults.valueForKey("uid") as? String {
+            if(AppointmentSignatureUID != ""){
+                self.patientService.getImage((AppointmentSignatureUID), completionHandler: { image in
+                    self.imageSignature.image = image
+                })
+            }
+        }else{
+           print("not login")
+        }
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "FAQConfirmSegue" {
             let FAQs = segue.destinationViewController as! FAQsViewController
             FAQs.titleString = "FAQs"
+        }else if segue.identifier == "SignatureSegue"{
+            let updateSignature = segue.destinationViewController as! SignatureViewController
+            updateSignature.delegate = self
+            updateSignature.checkConfimRequest = "true"
+            updateSignature.patientUID = ConfigurationSystem.uploadfileID
         }
     }
-    
+    func updateSignature(controller: SignatureViewController, sender: UIImage,imageUID:String) {
+        AppointmentSignatureUID = imageUID
+        imageSignature.image = sender
+        
+    }
     
     @IBAction func completeRequestAction(sender: AnyObject) {
         if b1 == false || b2 == false ||  b3 == false {
             alertView.alertMessage("", message: "Please accept consent and submit booking request")
         }else{
-            self.view.showLoading()
-            uploadImage()
+            print("AppointmentSignatureUID",AppointmentSignatureUID)
+            if(AppointmentSignatureUID == ""){
+                alertView.alertMessage("", message: "Please sign concents form before booking an appoinment with Redimed")
+            }else{
+                self.view.showLoading()
+                uploadImage()
+            }
         }
     }
     
@@ -98,7 +124,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
                         self.requestTelehealth()
                     }
                 }else {
-                
+                    
                     self.view.hideLoading()
                     let error = response["ErrorType"].string
                     self.alertView.alertMessage("Error", message: error!)
@@ -109,14 +135,12 @@ class ConfirmRequestTelehealthViewController: UIViewController {
     
     func requestTelehealth(){
         
-        requestTelehealthService.requestTelehealth(dateText!, Type: telehealthData.typeTelehealth, Description: telehealthData.description, FirstName: telehealthData.FirstName, LastName: telehealthData.LastName, PhoneNumber: telehealthData.PhoneNumber, HomePhoneNumber: telehealthData.HomePhoneNumber, Suburd: telehealthData.Suburb, DOB: telehealthData.DOB, Email: telehealthData.Email,FileUploads:fileUpload,handler: {
+        requestTelehealthService.requestTelehealth(dateText!, Type: telehealthData.typeTelehealth, Description: telehealthData.description, FirstName: telehealthData.FirstName, LastName: telehealthData.LastName, PhoneNumber: telehealthData.PhoneNumber, HomePhoneNumber: telehealthData.HomePhoneNumber, Suburd: telehealthData.Suburb, DOB: telehealthData.DOB, Email: telehealthData.Email,FileUploads:fileUpload,AppointmentSignatureUID:AppointmentSignatureUID,handler: {
             response in
             if response["status"] == "success"{
                 self.view.hideLoading()
                 self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
                 self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
-                
-                
             }else {
                 self.view.hideLoading()
                 self.alertView.alertMessage("Error", message: "\(response["ErrorType"])")

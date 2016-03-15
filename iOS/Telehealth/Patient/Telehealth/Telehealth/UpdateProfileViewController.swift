@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
+class UpdateProfileViewController: BaseViewController {
     @IBOutlet weak var firstNameTxt: UITextField!
     @IBOutlet weak var lastNameTxt: UITextField!
     @IBOutlet weak var homePhoneTxt: UITextField!
@@ -62,13 +62,23 @@ class UpdateProfileViewController: UIViewController,UITextFieldDelegate {
             })
             
         }
+        delegateTextField()
         autocompleteUrls = requestTelehealthService.loadDataJson()
         pastUrls = autocompleteUrls
         DatepickerMode()
         addCustomView()
         // Do any additional setup after loading the view.
     }
-    
+    func delegateTextField(){
+        addDoneButton(firstNameTxt)
+        addDoneButton(lastNameTxt)
+        addDoneButton(homePhoneTxt)
+        addDoneButton(emailTxt)
+        addDoneButton(suburbbTxt)
+        addDoneButton(postCodeTxt)
+        addDoneButton(countryTxt)
+        addDoneButton(addressTxt)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

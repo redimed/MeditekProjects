@@ -372,6 +372,28 @@
 										<div class="row" ng-show="typeShow=='PatientFund'">
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
+													<label class="control-label">Ref No</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Medicare Number</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Medicare Expire</label>
+													<input type="text" class="form-control date-picker" 
+														placeholder="dd/mm/yyyy" readonly
+														data-date-format="dd/mm/yyyy" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
 													<label class="control-label">Account Type</label>
 													<input type="text" class="form-control" ng-model="info.PatientFund.AccountType" ng-change="checkDataNull('PatientFund.AccountType')" />
 												</div>

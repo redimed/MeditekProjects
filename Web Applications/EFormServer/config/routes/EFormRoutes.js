@@ -46,5 +46,29 @@ module.exports = {
     'post /eform/update': {
         controller: 'EForm/EFormController',
         action: 'PostUpdate'
+    },
+    'post /eformtemplatemodule/create': {
+        controller: 'EForm/EFormController',
+        action: 'PostCreateEFormTemplateModule'
+    },
+    'post /eformtemplatemodule/update': {
+        controller: 'EForm/EFormController',
+        action: 'PostUpdateEFormTemplateModule'
+    },
+    'get /eformtemplatemodule/list': {
+        controller: 'EForm/EFormController',
+        action: 'GetListEFormTemplateModule'
+    },
+    'post /eformtemplatemodule/remove': {
+        controller: 'EForm/EFormController',
+        action: 'PostRemoveEFormTemplateModule'
+    },
+    'post /eformtemplatemodule/detail': {
+        controller: 'EForm/EFormController',
+        action: 'PostDetailEFormTemplateModule'
+    },
+    'post /eformtemplatemodule/save': {
+        controller: 'EForm/EFormController',
+        action: 'PostSaveEFormTemplateModule'
     }
 };

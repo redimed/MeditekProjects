@@ -57,7 +57,6 @@ module.exports = React.createClass({
                             {
                                 this.state.list.map((l,index)=>{
                                     var userCreated = (l.UserAccount)?l.UserAccount.UserName:'';
-                                    console.log(l);
                                     return (
                                         <tr key={index}>
                                             <td>{index+1}</td>

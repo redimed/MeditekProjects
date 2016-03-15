@@ -458,5 +458,20 @@ module.exports = {
             through: 'RelEFormPatient',
             foreignKey: 'PatientID'
         });
+        //association EFormTemplate - UserAccount
+        EFormTemplateModule.belongsTo(UserAccount, {
+            foreignKey: 'CreatedBy'
+        });
+        UserAccount.hasOne(EFormTemplateModule, {
+            foreignKey: 'CreatedBy',
+        });
+        //association EFormTemplate - EFormTemplateData
+        EFormTemplateModule.hasOne(EFormTemplateModuleData, {
+            foreignKey: 'EFormTemplateModuleID',
+            as: 'EFormTemplateModuleData'
+        });
+        EFormTemplateModuleData.belongsTo(EFormTemplateModule, {
+            foreignKey: 'EFormTemplateModuleID',
+        });
     }
 };

@@ -1,5 +1,7 @@
+var CommonModal = require('common/modal');
 var ComponentPageBar = require('modules/eform/eformTemplateDetail/pageBar');
 var ComponentSection = require('modules/eform/eformTemplateDetail/section');
+var ComponentEFormTemplateModuleList = require('modules/eform/eformTemplateModuleDetail/formList');
 var EFormService = require('modules/eform/services');
 var Config = require('config');
 
@@ -266,6 +268,9 @@ module.exports = React.createClass({
                 swal("Success!", "Your form has been saved.", "success");
             }.bind(this))
     },
+    _onComponentPageBarAddNewModule: function(){
+        this.refs.modalListEFormTemplateModule.show();
+    },
     _onComponentSectionCreateRow: function(codeSection){
         var rowRef = "row_"+codeSection+'_'+this.state.sections.get(codeSection).get('rows').size;
         this.setState(function(prevState) {
@@ -283,11 +288,41 @@ module.exports = React.createClass({
         })
         swal("Deleted!", "Your section has been deleted.", "success")
     },
+    _onSelectEFormTemplateModule: function(list){
+        var listData = list.EFormTemplateModuleData;
+        var module = JSON.parse(listData.TemplateModuleData);
+        var sections = this.state.sections;
+        if(module.length > 0){
+            module.map(function(section, index){
+                var sectionRef = "section_"+sections.size;
+                section.ref = sectionRef;
+                section.moduleID = list.ID;
+                sections = sections.push(Immutable.fromJS(section));
+            })
+            this.setState(function(prevState) {
+                return {
+                    sections: sections
+                }
+            })
+            swal("Success!", "Your section has been created.", "success");
+        }
+        this.refs.modalListEFormTemplateModule.hide();
+    },
     render: function(){
 	return (
 		<div className="page-content">
+                                <CommonModal ref="modalListEFormTemplateModule">
+                                    <div className="header">
+                                        <h4>List EForm Template Module</h4>
+                                    </div>
+                                    <div className="content">
+                                        <ComponentEFormTemplateModuleList ref="eformTemplateModuleList"
+                                            onSelect={this._onSelectEFormTemplateModule}/>
+                                    </div>
+                                </CommonModal>
 		      <ComponentPageBar ref="pageBar"
 		          onAddNewSection={this._onComponentPageBarAddNewSection}
+                                    onAddNewModule={this._onComponentPageBarAddNewModule} 
 		          onSaveForm={this._onComponentPageBarSaveForm}/>
             		      <h3 className="page-title">{this.state.name}</h3>
                                 {
@@ -320,6 +355,7 @@ module.exports = React.createClass({
                                 }
                                 <ComponentPageBar ref="pageBarBottom"
                                   onAddNewSection={this._onComponentPageBarAddNewSection}
+                                  onAddNewModule={this._onComponentPageBarAddNewModule}
                                   onSaveForm={this._onComponentPageBarSaveForm}/>
 	           </div>
 	)

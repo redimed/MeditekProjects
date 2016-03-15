@@ -1,6 +1,16 @@
 var Config = require('config');
 
 module.exports = {
+	getUserRoles: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'GET',
+				url: Config.apiUrl+'api/user-role/GetRolesOfUser?UID='+data.UID,
+				success: resolve
+			})	
+		});
+		return p;
+	},
 	createPDFForm: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
@@ -136,7 +146,7 @@ module.exports = {
 				success: resolve
 			})	
 		})
-		return p;	
+		return p;
 	},
 	eformDetail: function(data){
 		var p = new Promise(function(resolve, reject){
@@ -145,7 +155,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eform/detail',
 				success: resolve
-			})	
+			})
 		})
 		return p;	
 	},
@@ -155,6 +165,71 @@ module.exports = {
 				type: 'POST',
 				data: data,
 				url: Config.apiUrl+'eform/update',
+				success: resolve
+			})	
+		})
+		return p;
+	},
+	eformTemplateModuleCreate: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eformtemplatemodule/create',
+				data: data,
+				success: resolve
+			})	
+		});
+		return p;
+	},
+	eformTemplateModuleList: function(){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'GET',
+				url: Config.apiUrl+'eformtemplatemodule/list',
+				success: resolve
+			})	
+		})
+		return p;
+	},
+	eformTemplateModuleUpdate: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eformtemplatemodule/update',
+				success: resolve
+			})	
+		})
+		return p;
+	},
+	eformTemplateModuleRemove: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eformtemplatemodule/remove',
+				success: resolve
+			})
+		})
+		return p;
+	},
+	eformTemplateModuleDetail: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eformtemplatemodule/detail',
+				success: resolve
+			})
+		})
+		return p;
+	},
+	eformTemplateModuleSave: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eformtemplatemodule/save',
 				success: resolve
 			})	
 		})

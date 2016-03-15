@@ -45,7 +45,7 @@ public class ModelActivity extends AppCompatActivity implements IModelView, View
     private boolean shouldFinish = false;
     private IModelPresenter iModelPresenter;
     private static SharedPreferences uidTelehealth;
-    private String picturePath, appointmentUID, bodyPart, TAG = "MODEL";
+    private String picturePath, appointmentUID, bodyPart, TAG = "=====MODEL=====";
 
     @Bind(R.id.btnUpload)
     Button btnUpload;
@@ -81,7 +81,6 @@ public class ModelActivity extends AppCompatActivity implements IModelView, View
             uidTelehealth = getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
         }
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

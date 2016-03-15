@@ -66,7 +66,6 @@ public class UploadFile extends AsyncTask<Integer, Integer, Void> {
             public void success(JsonObject jsonObject, Response response) {
                 String status = jsonObject.get("status").getAsString();
                 if (status.equalsIgnoreCase("success")) {
-
                     if (fileType.equalsIgnoreCase("Signature")) {
                         UpdateSignatureProfile(jsonObject.get("fileUID").getAsString());
                     } else {

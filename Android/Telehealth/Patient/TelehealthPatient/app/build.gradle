@@ -19,7 +19,6 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        // Enabling multidex support
         multiDexEnabled true
         renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
@@ -49,6 +48,9 @@ android {
         preDexLibraries = false
         javaMaxHeapSize "4g" // 2g should be also OK
     }
+    repositories {
+        mavenCentral()
+    }
 }
 
 dependencies {
@@ -68,4 +70,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'cn.pedant.sweetalert:library:1.3'
 }

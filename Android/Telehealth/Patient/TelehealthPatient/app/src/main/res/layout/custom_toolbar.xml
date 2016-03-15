@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/layoutBack"
@@ -21,8 +22,8 @@
 
             <Button
                 android:id="@+id/btnBack"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_gravity="center"
                 android:background="@drawable/icon_back"
                 style="?android:attr/borderlessButtonStyle"/>
@@ -32,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HOME"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:layout_gravity="center"
                 android:textColor="@color/lightFont"/>
 

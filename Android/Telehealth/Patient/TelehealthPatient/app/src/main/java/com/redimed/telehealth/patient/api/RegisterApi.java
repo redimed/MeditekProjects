@@ -27,8 +27,8 @@ public interface RegisterApi {
     @Multipart
     @POST("/api/uploadFile")
     void uploadFileModel(@Part("userUID") String userUID, @Part("fileType") String fileType, @Part("bodyPart") String bodyPart,
-                    @Part("description") String description, @Part("uploadFile") TypedFile uploadFile,
-                    Callback<JsonObject> callback);
+                         @Part("description") String description, @Part("uploadFile") TypedFile uploadFile,
+                         Callback<JsonObject> callback);
 
     @Multipart
     @POST("/api/uploadFile")
@@ -36,6 +36,13 @@ public interface RegisterApi {
                     @Part("fileType") String fileType,
                     @Part("uploadFile") TypedFile uploadFile,
                     Callback<JsonObject> callback);
+
+    @Multipart
+    @POST("/api/uploadFileWithoutLogin")
+    void uploadFileNonLogin(@Part("userUID") String userUID,
+                            @Part("fileType") String fileType,
+                            @Part("uploadFile") TypedFile uploadFile,
+                            Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/enableFile")
     void changeEnableFile(@Body JsonObject jsonObject, Callback<JsonObject> callback);
@@ -78,12 +85,12 @@ public interface RegisterApi {
     @GET("/api/telehealth/user/{uid}")
     void getTelehealthUID(@Path("uid") String userID, Callback<JsonObject> callback);
 
-    @GET("/api/logout")
-    void logout(Callback<JsonObject> callback);
-
     @POST("/api/telehealth/appointment/request")
     void requestTelehealth(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/update")
     void updateProfile(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/user/logout")
+    void logout(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 }

@@ -29,6 +29,7 @@ import com.redimed.telehealth.patient.utlis.AdapterSlider;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +40,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     private int currentItem = 0;
     private boolean shouldFinish = false;
     private IHomePresenter iHomePresenter;
-    private String TAG = "HOME";
+    private static final String TAG = "=====HOME=====";
 
     /* Non Patient View */
     @Bind(R.id.layoutNonPatient)
@@ -185,8 +186,8 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        getView().setFocusableInTouchMode(true);
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -220,9 +221,13 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         if (msg.equalsIgnoreCase("Network Error")) {
             new DialogConnection(context).show();
         } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(getResources().getString(R.string.token_expired))
+                    .show();
         } else {
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(msg)
+                    .show();
         }
     }
 }

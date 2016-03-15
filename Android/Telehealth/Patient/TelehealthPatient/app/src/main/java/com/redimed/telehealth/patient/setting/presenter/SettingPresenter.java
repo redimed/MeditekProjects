@@ -25,6 +25,7 @@ import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.setting.SettingFragment;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
 
@@ -44,10 +45,10 @@ public class SettingPresenter implements ISettingPresenter {
     private Gson gson;
     private Context context;
     private Patient[] patients;
+    private RegisterApi restClient;
     private ISettingView iSettingView;
     private IMainPresenter iMainPresenter;
-    private String TAG = "SETTING_PRESENTER";
-    private RegisterApi restClient, registerApiLogin;
+    private static final String TAG = "===SETTING_PRESENTER===";
 
     public SettingPresenter(ISettingView iSettingView, Context context, FragmentActivity activity) {
         this.context = context;
@@ -56,7 +57,6 @@ public class SettingPresenter implements ISettingPresenter {
         gson = new Gson();
         iSettingView.onLoadToolbar();
         restClient = RESTClient.getRegisterApi();
-        registerApiLogin = RESTClient.getRegisterApiLogin();
         iMainPresenter = new MainPresenter(context, activity);
     }
 
@@ -97,31 +97,7 @@ public class SettingPresenter implements ISettingPresenter {
     }
 
     @Override
-    public void logout() {
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("token", "");
-//        jsonObject.addProperty("uid", uid);
-//
-//        JsonObject dataJson = new JsonObject();
-//        dataJson.addProperty("data", gson.toJson(jsonObject));
-//
-//            registerApiLogin.logout(new Callback<JsonObject>() {
-//                @Override
-//                public void success(JsonObject jsonObject, Response response) {
-//                    String message = jsonObject.get("status").getAsString();
-//                    if (message.equals("success")) {
-//                        clearApplication();
-//                        context.startActivity(new Intent(context, MainActivity.class));
-//                    }
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError error) {
-//                iSettingView.onLoadError(error.getLocalizedMessage());
-//                }
-//            }
-//            });
-
+    public void logout(final String uid) {
         final AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
         alertDialog.setTitle(context.getResources().getString(R.string.logout));
         alertDialog.setMessage(context.getResources().getString(R.string.un_title));
@@ -129,7 +105,9 @@ public class SettingPresenter implements ISettingPresenter {
         alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Logout", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                clearDataServer(uid);
                 clearApplication();
+                context.stopService(new Intent(context, SocketService.class));
                 iMainPresenter.replaceFragment(new HomeFragment());
             }
         });
@@ -143,7 +121,27 @@ public class SettingPresenter implements ISettingPresenter {
         alertDialog.show();
     }
 
-    public void clearApplication() {
+    private void clearDataServer(String uid) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("uid", uid);
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("data", gson.toJson(jsonObject));
+
+        restClient.logout(dataJson, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                Log.d(TAG, jsonObject + "");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, error.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void clearApplication() {
         File cache = context.getCacheDir();
         File appDir = new File(cache.getParent());
 
@@ -157,7 +155,7 @@ public class SettingPresenter implements ISettingPresenter {
         }
     }
 
-    public static boolean deleteDir(File dir) {
+    private static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             for (String aChildren : children) {

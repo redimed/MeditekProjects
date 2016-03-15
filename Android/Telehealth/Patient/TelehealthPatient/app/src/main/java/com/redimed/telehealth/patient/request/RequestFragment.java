@@ -40,7 +40,9 @@ import com.redimed.telehealth.patient.utlis.AdapterImageRequest;
 import com.redimed.telehealth.patient.utlis.DeviceUtils;
 import com.redimed.telehealth.patient.utlis.PreCachingLayoutManager;
 import com.redimed.telehealth.patient.views.SignaturePad;
+
 import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -50,10 +52,11 @@ import butterknife.ButterKnife;
 public class RequestFragment extends Fragment implements IRequestView, View.OnClickListener, View.OnFocusChangeListener {
 
     private Context context;
+    private String apptType;
     private ArrayList<EditText> arrEditText;
     private IRequestPresenter iRequestPresenter;
     private ArrayList<CustomGallery> customGalleries;
-    private String TAG = "=====REQUEST=====", apptType;
+    private static final String TAG = "=====REQUEST=====";
 
     @Bind(R.id.tblRequest)
     TableLayout tblRequest;
@@ -84,21 +87,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Bind(R.id.lblImage)
     TextView lblImage;
 
-    @Bind(R.id.signaturePad)
-    SignaturePad signaturePad;
-    @Bind(R.id.vfContainer)
-    ViewFlipper vfContainer;
-    @Bind(R.id.lblClear)
-    TextView btnClear;
-    @Bind(R.id.lblSave)
-    TextView btnSave;
-    @Bind(R.id.layoutSignature)
-    LinearLayout layoutSignature;
-    @Bind(R.id.layoutSubmit)
-    LinearLayout layoutSubmit;
-    @Bind(R.id.imgSignature)
-    ImageView imgSignature;
-
     /* Upload */
     @Bind(R.id.layoutUpload)
     RelativeLayout layoutUpload;
@@ -115,7 +103,8 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Bind(R.id.lblSubTitle)
     TextView lblSubTitle;
 
-    public RequestFragment() {}
+    public RequestFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -128,27 +117,10 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
 
         init();
         initSpinner();
-        initSignature();
 
         btnUpload.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         txtDOB.setOnFocusChangeListener(this);
-
-        btnClear.setOnClickListener(this);
-        btnSave.setOnClickListener(this);
-
-        txtDescription.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_UP:
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                return false;
-            }
-        });
 
         return v;
     }
@@ -197,27 +169,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-    }
-
-    private void initSignature() {
-        signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
-            @Override
-            public void onStartSigning() {
-                Toast.makeText(context, "OnStartSigning", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSigned() {
-                btnSave.setEnabled(true);
-                btnClear.setEnabled(true);
-            }
-
-            @Override
-            public void onClear() {
-                btnSave.setEnabled(false);
-                btnClear.setEnabled(false);
             }
         });
     }
@@ -284,8 +235,10 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
 
     public void onLoadData(Patient[] patients) {
         if (patients != null) {
-            layoutUpload.setVisibility(View.VISIBLE);
+
             btnUpload.setVisibility(View.VISIBLE);
+            layoutUpload.setVisibility(View.VISIBLE);
+
             for (Patient patient : patients) {
                 txtFirstName.setText(patient.getFirstName() == null ? "" : patient.getFirstName());
                 txtLastName.setText(patient.getLastName() == null ? "" : patient.getLastName());
@@ -295,10 +248,8 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 autoCompleteSuburb.setText(patient.getSuburb() == null ? "" : patient.getSuburb());
                 txtHome.setText(patient.getHomePhoneNumber() == null ? "" : patient.getHomePhoneNumber());
 
-                if (patient.getSignature() != null){
-                    //Call presenter load signature
-                    iRequestPresenter.loadSignature(Config.apiURLDownload + patient.getSignature());
-                }
+                //Get value signature
+                iRequestPresenter.getValueSign(patient.getSignature() == null ? "" : patient.getSignature());
             }
         }
     }
@@ -320,14 +271,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     }
 
     @Override
-    public void onLoadSignature(Bitmap bitmap) {
-        if (bitmap != null) {
-            vfContainer.setDisplayedChild(vfContainer.indexOfChild(layoutSubmit));
-            imgSignature.setImageBitmap(bitmap);
-        }
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblUpload:
@@ -336,12 +279,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 break;
             case R.id.lblSubmit:
                 iRequestPresenter.checkFields(arrEditText, autoCompleteSuburb.getText().toString(), apptType);
-                break;
-            case R.id.lblClear:
-                signaturePad.clear();
-                break;
-            case R.id.lblSave:
-                iRequestPresenter.saveBitmapSign(signaturePad);
                 break;
         }
     }
@@ -362,8 +299,8 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
-            switch (requestCode){
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
                 case 200:
                     String[] allPath = data.getStringArrayExtra("all_path");
                     iRequestPresenter.setImageGallery(allPath);
@@ -390,20 +327,12 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
         txtDOB.setText(dob);
     }
 
-    @Override
-    public void onLoadSign(Bitmap bitmap) {
-        if (bitmap != null) {
-            vfContainer.setDisplayedChild(vfContainer.indexOfChild(layoutSubmit));
-            imgSignature.setImageBitmap(bitmap);
-        }
-    }
-
     //Handler back button
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        getView().setFocusableInTouchMode(true);
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

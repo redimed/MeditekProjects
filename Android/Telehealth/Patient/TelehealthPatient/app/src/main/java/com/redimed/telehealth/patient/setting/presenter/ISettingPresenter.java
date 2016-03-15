@@ -8,9 +8,15 @@ import com.redimed.telehealth.patient.models.Patient;
  * Created by Fox on 1/15/2016.
  */
 public interface ISettingPresenter {
-    void getInfoPatient(String dataPatient);
-    void displayInfoPatient(String teleUID);
-    void changeFragment(Fragment fragment);
+
     void displayAbout();
-    void logout();
+
+    void logout(String uid);
+
+    void getInfoPatient(String dataPatient);
+
+    void displayInfoPatient(String teleUID);
+
+    void changeFragment(Fragment fragment);
+
 }

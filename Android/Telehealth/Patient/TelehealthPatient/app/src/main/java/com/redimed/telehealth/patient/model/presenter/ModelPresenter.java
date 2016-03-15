@@ -16,7 +16,7 @@ public class ModelPresenter implements IModelPresenter {
 
     private Context context;
     private IModelView iModelView;
-    private String TAG = "MODEL_PRESENTER";
+    private String TAG = "=====MODEL_PRESENTER=====";
 
     public ModelPresenter(Context context, IModelView iModelView) {
         this.context = context;

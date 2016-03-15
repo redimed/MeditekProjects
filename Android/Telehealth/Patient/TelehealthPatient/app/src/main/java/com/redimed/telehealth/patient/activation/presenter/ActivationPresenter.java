@@ -43,7 +43,7 @@ public class ActivationPresenter implements IActivationPresenter {
     private SharedPreferences.Editor editor;
     private IActivationView iActivationView;
     private RegisterApi registerApi, registerApiLogin;
-    private String TAG = "ACTIVATION_PRESENTER";
+    private String TAG = "=====ACTIVATION_PRESENTER=====";
 
     //Constructor
     public ActivationPresenter(IActivationView iActivationView, Context context, FragmentActivity activity) {
@@ -153,36 +153,6 @@ public class ActivationPresenter implements IActivationPresenter {
         }
     }
 
-    @Override
-    public void changeFragment(Fragment fragment) {
-        if (fragment != null) {
-            iMainPresenter.replaceFragment(fragment);
-        }
-    }
-
-    @Override
-    public void hideKeyboardFragment(View view) {
-        //Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    InputMethodManager inputMethodManager = (InputMethodManager)
-                            context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(((Activity) context).getCurrentFocus().getWindowToken(), 0);
-                    return false;
-                }
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                hideKeyboardFragment(innerView);
-            }
-        }
-    }
-
     private void login(JsonObject jsonObject) {
         registerApiLogin.login(initJsonLogin(jsonObject), new Callback<JsonObject>() {
             @Override
@@ -192,7 +162,6 @@ public class ActivationPresenter implements IActivationPresenter {
                 editor.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ? "" : jsonObject.get("refreshCode").getAsString());
                 editor.putString("deviceID", spDevice.getString("deviceID", ""));
                 editor.apply();
-
                 getTelehealthUID(userJson.get("UID").isJsonNull() ? "" : userJson.get("UID").getAsString());
             }
 
@@ -220,6 +189,36 @@ public class ActivationPresenter implements IActivationPresenter {
                     iActivationView.onLoadError(error.getLocalizedMessage());
                 }
             });
+        }
+    }
+
+    @Override
+    public void changeFragment(Fragment fragment) {
+        if (fragment != null) {
+            iMainPresenter.replaceFragment(fragment);
+        }
+    }
+
+    @Override
+    public void hideKeyboardFragment(View view) {
+        //Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    InputMethodManager inputMethodManager = (InputMethodManager)
+                            context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(((Activity) context).getCurrentFocus().getWindowToken(), 0);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                hideKeyboardFragment(innerView);
+            }
         }
     }
 

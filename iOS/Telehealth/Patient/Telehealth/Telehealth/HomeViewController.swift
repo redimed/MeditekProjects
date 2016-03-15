@@ -52,14 +52,13 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-            ShowLoading()
             self.socketService.openSocket(uuid,complete: {
                 complete in
                 if complete == "socket connected" {
-                    //self.socketService.hideLoading()
+                    
                 }
             })
-            getInformationPatient()
+            
         }
         
         pagingImage()
@@ -67,15 +66,22 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     }
     func ShowLoading(){
         let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey("loading")
         defaults.setValue("1", forKey: "loading")
+        defaults.synchronize()
         showloading("Connecting to server..")
     }
     func HideLoading() {
         let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey("loading")
         defaults.setValue("0", forKey: "loading")
+        defaults.synchronize()
         hideLoading()
     }
     override func viewWillAppear(animated: Bool) {
+        if let _ = defaults.valueForKey("uid") as? String {
+            getInformationPatient()
+        }
         checkLogin()
         
     }

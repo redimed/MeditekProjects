@@ -26,13 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         //check device ID in localstorage
         let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
         if  defaults.valueForKey("deviceID") as? String == nil {
             let deviceID = UIDevice.currentDevice().identifierForVendor!.UUIDString
             defaults.setValue(deviceID, forKey: "deviceID")
             defaults.synchronize()
         }else {
-            
+            print(defaults.valueForKey("deviceID") as? String)
         }
+       
         
         // Override point for customization after application launch.
         UINavigationBar.appearance().barTintColor = UIColor(red: 61.0/255.0, green: 81.0/255.0, blue: 94.0/255.0, alpha: 1.0)
@@ -43,39 +45,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //create setting push notification
         notificationSettings(application)
-        let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
-        notificationCategory.identifier = "CALLING_MESSAGE"
-        notificationCategory .setActions([], forContext: UIUserNotificationActionContext.Default)
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
-        
+//        let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
+//        notificationCategory.identifier = "CALLING_MESSAGE"
+//        notificationCategory .setActions([], forContext: UIUserNotificationActionContext.Default)
+//        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
+//        
         return true
     }
     func notificationSettings(application: UIApplication) {
         
         let notificationActionOk :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        notificationActionOk.identifier = "ACCEPT_IDENTIFIER"
+        notificationActionOk.identifier = "CALLING_MESSAGE"
         notificationActionOk.title = "Ok"
         notificationActionOk.destructive = false
         notificationActionOk.authenticationRequired = false
         notificationActionOk.activationMode = UIUserNotificationActivationMode.Background
         
-        let notificationActionCancel :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        notificationActionCancel.identifier = "NOT_NOW_IDENTIFIER"
-        notificationActionCancel.title = "Not Now"
-        notificationActionCancel.destructive = true
-        notificationActionCancel.authenticationRequired = false
-        notificationActionCancel.activationMode = UIUserNotificationActivationMode.Background
+//        let notificationActionCancel :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+//        notificationActionCancel.identifier = "NOT_NOW_IDENTIFIER"
+//        notificationActionCancel.title = "Not Now"
+//        notificationActionCancel.destructive = true
+//        notificationActionCancel.authenticationRequired = false
+//        notificationActionCancel.activationMode = UIUserNotificationActivationMode.Background
         
         let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
         notificationCategory.identifier = "ss"
-        notificationCategory .setActions([notificationActionOk,notificationActionCancel], forContext: UIUserNotificationActionContext.Default)
-        notificationCategory .setActions([notificationActionOk,notificationActionCancel], forContext: UIUserNotificationActionContext.Minimal)
+        notificationCategory .setActions([notificationActionOk], forContext: UIUserNotificationActionContext.Default)
+        notificationCategory .setActions([notificationActionOk], forContext: UIUserNotificationActionContext.Default)
         
         
-        application.registerUserNotificationSettings(
-            UIUserNotificationSettings(
-                forTypes: [.Alert, .Badge, .Sound],
-                categories: Set<UIUserNotificationCategory>(arrayLiteral: notificationCategory) ))
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
         
         
     }

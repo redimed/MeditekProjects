@@ -135,9 +135,14 @@ class VerifyPhoneAPI:TokenAPI {
         
     }
     
-    func logOut(completionHandler:(JSON)-> Void){
+    func logOut(telehealthIUD:String,completionHandler:(JSON)-> Void){
         config.setHeader()
-        Alamofire.request(.GET, ConfigurationSystem.Http_3006 + UrlInformationPatient.logOut ,headers:config.headers).responseJSON{
+        let parameters = [
+            "data": [
+            "uid":telehealthIUD
+            ]
+        ]
+        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.logOut ,headers:config.headers,parameters: parameters).responseJSON{
              response in
            
             switch response.result {

@@ -64,6 +64,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                 response in
                 if response["message"] == "success"{
                     //Change to home view by segue
+        
                     self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
                 }else {
                     self.view.hideLoading()

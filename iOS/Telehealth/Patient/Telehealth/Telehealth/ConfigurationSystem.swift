@@ -20,10 +20,14 @@ var cookies :String = String()
 let manager = Alamofire.Manager.sharedInstance
 
 struct ConfigurationSystem {
-    static let http :String = httpUrl.httpMeditek
+    static let http :String = httpUrl.httpTestApp
     static let Http_3009 :String = "\(http):3009"
     static let Http_3005 :String =  "\(http):3005"
     static let Http_3006 :String =  "\(http):3006"
+    
+    //
+    static let uploadfileID = "2d0626f3-e741-11e5-8fab-0050569f3a15"
+    //
     
     var headers = [
         "Authorization": "Bearer \(tokens)",

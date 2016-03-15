@@ -21,6 +21,7 @@ class SignatureViewController: UIViewController {
     var alertView : UIAlertView!
     var patientInformation : PatientContainer!
     var patientUID : String!
+    var checkConfimRequest : String = ""
     
     @IBOutlet weak var viewSig: UIView!
     var lastPoint = CGPoint.zero
@@ -120,8 +121,15 @@ class SignatureViewController: UIViewController {
     }
     
     @IBAction func doneButton(sender: AnyObject) {
+        print(defaults.valueForKey("userUID") as? String)
         if let uuid = defaults.valueForKey("userUID") as? String {
+            if(checkConfimRequest == "true"){
+                self.uploadImageNotLogin(self.mainImageView.image!, userUID: uuid)
+            }else{
             self.uploadImage(self.mainImageView.image!, userUID: uuid)
+            }
+        }else{
+            self.uploadImageNotLogin(self.mainImageView.image!, userUID: ConfigurationSystem.uploadfileID)
         }
     }
     
@@ -133,7 +141,7 @@ class SignatureViewController: UIViewController {
             if response["message"] == "success"{
                 self.view.hideLoading()
                 let  data = response["data"].string
-                print("sssssssss",data)
+                
                 
                 self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:data!)
                 self.patientService.updateSignature(data!, patientUID: self.patientUID, completionHandler: {
@@ -151,4 +159,26 @@ class SignatureViewController: UIViewController {
         })
         
     }
+    
+    func uploadImageNotLogin(image:UIImage,userUID:String){
+        self.view.showLoading()
+        appointmentService.uploadImageNotLogin(image, userUID: userUID,fileType:"Signature" , compailer: {
+            response in
+            if response["message"] == "success"{
+                self.view.hideLoading()
+        
+                let  fileUID = response["data"].string
+                //let fileUID =  response["fileUID"].string!
+                self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:fileUID!)
+                self.navigationController!.popViewControllerAnimated(true)
+            }else {
+                self.view.hideLoading()
+                print("error",response["ErrorType"])
+                let error = response["ErrorType"].string
+                self.alertView.alertMessage("Error", message: error!)
+            }
+        })
+        
+    }
+
 }

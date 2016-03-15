@@ -50,6 +50,7 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
     var pickerView = UIPickerView()
     var pickOption = ["","Telehealth", "Onsite"]
     var userUID : String!
+    var AppointmentSignatureUID : String = ""
     let alertView = UIAlertView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,7 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
             selectOptionImage.hidden = false
             collectionView.hidden = false
             if (patientInformation != nil) {
+                print(patientInformation.SignatureUID)
                 firstNameTextField.text = patientInformation.FirstName
                 lastNameTextField.text = patientInformation.LastName
                 emailTextField.text = patientInformation.Email
@@ -123,8 +125,6 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
                 }
                 
             }
-            
-            
             self.presentViewController(pickerController, animated: true) {}
     }
     
@@ -316,10 +316,6 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
                 self.viewSuburb.alpha = 1
             }
         }
-        
-        //        if textField == typeRequest {
-        //            typeRequest.text = "Telehealth"
-        //        }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
@@ -424,7 +420,7 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
                 alertView.alertMessage("", message: "Please check Email!")
             }else {
                 print("ok")
-                telehealthContainer = TelehealthContainer(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, mobilePhone: mobileTextField.text!, homePhone: homePhoneTextField.text!, type: typeRequest.text!, suburb: suburbTextField.text!, dob: dobTextField.text!, email: emailTextField.text!, description: textView.text, imageArray: ArrayImageUID)
+                telehealthContainer = TelehealthContainer(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, mobilePhone: mobileTextField.text!, homePhone: homePhoneTextField.text!, type: typeRequest.text!, suburb: suburbTextField.text!, dob: dobTextField.text!, email: emailTextField.text!, description: textView.text, imageArray: ArrayImageUID,AppointmentSignatureUID:AppointmentSignatureUID)
                 view.endEditing(true)
                 performSegueWithIdentifier("ConfirmRequestSegue", sender: self)
             }
@@ -436,6 +432,13 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
         if segue.identifier == "ConfirmRequestSegue"{
             let confirm = segue.destinationViewController as! ConfirmRequestTelehealthViewController
             confirm.telehealthData = telehealthContainer
+            if(patientInformation != nil){
+                if(patientInformation.SignatureUID != ""){
+                    confirm.AppointmentSignatureUID = patientInformation.SignatureUID
+                }
+            }else{
+                 confirm.AppointmentSignatureUID = ""
+            }
         }
     }
     
@@ -588,7 +591,6 @@ extension RequestTelehealthViewController : UIViewControllerTransitioningDelegat
     
     func openGallery()
     {
-        
         
         let assetType = DKOption.types[1]
         let allowMultipleType = true

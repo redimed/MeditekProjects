@@ -19,9 +19,7 @@ let sharedSocket = Singleton_SocketManager()
 class SocketService {
     
     var delegate : SocketDelegate! = nil
-    func hideLoading(){
-        self.delegate.HideLoading()
-    }
+    
     func openSocket(uid:String,complete:(String) -> Void) {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -46,10 +44,12 @@ class SocketService {
                 let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]
                 sharedSocket.socket.emit("get", dictionNary)
+            
+                print(defaults.valueForKey("loading"))
                 if(defaults.valueForKey("loading") as! String == "1"){
                     self.delegate.HideLoading()
                 }
-                print(defaults.valueForKey("loading"))
+                
             }
             
             sharedSocket.socket.on("receiveMessage"){data, ack in

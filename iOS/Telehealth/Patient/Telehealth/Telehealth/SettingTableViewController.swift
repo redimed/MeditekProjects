@@ -85,7 +85,7 @@ class SettingTableViewController: UITableViewController {
             if let uuid = defaults.valueForKey("uid") as? String {
                 self.api.updateTokenPush(uuid,deviceToken:"")
             }
-            self.verifyPhoneAPI.logOut({
+            self.verifyPhoneAPI.logOut((defaults.valueForKey("uid") as? String)!,completionHandler: {
                 response in
                 print(response)
                 if response["status"] == "success"{

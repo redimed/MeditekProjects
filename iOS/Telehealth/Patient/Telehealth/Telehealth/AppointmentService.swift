@@ -125,11 +125,13 @@ class AppointmentService {
     
     
     func uploadImage(image:UIImage,userUID:String,fileType:String = "MedicalImage",compailer:(JSON) -> Void){
-
+        
+        print("fileType",fileType)
+        print("userUID",userUID)
+        
         api.uploadImage(image,userUID: userUID,fileType:fileType){
             response in
-          
-           
+
             if response["status"] == "success"{
                 let fileUID =  response["fileUID"].string!
                 compailer(["message":"success","data":fileUID])
@@ -146,6 +148,32 @@ class AppointmentService {
             
         }
     }
+    
+    func uploadImageNotLogin(image:UIImage,userUID:String,fileType:String = "MedicalImage",compailer:(JSON) -> Void){
+        
+        print("fileType",fileType)
+        print("userUID",userUID)
+        
+        api.uploadImageNotLogin(image,userUID: userUID,fileType:fileType){
+            response in
+            
+            if response["status"] == "success"{
+                let fileUID =  response["fileUID"].string!
+                compailer(["message":"success","data":fileUID])
+            }else {
+                print("error",response["ErrorType"])
+                
+                if let error = response["ErrorType"].string {
+                    compailer(["message":"error","ErrorType":error])
+                }else {
+                    compailer(["message":"error","ErrorType":"Can't upload Image"])
+                }
+                
+            }
+            
+        }
+    }
+
     
     func updateImageToAppointment(fileUID:String,appointmentID:String,compailer:(JSON) -> Void) {
         api.updateImageToAppointment(fileUID, apptID:appointmentID){

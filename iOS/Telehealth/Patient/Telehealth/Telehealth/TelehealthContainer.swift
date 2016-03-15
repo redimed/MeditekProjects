@@ -11,8 +11,8 @@ class TelehealthContainer : PatientContainer{
     var typeTelehealth: String!
     var description: String!
     var imageTelehealth: [UIImage]!
-    
-     init(firstName:String,lastName:String,mobilePhone:String,homePhone:String,type:String,suburb:String,dob:String,email:String,description:String,imageArray:[UIImage]){
+    var AppointmentSignatureUID : String!
+    init(firstName:String,lastName:String,mobilePhone:String,homePhone:String,type:String,suburb:String,dob:String,email:String,description:String,imageArray:[UIImage],AppointmentSignatureUID:String){
         super.init()
         FirstName = firstName
         LastName = lastName
@@ -22,6 +22,7 @@ class TelehealthContainer : PatientContainer{
         Suburb = suburb
         DOB = dob
         Email = email
+        self.AppointmentSignatureUID = AppointmentSignatureUID
         self.description = description
         self.imageTelehealth = imageArray
     }

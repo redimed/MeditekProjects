@@ -11,9 +11,11 @@
 .idea/modules.xml
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
+.idea/gradle.xml
 .DS_Store
 /build
 /captures
 /app/app.iml
+/app/build.gradle
 *.iml
 /*/build/

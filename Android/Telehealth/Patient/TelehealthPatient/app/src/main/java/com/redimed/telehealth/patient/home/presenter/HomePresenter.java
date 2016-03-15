@@ -43,11 +43,12 @@ public class HomePresenter implements IHomePresenter {
     private Bundle bundle;
     private Context context;
     private Fragment fragment;
+    private String dataPatient;
     private IHomeView iHomeView;
     private RegisterApi registerApi;
     private IMainPresenter iMainPresenter;
-    private SharedPreferences uidTelehealth, spDevice;
-    private String TAG = "HOME_PRESENTER", dataPatient;
+    private SharedPreferences uidTelehealth, spDevice, existsUser;
+    private static final String TAG = "===HOME_PRESENTER===";
 
     //Constructor
     public HomePresenter(IHomeView iHomeView, Context context, FragmentActivity activity) {
@@ -61,6 +62,7 @@ public class HomePresenter implements IHomePresenter {
         iMainPresenter = new MainPresenter(context, activity);
         spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
+        existsUser = context.getSharedPreferences("ExistsUser", Context.MODE_PRIVATE);
     }
 
     //CreateJsonDataSuburb : if suburb.json file not exists then create file suburb.json
@@ -101,12 +103,18 @@ public class HomePresenter implements IHomePresenter {
 
     @Override
     public void checkExistsPatient() {
+        SharedPreferences.Editor editor = existsUser.edit();
         File xmlUser = new File("/data/data/" + context.getPackageName() + "/shared_prefs/TelehealthUser.xml");
         if (xmlUser.exists()) {
-            iHomeView.changeView(true);
             updateToken();
+            iHomeView.changeView(true);
             context.startService(new Intent(context, SocketService.class));
+
+            editor.putBoolean("exists", true);
+        } else {
+            editor.putBoolean("exists", false);
         }
+        editor.apply();
     }
 
     public void updateToken() {

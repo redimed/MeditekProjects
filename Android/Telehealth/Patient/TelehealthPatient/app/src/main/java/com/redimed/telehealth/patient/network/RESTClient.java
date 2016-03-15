@@ -35,9 +35,9 @@ import retrofit.client.Response;
  */
 public class RESTClient {
     private static Context context;
-    private static String TAG = "RESTCLIENT";
     private static SharedPreferences.Editor editor;
     private static SharedPreferences spDevice, uidTelehealth;
+    private static final String TAG = "=====REST_CLIENT=====";
     private static RestAdapter restAdapter, restAdapterCore, restAdapterLogin;
 
 
@@ -130,10 +130,10 @@ public class RESTClient {
     public static class SessionRequestInterceptor implements RequestInterceptor {
         public void intercept(RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("SystemType", "ARD");
-            paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
-            paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
-            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", null));
-            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", null));
+            paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", ""));
+            paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", ""));
+            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", ""));
+            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", ""));
             paramRequestFacade.addHeader("AppID", "com.redimed.telehealth.patient");
         }
     }

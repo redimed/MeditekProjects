@@ -15,7 +15,7 @@
     <dimen name="home_text_size">12sp</dimen>
     <dimen name="tracking_text_size">10sp</dimen>
 
-    <dimen name="size_title">25sp</dimen>
+    <dimen name="size_title">20sp</dimen>
     <dimen name="size_txt">15sp</dimen>
 
 </resources>

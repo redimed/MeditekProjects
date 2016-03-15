@@ -21,8 +21,6 @@ public interface IRequestView {
 
     void onLoadDOB(String dob);
 
-    void onLoadSign(Bitmap bitmap);
-
     void onResultEmail(boolean email);
 
     void onResultMobile(boolean phone);
@@ -30,8 +28,6 @@ public interface IRequestView {
     void startActivityResult(Intent i);
 
     void onResultSuburb(boolean suburb);
-
-    void onLoadSignature(Bitmap bitmap);
 
     void onResultField(EditText editText);
 

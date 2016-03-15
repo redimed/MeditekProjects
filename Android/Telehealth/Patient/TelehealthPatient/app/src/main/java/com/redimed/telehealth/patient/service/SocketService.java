@@ -42,8 +42,8 @@ import io.socket.emitter.Emitter;
 public class SocketService extends Service {
 
     private static Socket socket;
-    private static String TAG = "SocketService";
     private static SharedPreferences uidTelehealth;
+    private static String TAG = "=====SocketService=====";
 
     private void initializeSocket() {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);

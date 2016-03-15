@@ -123,14 +123,6 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         return listAppointment.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
-    public void setLoaded() {
-        loading = false;
-    }
-
-    public void setOnLoadMoreListener(EndlessRecyclerOnScrollListener onLoadMoreListener) {
-        this.onLoadMoreListener = onLoadMoreListener;
-    }
-
     @Override
     public int getItemCount() {
         return listAppointment.size();

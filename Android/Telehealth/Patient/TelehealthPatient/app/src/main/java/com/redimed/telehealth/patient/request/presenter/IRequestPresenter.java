@@ -21,6 +21,8 @@ public interface IRequestPresenter {
 
     ArrayAdapter loadJsonData();
 
+    void getValueSign(String sign);
+
     Patient[] loadDataInfoExists();
 
     void displayDatePickerDialog();
@@ -33,11 +35,7 @@ public interface IRequestPresenter {
 
     void changeFragment(Fragment fragment);
 
-    void saveBitmapSign(SignaturePad signaturePad);
-
-    void checkFields(ArrayList<EditText> arrEditText, String suburb, String apptType);
-
     void uploadImage(ArrayList<CustomGallery> customGalleries);
 
-    void loadSignature(String url);
+    void checkFields(ArrayList<EditText> arrEditText, String suburb, String apptType);
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +34,10 @@ import butterknife.ButterKnife;
  */
 public class SettingFragment extends Fragment implements ISettingView, View.OnClickListener {
 
+    private String uid;
     private Context context;
     private ISettingPresenter iSettingPresenter;
-    private String TAG = "SETTING", uid;
+    private static final String TAG = "=====SETTING=====";
 
     @Bind(R.id.lblPhoneNumber)
     TextView lblPhoneNumber;
@@ -126,7 +128,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnLogout:
-                iSettingPresenter.logout();
+                iSettingPresenter.logout(uid);
                 break;
             case R.id.layoutProfile:
                 iSettingPresenter.displayInfoPatient(uid);

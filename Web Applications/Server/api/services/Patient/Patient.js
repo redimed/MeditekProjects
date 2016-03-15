@@ -1482,27 +1482,45 @@ module.exports = {
                 },
                 {
                     model: PatientDVA,
-                    required: false
+                    required: false,
+                    where:{
+                        Enable: 'Y'
+                    }
                 },
                 {
                     model: PatientKin,
-                    required: false
+                    required: false,
+                    where:{
+                        Enable: 'Y'
+                    }
                 },
                 {
                     model: PatientMedicare,
-                    required: false
+                    required: false,
+                    where:{
+                        Enable: 'Y'
+                    }
                 },
                 {
                     model: PatientPension,
-                    required: false
+                    required: false,
+                    where:{
+                        Enable: 'Y'
+                    }
                 },
                 {
                     model: PatientGP,
-                    required: false
+                    required: false,
+                    where:{
+                        Enable: 'Y'
+                    }
                 },
                 {
                     model: PatientFund,
-                    required: false
+                    required: false,
+                    where:{
+                        Enable: 'Y'
+                    }
                 }
             ]
         })
@@ -1809,6 +1827,45 @@ module.exports = {
                     else {
                         t.commit();
                         return created_model;
+                    }
+                },function(err) {
+                    t.rollback();
+                    throw err;
+                })
+            },function(err) {
+                throw err;
+            });
+        }
+    },
+
+    ChangeStatusChild : function(data) {
+        if(data == null || data =='') {
+            var err = new Error('ChangeStatusChild.error');
+            err.pushError('data.invalid');
+            throw err;
+        }
+        else {
+            var model = sequelize.models[data.model];
+            console.log('????????????????????????????????? ',sequelize.models);
+            return sequelize.transaction()
+            .then(function(t) {
+                var ID = data.data.ID;
+                delete data.data['ID'];
+                return model.update(data.data,{
+                    where:{
+                        ID : ID
+                    },
+                    transaction:t
+                })
+                .then(function(updated_model) {
+                    if(updated_model == null || updated_model == ''){
+                        var err = new Error('ChangeStatusChild.error');
+                        err.pushError('UpdateModel.Error');
+                        throw err;
+                    }
+                    else {
+                        t.commit();
+                        return updated_model;
                     }
                 },function(err) {
                     t.rollback();

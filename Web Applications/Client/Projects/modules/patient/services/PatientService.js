@@ -552,5 +552,15 @@ angular.module('app.authentication.patient.services',[])
 		return changeStatusFile.post({data:data});
 	};
 
+	PatientService.addChild = function(data) {
+		var addChild = api.all('patient/add-child');
+		return addChild.post({data:data});
+	};
+
+	PatientService.changeStatusChild = function(data) {
+		var changeStatusChild = api.all('patient/change-status-child');
+		return changeStatusChild.post({data:data});
+	}
+
 	return PatientService;
 })

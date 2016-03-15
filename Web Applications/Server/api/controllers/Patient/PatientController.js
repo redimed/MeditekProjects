@@ -489,6 +489,16 @@ module.exports = {
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
+    },
+
+    ChangeStatusChild : function(req, res) {
+        var data = req.body.data;
+        Services.Patient.ChangeStatusChild(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
     }
 
 };

@@ -189,6 +189,16 @@ module.exports = {
                 }
             }
         },
+        PhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
         HealthLink: {
             type: Sequelize.STRING(255),
             allowNull: true,
@@ -222,6 +232,16 @@ module.exports = {
         Note: {
             type: Sequelize.TEXT,
             allowNull: true
+        },
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
         },
         CreatedDate: {
             type: Sequelize.DATE,

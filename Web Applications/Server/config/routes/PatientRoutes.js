@@ -58,5 +58,13 @@ module.exports={
 	'post /api/patient/get-fileUID' :{
 		controller: 'Patient/PatientController',
 		action: 'getfileUID'
+	},
+	'post /api/patient/add-child' :{
+		controller: 'Patient/PatientController',
+		action:'AddChild'
+	},
+	'post /api/patient/change-status-child' :{
+		controller: 'Patient/PatientController',
+		action:'ChangeStatusChild'
 	}
 }

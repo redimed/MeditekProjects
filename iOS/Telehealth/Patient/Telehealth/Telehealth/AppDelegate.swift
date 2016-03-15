@@ -16,23 +16,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var config : ConfigurationSystem = ConfigurationSystem()
     let socketService = SocketService()
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         if let info = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
             dUserInfo = info
             
-        
+            
         }
         //check device ID in localstorage
         let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
         if  defaults.valueForKey("deviceID") as? String == nil {
             let deviceID = UIDevice.currentDevice().identifierForVendor!.UUIDString
             defaults.setValue(deviceID, forKey: "deviceID")
             defaults.synchronize()
         }else {
-            
+            print(defaults.valueForKey("deviceID") as? String)
         }
+       
         
         // Override point for customization after application launch.
         UINavigationBar.appearance().barTintColor = UIColor(red: 61.0/255.0, green: 81.0/255.0, blue: 94.0/255.0, alpha: 1.0)
@@ -41,42 +43,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //check verified in localstorege
         
-       
-//        if let stringOne = defaults.valueForKey("verifyUser") as? String {
-//            if stringOne == "Verified" {
-//                
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
-//                self.window?.rootViewController = initialViewController
-//                self.window?.makeKeyAndVisible()
-//            }
-//            
-//        }
         //create setting push notification
-        let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
-        notificationCategory.identifier = "CALLING_MESSAGE"
-        notificationCategory .setActions([], forContext: UIUserNotificationActionContext.Default)
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
-
+        notificationSettings(application)
+//        let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
+//        notificationCategory.identifier = "CALLING_MESSAGE"
+//        notificationCategory .setActions([], forContext: UIUserNotificationActionContext.Default)
+//        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
+//        
         return true
     }
-
+    func notificationSettings(application: UIApplication) {
+        
+        let notificationActionOk :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        notificationActionOk.identifier = "CALLING_MESSAGE"
+        notificationActionOk.title = "Ok"
+        notificationActionOk.destructive = false
+        notificationActionOk.authenticationRequired = false
+        notificationActionOk.activationMode = UIUserNotificationActivationMode.Background
+        
+//        let notificationActionCancel :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+//        notificationActionCancel.identifier = "NOT_NOW_IDENTIFIER"
+//        notificationActionCancel.title = "Not Now"
+//        notificationActionCancel.destructive = true
+//        notificationActionCancel.authenticationRequired = false
+//        notificationActionCancel.activationMode = UIUserNotificationActivationMode.Background
+        
+        let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
+        notificationCategory.identifier = "ss"
+        notificationCategory .setActions([notificationActionOk], forContext: UIUserNotificationActionContext.Default)
+        notificationCategory .setActions([notificationActionOk], forContext: UIUserNotificationActionContext.Default)
+        
+        
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
+        
+        
+    }
+    
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         application.registerForRemoteNotifications()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-    
-
-      
+        
+        
+        
         completionHandler(.NoData)
     }
     
-
+    
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-
+        
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)
@@ -103,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         print("Couldn't register: \(error)")
-
+        
         
     }
     
@@ -136,10 +154,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
-                
-               print("applicationDidBecomeActive")
         
-
+        print("applicationDidBecomeActive")
+        
+        
     }
     
     func applicationWillTerminate(application: UIApplication) {
@@ -153,10 +171,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 socketService.emitDataToServer(MessageString.CallEndCall, uidFrom: uuid, uuidTo: from)
             }
         }
-
+        
         
     }
-
+    
     
     // MARK: - Core Data stack
     

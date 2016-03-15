@@ -166,7 +166,7 @@ module.exports = {
         if('UserAccountUID' in req.body) {
             data.UserAccountUID = req.body.UserAccountUID;
         }
-        console.log("body ..... ",req.body);
+
         var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
@@ -479,6 +479,26 @@ module.exports = {
                     message: ErrorWrap(err)
                 });
             })
+    },
+
+    AddChild : function(req, res) {
+        var data = req.body.data;
+        Services.Patient.AddChild(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
+    ChangeStatusChild : function(req, res) {
+        var data = req.body.data;
+        Services.Patient.ChangeStatusChild(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
     }
 
 };

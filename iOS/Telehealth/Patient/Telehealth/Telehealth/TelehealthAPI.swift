@@ -12,7 +12,7 @@ import Alamofire
 
 class TelehealthAPI : TokenAPI{
     //Get appointment Details
-    func requestTelehealth(RequestDate:String,Type:String,Description:String,FirstName:String,LastName:String,PhoneNumber:String,HomePhoneNumber:String,Suburd:String,DOB:String,Email:String,FileUploads:[[String:String]], compailer:(JSON) -> Void){
+    func requestTelehealth(RequestDate:String,Type:String,Description:String,FirstName:String,LastName:String,PhoneNumber:String,HomePhoneNumber:String,Suburd:String,DOB:String,Email:String,FileUploads:[[String:String]],AppointmentSignatureUID:String, compailer:(JSON) -> Void){
         config.setHeader()
         
         //print(FileUploads)
@@ -49,6 +49,12 @@ class TelehealthAPI : TokenAPI{
                         "Type": "RequestPatient",
                         "Name": "PatientConsent3",
                         "Value": "Y"
+                    ],[
+                        "Section": "Telehealth",
+                        "Category": "Appointment",
+                        "Type": "RequestPatient",
+                        "Name": "Signature",
+                        "Value": AppointmentSignatureUID
                     ]],
                 "FileUploads": FileUploads
             ]
@@ -66,7 +72,7 @@ class TelehealthAPI : TokenAPI{
                     }
                 }
                 let data : JSON = JSON(JSONData)
-                print("---data---",data)
+               // print("---data---",data)
                 compailer(data)
             case .Failure(let error):
                 print("Request failed with error: \(error)")

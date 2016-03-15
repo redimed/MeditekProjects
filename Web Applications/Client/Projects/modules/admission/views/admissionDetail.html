@@ -22,7 +22,7 @@
 </div>
 <br>
 <div class="row">
-    <div class="col-md-9 col-sm-9">
+    <div class="col-lg-9 col-md-12 col-sm-12">
         <div class="portlet portlet-fit light bordered">
             <div class="portlet-title">
                 <div class="caption font-red-sunglo">
@@ -41,27 +41,104 @@
                 <form name="form" novalidate role="form" ng-submit="submit()">
                     <div class="form-body">
                         <div class="row">
-                            <div class="col-md-12 form-inline">
-                                <div class="col-md-3">
-                                    <label>
-                                        <input type="radio" class="form-control" name="motor_vehicle_accident_or_work_injury" ng-value="1" ng-model="admissionDetail.motor_vehicle_accident_or_work_injury" />Motor Vehicle Accident?
-                                    </label>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">&nbsp;</label>
+                                    <div class="radio-list">
+                                        <label class="radio-inline">Medical Eligible</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="medical_eligible" value="Y" ng-model="admissionDetail.MedicareEligible"> Yes
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="medical_eligible" value="N" ng-model="admissionDetail.MedicareEligible" > No
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>
-                                        <input type="radio" class="form-control" name="motor_vehicle_accident_or_work_injury" ng-value="2" ng-model="admissionDetail.motor_vehicle_accident_or_work_injury" />Work Injury?
-                                    </label>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Medicare Number</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.MedicareNumber"/>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>Claim Number:</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Medicare Reference Number</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.MedicareReferenceNumber" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                 <div class="form-group">
+                                    <label class="control-label">Expiry Date</label>
+                                    <input type="text" class="form-control date-picker" 
+                                        data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.ExpiryDate" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">DVA Number</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.DVANumber" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class="radio-list">
+                                        <label class="radio-inline">
+                                            <input type="radio" class="form-control" name="motor_vehicle_accident_or_work_injury" value='1' ng-model="admissionDetail.motor_vehicle_accident_or_work_injury" />Motor Vehicle Accident?
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="form-control" name="motor_vehicle_accident_or_work_injury" value='2' ng-model="admissionDetail.motor_vehicle_accident_or_work_injury" />Work Injury?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Claim Number</label>
                                     <input type="text" class="form-control" ng-model="admissionDetail.claim_number" />
                                 </div>
-                                <div class="col-md-3">
-                                    <label>INS:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>INS</label>
                                     <input type="text" class="form-control" ng-model="admissionDetail.ins" />
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Next of Kin/Guardian</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.next_of_kin" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.KinFirstName" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Relationship</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.Relationship" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Contact Number</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.MobilePhoneNumber" />
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                         <h4 class="form-section bold">PREVIOUS SURGERY/PROCEDURES (e.g.joint replacement, transplants, implants, colonoscopy)</h4>
                         <div class="table-scrollable">
                             <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
@@ -772,6 +849,43 @@
                                 </tbody>
                             </table>
                         </div>
+                        <h4 class="form-section bold margin-top-40">Doctor use only</h4>
+                        <div class="form-group">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="radio-list">
+                                    <label class="radio-inline">Patient history form reviewed by Doctor ?</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="form_reviewed" value="Y" ng-model="admissionDetail.form_reviewed" /> Yes
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="form_reviewed" value="N" ng-model="admissionDetail.form_reviewed" /> No
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Name of Doctor</label>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.DoctorFullName" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Date</label>
+                                    <input type="text" class="form-control date-picker" 
+                                        data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.DoctorDateChoose" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Time</label>
+                                    <input type="text" class="form-control timepicker timepicker-no-seconds" 
+                                        data-default-time="" placeholder="hh:mm" ng-model="admissionDetail.DoctorTimeChoose" readonly>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-actions margin-top-40" style="text-align:right">
                         <button class="btn btn-lg btn-danger" ng-click="UpdateAdmission()">
@@ -783,7 +897,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-sm-3">
+    <div class="col-lg-3 col-md-12 col-sm-12">
         <patient-detail-directive apptuid="Params.UID"></patient-detail-directive>
         <appointment-detail-directive apptuid="Params.UID" opentok="opentokData"></appointment-detail-directive>
         <medicare-directive apptuid="Params.UID"></medicare-directive>

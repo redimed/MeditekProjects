@@ -3,6 +3,10 @@ module.exports = {
         controller: 'FileUpload/FileUploadController',
         action: 'UploadFile'
     },
+    'POST /api/uploadFileWithoutLogin': {
+        controller: 'FileUpload/FileUploadController',
+        action: 'UploadFileWithoutLogin'
+    },
     'GET /api/downloadFile/:size?/:fileUID': {
         controller: 'FileUpload/FileUploadController',
         action: 'DownloadFile'

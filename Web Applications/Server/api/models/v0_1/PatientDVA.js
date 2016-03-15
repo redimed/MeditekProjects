@@ -60,6 +60,16 @@ module.exports = {
                 }
             }
         },
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
         CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true,

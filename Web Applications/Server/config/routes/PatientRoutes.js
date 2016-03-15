@@ -62,5 +62,9 @@ module.exports={
 	'post /api/patient/add-child' :{
 		controller: 'Patient/PatientController',
 		action:'AddChild'
+	},
+	'post /api/patient/change-status-child' :{
+		controller: 'Patient/PatientController',
+		action:'ChangeStatusChild'
 	}
 }

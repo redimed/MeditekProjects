@@ -1,4 +1,4 @@
-var env='local'; //local,meditekServer,testApp,app
+var env='local',socketAuth, socketRest, socketNc, socketTelehealth ={}; //local,meditekServer,testApp,app
 
 var configRestBaseUrl={
 	// 'local':'https://192.168.1.235:3005',
@@ -65,7 +65,6 @@ else if(env == 'meditekServer')
 	var _authBaseURL=configAuthBaseUrl.meditekServer;
 	var _telehealthBaseURL=configTelehealthBaseUrl.meditekServer;
 	var _eFormBaseURL=configEFormUrl.meditekServer;
-	var _ncBaseURL=configNcBaseUrl.meditekServer;
 	var _PDFFormUrl=PDFFormUrl.meditekServer;
 }
 else if(env == 'testApp')

@@ -117,23 +117,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'TelehealthCall',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(telehealthcall, options, callback) {
-                telehealthcall.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(telehealthcalls, options, callback) {
-                telehealthcalls.forEach(function(telehealthcall, index) {
-                    telehealthcalls[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(telehealthcall, callback) {
-                telehealthcall.fields.push('ModifiedDate');
-                telehealthcall.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

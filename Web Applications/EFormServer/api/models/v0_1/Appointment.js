@@ -21,6 +21,16 @@ module.exports = {
                 }
             }
         },
+        Code: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
         SiteID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
@@ -140,22 +150,27 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Appointment',
-        timestamps: false,
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
         hooks: {
-            beforeCreate: function(appointment, options, callback) {
-                appointment.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(appointments, options, callback) {
-                appointments.forEach(function(appointment, index) {
-                    appointments[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(appointment, callback) {
-                appointment.fields.push('ModifiedDate');
-                appointment.attributes.ModifiedDate = new Date();
-                callback();
+            afterCreate: function(appointment, options, callback) {
+                if (!_.isEmpty(appointment) &&
+                    !_.isEmpty(appointment.dataValues) &&
+                    HelperService.CheckExistData(appointment.dataValues.ID)) {
+                    Appointment.update({
+                            Code: HashIDService.Create(appointment.dataValues.ID)
+                        }, {
+                            where: {
+                                ID: appointment.dataValues.ID
+                            },
+                            transaction: options.transaction
+                        })
+                        .then(function(apptCodeUpdated) {
+                            callback();
+                        }, function(err) {
+                            callback(err);
+                        });
+                }
             }
         }
     }

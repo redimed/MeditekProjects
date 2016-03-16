@@ -84,23 +84,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'EFormLineTemplate',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(examinationrequired, options, callback) {
-                examinationrequired.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(examinationrequireds, options, callback) {
-                examinationrequireds.forEach(function(examinationrequired, index) {
-                    examinationrequireds[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(examinationrequired, callback) {
-                examinationrequired.fields.push('ModifiedDate');
-                examinationrequired.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

@@ -3,7 +3,8 @@ var history = ReactRouter.hashHistory;
 module.exports = React.createClass({
 	propTypes: {
 		onAddNewSection: React.PropTypes.func,
-		onSaveForm: React.PropTypes.func
+		onSaveForm: React.PropTypes.func,
+                          onAddNewModule: React.PropTypes.func
 	},
             userUID: null,
             name: '',
@@ -13,31 +14,24 @@ module.exports = React.createClass({
             setName: function(name){
                 this.name = name;
             },
+            _onAddNewModule: function(){
+                this.props.onAddNewModule();
+            },
 	_onAddNewSection: function(){
-		var self = this;
-		swal({
-			title: 'Are you sure?',
-			text: 'You will create new Section for this E-Form',
-			type: 'warning',
-			showCancelButton: true,
-			closeOnConfirm: false,
-			allowOutsideClick: true
-		}, function(){
-			self.props.onAddNewSection();
-		})
+                	var self = this;
+                	swal({
+                		title: 'Are you sure?',
+                		text: 'You will create new Section for this E-Form',
+                		type: 'warning',
+                		showCancelButton: true,
+                		closeOnConfirm: false,
+                		allowOutsideClick: true
+                	}, function(){
+                		self.props.onAddNewSection();
+                	})
 	},
 	_onSaveForm: function(){
                          this.props.onSaveForm();
-		/*swal({
-			title: 'Are you sure?',
-			text: 'You will save this form !!!',
-			type: 'warning',
-			showCancelButton: true,
-			closeOnConfirm: false,
-			allowOutsideClick: false,
-			showLoaderOnConfirm: true
-		}, function(){
-		}.bind(this))*/
 	},
             _goToHome: function(){
                 history.push('/eformTemplate?userUID='+this.userUID);
@@ -61,6 +55,11 @@ module.exports = React.createClass({
                     		                          Add New Section
 				         </button>
 				        &nbsp;
+                                                            <button type="button" className="btn green btn-sm" onClick={this._onAddNewModule}>
+                                                                <i className="fa fa-plus"></i>&nbsp;
+                                                                Add New Module
+                                                             </button>
+                                                            &nbsp;
 				        <button type="button" className="btn green btn-sm" onClick={this._onSaveForm}>
                     		                          <i className="fa fa-save"></i>&nbsp;
                     		                          Save Form

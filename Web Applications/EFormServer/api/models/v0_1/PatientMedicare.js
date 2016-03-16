@@ -85,12 +85,49 @@ module.exports = {
                     msg: 'Too long!'
                 }
             }
+        },
+        CreatedDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
+        CreatedBy: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
+        },
+        ModifiedDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
+        ModifiedBy: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         }
     },
     associations: function() {},
     options: {
         tableName: 'PatientMedicare',
-        timestamps: false,
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
         hooks: {}
     }
 };

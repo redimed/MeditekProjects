@@ -11,16 +11,27 @@ module.exports = {
             },
             primaryKey: true
         },
-        PatientID: {
-            type: Sequelize.BIGINT(20),
+        UID: {
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                isInt: {
-                    msg: 'Must be an integer!'
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
                 }
             }
         },
-        HCCPensionNumber: {
+        FundName: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ATO: {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate: {
@@ -30,12 +41,13 @@ module.exports = {
                 }
             }
         },
-        ExpiryDate: {
-            type: Sequelize.DATE,
+        Type: {
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                isDate: {
-                    msg: 'Invalid!'
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
                 }
             }
         },
@@ -78,9 +90,24 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'PatientPension',
-        createdAt: 'CreatedDate',
-        updatedAt: 'ModifiedDate',
-        hooks: {}
+        tableName: 'Fund',
+        timestamps: false,
+        hooks: {
+            beforeCreate: function(fileupload, options, callback) {
+                fileupload.CreatedDate = new Date();
+                callback();
+            },
+            beforeBulkCreate: function(fileuploads, options, callback) {
+                fileuploads.forEach(function(fileupload, index) {
+                    fileuploads[index].CreatedDate = new Date();
+                });
+                callback();
+            },
+            beforeBulkUpdate: function(fileupload, callback) {
+                fileupload.fields.push('ModifiedDate');
+                fileupload.attributes.ModifiedDate = new Date();
+                callback();
+            }
+        }
     }
 };

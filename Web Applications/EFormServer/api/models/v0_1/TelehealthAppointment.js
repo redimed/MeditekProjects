@@ -44,6 +44,16 @@ module.exports = {
                 }
             }
         },
+        FundType: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
         Correspondence: {
             type: Sequelize.STRING(1),
             comment: 'Y/N',
@@ -238,23 +248,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'TelehealthAppointment',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(telehealthappointment, options, callback) {
-                telehealthappointment.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(telehealthappointments, options, callback) {
-                telehealthappointments.forEach(function(telehealthappointment, index) {
-                    telehealthappointments[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(telehealthappointment, callback) {
-                telehealthappointment.fields.push('ModifiedDate');
-                telehealthappointment.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

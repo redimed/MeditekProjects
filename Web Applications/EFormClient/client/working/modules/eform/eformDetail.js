@@ -23,6 +23,13 @@ module.exports = React.createClass({
         this.templateUID = locationParams.templateUID;
 
         this._serverTemplateDetail();
+        this._serverPermissionUser();
+    },
+    _serverPermissionUser: function(){
+        EFormService.getUserRoles({UID: this.userUID})
+        .then(function(response){
+            
+        })
     },
     _serverPreFormDetail: function(content){
         var self = this;

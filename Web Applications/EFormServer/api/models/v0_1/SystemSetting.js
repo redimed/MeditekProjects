@@ -11,31 +11,63 @@ module.exports = {
             },
             primaryKey: true
         },
-        PatientID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false,
             validate: {
-                isInt: {
-                    msg: 'Must be an integer!'
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
                 }
             }
         },
-        HCCPensionNumber: {
-            type: Sequelize.STRING(45),
+        Name: {
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 45],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
         },
-        ExpiryDate: {
-            type: Sequelize.DATE,
+        Value: {
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Enable: {
+            type: Sequelize.STRING(1),
             allowNull: true,
             validate: {
-                isDate: {
-                    msg: 'Invalid!'
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Active: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Description: {
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
                 }
             }
         },
@@ -78,7 +110,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'PatientPension',
+        tableName: 'SystemSetting',
         createdAt: 'CreatedDate',
         updatedAt: 'ModifiedDate',
         hooks: {}

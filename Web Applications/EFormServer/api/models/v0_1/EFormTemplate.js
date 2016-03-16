@@ -2,48 +2,81 @@ module.exports = {
     attributes: {
         ID: {
             type: Sequelize.BIGINT(20),
-            primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            allowNull: false,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
+            primaryKey: true
         },
         UID: {
-            type: Sequelize.UUID(),
-            defaultValue: Sequelize.UUIDV4
+            type: Sequelize.STRING(255),
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
         },
         Name: {
             type: Sequelize.STRING(255),
-            defaultValue: ''
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         Description: {
-            type: Sequelize.TEXT()
-        },
-        Enable: {
-            type: Sequelize.STRING(1),
-            defaultValue: 'Y'
-        },
-        Active: {
-            type: Sequelize.STRING(1),
-            defaultValue: 'Y'
+            type: Sequelize.TEXT,
+            allowNull: true
         },
         CreatedDate: {
-            type: Sequelize.DATE(),
-            defaultValue: Sequelize.NOW()
-        },
-        ModifiedDate: {
-            type: Sequelize.DATE(),
-            defaultValue: Sequelize.NOW()
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
         CreatedBy: {
-            type: Sequelize.BIGINT(20)
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
+        },
+        ModifiedDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
         ModifiedBy: {
-            type: Sequelize.BIGINT(20)
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         }
     },
     associations: function() {},
     options: {
         tableName: 'EFormTemplate',
-        timestamps: false,
         createdAt: 'CreatedDate',
-        updatedAt: 'ModifiedDate'
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

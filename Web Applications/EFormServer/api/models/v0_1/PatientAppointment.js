@@ -134,6 +134,16 @@ module.exports = {
                 }
             }
         },
+        Country: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
         CountryOfBirth: {
             type: Sequelize.STRING(255),
             allowNull: true,
@@ -456,23 +466,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'PatientAppointment',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(patientappointment, options, callback) {
-                patientappointment.CreatedDate = new Date();
-                callback();
-            },
-            beforeBulkCreate: function(patientappointments, options, callback) {
-                patientappointments.forEach(function(patientappointment, index) {
-                    patientappointments[index].CreatedDate = new Date();
-                });
-                callback();
-            },
-            beforeBulkUpdate: function(patientappointment, callback) {
-                patientappointment.fields.push('ModifiedDate');
-                patientappointment.attributes.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 };

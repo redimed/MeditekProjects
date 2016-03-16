@@ -12,6 +12,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 ComponentsDateTimePickers.init();
                 $.uniform.update();
             }, 0);
+            $scope.NextOfKin = "Y"
             ComponentsDropdowns.init();
             $scope.number = 1;
             $scope.submitted = false;
@@ -23,7 +24,9 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 PinNumber: ""
             }
             $scope.postData = {
-                "data": {},
+                "data": {
+                    "Gender":"Male"
+                },
                 "otherData": {
                     "PatientKin": {},
                     "PatientMedicare": {},
@@ -38,6 +41,57 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 }
                 return true;
             };
+            $scope.AppointmentDataPost = []
+            $scope.AppointmentData = function() {
+                console.log($scope.AppointmentData)
+                var AppointmentDataTemp = []
+                    for (var key in $scope.AppointmentData) {
+
+                        var newkey = key.split("__").join(" ");
+                        var res = newkey.split(".");
+                        var keyOtherRequest = res[2] + res[3];
+                        keyOtherRequest = keyOtherRequest.split(" ").join("");
+                        var object = {
+                            Section: res[0],
+                            Category: res[1],
+                            Type: res[2],
+                            Name: res[3],
+                            Value: $scope.AppointmentData[key].Value
+                        }
+
+                        var isExist = false;
+
+                        AppointmentDataTemp.forEach(function(valueTemp, keyTemp) {
+                            if (valueTemp !== undefined) {
+                                if (valueTemp.Section == object.Section &&
+                                    valueTemp.Category == object.Category &&
+                                    valueTemp.Type == object.Type &&
+                                    valueTemp.Name == object.Name) {
+                                    isExist = true;
+                                }
+                            } else {
+                                isExist = true;
+                            };
+
+                        })
+                        if (!isExist) {
+                            AppointmentDataTemp.push(object);
+                        };
+                    };
+                    var countCliniDetail = 0;
+                    AppointmentDataTemp.forEach(function(value, key) {
+                        if (value !== undefined) {
+                            if (value.Value != 'N' && value.Value != null) {
+                                countCliniDetail++;
+                            };
+                        };
+                    })
+                    if (countCliniDetail == 0) {
+                        AppointmentDataTemp = [];
+                    }
+                   $scope.AppointmentDataPost = angular.copy(AppointmentDataTemp)
+                   console.log($scope.AppointmentDataPost)
+                }
             $scope.GetDataAppointment = function() {
                 var NowDate = moment().format('YYYY-MM-DD HH:mm:ss Z');
                 $scope.dataCreateAppointment = {
@@ -83,10 +137,12 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         "PatientKinWorkPhoneNumber": null,
                         "DVANumber": $scope.postData.otherData.PatientDVA.DVANumber
                     },
+                    "AppointmentData":$scope.AppointmentDataPost,
                     "Doctor": {
                         "UID": null
                     }
                 }
+                console.log($scope.dataCreateAppointment)
                 if ($scope.typedoctor == 'typedoctor') {
                     consultationServices.getDoctorCampaign('Campaign01').then(function(response) {
                         console.log('Campaign01',response)
@@ -177,6 +233,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
             $scope.Submit = function() {
                 $scope.submitted = true;
                 if ($scope.step3.$valid) {
+                    $scope.AppointmentData();
                     $scope.FormatDate();
                     o.loadingPage(true);
                     blankServices.registerPatient($scope.postData).then(function(response) {

@@ -153,7 +153,10 @@ module.exports = {
             Services.RequestWAAppointmentPatient(data, req.user)
                 .then(function(success) {
                     success.transaction.commit();
-                    res.ok('success');
+                    res.ok({
+                        status: 'success',
+                        code: success.code
+                    });
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&

@@ -179,9 +179,16 @@ module.exports = function(data, userInfo) {
                             });
                         })
                         .then(function(apptDataCreated) {
+                            var code = null;
+                            if (!_.isEmpty(appointmentObject) &&
+                                !_.isEmpty(appointmentObject.dataValues) &&
+                                HelperService.CheckExistData(appointmentObject.dataValues.ID)) {
+                                code = HashIDService.Create(appointmentObject.dataValues.ID)
+                            }
                             defer.resolve({
                                 status: 'success',
-                                transaction: t
+                                transaction: t,
+                                code: code
                             });
                         }, function(err) {
                             defer.reject({

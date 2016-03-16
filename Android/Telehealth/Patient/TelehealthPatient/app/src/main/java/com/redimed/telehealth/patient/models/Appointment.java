@@ -20,6 +20,9 @@ public class Appointment {
     @SerializedName("RequestDate")
     private String RequestDate;
 
+    @SerializedName("CreatedDate")
+    private String CreatedDate;
+
     @SerializedName("ApprovalDate")
     private String ApprovalDate;
 
@@ -68,6 +71,14 @@ public class Appointment {
 
     public void setRequestDate(String requestDate) {
         RequestDate = requestDate;
+    }
+
+    public String getCreatedDate() {
+        return CreatedDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        CreatedDate = createdDate;
     }
 
     public String getApprovalDate() {

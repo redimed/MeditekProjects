@@ -127,7 +127,7 @@
     <string name="list_appt_title">Tracking Booking</string>
     <string name="no_data_result">No Data Result</string>
     <string name="no_image_result">No Image</string>
-    <string name="req_date">Request Date</string>
+    <string name="req_date">Created Date</string>
     <string name="ref_pra">Referring Practitioner</string>
     <string name="pre_pra">Preferred Practitioner</string>
 

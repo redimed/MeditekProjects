@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
     private int lastPosition;
     private IMainPresenter iMainPresenter;
     private List<Appointment> listAppointment;
-    private static String firstName, lastName, TAG = "=====AdapterAppointment=====";
+    private static String firstName, lastName, refName, TAG = "=====AdapterAppointment=====";
 
     public AdapterAppointment(Context context, List<Appointment> data, FragmentActivity fragmentActivity, RecyclerView recyclerView) {
         this.context = context;
@@ -146,18 +147,23 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         if (viewHolder instanceof AppointmentViewHolder) {
             AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
 
-            Doctor[] doctors = listAppointment.get(position).getDoctor();
-            for (Doctor doctor : doctors) {
-                firstName = doctor.getFirstName() == null ? "NONE" : doctor.getFirstName();
-                lastName = doctor.getLastName() == null ? "" : doctor.getLastName();
+            if (listAppointment.get(position).getDoctor() != null){
+                firstName = "NONE";
+                lastName = "";
+            } else {
+                Doctor[] doctors = listAppointment.get(position).getDoctor();
+                for (Doctor doctor : doctors) {
+                    if (doctor != null) {
+                        firstName = doctor.getFirstName() == null ? "NONE" : doctor.getFirstName();
+                        lastName = doctor.getLastName() == null ? "" : doctor.getLastName();
+                    }
+                }
+            } if (listAppointment.get(position).getTelehealthAppointment() != null) {
+                refName = listAppointment.get(position).getTelehealthAppointment().getRefName() == null ? "NONE" : listAppointment.get(position).getTelehealthAppointment().getRefName();
             }
 
-            String refName = "";
-            if (listAppointment.get(position).getTelehealthAppointment() != null) {
-                refName = listAppointment.get(position).getTelehealthAppointment().getRefName() == null
-                        ? "NONE" : listAppointment.get(position).getTelehealthAppointment().getRefName();
-            }
-            appointmentViewHolder.lblDate.setText(MyApplication.getInstance().ConvertDate(listAppointment.get(position).getRequestDate()));
+            /* Show data Created Date, Referring, Preferred */
+            appointmentViewHolder.lblDate.setText(MyApplication.getInstance().ConvertDate(listAppointment.get(position).getCreatedDate()));
             appointmentViewHolder.lblDoctorRef.setText(refName);
             appointmentViewHolder.lblDoctorPre.setText(firstName + " " + lastName);
 

@@ -66,12 +66,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:orientation="vertical"
                         android:layout_marginLeft="30dp"
                         android:layout_marginStart="30dp"
+                        android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/layoutAvatar"
-                        android:layout_toRightOf="@+id/layoutAvatar"
-                        android:orientation="vertical">
+                        android:layout_toRightOf="@+id/layoutAvatar">
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
                             android:id="@+id/lblNamePatient"
@@ -133,16 +133,6 @@
                                 android:textColor="@color/lightFont" />
 
                         </LinearLayout>
-
-                        <com.redimed.telehealth.patient.font.RobotoTextView
-                            android:id="@+id/lblUpdateProfile"
-                            android:layout_width="130dp"
-                            android:layout_height="30dp"
-                            android:gravity="center"
-                            android:text="@string/profile_update"
-                            android:layout_marginTop="10dp"
-                            android:textColor="@color/lightFont"
-                            android:background="@android:color/holo_blue_dark"/>
 
                     </LinearLayout>
 
@@ -537,6 +527,17 @@
                     </LinearLayout>
 
                 </ViewFlipper>
+
+                <com.redimed.telehealth.patient.font.RobotoTextView
+                    android:id="@+id/lblUpdateProfile"
+                    android:layout_width="200dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/lightFont"
+                    android:text="@string/profile_update"
+                    android:background="@android:color/holo_blue_dark"/>
 
             </LinearLayout>
 

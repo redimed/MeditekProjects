@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
@@ -56,7 +57,7 @@ public class TrackingPresenter implements ITrackingPresenter {
             listAppointment.clear();
 
         String strData = "{" +
-                "\"Order\": [{\"Appointment\": {\"FromTime\": \"DESC\"}}], " +
+                "\"Order\": [{\"Appointment\": {\"CreatedDate\": \"DESC\"}}], " +
                 "\"Filter\": [" +
                 "{\"Appointment\": {\"Enable\": \"Y\"}}," +
                 "{\"Patient\": {\"UID\": \"" + telehealthPatient.getString("patientUID", "") + "\"}}," +
@@ -71,12 +72,7 @@ public class TrackingPresenter implements ITrackingPresenter {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String data = jsonObject.get("rows").toString();
-                Appointment[] appointments = gson.fromJson(data, Appointment[].class);
-                for (Appointment appointment : appointments) {
-                    if (appointment.getFromTime() != null) {
-                        listAppointment.add(appointment);
-                    }
-                }
+                listAppointment = gson.fromJson(data, new TypeToken<List<Appointment>>() {}.getType());
                 if (offset <= 10)
                     iTrackingView.onLoadDataTracking(listAppointment);
             }

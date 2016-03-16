@@ -9,20 +9,15 @@ module.exports = {
             type: Sequelize.UUID(),
             defaultValue: Sequelize.UUIDV4
         },
-        Name: {
-            type: Sequelize.STRING(255),
-            defaultValue: ''
+        EFormTemplateModuleID: {
+            type: Sequelize.BIGINT(20),
+            references: {
+                model: 'EFormTemplateModule',
+                key: 'ID'
+            }
         },
-        Description: {
+        TemplateModuleData: {
             type: Sequelize.TEXT()
-        },
-        Enable: {
-            type: Sequelize.STRING(1),
-            defaultValue: 'Y'
-        },
-        Active: {
-            type: Sequelize.STRING(1),
-            defaultValue: 'Y'
         },
         CreatedDate: {
             type: Sequelize.DATE(),
@@ -38,12 +33,10 @@ module.exports = {
         ModifiedBy: {
             type: Sequelize.BIGINT(20)
         }
-    },
+    }, 
     associations: function() {},
     options: {
-        tableName: 'EFormTemplate',
-        timestamps: false,
-        createdAt: 'CreatedDate',
-        updatedAt: 'ModifiedDate'
+        tableName: 'EFormTemplateModuleData',
+        timestamps: false
     }
 };

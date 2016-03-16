@@ -103,7 +103,7 @@ module.exports = {
             foreignKey: 'UserAccountID'
         });
         //association Patient - PatientKin
-        Patient.hasMany(PatientKin, {
+        Patient.hasOne(PatientKin, {
             foreignKey: 'PatientID'
         });
         PatientKin.belongsTo(Patient, {
@@ -111,7 +111,7 @@ module.exports = {
         });
 
         //association Patient - PatientPension
-        Patient.hasMany(PatientPension, {
+        Patient.hasOne(PatientPension, {
             foreignKey: 'PatientID'
         });
         PatientPension.belongsTo(Patient, {
@@ -119,7 +119,7 @@ module.exports = {
         });
 
         //association Patient - PatientDVA
-        Patient.hasMany(PatientDVA, {
+        Patient.hasOne(PatientDVA, {
             foreignKey: 'PatientID'
         });
         PatientDVA.belongsTo(Patient, {
@@ -127,7 +127,7 @@ module.exports = {
         });
 
         //association Patient - PatientMedicare
-        Patient.hasMany(PatientMedicare, {
+        Patient.hasOne(PatientMedicare, {
             foreignKey: 'PatientID'
         });
         PatientMedicare.belongsTo(Patient, {
@@ -181,17 +181,8 @@ module.exports = {
             foreignKey: 'CountryID1'
         });
         Patient.belongsTo(Country, {
-            foreignKey: 'CountryID1',
-            as: 'Country1'
-        });
-        //Patient - Country
-        Country.hasOne(Patient, {
-            foreignKey: 'CountryID2'
-        });
-        Patient.belongsTo(Country, {
-            foreignKey: 'CountryID2',
-            as: 'Country2'
-        });
+            foreignKey: 'CountryID1'
+        })
 
         /* Doctor */
         FileUpload.hasOne(Doctor, {
@@ -407,7 +398,7 @@ module.exports = {
         });
 
         //association Patient - PatientGP
-        Patient.hasMany(PatientGP, {
+        Patient.hasOne(PatientGP, {
             foreignKey: 'PatientID'
         });
         PatientGP.belongsTo(Patient, {
@@ -415,69 +406,50 @@ module.exports = {
         });
 
         //association Patient - PatientFund
-        Patient.hasMany(PatientFund, {
+        Patient.hasOne(PatientFund, {
             foreignKey: 'PatientID'
         });
         PatientFund.belongsTo(Patient, {
             foreignKey: 'PatientID'
         });
-
-        //association Company - CompanySite
-        Company.hasMany(CompanySite, {
-            foreignKey: 'CompanyID'
+        //association EFormTemplate - UserAccount
+        EFormTemplate.belongsTo(UserAccount, {
+            foreignKey: 'CreatedBy'
         });
-        CompanySite.belongsTo(Company, {
-            foreignKey: 'CompanyID'
+        UserAccount.hasOne(EFormTemplate, {
+            foreignKey: 'CreatedBy',
         });
-
-        //association Company - UserAccount
-        Company.belongsToMany(UserAccount, {
-            through: 'RelCompanyUserAccount',
-            foreignKey: 'CompanyID'
+        //association EFormTemplate - EFormTemplateData
+        EFormTemplate.hasOne(EFormTemplateData, {
+            foreignKey: 'EFormTemplateID',
+            as: 'EFormTemplateData'
         });
-        UserAccount.belongsToMany(Company, {
-            through: 'RelCompanyUserAccount',
-            foreignKey: 'UserAccountID'
+        EFormTemplateData.belongsTo(EFormTemplate, {
+            foreignKey: 'EFormTemplateID',
         });
-
-        //association Company - Patient
-        Company.belongsToMany(Patient, {
-            through: 'RelCompanyPatient',
-            foreignKey: 'CompanyID'
+        //association EFormTemplate - EForm
+        EFormTemplate.hasOne(EForm, {
+            foreignKey: 'EFormTemplateID'
         });
-        Patient.belongsToMany(Company, {
-            through: 'RelCompanyPatient',
-            foreignKey: 'PatientID'
-        });
-
-        //association Company - Fund
-        Company.belongsToMany(Fund, {
-            through: 'RelFundCompany',
-            foreignKey: 'CompanyID'
-        });
-        Fund.belongsToMany(Company, {
-            through: 'RelFundCompany',
-            foreignKey: 'FundID'
-        });
-
-        //association Appointment -AppointmentData
-        Appointment.hasMany(AppointmentData, {
-            foreignKey: 'AppointmentID',
-            as: 'AppointmentData'
-        });
-        AppointmentData.belongsTo(Appointment, {
-            foreignKey: 'AppointmentID'
-        });
-
-        //association EForm - EFormTemplate
         EForm.belongsTo(EFormTemplate, {
             foreignKey: 'EFormTemplateID'
         });
-        EFormTemplate.hasMany(EForm, {
-            foreignKey: 'EFormTemplateID'
+        //association EForm - EFormData
+        EForm.hasOne(EFormData, {
+            foreignKey: 'EFormID',
+            as: 'EFormData'
+        })
+        EFormData.belongsTo(EForm, {
+            foreignKey: 'EFormID',
+        })
+        //association EFormTemplate - UserAccount
+        EForm.belongsTo(UserAccount, {
+            foreignKey: 'CreatedBy'
         });
-
-        //association EForm - Patient
+        UserAccount.hasOne(EForm, {
+            foreignKey: 'CreatedBy',
+        });
+        //association EForm - RelEFormPatient
         EForm.belongsToMany(Patient, {
             through: 'RelEFormPatient',
             foreignKey: 'EFormID'
@@ -485,6 +457,21 @@ module.exports = {
         Patient.belongsToMany(EForm, {
             through: 'RelEFormPatient',
             foreignKey: 'PatientID'
+        });
+        //association EFormTemplateModule - UserAccount
+        EFormTemplateModule.belongsTo(UserAccount, {
+            foreignKey: 'CreatedBy'
+        });
+        UserAccount.hasOne(EFormTemplateModule, {
+            foreignKey: 'CreatedBy',
+        });
+        //association EFormTemplateModule - EFormTemplateModuleData
+        EFormTemplateModule.hasOne(EFormTemplateModuleData, {
+            foreignKey: 'EFormTemplateModuleID',
+            as: 'EFormTemplateModuleData'
+        });
+        EFormTemplateModuleData.belongsTo(EFormTemplateModule, {
+            foreignKey: 'EFormTemplateModuleID',
         });
     }
 };

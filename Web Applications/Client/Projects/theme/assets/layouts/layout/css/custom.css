@@ -592,6 +592,71 @@ img.profile-imge {
         right: 0;
     }
 /*END Register Patient>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*regular-checkbox, regular-radio===============================================================================*/
+    .checkbox-list, 
+    .radio-list {
+        margin-left: 2em;
+    }
+    .checkbox-inline, 
+    .radio-inline {
+        margin-left: 2em;
+        margin-right: 2em;
+    }
+    .regular-checkbox{
+        -webkit-appearance: none;
+        height: 1.5em;
+        width: 1.5em;
+        border: 1px solid #cacece;
+        margin-left: -30px !important;
+        margin-top: 0 !important;
+    }
+    .regular-radio{
+        -webkit-appearance: none;
+        height: 1.5em;
+        width: 1.5em;
+        border: 1px solid #cacece;
+        border-radius: 50%;
+        margin-left: -30px !important;
+        margin-top: 0 !important;
+    }
+
+    .regular-checkbox:hover,
+    .regular-radio:hover{
+        background-color: #efefef;
+    }
+
+    .regular-checkbox:disabled, 
+    .regular-radio:disabled { 
+        border: 1px solid gray;
+        background-color: #eee;
+    }
+
+    .regular-radio:focus, 
+    .regular-radio:checked:focus,
+    .regular-radio:active, 
+    .regular-radio:checked:active,
+    .regular-checkbox:focus, 
+    .regular-checkbox:checked:focus
+    .regular-checkbox:active, 
+    .regular-checkbox:checked:active { 
+        outline: none !important;
+    }
+
+    .regular-radio:checked,
+    .regular-checkbox:checked{
+        text-align: center !important;
+        vertical-align: middle !important;
+        background-color: #999;
+        color: white;
+    }
+    .regular-radio:checked:after,
+    .regular-checkbox:checked:after{
+        content: '\2714';  
+    }
+/*regular-checkbox, regular-radio===============================================================================*/
+
+
+
 
 .dashboard-stat:hover{
     cursor: pointer;

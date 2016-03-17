@@ -65,6 +65,7 @@ else if(env == 'meditekServer')
 	var _authBaseURL=configAuthBaseUrl.meditekServer;
 	var _telehealthBaseURL=configTelehealthBaseUrl.meditekServer;
 	var _eFormBaseURL=configEFormUrl.meditekServer;
+	var _ncBaseURL=configNcBaseUrl.meditekServer;
 	var _PDFFormUrl=PDFFormUrl.meditekServer;
 }
 else if(env == 'testApp')

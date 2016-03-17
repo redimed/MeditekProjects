@@ -9,8 +9,8 @@ module.exports = function(data, userInfo) {
                 model: EForm,
                 include: [{
                     attributes: ['ID', 'UID'],
-                    model: Patient,
-                    where: pagination.Patient,
+                    model: Appointment,
+                    where: pagination.Appointment,
                     required: false
                 }],
                 required: false

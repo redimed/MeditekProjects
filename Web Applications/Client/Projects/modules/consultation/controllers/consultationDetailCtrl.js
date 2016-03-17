@@ -14,8 +14,8 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                         }
                     },
                     {
-                        Patient: {
-                            UID: $stateParams.UIDPatient
+                        Appointment: {
+                            UID: $stateParams.UID
                         }
                     }
             ]
@@ -45,10 +45,10 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         var check = false;
         for(var i = 0; i < EForms.length; i++){
             var EForm = EForms[i];
-            var Patients = EForm.Patients;
-            for(var j = 0; j < Patients.length; j++){
-               var Patient = Patients[j];
-               if(Patient.UID === $stateParams.UIDPatient){
+            var Appointments = EForm.Appointments;
+            for(var j = 0; j < Appointments.length; j++){
+               var Appointment = Appointments[j];
+               if(Appointment.UID === $stateParams.UID){
                     check = true;
                     break;
                } 

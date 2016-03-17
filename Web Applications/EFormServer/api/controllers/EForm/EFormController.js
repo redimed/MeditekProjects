@@ -198,6 +198,26 @@ module.exports = {
                        res.status(400).json({err: err});
                         return t.rollback(); 
                     })
+                    .then(function(){
+                        return Appointment.find(
+                            {
+                                attributes: ['ID'],
+                                where: {UID: req.body.appointmentUID},
+                                transaction: t
+                            }
+                        )
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback(); 
+                    })
+                    .then(function(appointment){
+                        return eform.addAppointment(appointment.ID,{
+                                transaction: t
+                        })
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback(); 
+                    })
                     .then(function(data){
                         return res.json({data: data});
                     }, function(err){

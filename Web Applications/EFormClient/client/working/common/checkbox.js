@@ -1,5 +1,5 @@
 module.exports = React.createClass({
-    value: '',
+    value: 'no',
     propTypes: {
         label: React.PropTypes.string,
         name: React.PropTypes.string,
@@ -29,10 +29,10 @@ module.exports = React.createClass({
             checkboxClass: 'icheckbox_square-green'
         })
         $(this.refs.input).on('ifChecked', function(event){
-            //self.value = 'yes';
+            self.value = 'yes';
         })
         $(this.refs.input).on('ifUnchecked', function(event){
-            //self.value = 'no';
+            self.value = 'no';
         })
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
@@ -68,6 +68,9 @@ module.exports = React.createClass({
     },
     getValue: function(){
         return this.props.value;
+    },
+    getValueTable: function(){
+        return this.value;
     },
     getName: function(){
         return this.props.name;

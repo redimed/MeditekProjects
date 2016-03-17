@@ -543,6 +543,15 @@ module.exports = {
             through: 'RelEFormPatient',
             foreignKey: 'PatientID'
         });
+        //association EForm - RelEFormAppointment
+        EForm.belongsToMany(Patient, {
+            through: 'RelEFormPatient',
+            foreignKey: 'EFormID'
+        });
+        Patient.belongsToMany(EForm, {
+            through: 'RelEFormPatient',
+            foreignKey: 'PatientID'
+        });
         //association EFormTemplateModule - UserAccount
         EFormTemplateModule.belongsTo(UserAccount, {
             foreignKey: 'CreatedBy'

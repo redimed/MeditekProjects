@@ -31,6 +31,8 @@ module.exports = React.createClass({
         onRemoveTableRow: React.PropTypes.func,
         onUpdateTableColumn: React.PropTypes.func
     },
+    componentDidMount: function(){
+    },
     getCode: function(){
         return this.props.code;
     },
@@ -350,7 +352,7 @@ module.exports = React.createClass({
                                                                 code={index}
                                                                 preCal={field.get('preCal')}
                                                                 onRightClickItem={this._onRightClickItem}/>
-                                                    else if(type === 'eform_input_date')
+                                                    else if(type === 'eform_input_date'){
                                                             return <CommonInputDate key={index} type={type}
                                                                 groupId={groupId}
                                                                 name={field.get('name')}
@@ -362,7 +364,7 @@ module.exports = React.createClass({
                                                                 preCal={field.get('preCal')}
                                                                 code={index}
                                                                 onRightClickItem={this._onRightClickItem}/>
-                                                    else if(type === 'eform_input_textarea')
+                                                    }else if(type === 'eform_input_textarea')
                                                             return <CommonTextArea key={index} type={type}
                                                                 groupId={groupId}
                                                                 name={field.get('name')}

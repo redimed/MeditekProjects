@@ -16,6 +16,7 @@ class SettingTableViewController: UITableViewController {
     let verifyPhoneAPI = VerifyPhoneAPI()
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var deviceID: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,7 @@ class SettingTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = leftButton
         self.navigationItem.title = "Setting"
+        deviceID.text = UIDevice.currentDevice().identifierForVendor!.UUIDString
     }
     
     
@@ -51,14 +53,17 @@ class SettingTableViewController: UITableViewController {
                     self.patientInformation = data!
                     self.setDataToForm()
                 } else if message["message"] == "error"{
+                    self.view.hideLoading()
                     self.alertView.alertMessage("Error", message: message["ErrorType"].string!)
                 }else {
-                    self.view.hideLoading()
+                    
                     if message["TimeOut"].string ==  ErrorMessage.TimeOut {
+                        self.view.hideLoading()
                         self.alertView.alertMessage("Error", message: ErrorMessage.TimeOut)
                     }else if message["message"].string == ErrorMessage.TimeOutToken {
-                        
+                        self.view.hideLoading()
                     }else {
+                        self.view.hideLoading()
                         let message : String = String(message["ErrorsList"][0])
                         self.alertView.alertMessage("Error", message: message)
                     }
@@ -74,7 +79,7 @@ class SettingTableViewController: UITableViewController {
     
     @IBAction func logoutButton(sender: AnyObject) {
         print("logout")
-        
+        self.view.showLoading()
         let alertController = UIAlertController(title: "Logout", message: MessageString.MessageLogout, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
@@ -89,6 +94,15 @@ class SettingTableViewController: UITableViewController {
                 response in
                 print(response)
                 if response["status"] == "success"{
+                    self.view.hideLoading()
+                    self.performSegueWithIdentifier("logOutUnwind", sender: self)
+                    self.patientService.logOut()
+                }else{
+                    self.view.hideLoading()
+                    let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setValue("Fail", forKey: "logoutFail")
+                    defaults.setValue(defaults.valueForKey("uid") as? String, forKey: "UIDLogoutFail")
+                    defaults.synchronize()
                     self.patientService.logOut()
                     self.performSegueWithIdentifier("logOutUnwind", sender: self)
                 }

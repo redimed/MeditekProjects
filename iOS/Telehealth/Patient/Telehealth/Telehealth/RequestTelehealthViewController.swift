@@ -106,24 +106,21 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
             pickerController.singleSelect = singleSelect
             pickerController.showsCancelButton = true
             pickerController.showsEmptyAlbums = false
-            
-            
-            // Clear all the selected assets if you used the picker controller as a single instance.
-            //			pickerController.defaultSelectedAssets = nil
             pickerController.defaultSelectedAssets = self.assets
             
             pickerController.didSelectAssets = { [unowned self] (assets: [DKAsset]) in
                 print("didSelectAssets")
+                if(sourceType == DKImagePickerControllerSourceType(2)){
+                   self.ArrayImageUID = []
+                }
                 self.assets = assets
                 self.collectionView?.reloadData()
-                print(assets)
                 for i in assets {
                     i.fetchFullScreenImage(true, completeBlock: {
                         image, info in
                         self.ArrayImageUID.append((image)!)
                     })
                 }
-                
             }
             self.presentViewController(pickerController, animated: true) {}
     }
@@ -419,7 +416,7 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
                 print("erro email")
                 alertView.alertMessage("", message: "Please check Email!")
             }else {
-                print("ok")
+                print("ok",self.ArrayImageUID.count)
                 telehealthContainer = TelehealthContainer(firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, mobilePhone: mobileTextField.text!, homePhone: homePhoneTextField.text!, type: typeRequest.text!, suburb: suburbTextField.text!, dob: dobTextField.text!, email: emailTextField.text!, description: textView.text, imageArray: ArrayImageUID,AppointmentSignatureUID:AppointmentSignatureUID)
                 view.endEditing(true)
                 performSegueWithIdentifier("ConfirmRequestSegue", sender: self)
@@ -526,7 +523,7 @@ extension RequestTelehealthViewController: UIPickerViewDataSource, UIPickerViewD
         return pickOption[row]
     }
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(row)
+        print("row",row)
         typeRequest.text = pickOption[row]
     }
     

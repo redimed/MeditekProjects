@@ -128,6 +128,10 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             self.dismissPopupViewController(.Fade)
             self.backMusic.stop()
             break
+        case MessageString.CallAnswer:
+            self.dismissPopupViewController(.Fade)
+            self.backMusic.stop()
+            break
         default :
             break
         }

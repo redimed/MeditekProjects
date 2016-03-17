@@ -60,24 +60,27 @@ class TelehealthAPI : TokenAPI{
             ]
         ]
         //print(parameter)
-        
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlTelehealth.requestTelehealth ,headers:config.headers,parameters:parameter,encoding: .JSON).responseJSON{
-            response in
-            switch response.result {
-            case .Success(let JSONData):
-                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update Token",requireupdatetoken)
-                        self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlTelehealth.requestTelehealth ,headers:config.headers,parameters:parameter,encoding: .JSON).responseJSON{
+                response in
+                switch response.result {
+                case .Success(let JSONData):
+                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                        if requireupdatetoken as! String == "true" {
+                            print("Update Token",requireupdatetoken)
+                            self.getNewToken()
+                        }
                     }
+                    let data : JSON = JSON(JSONData)
+                    // print("---data---",data)
+                    compailer(data)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                    compailer(JSON(["status":"error","ErrorType":ErrorMessage.TimeOut]))
                 }
-                let data : JSON = JSON(JSONData)
-               // print("---data---",data)
-                compailer(data)
-            case .Failure(let error):
-                print("Request failed with error: \(error)")
-                compailer(JSON(["status":"error","ErrorType":ErrorMessage.TimeOut]))
             }
+        }else{
+            compailer(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
     }
 }

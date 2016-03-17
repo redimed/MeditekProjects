@@ -152,30 +152,27 @@ class SignatureViewController: UIViewController {
                 
             }else {
                 self.view.hideLoading()
-                print("error",response["ErrorType"])
-                let error = response["ErrorType"].string
-                self.alertView.alertMessage("Error", message: error!)
+//                print("error",response["ErrorType"])
+//                let error = response["ErrorType"].string
+//                self.alertView.alertMessage("Error", message: error!)
             }
         })
         
     }
-    
+
     func uploadImageNotLogin(image:UIImage,userUID:String){
         self.view.showLoading()
         appointmentService.uploadImageNotLogin(image, userUID: userUID,fileType:"Signature" , compailer: {
             response in
             if response["message"] == "success"{
                 self.view.hideLoading()
-        
                 let  fileUID = response["data"].string
-                //let fileUID =  response["fileUID"].string!
                 self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:fileUID!)
                 self.navigationController!.popViewControllerAnimated(true)
             }else {
                 self.view.hideLoading()
-                print("error",response["ErrorType"])
-                let error = response["ErrorType"].string
-                self.alertView.alertMessage("Error", message: error!)
+               //self.alertView.alertMessage("Error",message: "")
+
             }
         })
         

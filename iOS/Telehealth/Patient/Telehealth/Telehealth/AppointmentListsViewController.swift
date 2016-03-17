@@ -59,7 +59,8 @@ class AppointmentListsViewController: UIViewController {
           
             if message["message"] == "error" {
                 self.alertView.alertMessage("Error", message: message["ErrorType"].string!)
-                self.refreshControl.endRefreshing()
+                print("\(message["ErrorType"].string!)")
+                //self.refreshControl.endRefreshing()
             }
             else {
                 self.Appointment = appointmentList

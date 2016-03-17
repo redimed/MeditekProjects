@@ -29,6 +29,7 @@ struct ErrorMessage {
     static let TimeOut: String  = "Request Time Out"
     static let TimeOutToken : String = "jwt expired"
     static let CheckField : String = "Please check field"
+    static let internetConnection : String = "Please check your Internet connection"
 }
 
 

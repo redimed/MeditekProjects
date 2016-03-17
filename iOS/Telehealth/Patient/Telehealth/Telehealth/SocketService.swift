@@ -25,7 +25,7 @@ class SocketService {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             // Called on every event
             sharedSocket.socket.onAny {
-                print("got event: \($0.event) with items \($0.items)")
+                //print("got event: \($0.event) with items \($0.items)")
                 _ = $0.event
                 _ = $0.items
                 if($0.event ==  "error" ){
@@ -54,6 +54,7 @@ class SocketService {
             
             sharedSocket.socket.on("receiveMessage"){data, ack in
                 print("calling to me")
+                //print(data)
                 let message : String = data[0]["message"] as! String
                 print("message----",data)
                 self.delegate.receiveMessage(self, message: message,data:data)

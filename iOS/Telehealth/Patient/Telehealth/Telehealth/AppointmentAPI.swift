@@ -42,25 +42,30 @@ class AppointmentAPI:TokenAPI {
             ]
         ]
         
-
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList,headers:config.headers, parameters:parameter,encoding: .JSON).responseJSON{
-            response in
-            switch response.result {
-            case .Success(let JSONData):
-                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update token",requireupdatetoken)
-                        self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList,headers:config.headers, parameters:parameter,encoding: .JSON).responseJSON{
+                response in
+                switch response.result {
+                case .Success(let JSONData):
+                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                        print("\(requireupdatetoken as! String)")
+                        if requireupdatetoken as! String == "true" {
+                            print("Update token",requireupdatetoken)
+                            self.getNewToken()
+                        }
                     }
+                    let data = JSON(JSONData)
+                    print(data["ErrorsList"])
+                    completionHandler(JSON(JSONData))
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+                    
                 }
-                        
-                completionHandler(JSON(JSONData))
-            case .Failure(let error):
-                print("Request failed with error: \(error)")
-                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 
             }
-            
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
         
     }
@@ -77,47 +82,50 @@ class AppointmentAPI:TokenAPI {
         print(config.headers)
         let imageData = UIImageJPEGRepresentation(image,1.0)
         
-        
-        Alamofire.upload(
-            .POST,
-            ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImageNotLogin,headers:config.headers,
-            multipartFormData: { multipartFormData in
-                
-                multipartFormData.appendBodyPart(data: fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
-                multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
-                
-                multipartFormData.appendBodyPart(
-                    data: imageData!,
-                    name: "uploadFile",
-                    fileName: "SignatureImage_\(image.hash).png",
-                    mimeType: "image/png"
-                )
-                
-            },
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .Success(let upload, _, _):
-                    upload.responseJSON { response in
-                        if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
-                            if requireupdatetoken as! String == "true" {
-                                print("Update token",requireupdatetoken)
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.upload(
+                .POST,
+                ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImageNotLogin,headers:config.headers,
+                multipartFormData: { multipartFormData in
+                    
+                    multipartFormData.appendBodyPart(data: fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
+                    multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
+                    
+                    multipartFormData.appendBodyPart(
+                        data: imageData!,
+                        name: "uploadFile",
+                        fileName: "SignatureImage_\(image.hash).png",
+                        mimeType: "image/png"
+                    )
+                    
+                },
+                encodingCompletion: { encodingResult in
+                    switch encodingResult {
+                    case .Success(let upload, _, _):
+                        upload.responseJSON { response in
+                            if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
+                                if requireupdatetoken as! String == "true" {
+                                    print("Update token",requireupdatetoken)
+                                }
+                            }
+                            if (response.response?.statusCode)!  == 200 {
+                                completionHandler(JSON(response.result.value!))
+                                print("result:",response.result.value)
+                            }else {
+                                print("result:",response.result.debugDescription)
                             }
                         }
-                        if (response.response?.statusCode)!  == 200 {
-                            completionHandler(JSON(response.result.value!))
-                            print("result:",response.result.value)
-                        }else {
-                            print("result:",response.result.debugDescription)
-                        }
+                    case .Failure(let encodingError):
+                        print("error",encodingError)
                     }
-                case .Failure(let encodingError):
-                    print("error11",encodingError)
                 }
-            }
-        )
+            )
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
+        }
         
     }
-
+    
     
     //GIap:Upload Image
     func uploadImage(image:UIImage,userUID:String,fileType:String = "MedicalImage",completionHandler:(JSON) -> Void)
@@ -131,46 +139,49 @@ class AppointmentAPI:TokenAPI {
         config.headers["useruid"] = userUID
         print(config.headers)
         let imageData = UIImageJPEGRepresentation(image,1.0)
-    
         
-        Alamofire.upload(
-            .POST,
-            ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImage,headers:config.headers,
-            multipartFormData: { multipartFormData in
-                
-                multipartFormData.appendBodyPart(data: fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
-                multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
-                
-                multipartFormData.appendBodyPart(
-                    data: imageData!,
-                    name: "uploadFile",
-                    fileName: "AppointmentImg_\(image.hash).png",
-                    mimeType: "image/png"
-                )
-         
-            },
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .Success(let upload, _, _):
-                    upload.responseJSON { response in
-                        if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
-                            if requireupdatetoken as! String == "true" {
-                                print("Update token",requireupdatetoken)
-                                self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.upload(
+                .POST,
+                ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImage,headers:config.headers,
+                multipartFormData: { multipartFormData in
+                    
+                    multipartFormData.appendBodyPart(data: fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
+                    multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
+                    
+                    multipartFormData.appendBodyPart(
+                        data: imageData!,
+                        name: "uploadFile",
+                        fileName: "AppointmentImg_\(image.hash).png",
+                        mimeType: "image/png"
+                    )
+                    
+                },
+                encodingCompletion: { encodingResult in
+                    switch encodingResult {
+                    case .Success(let upload, _, _):
+                        upload.responseJSON { response in
+                            if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
+                                if requireupdatetoken as! String == "true" {
+                                    print("Update token",requireupdatetoken)
+                                    self.getNewToken()
+                                }
+                            }
+                            if (response.response?.statusCode)!  == 200 {
+                                completionHandler(JSON(response.result.value!))
+                                print("result:",response.result.value)
+                            }else {
+                                print("result:",response.result.debugDescription)
                             }
                         }
-                        if (response.response?.statusCode)!  == 200 {
-                            completionHandler(JSON(response.result.value!))
-                            print("result:",response.result.value)
-                        }else {
-                            print("result:",response.result.debugDescription)
-                        }
+                    case .Failure(let encodingError):
+                        print("error11",encodingError)
                     }
-                case .Failure(let encodingError):
-                    print("error11",encodingError)
                 }
-            }
-        )
+            )
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
+        }
         
     }
     
@@ -183,70 +194,81 @@ class AppointmentAPI:TokenAPI {
                 "apptUID":apptID
             ]
         ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.updateImageToAppointment,headers:config.headers, parameters: parameters,encoding: .JSON).responseJSON{
-            response in
-            
-            
-            switch response.result {
-            case .Success(let JSONData):
-                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update token",requireupdatetoken)
-                        self.getNewToken()
-                    }
-                }
-                print("Update Image data",JSON(JSONData))
-                completionHandler(JSON(JSONData))
-            case .Failure(let error):
-                print("Request failed with error: \(error)")
-                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.updateImageToAppointment,headers:config.headers, parameters: parameters,encoding: .JSON).responseJSON{
+                response in
                 
+                
+                switch response.result {
+                case .Success(let JSONData):
+                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                        if requireupdatetoken as! String == "true" {
+                            print("Update token",requireupdatetoken)
+                            self.getNewToken()
+                        }
+                    }
+                    print("Update Image data",JSON(JSONData))
+                    completionHandler(JSON(JSONData))
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+                    
+                }
             }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
     }
     //Get appointment Details
     func getAppointmentDetails(appointmentUID:String,type:String,completionHandler:(JSON) -> Void){
         config.setHeader()
-        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getWAADetails + appointmentUID,headers:config.headers).responseJSON{
-            response in
-            switch response.result {
-            case .Success(let JSONData):
-                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update Token",requireupdatetoken)
-                        self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getWAADetails + appointmentUID,headers:config.headers).responseJSON{
+                response in
+                switch response.result {
+                case .Success(let JSONData):
+                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                        if requireupdatetoken as! String == "true" {
+                            print("Update Token",requireupdatetoken)
+                            self.getNewToken()
+                        }
                     }
+                    let data : JSON = JSON(JSONData)
+                    completionHandler(data)
+                case .Failure( let error):
+                    print("Request failed with error: \(error)")
+                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+                    
                 }
-                let data : JSON = JSON(JSONData)
-                completionHandler(data)
-            case .Failure( let error):
-                print("Request failed with error: \(error)")
-                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
-                
             }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
     }
     
     //get image by image UID
     func getImage(imageUID:String,completionHandler:(NSData) -> Void){
         config.setHeader()
-        Alamofire.request(.GET,  ConfigurationSystem.Http_3005 + UrlInformationPatient.downloadImage+"/\(imageUID)", headers:config.headers)
-            .responseData { response in
-                
-                
-                switch response.result {
-                case.Success(let imageData):
-                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                        
-                        if requireupdatetoken as! String == "true" {
-                            print("Update token",requireupdatetoken)
-                            self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.GET,  ConfigurationSystem.Http_3005 + UrlInformationPatient.downloadImage+"/\(imageUID)", headers:config.headers)
+                .responseData { response in
+                    
+                    
+                    switch response.result {
+                    case.Success(let imageData):
+                        if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                            
+                            if requireupdatetoken as! String == "true" {
+                                print("Update token",requireupdatetoken)
+                                self.getNewToken()
+                            }
                         }
+                        completionHandler(imageData)
+                    case.Failure(let error) :
+                        print("Request failed with error: \(error)")
                     }
-                    completionHandler(imageData)
-                case.Failure(let error) :
-                    print("Request failed with error: \(error)")
-                }
+            }
+        }else{
         }
         
     }

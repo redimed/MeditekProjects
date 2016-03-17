@@ -23,6 +23,9 @@ class AppointmentService {
             }else if response["TimeOut"] ==  "Request Time Out" {
                 message = JSON(["message":"error","ErrorType":ErrorMessage.TimeOut])
                 completionHandler(message,[AppointmentContainer()],"")
+            }else if (response["internetConnection"].string == ErrorMessage.internetConnection){
+                message = JSON(["message":"error","ErrorType":ErrorMessage.internetConnection])
+                completionHandler(message,[AppointmentContainer()],"")
             }
             else {
                 var UIDApointment : String!
@@ -66,7 +69,11 @@ class AppointmentService {
             if response["TimeOut"] ==  "Request Time Out" {
                 let message = JSON(["message":"error","ErrorType":ErrorMessage.TimeOut])
                 compailer(message)
-            }else {
+            }else if (response["internetConnection"].string == ErrorMessage.internetConnection){
+                let message = JSON(["message":"error","ErrorType":ErrorMessage.internetConnection])
+                compailer(message)
+            }
+            else {
                 let message = JSON(["message":"success","data":response])
                 compailer(message)
             }
@@ -140,6 +147,8 @@ class AppointmentService {
                 
                 if let error = response["ErrorType"].string {
                     compailer(["message":"error","ErrorType":error])
+                }else if (response["internetConnection"].string == ErrorMessage.internetConnection){
+                    compailer(["message":"error","ErrorType":ErrorMessage.internetConnection])
                 }else {
                     compailer(["message":"error","ErrorType":"Can't upload Image"])
                 }
@@ -161,10 +170,12 @@ class AppointmentService {
                 let fileUID =  response["fileUID"].string!
                 compailer(["message":"success","data":fileUID])
             }else {
-                print("error",response["ErrorType"])
+                print("error",response)
                 
-                if let error = response["ErrorType"].string {
-                    compailer(["message":"error","ErrorType":error])
+                if let _ = response["ErrorType"].string {
+                    compailer(["message":"error","ErrorType":response["ErrorType"].string!])
+                }else if (response["internetConnection"].string == ErrorMessage.internetConnection){
+                    compailer(["message":"error","ErrorType":ErrorMessage.internetConnection])
                 }else {
                     compailer(["message":"error","ErrorType":"Can't upload Image"])
                 }

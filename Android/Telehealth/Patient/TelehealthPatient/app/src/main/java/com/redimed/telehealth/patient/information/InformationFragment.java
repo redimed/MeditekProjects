@@ -382,8 +382,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        getView().setFocusableInTouchMode(true);
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -400,9 +400,10 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblUpdateProfile:
-                iInfoPresenter.changeViewUpdate(arrEditText);
+                lblUpdateProfile.setVisibility(View.VISIBLE);
                 layoutPatientName.setVisibility(View.VISIBLE);
                 layoutButtonUpdate.setVisibility(View.VISIBLE);
+                iInfoPresenter.changeViewUpdate(arrEditText);
                 vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
                 break;
             case R.id.lblSubmit:
@@ -420,6 +421,9 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 break;
             case R.id.avatarPatient:
                 DialogUploadImage();
+                break;
+            case R.id.lblCancel:
+                onReload();
                 break;
         }
     }

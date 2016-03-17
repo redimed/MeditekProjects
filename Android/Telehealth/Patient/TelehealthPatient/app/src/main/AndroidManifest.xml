@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.redimed.telehealth.patient">
-    <!-- Test1 -->
+
     <!-- Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -70,17 +70,25 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
-        tools:replace="android:icon">
+        tools:replace="android:icon,android:theme">
         <activity
             android:name=".LauncherActivity"
             android:label="@string/title_activity_launcher"
             android:theme="@style/MyTheme">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "https://www.redimed.com.au/#” -->
                 <data
@@ -90,10 +98,6 @@
                 <!-- note that the leading "/" is required for pathPrefix-->
             </intent-filter>
         </activity>
-        <activity
-            android:name=".main.MainActivity"
-            android:label="@string/title_activity_main"
-            android:launchMode="singleTask" />
         <activity
             android:name=".model.ModelActivity"
             android:label="@string/title_activity_model" />

@@ -6,6 +6,7 @@ module.exports = React.createClass({
     propTypes: {
         code: React.PropTypes.number,
         type: React.PropTypes.string,
+        page: React.PropTypes.number,
         rows: React.PropTypes.object,
         refTemp: React.PropTypes.string,
         permission: React.PropTypes.string,
@@ -22,7 +23,8 @@ module.exports = React.createClass({
         onCreateTableColumn: React.PropTypes.func,
         onCreateTableRow: React.PropTypes.func,
         onRemoveTableRow: React.PropTypes.func,
-        onUpdateTableColumn: React.PropTypes.func
+        onUpdateTableColumn: React.PropTypes.func,
+        onChangePage: React.PropTypes.func
     },
     getCode: function(){
         return this.props.code;
@@ -36,18 +38,29 @@ module.exports = React.createClass({
     getPermission: function(){
         return this.props.permission;
     },
+    getPage: function(){
+        return this.props.page;
+    },
     componentDidMount: function() {
         if (this.props.permission === 'eformDev') {
-            this._dragAndDropSections();
-            this._dragAndDropRows();
+            var self = this;
+            //this._dragAndDropSections();
+            //this._dragAndDropRows();
+
+            $(this.refs.page).val(this.props.page);
+            $(this.refs.page).keypress(function(event){
+                if(event.which == 13){
+                    self.props.onChangePage(self.props.code, event.target.value);
+                }
+            });
         }
     },
     componentDidUpdate: function(prevProps, prevState) {
         if (this.props.permission === 'eformDev') {
-            this.drakeSection.destroy();
-            this.drakeRow.destroy();
-            this._dragAndDropSections();
-            this._dragAndDropRows();
+            //this.drakeSection.destroy();
+            //this.drakeRow.destroy();
+            //this._dragAndDropSections();
+            //this._dragAndDropRows();
         }
     },
     _dragAndDropSections: function() {
@@ -242,6 +255,11 @@ module.exports = React.createClass({
                                                 <li>
                                                     <a onClick={this._onCreateRow}>
                                                         <i className="fa fa-plus"></i> Add Row
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a>
+                                                        <input type="text" ref="page"/>
                                                     </a>
                                                 </li>
                                                 <li className="divider"/>

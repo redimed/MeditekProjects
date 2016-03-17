@@ -161,10 +161,12 @@ module.exports = React.createClass({
                 fields.push(field);
             })
         }
+
         var content = JSON.stringify(fields);
         var appointmentUID = this.appointmentUID;
+
         if(this.formUID === null){
-            EFormService.formSave({templateUID: this.templateUID, content: content, name: this.state.name, patientUID: this.patientUID, userUID: this.userUID})
+            EFormService.formSave({templateUID: this.templateUID, appointmentUID: appointmentUID, content: content, name: this.state.name, patientUID: this.patientUID, userUID: this.userUID})
             .then(function(){
                 swal("Success!", "Your form has been saved.", "success");
             })

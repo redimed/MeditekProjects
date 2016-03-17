@@ -35,10 +35,16 @@ module.exports = React.createClass({
         this.refs.pageBarBottom.setUserUID(this.props.params.userUID);
     },
     _onComponentPageBarAddNewSection: function() {
+        var page = 1;
         var sectionRef = "section_"+this.state.sections.size;
+        if(this.state.sections.size > 0){
+            var prevSize = this.state.sections.size-1;
+            var sectionRefPrev = "section_"+prevSize;
+            page = this.refs[sectionRefPrev].getPage();
+        }
         this.setState(function(prevState) {
             return {
-                sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List() }))
+                sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List(), page: page }))
             }
         })
         swal("Success!", "Your section has been created.", "success");
@@ -117,6 +123,8 @@ module.exports = React.createClass({
     _onComponentSectionDragRow: function(fromObj, toObj) {
         var fromImmutable = this.state.sections.get(fromObj.codeSection).get('rows').get(fromObj.codeRow);
         var toImmutable = this.state.sections.get(toObj.codeSection).get('rows').get(toObj.codeRow);
+        console.log(fromImmutable.toJS());
+        console.log(toImmutable.toJS());
         var sections = this.state.sections;
         sections = sections.updateIn([fromObj.codeSection, 'rows', fromObj.codeRow], val => toImmutable);
         sections = sections.updateIn([toObj.codeSection, 'rows', toObj.codeRow], val => fromImmutable);
@@ -289,6 +297,13 @@ module.exports = React.createClass({
         swal("Deleted!", "Your section has been deleted.", "success")
     },
     _onSelectEFormTemplateModule: function(list){
+        var page = 1;
+        if(this.state.sections.size > 0){
+            var prevSize = this.state.sections.size-1;
+            var sectionRefPrev = "section_"+prevSize;
+            page = this.refs[sectionRefPrev].getPage();
+        }
+
         var listData = list.EFormTemplateModuleData;
         var module = JSON.parse(listData.TemplateModuleData);
         var sections = this.state.sections;
@@ -297,6 +312,7 @@ module.exports = React.createClass({
                 var sectionRef = "section_"+sections.size;
                 section.ref = sectionRef;
                 section.moduleID = list.ID;
+                section.page = page;
                 sections = sections.push(Immutable.fromJS(section));
             })
             this.setState(function(prevState) {
@@ -307,6 +323,14 @@ module.exports = React.createClass({
             swal("Success!", "Your section has been created.", "success");
         }
         this.refs.modalListEFormTemplateModule.hide();
+    },
+    _onComponentSectionChangePage: function(codeSection, value){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection], val => val.set('page', value))
+            }
+        })
+        swal("Success!", "Your section has change page to "+value, "success");
     },
     render: function(){
 	return (
@@ -333,6 +357,7 @@ module.exports = React.createClass({
                                     			key={index}
                                     			code={index}
                                                                  type="section"
+                                                                 page={section.get('page')}
                                                                  permission="eformDev"
                                                                  rows={section.get('rows')}
                                     			name={section.get('name')}
@@ -350,7 +375,8 @@ module.exports = React.createClass({
                                     			onCreateTableColumn={this._onComponentSectionCreateTableColumn}
                                     			onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
                                     			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
-                                                                 onDragRow={this._onComponentSectionDragRow}/>
+                                                                 onDragRow={this._onComponentSectionDragRow}
+                                                                 onChangePage={this._onComponentSectionChangePage}/>
                                     	}, this)
                                 }
                                 <ComponentPageBar ref="pageBarBottom"

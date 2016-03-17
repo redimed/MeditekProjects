@@ -95,7 +95,10 @@ module.exports = React.createClass({
         for(var i = 0; i < rows; i++){
             cols.map(function(col, indexCol){
                 var refChild = "field_"+i+"_"+indexCol;
-                var value = self.refs[refChild].getValue();
+                if(col.type !== 'c')
+                    var value = self.refs[refChild].getValue();
+                else
+                    var value = self.refs[refChild].getValueTable();
                 var typeChild = self.refs[refChild].getType();
                 var type = 'table';
                 var name = self.getName();

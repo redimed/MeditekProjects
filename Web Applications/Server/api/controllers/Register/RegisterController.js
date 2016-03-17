@@ -144,7 +144,7 @@ module.exports = {
 			.then(function(success){
 				if(data.captcha){
 					request.get({
-				        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276LcDaxATAAAAAGAlZHx7jZFllXynb6TBDeelzP3X%27&response="+data.captcha
+				        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276Ld-8A8TAAAAANQ3THAB8-cT8p8VEj58VZAThHxn%27&response="+data.captcha
 				    }, function(error, response, body) {
 				    	var captcha = JSON.parse(body);
 				        		if(captcha.success==true){

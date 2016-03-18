@@ -139,8 +139,9 @@ class ConfirmRequestTelehealthViewController: UIViewController ,signatureDelegat
             response in
             if response["status"] == "success"{
                 self.view.hideLoading()
-                self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
                 self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
+                self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
+                
             }else {
                 self.view.hideLoading()
                 self.alertView.alertMessage("Error", message: "\(response["ErrorType"])")

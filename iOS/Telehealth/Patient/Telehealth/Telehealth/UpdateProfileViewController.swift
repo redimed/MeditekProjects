@@ -10,6 +10,7 @@ import UIKit
 
 class UpdateProfileViewController: BaseViewController {
     @IBOutlet weak var firstNameTxt: UITextField!
+    @IBOutlet weak var middlename: UITextField!
     @IBOutlet weak var lastNameTxt: UITextField!
     @IBOutlet weak var homePhoneTxt: UITextField!
     @IBOutlet weak var dobTxt: UITextField!
@@ -49,6 +50,7 @@ class UpdateProfileViewController: BaseViewController {
         imageView.addGestureRecognizer(tapGestureRecognizer)
         if patientInformation != nil {
             firstNameTxt.text = patientInformation.FirstName
+            middlename.text = patientInformation.MiddleName
             lastNameTxt.text = patientInformation.LastName
             homePhoneTxt.text = patientInformation.HomePhoneNumber
             dobTxt.text = patientInformation.DOB
@@ -71,6 +73,7 @@ class UpdateProfileViewController: BaseViewController {
     }
     func delegateTextField(){
         addDoneButton(firstNameTxt)
+        addDoneButton(middlename)
         addDoneButton(lastNameTxt)
         addDoneButton(homePhoneTxt)
         addDoneButton(emailTxt)
@@ -231,6 +234,7 @@ class UpdateProfileViewController: BaseViewController {
     @IBAction func updateProfileButton(sender: AnyObject) {
         self.view.showLoading()
         patientInformation.FirstName = firstNameTxt.text
+        patientInformation.MiddleName = middlename.text
         patientInformation.LastName = lastNameTxt.text
         patientInformation.HomePhoneNumber = homePhoneTxt.text
         patientInformation.DOB = dobTxt.text
@@ -369,6 +373,14 @@ class UpdateProfileViewController: BaseViewController {
                 firstNameTxt.text = textField.text!.capitalizeFirst
             }else {
                 requestTelehealthService.borderTextFieldValid(firstNameTxt, color: colorCustomRed)
+            }
+            break;
+        case middlename:
+            if textField.text != "" && requestTelehealthService.checkMaxLength(textField.text! , length: 50) == true {
+                requestTelehealthService.borderTextFieldValid(middlename, color: colorAthenGray,check:true)
+                middlename.text = textField.text!.capitalizeFirst
+            }else {
+                requestTelehealthService.borderTextFieldValid(middlename, color: colorCustomRed)
             }
             break;
         case lastNameTxt:

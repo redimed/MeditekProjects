@@ -17,12 +17,15 @@ class PatientService{
         
         patientAPI.getInformationPatientByUUID(UUID){
             response in
-            print(response)
             let jsonInformation = response["data"][0] != nil ? response["data"][0] : ""
             if response["TimeOut"] == "Request Time Out" {
                 let errorJSON = JSON(["message":"error","ErrorType":response["TimeOut"]])
                 completionHandler(errorJSON,PatientContainer.init())
-            }else {
+            }else if (response["internetConnection"].string == ErrorMessage.internetConnection){
+                let errorJSON = JSON(["message":"error","ErrorType":ErrorMessage.internetConnection])
+                completionHandler(errorJSON,PatientContainer.init())
+            }
+            else {
                 let MiddleName = jsonInformation["MiddleName"].string ?? ""
                 let Address2 = jsonInformation["Address2"].string ?? ""
                 let Title = jsonInformation["Title"].string ?? ""
@@ -76,6 +79,7 @@ class PatientService{
             "data": [
                 "UID" : infoPatient.UID,
                 "FirstName" : infoPatient.FirstName,
+                "MiddleName":infoPatient.MiddleName,
                 "LastName" : infoPatient.LastName,
                 "HomePhoneNumber" : infoPatient.HomePhoneNumber,
                 "DOB" : infoPatient.DOB,

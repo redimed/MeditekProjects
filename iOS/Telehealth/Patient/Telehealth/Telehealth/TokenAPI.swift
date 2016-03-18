@@ -17,25 +17,29 @@ class TokenAPI {
                 "refreshCode" : refreshCode
             ]
             config.setHeader()
-            Alamofire.request(.POST,ConfigurationSystem.Http_3006 + UrlInformationPatient.getNewToken, headers:config.headers, parameters: parameters)
-                .responseJSON {
-                     response in
-                    switch response.result {
-                    case .Success(let JSONData):
-                        let data = JSON(JSONData)
-                        if data["refreshCode"].string != nil{
-                            if  data["refreshCode"].string! != refreshCode{
-                                
-                                self.setNewToken(data["token"].string!,refreshCode: data["refreshCode"].string!)
+            print("config.headers",config.headers)
+            if(UIApplication.sharedApplication().isConnectedToNetwork()){
+                Alamofire.request(.POST,ConfigurationSystem.Http_3006 + UrlInformationPatient.getNewToken, headers:config.headers, parameters: parameters)
+                    .responseJSON {
+                        response in
+                        switch response.result {
+                        case .Success(let JSONData):
+                            let data = JSON(JSONData)
+                            if data["refreshCode"].string != nil{
+                                if  data["refreshCode"].string! != refreshCode{
+                                    self.setNewToken(data["token"].string!,refreshCode: data["refreshCode"].string!)
+                                }
+                            }else {
+                                print("----------Error------",data)
                             }
-                        }else {
-                            print("----------Error------",data)
+                        case .Failure(let error):
+                            print("Request failed with error: \(error)")
+                            
                         }
-                    case .Failure(let error):
-                        print("Request failed with error: \(error)")
-                       
-                    }
+                }
             }
+        }else{
+            
         }
     }
     
@@ -60,24 +64,27 @@ class TokenAPI {
             ]
         ]
         config.setHeader()
-        Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:config.headers, parameters: parameters)
-            .responseJSON {
-                 response in
-            
-                switch response.result {
-                case .Success(let JSONData):
-                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                        if requireupdatetoken as! String == "true" {
-                            print("Update token",requireupdatetoken)
-                            self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:config.headers, parameters: parameters)
+                .responseJSON {
+                    response in
+                    
+                    switch response.result {
+                    case .Success(let JSONData):
+                        if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                            if requireupdatetoken as! String == "true" {
+                                print("Update token",requireupdatetoken)
+                                self.getNewToken()
+                            }
                         }
+            
+                    case .Failure(let error):
+                        print("Request failed with error: \(error)")
+                        
                     }
-                    let data = JSON(JSONData)
-                    //print("data---",data)
-                case .Failure(let error):
-                    print("Request failed with error: \(error)")
-                
-                }
+            }
+        }else{
+           
         }
     }
     
@@ -89,25 +96,29 @@ class TokenAPI {
             "category":category,
             "data":data
         ]
-        Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.pushNotify, headers:config.headers, parameters: parameters)
-            .responseJSON {
-                 response in
-               
-                switch response.result {
-                case .Success(let JSONData):
-                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                        if requireupdatetoken as! String == "true" {
-                            print("Update token",requireupdatetoken)
-                            self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.pushNotify, headers:config.headers, parameters: parameters)
+                .responseJSON {
+                    response in
+                    
+                    switch response.result {
+                    case .Success(let JSONData):
+                        if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                            if requireupdatetoken as! String == "true" {
+                                print("Update token",requireupdatetoken)
+                                self.getNewToken()
+                            }
                         }
+                        let data = JSON(JSONData)
+                        //print("data---",data)
+                        
+                    case .Failure(let error):
+                        print("Request failed with error: \(error)")
+                        
                     }
-                    let data = JSON(JSONData)
-                    //print("data---",data)
-                    
-                case .Failure(let error):
-                    print("Request failed with error: \(error)")
-                    
-                }
+            }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
     }
 }

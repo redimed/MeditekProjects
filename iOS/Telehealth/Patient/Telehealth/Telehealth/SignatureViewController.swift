@@ -139,43 +139,41 @@ class SignatureViewController: UIViewController {
         appointmentService.uploadImage(image, userUID: userUID,fileType:"Signature" , compailer: {
             response in
             if response["message"] == "success"{
-                self.view.hideLoading()
+                
                 let  data = response["data"].string
-                
-                
+
                 self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:data!)
                 self.patientService.updateSignature(data!, patientUID: self.patientUID, completionHandler: {
                     response in
                     print("update success",response)
                     self.performSegueWithIdentifier("unwindToProfileSegue", sender: self)
+                    self.view.hideLoading()
                 })
                 
             }else {
                 self.view.hideLoading()
-                print("error",response["ErrorType"])
-                let error = response["ErrorType"].string
-                self.alertView.alertMessage("Error", message: error!)
+//                print("error",response["ErrorType"])
+//                let error = response["ErrorType"].string
+//                self.alertView.alertMessage("Error", message: error!)
             }
         })
         
     }
-    
+
     func uploadImageNotLogin(image:UIImage,userUID:String){
         self.view.showLoading()
         appointmentService.uploadImageNotLogin(image, userUID: userUID,fileType:"Signature" , compailer: {
             response in
             if response["message"] == "success"{
-                self.view.hideLoading()
-        
+                
                 let  fileUID = response["data"].string
-                //let fileUID =  response["fileUID"].string!
                 self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:fileUID!)
                 self.navigationController!.popViewControllerAnimated(true)
+                self.view.hideLoading()
             }else {
                 self.view.hideLoading()
-                print("error",response["ErrorType"])
-                let error = response["ErrorType"].string
-                self.alertView.alertMessage("Error", message: error!)
+               //self.alertView.alertMessage("Error",message: "")
+
             }
         })
         

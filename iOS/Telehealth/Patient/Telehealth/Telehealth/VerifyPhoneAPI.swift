@@ -32,21 +32,24 @@ class VerifyPhoneAPI:TokenAPI {
                 "deviceType": "ios"
             ]
         ]
-      
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber ,headers:config.headers, parameters: parameters).responseJSON{
-             response  in
-            switch response.result {
-            case .Success(let JSONData):
-                if let cookie : String = response.response!.allHeaderFields["Set-Cookie"] as? String  {
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setValue(cookie, forKey: "Set-Cookie")
-                    defaults.synchronize()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber ,headers:config.headers, parameters: parameters).responseJSON{
+                response  in
+                switch response.result {
+                case .Success(let JSONData):
+                    if let cookie : String = response.response!.allHeaderFields["Set-Cookie"] as? String  {
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        defaults.setValue(cookie, forKey: "Set-Cookie")
+                        defaults.synchronize()
+                    }
+                    completionHandler(JSON(JSONData))
+                case .Failure( let error):
+                    print("Request failed with error: \(JSON(error))")
+                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 }
-                completionHandler(JSON(JSONData))
-            case .Failure( let error):
-                print("Request failed with error: \(error)")
-                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
             }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
         
     }
@@ -69,30 +72,33 @@ class VerifyPhoneAPI:TokenAPI {
                 "Phone":phoneConfig
             ]
         ]
-        
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:config.headers, parameters: parameters).responseJSON{
-             response in
-            
-            switch response.result {
-            case .Success(let JSONData):
-                var data = JSON(JSONData)
-                if data["ErrorType"] == nil {
-                    let verifyCode = data["verifyCode"].string! as String
-                    let patientUID = data["patientUID"].string!   as String
-                    let userUID = data["userUID"].string!  as String
-                    self.loginApi(userUID: userUID, patientUID: patientUID, verifyCode: verifyCode){
-                        dataResponse in
-                        completionHandler(dataResponse)
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:config.headers, parameters: parameters).responseJSON{
+                response in
+                
+                switch response.result {
+                case .Success(let JSONData):
+                    var data = JSON(JSONData)
+                    if data["ErrorType"] == nil {
+                        let verifyCode = data["verifyCode"].string! as String
+                        let patientUID = data["patientUID"].string!   as String
+                        let userUID = data["userUID"].string!  as String
+                        self.loginApi(userUID: userUID, patientUID: patientUID, verifyCode: verifyCode){
+                            dataResponse in
+                            completionHandler(dataResponse)
+                        }
+                        
+                    }else {
+                        completionHandler(data)
                     }
                     
-                }else {
-                    completionHandler(data)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 }
-                
-            case .Failure(let error):
-                print("Request failed with error: \(error)")
-                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
             }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
     }
     
@@ -108,29 +114,32 @@ class VerifyPhoneAPI:TokenAPI {
             "VerificationToken":verifyCode,
             "AppID":UIApplication.sharedApplication().bundleID()
         ]
-        
-        Alamofire.request(.POST, ConfigurationSystem.Http_3006 + UrlAPICheckPhoneNumber.apiLogin ,headers:config.headers, parameters: parameters).responseJSON{
-             response in
-            
-            switch response.result {
-            case .Success(let JSONData):
-                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update token",requireupdatetoken)
-                        self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST, ConfigurationSystem.Http_3006 + UrlAPICheckPhoneNumber.apiLogin ,headers:config.headers, parameters: parameters).responseJSON{
+                response in
+                
+                switch response.result {
+                case .Success(let JSONData):
+                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                        if requireupdatetoken as! String == "true" {
+                            print("Update token",requireupdatetoken)
+                            self.getNewToken()
+                        }
                     }
+                    let data = JSON(JSONData)
+                    //print(data)
+                    self.informationUser(data,patientUID: patientUID){
+                        dataResponse in
+                        completionHandler(dataResponse)
+                    }
+                case .Failure(let error):
+                    completionHandler(JSON(error))
+                    print("Request failed with error: \(error)")
+                    
                 }
-                let data = JSON(JSONData)
-                //print(data)
-                self.informationUser(data,patientUID: patientUID){
-                    dataResponse in
-                    completionHandler(dataResponse)
-                }
-            case .Failure(let error):
-                completionHandler(JSON(error))
-                print("Request failed with error: \(error)")
-            
             }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
         
     }
@@ -139,26 +148,30 @@ class VerifyPhoneAPI:TokenAPI {
         config.setHeader()
         let parameters = [
             "data": [
-            "uid":telehealthIUD
+                "uid":telehealthIUD
             ]
         ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.logOut ,headers:config.headers,parameters: parameters).responseJSON{
-             response in
-           
-            switch response.result {
-            case .Success(let JSONData):
-                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update token",requireupdatetoken)
-                        self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.logOut ,headers:config.headers,parameters: parameters).responseJSON{
+                response in
+                
+                switch response.result {
+                case .Success(let JSONData):
+                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                        if requireupdatetoken as! String == "true" {
+                            print("Update token",requireupdatetoken)
+                            self.getNewToken()
+                        }
                     }
+                    let data = JSON(JSONData)
+                    completionHandler(data)
+                case .Failure(let error):
+                    completionHandler(JSON(error))
+                    print("Request failed with error: \(error)")
                 }
-                let data = JSON(JSONData)
-                completionHandler(data)
-            case .Failure(let error):
-                completionHandler(JSON(error))
-                print("Request failed with error: \(error)")
             }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
     }
     
@@ -170,32 +183,35 @@ class VerifyPhoneAPI:TokenAPI {
         let token = data["token"].string! as String
         let refreshCode = data["refreshCode"].string! as String
         config.headers["Authorization"] = "Bearer \(token)"
-        
-        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getUserInfo + uid ,headers:config.headers).responseJSON{
-             response in
-            switch response.result {
-            case .Success(let JSONData):
-                if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update token",requireupdatetoken)
-                        self.getNewToken()
+        if(UIApplication.sharedApplication().isConnectedToNetwork()){
+            Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getUserInfo + uid ,headers:config.headers).responseJSON{
+                response in
+                switch response.result {
+                case .Success(let JSONData):
+                    if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
+                        if requireupdatetoken as! String == "true" {
+                            print("Update token",requireupdatetoken)
+                            self.getNewToken()
+                        }
                     }
+                    let data = JSON(JSONData)
+                    let userInfo = [
+                        "patientUID":patientUID,
+                        "token":token,
+                        "refreshCode":refreshCode,
+                        "userUID":uid,
+                        "teleUID":data["UID"].string! as String,
+                        "status":"success"
+                    ]
+                    completionHandler(JSON(userInfo))
+                case .Failure(let error):
+                    completionHandler(JSON(error))
+                    print("Request failed with error: \(error)")
+                    
                 }
-                let data = JSON(JSONData)
-                let userInfo = [
-                    "patientUID":patientUID,
-                    "token":token,
-                    "refreshCode":refreshCode,
-                    "userUID":uid,
-                    "teleUID":data["UID"].string! as String,
-                    "status":"success"
-                ]
-                completionHandler(JSON(userInfo))
-            case .Failure(let error):
-                completionHandler(JSON(error))
-                print("Request failed with error: \(error)")
-                
             }
+        }else{
+            completionHandler(JSON(["internetConnection":ErrorMessage.internetConnection]))
         }
     }
 }

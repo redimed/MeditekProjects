@@ -61,17 +61,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationActionOk.authenticationRequired = false
         notificationActionOk.activationMode = UIUserNotificationActivationMode.Background
         
-//        let notificationActionCancel :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-//        notificationActionCancel.identifier = "NOT_NOW_IDENTIFIER"
-//        notificationActionCancel.title = "Not Now"
-//        notificationActionCancel.destructive = true
-//        notificationActionCancel.authenticationRequired = false
-//        notificationActionCancel.activationMode = UIUserNotificationActivationMode.Background
+        let notificationActionCancel :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        notificationActionCancel.identifier = "NOT_NOW_IDENTIFIER"
+        notificationActionCancel.title = "Not Now"
+        notificationActionCancel.destructive = true
+        notificationActionCancel.authenticationRequired = false
+        notificationActionCancel.activationMode = UIUserNotificationActivationMode.Background
         
         let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
         notificationCategory.identifier = "ss"
         notificationCategory .setActions([notificationActionOk], forContext: UIUserNotificationActionContext.Default)
-        notificationCategory .setActions([notificationActionOk], forContext: UIUserNotificationActionContext.Default)
+        notificationCategory .setActions([notificationActionCancel], forContext: UIUserNotificationActionContext.Default)
         
         
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
@@ -90,16 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         completionHandler(.NoData)
     }
-    
-    
-    
+
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
         
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)
     {
-        
         
         let deviceTokenString = convertDeviceTokenToString(deviceToken)
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -121,8 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         print("Couldn't register: \(error)")
-        
-        
+
     }
     
     func applicationWillResignActive(application: UIApplication) {

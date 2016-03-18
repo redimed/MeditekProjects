@@ -22,9 +22,12 @@ class VerifyService{
                 }
                 compailer(["message":"success"])
             }else {
+                print(response)
                 if response["TimeOut"].string ==  ErrorMessage.TimeOut {
                     compailer(["message":"error","ErrorType":ErrorMessage.TimeOut])
-                }else {
+                }else if(response["internetConnection"].string == ErrorMessage.internetConnection){
+                    compailer(["message":"error","ErrorType":ErrorMessage.internetConnection])
+                }else{
                     let message : String = String(response["ErrorsList"][0])
                     compailer(["message":"error","ErrorType":message])
                 }
@@ -37,6 +40,7 @@ class VerifyService{
     func verifyPhoneNumber(verifyNumber:String,phoneNumber:String,compailer:(JSON) -> Void){
         api.CheckVerifyPhoneNumber(verifyNumber,phoneNumber:phoneNumber){
             response in
+            print(response)
             if response["status"] == "success"{
                 let defaults = NSUserDefaults.standardUserDefaults()
                 let uid = response["teleUID"].string! as String

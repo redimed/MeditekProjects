@@ -13,6 +13,7 @@ enum MyError: ErrorType {
     case NetworkError
     case DiscoverydError
 }
+
 class VerifyViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var textFieldVerifyCode: DesignableTextField!
@@ -22,7 +23,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
     
     let verifyService = VerifyService()
     let alertView = UIAlertView()
-    
+    let verifyPhoneAPI = VerifyPhoneAPI()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,13 +65,33 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                 response in
                 if response["message"] == "success"{
                     //Change to home view by segue
-        
+                    if(defaults.valueForKey("logoutFail") as? String != nil){
+                        self.verifyPhoneAPI.logOut((defaults.valueForKey("UIDLogoutFail") as? String)!,completionHandler: {
+                            response in
+                            print(response)
+                            if response["status"] == "success"{
+                                print("logout when internet connect")
+                                let defaults = NSUserDefaults.standardUserDefaults()
+                                defaults.removeObjectForKey("logoutFail")
+                                defaults.removeObjectForKey("UIDLogoutFail")
+                                defaults.synchronize()
+                            }else{
+                                print("logout fail when internet connect") 
+                            }
+                        })
+                    }
+
                     self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
+                    
                 }else {
                     self.view.hideLoading()
-                    let message : String = String(response["ErrorsList"])
+                    print(response)
                     self.textFieldVerifyCode.text = ""
-                    self.alertView.alertMessage("Error", message: message)
+                    if(response["internetConnection"].string == ErrorMessage.internetConnection){
+                        self.alertView.alertMessage("Error", message: ErrorMessage.internetConnection)
+                    }else if(response["ErrorType"] == "Activation.codeInvalid"){
+                        self.alertView.alertMessage("Error", message: "Verify Code Invalid")
+                    }
                 }
             })
         }

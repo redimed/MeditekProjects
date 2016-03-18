@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */; };
+		3FFBDF411C9BBB1F006F041B /* DTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */; };
+		3FFBDF441C9BBBDE006F041B /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF431C9BBBDE006F041B /* Define.swift */; };
+		3FFBDF461C9BBC95006F041B /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */; };
 		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
 		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; };
 		AF00A6221C86EF6100104E0B /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00A6211C86EF6100104E0B /* SignatureViewController.swift */; };
@@ -156,6 +159,9 @@
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
 		3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAlertView.swift; sourceTree = "<group>"; };
+		3FFBDF431C9BBBDE006F041B /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
+		3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewCell.swift; sourceTree = "<group>"; };
 		AF00A6211C86EF6100104E0B /* SignatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
 		AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -351,6 +357,16 @@
 				C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		3FFBDF3F1C9BBAE0006F041B /* DTAlert */ = {
+			isa = PBXGroup;
+			children = (
+				3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */,
+				3FFBDF431C9BBBDE006F041B /* Define.swift */,
+				3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */,
+			);
+			name = DTAlert;
 			sourceTree = "<group>";
 		};
 		9C8F9A3844FDFD23E44C015B /* Frameworks */ = {
@@ -680,6 +696,7 @@
 		AFF27DF91BB39C5500B325E8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				3FFBDF3F1C9BBAE0006F041B /* DTAlert */,
 				AF73C8331C7BF9030015A625 /* DKCamera */,
 				AF73C8361C7BF9030015A625 /* DKImageManager */,
 				AF73C83D1C7BF9030015A625 /* DKImagePickerController */,
@@ -918,6 +935,7 @@
 				AFE642331C465700001F0524 /* AppointmentContainer.swift in Sources */,
 				AFEE353D1BB0415D00471592 /* SpringTextField.swift in Sources */,
 				AF9317DC1C4887C3005D230F /* ConfigMessageString.swift in Sources */,
+				3FFBDF441C9BBBDE006F041B /* Define.swift in Sources */,
 				AFEE35381BB0415D00471592 /* Spring.swift in Sources */,
 				AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */,
 				AFEE34DF1BB0413600471592 /* Telehealth.xcdatamodeld in Sources */,
@@ -938,9 +956,11 @@
 				AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */,
 				AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */,
 				AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */,
+				3FFBDF461C9BBC95006F041B /* UIColorExtension.swift in Sources */,
 				AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */,
 				AFEE35401BB0415D00471592 /* TransitionManager.swift in Sources */,
 				AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */,
+				3FFBDF411C9BBB1F006F041B /* DTAlertView.swift in Sources */,
 				AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */,
 				AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				AF73C8491C7BF9030015A625 /* DKGroupDataManager.swift in Sources */,

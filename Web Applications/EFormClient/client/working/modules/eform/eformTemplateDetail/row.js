@@ -75,7 +75,7 @@ module.exports = React.createClass({
     },
     _onComponentListFieldSelect: function(item){
         this.refs.modalCreateFieldSection.hide();
-        this.props.onSelectField(this.props.codeSection, this.props.code, item.get('code'));
+        this.props.onSelectField(this.props.codeSection, this.props.code, this.props.refTemp, item.get('code'));
     },
     _onRightClickItem: function(code, e, ref) {
         var id = $(e.target).attr('id')

@@ -262,10 +262,10 @@ module.exports = {
         })
     },
     PostCheckDetail: function(req, res){
-        Patient.findOne({
-            where: {UID: req.body.patientUID}
+        Appointment.findOne({
+            where: {UID: req.body.appointmentUID}
         })
-        .then(function(patient){
+        .then(function(appointment){
             EFormTemplate.findOne({
                 where: {UID: req.body.templateUID}
             })
@@ -274,10 +274,10 @@ module.exports = {
                     where: {EFormTemplateID: eFormTemplate.ID},
                     include: [
                         {model: EFormData, required: false, as: 'EFormData'},
-                        {model: Patient,
+                        {model: Appointment,
                             required: true,
                             through: {
-                                where: {PatientID: patient.ID}
+                                where: {AppointmentID: appointment.ID}
                             } 
                         }
                     ]

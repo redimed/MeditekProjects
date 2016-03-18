@@ -9,7 +9,7 @@ app.controller('eFormLoadFormCtrl', function($scope, $stateParams, $cookies, $st
     $scope.eFormBaseUrl = o.const.eFormBaseUrl;
     var contentHeight = $('.page-content').height();
     $('#eform').attr('src', $scope.eFormBaseUrl+'/#/eform/detail?appointmentUID='+AppointmentUID+'&patientUID='+PatientUID+'&templateUID='+TemplateUID+'&userUID='+UserUID);
-    $('#eform').css('height', contentHeight);
+    //$('#eform').css('height', contentHeight);
 
     $scope.eforms = function() {
         $state.go("authentication.consultation.detail.eForm.appointment", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient });

@@ -105,7 +105,7 @@ module.exports = React.createClass({
     },
     _checkServerEFormDetail: function(){
         var self = this;
-        EFormService.eformCheckDetail({templateUID: this.templateUID, patientUID: this.patientUID})
+        EFormService.eformCheckDetail({templateUID: this.templateUID, appointmentUID: this.appointmentUID})
         .then(function(response){
             if(response.data){
                 self.formUID = response.data.UID;

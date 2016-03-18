@@ -36,6 +36,7 @@ import com.redimed.telehealth.patient.appointment.presenter.IAppointmentPresente
 import com.redimed.telehealth.patient.appointment.view.IAppointmentView;
 import com.redimed.telehealth.patient.model.ModelActivity;
 import com.redimed.telehealth.patient.models.Doctor;
+import com.redimed.telehealth.patient.models.PatientAppointment;
 import com.redimed.telehealth.patient.tracking.TrackingFragment;
 import com.redimed.telehealth.patient.utlis.DeviceUtils;
 import com.redimed.telehealth.patient.utlis.DialogAlert;
@@ -47,6 +48,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,7 +64,8 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     private static final int RESULT_RELOAD = 3;
     private static final int MEDIA_TYPE_IMAGE = 1;
     private IAppointmentPresenter iAppointmentPresenter;
-    private String TAG = "DETAILS", fromTime, status, firstDoctor, middleDoctor, lastDoctor, appointmentUID;
+    private String fromTime, status, firstDoctor, middleDoctor, lastDoctor, type, appointmentUID;
+    private static final String TAG = "=====DETAILS=====";
 
     @Bind(R.id.lblDate)
     TextView lblDate;
@@ -81,6 +84,25 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     @Bind(R.id.lblImage)
     TextView lblImage;
 
+    @Bind(R.id.lblFirstName)
+    TextView lblFirstName;
+    @Bind(R.id.lblLastName)
+    TextView lblLastName;
+    @Bind(R.id.lblMobile)
+    TextView lblMobile;
+    @Bind(R.id.lblHome)
+    TextView lblHome;
+    @Bind(R.id.lblSuburb)
+    TextView lblSuburb;
+    @Bind(R.id.lblApptType)
+    TextView lblApptType;
+    @Bind(R.id.lblDOB)
+    TextView lblDOB;
+    @Bind(R.id.lblEmail)
+    TextView lblEmail;
+    @Bind(R.id.lblDes)
+    TextView lblDes;
+
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
@@ -91,7 +113,8 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     @Bind(R.id.lblSubTitle)
     TextView lblSubTitle;
 
-    public AppointmentFragment() {}
+    public AppointmentFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -139,53 +162,82 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     }
 
     @Override
-    public void onLoadAppointment(JsonObject dataAppt, String msg) {
-        if (msg.equalsIgnoreCase("success")) {
-            if (!dataAppt.get("data").isJsonNull()) {
-                fromTime = dataAppt.get("data").getAsJsonObject().get("FromTime").isJsonNull() ?
-                        "" : dataAppt.get("data").getAsJsonObject().get("FromTime").getAsString();
-                status = dataAppt.get("data").getAsJsonObject().get("Status").isJsonNull() ?
-                        "" : dataAppt.get("data").getAsJsonObject().get("Status").getAsString();
-
-                for (Doctor doctor : (gson.fromJson(dataAppt.get("data").getAsJsonObject().get("Doctors").toString(), Doctor[].class))) {
-                    firstDoctor = doctor.getFirstName() == null ? " " : doctor.getFirstName();
-                    middleDoctor = doctor.getMiddleName() == null ? " " : doctor.getMiddleName();
-                    lastDoctor = doctor.getLastName() == null ? " " : doctor.getLastName();
-                }
-
-                lblDate.setText(MyApplication.getInstance().ConvertDate(fromTime));
-                lblTime.setText(MyApplication.getInstance().ConvertTime(fromTime));
-                lblStatus.setText(status);
-                lblDoctorName.setText(firstDoctor + middleDoctor + lastDoctor);
-
-                iAppointmentPresenter.getListImage(dataAppt);
-            } else {
-                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                alertDialog.setTitle(R.string.title_dialog_appt);
-                alertDialog.setMessage(context.getResources().getString(R.string.message_dialog_appt));
-
-                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        iAppointmentPresenter.changeFragment(new TrackingFragment());
-                    }
-                });
-                alertDialog.show();
-            }
-        } else if (msg.equalsIgnoreCase("Network Error")) {
+    public void onLoadError(String msg) {
+        if (msg.equalsIgnoreCase("Network Error")) {
             new DialogConnection(context).show();
         } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(getResources().getString(R.string.token_expired))
+                    .show();
         } else {
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(msg)
+                    .show();
         }
+    }
+
+    @Override
+    public void onLoadAppointment(JsonObject dataAppt) {
+        if (!dataAppt.get("data").isJsonNull()) {
+            fromTime = dataAppt.get("data").getAsJsonObject().get("FromTime").isJsonNull() ?
+                    "NONE" : dataAppt.get("data").getAsJsonObject().get("FromTime").getAsString();
+
+            status = dataAppt.get("data").getAsJsonObject().get("Status").isJsonNull() ?
+                    "NONE" : dataAppt.get("data").getAsJsonObject().get("Status").getAsString();
+
+            type = dataAppt.get("data").getAsJsonObject().get("Type").isJsonNull() ?
+                    "NONE" : dataAppt.get("data").getAsJsonObject().get("Type").getAsString();
+
+            GetInfoPatient(dataAppt);
+
+            lblStatus.setText(status);
+            lblApptType.setText(type);
+            lblDoctorName.setText(GetNameDoctor(dataAppt));
+            lblDate.setText(MyApplication.getInstance().ConvertDate(fromTime));
+            lblTime.setText(MyApplication.getInstance().ConvertTime(fromTime));
+
+            iAppointmentPresenter.getListImage(dataAppt);
+        } else {
+            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+            alertDialog.setTitle(R.string.title_dialog_appt);
+            alertDialog.setMessage(context.getResources().getString(R.string.message_dialog_appt));
+
+            alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Close", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    iAppointmentPresenter.changeFragment(new TrackingFragment());
+                }
+            });
+            alertDialog.show();
+        }
+    }
+
+    private void GetInfoPatient(JsonObject dataAppt) {
+        String patientAppt = dataAppt.get("data").getAsJsonObject().get("TelehealthAppointment").getAsJsonObject().get("PatientAppointment").toString();
+        PatientAppointment patientAppointment = gson.fromJson(patientAppt, PatientAppointment.class);
+        lblFirstName.setText(patientAppointment.getFirstName());
+        lblLastName.setText(patientAppointment.getLastName());
+        lblMobile.setText(patientAppointment.getPhoneNumber());
+        lblHome.setText(patientAppointment.getHomePhoneNumber());
+        lblSuburb.setText(patientAppointment.getSuburb());
+        lblDOB.setText(patientAppointment.getDOB());
+        lblEmail.setText(patientAppointment.getEmail());
+    }
+
+    private String GetNameDoctor(JsonObject dataAppt) {
+        for (Doctor doctor : (gson.fromJson(dataAppt.get("data").getAsJsonObject().get("Doctors").toString(), Doctor[].class))) {
+            firstDoctor = doctor.getFirstName() == null ? "NONE" : doctor.getFirstName();
+            middleDoctor = doctor.getMiddleName() == null ? " " : doctor.getMiddleName();
+            lastDoctor = doctor.getLastName() == null ? " " : doctor.getLastName();
+        }
+        return firstDoctor + middleDoctor + lastDoctor;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        getView().setFocusableInTouchMode(true);
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -316,7 +368,7 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
             rvImageAppointment.setLayoutManager(layoutManagerCategories);
             rvImageAppointment.setAdapter(adapterImageAppointment);
         }
-        if (listImage.size() <= 0){
+        if (listImage.size() <= 0) {
             lblImage.setVisibility(View.VISIBLE);
         }
     }

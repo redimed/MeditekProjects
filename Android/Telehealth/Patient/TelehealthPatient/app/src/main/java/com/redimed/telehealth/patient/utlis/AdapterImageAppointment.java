@@ -69,7 +69,7 @@ public class AdapterImageAppointment extends RecyclerView.Adapter<AdapterImageAp
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        Log.d("ADAPTER", e.toString());
+                        Log.d("ADAPTER", e.getLocalizedMessage());
                     }
                 });
     }

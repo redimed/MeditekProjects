@@ -12,8 +12,15 @@ import java.util.List;
  * Created by Fox on 1/19/2016.
  */
 public interface IAppointmentView {
-    void onLoadAppointment(JsonObject dataAppt, String msg);
+
     void onLoadToolbar();
+
+    void onLoadError(String msg);
+
+    void onLoadAppointment(JsonObject dataAppt);
+
     void onResultUpload(String picturePath, boolean result);
+
     void onLoadListImage(List<String> listImage, SharedPreferences spTelehealth);
+
 }

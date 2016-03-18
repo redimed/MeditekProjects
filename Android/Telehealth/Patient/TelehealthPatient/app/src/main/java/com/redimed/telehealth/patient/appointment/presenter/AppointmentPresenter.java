@@ -47,7 +47,6 @@ import retrofit.client.Response;
 public class AppointmentPresenter implements IAppointmentPresenter {
 
     private Gson gson;
-
     private Context context;
     private List<String> listUrl;
     private List<String> listImage;
@@ -81,12 +80,12 @@ public class AppointmentPresenter implements IAppointmentPresenter {
         registerApi.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                iAppointmentView.onLoadAppointment(jsonObject, "success");
+                iAppointmentView.onLoadAppointment(jsonObject);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                iAppointmentView.onLoadAppointment(null, error.getLocalizedMessage());
+                iAppointmentView.onLoadError(error.getLocalizedMessage());
             }
         });
     }

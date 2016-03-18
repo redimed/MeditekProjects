@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-class SettingTableViewController: UITableViewController {
+class SettingTableViewController: UITableViewController ,DTAlertViewDelegate {
     let patientService = PatientService()
     let alertView = UIAlertView()
     var patientInformation : PatientContainer!
@@ -42,28 +42,28 @@ class SettingTableViewController: UITableViewController {
     
     //get information patient
     func getInformationPatient(){
-        self.view.showLoading()
+        //self.view.showLoading()
         if let uuid = defaults.valueForKey("uid") as? String {
             
             patientService.getInformationPatientByUUID(uuid){
                 message , data in
                 
                 if message["message"] == "success" {
-                    self.view.hideLoading()
+                    //self.view.hideLoading()
                     self.patientInformation = data!
                     self.setDataToForm()
                 } else if message["message"] == "error"{
-                    self.view.hideLoading()
+                   // self.view.hideLoading()
                     self.alertView.alertMessage("Error", message: message["ErrorType"].string!)
                 }else {
                     
                     if message["TimeOut"].string ==  ErrorMessage.TimeOut {
-                        self.view.hideLoading()
+                      //  self.view.hideLoading()
                         self.alertView.alertMessage("Error", message: ErrorMessage.TimeOut)
                     }else if message["message"].string == ErrorMessage.TimeOutToken {
-                        self.view.hideLoading()
+                        //self.view.hideLoading()
                     }else {
-                        self.view.hideLoading()
+                       // self.view.hideLoading()
                         let message : String = String(message["ErrorsList"][0])
                         self.alertView.alertMessage("Error", message: message)
                     }
@@ -115,11 +115,26 @@ class SettingTableViewController: UITableViewController {
         }
         
     }
+    //MARK: - deletate DT ALERT
+    func willPresentDTAlertView(alertView: DTAlertView) {
+        NSLog("%@", "will present")
+    }
+    func didPresentDTAlertView(alertView: DTAlertView) {
+        NSLog("%@", "Did present")
+    }
+    func DTAlertViewWillDismiss(alertView: DTAlertView) {
+        NSLog("%@", "Will Dismiss")
+    }
+    func DTAlertViewDidDismiss(alertView: DTAlertView) {
+        NSLog("%@", "did Dismiss")
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "informationSegue" {
             let info = segue.destinationViewController as! InformationViewController
             info.patientInformation = patientInformation
         }else if segue.identifier == "Aboutsegue"{
+//           let alertView = DTAlertView(alertStyle: DTAlertStyle.DTAlertStyleSuccess, message: "Connecting to server...", title: "Notification", object: self)
+//            alertView.show()
             let FAQs = segue.destinationViewController as! FAQsViewController
             FAQs.titleString = "ABOUT US"
         }

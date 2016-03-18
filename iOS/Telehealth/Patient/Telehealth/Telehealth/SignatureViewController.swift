@@ -139,15 +139,15 @@ class SignatureViewController: UIViewController {
         appointmentService.uploadImage(image, userUID: userUID,fileType:"Signature" , compailer: {
             response in
             if response["message"] == "success"{
-                self.view.hideLoading()
+                
                 let  data = response["data"].string
-                
-                
+
                 self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:data!)
                 self.patientService.updateSignature(data!, patientUID: self.patientUID, completionHandler: {
                     response in
                     print("update success",response)
                     self.performSegueWithIdentifier("unwindToProfileSegue", sender: self)
+                    self.view.hideLoading()
                 })
                 
             }else {
@@ -165,10 +165,11 @@ class SignatureViewController: UIViewController {
         appointmentService.uploadImageNotLogin(image, userUID: userUID,fileType:"Signature" , compailer: {
             response in
             if response["message"] == "success"{
-                self.view.hideLoading()
+                
                 let  fileUID = response["data"].string
                 self.delegate?.updateSignature(self, sender: self.mainImageView.image!,imageUID:fileUID!)
                 self.navigationController!.popViewControllerAnimated(true)
+                self.view.hideLoading()
             }else {
                 self.view.hideLoading()
                //self.alertView.alertMessage("Error",message: "")

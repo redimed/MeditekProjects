@@ -72,6 +72,10 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
             selectOptionImage.hidden = true
             collectionView.hidden = true
         }
+        
+        //
+        
+        //
         delegateTextField()
         textView.delegate = self
         pickerView.delegate = self
@@ -81,8 +85,9 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
         DatepickerMode()
         PickerView()
     }
-    
+   
     func delegateTextField(){
+        addDoneButtontextView(textView)
         addDoneButton(mobileTextField)
         addDoneButton(firstNameTextField)
         addDoneButton(lastNameTextField)

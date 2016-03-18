@@ -20,6 +20,17 @@ class BaseViewController: UIViewController,UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    func addDoneButtontextView(textView:UITextView) {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
+            target: nil, action: nil)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
+            target: view, action: Selector("endEditing:"))
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        textView.inputAccessoryView = keyboardToolbar
+    }
+    
     func addDoneButton(textField:UITextField) {
         let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()

@@ -78,9 +78,12 @@ module.exports = React.createClass({
         })
         swal("Success!", "Drag change section successfully.", "success");
     },
-    _onComponentSectionSelectField: function(codeSection, codeRow, typeField) {
+    _onComponentSectionSelectField: function(codeSection, codeRow, refSection, refRow, typeField) {
         var fields = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields');
-        var ref = "field_" + codeSection + '_' + codeRow + '_' +fields.size;
+        var sectionRefNumber = refSection.split('_')[1];
+        var rowRefNumber = refRow.split('_')[2];
+
+        var ref = "field_" + sectionRefNumber + '_' + rowRefNumber + '_' +fields.size;
         if(Config.getPrefixField(typeField, 'eform_input') > -1){
             var object = { type: typeField, name: '', size: '12', ref: ref, preCal: ''};
             if(Config.getPrefixField(typeField, 'textarea') > -1)
@@ -123,8 +126,6 @@ module.exports = React.createClass({
     _onComponentSectionDragRow: function(fromObj, toObj) {
         var fromImmutable = this.state.sections.get(fromObj.codeSection).get('rows').get(fromObj.codeRow);
         var toImmutable = this.state.sections.get(toObj.codeSection).get('rows').get(toObj.codeRow);
-        console.log(fromImmutable.toJS());
-        console.log(toImmutable.toJS());
         var sections = this.state.sections;
         sections = sections.updateIn([fromObj.codeSection, 'rows', fromObj.codeRow], val => toImmutable);
         sections = sections.updateIn([toObj.codeSection, 'rows', toObj.codeRow], val => fromImmutable);
@@ -279,8 +280,10 @@ module.exports = React.createClass({
     _onComponentPageBarAddNewModule: function(){
         this.refs.modalListEFormTemplateModule.show();
     },
-    _onComponentSectionCreateRow: function(codeSection){
-        var rowRef = "row_"+codeSection+'_'+this.state.sections.get(codeSection).get('rows').size;
+    _onComponentSectionCreateRow: function(codeSection, refSection){
+        var sectionRefNumber = refSection.split('_')[1];
+
+        var rowRef = "row_"+sectionRefNumber+'_'+this.state.sections.get(codeSection).get('rows').size;
         this.setState(function(prevState) {
             return {
                 sections: prevState.sections.updateIn([codeSection, 'rows'], val => val.push(Immutable.Map({ref: rowRef, type: 'row', fields: Immutable.List(), size: 12})))
@@ -332,6 +335,24 @@ module.exports = React.createClass({
         })
         swal("Success!", "Your section has change page to "+value, "success");
     },
+    _onComponentSectionOrderSection: function(codeSection, value){
+        var sections = this.state.sections.deleteIn([codeSection]);
+        var sectionOrder = this.state.sections.get(codeSection);
+        var firstSections = sections.slice(0, value);
+        var appendFirstSections = firstSections.push(sectionOrder);
+        var secondSections = sections.slice(value, this.state.sections.size);
+        var finalSections = appendFirstSections;
+        secondSections.toJS().map(function(section){
+            finalSections = finalSections.push(Immutable.fromJS(section));
+        })
+
+       this.setState(function(prevState) {
+            return {
+                sections: finalSections
+            }
+        })
+        swal("Success!", "Your section has order to "+value, "success");
+    },
     render: function(){
 	return (
 		<div className="page-content">
@@ -376,7 +397,8 @@ module.exports = React.createClass({
                                     			onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
                                     			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
                                                                  onDragRow={this._onComponentSectionDragRow}
-                                                                 onChangePage={this._onComponentSectionChangePage}/>
+                                                                 onChangePage={this._onComponentSectionChangePage}
+                                                                 onOrderSection={this._onComponentSectionOrderSection}/>
                                     	}, this)
                                 }
                                 <ComponentPageBar ref="pageBarBottom"

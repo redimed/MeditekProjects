@@ -1,6 +1,7 @@
 var CommonModal = require('common/modal');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
 var ComponentRow = require('modules/eform/eformTemplateDetail/row');
+var CommonInput = require('common/inputText');
 
 module.exports = React.createClass({
     propTypes: {
@@ -24,7 +25,8 @@ module.exports = React.createClass({
         onCreateTableRow: React.PropTypes.func,
         onRemoveTableRow: React.PropTypes.func,
         onUpdateTableColumn: React.PropTypes.func,
-        onChangePage: React.PropTypes.func
+        onChangePage: React.PropTypes.func,
+        onOrderSection: React.PropTypes.func
     },
     getCode: function(){
         return this.props.code;
@@ -43,6 +45,7 @@ module.exports = React.createClass({
     },
     componentDidMount: function() {
         if (this.props.permission === 'eformDev') {
+            this.refs.inputOrder.setValue(this.props.code);
             var self = this;
             //this._dragAndDropSections();
             //this._dragAndDropRows();
@@ -156,7 +159,7 @@ module.exports = React.createClass({
             closeOnConfirm: false,
             allowOutsideClick: true
         }, function() {
-            self.props.onCreateRow(self.props.code);
+            self.props.onCreateRow(self.props.code, self.props.refTemp);
         })
     },
     _onUpdateSection: function() {
@@ -186,9 +189,20 @@ module.exports = React.createClass({
             closeOnConfirm: false,
             allowOutsideClick: true
         }, function() {
-            self.refs.modalUpdateSection.hide()
-            self.props.onUpdateSection(self.props.code, name)
+            self.refs.modalUpdateSection.hide();
+            self.props.onUpdateSection(self.props.code, name);
         })
+    },
+    _onOrderSection: function(){
+        this.refs.modalOrderSection.show();
+    },
+    _onSaveInputOrder: function(){
+        var value = this.refs.inputOrder.getValue();
+        this.refs.modalOrderSection.hide();
+        this.props.onOrderSection(this.props.code, value);
+    },
+    _onSelectField: function(codeSection, codeRow, refRow, type){
+        this.props.onSelectField(codeSection, codeRow, this.props.refTemp, refRow, type);
     },
     setValue: function(refRow, fieldRef, value){
         if(typeof this.refs[refRow] !== 'undefined')
@@ -231,6 +245,18 @@ module.exports = React.createClass({
                             <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateSection}>Save</button>
                         </div>
                     </CommonModal>
+                    <CommonModal ref="modalOrderSection">
+                        <div className="header">
+                            <h4>Order Section</h4>
+                        </div>
+                        <div className="content">
+                            <CommonInput ref="inputOrder"/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){this.refs.modalOrderSection.hide()}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrder}>Save</button>
+                        </div>
+                    </CommonModal>
                     <div className="col-md-12 dragSection">
                         <div className="portlet box green" id={"dragSection_"+this.props.code}>
                             <div className="portlet-title">
@@ -258,6 +284,11 @@ module.exports = React.createClass({
                                                     </a>
                                                 </li>
                                                 <li>
+                                                    <a onClick={this._onOrderSection}>
+                                                        <i className="fa fa-sort"></i> Order Section
+                                                    </a>
+                                                </li>
+                                                <li>
                                                     <a>
                                                         <input type="text" ref="page"/>
                                                     </a>
@@ -282,6 +313,7 @@ module.exports = React.createClass({
                                 <div className="form-body">
                                     {
                                         this.props.rows.map(function(row, index){
+                                            console.log(row.toJS());
                                             return <ComponentRow
                                                             key={index}
                                                             code={index}
@@ -293,7 +325,7 @@ module.exports = React.createClass({
                                                             fields={row.get('fields')}
                                                             permission={this.props.permission}
                                                             onRemoveRow={this.props.onRemoveRow}
-                                                            onSelectField={this.props.onSelectField}
+                                                            onSelectField={this._onSelectField}
                                                             onSaveFieldDetail={this.props.onSaveFieldDetail}
                                                             onRemoveField={this.props.onRemoveField}
                                                             onRemoveTableColumn={this.props.onRemoveTableColumn}

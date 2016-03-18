@@ -19,13 +19,13 @@ public class PatientAppointment {
     @SerializedName("HomePhoneNumber")
     public String HomePhoneNumber;
 
-    @SerializedName("Suburd")
-    public String Suburd;
+    @SerializedName("Suburb")
+    public String Suburb;
 
     @SerializedName("DOB")
     public String DOB;
 
-    @SerializedName("Email")
+    @SerializedName("Email1")
     public String Email;
 
     public String getFirstName() {
@@ -60,12 +60,12 @@ public class PatientAppointment {
         HomePhoneNumber = homePhoneNumber;
     }
 
-    public String getSuburd() {
-        return Suburd;
+    public String getSuburb() {
+        return Suburb;
     }
 
-    public void setSuburd(String suburd) {
-        Suburd = suburd;
+    public void setSuburb(String suburb) {
+        Suburb = suburb;
     }
 
     public String getDOB() {

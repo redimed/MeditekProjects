@@ -48,7 +48,7 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
     private int lastPosition;
     private IMainPresenter iMainPresenter;
     private List<Appointment> listAppointment;
-    private static String firstName, lastName, refName, TAG = "=====AdapterAppointment=====";
+    private static final String TAG = "=====AdapterAppointment=====";
 
     public AdapterAppointment(Context context, List<Appointment> data, FragmentActivity fragmentActivity, RecyclerView recyclerView) {
         this.context = context;
@@ -147,17 +147,18 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         if (viewHolder instanceof AppointmentViewHolder) {
             AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
 
-            if (listAppointment.get(position).getDoctor() != null){
-                firstName = "NONE";
-                lastName = "";
-            } else {
-                Doctor[] doctors = listAppointment.get(position).getDoctor();
+            String firstName = "NONE", lastName = "", refName = "";
+            Doctor[] doctors = listAppointment.get(position).getDoctor();
+            if (doctors != null) {
                 for (Doctor doctor : doctors) {
                     if (doctor != null) {
                         firstName = doctor.getFirstName() == null ? "NONE" : doctor.getFirstName();
                         lastName = doctor.getLastName() == null ? "" : doctor.getLastName();
                     }
                 }
+            } else {
+                firstName = "NONE";
+                lastName = "";
             } if (listAppointment.get(position).getTelehealthAppointment() != null) {
                 refName = listAppointment.get(position).getTelehealthAppointment().getRefName() == null ? "NONE" : listAppointment.get(position).getTelehealthAppointment().getRefName();
             }

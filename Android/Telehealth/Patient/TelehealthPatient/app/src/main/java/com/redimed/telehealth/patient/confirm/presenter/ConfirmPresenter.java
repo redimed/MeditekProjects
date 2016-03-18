@@ -152,7 +152,7 @@ public class ConfirmPresenter implements IConfirmPresenter {
         patientAppointment.setPhoneNumber(i.getStringExtra("mobile"));
         patientAppointment.setHomePhoneNumber(i.getStringExtra("mobile"));
         patientAppointment.setDOB(i.getStringExtra("dob"));
-        patientAppointment.setSuburd(i.getStringExtra("suburb"));
+        patientAppointment.setSuburb(i.getStringExtra("suburb"));
         patientAppointment.setEmail(i.getStringExtra("email"));
 
         makeRequest(patientAppointment, i.getStringExtra("des"), i.getStringExtra("apptType"), fileUploads, currentDate);

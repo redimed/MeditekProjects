@@ -29,6 +29,9 @@ public class Appointment {
     @SerializedName("Status")
     private String Status;
 
+    @SerializedName("Type")
+    private String Type;
+
     @SerializedName("Enable")
     private String Enable;
 
@@ -97,12 +100,12 @@ public class Appointment {
         Status = status;
     }
 
-    public String getEnable() {
-        return Enable;
+    public String getType() {
+        return Type;
     }
 
-    public void setEnable(String enable) {
-        Enable = enable;
+    public void setType(String type) {
+        Type = type;
     }
 
     public Doctor[] getDoctor() {

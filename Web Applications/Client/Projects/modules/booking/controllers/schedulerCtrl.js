@@ -156,6 +156,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         RosterService.PostListRoster(postData)
             .then(function(response) {
                 var events = [];
+
                 _.forEach(response.data.rows, function(roster, index) {
                     var doctor = roster.UserAccounts[0].Doctor;
                     var FromTime = moment(roster.FromTime).format('YYYY-MM-DDTHH:mm:ss');
@@ -238,6 +239,55 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
     };
     $scope.eventRender = function(event, element, view) {
         angular.element('.fc-other-month').css('background', '#eee');
+        if (!startedViewRender)
+            return;
+        else
+            startedViewRender = false;
+
+        var events = $('#calendar').fullCalendar('clientEvents');
+
+        if (events.length === 0) {
+            console.log('no events at all');
+            //Set to default times?
+            return;
+        }
+
+        var visibleAndNotAllDayEvents = events.filter(function(event) {
+            //end not necessarily defined
+            var endIsWithin = event.end ? event.end.isWithin(view.start, view.end) : false;
+            return !event.allDay && (event.start.isWithin(view.start, view.end) || endIsWithin);
+        });
+
+        if (visibleAndNotAllDayEvents.length === 0) {
+            console.log('no visible not all day events');
+            //Set to default times?
+            return;
+        }
+
+        var earliest = visibleAndNotAllDayEvents.reduce(function(previousValue, event) {
+            return greaterTime(previousValue, event.start).isSame(previousValue) ? event.start : previousValue;
+        }, moment('23:59:59', 'HH:mm:ss'));
+
+        var latest = visibleAndNotAllDayEvents.reduce(function(previousValue, event) {
+            var end = event.end ? event.end.clone() : event.start.clone().add(moment(calendarConfig.defaultTimedEventDuration, 'HH:mm:ss'));
+
+            return greaterTime(previousValue, end);
+        }, moment('00:00:00', 'HH:mm:ss'));
+
+        console.log("earliest", earliest);
+
+        if (calendarConfig.minTime !== earliest.format('HH:mm:ss') || calendarConfig.maxTime !== latest.format('HH:mm:ss')) {
+            //Reinitialize the whole thing
+
+            var currentDate = $('#calendar').fullCalendar('getDate');
+
+            $('#calendar').fullCalendar('destroy');
+            $('#calendar').fullCalendar($.extend(calendarConfig, {
+                defaultDate: currentDate,
+                minTime: earliest.format('HH:mm:ss'),
+                maxTime: latest.format('HH:mm:ss')
+            }));
+        }
     };
 
     function getDateCalendar(){
@@ -248,9 +298,11 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
     }
 
     $scope.viewRender = function(view, element) {
+        startedViewRender = true;
         var today = getDateCalendar();
         ServerListBooking(today);
     };
+
 
     $scope.eventAfterRender = function(event, element, view) {
         if (typeof event.Patient !== 'undefined') {
@@ -413,8 +465,17 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
     $scope.eventClick = function(event, jsEvent, view, start, end, element) {};
 
     var todayNotTZ = moment().format('YYYY-MM-DD');
+    var startedViewRender = true;
 
-    $scope.scheduler = angular.element('#calendar').fullCalendar({
+    function greaterTime(first, second) {
+        //Assuming dates are the same year
+        if (first.clone().dayOfYear(0).isBefore(second.clone().dayOfYear(0)))
+            return second;
+        else
+            return first;
+    }
+
+    var calendarConfig = {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
         timezone: 'UTC',
         eventStartEditable: false,
@@ -428,19 +489,15 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         eventLimit: true, // allow "more" link when too many events
         scrollTime: moment(),
         minTime: "00:00:00",
-        maxTime: "23:00:00",
+        maxTime: "24:00:00",
         header: {
             left: 'today prev,next ',
             center: 'title',
-            right: 'agendaDay,agendaTwoDay, agendaWeek', // right: 'agendaDay,agendaTwoDay,agendaWeek,month'
+            right: 'agendaDay', // right: 'agendaDay,agendaTwoDay,agendaWeek,month'
         },
         views: {
             agendaTwoDay: {
                 type: 'agenda',
-                duration: {
-                    days: 2
-                },
-
                 // views that are more than a day will NOT do this behavior by default
                 // so, we need to explicitly enable it
                 groupByResource: true
@@ -467,7 +524,9 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         eventResizeStop: $scope.eventResizeStop,
         eventMouseover: function(data, event, view) {},
         eventMouseout: function(calEvent, jsEvent) {},
-    });
+    }
+
+    $scope.scheduler = angular.element('#calendar').fullCalendar(calendarConfig);
 
     //INIT
     getListSite();

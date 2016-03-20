@@ -33,8 +33,8 @@ var configNcBaseUrl={
 };
 
 var configEFormUrl={
-	// 'local':'https://192.168.1.235:3014',
-	'local':'https://localhost:3014',
+	'local':'https://192.168.1.235:3014',
+	// 'local':'https://localhost:3014',
 	'meditekServer':'https://meditek.redimed.com.au:3014',
 	//'meditekServer': 'https://localhost:3014',
 	'testApp':'https://testapp.redimed.com.au:3014',

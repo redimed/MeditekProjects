@@ -376,7 +376,7 @@ module.exports = {
                 }
             }
         },
-        PatientKinMiddleName: {
+        PatientKinLastName: {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate: {

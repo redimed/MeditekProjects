@@ -498,10 +498,10 @@ module.exports = {
         });
 
         //association UserAccount - TelehealthUser
-        UserAccount.belongsTo(TelehealthUser, {
-            foreignKey: 'ID'
+        UserAccount.hasOne(TelehealthUser, {
+            foreignKey: 'UserAccountID'
         });
-        TelehealthUser.hasOne(UserAccount, {
+        TelehealthUser.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
     }

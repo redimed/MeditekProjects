@@ -36,7 +36,7 @@ module.exports = function(data, userInfo) {
                             if (!_.isEmpty(rosterUpdate) &&
                                 HelperService.CheckExistData(rosterUpdate.FromTime)) {
                                 var startTime = moment(rosterUpdate.FromTime).format('YYYY-MM-DD HH:mm:ss Z');
-                                var endTime = moment(data.Roster.EndRecurrence).add(1, 'day').format('YYYY-MM-DD HH:mm:ss Z');
+                                var endTime = moment(data.Roster.EndRecurrence || rosterUpdate.FromTime).add(1, 'day').format('YYYY-MM-DD HH:mm:ss Z');
                                 var timeTo = moment(rosterUpdate.ToTime).format('YYYY-MM-DD HH:mm:ss Z').split(' ')[1];
                                 var rangTime = moment.range(startTime, endTime);
                                 var arrayWhereClauseRoster = [];
@@ -478,6 +478,12 @@ module.exports = function(data, userInfo) {
                                                 }
                                             });
                                     }
+                                } else {
+                                    var error = new Error('UpdateRequestRoster.failed.RepeatRoster');
+                                    defer.reject({
+                                        error: error,
+                                        transaction: t
+                                    });
                                 }
                             }
                         }, function(err) {

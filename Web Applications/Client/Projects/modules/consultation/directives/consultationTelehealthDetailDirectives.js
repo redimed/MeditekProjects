@@ -190,7 +190,7 @@ app.directive('telehealthDetail', function() {
                 $scope.saveWaAppointment = function() {
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
-                    console.log($scope.wainformation)
+                    console.log('loi',$scope.wainformation);
                     WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                         toastr.success("Update appointment successfully !");
                         swal.close();

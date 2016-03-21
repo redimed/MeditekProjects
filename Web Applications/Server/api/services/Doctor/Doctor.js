@@ -924,17 +924,16 @@ module.exports = {
 			          		model: RelUserRole,
 			          		attributes: ['RoleId'],
 			          		required: false,
+
 				    	},
-					],
-		       		model: UserAccount,
-		      		attributes: ['PhoneNumber','Enable', 'UID'],
-		      		include:[
-		      			{
+				    	{
 		      				model: TelehealthUser,
 		      				required: false,
 		      				attributes:['UID']
 		      			}
-		      		],
+					],
+		       		model: UserAccount,
+		      		attributes: ['PhoneNumber','Enable', 'UID'],
 			  		where:{
 			   			$or: whereClause.UserAccount
 			   		},

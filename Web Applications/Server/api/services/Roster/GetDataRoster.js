@@ -25,7 +25,7 @@ module.exports = {
                     var timeFrom = fromTime.split(' ')[1];
                     var zoneFrom = fromTime.split(' ')[2];
                     var zoneTo = toTime.split(' ')[2];
-                     var zoneServer = moment().format('Z');
+                    var zoneServer = moment().format('Z');
                     var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
                     var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
                     var rangeDateFrom = moment.range(startDate, endDate);
@@ -113,7 +113,7 @@ module.exports = {
                     var timeFrom = fromTime.split(' ')[1];
                     var zoneFrom = fromTime.split(' ')[2];
                     var zoneTo = toTime.split(' ')[2];
-                     var zoneServer = moment().format('Z');
+                    var zoneServer = moment().format('Z');
                     var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
                     var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
                     var rangeDateFrom = moment.range(startDate, endDate);
@@ -162,7 +162,7 @@ module.exports = {
             (moment(data.ToTime, 'YYYY-MM-DD Z', true).isValid() ||
                 moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z', true).isValid())) {
             var objectRoster = {
-                UID: UUIDService.Create(),
+                UID: data.UID || UUIDService.Create(),
                 FromTime: data.FromTime,
                 ToTime: data.ToTime,
                 IsRecurrence: data.IsRecurrence,

@@ -274,19 +274,19 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
             return greaterTime(previousValue, end);
         }, moment('00:00:00', 'HH:mm:ss'));
 
-        console.log("earliest", earliest);
-
         if (calendarConfig.minTime !== earliest.format('HH:mm:ss') || calendarConfig.maxTime !== latest.format('HH:mm:ss')) {
             //Reinitialize the whole thing
 
             var currentDate = $('#calendar').fullCalendar('getDate');
 
             $('#calendar').fullCalendar('destroy');
-            $('#calendar').fullCalendar($.extend(calendarConfig, {
-                defaultDate: currentDate,
-                minTime: earliest.format('HH:mm:ss'),
-                maxTime: latest.format('HH:mm:ss')
-            }));
+            setTimeout(function(){
+                $('#calendar').fullCalendar($.extend(calendarConfig, {
+                    defaultDate: currentDate,
+                    minTime: earliest.format('HH:mm:ss'),
+                    maxTime: latest.format('HH:mm:ss')
+                }));
+            }, 500)
         }
     };
 
@@ -474,6 +474,8 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         else
             return first;
     }
+
+    var tempCalendarConfig = {};
 
     var calendarConfig = {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',

@@ -928,6 +928,13 @@ module.exports = {
 					],
 		       		model: UserAccount,
 		      		attributes: ['PhoneNumber','Enable', 'UID'],
+		      		include:[
+		      			{
+		      				model: TelehealthUser,
+		      				required: false,
+		      				attributes:['UID']
+		      			}
+		      		],
 			  		where:{
 			   			$or: whereClause.UserAccount
 			   		},

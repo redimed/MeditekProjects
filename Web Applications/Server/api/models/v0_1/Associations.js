@@ -486,5 +486,23 @@ module.exports = {
             through: 'RelEFormPatient',
             foreignKey: 'PatientID'
         });
+
+        //association PatientFund - Fund
+        PatientFund.belongsToMany(Fund, {
+            through: 'RelPatientFund',
+            foreignKey: 'PatientFundID'
+        });
+        Fund.belongsToMany(PatientFund, {
+            through: 'RelPatientFund',
+            foreignKey: 'FundID'
+        });
+
+        //association UserAccount - TelehealthUser
+        UserAccount.belongsTo(TelehealthUser, {
+            foreignKey: 'ID'
+        });
+        TelehealthUser.hasOne(UserAccount, {
+            foreignKey: 'UserAccountID'
+        });
     }
 };

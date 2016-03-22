@@ -728,7 +728,7 @@ module.exports = {
                 throw err;
             })
             .then(function(user){
-                console.log(user);
+
                 info.UserAccountID = user.ID;
                 info.UserAccountUID = user.UID;
                 return Patient.findOne({
@@ -742,7 +742,7 @@ module.exports = {
                 throw err;
             })
             .then(function(got_patient) {
-                console.log("got_patient ",got_patient);
+
                 if(got_patient == null || got_patient == ''){
                     return Patient.create(info,{transaction:t});
                 }
@@ -757,78 +757,86 @@ module.exports = {
                 throw err;
             })
             .then(function(result){
-                console.log("tao ra patient ",info);
-                patientInfo = result;
+                if(other != null) {
+                    for(var key in other){
+                        other[key].PatientID = result.ID;
+                        other[key].UID = UUIDService.Create();
+                    }
+                    PatientDetail = other;
+                }
                 return RelUserRole.create({
                     UserAccountId : info.UserAccountID,
                     RoleId        : 3,
                     SiteId        : 1,
                     CreatedDate   : new Date()
-                },{transaction:t})
-                
+                },{transaction:t});
             }, function(err){
                 // t.rollback();
                 console.log("err ",err);
                 throw err;
             })
-            .then(function(s){
-                    console.log(s);
-                    if(other != null) {
-                        for(var key in other){
-                            other[key].PatientID = patientInfo.ID;
-                            other[key].UID = UUIDService.Create();
-                        }
-                        PatientDetail = other;
-                        if(PatientDetail!=null) {
-                            if(PatientDetail.PatientPension != null) {
-                                return PatientPension.create(PatientDetail.PatientPension,{transaction:t});
-                            }
-                        }
-                    }
-                    else {
-                        return s;
-                    }
-                },function(err){
-                    // t.rollback();
+            .then(function(created_reluserrole) {
+                if(created_reluserrole == null || created_reluserrole == '') {
+                    var err = new Error("CreatePatient.Error");
+                    err.pushError("RelUserRole.createfail");
                     throw err;
-                })
-                .then(function(result){
-                    if(PatientDetail.PatientMedicare != null) {
-                        return PatientMedicare.create(PatientDetail.PatientMedicare,{transaction:t});
+                }
+                else {
+                    if(PatientDetail != null && PatientDetail != '') {
+                        if(PatientDetail.PatientMedicare != null && PatientDetail.PatientMedicare != '') {
+                            return PatientMedicare.create(PatientDetail.PatientMedicare,{transaction:t});
+                        }
                     }
-                    else {
-                        return result;
-                    }
-                },function(err){
-                   // t.rollback();
-                   throw err; 
-                })
-                .then(function(result){
-                    if(PatientDetail.PatientKin != null) {
+                }
+            },function(err) {
+                throw err;
+            })
+            .then(function(created_patientMedicare) {
+                if(PatientDetail != null && PatientDetail != '') {
+                    if(PatientDetail.PatientKin != null && PatientDetail.PatientKin != '') {
                         return PatientKin.create(PatientDetail.PatientKin,{transaction:t});
                     }
-                    else {
-                        return result;
+                }
+            },function(err) {
+                throw err;
+            })
+            .then(function(created_patientKin) {
+                if(PatientDetail != null && PatientDetail != '') {
+                    if(PatientDetail.Fund != null && PatientDetail.Fund != '') {
+                        return PatientFund.create(PatientDetail.Fund,{transaction:t});
                     }
-                },function(err){
-                    // t.rollback();
-                    throw err;
-                })
-                .then(function(result){
-                    if(PatientDetail.PatientDVA != null) {
+                }
+            },function(err) {
+                throw err;
+            })
+            .then(function(created_patientFund) {
+                if(PatientDetail != null && PatientDetail != '') {
+                    if(PatientDetail.PatientDVA != null && PatientDetail.PatientDVA != '') {
                         return PatientDVA.create(PatientDetail.PatientDVA,{transaction:t});
                     }
-                    else {
-                        return result;
+                }
+            },function(err) {
+                throw err;
+            })
+            .then(function(created_patientDVA) {
+                if(PatientDetail != null && PatientDetail != '') {
+                    if(PatientDetail.PatientGP != null && PatientDetail.PatientGP != '') {
+                        return PatientGP.create(PatientDetail.PatientGP,{transaction:t});
                     }
-                },function(err){
-                    // t.rollback();
-                    throw err;
-                })
-
-            .then(function(success) {
-                //call send Mail or send SMSs
-                console.log("ishaveUser ",ishaveUser);
+                }
+            },function(err) {
+                throw err;
+            })
+            .then(function(created_patientGP) {
+                if(PatientDetail != null && PatientDetail != '') {
+                    if(PatientDetail.PatientPension != null && PatientDetail.PatientPension != '') {
+                        return PatientPension.create(PatientDetail.PatientPension,{transaction:t});
+                    }
+                }
+            },function(err) {
+                throw err;
+            })
+            .then(function(created_patientPension){
                 if(ishaveUser == false) {
                     if(isCreateByPhoneAndEmail == true) {
                         data.content = data.PinNumber;
@@ -857,7 +865,7 @@ module.exports = {
                             }
                             else{
                                 info.transaction = t;
-								info.PinNumber = userInfo.PinNumber;
+                                info.PinNumber = userInfo.PinNumber;
                                 defer.resolve(info);
                             }
                         });
@@ -869,21 +877,30 @@ module.exports = {
                                 throw err;
                             else{
                                 info.transaction = t;
-								info.PinNumber = userInfo.PinNumber;
+                                info.PinNumber = userInfo.PinNumber;
                                 defer.resolve(info);
                             }
                         });
                     }
                     else {
                         info.transaction = t;
-						info.PinNumber = userInfo.PinNumber;
+                        info.PinNumber = userInfo.PinNumber;
                         defer.resolve(info);
                     }
+
                 }
                 else {
                     info.transaction = t;
                     defer.resolve(info);
                 }
+
+            },function(err) {
+                throw err;
+            })
+            .then(function(success) {
+                //call send Mail or send SMSs
+                console.log("ishaveUser ",ishaveUser);
+                defer.resolve(success);
             },function(err) {
                 t.rollback();
                 defer.reject(err);

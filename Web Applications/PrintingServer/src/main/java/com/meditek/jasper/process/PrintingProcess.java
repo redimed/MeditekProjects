@@ -88,9 +88,9 @@ public class PrintingProcess {
         }
     }
     
-    public ByteArrayOutputStream jasperPrinting(List<FormDataModel> formData, String formUID){
+    public ByteArrayOutputStream jasperPrinting(List<FormDataModel> formData, String formUID, String baseUrl) throws Exception{
         try {
-            Hashtable parsedData = dataParsing.jasperDataParse(formData);
+            Hashtable parsedData = dataParsing.jasperDataParse(formData, baseUrl);
             for (Enumeration data = parsedData.keys(); data.hasMoreElements();){
                 String key= (String)data.nextElement();
                 System.out.println("Key: "+key+"                    Value: "+ parsedData.get(key));

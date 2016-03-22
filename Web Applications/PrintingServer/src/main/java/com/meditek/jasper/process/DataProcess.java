@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
@@ -77,7 +78,7 @@ public class DataProcess {
         return parsedData;
     }
     
-    public Hashtable jasperDataParse(List<FormDataModel> data){
+    public Hashtable jasperDataParse(List<FormDataModel> data, String baseUrl) throws Exception{
         Hashtable parsedData = new Hashtable();
         //init params
         List<String> tableRefs = new ArrayList<String>();
@@ -93,12 +94,18 @@ public class DataProcess {
         for(FormDataModel d : tableIdentity){
             List<Hashtable> tableHash = jasperTableDataParse(d, d.getColumns(), d.getRows(), data);
             parsedData.put(d.getName().toLowerCase(), tableHash);
-        }
+        } 
         //populate remaning data (non-table)
         for(FormDataModel d : data){
             //only if it's not table identity or not a cell in a table
             if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
-                parsedData.put(d.getName().toLowerCase(), d.getValue());
+                if(d.getName().toLowerCase().contains("signature") || d.getType().equals("eform_input_signature")){
+                    BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
+//                    BufferedImage image = ImageIO.read(new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/4a3efefb-39a7-441c-9d59-1bc638b527c7").openStream());
+
+                    parsedData.put(d.getName().toLowerCase(), image);
+                }
+                else parsedData.put(d.getName().toLowerCase(), d.getValue());
             }
         }
         return parsedData;

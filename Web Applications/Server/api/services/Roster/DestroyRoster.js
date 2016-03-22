@@ -22,11 +22,10 @@ module.exports = function(data, userInfo) {
                         })
                         .then(function(rosterRes) {
                             if (!_.isEmpty(rosterRes)) {
-                                rosterRes.FromTime = moment(rosterRes.FromTime).format('YYYY-MM-DD HH:mm:ss Z');
-                                rosterRes.ToTime = moment(rosterRes.ToTime).format('YYYY-MM-DD HH:mm:ss Z');
-                                var zoneServer = moment().format('Z');
-                                rosterRes.EndRecurrence =
-                                    moment(data.Roster.EndRecurrence.split(' ')[0] + ' ' + data.Roster.EndRecurrence.split(' ')[1] + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
+                                var clientZone = data.Roster.EndRecurrence.split(' ')[2];
+                                rosterRes.FromTime = moment(rosterRes.FromTime).utcOffset(clientZone).format('YYYY-MM-DD HH:mm:ss Z');
+                                rosterRes.ToTime = moment(rosterRes.ToTime).utcOffset(clientZone).format('YYYY-MM-DD HH:mm:ss Z');
+                                rosterRes.EndRecurrence = data.Roster.EndRecurrence;
                                 var rosterRepeat = Services.GetDataRoster.GetRosterRepeat(rosterRes, userInfo);
                                 if (!_.isEmpty(rosterRepeat) &&
                                     _.isArray(rosterRepeat)) {

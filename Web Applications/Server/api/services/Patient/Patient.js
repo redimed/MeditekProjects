@@ -756,15 +756,21 @@ module.exports = {
                 throw err;
             })
             .then(function(result){
-                console.log("tao ra patient ",result);
+                console.log("tao ra patient ",info);
                 return RelUserRole.create({
                     UserAccountId : info.UserAccountID,
                     RoleId        : 3,
                     SiteId        : 1,
                     CreatedDate   : new Date()
                 },{transaction:t})
-                .then(function(s){
-					console.log(s);
+                
+            }, function(err){
+                // t.rollback();
+                console.log("err ",err);
+                throw err;
+            })
+            .then(function(s){
+                    console.log(s);
                     if(other != null) {
                         for(var key in other){
                             other[key].PatientID = result.ID;
@@ -817,11 +823,7 @@ module.exports = {
                     // t.rollback();
                     throw err;
                 })
-            }, function(err){
-                // t.rollback();
-                console.log("err ",err);
-                throw err;
-            })
+
             .then(function(success) {
                 //call send Mail or send SMSs
                 console.log("ishaveUser ",ishaveUser);

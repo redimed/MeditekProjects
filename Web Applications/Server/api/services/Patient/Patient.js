@@ -661,7 +661,8 @@ module.exports = {
         var isCreateByPhoneAndEmail = false;
         var ishaveUser = false;
         var userInfo ={};
-        var defer = $q.defer(); 
+        var defer = $q.defer();
+        var patientInfo = {};
         var info = {
             Title           : data.Title,
             FirstName       : data.FirstName,
@@ -757,6 +758,7 @@ module.exports = {
             })
             .then(function(result){
                 console.log("tao ra patient ",info);
+                patientInfo = result;
                 return RelUserRole.create({
                     UserAccountId : info.UserAccountID,
                     RoleId        : 3,
@@ -773,7 +775,7 @@ module.exports = {
                     console.log(s);
                     if(other != null) {
                         for(var key in other){
-                            other[key].PatientID = result.ID;
+                            other[key].PatientID = patientInfo.ID;
                             other[key].UID = UUIDService.Create();
                         }
                         PatientDetail = other;

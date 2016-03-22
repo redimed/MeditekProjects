@@ -152,9 +152,6 @@ class SignatureViewController: UIViewController {
                 
             }else {
                 self.view.hideLoading()
-//                print("error",response["ErrorType"])
-//                let error = response["ErrorType"].string
-//                self.alertView.alertMessage("Error", message: error!)
             }
         })
         

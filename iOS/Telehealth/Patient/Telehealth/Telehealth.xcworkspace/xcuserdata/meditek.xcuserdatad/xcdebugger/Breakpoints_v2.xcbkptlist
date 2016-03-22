@@ -25,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Telehealth/TokenAPI.swift"
-            timestampString = "479827741.250058"
+            filePath = "Telehealth/HomeViewController.swift"
+            timestampString = "480324857.008954"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "getNewToken()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Telehealth/RequestTelehealthViewController.swift"
-            timestampString = "479958055.807276"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "424"
-            endingLineNumber = "424"
-            landmarkName = "checkField(_:)"
+            startingLineNumber = "384"
+            endingLineNumber = "384"
+            landmarkName = "getInformationPatient()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -115,9 +115,7 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
             
             pickerController.didSelectAssets = { [unowned self] (assets: [DKAsset]) in
                 print("didSelectAssets")
-                if(sourceType == DKImagePickerControllerSourceType(2)){
-                   self.ArrayImageUID = []
-                }
+                self.ArrayImageUID = []
                 self.assets = assets
                 self.collectionView?.reloadData()
                 for i in assets {

@@ -50,7 +50,7 @@ class ConfirmRequestTelehealthViewController: UIViewController ,signatureDelegat
         
     }
     override func viewWillAppear(animated: Bool) {
-        if let uuid = defaults.valueForKey("uid") as? String {
+        if let _ = defaults.valueForKey("uid") as? String {
             if(AppointmentSignatureUID != ""){
                 self.patientService.getImage((AppointmentSignatureUID), completionHandler: { image in
                     self.imageSignature.image = image
@@ -139,9 +139,8 @@ class ConfirmRequestTelehealthViewController: UIViewController ,signatureDelegat
             response in
             if response["status"] == "success"{
                 self.view.hideLoading()
-                self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
                 self.alertView.alertMessage("Success", message: "Request Telehealth Success!")
-                
+                self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
             }else {
                 self.view.hideLoading()
                 self.alertView.alertMessage("Error", message: "\(response["ErrorType"])")

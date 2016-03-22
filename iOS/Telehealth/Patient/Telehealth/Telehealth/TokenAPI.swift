@@ -18,6 +18,7 @@ class TokenAPI {
             ]
             config.setHeader()
             print("config.headers",config.headers)
+            print("param",parameters)
             if(UIApplication.sharedApplication().isConnectedToNetwork()){
                 Alamofire.request(.POST,ConfigurationSystem.Http_3006 + UrlInformationPatient.getNewToken, headers:config.headers, parameters: parameters)
                     .responseJSON {

@@ -32,6 +32,9 @@ class VerifyPhoneAPI:TokenAPI {
                 "deviceType": "ios"
             ]
         ]
+        
+        print(config.headers)
+        print(parameters)
         if(UIApplication.sharedApplication().isConnectedToNetwork()){
             Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber ,headers:config.headers, parameters: parameters).responseJSON{
                 response  in
@@ -114,12 +117,14 @@ class VerifyPhoneAPI:TokenAPI {
             "VerificationToken":verifyCode,
             "AppID":UIApplication.sharedApplication().bundleID()
         ]
+        print("aaaa",parameters)
         if(UIApplication.sharedApplication().isConnectedToNetwork()){
             Alamofire.request(.POST, ConfigurationSystem.Http_3006 + UrlAPICheckPhoneNumber.apiLogin ,headers:config.headers, parameters: parameters).responseJSON{
                 response in
                 
                 switch response.result {
                 case .Success(let JSONData):
+                    print(response.response?.allHeaderFields)
                     if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
                         if requireupdatetoken as! String == "true" {
                             print("Update token",requireupdatetoken)

@@ -195,5 +195,17 @@ module.exports = {
                 }
             })
         });
+    },
+    ListRoomSocket: function(req, res) {
+        var roomList = sails.sockets.rooms();
+        console.log("roomList",roomList);
+        res.ok({roomList:roomList});
+    },
+    TotalUserInRoom: function(req,res) {
+        var roomId = req.body.UID;
+        var userInRoom = sails.sockets.subscribers(roomId);
+        var toal = sails.sockets.subscribers(roomId).length;
+        console.log("userInRoom",userInRoom);
+        res.ok({userInRoom:userInRoom,toal:toal});
     }
 }

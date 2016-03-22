@@ -19,8 +19,8 @@ module.exports={
       'TestPushBuryJob':true,
   	},
 
-  	'UserAccount/v0_1/UserActivationController':{
-  		
+  	'UserAccount/v0_1/RefreshTokenController':{
+  		'GetNewToken':true,
   	},
 
   	'UserAccount/v0_1/AuthController':{

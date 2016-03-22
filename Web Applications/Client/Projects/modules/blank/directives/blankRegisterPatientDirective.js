@@ -183,13 +183,23 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 $scope.submitted = true;
                 if ($scope.step1.$valid && number == 1) {
                     blankServices.checkpatient({
-                        PhoneNumber: $scope.postData.data.PhoneNumber
+                        PhoneNumber: $scope.postData.data.PhoneNumber,
+                        Email: $scope.postData.data.Email1
                     }).then(function(response) {
                         if (!response.data.isCreated) {
                             $scope.number++;
                             $scope.submitted = false;
                         } else {
-                            toastr.error("Mobile Phone Number exits");
+                            if(response.data.field.Email == true && response.data.field.PhoneNumber == true) {
+                                toastr.error("Mobile Phone Number and Email existed");
+                            }
+                            else if(response.data.field.Email == true) {
+                                toastr.error("Email existed");
+                            }
+                            else if(response.data.field.PhoneNumber == true) {
+                                toastr.error("Mobile Phone Number existed");
+                            }
+
                         }
                     }, function(err) {
                         console.log(err.data.message);
@@ -233,6 +243,13 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
             $scope.Submit = function() {
                 $scope.submitted = true;
                 if ($scope.step3.$valid) {
+                    if($scope.postData) {
+                        for(var key in $scope.postData) {
+                            if($scope.postData[key]== null || $scope.postData[key]=='') {
+                                delete $scope.postData[key];
+                            }
+                        }
+                    }
                     $scope.AppointmentData();
                     $scope.FormatDate();
                     o.loadingPage(true);

@@ -770,6 +770,11 @@ module.exports = {
 					like:'%'+data.Search.Email+'%'
 				}
 			}
+			if(data.Search.Type){
+				whereClause.Doctor.Type = {
+					like:'%'+data.Search.Type+'%'
+				}
+			}
 			if(data.Search.Enable){
 				whereClause.UserAccount.Enable = {
 					like:'%'+data.Search.Enable+'%'

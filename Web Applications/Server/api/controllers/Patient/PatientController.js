@@ -49,6 +49,11 @@ module.exports = {
 
     RegisterPatient: function(req, res) {
         var data = req.body.data;
+        for(var key in data) {
+            if(data[key]==null || data[key]=='') {
+                delete data[key];
+            }
+        }
         var otherData = req.body.otherData?req.body.otherData:null;
         // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
         // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};

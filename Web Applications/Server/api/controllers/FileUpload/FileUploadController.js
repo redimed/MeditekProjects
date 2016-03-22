@@ -41,6 +41,27 @@ module.exports = {
             file.pipe(res);
         })
     },
+    DownloadFileWithoutLogin: function(req, res) {
+
+        var params = req.params.all();
+        Services.FileUpload.DownloadFile({
+            output: rootPath + '/temp/',
+            fileUID: params.fileUID,
+            size: params.size
+        }, function(err, output, fileName) {
+            res.set('filename', fileName);
+            // res.set('testtesttesttest',true);
+            res.header('Access-Control-Expose-Headers', HelperService.const.exposeHeaders);
+            // console.log("====Response====: ",res);
+            if (err) return res.serverError(ErrorWrap(err));
+            res.attachment(fileName);
+            var file = fs.createReadStream(output);
+            file.on('end', function() {
+                if (fs.statSync(output).isFile()) fs.unlinkSync(output);
+            })
+            file.pipe(res);
+        })
+    },
     EnableFile: function(req, res) {
         var params = req.params.all();
         if (params.isEnable != 'true' && params.isEnable != 'false') {

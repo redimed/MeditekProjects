@@ -36,6 +36,11 @@ app.controller('showImageController', function($scope, $modalInstance, toastr, L
             });
     };
 });
-app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $state, $cookies, $scope, $stateParams, $modal, WAAppointmentService, toastr, PatientService, CommonService) {
+app.controller('WAAppointmentListDetailCtrl', function($state, $scope, $stateParams) {
+    $scope.runWhenFinish = {
+        success:function () {
+            $state.go($state.current, {UID:$stateParams.UID}, {reload: true});
+        }
+    };
     
 });

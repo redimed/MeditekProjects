@@ -4,6 +4,7 @@ module.exports = {
         'DownloadFile': 'isAuthenticated',
         'EnableFile': true,
         'DisableAllFile': true,
-        'UploadFileWithoutLogin': true
+        'UploadFileWithoutLogin': true,
+        'DownloadFileWithoutLogin':true
     }
 }

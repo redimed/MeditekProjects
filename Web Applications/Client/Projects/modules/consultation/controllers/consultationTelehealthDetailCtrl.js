@@ -1,4 +1,8 @@
 var app = angular.module("app.authentication.consultation.detail.telehealth.controller", []);
 app.controller('TelehealthDetailController', function($scope, $state, $stateParams) {
-    // alert('222')
+    $scope.runWhenFinish = {
+    	success:function () {
+    		$state.go($state.current, {UID:$stateParams.UID,UIDPatient:$stateParams.UIDPatient}, {reload: true});
+    	}
+    };
 });

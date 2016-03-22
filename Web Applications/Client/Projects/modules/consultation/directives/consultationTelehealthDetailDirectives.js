@@ -1,6 +1,9 @@
 var app = angular.module('app.authentication.consultation.directives.TelehealthDetail', []);
 app.directive('telehealthDetail', function() {
     return {
+        scope:{
+            runWhenFinish:"="
+        },
         restrict: 'E',
         templateUrl: "modules/consultation/directives/templates/consultationTelehealthDetailDirectives.html",
         controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$scope,$timeout) {
@@ -190,22 +193,22 @@ app.directive('telehealthDetail', function() {
                 $scope.saveWaAppointment = function() {
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
-                    console.log('loi',$scope.wainformation);
+                    console.log("saveWaAppointment",$scope.wainformation)
                     WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                         toastr.success("Update appointment successfully !");
                         swal.close();
-                        $state.go("authentication.WAAppointment.detail", {
-                            reload: true
-                        });
+                        if ($scope.runWhenFinish) {
+                            $scope.runWhenFinish.success();
+                        }
                     }, function(err) {
                         if (err.status == 401) {
                             swal.close();
                         } else {
                             swal.close();
                             toastr.error('Update Appointment Failed');
-                            $state.go("authentication.WAAppointment.detail", {
-                                reload: true
-                            });
+                            if ($scope.runWhenFinish) {
+                                $scope.runWhenFinish.success();
+                            }
                         }
                     });
                 }

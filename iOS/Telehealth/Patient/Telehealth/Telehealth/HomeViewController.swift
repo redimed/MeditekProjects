@@ -70,10 +70,14 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         defaults.setValue("1", forKey: "loading")
         defaults.synchronize()
         showloading("Connecting to server..")
-        let delay = 6.0 * Double(NSEC_PER_SEC)
+        let delay = 10.0 * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue(), {
-            self.HideLoading()
+            if(defaults.valueForKey("loading") as! String == "1"){
+                self.HideLoading()
+            }else{
+                print("zo day chu zo dau")
+            }
         })
     }
     func HideLoading() {

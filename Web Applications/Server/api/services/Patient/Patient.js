@@ -723,6 +723,8 @@ module.exports = {
                 else {
                     return got_user;
                 }
+            },function(err) {
+                throw err;
             })
             .then(function(user){
                 console.log(user);
@@ -759,6 +761,7 @@ module.exports = {
                     CreatedDate   : new Date()
                 },{transaction:t})
                 .then(function(s){
+					console.log(s);
                     if(other != null) {
                         for(var key in other){
                             other[key].PatientID = result.ID;
@@ -771,6 +774,9 @@ module.exports = {
                             }
                         }
                     }
+                    else {
+                        return s;
+                    }
                 },function(err){
                     // t.rollback();
                     throw err;
@@ -778,6 +784,9 @@ module.exports = {
                 .then(function(result){
                     if(PatientDetail.PatientMedicare != null) {
                         return PatientMedicare.create(PatientDetail.PatientMedicare,{transaction:t});
+                    }
+                    else {
+                        return result;
                     }
                 },function(err){
                    // t.rollback();
@@ -787,6 +796,9 @@ module.exports = {
                     if(PatientDetail.PatientKin != null) {
                         return PatientKin.create(PatientDetail.PatientKin,{transaction:t});
                     }
+                    else {
+                        return result;
+                    }
                 },function(err){
                     // t.rollback();
                     throw err;
@@ -794,6 +806,9 @@ module.exports = {
                 .then(function(result){
                     if(PatientDetail.PatientDVA != null) {
                         return PatientDVA.create(PatientDetail.PatientDVA,{transaction:t});
+                    }
+                    else {
+                        return result;
                     }
                 },function(err){
                     // t.rollback();

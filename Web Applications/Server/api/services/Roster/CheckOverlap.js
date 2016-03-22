@@ -56,7 +56,7 @@ module.exports = function(objCheckOverlap) {
                                 });
                             });
                             if (!_.isEmpty(arrayRosterOverlap)) {
-                                arrayRosterOverlap = _.uniq(arrayRosterOverlap, _.isEqual);
+                                arrayRosterOverlap = _.uniq(arrayRosterOverlap, 'UID');
                                 defer.reject({
                                     status: 'overlaps',
                                     dataOverlap: arrayRosterOverlap

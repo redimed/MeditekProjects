@@ -1615,49 +1615,131 @@ module.exports = {
                  is created or not created
     */
     CheckPatient : function(data, transaction) {
-
+        var fieldData = {};
         var info = {};
         // return Services.Patient.validation(data,false)
         // .then(function(success){
             if(check.checkData(data.PhoneNumber) && check.checkData(data.Email)){
-                // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
-                return Services.UserAccount.GetUserAccountDetails(data,null,transaction)
-                .then(function(user){
-                    if(check.checkData(user)){
-                        info.Email = user.Email;
-                        info.PhoneNumber = user.PhoneNumber;
-                        return Patient.findAll({
-                                where :{
-                                    UserAccountID : user.ID
-                                },
-                                transaction:transaction
-                            });
-        
+                var userinfo = {
+                    phoneNumber:null,
+                    Email:null
+                };
+                data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:check.parseAuMobilePhone(data.PhoneNumber);
+                return UserAccount.findAll({
+                    where:{
+                        $or:{
+                            PhoneNumber: data.PhoneNumber,
+                            Email:       data.Email
+                        }
                     }
-                    else
+                })
+                .then(function(user) {
+                    if(user == null || user == '') {
                         return ({
                             isCreated:false
-                        });
-                },function(err){
-                    throw err;
-                })
-                .then(function(result){
-                    if(check.checkData(result) && result.isCreated!==false){
-                        return ({
-                            isCreated:true
+
                         });
                     }
-                    else
-                        return ({
-                            isCreated:false,
-                            data: {
-                                Email : info.Email,
-                                PhoneNumber: info.PhoneNumber
+                    else {
+                        var stringID = [];
+                        for(var i = 0; i < user.length; i++) {
+                            if(user[i].PhoneNumber == data.PhoneNumber) {
+                                userinfo.PhoneNumber = user[i].PhoneNumber;
                             }
-                        });
-                },function(err){
+                            else if(user[i].Email == data.Email) {
+                                userinfo.Email = user[i].Email;
+                            }
+                            stringID.push(user[i].ID);
+                        }
+                        return Patient.findAll({
+                            where:{
+                                UserAccountID:{
+                                    $in: stringID
+                                }
+                            },
+                        })
+                        .then(function(result) {
+                            if(result.isCreated == false) {
+                                return ({
+                                    isCreated:false,
+                                    data: {
+                                        Email : info.Email,
+                                        PhoneNumber: info.PhoneNumber
+                                    }
+                                });
+                            }
+                            else {
+                                if(result.length == 0) {
+                                    return ({isCreated:false});
+                                }
+                                else {
+                                    for(var i = 0; i <= result.length; i++) {
+                                        if(i == result.length) {
+                                            if(fieldData!=null && fieldData!='') {
+                                                return ({
+                                                    isCreated:true,
+                                                    field:fieldData
+                                                });
+                                            }
+                                        }
+                                        else{
+                                            for(var key in userinfo) {
+                                                    if(userinfo.PhoneNumber == check.parseAuMobilePhone(data.PhoneNumber)){
+                                                        fieldData.PhoneNumber = true;
+                                                    }
+                                                    if(userinfo.Email == data.Email) {
+                                                        fieldData.Email = true;
+                                                    }
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },function(err) {
+                            throw err;
+                        })
+                    }
+                },function(err) {
                     throw err;
-                });
+                })
+                // return Services.UserAccount.GetUserAccountDetails(data,null,transaction)
+                // .then(function(user){
+                //     if(check.checkData(user)){
+                //         info.Email = user.Email;
+                //         info.PhoneNumber = user.PhoneNumber;
+                //         return Patient.findAll({
+                //                 where :{
+                //                     UserAccountID : user.ID
+                //                 },
+                //                 transaction:transaction
+                //             });
+        
+                //     }
+                //     else
+                //         return ({
+                //             isCreated:false
+                //         });
+                // },function(err){
+                //     throw err;
+                // })
+                // .then(function(result){
+                //     if(check.checkData(result) && result.isCreated!==false){
+                //         return ({
+                //             isCreated:true
+                //         });
+                //     }
+                //     else
+                //         return ({
+                //             isCreated:false,
+                //             data: {
+                //                 Email : info.Email,
+                //                 PhoneNumber: info.PhoneNumber
+                //             }
+                //         });
+                // },function(err){
+                //     throw err;
+                // });
             }
             else if(check.checkData(data.PhoneNumber)){
                 // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
@@ -1684,7 +1766,8 @@ module.exports = {
                 .then(function(result){
                     if(check.checkData(result) && result.isCreated!==false){
                         return ({
-                            isCreated:true
+                            isCreated:true,
+                            field:{PhoneNumber:true}
                         });
                     }
                     else
@@ -1724,7 +1807,8 @@ module.exports = {
                 .then(function(result){
                     if(check.checkData(result) && result.isCreated!==false){
                         return ({
-                            isCreated:true
+                            isCreated:true,
+                            field:{Email:true}
                         });
                     }
                     else

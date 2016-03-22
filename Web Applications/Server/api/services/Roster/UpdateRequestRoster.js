@@ -30,20 +30,27 @@ module.exports = function(data, userInfo) {
                             where: {
                                 UID: data.Roster.UID
                             },
+                            raw: true,
                             transaction: t
                         })
                         .then(function(rosterUpdate) {
                             if (!_.isEmpty(rosterUpdate) &&
                                 HelperService.CheckExistData(rosterUpdate.FromTime)) {
-                                var startTime = moment(rosterUpdate.FromTime).format('YYYY-MM-DD HH:mm:ss Z');
-                                var endTime = moment(data.Roster.EndRecurrence || rosterUpdate.FromTime).add(1, 'day').format('YYYY-MM-DD HH:mm:ss Z');
-                                var timeTo = moment(rosterUpdate.ToTime).format('YYYY-MM-DD HH:mm:ss Z').split(' ')[1];
+                                var zoneClient = data.Roster.FromTime.split(' ')[2];
+                                var fromTime = moment(rosterUpdate.FromTime).utcOffset(zoneClient).format('YYYY-MM-DD HH:mm:ss Z');
+                                var toTime = moment(rosterUpdate.ToTime).utcOffset(zoneClient).format('YYYY-MM-DD HH:mm:ss Z');
+                                var timeFrom = fromTime.split(' ')[1];
+                                var timeTo = toTime.split(' ')[1];
+                                var zoneFrom = fromTime.split(' ')[2];
+                                var zoneTo = toTime.split(' ')[2];
+                                var startTime = fromTime.split(' ')[0];
+                                var endTime = data.Roster.EndRecurrence.split(' ')[0];
                                 var rangTime = moment.range(startTime, endTime);
                                 var arrayWhereClauseRoster = [];
                                 rangTime.by('days', function(day) {
                                     var objWhereClauseRoster = {
-                                        FromTime: moment(moment(day).format('YYYY-MM-DD HH:mm:ss Z')).toDate(),
-                                        ToTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + moment().format('Z')).toDate()
+                                        FromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).toDate(),
+                                        ToTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).toDate()
                                     };
                                     arrayWhereClauseRoster.push(objWhereClauseRoster);
                                 });

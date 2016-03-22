@@ -485,6 +485,11 @@ module.exports = function(data, userInfo) {
                                         transaction: t
                                     });
                                 }
+                            } else {
+                                defer.resolve({
+                                    status: 'success',
+                                    transaction: t
+                                });
                             }
                         }, function(err) {
                             defer.reject({

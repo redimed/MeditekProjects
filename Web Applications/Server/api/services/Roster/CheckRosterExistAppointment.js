@@ -101,7 +101,7 @@ module.exports = function(objCheck) {
                         .then(function(checkExistApptComplete) {
                             if (!_.isEmpty(arrDataExistAppt)) {
                                 if (!_.isEmpty(arrDataExistAppt)) {
-                                    arrDataExistAppt = _.uniq(arrDataExistAppt, _.isEqual);
+                                    arrDataExistAppt = _.uniq(arrDataExistAppt, 'UID');
                                     defer.reject({
                                         status: 'existAppt',
                                         dataExistAppt: arrDataExistAppt

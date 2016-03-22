@@ -29,7 +29,6 @@ module.exports = {
         }
     },
     UpdateRequestRoster: function(req, res) {
-        console.log('request roster', JSON.stringify(req.body.data));
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');

@@ -17,23 +17,20 @@ module.exports = {
                 moment(data.EndRecurrence, 'YYYY-MM-DD HH:mm:ss Z', true).isValid())) {
             switch (data.RecurrenceType) {
                 case 'weekly':
-                    var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
-                    var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
                     var endRecurrence = data.EndRecurrence;
                     var arrayDateRepeat = [];
-                    var timeTo = toTime.split(' ')[1];
-                    var timeFrom = fromTime.split(' ')[1];
-                    var zoneFrom = fromTime.split(' ')[2];
-                    var zoneTo = toTime.split(' ')[2];
-                    var zoneServer = moment().format('Z');
-                    var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
-                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
+                    var timeTo = data.ToTime.split(' ')[1];
+                    var timeFrom = data.FromTime.split(' ')[1];
+                    var zoneFrom = data.FromTime.split(' ')[2];
+                    var zoneTo = data.ToTime.split(' ')[2];
+                    var startDate = data.FromTime.split(' ')[0];
+                    var endDate = endRecurrence.split(' ')[0];
                     var rangeDateFrom = moment.range(startDate, endDate);
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
-                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
+                                fromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).format('YYYY-MM-DD HH:mm:ss Z'),
+                                toTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).format('YYYY-MM-DD HH:mm:ss Z')
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -45,7 +42,7 @@ module.exports = {
                                 HelperService.CheckExistData(valueDate.fromTime) &&
                                 HelperService.CheckExistData(valueDate.toTime) &&
                                 moment(valueDate.fromTime).format('e') ===
-                                moment(fromTime).format('e')) {
+                                moment(startDate).format('e')) {
                                 var objectRoster = {
                                     UID: UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
@@ -62,23 +59,20 @@ module.exports = {
                     }
                     break;
                 case 'daily':
-                    var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
-                    var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
                     var endRecurrence = data.EndRecurrence;
                     var arrayDateRepeat = [];
-                    var timeTo = toTime.split(' ')[1];
-                    var timeFrom = fromTime.split(' ')[1];
-                    var zoneFrom = fromTime.split(' ')[2];
-                    var zoneTo = toTime.split(' ')[2];
-                    var zoneServer = moment().format('Z');
-                    var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
-                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
+                    var timeTo = data.ToTime.split(' ')[1];
+                    var timeFrom = data.FromTime.split(' ')[1];
+                    var zoneFrom = data.FromTime.split(' ')[2];
+                    var zoneTo = data.ToTime.split(' ')[2];
+                    var startDate = data.FromTime.split(' ')[0];
+                    var endDate = endRecurrence.split(' ')[0];
                     var rangeDateFrom = moment.range(startDate, endDate);
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
-                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
+                                fromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).format('YYYY-MM-DD HH:mm:ss Z'),
+                                toTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).format('YYYY-MM-DD HH:mm:ss Z')
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -105,23 +99,20 @@ module.exports = {
                     }
                     break;
                 case 'weekday':
-                    var fromTime = moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
-                    var toTime = moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss Z');
                     var endRecurrence = data.EndRecurrence;
                     var arrayDateRepeat = [];
-                    var timeTo = toTime.split(' ')[1];
-                    var timeFrom = fromTime.split(' ')[1];
-                    var zoneFrom = fromTime.split(' ')[2];
-                    var zoneTo = toTime.split(' ')[2];
-                    var zoneServer = moment().format('Z');
-                    var startDate = moment(fromTime, 'YYYY-MM-DD HH:mm:ss Z');
-                    var endDate = moment(endRecurrence.split(' ')[0] + ' ' + timeFrom + ' ' + zoneServer, 'YYYY-MM-DD HH:mm:ss Z');
+                    var timeTo = data.ToTime.split(' ')[1];
+                    var timeFrom = data.FromTime.split(' ')[1];
+                    var zoneFrom = data.FromTime.split(' ')[2];
+                    var zoneTo = data.ToTime.split(' ')[2];
+                    var startDate = data.FromTime.split(' ')[0];
+                    var endDate = endRecurrence.split(' ')[0];
                     var rangeDateFrom = moment.range(startDate, endDate);
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
-                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
+                                fromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).format('YYYY-MM-DD HH:mm:ss Z'),
+                                toTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).format('YYYY-MM-DD HH:mm:ss Z')
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -133,7 +124,7 @@ module.exports = {
                                 HelperService.CheckExistData(valueDate.fromTime) &&
                                 HelperService.CheckExistData(valueDate.toTime) &&
                                 moment(valueDate.fromTime).format('e') ===
-                                moment(fromTime).format('e') &&
+                                moment(startDate).format('e') &&
                                 moment(valueDate.fromTime).format('e') <= 5) {
                                 var objectRoster = {
                                     UID: UUIDService.Create(),

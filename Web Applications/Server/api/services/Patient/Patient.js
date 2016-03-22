@@ -741,6 +741,7 @@ module.exports = {
                 throw err;
             })
             .then(function(got_patient) {
+                console.log("got_patient ",got_patient);
                 if(got_patient == null || got_patient == ''){
                     return Patient.create(info,{transaction:t});
                 }
@@ -750,10 +751,12 @@ module.exports = {
                     throw err;
                 }
             },function(err) {
+                console.log("errs ",err);
                 // t.rollback();
                 throw err;
             })
             .then(function(result){
+                console.log("tao ra patient ",result);
                 return RelUserRole.create({
                     UserAccountId : info.UserAccountID,
                     RoleId        : 3,
@@ -816,6 +819,7 @@ module.exports = {
                 })
             }, function(err){
                 // t.rollback();
+                console.log("err ",err);
                 throw err;
             })
             .then(function(success) {

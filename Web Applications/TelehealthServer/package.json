@@ -52,7 +52,7 @@
     "rc": "~0.5.0",
     "redis": "^0.7.3",
     "requestify": "git+https://github.com/redimed/requestify.git",
-    "sails": "~0.11.0",
+    "sails": "^0.11.0",
     "sails-disk": "~0.10.0",
     "sails-generate-auth": "^0.3.1",
     "sails-hook-sequelize": "^1.0.1",

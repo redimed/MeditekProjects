@@ -1,6 +1,7 @@
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var config = sails.config.myconf;
+var _ = require('lodash');
 //****Twilio Client for sending SMS
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
 //****Send SMS function******
@@ -89,8 +90,6 @@ module.exports = {
     GetListDoctor: function(req, res) {
         var body = req.body;
         var headers = req.headers;
-        console.log("1111111111111111111111111111", body);
-        console.log("222222222222222222", headers);
         if (!_.isEmpty(body) &&
             !_.isEmpty(body.data)) {
             TelehealthService.GetListDoctor(headers, body).then(function(response) {
@@ -205,7 +204,21 @@ module.exports = {
         }
         TelehealthService.GetWAAppointmentDetails(apptUID, headers).then(function(response) {
             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+
             return res.ok(response.getBody());
+        }).catch(function(err) {
+            res.json(err.getCode(), err.getBody());
+        })
+    },
+    GetListCountry: function(req, res) {
+        var headers = req.headers;
+        TelehealthService.GetListCountry(headers).then(function(response) {
+            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+            var data = [];
+            _.forEach(response.getBody().data, function(value, key) {
+                data.push(value.ShortName);
+            });
+            return res.ok({ data: data });
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
         })

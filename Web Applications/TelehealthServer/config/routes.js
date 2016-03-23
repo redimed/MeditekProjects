@@ -52,6 +52,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetListDoctor'
     },
+    'GET /api/telehealth/listCountry': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'GetListCountry'
+    },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',

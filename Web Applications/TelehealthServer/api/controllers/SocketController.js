@@ -129,8 +129,8 @@ module.exports = {
                         var androidDevices = [];
                         if (devices) {
                             for (var i = 0; i < devices.length; i++) {
-                                console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", devices[i].DeviceToken);
                                 if (devices[i].DeviceToken != null) {
+                                    console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", devices[i].DeviceToken);
                                     if (devices[i].Type == 'IOS')
                                         iosDevices.push(devices[i].DeviceToken);
                                     else
@@ -158,7 +158,7 @@ module.exports = {
                     RedisWrap.hset(redisKey, to, data);
                     break;
                 default:
-                    RedisWrap.hdel(redisKey, from);
+                    RedisWrap.hdel(redisKey, to);
                     console.log("DELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
             }
 

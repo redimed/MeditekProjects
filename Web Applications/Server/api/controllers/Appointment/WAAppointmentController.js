@@ -184,5 +184,28 @@ module.exports = {
                     res.serverError(ErrorWrap(err));
                 }
             });
+    },
+    GetListWAAppointmentConsultation: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        var objRequired = {
+            Patient: true
+        };
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.GetListAppointment(data, req.user, objRequired)
+                .then(function(success) {
+                    res.ok(success.data);
+                }, function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
+                        err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
+                    }
+                });
+        }
     }
 };

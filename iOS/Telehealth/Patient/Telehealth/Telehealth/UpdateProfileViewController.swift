@@ -38,7 +38,8 @@ class UpdateProfileViewController: BaseViewController {
     var tableView: UITableView =  UITableView()
     var autocompleteUrls = [String]()
     var pastUrls : [String] = []
-    
+    var autocompleteUrlsCountry = [String]()
+    var pastUrlsCountry : [String] = []
     var assets: [DKAsset]?
     
     
@@ -67,6 +68,8 @@ class UpdateProfileViewController: BaseViewController {
         delegateTextField()
         autocompleteUrls = requestTelehealthService.loadDataJson()
         pastUrls = autocompleteUrls
+        autocompleteUrlsCountry = requestTelehealthService.loadDataJsonContry()
+        pastUrlsCountry = autocompleteUrls
         DatepickerMode()
         addCustomView()
         // Do any additional setup after loading the view.
@@ -271,7 +274,19 @@ class UpdateProfileViewController: BaseViewController {
         }
         
     }
-    
+    @IBAction func countrySearchAction(sender: AnyObject) {
+        searchAutocompleteEntriesWithSubstring(countryTxt.text!)
+        if countryTxt.text == "" || autocompleteUrlsCountry.count == 0 {
+            self.countryTxt.alpha = 0
+        }else {
+            
+            self.countryTxt.alpha = 1
+            
+        }
+    }
+    @IBAction func countryEndEdit(sender: AnyObject) {
+        self.countryTxt.alpha = 0
+    }
  
     @IBAction func suburbEndEdit(sender: AnyObject) {
         self.viewSuburb.alpha = 0
@@ -284,6 +299,15 @@ class UpdateProfileViewController: BaseViewController {
         }
         tableView.reloadData()
     }
+    func searchAutocompleteEntriesWithSubstringContry(substring: String)
+    {
+        autocompleteUrls = requestTelehealthService.handleSearchData(pastUrlsCountry, substring: substring)
+        if substring == "" {
+            autocompleteUrlsCountry = pastUrlsCountry
+        }
+        tableView.reloadData()
+    }
+
     
     
     func addCustomView() {

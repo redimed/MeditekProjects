@@ -93,4 +93,7 @@ public interface RegisterApi {
 
     @POST("/api/telehealth/user/logout")
     void logout(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @GET("/api/telehealth/listCountry")
+    void getListCountry(Callback<JsonObject> callback);
 }

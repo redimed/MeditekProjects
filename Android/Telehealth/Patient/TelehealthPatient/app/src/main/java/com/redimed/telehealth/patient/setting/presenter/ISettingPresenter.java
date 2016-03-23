@@ -13,10 +13,10 @@ public interface ISettingPresenter {
 
     void logout(String uid);
 
-    void getInfoPatient(String dataPatient);
-
     void displayInfoPatient(String teleUID);
 
     void changeFragment(Fragment fragment);
+
+    void getInfoPatient(String dataPatient);
 
 }

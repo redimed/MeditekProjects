@@ -65,7 +65,9 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
         context = v.getContext();
         ButterKnife.bind(this, v);
+
         initVariable();
+        onLoadToolbar();
 
         btnLogout.setOnClickListener(this);
         layoutAbout.setOnClickListener(this);
@@ -97,7 +99,6 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
         }
     }
 
-    @Override
     public void onLoadToolbar() {
         //init toolbar
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
@@ -111,17 +112,6 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
                 iSettingPresenter.changeFragment(new HomeFragment());
             }
         });
-    }
-
-    @Override
-    public void onLoadError(String msg) {
-        if (msg.equalsIgnoreCase("Network Error")) {
-            new DialogConnection(context).show();
-        } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
-        } else {
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
-        }
     }
 
     @Override
@@ -143,8 +133,8 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        getView().setFocusableInTouchMode(true);
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

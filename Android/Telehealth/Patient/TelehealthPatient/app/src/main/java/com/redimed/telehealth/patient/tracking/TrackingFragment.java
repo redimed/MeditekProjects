@@ -35,6 +35,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,9 +46,9 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     private Context context;
     protected Handler handler;
     private List<Appointment> data;
-    private String TAG = "=====TRACKING=====";
     private ITrackingPresenter iTrackingPresenter;
     private LinearLayoutManager linearLayoutManager;
+    private static final String TAG = "=====TRACKING=====";
 
     @Bind(R.id.swipeInfo)
     SwipeRefreshLayout swipeInfo;
@@ -75,8 +76,10 @@ public class TrackingFragment extends Fragment implements ITrackingView {
         View v = inflater.inflate(R.layout.fragment_list_appointment, container, false);
         context = v.getContext();
         ButterKnife.bind(this, v);
+
         getListAppointment();
         SwipeRefresh();
+
         return v;
     }
 
@@ -155,11 +158,15 @@ public class TrackingFragment extends Fragment implements ITrackingView {
         if (msg.equalsIgnoreCase("Network Error")) {
             new DialogConnection(context).show();
         } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(getResources().getString(R.string.token_expired))
+                    .show();
         } else {
             lblNoData.setVisibility(View.VISIBLE);
             iTrackingPresenter.setProgressBarVisibility(View.GONE);
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
+            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                    .setContentText(msg)
+                    .show();
         }
         swipeInfo.setRefreshing(false);
     }
@@ -167,8 +174,8 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        getView().setFocusableInTouchMode(true);
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

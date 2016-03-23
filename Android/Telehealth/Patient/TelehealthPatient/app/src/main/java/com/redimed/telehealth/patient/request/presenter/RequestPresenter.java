@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -23,7 +24,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.confirm.ConfirmActivity;
+import com.redimed.telehealth.patient.confirm.ConfirmFragment;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.CustomGallery;
@@ -83,7 +84,7 @@ public class RequestPresenter implements IRequestPresenter {
     public ArrayAdapter loadJsonData() {
         ArrayAdapter adapter = null;
         try {
-            file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" + context.getResources().getString(R.string.fileName));
+            file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" + context.getResources().getString(R.string.fileSuburb));
             if (file.exists()) {
                 FileInputStream is = new FileInputStream(file);
                 int size = is.available();
@@ -160,20 +161,22 @@ public class RequestPresenter implements IRequestPresenter {
 
     @Override
     public void changeActivity() {
-        Intent i = new Intent(context, ConfirmActivity.class);
-        i.putExtra("firstName", firstName);
-        i.putExtra("lastName", lastName);
-        i.putExtra("mobile", mobile);
-        i.putExtra("home", home);
-        i.putExtra("suburb", suburb);
-        i.putExtra("apptType", apptType);
-        i.putExtra("dob", dob);
-        i.putExtra("email", email);
-        i.putExtra("des", des);
-        i.putExtra("fileUploads", fileUploads);
-        i.putExtra("sign", sign);
+        Bundle bundle = new Bundle();
+        bundle.putString("firstName", firstName);
+        bundle.putString("lastName", lastName);
+        bundle.putString("mobile", mobile);
+        bundle.putString("home", home);
+        bundle.putString("suburb", suburb);
+        bundle.putString("apptType", apptType);
+        bundle.putString("dob", dob);
+        bundle.putString("email", email);
+        bundle.putString("des", des);
+        bundle.putStringArrayList("fileUploads", fileUploads);
+        bundle.putString("sign", sign);
 
-        iRequestView.startActivityResult(i);
+        Fragment fragment = new ConfirmFragment();
+        fragment.setArguments(bundle);
+        iMainPresenter.replaceFragment(fragment);
     }
 
     @Override

@@ -24,8 +24,9 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FAQsFragment extends Fragment implements IFAQsView, View.OnClickListener {
+public class FAQsFragment extends Fragment implements IFAQsView {
 
+    private Bundle bundle;
     private Context context;
     private IFAQsPresenter ifaqsPresenter;
 
@@ -42,18 +43,28 @@ public class FAQsFragment extends Fragment implements IFAQsView, View.OnClickLis
         context = v.getContext();
         ButterKnife.bind(this, v);
 
-        ifaqsPresenter = new FAQsPresenter(this, context) ;
-        layoutBack.setOnClickListener(this);
+        ifaqsPresenter = new FAQsPresenter(this, context, getActivity());
 
         //init Bundle
         getDataBundle();
 
+        layoutBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String page = bundle.getString("msg");
+                assert page != null;
+                if (page.equalsIgnoreCase("ConfirmFAQs")) {
+                    ifaqsPresenter.backToHome(true);
+                } else
+                    ifaqsPresenter.backToHome(false);
+            }
+        });
         return v;
     }
 
     //init Bundle
-    private void getDataBundle(){
-        Bundle bundle = getArguments();
+    private void getDataBundle() {
+        bundle = getArguments();
         if (bundle != null) {
             ifaqsPresenter.contentFAQs(bundle);
         }
@@ -67,24 +78,15 @@ public class FAQsFragment extends Fragment implements IFAQsView, View.OnClickLis
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.layoutBack:
-                ifaqsPresenter.backToHome(getActivity());
-                break;
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        getView().setFocusableInTouchMode(true);
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    ifaqsPresenter.backToHome(getActivity());
+                    ifaqsPresenter.backToHome(false);
                     return true;
                 }
                 return false;

@@ -55,7 +55,6 @@ public class SettingPresenter implements ISettingPresenter {
         this.iSettingView = iSettingView;
 
         gson = new Gson();
-        iSettingView.onLoadToolbar();
         restClient = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
     }
@@ -146,6 +145,7 @@ public class SettingPresenter implements ISettingPresenter {
         File appDir = new File(cache.getParent());
 
         if (appDir.exists()) {
+            //Get all folder include /data/data/com.redimed.telehealth.patient
             String[] children = appDir.list();
             for (String s : children) {
                 if (!s.equals("lib")) {
@@ -158,6 +158,7 @@ public class SettingPresenter implements ISettingPresenter {
     private static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
+            //Get child in each folder
             for (String aChildren : children) {
                 boolean success = deleteDir(new File(dir, aChildren));
                 if (!success) {

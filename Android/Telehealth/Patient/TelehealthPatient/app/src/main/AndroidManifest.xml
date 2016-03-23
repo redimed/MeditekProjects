@@ -114,7 +114,6 @@
             android:keepScreenOn="true"
             android:label="@string/title_activity_call"
             android:launchMode="singleTask" />
-        <activity android:name=".confirm.ConfirmActivity" />
 
         <activity
             android:name=".gallery.GalleryActivity"

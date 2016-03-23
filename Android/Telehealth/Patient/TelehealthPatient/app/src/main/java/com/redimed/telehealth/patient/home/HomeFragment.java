@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -87,11 +88,8 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         context = v.getContext();
         ButterKnife.bind(this, v);
 
+        init();
         initSlider();
-
-        iHomePresenter = new HomePresenter(this, context, getActivity());
-        iHomePresenter.checkExistsPatient();
-        iHomePresenter.createJsonDataSuburb();
 
         /* Non Patient View */
         btnLogin.setOnClickListener(this);
@@ -110,6 +108,14 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         btnUrgentCare.setOnClickListener(this);
 
         return v;
+    }
+
+    private void init() {
+        iHomePresenter = new HomePresenter(this, context, getActivity());
+        iHomePresenter.checkExistsPatient();
+        iHomePresenter.createdJsonDataSuburb();
+        iHomePresenter.createdJsonDataCountry();
+
     }
 
     //Generation Slider Image
@@ -225,7 +231,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                     .setContentText(getResources().getString(R.string.token_expired))
                     .show();
         } else {
-            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
                     .setContentText(msg)
                     .show();
         }

@@ -4,7 +4,8 @@ var CommonInputText = require('common/inputText');
 module.exports = React.createClass({
     types: [
         {code: 'it', name: 'Input Text'},
-        {code: 'c', name: 'Checkbox'}
+        {code: 'c', name: 'Checkbox'},
+        {code: 'radio_yes_no', name: 'Radio Yes No'}
     ],
     code: '',
     propTypes: {
@@ -47,6 +48,6 @@ module.exports = React.createClass({
                     </form>
                 </div>
             </div>
-		)
-	}
+        )
+    }
 })

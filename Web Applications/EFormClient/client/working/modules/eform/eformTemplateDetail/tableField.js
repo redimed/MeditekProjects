@@ -1,6 +1,7 @@
 var CommonModal = require('common/modal');
 var CommonInputText = require('common/inputText');
 var CommonCheckbox = require('common/checkbox');
+var CommonYesNo = require('common/yesno');
 var ComponentFormEditTableColumn = require('modules/eform/eformTemplateDetail/formUpdateTableColumn');
 
 module.exports = React.createClass({
@@ -36,9 +37,10 @@ module.exports = React.createClass({
         this.contextMenuColumn();
     },
     contextMenuColumn: function(){
-        $('.context-col').contextmenu({
-            target: '#contextColumnMenu',
-            before: function(e, element, target) {                    
+        var self = this;
+        $(this.refs.table).find('.context-col').contextmenu({
+            target: this.refs.contextColumnMenu,
+            before: function(e, element, target) {
                 e.preventDefault();
                 return true;
             },
@@ -49,13 +51,13 @@ module.exports = React.createClass({
                 var code = $(element[0]).attr('id')
                 switch(menu){
                     case 'deleteCol':
-                        this.execDeleteCol(code)
-                        break
+                        this.execDeleteCol(code);
+                        break;
                     case 'editCol':
                         var col = this.props.content.get('cols').get(code);
                         this.refs.modalEditTableColumn.show();
                         this.refs.formEditTableColumn.init(col,code);
-                        break
+                        break;
                 }
             }.bind(this)
         })
@@ -124,8 +126,8 @@ module.exports = React.createClass({
             rows = rows.push(Immutable.Map({col: content.get('cols')}))
         }
         return (
-            <div className="col-md-12 dragField">
-                <div id="contextColumnMenu">
+            <div className="col-md-12 dragField" ref="table">
+                <div ref="contextColumnMenu">
                     <ul className="dropdown-menu" role="menu">
                         <li><a id="editCol"><i className="icon-pencil"/> Edit Column</a></li>
                         <li><a id="deleteCol"><i className="icon-trash"/> Delete Column</a></li>
@@ -159,7 +161,7 @@ module.exports = React.createClass({
                                             <tr key={indexRow}>
                                                 {
                                                     row.get('col').map(function(c, indexCol){
-                                                        var type = c.get('type')
+                                                        var type = c.get('type');
                                                         if(type === 'it')
                                                             return (
                                                                 <td key={indexCol}>
@@ -174,6 +176,18 @@ module.exports = React.createClass({
                                                                     <center>
                                                                         <span style={{verticalAlign: 'middle', display: 'inline-block', textAlign: 'center'}}>
                                                                             <CommonCheckbox key={indexCol} type={type}
+                                                                                ref={"field_"+indexRow+'_'+indexCol}
+                                                                                code={indexCol}/>
+                                                                        </span>
+                                                                    </center>
+                                                                </td>
+                                                            )
+                                                        else if(type === 'radio_yes_no')
+                                                            return (
+                                                                <td key={indexCol} style={{verticalAlign: 'middle'}}>
+                                                                    <center>
+                                                                        <span style={{verticalAlign: 'middle', display: 'inline-block', textAlign: 'center'}}>
+                                                                            <CommonYesNo key={indexCol} type={type}
                                                                                 ref={"field_"+indexRow+'_'+indexCol}
                                                                                 code={indexCol}/>
                                                                         </span>

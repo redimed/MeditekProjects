@@ -29,8 +29,8 @@ module.exports = React.createClass({
                             <form>
                                 <div className="form-body">
                                     <div className="form-group">
-                                        <label>E-Form Template Module Name</label>
-                                        <CommonInputText placeholder="E-Form Template Module Name..." ref="inputName"/>
+                                        <label>E-Form Group Name</label>
+                                        <CommonInputText placeholder="E-Form Group Name..." ref="inputName"/>
                                     </div>
                                     <div className="form-group" style={{float:'right'}}>
                                         <button type="button" className="btn btn-default" onClick={this.props.onCloseModal}>Close</button>

@@ -1,4 +1,66 @@
 module.exports = {
+    GetListEFormGroup: function(req, res){
+        EFormGroup.findAll({
+            where: {Enable: 'Y'},
+            include: [
+                {
+                    model: UserAccount,
+                    required: false
+                }
+            ]
+        })
+        .then(function(data){
+            res.json({data: data});
+        })
+    },
+    PostCreateEFormGroup: function(req, res){
+        var userAccount = null;
+        return sequelize.transaction(function(t){
+            return UserAccount.findOne({
+                where: {UID: req.body.userUID},
+                attributes: ['ID'],
+                transaction: t
+            })
+            .then(function(UserAccount){
+                userAccount = UserAccount;
+                return EFormGroup.create({
+                    Name: req.body.name,
+                    CreatedBy: UserAccount.ID,
+                    ModifiedBy: UserAccount.ID
+                }, {transaction: t})
+            })
+            .then(function(data){
+                res.json({data: data});
+                return t.commit();
+            })
+            .catch(function(err){
+                return t.rollback();
+            })
+        })
+    },
+    PostUpdateEFormGroup: function(req, res){
+        UserAccount.findOne({
+            where: {UID: req.body.userUID},
+            attributes: ['ID'],
+        })
+        .then(function(UserAccount){
+            EFormGroup.update({
+                Name: req.body.name,
+                ModifiedBy: UserAccount.ID
+            }, {where: {id: req.body.id} })
+            .then(function(eFormGroup){
+                res.json({data: eFormGroup});
+            })
+        })
+    },
+    PostRemoveEFormGroup: function(req, res){
+        EFormGroup.update({
+            Enable: 'N'
+        }, {where: {id: req.body.id} })
+        .then(function(EFormGroup){
+            res.json({data: EFormGroup});
+        })
+    },
     GetListEFormTemplate: function(req, res){
         EFormTemplate.findAll({
             where: {Active: 'Y'},

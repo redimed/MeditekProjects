@@ -29,16 +29,16 @@ module.exports = React.createClass({
         }
     },
     getLabel: function(){
-        return this.props.label
+        return this.props.label;
     },
     getSize: function(){
-        return this.props.size
+        return this.props.size;
     },
     getValue: function(){
         return '';
     },
     getType: function(){
-        return this.props.type
+        return this.props.type;
     },
     render: function(){
         var type = this.props.type;

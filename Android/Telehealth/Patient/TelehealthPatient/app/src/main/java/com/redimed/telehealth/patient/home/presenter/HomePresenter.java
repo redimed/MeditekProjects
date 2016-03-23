@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient.home.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -29,6 +30,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -47,6 +49,7 @@ public class HomePresenter implements IHomePresenter {
     private IHomeView iHomeView;
     private RegisterApi registerApi;
     private IMainPresenter iMainPresenter;
+    private SweetAlertDialog progressDialog;
     private SharedPreferences uidTelehealth, spDevice, existsUser;
     private static final String TAG = "===HOME_PRESENTER===";
 
@@ -63,16 +66,22 @@ public class HomePresenter implements IHomePresenter {
         spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
         existsUser = context.getSharedPreferences("ExistsUser", Context.MODE_PRIVATE);
+
+        //init progressDialog
+        progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        progressDialog.setTitleText("Loading");
+        progressDialog.setCancelable(false);
     }
 
-    //CreateJsonDataSuburb : if suburb.json file not exists then create file suburb.json
+    //CreatedJsonDataSuburb : if suburb.json file not exists then create file suburb.json
     @Override
-    public void createJsonDataSuburb() {
+    public void createdJsonDataSuburb() {
         File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
-                context.getResources().getString(R.string.fileName));
+                context.getResources().getString(R.string.fileSuburb));
         if (!file.exists()) {
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setLogLevel(RestAdapter.LogLevel.BASIC)
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setEndpoint("http://testapp.redimed.com.au:3001/api/urgent-care")
                     .setErrorHandler(new RetrofitErrorHandler(context))
                     .build();
@@ -84,7 +93,36 @@ public class HomePresenter implements IHomePresenter {
                     try {
                         FileWriter file = new FileWriter(
                                 "/data/data/" + context.getApplicationContext().getPackageName() + "/" +
-                                        context.getResources().getString(R.string.fileName));
+                                        context.getResources().getString(R.string.fileSuburb));
+                        file.write(String.valueOf(jsonObject));
+                        file.flush();
+                        file.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d(TAG, error.getLocalizedMessage());
+                }
+            });
+        }
+    }
+
+    //CreatedJsonDataCountry : if country.json file not exists then create file country.json
+    @Override
+    public void createdJsonDataCountry() {
+        File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
+                context.getResources().getString(R.string.fileCountry));
+        if (!file.exists()) {
+            registerApi.getListCountry(new Callback<JsonObject>() {
+                @Override
+                public void success(JsonObject jsonObject, Response response) {
+                    try {
+                        FileWriter file = new FileWriter(
+                                "/data/data/" + context.getApplicationContext().getPackageName() + "/" +
+                                        context.getResources().getString(R.string.fileCountry));
                         file.write(String.valueOf(jsonObject));
                         file.flush();
                         file.close();
@@ -109,7 +147,6 @@ public class HomePresenter implements IHomePresenter {
             updateToken();
             iHomeView.changeView(true);
             context.startService(new Intent(context, SocketService.class));
-
             editor.putBoolean("exists", true);
         } else {
             editor.putBoolean("exists", false);
@@ -140,6 +177,7 @@ public class HomePresenter implements IHomePresenter {
 
     @Override
     public void getInfoPatient() {
+        progressDialog.show();
         registerApi.getDetailsPatient(uidTelehealth.getString("uid", ""), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -150,11 +188,13 @@ public class HomePresenter implements IHomePresenter {
                     SharedPreferences.Editor patientInfo = context.getSharedPreferences("PatientInfo", Context.MODE_PRIVATE).edit();
                     patientInfo.putString("info", dataPatient);
                     patientInfo.apply();
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
+                progressDialog.dismiss();
                 iHomeView.onLoadError(error.getLocalizedMessage());
             }
         });

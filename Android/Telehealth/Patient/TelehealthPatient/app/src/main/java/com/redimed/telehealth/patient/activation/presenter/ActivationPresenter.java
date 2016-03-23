@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,7 @@ public class ActivationPresenter implements IActivationPresenter {
     public void requestCode(String phoneNumber) {
         telehealthUser.setPhone(phoneNumber);
         patientJSON.addProperty("data", gson.toJson(telehealthUser));
-
+        Log.d(TAG, patientJSON + "");
         if (spDevice.getBoolean("sendToken", false)) {
             registerApi.activation(patientJSON, new Callback<JsonObject>() {
                 @Override
@@ -132,6 +133,7 @@ public class ActivationPresenter implements IActivationPresenter {
         if (!verifyCode.equalsIgnoreCase("")){
             telehealthUser.setCode(verifyCode);
             patientJSON.addProperty("data", gson.toJson(telehealthUser));
+            Log.d(TAG, patientJSON + "");
 
             registerApi.verify(patientJSON, new Callback<JsonObject>() {
                 @Override
@@ -232,6 +234,7 @@ public class ActivationPresenter implements IActivationPresenter {
         jsonLogin.addProperty("VerificationToken", jsonObject.get("verifyCode").isJsonNull() ?
                 "" : jsonObject.get("verifyCode").getAsString());
         jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
+        Log.d(TAG, jsonLogin + "");
         return jsonLogin;
     }
 }

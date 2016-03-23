@@ -20,6 +20,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -30,17 +32,20 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.information.view.IInfoView;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
+import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utlis.UploadFile;
 import com.redimed.telehealth.patient.views.SignaturePad;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -66,12 +71,13 @@ public class InfoPresenter implements IInfoPresenter {
     private Context context;
     private Patient[] patients;
     private IInfoView iInfoView;
+    private ArrayAdapter adapter;
     private RegisterApi restClient;
     private SimpleDateFormat dateFormat;
     private IMainPresenter iMainPresenter;
     private static final int MEDIA_TYPE_IMAGE = 1;
     private SharedPreferences patientSharedPreferences;
-    private String TAG = "=====INFORMATION_PRESENTER=====", firstName, lastName, dob, home, email, address, suburb, postCode, country;
+    private String TAG = "=====INFORMATION_PRESENTER=====", firstName, midName, lastName, dob, home, email, address, postCode;
 
     public InfoPresenter(IInfoView iInfoView, Context context, FragmentActivity activity) {
         this.context = context;
@@ -102,6 +108,52 @@ public class InfoPresenter implements IInfoPresenter {
                 iInfoView.onLoadError(error.getLocalizedMessage());
             }
         });
+    }
+
+    @Override
+    public ArrayAdapter loadJsonSuburb() {
+        try {
+            File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" + context.getResources().getString(R.string.fileSuburb));
+            if (file.exists()) {
+                FileInputStream is = new FileInputStream(file);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                String mResponse = new String(buffer);
+
+                JsonParser parser = new JsonParser();
+                JsonObject obj = (JsonObject) parser.parse(mResponse);
+                String[] suburbs = gson.fromJson(obj.get("data"), String[].class);
+                adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, suburbs);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return adapter;
+    }
+
+    @Override
+    public ArrayAdapter loadJsonCountry(){
+        try {
+            File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" + context.getResources().getString(R.string.fileCountry));
+            if (file.exists()) {
+                FileInputStream is = new FileInputStream(file);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                String mResponse = new String(buffer);
+
+                JsonParser parser = new JsonParser();
+                JsonObject obj = (JsonObject) parser.parse(mResponse);
+                String[] country = gson.fromJson(obj.get("data"), String[].class);
+                adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, country);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return adapter;
     }
 
     @Override
@@ -155,18 +207,14 @@ public class InfoPresenter implements IInfoPresenter {
     }
 
     @Override
-    public void changeViewUpdate(ArrayList<EditText> arrEditText) {
-        for (EditText editText : arrEditText){
-            editText.setEnabled(true);
-        }
-    }
-
-    @Override
-    public void updateProfile(ArrayList<EditText> arrEditText) {
+    public void updateProfile(ArrayList<EditText> arrEditText, String suburb, String country) {
         for (EditText editText : arrEditText){
             switch (editText.getId()) {
                 case R.id.txtFirstName:
                     firstName = editText.getText().toString();
+                    break;
+                case R.id.txtMidName:
+                    midName = editText.getText().toString();
                     break;
                 case R.id.txtLastName:
                     lastName = editText.getText().toString();
@@ -180,14 +228,8 @@ public class InfoPresenter implements IInfoPresenter {
                 case R.id.txtAddress:
                     address = editText.getText().toString();
                     break;
-                case R.id.txtSuburb:
-                    suburb = editText.getText().toString();
-                    break;
                 case R.id.txtPostCode:
                     postCode = editText.getText().toString();
-                    break;
-                case R.id.txtCountry:
-                    country = editText.getText().toString();
                     break;
                 case R.id.txtEmail:
                     email = editText.getText().toString();
@@ -198,6 +240,7 @@ public class InfoPresenter implements IInfoPresenter {
         if (isValidateForm(arrEditText)){
             Patient patient = new Patient();
             patient.setFirstName(firstName);
+            patient.setMiddleName(midName);
             patient.setLastName(lastName);
             patient.setDOB(dob);
             patient.setEmail(email);
@@ -225,7 +268,7 @@ public class InfoPresenter implements IInfoPresenter {
         }
     }
 
-    public boolean isRequiredData(EditText editText) {
+    private boolean isRequiredData(EditText editText) {
         boolean isRequire = false;
         if (editText.getText().length() == 0) {
             isRequire = true;
@@ -238,13 +281,13 @@ public class InfoPresenter implements IInfoPresenter {
         // Validation Edit Text
         for (EditText editText : arr) {
             if (isRequiredData(editText)){
-                iInfoView.onResultField(editText);
                 isValid = false;
+                iInfoView.onResultField(editText);
             }
             if (editText.getId() == R.id.txtEmail) {
                 if (!isEmailValid(editText)) {
-                    iInfoView.onResultEmail(isEmailValid(editText));
                     isValid = false;
+                    iInfoView.onResultEmail(isEmailValid(editText));
                 }
             }
         }

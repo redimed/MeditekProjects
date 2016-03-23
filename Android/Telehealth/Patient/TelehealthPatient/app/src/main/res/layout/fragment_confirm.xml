@@ -2,9 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.redimed.telehealth.patient.confirm.ConfirmActivity">
+    tools:context="com.redimed.telehealth.patient.confirm.ConfirmFragment">
 
     <include layout="@layout/custom_toolbar" />
 
@@ -60,30 +59,30 @@
                 android:id="@+id/chkConsent1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingTop="5dp"
                 android:layout_gravity="start"
                 android:layout_marginBottom="5dp"
+                android:gravity="start"
+                android:paddingTop="5dp"
                 android:text="@string/confirm_option1" />
 
             <CheckBox
                 android:id="@+id/chkConsent2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingTop="5dp"
                 android:layout_gravity="start"
                 android:layout_marginBottom="5dp"
+                android:gravity="start"
+                android:paddingTop="5dp"
                 android:text="@string/confirm_option2" />
 
             <CheckBox
                 android:id="@+id/chkConsent3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingTop="5dp"
                 android:layout_gravity="start"
                 android:layout_marginBottom="5dp"
+                android:gravity="start"
+                android:paddingTop="5dp"
                 android:text="@string/confirm_option3" />
 
             <ViewFlipper
@@ -91,7 +90,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
                 android:gravity="center">
 
                 <LinearLayout
@@ -100,36 +98,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/signature_pad_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/confirm_sign"
+                        android:textColor="@android:color/darker_gray" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@android:color/darker_gray" />
+
                     <RelativeLayout
                         android:id="@+id/signature_pad_container"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="5dp"
                         android:background="#F2F2F2">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_centerHorizontal="true">
-
-                            <TextView
-                                android:id="@+id/signature_pad_description"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:layout_gravity="center"
-                                android:text="Please sign consents form before booking an appointment with Redimed"
-                                android:textColor="@android:color/darker_gray" />
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginBottom="8dp"
-                                android:background="@android:color/darker_gray" />
-
-                        </LinearLayout>
 
                         <com.redimed.telehealth.patient.views.SignaturePad
                             android:id="@+id/signaturePad"
@@ -141,8 +130,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_marginTop="20dp"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
@@ -151,21 +140,23 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="15dp"
                             android:layout_marginRight="15dp"
-                            android:background="@color/greyFont"
+                            android:background="@android:color/holo_blue_dark"
                             android:enabled="false"
                             android:gravity="center"
                             android:padding="15dp"
-                            android:text="Clear Pad" />
+                            android:text="@string/sign_clear"
+                            android:textColor="@color/lightFont" />
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
                             android:id="@+id/lblSave"
                             android:layout_width="130dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/greyFont"
+                            android:background="@android:color/holo_blue_dark"
                             android:enabled="false"
                             android:gravity="center"
                             android:padding="15dp"
-                            android:text="Save Signature" />
+                            android:text="@string/sign_save"
+                            android:textColor="@color/lightFont" />
 
                     </LinearLayout>
 
@@ -175,22 +166,22 @@
                     android:id="@+id/layoutSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="20dp"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imgSignature"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="200dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
                             android:id="@+id/lblComplete"
@@ -207,6 +198,15 @@
                 </LinearLayout>
 
             </ViewFlipper>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblFAQs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F2F2F2"
+                android:padding="10dp"
+                android:text="@string/faqs_btn"
+                android:textSize="@dimen/size_txt" />
 
         </LinearLayout>
 

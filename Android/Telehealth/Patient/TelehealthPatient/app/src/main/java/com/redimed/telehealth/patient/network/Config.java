@@ -32,16 +32,4 @@ public class Config {
 //
 //    public static final String apiURLImageResize = "https://testapp.redimed.com.au:3005/api/downloadFile/400/";
 
-    /*Meditek*/
-//    public static final String socketURL = "https://meditek.redimed.com.au:3009";
-//
-//    public static final String apiURL = "https://meditek.redimed.com.au:3009";
-//
-//    public static final String apiURLCore = "https://meditek.redimed.com.au:3005";
-//
-//    public static final String apiURLLogin = "https://meditek.redimed.com.au:3006";
-//
-//    public static final String apiURLDownload = "https://meditek.redimed.com.au:3005/api/downloadFile/";
-//
-//    public static final String apiURLImageResize = "https://meditek.redimed.com.au:3005/api/downloadFile/400/";
 }

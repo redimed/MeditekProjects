@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient.utlis;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -69,7 +70,8 @@ public class AdapterImageAppointment extends RecyclerView.Adapter<AdapterImageAp
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        Log.d("ADAPTER", e.getLocalizedMessage());
+                        Bitmap errorBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_error_image);
+                        holder.imgContains.setImageBitmap(errorBitmap);
                     }
                 });
     }

@@ -9,7 +9,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.CheckBox;
@@ -25,6 +27,8 @@ import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.confirm.view.IConfirmView;
+import com.redimed.telehealth.patient.faq.FAQsFragment;
+import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.AppointmentData;
@@ -58,15 +62,17 @@ public class ConfirmPresenter implements IConfirmPresenter {
     private Context context;
     private RegisterApi registerApi;
     private IConfirmView iConfirmView;
+    private IMainPresenter iMainPresenter;
     private SharedPreferences uidTelehealth;
     private String pathSign = "", signatureUID;
     private static final String TAG = "===CONFIRM_PRESENTER===";
 
-    public ConfirmPresenter(Context context, IConfirmView iConfirmView) {
+    public ConfirmPresenter(Context context, IConfirmView iConfirmView, FragmentActivity activity) {
         this.context = context;
         this.iConfirmView = iConfirmView;
 
         gson = new Gson();
+        iMainPresenter = new MainPresenter(context, activity);
         if (context.getSharedPreferences("ExistsUser", Context.MODE_PRIVATE).getBoolean("exists", false))
             uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
@@ -96,6 +102,25 @@ public class ConfirmPresenter implements IConfirmPresenter {
                 Log.d(TAG, error.getLocalizedMessage());
             }
         });
+    }
+
+    @Override
+    public void changeFragment(Fragment fragment) {
+        if (fragment != null){
+            iMainPresenter.replaceFragment(fragment);
+        }
+    }
+
+    @Override
+    public void displayFAQs(Bundle bundle) {
+        Bundle backupConfirm = new Bundle();
+        backupConfirm.putString("msg", "ConfirmFAQs");
+        backupConfirm.putBundle("dataConfirm", bundle);
+
+        Fragment fragment = new FAQsFragment();
+        fragment.setArguments(backupConfirm);
+
+        iMainPresenter.replaceFragment(fragment);
     }
 
     @Override
@@ -145,17 +170,17 @@ public class ConfirmPresenter implements IConfirmPresenter {
     }
 
     @Override
-    public void completeRequest(Intent i, ArrayList<String> fileUploads, String currentDate) {
+    public void completeRequest(Bundle bundle, ArrayList<String> fileUploads, String currentDate) {
         PatientAppointment patientAppointment = new PatientAppointment();
-        patientAppointment.setFirstName(i.getStringExtra("firstName"));
-        patientAppointment.setLastName(i.getStringExtra("lastName"));
-        patientAppointment.setPhoneNumber(i.getStringExtra("mobile"));
-        patientAppointment.setHomePhoneNumber(i.getStringExtra("mobile"));
-        patientAppointment.setDOB(i.getStringExtra("dob"));
-        patientAppointment.setSuburb(i.getStringExtra("suburb"));
-        patientAppointment.setEmail(i.getStringExtra("email"));
+        patientAppointment.setFirstName(bundle.getString("firstName"));
+        patientAppointment.setLastName(bundle.getString("lastName"));
+        patientAppointment.setPhoneNumber(bundle.getString("mobile"));
+        patientAppointment.setHomePhoneNumber(bundle.getString("mobile"));
+        patientAppointment.setDOB(bundle.getString("dob"));
+        patientAppointment.setSuburb(bundle.getString("suburb"));
+        patientAppointment.setEmail(bundle.getString("email"));
 
-        makeRequest(patientAppointment, i.getStringExtra("des"), i.getStringExtra("apptType"), fileUploads, currentDate);
+        makeRequest(patientAppointment, bundle.getString("des"), bundle.getString("apptType"), fileUploads, currentDate);
     }
 
     @Override
@@ -192,8 +217,6 @@ public class ConfirmPresenter implements IConfirmPresenter {
         jConsent3.addProperty("Type", "RequestPatient");
         jConsent3.addProperty("Name", "Signature");
         jConsent3.addProperty("Value", signatureUID);
-
-        Log.d(TAG, signatureUID + "");
 
         ArrayList<AppointmentData> appointmentDataArrayList = new ArrayList<AppointmentData>();
         appointmentDataArrayList.add(gson.fromJson(jConsent1, AppointmentData.class));
@@ -262,8 +285,7 @@ public class ConfirmPresenter implements IConfirmPresenter {
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        Bitmap errorBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_error_image);
-                        iConfirmView.onLoadImgSignature(errorBitmap, pathSign);
+                        iConfirmView.onLoadImgSignature(null, pathSign);
                     }
                 });
     }

@@ -7,13 +7,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import com.google.gson.JsonParser;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.main.view.IMainView;
 import com.redimed.telehealth.patient.network.RESTClient;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -28,7 +34,7 @@ public class MainPresenter implements IMainPresenter {
     private Context context;
     private IMainView iMainView;
     private FragmentActivity activity;
-    private String TAG = "MAIN";
+    private String TAG = "=====MAIN=====";
 
     //Constructor
     public MainPresenter(Context context, FragmentActivity activity) {

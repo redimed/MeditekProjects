@@ -36,7 +36,8 @@
     <!-- Connection Dialog-->
     <string name="btn_primary">Settings</string>
     <string name="btn_foreign">Skip</string>
-    <string name="message_connection">Please turn on Wifi or Cellular in your device settings to use full our service!</string>
+    <string name="title_connection">Can\'t connect to Server!</string>
+    <string name="message_connection">Please check Wifi or Cellular in your device settings to use full our service!</string>
 
     <!-- Fontello icons -->
     <string name="fontello_search">&#xe816;</string>
@@ -151,6 +152,7 @@
 
     <!-- Profile Layout-->
     <string name="profile_first_name">First Name</string>
+    <string name="profile_mid_name">Middle Name</string>
     <string name="profile_last_name">Last Name</string>
     <string name="profile_title">Patient Profile</string>
     <string name="profile_mobile">Mobile:</string>
@@ -205,7 +207,11 @@
     <string name="btn_submit">Submit</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_upload">Upload Photos</string>
-    <string name="fileName">suburb.json</string>
+    <string name="fileSuburb">suburb.json</string>
+    <string name="fileCountry">country.json</string>
+    <string name="confirm_sign">Please sign consents form before booking an appointment with Redimed</string>
+    <string name="sign_clear">Clear</string>
+    <string name="sign_save">Save Signature</string>
 
     <!-- Notification-->
     <string name="not_title">Telehealth</string>
@@ -224,5 +230,8 @@
     <string name="confirm_option1">I, authorise any doctor who treats me (whether named in this certificate or not) to discuss my medical condition, in relation to my claim for worker\'s compensation and return to work options, with my employer and with their insurer.</string>
     <string name="confirm_option2">If your claim is NOT ACCEPTED by the insurance company, or your accounts are not settled by your employer, you will be liable for any invoices issued during the course of your treatment. If your account is forwarded to the debt collector, you will be liable for all fees associated.</string>
     <string name="confirm_option3">I, agree to having medic/supervisor present as a third party during a medical consult with REDiMED.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -83,7 +83,7 @@ public class MyApplication extends Application {
     public String ConvertDate(String dataTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date myDate = null;
-        String finalDate = " ";
+        String finalDate = "NONE";
         try {
             myDate = dateFormat.parse(dataTime);
             SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -98,7 +98,7 @@ public class MyApplication extends Application {
     public String ConvertTime(String dataTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date myDate = null;
-        String finalDate = " ";
+        String finalDate = "NONE";
         try {
             myDate = dateFormat.parse(dataTime);
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");

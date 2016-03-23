@@ -63,9 +63,6 @@ public class DialogConnection extends Dialog implements View.OnClickListener {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_OUTSIDE){
-            return true;
-        }
-        return false;
+        return event.getAction() == MotionEvent.ACTION_OUTSIDE;
     }
 }

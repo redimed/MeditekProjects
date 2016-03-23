@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,10 +52,12 @@ import com.redimed.telehealth.patient.views.SignaturePad;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Fox on 1/14/2016.
@@ -67,7 +71,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     private static final int RESULT_PHOTO = 1;
     private static final int RESULT_CAMERA = 2;
     private static final int MEDIA_TYPE_IMAGE = 1;
-    private String TAG = "======INFORMATION=====";
+    private static final String TAG = "======INFORMATION=====";
 
     @Bind(R.id.progressBarUpload)
     ProgressBar progressBarUpload;
@@ -92,17 +96,19 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     EditText txtHomePhone;
     @Bind(R.id.txtAddress)
     EditText txtAddress;
-    @Bind(R.id.txtSuburb)
-    EditText txtSuburb;
+    @Bind(R.id.autoCompleteSuburb)
+    AutoCompleteTextView autoCompleteSuburb;
     @Bind(R.id.txtPostCode)
     EditText txtPostCode;
-    @Bind(R.id.txtCountry)
-    EditText txtCountry;
+    @Bind(R.id.autoCompleteCountry)
+    AutoCompleteTextView autoCompleteCountry;
 
     @Bind(R.id.layoutPatientName)
     LinearLayout layoutPatientName;
     @Bind(R.id.txtFirstName)
     EditText txtFirstName;
+    @Bind(R.id.txtMidName)
+    EditText txtMidName;
     @Bind(R.id.txtLastName)
     EditText txtLastName;
     @Bind(R.id.txtDOB)
@@ -149,7 +155,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Bind(R.id.lblSubTitle)
     TextView lblSubTitle;
 
-    public InformationFragment() {}
+    public InformationFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -214,14 +221,24 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         //init array EditText
         arrEditText = new ArrayList<EditText>();
         arrEditText.add(txtFirstName);
+        arrEditText.add(txtMidName);
         arrEditText.add(txtLastName);
         arrEditText.add(txtDOB);
         arrEditText.add(txtHomePhone);
         arrEditText.add(txtAddress);
-        arrEditText.add(txtSuburb);
         arrEditText.add(txtPostCode);
-        arrEditText.add(txtCountry);
         arrEditText.add(txtEmail);
+
+        //init Suburb
+        if (iInfoPresenter.loadJsonSuburb() != null) {
+            autoCompleteSuburb.setThreshold(1);
+            autoCompleteSuburb.setAdapter(iInfoPresenter.loadJsonSuburb());
+        }
+
+        if (iInfoPresenter.loadJsonCountry() != null) {
+            autoCompleteCountry.setThreshold(1);
+            autoCompleteCountry.setAdapter(iInfoPresenter.loadJsonCountry());
+        }
     }
 
     //Refresh information patient
@@ -262,21 +279,23 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Override
     public void displayInfo(Patient[] patients) {
         if (patients != null) {
-            String firstName, lastName;
+            String firstName, lastName, midName;
             for (Patient patient : patients) {
                 firstName = patient.getFirstName() == null ? "NONE" : patient.getFirstName();
-                lastName = patient.getLastName() == null ? "" : patient.getLastName();
-                lblNamePatient.setText(firstName + " " + lastName);
+                midName = patient.getMiddleName() == null ? " " : patient.getMiddleName();
+                lastName = patient.getLastName() == null ? " " : patient.getLastName();
+                lblNamePatient.setText(firstName + " " + midName + " " + lastName);
                 lblPhoneNumber.setText(patient.getPhoneNumber());
                 txtHomePhone.setText(patient.getHomePhoneNumber() == null ? "NONE" : patient.getHomePhoneNumber());
                 txtEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
                 lblDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
                 txtAddress.setText(patient.getAddress1() == null ? "NONE" : patient.getAddress1());
-                txtSuburb.setText(patient.getSuburb() == null ? "NONE" : patient.getSuburb());
+                autoCompleteSuburb.setText(patient.getSuburb() == null ? "NONE" : patient.getSuburb());
                 txtPostCode.setText(patient.getPostCode() == null ? "NONE" : patient.getPostCode());
-                txtCountry.setText(patient.getCountryName() == null ? "NONE" : patient.getCountryName());
+                autoCompleteCountry.setText(patient.getCountryName() == null ? "NONE" : patient.getCountryName());
 
                 txtFirstName.setText(firstName);
+                txtMidName.setText(midName);
                 txtLastName.setText(lastName);
                 txtDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
 
@@ -305,6 +324,9 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
     @Override
     public void onReload() {
+        for (EditText editText : arrEditText){
+            editText.setError(null);
+        }
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
     }
@@ -341,7 +363,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
     @Override
     public void onResultSignature(Bitmap bitmap) {
-        if (bitmap != null){
+        if (bitmap != null) {
             imgSignature.setImageBitmap(bitmap);
             lblNoSign.setVisibility(View.VISIBLE);
             vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutImg));
@@ -372,9 +394,13 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         if (msg.equalsIgnoreCase("Network Error")) {
             new DialogConnection(context).show();
         } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(getResources().getString(R.string.token_expired))
+                    .show();
         } else {
-            new DialogAlert(context, DialogAlert.State.Error, msg).show();
+            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                    .setContentText(msg)
+                    .show();
         }
     }
 
@@ -400,14 +426,10 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblUpdateProfile:
-                lblUpdateProfile.setVisibility(View.VISIBLE);
-                layoutPatientName.setVisibility(View.VISIBLE);
-                layoutButtonUpdate.setVisibility(View.VISIBLE);
-                iInfoPresenter.changeViewUpdate(arrEditText);
-                vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
+                ChangeViewUpdate();
                 break;
             case R.id.lblSubmit:
-                iInfoPresenter.updateProfile(arrEditText);
+                iInfoPresenter.updateProfile(arrEditText, autoCompleteSuburb.getText().toString(), autoCompleteCountry.getText().toString());
                 break;
             case R.id.lblClear:
                 vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutImg));
@@ -426,6 +448,18 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 onReload();
                 break;
         }
+    }
+
+    private void ChangeViewUpdate(){
+        lblUpdateProfile.setVisibility(View.GONE);
+        layoutPatientName.setVisibility(View.VISIBLE);
+        layoutButtonUpdate.setVisibility(View.VISIBLE);
+        for (EditText editText : arrEditText){
+            editText.setEnabled(true);
+        }
+        autoCompleteSuburb.setEnabled(true);
+        autoCompleteCountry.setEnabled(true);
+        vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
     }
 
     //Display dialog choose camera or gallery to upload image
@@ -485,12 +519,21 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                         break;
 
                 }
+                showImage(picturePath);
                 new UploadFile(context, progressBarUpload, "ProfileImage", picturePath).execute();
             } else {
                 Toast.makeText(context, "You haven't picked Image", Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
             Log.d(TAG, ex.getLocalizedMessage());
+        }
+    }
+
+    private void showImage(String path) {
+        File imgFile = new File(path);
+        if (imgFile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            avatarPatient.setImageBitmap(myBitmap);
         }
     }
 }

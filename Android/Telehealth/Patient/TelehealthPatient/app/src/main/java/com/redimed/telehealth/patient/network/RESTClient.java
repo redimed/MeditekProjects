@@ -160,14 +160,17 @@ public class RESTClient {
         public Response execute(Request request) throws IOException {
             Response response = super.execute(request);
             for (final Header header : response.getHeaders()) {
+
                 if (null != header.getName() && header.getName().equals("set-cookie")) {
                     editor = uidTelehealth.edit();
                     editor.putString("cookie", header.getValue());
                     editor.apply();
                 }
                 if (header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")) {
+
                     JsonObject dataRefresh = new JsonObject();
                     dataRefresh.addProperty("refreshCode", uidTelehealth.getString("refreshCode", null));
+
                     RESTClient.getRegisterApiLogin().getNewToken(dataRefresh, new Callback<JsonObject>() {
                         @Override
                         public void success(JsonObject jsonObject, Response response) {

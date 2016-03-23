@@ -147,26 +147,15 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         if (viewHolder instanceof AppointmentViewHolder) {
             AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
 
-            String firstName = "NONE", lastName = "", refName = "";
-            Doctor[] doctors = listAppointment.get(position).getDoctor();
-            if (doctors != null) {
-                for (Doctor doctor : doctors) {
-                    if (doctor != null) {
-                        firstName = doctor.getFirstName() == null ? "NONE" : doctor.getFirstName();
-                        lastName = doctor.getLastName() == null ? "" : doctor.getLastName();
-                    }
-                }
-            } else {
-                firstName = "NONE";
-                lastName = "";
-            } if (listAppointment.get(position).getTelehealthAppointment() != null) {
+            String refName = "";
+            if (listAppointment.get(position).getTelehealthAppointment() != null) {
                 refName = listAppointment.get(position).getTelehealthAppointment().getRefName() == null ? "NONE" : listAppointment.get(position).getTelehealthAppointment().getRefName();
             }
 
             /* Show data Created Date, Referring, Preferred */
             appointmentViewHolder.lblDate.setText(MyApplication.getInstance().ConvertDate(listAppointment.get(position).getCreatedDate()));
             appointmentViewHolder.lblDoctorRef.setText(refName);
-            appointmentViewHolder.lblDoctorPre.setText(firstName + " " + lastName);
+            appointmentViewHolder.lblDoctorPre.setText(GetDoctorName(position));
 
             Animation animation = AnimationUtils.loadAnimation(context,
                     (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
@@ -175,5 +164,18 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         } else {
             ((ProgressViewHolder) viewHolder).progressBar.setIndeterminate(true);
         }
+    }
+
+    private String GetDoctorName(int position) {
+        Doctor[] doctors = listAppointment.get(position).getDoctor();
+        if (doctors != null && doctors.length > 0) {
+            String firstName = null, lastName = null;
+            for (Doctor doctor : doctors) {
+                firstName = doctor.getFirstName() == null ? "NONE" : doctor.getFirstName();
+                lastName = (doctor.getLastName() == null ? "" : doctor.getLastName());
+            }
+            return firstName + lastName;
+        }
+        return "NONE";
     }
 }

@@ -32,7 +32,7 @@
                 android:id="@+id/lblSubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HOME"
+                android:text="BACK"
                 android:textSize="15dp"
                 android:layout_gravity="center"
                 android:textColor="@color/lightFont"/>

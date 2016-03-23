@@ -103,8 +103,7 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Bind(R.id.lblSubTitle)
     TextView lblSubTitle;
 
-    public RequestFragment() {
-    }
+    public RequestFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -304,9 +303,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 case 200:
                     String[] allPath = data.getStringArrayExtra("all_path");
                     iRequestPresenter.setImageGallery(allPath);
-                    break;
-                case 1:
-                    iRequestPresenter.changeFragment(new HomeFragment());
                     break;
                 default:
                     break;

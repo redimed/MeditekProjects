@@ -5,46 +5,29 @@
  */
 package com.meditek.jasper.controller;
 
-import com.meditek.jasper.model.FormDataModel;
 import com.meditek.jasper.model.RequestDataModel;
 import com.meditek.jasper.process.PrintingProcess;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
+import java.net.URL;
+
+
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import sun.misc.IOUtils;
+
 
 /**
  *
@@ -54,7 +37,7 @@ import sun.misc.IOUtils;
 public class JasperReportController {
     
     PrintingProcess pdfPrinting = new PrintingProcess();
-//    String baseUrl="https://meditek.redimed.com.au:3005";
+    String baseUrl="https://meditek.redimed.com.au:3005";
     //String baseUrl="https://testapp.redimed.com.au:3005";
     
     @CrossOrigin("*")
@@ -104,7 +87,7 @@ public class JasperReportController {
                 baos = pdfPrinting.iTextPrinting(requestData.getData(), requestData.getTemplateUID());
             }
             else{
-                String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
+//                String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
                 baos = pdfPrinting.jasperPrinting(requestData.getData(), requestData.getTemplateUID(), baseUrl);
             }
             //Return the filled pdf file.

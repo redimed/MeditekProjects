@@ -19,6 +19,7 @@ module.exports = function(objCheck) {
             }
         });
         var arrayUIDRosterUpdate = _.map(objCheck.where, 'UID');
+        //get all Roster update
         Roster.findAll({
                 attributes: Services.AttributesRoster.Roster(),
                 include: [{
@@ -39,6 +40,7 @@ module.exports = function(objCheck) {
                 if (!_.isEmpty(rosterRes)) {
                     arrRoster = JSON.parse(JSON.stringify(rosterRes));
                     var arrDataExistAppt = [];
+                    //loop arrRoster get all Appointment in FromTime - ToTime of Roster
                     return sequelize.Promise.each(arrRoster, function(valueRosterUser, indexRosterUser) {
                             if (!_.isEmpty(valueRosterUser) &&
                                 HelperService.CheckExistData(valueRosterUser.FromTime) &&
@@ -70,7 +72,7 @@ module.exports = function(objCheck) {
                                     })
                                     .then(function(apptOnRoster) {
                                         if (!_.isEmpty(apptOnRoster)) {
-                                            //find FromTime, ToTime update ofr Roster
+                                            //find FromTime, ToTime update for Roster
                                             var FromTimeUpdate = null;
                                             var ToTimeUpdate = null;
                                             var rosterCurrentUpdate = null;
@@ -85,8 +87,10 @@ module.exports = function(objCheck) {
                                             _.forEach(apptOnRoster, function(valueAppt, indexAppt) {
                                                 var FromTimeAppt = moment(valueAppt.FromTime).format('YYYY-MM-DD HH:mm:ss Z');
                                                 var ToTimeAppt = moment(valueAppt.ToTime).format('YYYY-MM-DD HH:mm:ss Z');
-                                                if (!moment(FromTimeAppt).within(rangeRosterUpdate) ||
-                                                    !moment(ToTimeAppt).within(rangeRosterUpdate)) {
+                                                if ((!moment(FromTimeAppt).within(rangeRosterUpdate) &&
+                                                        !_.isEmpty(valueAppt.FromTime)) ||
+                                                    (!moment(ToTimeAppt).within(rangeRosterUpdate) &&
+                                                        !_.isEmpty(valueAppt.ToTime))) {
                                                     var objRosterExistAppt = _.extend({}, rosterCurrentUpdate);
                                                     objRosterExistAppt.Appointment = _.extend({}, valueAppt);
                                                     arrDataExistAppt.push(objRosterExistAppt);

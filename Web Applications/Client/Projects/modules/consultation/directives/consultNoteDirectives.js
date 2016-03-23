@@ -124,7 +124,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.PrintPDF = function() {
                 o.loadingPage(true);
                 var ConsultationDataTemp = [];
-                console.log("$scope.requestInfo.Consultations[0].ConsultationData",$scope.requestInfo.Consultations[0].FileUploads[0].UID)
+                
                 for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");
@@ -168,14 +168,13 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         };
                         postData.push(object)
                     })
-                    if ($scope.requestInfo.Consultations[0].FileUploads.length > 0) {
-                     var Image = {
-                        name:"consult_note_image",
-                        value:$scope.requestInfo.Consultations[0].FileUploads[0].UID
-                        }
-                     postData.push(Image)
+                    console.log($scope.requestInfo.Consultations[0].FileUploads)
+                    var Image = {
+                      name:"consult_note_image",
+                      value:($scope.requestInfo.Consultations[0].FileUploads.length > 0)?$scope.requestInfo.Consultations[0].FileUploads[0].UID:""
                     }
-
+                    postData.push(Image)
+                    
                     var firstname = {
                         name: "firstname",
                         value: response.data[0].FirstName

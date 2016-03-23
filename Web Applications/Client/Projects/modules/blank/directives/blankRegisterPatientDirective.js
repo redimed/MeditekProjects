@@ -181,26 +181,64 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
             $scope.loadListContry();
             $scope.Next = function(number) {
                 $scope.submitted = true;
+                var isEmail = false;
+                var isPhoneNumber = false;
+                var data = '?';
                 if ($scope.step1.$valid && number == 1) {
-                    blankServices.checkpatient({
-                        PhoneNumber: $scope.postData.data.PhoneNumber,
-                        Email: $scope.postData.data.Email1
-                    }).then(function(response) {
-                        if (!response.data.isCreated) {
+                    if($scope.postData.data.PhoneNumber) {
+                        data = data+'&PhoneNumber='+$scope.postData.data.PhoneNumber;
+                    }
+                    if($scope.postData.data.Email1) {
+                        data = data+'&Email='+$scope.postData.data.Email1;
+                    }
+                    blankServices.checkpatient(data).then(function(response) {
+                        if(response == null || response == '' || response.length == 0) {
                             $scope.number++;
                             $scope.submitted = false;
-                        } else {
-                            if(response.data.field.Email == true && response.data.field.PhoneNumber == true) {
-                                toastr.error("Mobile Phone Number and Email existed");
-                            }
-                            else if(response.data.field.Email == true) {
-                                toastr.error("Email existed");
-                            }
-                            else if(response.data.field.PhoneNumber == true) {
-                                toastr.error("Mobile Phone Number existed");
-                            }
-
                         }
+                        else { 
+                            if($scope.postData.data.PhoneNumber.indexOf('0') == 0){
+                                var parsePhone = $scope.postData.data.PhoneNumber.substr(0, 0)+"+614"+$scope.postData.data.PhoneNumber.substr(2);
+                            }
+                            for(var i = 0; i <= response.length; i++) {
+                                if(i == response.length) {
+                                    if(isEmail == true && isPhoneNumber == true) {
+                                        toastr.error("Mobile Phone Number and Email existed");
+                                    }
+                                    else if(isEmail == true) {
+                                        toastr.error("Email existed");
+                                    }
+                                    else if(isPhoneNumber == true) {
+                                        toastr.error("Mobile Phone Number existed");
+                                    }
+                                }
+                                else {
+                                    if(response[i].Email == $scope.postData.data.Email1) {
+                                        isEmail = true;
+                                        // toastr.error("Email existed");
+                                    }
+                                    if(response[i].PhoneNumber == parsePhone) {
+                                        isPhoneNumber = true;
+                                        // toastr.error("Mobile Phone Number existed");
+                                    }
+                                }
+                            }
+                        }
+                        // if (!response.data.isCreated) {
+                        //     $scope.number++;
+                        //     $scope.submitted = false;
+                        // } else {
+                        //     if(response.data.field.Email == true && response.data.field.PhoneNumber == true) {
+                        //         toastr.error("Mobile Phone Number and Email existed");
+                        //     }
+                        //     else if(response.data.field.Email == true) {
+                        //         toastr.error("Email existed");
+                        //     }
+                        //     else if(response.data.field.PhoneNumber == true) {
+                        //         toastr.error("Mobile Phone Number existed");
+                        //     }
+
+                        // }
                     }, function(err) {
                         console.log(err.data.message);
                     })

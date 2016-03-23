@@ -10,9 +10,10 @@ angular.module("app.blank.services", [])
             return api.all('patient/register-patient').post(data);
         }
         services.checkpatient = function(data) {
-            return api.all('patient/check-patient').post({
-                data: data
-            });
+            var postData = data.slice(0, 1) + data.slice(2);
+            console.log(postData);
+            return api.one('user-account/CheckExistUser/'+postData.toString()).get();
+            // http://localhost:3005/api/user-account/CheckExistUser/?PhoneNumber=0411111111&Email=sad@sdsd.cs
         }
         services.searchPatient = function(data) {
             return api.all('patient/search-patient').post({

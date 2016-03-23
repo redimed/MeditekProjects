@@ -142,7 +142,7 @@ module.exports = {
 
     forgot: function(req, res) {
         var data = req.body.data;
-        return UserAccount.findOne({
+        UserAccount.findOne({
             where : {
                 Email : data.email
             }
@@ -150,7 +150,7 @@ module.exports = {
         .then(function(result){
             if(result!=null && result!=""){
                 data.UID = result.UID;
-                Services.UserAccount.sendMail(data,secret,function(err, responseStatus, html, text){
+                return Services.UserAccount.sendMail(data,secret,null,function(err, responseStatus, html, text){
                     if(err)
                         res.serverError(ErrorWrap(err));
                     else{

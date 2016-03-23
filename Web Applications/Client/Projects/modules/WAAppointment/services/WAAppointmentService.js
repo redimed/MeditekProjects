@@ -13,6 +13,11 @@ angular.module("app.authentication.WAAppointment.services", [])
                 data: data
             });
         };
+         services.loadListWAAppointmentConsultation = function(data) {
+            return api.all("appointment-wa-list/consultation").post({
+                data: data
+            });
+        };
         //load detail WAappointment
         services.getDetailWAAppointmentByUid = function(UID) {
             return api.one("appointment-wa-detail/" + UID).get();

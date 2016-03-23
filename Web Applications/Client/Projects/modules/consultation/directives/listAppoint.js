@@ -103,7 +103,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
 
             scope.LoadData = function() {
                 console.log(scope.info.data);
-                WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
+                WAAppointmentService.loadListWAAppointmentConsultation(scope.info.data).then(function(data) {
                     console.log(data);
                     scope.info.listWaapointment = data;
                 });

@@ -114,6 +114,14 @@ module.exports = {
             headers: headers
         });
     },
+    GetListCountry: function(headers) {
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/patient/get-listcountry',
+            method: 'GET',
+            headers: headers
+        })
+    },
     GetWAAppointmentDetails: function(apptUID, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({

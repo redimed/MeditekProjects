@@ -192,7 +192,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                         scope.ermsg = '';
                                         scope.loadingCheck = false;
                                         toastr.success("Information can be choose to create patient", "SUCCESS");
-                                        scope.isShowEmail1 = result.data.data.Email1;
+                                        scope.isShowEmail1 = verifyData.Email;
                                         scope.data.Email1 = verifyData.Email;
                                         scope.isShowNext = true;
                                         scope.data.CountryID1 = 14;
@@ -206,9 +206,20 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                         scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
                                         // scope.data.DOB = new Date('1/1/1990');
                                     } else {
-                                        toastr.error("Information was used to create patient", "ERROR");
+                                        console.log(result);
+                                        // toastr.error("Information was used to create patient", "ERROR");
                                         scope.isBlockStep1 = false;
                                         scope.loadingCheck = false;
+                                        if(result.data.field.Email && result.data.field.PhoneNumber) {
+                                            toastr.error("Mobile Phone Number and Email existed");
+                                        }
+                                        else if (result.data.field.Email) {
+                                            toastr.error("Email existed");
+                                        }
+                                        else if (result.data.field.PhoneNumber) {
+                                            toastr.error("Mobile Phone Number existed");
+                                        }
+                
                                     }
                                 }
                             }, function(err) {

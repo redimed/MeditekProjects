@@ -1046,7 +1046,7 @@ module.exports = {
 
 		return Validation()
 		.then(function(data){
-			return UserAccount.findOne({
+			return UserAccount.findAll({
 				where:{
 					$or:whereClause
 				},
@@ -1121,7 +1121,7 @@ module.exports = {
         	Token          : token
         },{transaction: transaction})
         .then(function(success){
-        	SendMailService.SendMail
+        	return SendMailService.SendMail
         		('demo', emailInfo, functionA);
         },function(err){
         	throw err;

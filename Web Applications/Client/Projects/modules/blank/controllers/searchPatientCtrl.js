@@ -1,6 +1,12 @@
 var app = angular.module('app.blank.searchPatient.controller', []);
-app.controller('searchPatientCtrl', function($scope, blankServices, toastr, UnauthenticatedService, $rootScope, $state, $cookies, $stateParams) {
-    console.log('$stateParams',$stateParams.typePatient)
+app.controller('searchPatientCtrl', function($scope, blankServices, toastr, UnauthenticatedService, $rootScope, $state, $cookies, $stateParams, $timeout) {
+    console.log('$stateParams',$stateParams.typePatient);
+    $timeout(function(){
+        if($stateParams.typePatient == 'PatientCampaign')
+            document.body.className = "full-background-compaign";
+        else
+            document.body.className = "full-background";
+    },0);
    if ($stateParams.typePatient == 'PatientCampaign') {
      $scope.typePatient = $stateParams.typePatient
    };
@@ -13,8 +19,9 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
         PinNumber: ""
     }
     $scope.Reset = function() {
-        $scope.postData.data = {}
-        $scope.submitted = false;
+        $state.go('blank.searchPatient',{},{reload:true});
+        // $scope.postData.data = {}
+        // $scope.submitted = false;
     }
     $scope.next = function() {
         $scope.submitted = true;

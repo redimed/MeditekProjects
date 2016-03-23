@@ -56,7 +56,13 @@
 				<tr ng-hide="toggle">
 					<td>#</td>
 					<td ng-repeat="i in items">
-						<input ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="{{i.field}}" />
+						<input ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="{{i.field}}" ng-if="i.field!='Gender'" />
+						<select class="form-control" ng-change="Search(search,'13')" ng-model="search[i.field]" ng-if="i.field=='Gender'">
+							<option value=""></option>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+							<option value="Other">Other</option>
+						</select>
 					</td>
 					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.RoleName" ng-options="r.id as r.name for r in typeDoctor"></select></td>
 					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select></td>
@@ -64,7 +70,7 @@
 			</thead>
 			<tbody>
 			<tbody>
-				<tr ng-repeat="d in doctors" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId)">
+				<tr ng-repeat="d in doctors" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)">
 					<td>{{d.stt}}</td>
 					<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
 					<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>

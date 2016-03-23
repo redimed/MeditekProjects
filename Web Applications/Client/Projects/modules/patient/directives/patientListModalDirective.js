@@ -450,7 +450,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
 							// scope.uploader.uploadAll();
 							toastr.success("update success!!!","SUCCESS");
-							scope.onCancel();
+							scope.init();
+							// scope.onCancel();
 						},function(err){
 							toastr.error(err.data.message.errors,"ERROR");
 							scope.info = angular.copy(oriInfo);

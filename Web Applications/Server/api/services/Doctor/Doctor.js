@@ -918,17 +918,17 @@ module.exports = {
 									model: Role,
 				          			attributes: ['RoleName'],
 				          			where:{
-				          				$or: whereClause.Role,
-				          				RoleName: {
-				          					$notLike: '%Patient%'
-				          				}
+				          				$or: whereClause.Role
 				          			},
-				          			required: false,
+				          			required: true,
 						  		}
 							],
 			          		model: RelUserRole,
 			          		attributes: ['RoleId'],
-			          		required: false,
+			          		where:{
+			          			RoleId : {in:[4,5]}
+			          		},
+			          		required: true,
 
 				    	},
 				    	{
@@ -951,9 +951,9 @@ module.exports = {
 			order      : data.order,
 			subQuery   : false,
 			where: {
-				$or: [
+				$and: [
 					whereClause.Doctor,
-					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"),' ', Sequelize.col("LastName")), {
+					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
 		    	   	like: '%'+FirstName+' '+LastName+'%'}):null,
 				]			
 			},

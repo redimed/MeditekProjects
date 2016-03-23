@@ -542,9 +542,7 @@ module.exports = {
                 }
             }
             if(data.Search.Gender){
-                whereClause.Patient.Gender = {
-                    like:'%'+data.Search.Gender+'%'
-                }
+                whereClause.Patient.Gender = data.Search.Gender;
             }
             if(data.Search.Email1){
                 whereClause.Patient.Email1 = {
@@ -1620,6 +1618,24 @@ module.exports = {
                     model: UserAccount,
                     attributes: ['PhoneNumber','Enable'],
                     required: true,
+                    include:[
+                        {
+                            include:[
+                                {
+                                    model: Role,
+                                    attributes: ['RoleName'],
+                                    required: false,
+                                }
+                            ],
+                            model: RelUserRole,
+                            attributes: ['RoleId'],
+                            where:{
+                                RoleId : {in:[3]}
+                            },
+                            required: false,
+
+                        }
+                    ],
                     where:{
                         $or: whereClause.UserAccount
                     }
@@ -1630,9 +1646,9 @@ module.exports = {
             offset     : data.offset,
             order      : data.order,
             where: {
-                $or: [
+                $and: [
                     whereClause.Patient,
-                    isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"),' ', Sequelize.col("LastName")), {
+                    isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Patient.FirstName"),' ', Sequelize.col("Patient.LastName")), {
                         like: '%'+FirstName+' '+LastName+'%'
                     }):null,
                 ]

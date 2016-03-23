@@ -18,7 +18,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 			];
 			scope.typeDoctor = [
 				{id:null,name:"All"},
-				{id:"Admin",name:"Admin"},
+				{id:"Speciality",name:"Speciality"},
 				{id:"GP",name:"GP"}
 			];
 			scope.fieldSort={};
@@ -29,6 +29,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 				{field:"Email",name:"Email"}
 			];
 			scope.items = scope.items!=null&&scope.items!=undefined?scope.items:scope.itemDefault;
+			console.log(scope.items);
 			for(var i = 0; i < scope.items.length; i++){
 				scope.fieldSort[scope.items[i].field]='ASC';
 			};

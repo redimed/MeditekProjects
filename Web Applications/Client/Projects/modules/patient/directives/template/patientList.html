@@ -32,7 +32,13 @@
 				<tr style="width:100%;" ng-hide="toggle">
 					<th>&nbsp;</th>
 					<th ng-repeat="i in items">
-						<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)">
+						<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" ng-if="i.field!='Gender'">
+						<select class="form-control" ng-change="Search(search,'13')" ng-model="search[i.field]" ng-if="i.field=='Gender'">
+							<option value=""></option>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+							<option value="Other">Other</option>
+						</select>
 					</th>
 					<th style="width:10%;">
 						<select class="form-control" ng-change="Search(search,flag)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>

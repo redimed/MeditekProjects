@@ -5,24 +5,14 @@
  */
 package com.meditek.jasper.process;
 
-import com.itextpdf.text.Image;
 import com.meditek.jasper.model.FormDataModel;
-import com.meditek.jasper.model.PatientKinModel;
-import com.meditek.jasper.model.PatientModel;
-import com.meditek.jasper.model.ReportDataWrapperModel;
+
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collection;
-import java.util.Collections;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -99,11 +89,15 @@ public class DataProcess {
         for(FormDataModel d : data){
             //only if it's not table identity or not a cell in a table
             if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
-                if(d.getName().toLowerCase().contains("signature") || d.getType().equals("eform_input_signature")){
-                    BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
+                if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("_image") || d.getType().equals("eform_input_signature")){
+                    try{
+                        BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
+                        parsedData.put(d.getName().toLowerCase(), image);
+                    }
+                    catch(Exception e){
+                        // Do nothing
+                    }
 //                    BufferedImage image = ImageIO.read(new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/4a3efefb-39a7-441c-9d59-1bc638b527c7").openStream());
-
-                    parsedData.put(d.getName().toLowerCase(), image);
                 }
                 else parsedData.put(d.getName().toLowerCase(), d.getValue());
             }
@@ -122,8 +116,6 @@ public class DataProcess {
         }
         //Populate the table
         int tableFieldLimit = numOfRows*numOfCols;
-//        int colIndex = 0;
-//        int rowIndex = 0;
         for(int rowIndex=0; rowIndex<numOfRows; rowIndex++){
             Hashtable rowData = new Hashtable();
             for(int colIndex=0; colIndex<numOfCols; colIndex++){

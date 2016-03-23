@@ -353,6 +353,25 @@ module.exports = React.createClass({
         })
         swal("Success!", "Your section has order to "+value, "success");
     },
+    _onComponentSectionOrderRow: function(codeSection, codeRow, value){
+        var rows = this.state.sections.deleteIn([codeSection, 'rows', codeRow]);
+        var rowOrder = this.state.sections.get(codeSection).get('rows').get(codeRow);
+        var firstRows = rows.get(codeSection).get('rows');
+        firstRows = firstRows.slice(0, value);
+        var appendFirstRows = firstRows.push(rowOrder);
+        var secondRows = rows.get(codeSection).get('rows').slice(value, this.state.sections.get(codeSection).get('rows').size);
+        var finalRows = appendFirstRows;
+        secondRows.toJS().map(function(row){
+            finalRows = finalRows.push(Immutable.fromJS(row));
+        })
+
+       this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows'], val => finalRows)
+            }
+        })
+        swal("Success!", "Your row has change order", "success"); 
+    },
     render: function(){
 	return (
 		<div className="page-content">
@@ -372,33 +391,35 @@ module.exports = React.createClass({
             		      <h3 className="page-title">{this.state.name}</h3>
                                 {
                                     	this.state.sections.map(function(section, index){
-                                    		return <ComponentSection key={index}
-                                    			ref={section.get('ref')}
-                                                                 refTemp={section.get('ref')}
-                                    			key={index}
-                                    			code={index}
-                                                                 type="section"
-                                                                 page={section.get('page')}
-                                                                 permission="eformDev"
-                                                                 rows={section.get('rows')}
-                                    			name={section.get('name')}
-                                    			onUpdateSection={this._onComponentSectionUpdate}
-                                    			onRemoveSection={this._onComponentSectionRemove}
-                                    			onDragSection={this._onComponentSectionDrag}
-                                                                 onCreateRow={this._onComponentSectionCreateRow}
-                                                                 onRemoveRow={this._onComponentSectionRemoveRow}
-                                    			onSelectField={this._onComponentSectionSelectField}
-                                    			onDragField={this._onComponentSectionDragField}
-                                    			onRemoveField={this._onComponentSectionRemoveField}
-                                    			onSaveFieldDetail={this._onComponentSectionSaveFieldDetail}
-                                    			onCreateTableRow={this._onComponentSectionCreateTableRow}
-                                    			onRemoveTableRow={this._onComponentSectionRemoveTableRow}
-                                    			onCreateTableColumn={this._onComponentSectionCreateTableColumn}
-                                    			onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
-                                    			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
-                                                                 onDragRow={this._onComponentSectionDragRow}
-                                                                 onChangePage={this._onComponentSectionChangePage}
-                                                                 onOrderSection={this._onComponentSectionOrderSection}/>
+                                            console.log(section.toJS());
+                        		      return <ComponentSection key={index}
+                        			ref={section.get('ref')}
+                                                     refTemp={section.get('ref')}
+                        			key={index}
+                        			code={index}
+                                                     type="section"
+                                                     page={section.get('page')}
+                                                     permission="eformDev"
+                                                     rows={section.get('rows')}
+                        			name={section.get('name')}
+                        			onUpdateSection={this._onComponentSectionUpdate}
+                        			onRemoveSection={this._onComponentSectionRemove}
+                        			onDragSection={this._onComponentSectionDrag}
+                                                     onCreateRow={this._onComponentSectionCreateRow}
+                                                     onRemoveRow={this._onComponentSectionRemoveRow}
+                        			onSelectField={this._onComponentSectionSelectField}
+                        			onDragField={this._onComponentSectionDragField}
+                        			onRemoveField={this._onComponentSectionRemoveField}
+                        			onSaveFieldDetail={this._onComponentSectionSaveFieldDetail}
+                        			onCreateTableRow={this._onComponentSectionCreateTableRow}
+                        			onRemoveTableRow={this._onComponentSectionRemoveTableRow}
+                        			onCreateTableColumn={this._onComponentSectionCreateTableColumn}
+                        			onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
+                        			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
+                                                     onDragRow={this._onComponentSectionDragRow}
+                                                     onChangePage={this._onComponentSectionChangePage}
+                                                     onOrderSection={this._onComponentSectionOrderSection}
+                                                     onOrderRow={this._onComponentSectionOrderRow}/>
                                     	}, this)
                                 }
                                 <ComponentPageBar ref="pageBarBottom"

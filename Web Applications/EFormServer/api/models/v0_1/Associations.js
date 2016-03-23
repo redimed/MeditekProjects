@@ -487,6 +487,24 @@ module.exports = {
             foreignKey: 'PatientID'
         });
 
+        //association EFormGroup - EFormTemplate
+        EFormGroup.belongsToMany(EFormTemplate, {
+            through: 'RelEFormGroupTemplate',
+            foreignKey: 'EFormGroupID'
+        });
+        EFormTemplate.belongsToMany(EFormGroup, {
+            through: 'RelEFormGroupTemplate',
+            foreignKey: 'EFormTemplate'
+        });
+
+        //association EFormGroup - UserAccount
+        EFormGroup.belongsTo(UserAccount, {
+            foreignKey: 'CreatedBy'
+        });
+        UserAccount.hasOne(EFormGroup, {
+            foreignKey: 'CreatedBy',
+        });
+
         //association PatientFund - Fund
         PatientFund.belongsToMany(Fund, {
             through: 'RelPatientFund',

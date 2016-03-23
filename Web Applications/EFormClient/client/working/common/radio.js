@@ -112,11 +112,6 @@ module.exports = React.createClass({
                     </div>
                 )
                 break;
-            case 'r':
-                html = (
-                    <input type="radio" className="icheck" ref="input"/>
-                )
-                break;
         }
         return html
     }

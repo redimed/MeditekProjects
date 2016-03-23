@@ -26,7 +26,8 @@ module.exports = React.createClass({
         onRemoveTableRow: React.PropTypes.func,
         onUpdateTableColumn: React.PropTypes.func,
         onChangePage: React.PropTypes.func,
-        onOrderSection: React.PropTypes.func
+        onOrderSection: React.PropTypes.func,
+        onOrderRow: React.PropTypes.func
     },
     getCode: function(){
         return this.props.code;
@@ -263,10 +264,10 @@ module.exports = React.createClass({
                                 <div className="caption">
                                         {this.props.name}
                                         &nbsp;
-                                        <span className="label label-sm label-primary dragSectionHandler"
+                                        {/*<span className="label label-sm label-primary dragSectionHandler"
                                             style={{display: displayPermission}}>
                                             Drag here
-                                        </span>
+                                        </span>*/}
                                     </div>
                                     <div className="tools" style={{display: displayPermission}}>
                                         <a className="collapse"></a>
@@ -276,7 +277,7 @@ module.exports = React.createClass({
                                             <a className="btn btn-default btn-sm" data-toggle="dropdown">
                                                 Action&nbsp;
                                                 <i className="fa fa-angle-down"></i>
-                                            </a>
+                                            </a>                                            
                                             <ul className="dropdown-menu pull-right">
                                                 <li>
                                                     <a onClick={this._onCreateRow}>
@@ -313,7 +314,6 @@ module.exports = React.createClass({
                                 <div className="form-body">
                                     {
                                         this.props.rows.map(function(row, index){
-                                            console.log(row.toJS());
                                             return <ComponentRow
                                                             key={index}
                                                             code={index}
@@ -332,7 +332,8 @@ module.exports = React.createClass({
                                                             onUpdateTableColumn={this.props.onUpdateTableColumn}
                                                             onCreateTableColumn={this.props.onCreateTableColumn}
                                                             onCreateTableRow={this.props.onCreateTableRow}
-                                                            onRemoveTableRow={this.props.onRemoveTableRow}/>
+                                                            onRemoveTableRow={this.props.onRemoveTableRow}
+                                                            onOrderRow={this.props.onOrderRow}/>
                                         }, this)
                                     }
                                 </div>

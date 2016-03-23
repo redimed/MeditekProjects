@@ -70,5 +70,21 @@ module.exports = {
     'post /eformtemplatemodule/save': {
         controller: 'EForm/EFormController',
         action: 'PostSaveEFormTemplateModule'
+    },
+    'post /eformgroup/create': {
+        controller: 'EForm/EFormController',
+        action: 'PostCreateEFormGroup'
+    },
+    'post /eformgroup/update': {
+        controller: 'EForm/EFormController',
+        action: 'PostUpdateEFormGroup'
+    },
+    'post /eformgroup/remove': {
+        controller: 'EForm/EFormController',
+        action: 'PostRemoveEFormGroup'
+    },
+    'get /eformgroup/list': {
+        controller: 'EForm/EFormController',
+        action: 'GetListEFormGroup'
     }
 };

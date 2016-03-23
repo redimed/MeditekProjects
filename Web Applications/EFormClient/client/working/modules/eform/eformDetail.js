@@ -177,7 +177,7 @@ module.exports = React.createClass({
             })
         }
     },
-    _onComponentPageBarPrintForm: function(){
+    _onComponentPageBarPrintForm: function(printType){
         var sections = this.state.sections.toJS();
         var self = this;
         var fields = [];
@@ -190,7 +190,7 @@ module.exports = React.createClass({
             })
         }
         var data = {
-            printMethod: 'itext',
+            printMethod: printType,
             data: fields,
             templateUID: this.templateUID
         }

@@ -33,10 +33,17 @@ module.exports = React.createClass({
         this.refs.pageBarBottom.setUserUID(this.props.params.userUID);
     },
     _onComponentPageBarAddNewSection: function() {
-        var sectionRef = "section_"+this.state.sections.size;
+        var page = 1;
+        var sectionRefSize = this.state.sections.size+100;
+        var sectionRef = "section_"+sectionRefSize;
+        if(this.state.sections.size > 0){
+            var prevSize = this.state.sections.size-1;
+            var sectionRefPrev = "section_"+prevSize;
+            page = this.refs[sectionRefPrev].getPage();
+        }
         this.setState(function(prevState) {
             return {
-                sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List() }))
+                sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List(), page: page }))
             }
         })
         swal("Success!", "Your section has been created.", "success");
@@ -73,9 +80,12 @@ module.exports = React.createClass({
         })
         swal("Success!", "Drag change section successfully.", "success");
     },
-    _onComponentSectionSelectField: function(codeSection, codeRow, typeField) {
+    _onComponentSectionSelectField: function(codeSection, codeRow, refSection, refRow, typeField) {
         var fields = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields');
-        var ref = "field_" + codeSection + '_' + codeRow + '_' +fields.size;
+        var sectionRefNumber = refSection.split('_')[1];
+        var rowRefNumber = refRow.split('_')[2];
+
+        var ref = "field_" + sectionRefNumber + '_' + rowRefNumber + '_' +fields.size;
         if(Config.getPrefixField(typeField, 'eform_input') > -1){
             var object = { type: typeField, name: '', size: '12', ref: ref, preCal: ''};
             if(Config.getPrefixField(typeField, 'textarea') > -1)
@@ -269,8 +279,10 @@ module.exports = React.createClass({
                 swal("Success!", "Your form has been saved.", "success");
             }.bind(this))
     },
-    _onComponentSectionCreateRow: function(codeSection){
-        var rowRef = "row_"+codeSection+'_'+this.state.sections.get(codeSection).get('rows').size;
+    _onComponentSectionCreateRow: function(codeSection, refSection){
+        var sectionRefNumber = refSection.split('_')[1];
+
+        var rowRef = "row_"+sectionRefNumber+'_'+this.state.sections.get(codeSection).get('rows').size;
         this.setState(function(prevState) {
             return {
                 sections: prevState.sections.updateIn([codeSection, 'rows'], val => val.push(Immutable.Map({ref: rowRef, type: 'row', fields: Immutable.List(), size: 12})))
@@ -285,6 +297,43 @@ module.exports = React.createClass({
             }
         })
         swal("Deleted!", "Your section has been deleted.", "success")
+    },
+    _onComponentSectionOrderSection: function(codeSection, value){
+        var sections = this.state.sections.deleteIn([codeSection]);
+        var sectionOrder = this.state.sections.get(codeSection);
+        var firstSections = sections.slice(0, value);
+        var appendFirstSections = firstSections.push(sectionOrder);
+        var secondSections = sections.slice(value, this.state.sections.size);
+        var finalSections = appendFirstSections;
+        secondSections.toJS().map(function(section){
+            finalSections = finalSections.push(Immutable.fromJS(section));
+        })
+
+       this.setState(function(prevState) {
+            return {
+                sections: finalSections
+            }
+        })
+        swal("Success!", "Your section has order to "+value, "success");
+    },
+    _onComponentSectionOrderRow: function(codeSection, codeRow, value){
+        var rows = this.state.sections.deleteIn([codeSection, 'rows', codeRow]);
+        var rowOrder = this.state.sections.get(codeSection).get('rows').get(codeRow);
+        var firstRows = rows.get(codeSection).get('rows');
+        firstRows = firstRows.slice(0, value);
+        var appendFirstRows = firstRows.push(rowOrder);
+        var secondRows = rows.get(codeSection).get('rows').slice(value, this.state.sections.get(codeSection).get('rows').size);
+        var finalRows = appendFirstRows;
+        secondRows.toJS().map(function(row){
+            finalRows = finalRows.push(Immutable.fromJS(row));
+        })
+
+       this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows'], val => finalRows)
+            }
+        })
+        swal("Success!", "Your row has change order", "success"); 
     },
     render: function(){
         return (
@@ -302,14 +351,15 @@ module.exports = React.createClass({
                                                 key={index}
                                                 code={index}
                                                 type="section"
-                                                permission="eformDev"
-                                                rows={section.get('rows')}
+                                                 page={section.get('page')}
+                                                 permission="eformDev"
+                                                 rows={section.get('rows')}
                                                 name={section.get('name')}
                                                 onUpdateSection={this._onComponentSectionUpdate}
                                                 onRemoveSection={this._onComponentSectionRemove}
                                                 onDragSection={this._onComponentSectionDrag}
-                                                onCreateRow={this._onComponentSectionCreateRow}
-                                                onRemoveRow={this._onComponentSectionRemoveRow}
+                                                 onCreateRow={this._onComponentSectionCreateRow}
+                                                 onRemoveRow={this._onComponentSectionRemoveRow}
                                                 onSelectField={this._onComponentSectionSelectField}
                                                 onDragField={this._onComponentSectionDragField}
                                                 onRemoveField={this._onComponentSectionRemoveField}
@@ -319,7 +369,10 @@ module.exports = React.createClass({
                                                 onCreateTableColumn={this._onComponentSectionCreateTableColumn}
                                                 onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
                                                 onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
-                                                onDragRow={this._onComponentSectionDragRow}/>
+                                                 onDragRow={this._onComponentSectionDragRow}
+                                                 onChangePage={this._onComponentSectionChangePage}
+                                                 onOrderSection={this._onComponentSectionOrderSection}
+                                                 onOrderRow={this._onComponentSectionOrderRow}/>
                                         }, this)
                                 }
                                 <ComponentPageBar ref="pageBarBottom"

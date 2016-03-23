@@ -29,9 +29,12 @@ module.exports = React.createClass({
         onCreateTableColumn: React.PropTypes.func,
         onCreateTableRow: React.PropTypes.func,
         onRemoveTableRow: React.PropTypes.func,
-        onUpdateTableColumn: React.PropTypes.func
+        onUpdateTableColumn: React.PropTypes.func,
+        onOrderRow: React.PropTypes.func
     },
     componentDidMount: function(){
+        if(this.props.permission === 'eformDev')
+            this.refs.inputOrder.setValue(this.props.code);
     },
     getCode: function(){
         return this.props.code;
@@ -261,6 +264,11 @@ module.exports = React.createClass({
         }
         return results;
     },
+    _onSaveInputOrder: function(){
+        var value = this.refs.inputOrder.getValue();
+        this.refs.modalOrderRow.hide();
+        this.props.onOrderRow(this.props.codeSection, this.props.code, value);
+    },
     render: function(){
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';
         var displayContextTableMenu = (this.props.permission === 'eformDev')?'contextTableMenu':'none';
@@ -299,13 +307,25 @@ module.exports = React.createClass({
                                 onCloseModal={function(){this.refs.modalFieldDetail.hide()}.bind(this)}/>
                         </div>
                     </CommonModal>
+                    <CommonModal ref="modalOrderRow">
+                        <div className="header">
+                            <h4>Order Section</h4>
+                        </div>
+                        <div className="content">
+                            <CommonInputText ref="inputOrder"/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){this.refs.modalOrderRow.hide()}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrder}>Save</button>
+                        </div>
+                    </CommonModal>
                     <div className="col-md-12 dragRow">
                         <div className="portlet light" id={"dragRow_"+this.props.codeSection+'_'+this.props.code}>
                             <div className="portlet-title">
                                     <div className="caption">
-                                            <span className="label label-sm label-primary dragRowHandler">
+                                            {/*<span className="label label-sm label-primary dragRowHandler">
                                                 Drag here
-                                            </span>
+                                            </span>*/}
                                         </div>
                                         <div className="tools">
                                             <a className="collapse"></a>
@@ -320,6 +340,11 @@ module.exports = React.createClass({
                                                     <li>
                                                         <a onClick={function(){this.refs.modalCreateFieldSection.show()}.bind(this)}>
                                                             <i className="fa fa-plus"></i> Add Field
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a onClick={function(){this.refs.modalOrderRow.show()}.bind(this)}>
+                                                            <i className="fa fa-plus"></i> Order Row
                                                         </a>
                                                     </li>
                                                     <li className="divider"/>
@@ -468,7 +493,7 @@ module.exports = React.createClass({
             var html = (
                 <div className="row">
                     {
-                            this.props.fields.map(function(field,index){
+                            this.props.fields.map(function(field,index){                                
                                 var type = field.get('type');
                                 var groupId = 'fieldgroup_'+this.props.codeSection+'_'+this.props.code+'_'+index;
                                 if(type === 'eform_input_text')

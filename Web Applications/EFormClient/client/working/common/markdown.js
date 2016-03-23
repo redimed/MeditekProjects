@@ -11,9 +11,9 @@ module.exports = React.createClass({
     getValue: function(){
         return $(this.refs.markdown).code();
     },
-	render: function(){
+    render: function(){
         return (
             <div ref="markdown"/>
         )
-	}
+    }
 })

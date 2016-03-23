@@ -29,6 +29,49 @@ module.exports = {
 		});
 		return p;
 	},
+	eformGroupCreate: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eformgroup/create',
+				data: data,
+				success: resolve
+			})	
+		});
+		return p;
+	},
+	eformGroupList: function(){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'GET',
+				url: Config.apiUrl+'eformgroup/list',
+				success: resolve
+			})	
+		})
+		return p;
+	},
+	eformGroupUpdate: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eformgroup/update',
+				success: resolve
+			})	
+		})
+		return p;
+	},
+	eformGroupRemove: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eformgroup/remove',
+				success: resolve
+			})	
+		})
+		return p;
+	},
 	eformTemplateCreate: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

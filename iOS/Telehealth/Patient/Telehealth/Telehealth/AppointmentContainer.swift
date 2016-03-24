@@ -10,13 +10,14 @@ import Foundation
 import SwiftyJSON
 struct AppointmentContainer {
     let api = AppointmentAPI()
-    var UIDApointment,ToTime,Status,FromTime,NameDoctor: String!,Type:String!,refName:String!,CreatedDate:String!
+    var UIDApointment,ToTime,Status,Code,FromTime,NameDoctor: String!,Type:String!,refName:String!,CreatedDate:String!
     var FirstName,LastName,Suburb,HomePhoneNumber,PhoneNumber,Email,DOB : String!
     init(){}
-    init(UIDApointment:String,ToTime:String,Status:String,FromTime:String,NameDoctor:String,Type:String,refName:String,CreatedDate:String){
+    init(UIDApointment:String,ToTime:String,Status:String,Code:String,FromTime:String,NameDoctor:String,Type:String,refName:String,CreatedDate:String){
         self.UIDApointment = UIDApointment
         self.ToTime = ToTime
         self.Status = Status
+        self.Code = Code
         self.FromTime = FromTime
         self.NameDoctor = NameDoctor
         self.Type = Type

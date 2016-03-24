@@ -32,6 +32,7 @@ class AppointmentService {
                 var FromTime : String!
                 var ToTime : String!
                 var Status : String!
+                var Code : String!
                 var NameDoctor : String!
                 var Type:String!
                 var refName:String!
@@ -48,12 +49,13 @@ class AppointmentService {
                     FromTime = data[i]["FromTime"].string ?? ""
                     ToTime = data[i]["ToTime"].string ?? ""
                     Status = data[i]["Status"].string ?? ""
+                    Code = data[i]["Code"].string ?? ""
                     lastName = data[i]["Doctors"][0]["LastName"].string ?? ""
                     firstName = data[i]["Doctors"][0]["FirstName"].string ?? ""
                     NameDoctor = "\(firstName) \(lastName)"
                     Type = data[0]["TelehealthAppointment"]["Type"].string ?? ""
                     CreatedDate = data[i]["CreatedDate"].string ?? ""
-                    let appointment = AppointmentContainer.init(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor, Type: Type, refName: refName,CreatedDate:CreatedDate)
+                    let appointment = AppointmentContainer.init(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status,Code:Code, FromTime: FromTime, NameDoctor: NameDoctor, Type: Type, refName: refName,CreatedDate:CreatedDate)
                     
                     AppointmentArr.append(appointment)
                 }

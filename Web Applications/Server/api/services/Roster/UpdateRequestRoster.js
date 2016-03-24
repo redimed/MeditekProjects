@@ -44,7 +44,12 @@ module.exports = function(data, userInfo) {
                                 var zoneFrom = fromTime.split(' ')[2];
                                 var zoneTo = toTime.split(' ')[2];
                                 var startTime = fromTime.split(' ')[0];
-                                var endTime = data.Roster.EndRecurrence.split(' ')[0];
+                                var endTime = null;
+                                if (!_.isEmpty(data.Roster.EndRecurrence)) {
+                                    endTime = data.Roster.EndRecurrence.split(' ')[0];
+                                } else {
+                                    endTime = data.Roster.FromTime.split(' ')[0];
+                                }
                                 var rangTime = moment.range(startTime, endTime);
                                 var arrayWhereClauseRoster = [];
                                 rangTime.by('days', function(day) {
@@ -82,9 +87,7 @@ module.exports = function(data, userInfo) {
                                     //filter all Roster update
                                     _.forEach(rosterRepeater, function(valueRosterRequest, indexRosterRequest) {
                                         _.forEach(arrRosterUser, function(valueRosterUser, indexRosterUser) {
-                                            var dateRosterRequest = moment(valueRosterRequest.FromTime).format('YYYY-MM-DD');
-                                            var dateRosterUser = moment(valueRosterUser.FromTime).format('YYYY-MM-DD');
-                                            if (dateRosterRequest === dateRosterUser) {
+                                            if (valueRosterUser.UID === valueRosterRequest.UID) {
                                                 var objRosterUpdate = {
                                                     UID: valueRosterUser.UID,
                                                     FromTime: valueRosterRequest.FromTime,
@@ -92,7 +95,8 @@ module.exports = function(data, userInfo) {
                                                     IsRecurrence: valueRosterRequest.IsRecurrence,
                                                     RecurrenceType: valueRosterRequest.RecurrenceType,
                                                     Enable: 'Y',
-                                                    ModifiedBy: userInfo.ID
+                                                    ModifiedBy: userInfo.ID,
+                                                    action: 'update'
                                                 };
                                                 if (valueRosterRequest.IsRecurrence === 'Y') {
                                                     objRosterUpdate.EndRecurrence = valueRosterRequest.EndRecurrence;
@@ -112,6 +116,7 @@ module.exports = function(data, userInfo) {
                                             }
                                         });
                                         if (!isFound) {
+                                            valueRosterRequest.action = 'create';
                                             arrayRosterCreate.push(valueRosterRequest);
                                         }
                                     });
@@ -125,12 +130,15 @@ module.exports = function(data, userInfo) {
                                         };
                                         return Services.CheckRosterExistAppointment(objectCheckExistAppt)
                                             .then(function(checkExistApptOk) {
+                                                var arrayAllRoster = _.extend([], arrayRosterUpdate);
+                                                _.forEach(arrayRosterCreate, function(valueRosterCreate, indexRosterCreate) {
+                                                    arrayAllRoster.push(valueRosterCreate);
+                                                });
                                                 var objectCheckOverlap = {
-                                                    data: arrayRosterUpdate,
+                                                    data: arrayAllRoster,
                                                     transaction: t,
                                                     userAccount: data.UserAccount,
-                                                    Bookable: data.Service.Bookable,
-                                                    action: 'update'
+                                                    Bookable: data.Service.Bookable
                                                 };
                                                 return Services.CheckOverlap(objectCheckOverlap)
                                                     .then(function(checkOverlapOk) {
@@ -256,191 +264,174 @@ module.exports = function(data, userInfo) {
                                                                         Bookable: data.Service.Bookable,
                                                                         action: 'create'
                                                                     };
-                                                                    return Services.CheckOverlap(objectCheckOverlap)
-                                                                        .then(function(checkOverlapOk) {
-                                                                            var objectCreateRoster = {
-                                                                                data: arrayRosterCreate,
-                                                                                userInfo: userInfo,
-                                                                                transaction: t
-                                                                            };
-                                                                            var arrayRosterID = null;
-                                                                            return Services.BulkCreateRoster(objectCreateRoster)
-                                                                                .then(function(rosterCreated) {
-                                                                                    var rosterCreated =
-                                                                                        JSON.parse(JSON.stringify(rosterCreated));
-                                                                                    arrayRosterID = _.map(_.groupBy(rosterCreated, function(R) {
-                                                                                        return R.ID;
-                                                                                    }), function(subGrouped) {
-                                                                                        return subGrouped[0].ID;
-                                                                                    });
-                                                                                    if (!_.isEmpty(data.UserAccount)) {
-                                                                                        var whereClause = {};
-                                                                                        _.forEach(data.UserAccount, function(valueKey, indexKey) {
-                                                                                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                                                                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                                                                                whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                                                                            } else if (!_.isArray(valueKey) &&
-                                                                                                !_.isObject(valueKey)) {
-                                                                                                whereClause[indexKey] = valueKey;
-                                                                                            }
-                                                                                        });
-                                                                                        return UserAccount.findOne({
-                                                                                            attributes: ['ID'],
-                                                                                            where: whereClause,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    } else {
-                                                                                        var error = new Error('userAccount.not.exist');
-                                                                                        defer.reject({
-                                                                                            error: error,
-                                                                                            transaction: t
-                                                                                        });
+                                                                    var objectCreateRoster = {
+                                                                        data: arrayRosterCreate,
+                                                                        userInfo: userInfo,
+                                                                        transaction: t
+                                                                    };
+                                                                    var arrayRosterID = null;
+                                                                    return Services.BulkCreateRoster(objectCreateRoster)
+                                                                        .then(function(rosterCreated) {
+                                                                            var rosterCreated =
+                                                                                JSON.parse(JSON.stringify(rosterCreated));
+                                                                            arrayRosterID = _.map(_.groupBy(rosterCreated, function(R) {
+                                                                                return R.ID;
+                                                                            }), function(subGrouped) {
+                                                                                return subGrouped[0].ID;
+                                                                            });
+                                                                            if (!_.isEmpty(data.UserAccount)) {
+                                                                                var whereClause = {};
+                                                                                _.forEach(data.UserAccount, function(valueKey, indexKey) {
+                                                                                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                                                                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                                                                        whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                                                                    } else if (!_.isArray(valueKey) &&
+                                                                                        !_.isObject(valueKey)) {
+                                                                                        whereClause[indexKey] = valueKey;
                                                                                     }
-                                                                                }, function(err) {
-                                                                                    defer.reject({
-                                                                                        error: err,
-                                                                                        transaction: t
-                                                                                    });
-                                                                                })
-                                                                                .then(function(userAccountRes) {
-                                                                                    if (!_.isEmpty(userAccountRes)) {
-                                                                                        return userAccountRes.addRosters(arrayRosterID, {
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    } else {
-                                                                                        var error = new Error('userAccount.not.exist');
-                                                                                        defer.reject({
-                                                                                            error: error,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    }
-                                                                                }, function(err) {
-                                                                                    defer.reject({
-                                                                                        error: err,
-                                                                                        transaction: t
-                                                                                    });
-                                                                                })
-                                                                                .then(function(relUserAccountRosterCreated) {
-                                                                                    if (!_.isEmpty(data.Service)) {
-                                                                                        var whereClause = {};
-                                                                                        _.forEach(data.Service, function(valueKey, indexKey) {
-                                                                                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                                                                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                                                                                whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                                                                            } else if (!_.isArray(valueKey) &&
-                                                                                                !_.isObject(valueKey)) {
-                                                                                                whereClause[indexKey] = valueKey;
-                                                                                            }
-                                                                                        });
-                                                                                        return Service.findOne({
-                                                                                            attributes: ['ID'],
-                                                                                            where: whereClause,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    } else {
-                                                                                        var error = new Error('service.not.exist');
-                                                                                        defer.reject({
-                                                                                            error: error,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    }
-                                                                                }, function(err) {
-                                                                                    defer.reject({
-                                                                                        error: err,
-                                                                                        transaction: t
-                                                                                    });
-                                                                                })
-                                                                                .then(function(serviceRes) {
-                                                                                    if (!_.isEmpty(serviceRes)) {
-                                                                                        return serviceRes.addRosters(arrayRosterID, {
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    } else {
-                                                                                        var error = new Error('service.not.exist');
-                                                                                        defer.reject({
-                                                                                            error: error,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    }
-                                                                                }, function(err) {
-                                                                                    defer.reject({
-                                                                                        error: err,
-                                                                                        transaction: t
-                                                                                    });
-                                                                                })
-                                                                                .then(function(relRosterServiceCreated) {
-                                                                                    if (!_.isEmpty(data.Site)) {
-                                                                                        var whereClause = {};
-                                                                                        _.forEach(data.Site, function(valueKey, indexKey) {
-                                                                                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                                                                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                                                                                whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                                                                            } else if (!_.isArray(valueKey) &&
-                                                                                                !_.isObject(valueKey)) {
-                                                                                                whereClause[indexKey] = valueKey;
-                                                                                            }
-                                                                                        });
-                                                                                        return Site.findOne({
-                                                                                            attributes: ['ID'],
-                                                                                            where: whereClause,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    } else {
-                                                                                        var error = new Error('Site.not.exist');
-                                                                                        defer.reject({
-                                                                                            error: error,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    }
-                                                                                }, function(err) {
-                                                                                    defer.reject({
-                                                                                        error: err,
-                                                                                        transaction: t
-                                                                                    });
-                                                                                })
-                                                                                .then(function(siteRes) {
-                                                                                    if (!_.isEmpty(siteRes)) {
-                                                                                        return siteRes.addRosters(arrayRosterID, {
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    } else {
-                                                                                        var error = new Error('service.not.exist');
-                                                                                        defer.reject({
-                                                                                            error: error,
-                                                                                            transaction: t
-                                                                                        });
-                                                                                    }
-                                                                                }, function(err) {
-                                                                                    defer.reject({
-                                                                                        error: err,
-                                                                                        transaction: t
-                                                                                    });
-                                                                                })
-                                                                                .then(function(relRosterSiteCreated) {
-                                                                                    defer.resolve({
-                                                                                        status: 'success',
-                                                                                        transaction: t
-                                                                                    });
-                                                                                }, function(err) {
-                                                                                    defer.reject({
-                                                                                        error: err,
-                                                                                        transaction: t
-                                                                                    });
                                                                                 });
-                                                                        }, function(err) {
-                                                                            if (!_.isEmpty(err) &&
-                                                                                !_.isEmpty(err.dataOverlap) &&
-                                                                                err.status === 'overlaps') {
-                                                                                defer.reject({
-                                                                                    transaction: t,
-                                                                                    dataOverlap: err.dataOverlap
+                                                                                return UserAccount.findOne({
+                                                                                    attributes: ['ID'],
+                                                                                    where: whereClause,
+                                                                                    transaction: t
                                                                                 });
                                                                             } else {
+                                                                                var error = new Error('userAccount.not.exist');
                                                                                 defer.reject({
-                                                                                    transaction: t,
-                                                                                    error: err
+                                                                                    error: error,
+                                                                                    transaction: t
                                                                                 });
                                                                             }
+                                                                        }, function(err) {
+                                                                            defer.reject({
+                                                                                error: err,
+                                                                                transaction: t
+                                                                            });
+                                                                        })
+                                                                        .then(function(userAccountRes) {
+                                                                            if (!_.isEmpty(userAccountRes)) {
+                                                                                return userAccountRes.addRosters(arrayRosterID, {
+                                                                                    transaction: t
+                                                                                });
+                                                                            } else {
+                                                                                var error = new Error('userAccount.not.exist');
+                                                                                defer.reject({
+                                                                                    error: error,
+                                                                                    transaction: t
+                                                                                });
+                                                                            }
+                                                                        }, function(err) {
+                                                                            defer.reject({
+                                                                                error: err,
+                                                                                transaction: t
+                                                                            });
+                                                                        })
+                                                                        .then(function(relUserAccountRosterCreated) {
+                                                                            if (!_.isEmpty(data.Service)) {
+                                                                                var whereClause = {};
+                                                                                _.forEach(data.Service, function(valueKey, indexKey) {
+                                                                                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                                                                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                                                                        whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                                                                    } else if (!_.isArray(valueKey) &&
+                                                                                        !_.isObject(valueKey)) {
+                                                                                        whereClause[indexKey] = valueKey;
+                                                                                    }
+                                                                                });
+                                                                                return Service.findOne({
+                                                                                    attributes: ['ID'],
+                                                                                    where: whereClause,
+                                                                                    transaction: t
+                                                                                });
+                                                                            } else {
+                                                                                var error = new Error('service.not.exist');
+                                                                                defer.reject({
+                                                                                    error: error,
+                                                                                    transaction: t
+                                                                                });
+                                                                            }
+                                                                        }, function(err) {
+                                                                            defer.reject({
+                                                                                error: err,
+                                                                                transaction: t
+                                                                            });
+                                                                        })
+                                                                        .then(function(serviceRes) {
+                                                                            if (!_.isEmpty(serviceRes)) {
+                                                                                return serviceRes.addRosters(arrayRosterID, {
+                                                                                    transaction: t
+                                                                                });
+                                                                            } else {
+                                                                                var error = new Error('service.not.exist');
+                                                                                defer.reject({
+                                                                                    error: error,
+                                                                                    transaction: t
+                                                                                });
+                                                                            }
+                                                                        }, function(err) {
+                                                                            defer.reject({
+                                                                                error: err,
+                                                                                transaction: t
+                                                                            });
+                                                                        })
+                                                                        .then(function(relRosterServiceCreated) {
+                                                                            if (!_.isEmpty(data.Site)) {
+                                                                                var whereClause = {};
+                                                                                _.forEach(data.Site, function(valueKey, indexKey) {
+                                                                                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                                                                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                                                                        whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                                                                    } else if (!_.isArray(valueKey) &&
+                                                                                        !_.isObject(valueKey)) {
+                                                                                        whereClause[indexKey] = valueKey;
+                                                                                    }
+                                                                                });
+                                                                                return Site.findOne({
+                                                                                    attributes: ['ID'],
+                                                                                    where: whereClause,
+                                                                                    transaction: t
+                                                                                });
+                                                                            } else {
+                                                                                var error = new Error('Site.not.exist');
+                                                                                defer.reject({
+                                                                                    error: error,
+                                                                                    transaction: t
+                                                                                });
+                                                                            }
+                                                                        }, function(err) {
+                                                                            defer.reject({
+                                                                                error: err,
+                                                                                transaction: t
+                                                                            });
+                                                                        })
+                                                                        .then(function(siteRes) {
+                                                                            if (!_.isEmpty(siteRes)) {
+                                                                                return siteRes.addRosters(arrayRosterID, {
+                                                                                    transaction: t
+                                                                                });
+                                                                            } else {
+                                                                                var error = new Error('service.not.exist');
+                                                                                defer.reject({
+                                                                                    error: error,
+                                                                                    transaction: t
+                                                                                });
+                                                                            }
+                                                                        }, function(err) {
+                                                                            defer.reject({
+                                                                                error: err,
+                                                                                transaction: t
+                                                                            });
+                                                                        })
+                                                                        .then(function(relRosterSiteCreated) {
+                                                                            defer.resolve({
+                                                                                status: 'success',
+                                                                                transaction: t
+                                                                            });
+                                                                        }, function(err) {
+                                                                            defer.reject({
+                                                                                error: err,
+                                                                                transaction: t
+                                                                            });
                                                                         });
                                                                 } else {
                                                                     defer.resolve({

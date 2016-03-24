@@ -3,6 +3,7 @@ module.exports = {
         var moment = require('moment');
         require('moment-range');
         var dataRes = [];
+        var dateKey = moment(data.FromTime).format('YYYY-MM-DD');
         if (!_.isEmpty(data) &&
             data.IsRecurrence == 'Y' &&
             HelperService.CheckExistData(data.RecurrenceType) &&
@@ -43,8 +44,10 @@ module.exports = {
                                 HelperService.CheckExistData(valueDate.toTime) &&
                                 moment(valueDate.fromTime).format('e') ===
                                 moment(startDate).format('e')) {
+                                var dateRepeat = moment(valueDate.fromTime).format('YYYY-MM-DD');
+                                var isdateKey = dateRepeat === dateKey;
                                 var objectRoster = {
-                                    UID: UUIDService.Create(),
+                                    UID: isdateKey ? data.UID ? data.UID : UUIDService.Create() : UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,
@@ -83,8 +86,10 @@ module.exports = {
                             if (!_.isEmpty(valueDate) &&
                                 HelperService.CheckExistData(valueDate.fromTime) &&
                                 HelperService.CheckExistData(valueDate.toTime)) {
+                                var dateRepeat = moment(valueDate.fromTime).format('YYYY-MM-DD');
+                                var isdateKey = dateRepeat === dateKey;
                                 var objectRoster = {
-                                    UID: UUIDService.Create(),
+                                    UID: isdateKey ? data.UID ? data.UID : UUIDService.Create() : UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,
@@ -126,8 +131,10 @@ module.exports = {
                                 moment(valueDate.fromTime).format('e') ===
                                 moment(startDate).format('e') &&
                                 moment(valueDate.fromTime).format('e') <= 5) {
+                                var dateRepeat = moment(valueDate.fromTime).format('YYYY-MM-DD');
+                                var isdateKey = dateRepeat === dateKey;
                                 var objectRoster = {
-                                    UID: UUIDService.Create(),
+                                    UID: isdateKey ? data.UID ? data.UID : UUIDService.Create() : UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,

@@ -12,12 +12,16 @@ module.exports = function(data, userInfo) {
                 var rosterRepeat = Services.GetDataRoster.GetRosterRepeat(data.Roster, userInfo);
                 if (_.isArray(rosterRepeat) &&
                     !_.isEmpty(rosterRepeat)) {
+                    _.forEach(rosterRepeat, function(valueR, indexR) {
+                        if (!_.isEmpty(valueR)) {
+                            rosterRepeat[indexR].action = 'create';
+                        }
+                    });
                     var objectCheckOverlap = {
                         data: rosterRepeat,
                         transaction: t,
                         userAccount: data.UserAccount,
-                        Bookable: data.Service.Bookable,
-                        action: 'create'
+                        Bookable: data.Service.Bookable
                     };
                     return Services.CheckOverlap(objectCheckOverlap)
                         .then(function(checkOk) {

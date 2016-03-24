@@ -46,8 +46,8 @@ module.exports = function(objCheckOverlap) {
                                         var rangeRosterCheck = moment.range(fromTimeCheck, toTimeCheck);
                                         var rangeRosterUser = moment.range(fromTimeUser, toTimeUser);
                                         if (rangeRosterCheck.overlaps(rangeRosterUser) === true &&
-                                            (objCheckOverlap.action === 'create' ||
-                                                (objCheckOverlap.action === 'update' &&
+                                            (valueRosterCheck.action === 'create' ||
+                                                (valueRosterCheck.action === 'update' &&
                                                     valueRosterCheck.UID !== valueRosterUser.UID) &&
                                                 HelperService.CheckExistData(valueRosterUser.UID))) {
                                             arrayRosterOverlap.push(valueRosterCheck);

@@ -33,7 +33,7 @@ class SocketService {
                         self.delegate.ShowLoading()
                     }
                 }else if($0.event ==  "connect"){
-                    self.delegate.ShowLoading()
+                    //self.delegate.ShowLoading()
                 }
             }
             // Socket Events

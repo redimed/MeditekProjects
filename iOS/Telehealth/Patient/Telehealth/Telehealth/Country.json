@@ -1,2003 +1,1004 @@
 {
     "country": [
-                {
-                "name": "Afghanistan",
-                "text": "Afghanistan"
-                },
-                {
-                "name": "Aland Islands",
-                "text": "Aland Islands"
-                },
-                {
-                "name": "Albania",
-                "text": "Albania"
-                },
-                {
-                "name": "Algeria",
-                "text": "Algeria"
-                },
-                {
-                "name": "American Samoa",
-                "text": "American Samoa"
-                },
-                {
-                "name": "Andorra",
-                "text": "Andorra"
-                },
-                {
-                "name": "Angola",
-                "text": "Angola"
-                },
-                {
-                "name": "Anguilla",
-                "text": "Anguilla"
-                },
-                {
-                "name": "Antarctica",
-                "text": "Antarctica"
-                },
-                {
-                "name": "Antigua and Barbuda",
-                "text": "Antigua and Barbuda"
-                },
-                {
-                "name": "Argentina",
-                "text": "Argentina"
-                },
-                {
-                "name": "Armenia",
-                "text": "Armenia"
-                },
-                {
-                "name": "Aruba",
-                "text": "Aruba"
-                },
-                {
-                "name": "Australia",
-                "text": "Australia"
-                },
-                {
-                "name": "Austria",
-                "text": "Austria"
-                },
-                {
-                "name": "Azerbaijan",
-                "text": "Azerbaijan"
-                },
-                {
-                "name": "Bahamas",
-                "text": "Bahamas"
-                },
-                {
-                "name": "Bahrain",
-                "text": "Bahrain"
-                },
-                {
-                "name": "Bangladesh",
-                "text": "Bangladesh"
-                },
-                {
-                "name": "Barbados",
-                "text": "Barbados"
-                },
-                {
-                "name": "Belarus",
-                "text": "Belarus"
-                },
-                {
-                "name": "Belgium",
-                "text": "Belgium"
-                },
-                {
-                "name": "Belize",
-                "text": "Belize"
-                },
-                {
-                "name": "Benin",
-                "text": "Benin"
-                },
-                {
-                "name": "Bermuda",
-                "text": "Bermuda"
-                },
-                {
-                "name": "Bhutan",
-                "text": "Bhutan"
-                },
-                {
-                "name": "Bolivia",
-                "text": "Bolivia"
-                },
-                {
-                "name": "Bonaire, Sint Eustatius and Saba",
-                "text": "Bonaire, Sint Eustatius and Saba"
-                },
-                {
-                "name": "Bosnia and Herzegovina",
-                "text": "Bosnia and Herzegovina"
-                },
-                {
-                "name": "Botswana",
-                "text": "Botswana"
-                },
-                {
-                "name": "Bouvet Island",
-                "text": "Bouvet Island"
-                },
-                {
-                "name": "Brazil",
-                "text": "Brazil"
-                },
-                {
-                "name": "British Indian Ocean Territory",
-                "text": "British Indian Ocean Territory"
-                },
-                {
-                "name": "Brunei",
-                "text": "Brunei"
-                },
-                {
-                "name": "Bulgaria",
-                "text": "Bulgaria"
-                },
-                {
-                "name": "Burkina Faso",
-                "text": "Burkina Faso"
-                },
-                {
-                "name": "Burundi",
-                "text": "Burundi"
-                },
-                {
-                "name": "Cambodia",
-                "text": "Cambodia"
-                },
-                {
-                "name": "Cameroon",
-                "text": "Cameroon"
-                },
-                {
-                "name": "Canada",
-                "text": "Canada"
-                },
-                {
-                "name": "Cape Verde",
-                "text": "Cape Verde"
-                },
-                {
-                "name": "Cayman Islands",
-                "text": "Cayman Islands"
-                },
-                {
-                "name": "Central African Republic",
-                "text": "Central African Republic"
-                },
-                {
-                "name": "Chad",
-                "text": "Chad"
-                },
-                {
-                "name": "Chile",
-                "text": "Chile"
-                },
-                {
-                "name": "China",
-                "text": "China"
-                },
-                {
-                "name": "Christmas Island",
-                "text": "Christmas Island"
-                },
-                {
-                "name": "Cocos (Keeling) Islands",
-                "text": "Cocos (Keeling) Islands"
-                },
-                {
-                "name": "Colombia",
-                "text": "Colombia"
-                },
-                {
-                "name": "Comoros",
-                "text": "Comoros"
-                },
-                {
-                "name": "Congo",
-                "text": "Congo"
-                },
-                {
-                "name": "Cook Islands",
-                "text": "Cook Islands"
-                },
-                {
-                "name": "Costa Rica",
-                "text": "Costa Rica"
-                },
-                {
-                "name": "Cote d'ivoire (Ivory Coast)",
-                "text": "Cote d'ivoire (Ivory Coast)"
-                },
-                {
-                "name": "Croatia",
-                "text": "Croatia"
-                },
-                {
-                "name": "Cuba",
-                "text": "Cuba"
-                },
-                {
-                "name": "Curacao",
-                "text": "Curacao"
-                },
-                {
-                "name": "Cyprus",
-                "text": "Cyprus"
-                },
-                {
-                "name": "Czech Republic",
-                "text": "Czech Republic"
-                },
-                {
-                "name": "Democratic Republic of the Congo",
-                "text": "Democratic Republic of the Congo"
-                },
-                {
-                "name": "Denmark",
-                "text": "Denmark"
-                },
-                {
-                "name": "Djibouti",
-                "text": "Djibouti"
-                },
-                {
-                "name": "Dominica",
-                "text": "Dominica"
-                },
-                {
-                "name": "Dominican Republic",
-                "text": "Dominican Republic"
-                },
-                {
-                "name": "Ecuador",
-                "text": "Ecuador"
-                },
-                {
-                "name": "Egypt",
-                "text": "Egypt"
-                },
-                {
-                "name": "El Salvador",
-                "text": "El Salvador"
-                },
-                {
-                "name": "Equatorial Guinea",
-                "text": "Equatorial Guinea"
-                },
-                {
-                "name": "Eritrea",
-                "text": "Eritrea"
-                },
-                {
-                "name": "Estonia",
-                "text": "Estonia"
-                },
-                {
-                "name": "Ethiopia",
-                "text": "Ethiopia"
-                },
-                {
-                "name": "Falkland Islands (Malvinas)",
-                "text": "Falkland Islands (Malvinas)"
-                },
-                {
-                "name": "Faroe Islands",
-                "text": "Faroe Islands"
-                },
-                {
-                "name": "Fiji",
-                "text": "Fiji"
-                },
-                {
-                "name": "Finland",
-                "text": "Finland"
-                },
-                {
-                "name": "France",
-                "text": "France"
-                },
-                {
-                "name": "French Guiana",
-                "text": "French Guiana"
-                },
-                {
-                "name": "French Polynesia",
-                "text": "French Polynesia"
-                },
-                {
-                "name": "French Southern Territories",
-                "text": "French Southern Territories"
-                },
-                {
-                "name": "Gabon",
-                "text": "Gabon"
-                },
-                {
-                "name": "Gambia",
-                "text": "Gambia"
-                },
-                {
-                "name": "Georgia",
-                "text": "Georgia"
-                },
-                {
-                "name": "Germany",
-                "text": "Germany"
-                },
-                {
-                "name": "Ghana",
-                "text": "Ghana"
-                },
-                {
-                "name": "Gibraltar",
-                "text": "Gibraltar"
-                },
-                {
-                "name": "Greece",
-                "text": "Greece"
-                },
-                {
-                "name": "Greenland",
-                "text": "Greenland"
-                },
-                {
-                "name": "Grenada",
-                "text": "Grenada"
-                },
-                {
-                "name": "Guadaloupe",
-                "text": "Guadaloupe"
-                },
-                {
-                "name": "Guam",
-                "text": "Guam"
-                },
-                {
-                "name": "Guatemala",
-                "text": "Guatemala"
-                },
-                {
-                "name": "Guernsey",
-                "text": "Guernsey"
-                },
-                {
-                "name": "Guinea",
-                "text": "Guinea"
-                },
-                {
-                "name": "Guinea-Bissau",
-                "text": "Guinea-Bissau"
-                },
-                {
-                "name": "Guyana",
-                "text": "Guyana"
-                },
-                {
-                "name": "Haiti",
-                "text": "Haiti"
-                },
-                {
-                "name": "Heard Island and McDonald Islands",
-                "text": "Heard Island and McDonald Islands"
-                },
-                {
-                "name": "Honduras",
-                "text": "Honduras"
-                },
-                {
-                "name": "Hong Kong",
-                "text": "Hong Kong"
-                },
-                {
-                "name": "Hungary",
-                "text": "Hungary"
-                },
-                {
-                "name": "Iceland",
-                "text": "Iceland"
-                },
-                {
-                "name": "India",
-                "text": "India"
-                },
-                {
-                "name": "Indonesia",
-                "text": "Indonesia"
-                },
-                {
-                "name": "Iran",
-                "text": "Iran"
-                },
-                {
-                "name": "Iraq",
-                "text": "Iraq"
-                },
-                {
-                "name": "Ireland",
-                "text": "Ireland"
-                },
-                {
-                "name": "Isle of Man",
-                "text": "Isle of Man"
-                },
-                {
-                "name": "Israel",
-                "text": "Israel"
-                },
-                {
-                "name": "Italy",
-                "text": "Italy"
-                },
-                {
-                "name": "Jamaica",
-                "text": "Jamaica"
-                },
-                {
-                "name": "Japan",
-                "text": "Japan"
-                },
-                {
-                "name": "Jersey",
-                "text": "Jersey"
-                },
-                {
-                "name": "Jordan",
-                "text": "Jordan"
-                },
-                {
-                "name": "Kazakhstan",
-                "text": "Kazakhstan"
-                },
-                {
-                "name": "Kenya",
-                "text": "Kenya"
-                },
-                {
-                "name": "Kiribati",
-                "text": "Kiribati"
-                },
-                {
-                "name": "Kosovo",
-                "text": "Kosovo"
-                },
-                {
-                "name": "Kuwait",
-                "text": "Kuwait"
-                },
-                {
-                "name": "Kyrgyzstan",
-                "text": "Kyrgyzstan"
-                },
-                {
-                "name": "Laos",
-                "text": "Laos"
-                },
-                {
-                "name": "Latvia",
-                "text": "Latvia"
-                },
-                {
-                "name": "Lebanon",
-                "text": "Lebanon"
-                },
-                {
-                "name": "Lesotho",
-                "text": "Lesotho"
-                },
-                {
-                "name": "Liberia",
-                "text": "Liberia"
-                },
-                {
-                "name": "Libya",
-                "text": "Libya"
-                },
-                {
-                "name": "Liechtenstein",
-                "text": "Liechtenstein"
-                },
-                {
-                "name": "Lithuania",
-                "text": "Lithuania"
-                },
-                {
-                "name": "Luxembourg",
-                "text": "Luxembourg"
-                },
-                {
-                "name": "Macao",
-                "text": "Macao"
-                },
-                {
-                "name": "Macedonia",
-                "text": "Macedonia"
-                },
-                {
-                "name": "Madagascar",
-                "text": "Madagascar"
-                },
-                {
-                "name": "Malawi",
-                "text": "Malawi"
-                },
-                {
-                "name": "Malaysia",
-                "text": "Malaysia"
-                },
-                {
-                "name": "Maldives",
-                "text": "Maldives"
-                },
-                {
-                "name": "Mali",
-                "text": "Mali"
-                },
-                {
-                "name": "Malta",
-                "text": "Malta"
-                },
-                {
-                "name": "Marshall Islands",
-                "text": "Marshall Islands"
-                },
-                {
-                "name": "Martinique",
-                "text": "Martinique"
-                },
-                {
-                "name": "Mauritania",
-                "text": "Mauritania"
-                },
-                {
-                "name": "Mauritius",
-                "text": "Mauritius"
-                },
-                {
-                "name": "Mayotte",
-                "text": "Mayotte"
-                },
-                {
-                "name": "Mexico",
-                "text": "Mexico"
-                },
-                {
-                "name": "Micronesia",
-                "text": "Micronesia"
-                },
-                {
-                "name": "Moldava",
-                "text": "Moldava"
-                },
-                {
-                "name": "Monaco",
-                "text": "Monaco"
-                },
-                {
-                "name": "Mongolia",
-                "text": "Mongolia"
-                },
-                {
-                "name": "Montenegro",
-                "text": "Montenegro"
-                },
-                {
-                "name": "Montserrat",
-                "text": "Montserrat"
-                },
-                {
-                "name": "Morocco",
-                "text": "Morocco"
-                },
-                {
-                "name": "Mozambique",
-                "text": "Mozambique"
-                },
-                {
-                "name": "Myanmar (Burma)",
-                "text": "Myanmar (Burma)"
-                },
-                {
-                "name": "Namibia",
-                "text": "Namibia"
-                },
-                {
-                "name": "Nauru",
-                "text": "Nauru"
-                },
-                {
-                "name": "Nepal",
-                "text": "Nepal"
-                },
-                {
-                "name": "Netherlands",
-                "text": "Netherlands"
-                },
-                {
-                "name": "New Caledonia",
-                "text": "New Caledonia"
-                },
-                {
-                "name": "New Zealand",
-                "text": "New Zealand"
-                },
-                {
-                "name": "Nicaragua",
-                "text": "Nicaragua"
-                },
-                {
-                "name": "Niger",
-                "text": "Niger"
-                },
-                {
-                "name": "Nigeria",
-                "text": "Nigeria"
-                },
-                {
-                "name": "Niue",
-                "text": "Niue"
-                },
-                {
-                "name": "Norfolk Island",
-                "text": "Norfolk Island"
-                },
-                {
-                "name": "North Korea",
-                "text": "North Korea"
-                },
-                {
-                "name": "Northern Mariana Islands",
-                "text": "Northern Mariana Islands"
-                },
-                {
-                "name": "Norway",
-                "text": "Norway"
-                },
-                {
-                "name": "Oman",
-                "text": "Oman"
-                },
-                {
-                "name": "Pakistan",
-                "text": "Pakistan"
-                },
-                {
-                "name": "Palau",
-                "text": "Palau"
-                },
-                {
-                "name": "Palestine",
-                "text": "Palestine"
-                },
-                {
-                "name": "Panama",
-                "text": "Panama"
-                },
-                {
-                "name": "Papua New Guinea",
-                "text": "Papua New Guinea"
-                },
-                {
-                "name": "Paraguay",
-                "text": "Paraguay"
-                },
-                {
-                "name": "Peru",
-                "text": "Peru"
-                },
-                {
-                "name": "Phillipines",
-                "text": "Phillipines"
-                },
-                {
-                "name": "Pitcairn",
-                "text": "Pitcairn"
-                },
-                {
-                "name": "Poland",
-                "text": "Poland"
-                },
-                {
-                "name": "Portugal",
-                "text": "Portugal"
-                },
-                {
-                "name": "Puerto Rico",
-                "text": "Puerto Rico"
-                },
-                {
-                "name": "Qatar",
-                "text": "Qatar"
-                },
-                {
-                "name": "Reunion",
-                "text": "Reunion"
-                },
-                {
-                "name": "Romania",
-                "text": "Romania"
-                },
-                {
-                "name": "Russia",
-                "text": "Russia"
-                },
-                {
-                "name": "Rwanda",
-                "text": "Rwanda"
-                },
-                {
-                "name": "Saint Barthelemy",
-                "text": "Saint Barthelemy"
-                },
-                {
-                "name": "Saint Helena",
-                "text": "Saint Helena"
-                },
-                {
-                "name": "Saint Kitts and Nevis",
-                "text": "Saint Kitts and Nevis"
-                },
-                {
-                "name": "Saint Lucia",
-                "text": "Saint Lucia"
-                },
-                {
-                "name": "Saint Martin",
-                "text": "Saint Martin"
-                },
-                {
-                "name": "Saint Pierre and Miquelon",
-                "text": "Saint Pierre and Miquelon"
-                },
-                {
-                "name": "Saint Vincent and the Grenadines",
-                "text": "Saint Vincent and the Grenadines"
-                },
-                {
-                "name": "Samoa",
-                "text": "Samoa"
-                },
-                {
-                "name": "San Marino",
-                "text": "San Marino"
-                },
-                {
-                "name": "Sao Tome and Principe",
-                "text": "Sao Tome and Principe"
-                },
-                {
-                "name": "Saudi Arabia",
-                "text": "Saudi Arabia"
-                },
-                {
-                "name": "Senegal",
-                "text": "Senegal"
-                },
-                {
-                "name": "Serbia",
-                "text": "Serbia"
-                },
-                {
-                "name": "Seychelles",
-                "text": "Seychelles"
-                },
-                {
-                "name": "Sierra Leone",
-                "text": "Sierra Leone"
-                },
-                {
-                "name": "Singapore",
-                "text": "Singapore"
-                },
-                {
-                "name": "Sint Maarten",
-                "text": "Sint Maarten"
-                },
-                {
-                "name": "Slovakia",
-                "text": "Slovakia"
-                },
-                {
-                "name": "Slovenia",
-                "text": "Slovenia"
-                },
-                {
-                "name": "Solomon Islands",
-                "text": "Solomon Islands"
-                },
-                {
-                "name": "Somalia",
-                "text": "Somalia"
-                },
-                {
-                "name": "South Africa",
-                "text": "South Africa"
-                },
-                {
-                "name": "South Georgia and the South Sandwich Islands",
-                "text": "South Georgia and the South Sandwich Islands"
-                },
-                {
-                "name": "South Korea",
-                "text": "South Korea"
-                },
-                {
-                "name": "South Sudan",
-                "text": "South Sudan"
-                },
-                {
-                "name": "Spain",
-                "text": "Spain"
-                },
-                {
-                "name": "Sri Lanka",
-                "text": "Sri Lanka"
-                },
-                {
-                "name": "Sudan",
-                "text": "Sudan"
-                },
-                {
-                "name": "Suriname",
-                "text": "Suriname"
-                },
-                {
-                "name": "Svalbard and Jan Mayen",
-                "text": "Svalbard and Jan Mayen"
-                },
-                {
-                "name": "Swaziland",
-                "text": "Swaziland"
-                },
-                {
-                "name": "Sweden",
-                "text": "Sweden"
-                },
-                {
-                "name": "Switzerland",
-                "text": "Switzerland"
-                },
-                {
-                "name": "Syria",
-                "text": "Syria"
-                },
-                {
-                "name": "Taiwan",
-                "text": "Taiwan"
-                },
-                {
-                "name": "Tajikistan",
-                "text": "Tajikistan"
-                },
-                {
-                "name": "Tanzania",
-                "text": "Tanzania"
-                },
-                {
-                "name": "Thailand",
-                "text": "Thailand"
-                },
-                {
-                "name": "Timor-Leste (East Timor)",
-                "text": "Timor-Leste (East Timor)"
-                },
-                {
-                "name": "Togo",
-                "text": "Togo"
-                },
-                {
-                "name": "Tokelau",
-                "text": "Tokelau"
-                },
-                {
-                "name": "Tonga",
-                "text": "Tonga"
-                },
-                {
-                "name": "Trinidad and Tobago",
-                "text": "Trinidad and Tobago"
-                },
-                {
-                "name": "Tunisia",
-                "text": "Tunisia"
-                },
-                {
-                "name": "Turkey",
-                "text": "Turkey"
-                },
-                {
-                "name": "Turkmenistan",
-                "text": "Turkmenistan"
-                },
-                {
-                "name": "Turks and Caicos Islands",
-                "text": "Turks and Caicos Islands"
-                },
-                {
-                "name": "Tuvalu",
-                "text": "Tuvalu"
-                },
-                {
-                "name": "Uganda",
-                "text": "Uganda"
-                },
-                {
-                "name": "Ukraine",
-                "text": "Ukraine"
-                },
-                {
-                "name": "United Arab Emirates",
-                "text": "United Arab Emirates"
-                },
-                {
-                "name": "United Kingdom",
-                "text": "United Kingdom"
-                },
-                {
-                "name": "United States",
-                "text": "United States"
-                },
-                {
-                "name": "United States Minor Outlying Islands",
-                "text": "United States Minor Outlying Islands"
-                },
-                {
-                "name": "Uruguay",
-                "text": "Uruguay"
-                },
-                {
-                "name": "Uzbekistan",
-                "text": "Uzbekistan"
-                },
-                {
-                "name": "Vanuatu",
-                "text": "Vanuatu"
-                },
-                {
-                "name": "Vatican City",
-                "text": "Vatican City"
-                },
-                {
-                "name": "Venezuela",
-                "text": "Venezuela"
-                },
-                {
-                "name": "Vietnam",
-                "text": "Vietnam"
-                },
-                {
-                "name": "Virgin Islands, British",
-                "text": "Virgin Islands, British"
-                },
-                {
-                "name": "Virgin Islands, US",
-                "text": "Virgin Islands, US"
-                },
-                {
-                "name": "Wallis and Futuna",
-                "text": "Wallis and Futuna"
-                },
-                {
-                "name": "Western Sahara",
-                "text": "Western Sahara"
-                },
-                {
-                "name": "Yemen",
-                "text": "Yemen"
-                },
-                {
-                "name": "Zambia",
-                "text": "Zambia"
-                },
-                {
-                "name": "Zimbabwe",
-                "text": "Zimbabwe"
-                }{
-                "name": "Afghanistan",
-                "text": "Afghanistan"
-                },
-                {
-                "name": "Aland Islands",
-                "text": "Aland Islands"
-                },
-                {
-                "name": "Albania",
-                "text": "Albania"
-                },
-                {
-                "name": "Algeria",
-                "text": "Algeria"
-                },
-                {
-                "name": "American Samoa",
-                "text": "American Samoa"
-                },
-                {
-                "name": "Andorra",
-                "text": "Andorra"
-                },
-                {
-                "name": "Angola",
-                "text": "Angola"
-                },
-                {
-                "name": "Anguilla",
-                "text": "Anguilla"
-                },
-                {
-                "name": "Antarctica",
-                "text": "Antarctica"
-                },
-                {
-                "name": "Antigua and Barbuda",
-                "text": "Antigua and Barbuda"
-                },
-                {
-                "name": "Argentina",
-                "text": "Argentina"
-                },
-                {
-                "name": "Armenia",
-                "text": "Armenia"
-                },
-                {
-                "name": "Aruba",
-                "text": "Aruba"
-                },
-                {
-                "name": "Australia",
-                "text": "Australia"
-                },
-                {
-                "name": "Austria",
-                "text": "Austria"
-                },
-                {
-                "name": "Azerbaijan",
-                "text": "Azerbaijan"
-                },
-                {
-                "name": "Bahamas",
-                "text": "Bahamas"
-                },
-                {
-                "name": "Bahrain",
-                "text": "Bahrain"
-                },
-                {
-                "name": "Bangladesh",
-                "text": "Bangladesh"
-                },
-                {
-                "name": "Barbados",
-                "text": "Barbados"
-                },
-                {
-                "name": "Belarus",
-                "text": "Belarus"
-                },
-                {
-                "name": "Belgium",
-                "text": "Belgium"
-                },
-                {
-                "name": "Belize",
-                "text": "Belize"
-                },
-                {
-                "name": "Benin",
-                "text": "Benin"
-                },
-                {
-                "name": "Bermuda",
-                "text": "Bermuda"
-                },
-                {
-                "name": "Bhutan",
-                "text": "Bhutan"
-                },
-                {
-                "name": "Bolivia",
-                "text": "Bolivia"
-                },
-                {
-                "name": "Bonaire, Sint Eustatius and Saba",
-                "text": "Bonaire, Sint Eustatius and Saba"
-                },
-                {
-                "name": "Bosnia and Herzegovina",
-                "text": "Bosnia and Herzegovina"
-                },
-                {
-                "name": "Botswana",
-                "text": "Botswana"
-                },
-                {
-                "name": "Bouvet Island",
-                "text": "Bouvet Island"
-                },
-                {
-                "name": "Brazil",
-                "text": "Brazil"
-                },
-                {
-                "name": "British Indian Ocean Territory",
-                "text": "British Indian Ocean Territory"
-                },
-                {
-                "name": "Brunei",
-                "text": "Brunei"
-                },
-                {
-                "name": "Bulgaria",
-                "text": "Bulgaria"
-                },
-                {
-                "name": "Burkina Faso",
-                "text": "Burkina Faso"
-                },
-                {
-                "name": "Burundi",
-                "text": "Burundi"
-                },
-                {
-                "name": "Cambodia",
-                "text": "Cambodia"
-                },
-                {
-                "name": "Cameroon",
-                "text": "Cameroon"
-                },
-                {
-                "name": "Canada",
-                "text": "Canada"
-                },
-                {
-                "name": "Cape Verde",
-                "text": "Cape Verde"
-                },
-                {
-                "name": "Cayman Islands",
-                "text": "Cayman Islands"
-                },
-                {
-                "name": "Central African Republic",
-                "text": "Central African Republic"
-                },
-                {
-                "name": "Chad",
-                "text": "Chad"
-                },
-                {
-                "name": "Chile",
-                "text": "Chile"
-                },
-                {
-                "name": "China",
-                "text": "China"
-                },
-                {
-                "name": "Christmas Island",
-                "text": "Christmas Island"
-                },
-                {
-                "name": "Cocos (Keeling) Islands",
-                "text": "Cocos (Keeling) Islands"
-                },
-                {
-                "name": "Colombia",
-                "text": "Colombia"
-                },
-                {
-                "name": "Comoros",
-                "text": "Comoros"
-                },
-                {
-                "name": "Congo",
-                "text": "Congo"
-                },
-                {
-                "name": "Cook Islands",
-                "text": "Cook Islands"
-                },
-                {
-                "name": "Costa Rica",
-                "text": "Costa Rica"
-                },
-                {
-                "name": "Cote d'ivoire (Ivory Coast)",
-                "text": "Cote d'ivoire (Ivory Coast)"
-                },
-                {
-                "name": "Croatia",
-                "text": "Croatia"
-                },
-                {
-                "name": "Cuba",
-                "text": "Cuba"
-                },
-                {
-                "name": "Curacao",
-                "text": "Curacao"
-                },
-                {
-                "name": "Cyprus",
-                "text": "Cyprus"
-                },
-                {
-                "name": "Czech Republic",
-                "text": "Czech Republic"
-                },
-                {
-                "name": "Democratic Republic of the Congo",
-                "text": "Democratic Republic of the Congo"
-                },
-                {
-                "name": "Denmark",
-                "text": "Denmark"
-                },
-                {
-                "name": "Djibouti",
-                "text": "Djibouti"
-                },
-                {
-                "name": "Dominica",
-                "text": "Dominica"
-                },
-                {
-                "name": "Dominican Republic",
-                "text": "Dominican Republic"
-                },
-                {
-                "name": "Ecuador",
-                "text": "Ecuador"
-                },
-                {
-                "name": "Egypt",
-                "text": "Egypt"
-                },
-                {
-                "name": "El Salvador",
-                "text": "El Salvador"
-                },
-                {
-                "name": "Equatorial Guinea",
-                "text": "Equatorial Guinea"
-                },
-                {
-                "name": "Eritrea",
-                "text": "Eritrea"
-                },
-                {
-                "name": "Estonia",
-                "text": "Estonia"
-                },
-                {
-                "name": "Ethiopia",
-                "text": "Ethiopia"
-                },
-                {
-                "name": "Falkland Islands (Malvinas)",
-                "text": "Falkland Islands (Malvinas)"
-                },
-                {
-                "name": "Faroe Islands",
-                "text": "Faroe Islands"
-                },
-                {
-                "name": "Fiji",
-                "text": "Fiji"
-                },
-                {
-                "name": "Finland",
-                "text": "Finland"
-                },
-                {
-                "name": "France",
-                "text": "France"
-                },
-                {
-                "name": "French Guiana",
-                "text": "French Guiana"
-                },
-                {
-                "name": "French Polynesia",
-                "text": "French Polynesia"
-                },
-                {
-                "name": "French Southern Territories",
-                "text": "French Southern Territories"
-                },
-                {
-                "name": "Gabon",
-                "text": "Gabon"
-                },
-                {
-                "name": "Gambia",
-                "text": "Gambia"
-                },
-                {
-                "name": "Georgia",
-                "text": "Georgia"
-                },
-                {
-                "name": "Germany",
-                "text": "Germany"
-                },
-                {
-                "name": "Ghana",
-                "text": "Ghana"
-                },
-                {
-                "name": "Gibraltar",
-                "text": "Gibraltar"
-                },
-                {
-                "name": "Greece",
-                "text": "Greece"
-                },
-                {
-                "name": "Greenland",
-                "text": "Greenland"
-                },
-                {
-                "name": "Grenada",
-                "text": "Grenada"
-                },
-                {
-                "name": "Guadaloupe",
-                "text": "Guadaloupe"
-                },
-                {
-                "name": "Guam",
-                "text": "Guam"
-                },
-                {
-                "name": "Guatemala",
-                "text": "Guatemala"
-                },
-                {
-                "name": "Guernsey",
-                "text": "Guernsey"
-                },
-                {
-                "name": "Guinea",
-                "text": "Guinea"
-                },
-                {
-                "name": "Guinea-Bissau",
-                "text": "Guinea-Bissau"
-                },
-                {
-                "name": "Guyana",
-                "text": "Guyana"
-                },
-                {
-                "name": "Haiti",
-                "text": "Haiti"
-                },
-                {
-                "name": "Heard Island and McDonald Islands",
-                "text": "Heard Island and McDonald Islands"
-                },
-                {
-                "name": "Honduras",
-                "text": "Honduras"
-                },
-                {
-                "name": "Hong Kong",
-                "text": "Hong Kong"
-                },
-                {
-                "name": "Hungary",
-                "text": "Hungary"
-                },
-                {
-                "name": "Iceland",
-                "text": "Iceland"
-                },
-                {
-                "name": "India",
-                "text": "India"
-                },
-                {
-                "name": "Indonesia",
-                "text": "Indonesia"
-                },
-                {
-                "name": "Iran",
-                "text": "Iran"
-                },
-                {
-                "name": "Iraq",
-                "text": "Iraq"
-                },
-                {
-                "name": "Ireland",
-                "text": "Ireland"
-                },
-                {
-                "name": "Isle of Man",
-                "text": "Isle of Man"
-                },
-                {
-                "name": "Israel",
-                "text": "Israel"
-                },
-                {
-                "name": "Italy",
-                "text": "Italy"
-                },
-                {
-                "name": "Jamaica",
-                "text": "Jamaica"
-                },
-                {
-                "name": "Japan",
-                "text": "Japan"
-                },
-                {
-                "name": "Jersey",
-                "text": "Jersey"
-                },
-                {
-                "name": "Jordan",
-                "text": "Jordan"
-                },
-                {
-                "name": "Kazakhstan",
-                "text": "Kazakhstan"
-                },
-                {
-                "name": "Kenya",
-                "text": "Kenya"
-                },
-                {
-                "name": "Kiribati",
-                "text": "Kiribati"
-                },
-                {
-                "name": "Kosovo",
-                "text": "Kosovo"
-                },
-                {
-                "name": "Kuwait",
-                "text": "Kuwait"
-                },
-                {
-                "name": "Kyrgyzstan",
-                "text": "Kyrgyzstan"
-                },
-                {
-                "name": "Laos",
-                "text": "Laos"
-                },
-                {
-                "name": "Latvia",
-                "text": "Latvia"
-                },
-                {
-                "name": "Lebanon",
-                "text": "Lebanon"
-                },
-                {
-                "name": "Lesotho",
-                "text": "Lesotho"
-                },
-                {
-                "name": "Liberia",
-                "text": "Liberia"
-                },
-                {
-                "name": "Libya",
-                "text": "Libya"
-                },
-                {
-                "name": "Liechtenstein",
-                "text": "Liechtenstein"
-                },
-                {
-                "name": "Lithuania",
-                "text": "Lithuania"
-                },
-                {
-                "name": "Luxembourg",
-                "text": "Luxembourg"
-                },
-                {
-                "name": "Macao",
-                "text": "Macao"
-                },
-                {
-                "name": "Macedonia",
-                "text": "Macedonia"
-                },
-                {
-                "name": "Madagascar",
-                "text": "Madagascar"
-                },
-                {
-                "name": "Malawi",
-                "text": "Malawi"
-                },
-                {
-                "name": "Malaysia",
-                "text": "Malaysia"
-                },
-                {
-                "name": "Maldives",
-                "text": "Maldives"
-                },
-                {
-                "name": "Mali",
-                "text": "Mali"
-                },
-                {
-                "name": "Malta",
-                "text": "Malta"
-                },
-                {
-                "name": "Marshall Islands",
-                "text": "Marshall Islands"
-                },
-                {
-                "name": "Martinique",
-                "text": "Martinique"
-                },
-                {
-                "name": "Mauritania",
-                "text": "Mauritania"
-                },
-                {
-                "name": "Mauritius",
-                "text": "Mauritius"
-                },
-                {
-                "name": "Mayotte",
-                "text": "Mayotte"
-                },
-                {
-                "name": "Mexico",
-                "text": "Mexico"
-                },
-                {
-                "name": "Micronesia",
-                "text": "Micronesia"
-                },
-                {
-                "name": "Moldava",
-                "text": "Moldava"
-                },
-                {
-                "name": "Monaco",
-                "text": "Monaco"
-                },
-                {
-                "name": "Mongolia",
-                "text": "Mongolia"
-                },
-                {
-                "name": "Montenegro",
-                "text": "Montenegro"
-                },
-                {
-                "name": "Montserrat",
-                "text": "Montserrat"
-                },
-                {
-                "name": "Morocco",
-                "text": "Morocco"
-                },
-                {
-                "name": "Mozambique",
-                "text": "Mozambique"
-                },
-                {
-                "name": "Myanmar (Burma)",
-                "text": "Myanmar (Burma)"
-                },
-                {
-                "name": "Namibia",
-                "text": "Namibia"
-                },
-                {
-                "name": "Nauru",
-                "text": "Nauru"
-                },
-                {
-                "name": "Nepal",
-                "text": "Nepal"
-                },
-                {
-                "name": "Netherlands",
-                "text": "Netherlands"
-                },
-                {
-                "name": "New Caledonia",
-                "text": "New Caledonia"
-                },
-                {
-                "name": "New Zealand",
-                "text": "New Zealand"
-                },
-                {
-                "name": "Nicaragua",
-                "text": "Nicaragua"
-                },
-                {
-                "name": "Niger",
-                "text": "Niger"
-                },
-                {
-                "name": "Nigeria",
-                "text": "Nigeria"
-                },
-                {
-                "name": "Niue",
-                "text": "Niue"
-                },
-                {
-                "name": "Norfolk Island",
-                "text": "Norfolk Island"
-                },
-                {
-                "name": "North Korea",
-                "text": "North Korea"
-                },
-                {
-                "name": "Northern Mariana Islands",
-                "text": "Northern Mariana Islands"
-                },
-                {
-                "name": "Norway",
-                "text": "Norway"
-                },
-                {
-                "name": "Oman",
-                "text": "Oman"
-                },
-                {
-                "name": "Pakistan",
-                "text": "Pakistan"
-                },
-                {
-                "name": "Palau",
-                "text": "Palau"
-                },
-                {
-                "name": "Palestine",
-                "text": "Palestine"
-                },
-                {
-                "name": "Panama",
-                "text": "Panama"
-                },
-                {
-                "name": "Papua New Guinea",
-                "text": "Papua New Guinea"
-                },
-                {
-                "name": "Paraguay",
-                "text": "Paraguay"
-                },
-                {
-                "name": "Peru",
-                "text": "Peru"
-                },
-                {
-                "name": "Phillipines",
-                "text": "Phillipines"
-                },
-                {
-                "name": "Pitcairn",
-                "text": "Pitcairn"
-                },
-                {
-                "name": "Poland",
-                "text": "Poland"
-                },
-                {
-                "name": "Portugal",
-                "text": "Portugal"
-                },
-                {
-                "name": "Puerto Rico",
-                "text": "Puerto Rico"
-                },
-                {
-                "name": "Qatar",
-                "text": "Qatar"
-                },
-                {
-                "name": "Reunion",
-                "text": "Reunion"
-                },
-                {
-                "name": "Romania",
-                "text": "Romania"
-                },
-                {
-                "name": "Russia",
-                "text": "Russia"
-                },
-                {
-                "name": "Rwanda",
-                "text": "Rwanda"
-                },
-                {
-                "name": "Saint Barthelemy",
-                "text": "Saint Barthelemy"
-                },
-                {
-                "name": "Saint Helena",
-                "text": "Saint Helena"
-                },
-                {
-                "name": "Saint Kitts and Nevis",
-                "text": "Saint Kitts and Nevis"
-                },
-                {
-                "name": "Saint Lucia",
-                "text": "Saint Lucia"
-                },
-                {
-                "name": "Saint Martin",
-                "text": "Saint Martin"
-                },
-                {
-                "name": "Saint Pierre and Miquelon",
-                "text": "Saint Pierre and Miquelon"
-                },
-                {
-                "name": "Saint Vincent and the Grenadines",
-                "text": "Saint Vincent and the Grenadines"
-                },
-                {
-                "name": "Samoa",
-                "text": "Samoa"
-                },
-                {
-                "name": "San Marino",
-                "text": "San Marino"
-                },
-                {
-                "name": "Sao Tome and Principe",
-                "text": "Sao Tome and Principe"
-                },
-                {
-                "name": "Saudi Arabia",
-                "text": "Saudi Arabia"
-                },
-                {
-                "name": "Senegal",
-                "text": "Senegal"
-                },
-                {
-                "name": "Serbia",
-                "text": "Serbia"
-                },
-                {
-                "name": "Seychelles",
-                "text": "Seychelles"
-                },
-                {
-                "name": "Sierra Leone",
-                "text": "Sierra Leone"
-                },
-                {
-                "name": "Singapore",
-                "text": "Singapore"
-                },
-                {
-                "name": "Sint Maarten",
-                "text": "Sint Maarten"
-                },
-                {
-                "name": "Slovakia",
-                "text": "Slovakia"
-                },
-                {
-                "name": "Slovenia",
-                "text": "Slovenia"
-                },
-                {
-                "name": "Solomon Islands",
-                "text": "Solomon Islands"
-                },
-                {
-                "name": "Somalia",
-                "text": "Somalia"
-                },
-                {
-                "name": "South Africa",
-                "text": "South Africa"
-                },
-                {
-                "name": "South Georgia and the South Sandwich Islands",
-                "text": "South Georgia and the South Sandwich Islands"
-                },
-                {
-                "name": "South Korea",
-                "text": "South Korea"
-                },
-                {
-                "name": "South Sudan",
-                "text": "South Sudan"
-                },
-                {
-                "name": "Spain",
-                "text": "Spain"
-                },
-                {
-                "name": "Sri Lanka",
-                "text": "Sri Lanka"
-                },
-                {
-                "name": "Sudan",
-                "text": "Sudan"
-                },
-                {
-                "name": "Suriname",
-                "text": "Suriname"
-                },
-                {
-                "name": "Svalbard and Jan Mayen",
-                "text": "Svalbard and Jan Mayen"
-                },
-                {
-                "name": "Swaziland",
-                "text": "Swaziland"
-                },
-                {
-                "name": "Sweden",
-                "text": "Sweden"
-                },
-                {
-                "name": "Switzerland",
-                "text": "Switzerland"
-                },
-                {
-                "name": "Syria",
-                "text": "Syria"
-                },
-                {
-                "name": "Taiwan",
-                "text": "Taiwan"
-                },
-                {
-                "name": "Tajikistan",
-                "text": "Tajikistan"
-                },
-                {
-                "name": "Tanzania",
-                "text": "Tanzania"
-                },
-                {
-                "name": "Thailand",
-                "text": "Thailand"
-                },
-                {
-                "name": "Timor-Leste (East Timor)",
-                "text": "Timor-Leste (East Timor)"
-                },
-                {
-                "name": "Togo",
-                "text": "Togo"
-                },
-                {
-                "name": "Tokelau",
-                "text": "Tokelau"
-                },
-                {
-                "name": "Tonga",
-                "text": "Tonga"
-                },
-                {
-                "name": "Trinidad and Tobago",
-                "text": "Trinidad and Tobago"
-                },
-                {
-                "name": "Tunisia",
-                "text": "Tunisia"
-                },
-                {
-                "name": "Turkey",
-                "text": "Turkey"
-                },
-                {
-                "name": "Turkmenistan",
-                "text": "Turkmenistan"
-                },
-                {
-                "name": "Turks and Caicos Islands",
-                "text": "Turks and Caicos Islands"
-                },
-                {
-                "name": "Tuvalu",
-                "text": "Tuvalu"
-                },
-                {
-                "name": "Uganda",
-                "text": "Uganda"
-                },
-                {
-                "name": "Ukraine",
-                "text": "Ukraine"
-                },
-                {
-                "name": "United Arab Emirates",
-                "text": "United Arab Emirates"
-                },
-                {
-                "name": "United Kingdom",
-                "text": "United Kingdom"
-                },
-                {
-                "name": "United States",
-                "text": "United States"
-                },
-                {
-                "name": "United States Minor Outlying Islands",
-                "text": "United States Minor Outlying Islands"
-                },
-                {
-                "name": "Uruguay",
-                "text": "Uruguay"
-                },
-                {
-                "name": "Uzbekistan",
-                "text": "Uzbekistan"
-                },
-                {
-                "name": "Vanuatu",
-                "text": "Vanuatu"
-                },
-                {
-                "name": "Vatican City",
-                "text": "Vatican City"
-                },
-                {
-                "name": "Venezuela",
-                "text": "Venezuela"
-                },
-                {
-                "name": "Vietnam",
-                "text": "Vietnam"
-                },
-                {
-                "name": "Virgin Islands, British",
-                "text": "Virgin Islands, British"
-                },
-                {
-                "name": "Virgin Islands, US",
-                "text": "Virgin Islands, US"
-                },
-                {
-                "name": "Wallis and Futuna",
-                "text": "Wallis and Futuna"
-                },
-                {
-                "name": "Western Sahara",
-                "text": "Western Sahara"
-                },
-                {
-                "name": "Yemen",
-                "text": "Yemen"
-                },
-                {
-                "name": "Zambia",
-                "text": "Zambia"
-                },
-                {
-                "name": "Zimbabwe",
-                "text": "Zimbabwe"
-                }
-                ]
+               {
+               "NAME": "AFGHANISTAN",
+               "TEXT": "AFGHANISTAN"
+               },
+               {
+               "NAME": "ALAND ISLANDS",
+               "TEXT": "ALAND ISLANDS"
+               },
+               {
+               "NAME": "ALBANIA",
+               "TEXT": "ALBANIA"
+               },
+               {
+               "NAME": "ALGERIA",
+               "TEXT": "ALGERIA"
+               },
+               {
+               "NAME": "AMERICAN SAMOA",
+               "TEXT": "AMERICAN SAMOA"
+               },
+               {
+               "NAME": "ANDORRA",
+               "TEXT": "ANDORRA"
+               },
+               {
+               "NAME": "ANGOLA",
+               "TEXT": "ANGOLA"
+               },
+               {
+               "NAME": "ANGUILLA",
+               "TEXT": "ANGUILLA"
+               },
+               {
+               "NAME": "ANTARCTICA",
+               "TEXT": "ANTARCTICA"
+               },
+               {
+               "NAME": "ANTIGUA AND BARBUDA",
+               "TEXT": "ANTIGUA AND BARBUDA"
+               },
+               {
+               "NAME": "ARGENTINA",
+               "TEXT": "ARGENTINA"
+               },
+               {
+               "NAME": "ARMENIA",
+               "TEXT": "ARMENIA"
+               },
+               {
+               "NAME": "ARUBA",
+               "TEXT": "ARUBA"
+               },
+               {
+               "NAME": "AUSTRALIA",
+               "TEXT": "AUSTRALIA"
+               },
+               {
+               "NAME": "AUSTRIA",
+               "TEXT": "AUSTRIA"
+               },
+               {
+               "NAME": "AZERBAIJAN",
+               "TEXT": "AZERBAIJAN"
+               },
+               {
+               "NAME": "BAHAMAS",
+               "TEXT": "BAHAMAS"
+               },
+               {
+               "NAME": "BAHRAIN",
+               "TEXT": "BAHRAIN"
+               },
+               {
+               "NAME": "BANGLADESH",
+               "TEXT": "BANGLADESH"
+               },
+               {
+               "NAME": "BARBADOS",
+               "TEXT": "BARBADOS"
+               },
+               {
+               "NAME": "BELARUS",
+               "TEXT": "BELARUS"
+               },
+               {
+               "NAME": "BELGIUM",
+               "TEXT": "BELGIUM"
+               },
+               {
+               "NAME": "BELIZE",
+               "TEXT": "BELIZE"
+               },
+               {
+               "NAME": "BENIN",
+               "TEXT": "BENIN"
+               },
+               {
+               "NAME": "BERMUDA",
+               "TEXT": "BERMUDA"
+               },
+               {
+               "NAME": "BHUTAN",
+               "TEXT": "BHUTAN"
+               },
+               {
+               "NAME": "BOLIVIA",
+               "TEXT": "BOLIVIA"
+               },
+               {
+               "NAME": "BONAIRE, SINT EUSTATIUS AND SABA",
+               "TEXT": "BONAIRE, SINT EUSTATIUS AND SABA"
+               },
+               {
+               "NAME": "BOSNIA AND HERZEGOVINA",
+               "TEXT": "BOSNIA AND HERZEGOVINA"
+               },
+               {
+               "NAME": "BOTSWANA",
+               "TEXT": "BOTSWANA"
+               },
+               {
+               "NAME": "BOUVET ISLAND",
+               "TEXT": "BOUVET ISLAND"
+               },
+               {
+               "NAME": "BRAZIL",
+               "TEXT": "BRAZIL"
+               },
+               {
+               "NAME": "BRITISH INDIAN OCEAN TERRITORY",
+               "TEXT": "BRITISH INDIAN OCEAN TERRITORY"
+               },
+               {
+               "NAME": "BRUNEI",
+               "TEXT": "BRUNEI"
+               },
+               {
+               "NAME": "BULGARIA",
+               "TEXT": "BULGARIA"
+               },
+               {
+               "NAME": "BURKINA FASO",
+               "TEXT": "BURKINA FASO"
+               },
+               {
+               "NAME": "BURUNDI",
+               "TEXT": "BURUNDI"
+               },
+               {
+               "NAME": "CAMBODIA",
+               "TEXT": "CAMBODIA"
+               },
+               {
+               "NAME": "CAMEROON",
+               "TEXT": "CAMEROON"
+               },
+               {
+               "NAME": "CANADA",
+               "TEXT": "CANADA"
+               },
+               {
+               "NAME": "CAPE VERDE",
+               "TEXT": "CAPE VERDE"
+               },
+               {
+               "NAME": "CAYMAN ISLANDS",
+               "TEXT": "CAYMAN ISLANDS"
+               },
+               {
+               "NAME": "CENTRAL AFRICAN REPUBLIC",
+               "TEXT": "CENTRAL AFRICAN REPUBLIC"
+               },
+               {
+               "NAME": "CHAD",
+               "TEXT": "CHAD"
+               },
+               {
+               "NAME": "CHILE",
+               "TEXT": "CHILE"
+               },
+               {
+               "NAME": "CHINA",
+               "TEXT": "CHINA"
+               },
+               {
+               "NAME": "CHRISTMAS ISLAND",
+               "TEXT": "CHRISTMAS ISLAND"
+               },
+               {
+               "NAME": "COCOS (KEELING) ISLANDS",
+               "TEXT": "COCOS (KEELING) ISLANDS"
+               },
+               {
+               "NAME": "COLOMBIA",
+               "TEXT": "COLOMBIA"
+               },
+               {
+               "NAME": "COMOROS",
+               "TEXT": "COMOROS"
+               },
+               {
+               "NAME": "CONGO",
+               "TEXT": "CONGO"
+               },
+               {
+               "NAME": "COOK ISLANDS",
+               "TEXT": "COOK ISLANDS"
+               },
+               {
+               "NAME": "COSTA RICA",
+               "TEXT": "COSTA RICA"
+               },
+               {
+               "NAME": "COTE D'IVOIRE (IVORY COAST)",
+               "TEXT": "COTE D'IVOIRE (IVORY COAST)"
+               },
+               {
+               "NAME": "CROATIA",
+               "TEXT": "CROATIA"
+               },
+               {
+               "NAME": "CUBA",
+               "TEXT": "CUBA"
+               },
+               {
+               "NAME": "CURACAO",
+               "TEXT": "CURACAO"
+               },
+               {
+               "NAME": "CYPRUS",
+               "TEXT": "CYPRUS"
+               },
+               {
+               "NAME": "CZECH REPUBLIC",
+               "TEXT": "CZECH REPUBLIC"
+               },
+               {
+               "NAME": "DEMOCRATIC REPUBLIC OF THE CONGO",
+               "TEXT": "DEMOCRATIC REPUBLIC OF THE CONGO"
+               },
+               {
+               "NAME": "DENMARK",
+               "TEXT": "DENMARK"
+               },
+               {
+               "NAME": "DJIBOUTI",
+               "TEXT": "DJIBOUTI"
+               },
+               {
+               "NAME": "DOMINICA",
+               "TEXT": "DOMINICA"
+               },
+               {
+               "NAME": "DOMINICAN REPUBLIC",
+               "TEXT": "DOMINICAN REPUBLIC"
+               },
+               {
+               "NAME": "ECUADOR",
+               "TEXT": "ECUADOR"
+               },
+               {
+               "NAME": "EGYPT",
+               "TEXT": "EGYPT"
+               },
+               {
+               "NAME": "EL SALVADOR",
+               "TEXT": "EL SALVADOR"
+               },
+               {
+               "NAME": "EQUATORIAL GUINEA",
+               "TEXT": "EQUATORIAL GUINEA"
+               },
+               {
+               "NAME": "ERITREA",
+               "TEXT": "ERITREA"
+               },
+               {
+               "NAME": "ESTONIA",
+               "TEXT": "ESTONIA"
+               },
+               {
+               "NAME": "ETHIOPIA",
+               "TEXT": "ETHIOPIA"
+               },
+               {
+               "NAME": "FALKLAND ISLANDS (MALVINAS)",
+               "TEXT": "FALKLAND ISLANDS (MALVINAS)"
+               },
+               {
+               "NAME": "FAROE ISLANDS",
+               "TEXT": "FAROE ISLANDS"
+               },
+               {
+               "NAME": "FIJI",
+               "TEXT": "FIJI"
+               },
+               {
+               "NAME": "FINLAND",
+               "TEXT": "FINLAND"
+               },
+               {
+               "NAME": "FRANCE",
+               "TEXT": "FRANCE"
+               },
+               {
+               "NAME": "FRENCH GUIANA",
+               "TEXT": "FRENCH GUIANA"
+               },
+               {
+               "NAME": "FRENCH POLYNESIA",
+               "TEXT": "FRENCH POLYNESIA"
+               },
+               {
+               "NAME": "FRENCH SOUTHERN TERRITORIES",
+               "TEXT": "FRENCH SOUTHERN TERRITORIES"
+               },
+               {
+               "NAME": "GABON",
+               "TEXT": "GABON"
+               },
+               {
+               "NAME": "GAMBIA",
+               "TEXT": "GAMBIA"
+               },
+               {
+               "NAME": "GEORGIA",
+               "TEXT": "GEORGIA"
+               },
+               {
+               "NAME": "GERMANY",
+               "TEXT": "GERMANY"
+               },
+               {
+               "NAME": "GHANA",
+               "TEXT": "GHANA"
+               },
+               {
+               "NAME": "GIBRALTAR",
+               "TEXT": "GIBRALTAR"
+               },
+               {
+               "NAME": "GREECE",
+               "TEXT": "GREECE"
+               },
+               {
+               "NAME": "GREENLAND",
+               "TEXT": "GREENLAND"
+               },
+               {
+               "NAME": "GRENADA",
+               "TEXT": "GRENADA"
+               },
+               {
+               "NAME": "GUADALOUPE",
+               "TEXT": "GUADALOUPE"
+               },
+               {
+               "NAME": "GUAM",
+               "TEXT": "GUAM"
+               },
+               {
+               "NAME": "GUATEMALA",
+               "TEXT": "GUATEMALA"
+               },
+               {
+               "NAME": "GUERNSEY",
+               "TEXT": "GUERNSEY"
+               },
+               {
+               "NAME": "GUINEA",
+               "TEXT": "GUINEA"
+               },
+               {
+               "NAME": "GUINEA-BISSAU",
+               "TEXT": "GUINEA-BISSAU"
+               },
+               {
+               "NAME": "GUYANA",
+               "TEXT": "GUYANA"
+               },
+               {
+               "NAME": "HAITI",
+               "TEXT": "HAITI"
+               },
+               {
+               "NAME": "HEARD ISLAND AND MCDONALD ISLANDS",
+               "TEXT": "HEARD ISLAND AND MCDONALD ISLANDS"
+               },
+               {
+               "NAME": "HONDURAS",
+               "TEXT": "HONDURAS"
+               },
+               {
+               "NAME": "HONG KONG",
+               "TEXT": "HONG KONG"
+               },
+               {
+               "NAME": "HUNGARY",
+               "TEXT": "HUNGARY"
+               },
+               {
+               "NAME": "ICELAND",
+               "TEXT": "ICELAND"
+               },
+               {
+               "NAME": "INDIA",
+               "TEXT": "INDIA"
+               },
+               {
+               "NAME": "INDONESIA",
+               "TEXT": "INDONESIA"
+               },
+               {
+               "NAME": "IRAN",
+               "TEXT": "IRAN"
+               },
+               {
+               "NAME": "IRAQ",
+               "TEXT": "IRAQ"
+               },
+               {
+               "NAME": "IRELAND",
+               "TEXT": "IRELAND"
+               },
+               {
+               "NAME": "ISLE OF MAN",
+               "TEXT": "ISLE OF MAN"
+               },
+               {
+               "NAME": "ISRAEL",
+               "TEXT": "ISRAEL"
+               },
+               {
+               "NAME": "ITALY",
+               "TEXT": "ITALY"
+               },
+               {
+               "NAME": "JAMAICA",
+               "TEXT": "JAMAICA"
+               },
+               {
+               "NAME": "JAPAN",
+               "TEXT": "JAPAN"
+               },
+               {
+               "NAME": "JERSEY",
+               "TEXT": "JERSEY"
+               },
+               {
+               "NAME": "JORDAN",
+               "TEXT": "JORDAN"
+               },
+               {
+               "NAME": "KAZAKHSTAN",
+               "TEXT": "KAZAKHSTAN"
+               },
+               {
+               "NAME": "KENYA",
+               "TEXT": "KENYA"
+               },
+               {
+               "NAME": "KIRIBATI",
+               "TEXT": "KIRIBATI"
+               },
+               {
+               "NAME": "KOSOVO",
+               "TEXT": "KOSOVO"
+               },
+               {
+               "NAME": "KUWAIT",
+               "TEXT": "KUWAIT"
+               },
+               {
+               "NAME": "KYRGYZSTAN",
+               "TEXT": "KYRGYZSTAN"
+               },
+               {
+               "NAME": "LAOS",
+               "TEXT": "LAOS"
+               },
+               {
+               "NAME": "LATVIA",
+               "TEXT": "LATVIA"
+               },
+               {
+               "NAME": "LEBANON",
+               "TEXT": "LEBANON"
+               },
+               {
+               "NAME": "LESOTHO",
+               "TEXT": "LESOTHO"
+               },
+               {
+               "NAME": "LIBERIA",
+               "TEXT": "LIBERIA"
+               },
+               {
+               "NAME": "LIBYA",
+               "TEXT": "LIBYA"
+               },
+               {
+               "NAME": "LIECHTENSTEIN",
+               "TEXT": "LIECHTENSTEIN"
+               },
+               {
+               "NAME": "LITHUANIA",
+               "TEXT": "LITHUANIA"
+               },
+               {
+               "NAME": "LUXEMBOURG",
+               "TEXT": "LUXEMBOURG"
+               },
+               {
+               "NAME": "MACAO",
+               "TEXT": "MACAO"
+               },
+               {
+               "NAME": "MACEDONIA",
+               "TEXT": "MACEDONIA"
+               },
+               {
+               "NAME": "MADAGASCAR",
+               "TEXT": "MADAGASCAR"
+               },
+               {
+               "NAME": "MALAWI",
+               "TEXT": "MALAWI"
+               },
+               {
+               "NAME": "MALAYSIA",
+               "TEXT": "MALAYSIA"
+               },
+               {
+               "NAME": "MALDIVES",
+               "TEXT": "MALDIVES"
+               },
+               {
+               "NAME": "MALI",
+               "TEXT": "MALI"
+               },
+               {
+               "NAME": "MALTA",
+               "TEXT": "MALTA"
+               },
+               {
+               "NAME": "MARSHALL ISLANDS",
+               "TEXT": "MARSHALL ISLANDS"
+               },
+               {
+               "NAME": "MARTINIQUE",
+               "TEXT": "MARTINIQUE"
+               },
+               {
+               "NAME": "MAURITANIA",
+               "TEXT": "MAURITANIA"
+               },
+               {
+               "NAME": "MAURITIUS",
+               "TEXT": "MAURITIUS"
+               },
+               {
+               "NAME": "MAYOTTE",
+               "TEXT": "MAYOTTE"
+               },
+               {
+               "NAME": "MEXICO",
+               "TEXT": "MEXICO"
+               },
+               {
+               "NAME": "MICRONESIA",
+               "TEXT": "MICRONESIA"
+               },
+               {
+               "NAME": "MOLDAVA",
+               "TEXT": "MOLDAVA"
+               },
+               {
+               "NAME": "MONACO",
+               "TEXT": "MONACO"
+               },
+               {
+               "NAME": "MONGOLIA",
+               "TEXT": "MONGOLIA"
+               },
+               {
+               "NAME": "MONTENEGRO",
+               "TEXT": "MONTENEGRO"
+               },
+               {
+               "NAME": "MONTSERRAT",
+               "TEXT": "MONTSERRAT"
+               },
+               {
+               "NAME": "MOROCCO",
+               "TEXT": "MOROCCO"
+               },
+               {
+               "NAME": "MOZAMBIQUE",
+               "TEXT": "MOZAMBIQUE"
+               },
+               {
+               "NAME": "MYANMAR (BURMA)",
+               "TEXT": "MYANMAR (BURMA)"
+               },
+               {
+               "NAME": "NAMIBIA",
+               "TEXT": "NAMIBIA"
+               },
+               {
+               "NAME": "NAURU",
+               "TEXT": "NAURU"
+               },
+               {
+               "NAME": "NEPAL",
+               "TEXT": "NEPAL"
+               },
+               {
+               "NAME": "NETHERLANDS",
+               "TEXT": "NETHERLANDS"
+               },
+               {
+               "NAME": "NEW CALEDONIA",
+               "TEXT": "NEW CALEDONIA"
+               },
+               {
+               "NAME": "NEW ZEALAND",
+               "TEXT": "NEW ZEALAND"
+               },
+               {
+               "NAME": "NICARAGUA",
+               "TEXT": "NICARAGUA"
+               },
+               {
+               "NAME": "NIGER",
+               "TEXT": "NIGER"
+               },
+               {
+               "NAME": "NIGERIA",
+               "TEXT": "NIGERIA"
+               },
+               {
+               "NAME": "NIUE",
+               "TEXT": "NIUE"
+               },
+               {
+               "NAME": "NORFOLK ISLAND",
+               "TEXT": "NORFOLK ISLAND"
+               },
+               {
+               "NAME": "NORTH KOREA",
+               "TEXT": "NORTH KOREA"
+               },
+               {
+               "NAME": "NORTHERN MARIANA ISLANDS",
+               "TEXT": "NORTHERN MARIANA ISLANDS"
+               },
+               {
+               "NAME": "NORWAY",
+               "TEXT": "NORWAY"
+               },
+               {
+               "NAME": "OMAN",
+               "TEXT": "OMAN"
+               },
+               {
+               "NAME": "PAKISTAN",
+               "TEXT": "PAKISTAN"
+               },
+               {
+               "NAME": "PALAU",
+               "TEXT": "PALAU"
+               },
+               {
+               "NAME": "PALESTINE",
+               "TEXT": "PALESTINE"
+               },
+               {
+               "NAME": "PANAMA",
+               "TEXT": "PANAMA"
+               },
+               {
+               "NAME": "PAPUA NEW GUINEA",
+               "TEXT": "PAPUA NEW GUINEA"
+               },
+               {
+               "NAME": "PARAGUAY",
+               "TEXT": "PARAGUAY"
+               },
+               {
+               "NAME": "PERU",
+               "TEXT": "PERU"
+               },
+               {
+               "NAME": "PHILLIPINES",
+               "TEXT": "PHILLIPINES"
+               },
+               {
+               "NAME": "PITCAIRN",
+               "TEXT": "PITCAIRN"
+               },
+               {
+               "NAME": "POLAND",
+               "TEXT": "POLAND"
+               },
+               {
+               "NAME": "PORTUGAL",
+               "TEXT": "PORTUGAL"
+               },
+               {
+               "NAME": "PUERTO RICO",
+               "TEXT": "PUERTO RICO"
+               },
+               {
+               "NAME": "QATAR",
+               "TEXT": "QATAR"
+               },
+               {
+               "NAME": "REUNION",
+               "TEXT": "REUNION"
+               },
+               {
+               "NAME": "ROMANIA",
+               "TEXT": "ROMANIA"
+               },
+               {
+               "NAME": "RUSSIA",
+               "TEXT": "RUSSIA"
+               },
+               {
+               "NAME": "RWANDA",
+               "TEXT": "RWANDA"
+               },
+               {
+               "NAME": "SAINT BARTHELEMY",
+               "TEXT": "SAINT BARTHELEMY"
+               },
+               {
+               "NAME": "SAINT HELENA",
+               "TEXT": "SAINT HELENA"
+               },
+               {
+               "NAME": "SAINT KITTS AND NEVIS",
+               "TEXT": "SAINT KITTS AND NEVIS"
+               },
+               {
+               "NAME": "SAINT LUCIA",
+               "TEXT": "SAINT LUCIA"
+               },
+               {
+               "NAME": "SAINT MARTIN",
+               "TEXT": "SAINT MARTIN"
+               },
+               {
+               "NAME": "SAINT PIERRE AND MIQUELON",
+               "TEXT": "SAINT PIERRE AND MIQUELON"
+               },
+               {
+               "NAME": "SAINT VINCENT AND THE GRENADINES",
+               "TEXT": "SAINT VINCENT AND THE GRENADINES"
+               },
+               {
+               "NAME": "SAMOA",
+               "TEXT": "SAMOA"
+               },
+               {
+               "NAME": "SAN MARINO",
+               "TEXT": "SAN MARINO"
+               },
+               {
+               "NAME": "SAO TOME AND PRINCIPE",
+               "TEXT": "SAO TOME AND PRINCIPE"
+               },
+               {
+               "NAME": "SAUDI ARABIA",
+               "TEXT": "SAUDI ARABIA"
+               },
+               {
+               "NAME": "SENEGAL",
+               "TEXT": "SENEGAL"
+               },
+               {
+               "NAME": "SERBIA",
+               "TEXT": "SERBIA"
+               },
+               {
+               "NAME": "SEYCHELLES",
+               "TEXT": "SEYCHELLES"
+               },
+               {
+               "NAME": "SIERRA LEONE",
+               "TEXT": "SIERRA LEONE"
+               },
+               {
+               "NAME": "SINGAPORE",
+               "TEXT": "SINGAPORE"
+               },
+               {
+               "NAME": "SINT MAARTEN",
+               "TEXT": "SINT MAARTEN"
+               },
+               {
+               "NAME": "SLOVAKIA",
+               "TEXT": "SLOVAKIA"
+               },
+               {
+               "NAME": "SLOVENIA",
+               "TEXT": "SLOVENIA"
+               },
+               {
+               "NAME": "SOLOMON ISLANDS",
+               "TEXT": "SOLOMON ISLANDS"
+               },
+               {
+               "NAME": "SOMALIA",
+               "TEXT": "SOMALIA"
+               },
+               {
+               "NAME": "SOUTH AFRICA",
+               "TEXT": "SOUTH AFRICA"
+               },
+               {
+               "NAME": "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS",
+               "TEXT": "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
+               },
+               {
+               "NAME": "SOUTH KOREA",
+               "TEXT": "SOUTH KOREA"
+               },
+               {
+               "NAME": "SOUTH SUDAN",
+               "TEXT": "SOUTH SUDAN"
+               },
+               {
+               "NAME": "SPAIN",
+               "TEXT": "SPAIN"
+               },
+               {
+               "NAME": "SRI LANKA",
+               "TEXT": "SRI LANKA"
+               },
+               {
+               "NAME": "SUDAN",
+               "TEXT": "SUDAN"
+               },
+               {
+               "NAME": "SURINAME",
+               "TEXT": "SURINAME"
+               },
+               {
+               "NAME": "SVALBARD AND JAN MAYEN",
+               "TEXT": "SVALBARD AND JAN MAYEN"
+               },
+               {
+               "NAME": "SWAZILAND",
+               "TEXT": "SWAZILAND"
+               },
+               {
+               "NAME": "SWEDEN",
+               "TEXT": "SWEDEN"
+               },
+               {
+               "NAME": "SWITZERLAND",
+               "TEXT": "SWITZERLAND"
+               },
+               {
+               "NAME": "SYRIA",
+               "TEXT": "SYRIA"
+               },
+               {
+               "NAME": "TAIWAN",
+               "TEXT": "TAIWAN"
+               },
+               {
+               "NAME": "TAJIKISTAN",
+               "TEXT": "TAJIKISTAN"
+               },
+               {
+               "NAME": "TANZANIA",
+               "TEXT": "TANZANIA"
+               },
+               {
+               "NAME": "THAILAND",
+               "TEXT": "THAILAND"
+               },
+               {
+               "NAME": "TIMOR-LESTE (EAST TIMOR)",
+               "TEXT": "TIMOR-LESTE (EAST TIMOR)"
+               },
+               {
+               "NAME": "TOGO",
+               "TEXT": "TOGO"
+               },
+               {
+               "NAME": "TOKELAU",
+               "TEXT": "TOKELAU"
+               },
+               {
+               "NAME": "TONGA",
+               "TEXT": "TONGA"
+               },
+               {
+               "NAME": "TRINIDAD AND TOBAGO",
+               "TEXT": "TRINIDAD AND TOBAGO"
+               },
+               {
+               "NAME": "TUNISIA",
+               "TEXT": "TUNISIA"
+               },
+               {
+               "NAME": "TURKEY",
+               "TEXT": "TURKEY"
+               },
+               {
+               "NAME": "TURKMENISTAN",
+               "TEXT": "TURKMENISTAN"
+               },
+               {
+               "NAME": "TURKS AND CAICOS ISLANDS",
+               "TEXT": "TURKS AND CAICOS ISLANDS"
+               },
+               {
+               "NAME": "TUVALU",
+               "TEXT": "TUVALU"
+               },
+               {
+               "NAME": "UGANDA",
+               "TEXT": "UGANDA"
+               },
+               {
+               "NAME": "UKRAINE",
+               "TEXT": "UKRAINE"
+               },
+               {
+               "NAME": "UNITED ARAB EMIRATES",
+               "TEXT": "UNITED ARAB EMIRATES"
+               },
+               {
+               "NAME": "UNITED KINGDOM",
+               "TEXT": "UNITED KINGDOM"
+               },
+               {
+               "NAME": "UNITED STATES",
+               "TEXT": "UNITED STATES"
+               },
+               {
+               "NAME": "UNITED STATES MINOR OUTLYING ISLANDS",
+               "TEXT": "UNITED STATES MINOR OUTLYING ISLANDS"
+               },
+               {
+               "NAME": "URUGUAY",
+               "TEXT": "URUGUAY"
+               },
+               {
+               "NAME": "UZBEKISTAN",
+               "TEXT": "UZBEKISTAN"
+               },
+               {
+               "NAME": "VANUATU",
+               "TEXT": "VANUATU"
+               },
+               {
+               "NAME": "VATICAN CITY",
+               "TEXT": "VATICAN CITY"
+               },
+               {
+               "NAME": "VENEZUELA",
+               "TEXT": "VENEZUELA"
+               },
+               {
+               "NAME": "VIETNAM",
+               "TEXT": "VIETNAM"
+               },
+               {
+               "NAME": "VIRGIN ISLANDS, BRITISH",
+               "TEXT": "VIRGIN ISLANDS, BRITISH"
+               },
+               {
+               "NAME": "VIRGIN ISLANDS, US",
+               "TEXT": "VIRGIN ISLANDS, US"
+               },
+               {
+               "NAME": "WALLIS AND FUTUNA",
+               "TEXT": "WALLIS AND FUTUNA"
+               },
+               {
+               "NAME": "WESTERN SAHARA",
+               "TEXT": "WESTERN SAHARA"
+               },
+               {
+               "NAME": "YEMEN",
+               "TEXT": "YEMEN"
+               },
+               {
+               "NAME": "ZAMBIA",
+               "TEXT": "ZAMBIA"
+               },
+               {
+               "NAME": "ZIMBABWE",
+               "TEXT": "ZIMBABWE"
+               }
+               ]
 }

@@ -495,7 +495,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         header: {
             left: 'today prev,next ',
             center: 'title',
-            right: 'agendaDay', // right: 'agendaDay,agendaTwoDay,agendaWeek,month'
+            right: '', // right: 'agendaDay,agendaTwoDay,agendaWeek,month'
         },
         views: {
             agendaTwoDay: {

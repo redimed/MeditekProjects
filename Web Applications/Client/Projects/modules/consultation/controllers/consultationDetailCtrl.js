@@ -68,6 +68,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     $scope.getTelehealthDetail = function(UID) {
         WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
             $scope.wainformation = data.data;
+            console.log(" o day wainformation ",$scope.wainformation);
             WAAppointmentService.GetDetailPatientByUid({
                 UID: $scope.wainformation.Patients[0].UID
             }).then(function(data) {

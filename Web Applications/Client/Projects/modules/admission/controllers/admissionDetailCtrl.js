@@ -1,6 +1,48 @@
 var app = angular.module('app.authentication.admission.detail.controller', []);
 app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices, $state) {
 
+ /* THAO */
+    $scope.admissionDetail = {
+        cardiovascular_triglycerides : 'N',
+        cardiovascular_hypertension : 'N',
+        cardiovascular_angina : 'N',
+        cardiovascular_fibrillation : 'N',
+        cardiovascular_condition : 'N',
+        cardiovascular_disease : 'N',
+        cardiovascular_cardiac_disease : 'N',
+        endocrinology_diabetes : 'N',
+        endocrinology_blood_glucose : 'N',
+        endocrinology_goitre : 'N',
+        gastrointestinal_reflux : 'N',
+        gastrointestinal_jaundice : 'N',
+        gastrointestinal_ibs : 'N',
+        bleeding_disorders_lungs : 'N',
+        bleeding_disorders_anaemia : 'N',
+        bleeding_disorders_problems : 'N',
+        musculoskeletal_osteoarthritis : 'N',
+        musculoskeletal_problems : 'N',
+        neurology_dystrophies : 'N',
+        neurology_tia : 'N',
+        neurology_weakness : 'N',
+        neurology_turns : 'N',
+        respiratory_emphysema : 'N',
+        respiratory_inclines : 'N',
+        anti_inflammatory: 'N',
+        herbal_supplements: 'N',
+        lifestyle_alcohol: 'N',
+        lifestyle_drugs: 'N',
+        allergies_alerts_hyperthermia: 'N',
+        anti_coagulant: 'N',
+        lifestyle_smoked: 'N'
+    };
+
+    $scope.ChangeRadio = function(testname){
+        for(var i = 0; i < testname.length; i++) {
+            $("input[name="+testname[i]+"]").val(null);
+        }
+
+    };
+    /* END THAO */
     $timeout(function() {
         App.initAjax();
 
@@ -319,5 +361,11 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
             console.log(err);
         });
         console.log(postdata);
-    }
+    };
+
+    // $scope.Disabled = function() {
+    //   expect(element(by.css('text')).getAttribute('disabled')).toBeFalsy();
+    //   element(by.model('radio')).click();
+    //   expect(element(by.css('text')).getAttribute('disabled')).toBeTruthy();
+    // };
 });

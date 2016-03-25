@@ -1,6 +1,5 @@
 var app = angular.module('app.authentication.admission.detail.controller', []);
-app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices, $state) {
-
+app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices) {
  /* THAO */
     $scope.admissionDetail = {
         cardiovascular_triglycerides : 'N',
@@ -65,17 +64,17 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
             }]
         }
     };
-
-    if ($scope.wainformation && $scope.wainformation.Patients.length > 0) {
-        $scope.admissionDetail.FirstName = $scope.wainformation.Patients[0].FirstName ? $scope.wainformation.Patients[0].FirstName : '';
-        $scope.admissionDetail.LastName = $scope.wainformation.Patients[0].LastName ? $scope.wainformation.Patients[0].LastName : '';
-        $scope.admissionDetail.DOB = $scope.wainformation.Patients[0].DOB ? $scope.wainformation.Patients[0].DOB : '';
-        $scope.admissionDetail.Gender = $scope.wainformation.Patients[0].Gender ? $scope.wainformation.Patients[0].Gender : '';
-        if ($scope.wainformation.Patients[0].PatientMedicares.length > 0) {
-            $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : $scope.wainformation.Patients[0].PatientMedicares[0].MedicareEligible ? $scope.wainformation.Patients[0].PatientMedicares[0].MedicareEligible : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible : '';
-            $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : $scope.wainformation.Patients[0].PatientMedicares[0].MedicareReferenceNumber ? $scope.wainformation.Patients[0].PatientMedicares[0].MedicareReferenceNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber : '';
-            $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : $scope.wainformation.Patients[0].PatientMedicares[0].MedicareNumber ? $scope.wainformation.Patients[0].PatientMedicares[0].MedicareNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber : '';
-            $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : $scope.wainformation.Patients[0].PatientMedicares[0].ExpiryDate ? moment($scope.wainformation.Patients[0].PatientMedicares[0].ExpiryDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY') : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate : '';
+    console.log('wainformation ',$scope.wainformation);
+    if ( $scope.wainformation && $scope.wainformation.Patients.length > 0){
+        $scope.admissionDetail.FirstName = $scope.wainformation.Patients[0].FirstName?$scope.wainformation.Patients[0].FirstName:'';
+        $scope.admissionDetail.LastName = $scope.wainformation.Patients[0].LastName?$scope.wainformation.Patients[0].LastName:'';
+        $scope.admissionDetail.DOB = $scope.wainformation.Patients[0].DOB?$scope.wainformation.Patients[0].DOB:'';
+        $scope.admissionDetail.Gender = $scope.wainformation.Patients[0].Gender?$scope.wainformation.Patients[0].Gender:'';
+        if($scope.wainformation.Patients[0].PatientMedicares.length > 0){
+            $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible?$scope.admissionDetail.MedicareEligible:$scope.wainformation.Patients[0].PatientMedicares[0].MedicareEligible?$scope.wainformation.Patients[0].PatientMedicares[0].MedicareEligible:$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible?$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible:'';
+            $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber?$scope.admissionDetail.MedicareReferenceNumber:$scope.wainformation.Patients[0].PatientMedicares[0].MedicareReferenceNumber?$scope.wainformation.Patients[0].PatientMedicares[0].MedicareReferenceNumber:$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber?$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber:'';
+            $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber?$scope.admissionDetail.MedicareNumber:$scope.wainformation.Patients[0].PatientMedicares[0].MedicareNumber?$scope.wainformation.Patients[0].PatientMedicares[0].MedicareNumber:$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber?$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber:'';
+            $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate?$scope.admissionDetail.ExpiryDate:$scope.wainformation.Patients[0].PatientMedicares[0].ExpiryDate?moment($scope.wainformation.Patients[0].PatientMedicares[0].ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate?$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate:'';
         }
 
         if ($scope.wainformation.Patients[0].PatientDVAs.length > 0) {
@@ -89,9 +88,9 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
             $scope.admissionDetail.MobilePhoneNumber = $scope.admissionDetail.MobilePhoneNumber ? $scope.admissionDetail.MobilePhoneNumber : $scope.wainformation.Patients[0].PatientKins[0].MobilePhoneNumber ? $scope.wainformation.Patients[0].PatientKins[0].MobilePhoneNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinMobilePhoneNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinMobilePhoneNumber : '';
         }
     }
-    if ($scope.wainformation && $scope.wainformation.Doctors.length > 0) {
-        if ($scope.wainformation.Doctors[0].FirstName || $scope.wainformation.Doctors[0].LastName) {
-            $scope.admissionDetail.DoctorFullName = $scope.admissionDetail.DoctorFullName ? $scope.admissionDetail.DoctorFullName : $scope.wainformation.Doctors[0].FirstName + ' ' + $scope.wainformation.Doctors[0].LastName;
+    if($scope.wainformation && $scope.wainformation.Doctors.length > 0) {
+        if($scope.wainformation.Doctors[0].FirstName || $scope.wainformation.Doctors[0].LastName) {
+            $scope.admissionDetail.DoctorFullName = $scope.admissionDetail.DoctorFullName?$scope.admissionDetail.DoctorFullName:$scope.wainformation.Doctors[0].FirstName+' '+$scope.wainformation.Doctors[0].LastName;
         }
 
         if ($scope.wainformation.Doctors[0].FileUpload != null && $scope.wainformation.Doctors[0].FileUpload != '') {

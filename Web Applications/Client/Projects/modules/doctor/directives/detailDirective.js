@@ -36,6 +36,9 @@ angular.module('app.authentication.doctor.directive.detail', [])
 						data.UID = $scope.info.UID;
 						data.UserAccountID = $scope.info.UserAccountID;
 						$scope.doctorUID =  $scope.info.UserAccountID;
+						if($scope.info.Speciality == null || $scope.info.Speciality=='' || $scope.info.Speciality.length ==0) {
+							delete $scope.info['Speciality'];
+						}
 						delete $scope.info['UID'];
 						data.info = $scope.info;
 						data.RoleId = $scope.info.UserAccount.RelUserRoles.length!=0?$scope.info.UserAccount.RelUserRoles[0].RoleId:null;
@@ -152,6 +155,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 
 		},
 		link: function(scope, ele, attrs) {
+			console.log(scope.isShowFull);
 			console.log(scope.info);
 			scope.isChoseAvatar = false;
 			scope.isChoseSignature = false;
@@ -253,7 +257,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    };
 
 		    scope.checkDataNull = function(name){
-		    	if(scope.info[name].length==0)
+		    	if(scope.info[name].length==0 && name != 'Speciality')
 		    		scope.info[name] = null;
 		    };
 
@@ -373,7 +377,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					    imageAvatar.addEventListener('change', function(e){
 					    	var canvas = document.getElementById('imageAvatarCanvas');
 							var ctx = canvas.getContext('2d');
-							scope.buildImg(imageAvatar, canvas, ctx,e,275,300);
+							scope.buildImg(imageAvatar, canvas, ctx,e,250,250);
 					    }, false);
 				}
 				else if(value =="Signature") {

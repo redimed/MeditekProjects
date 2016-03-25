@@ -61,10 +61,10 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
             }, function(err) {
                  o.loadingPage(false);
                 if (err.data.ErrorType == "PinNumber.Invalid") {
-                    toastr.error('Password Invalid');
+                    toastr.error('PinNumber Invalid');
                 } else if (err.data.ErrorType == "PinNumber.Expired") {
 
-                    toastr.error('Password Invalid');
+                    toastr.error('PinNumber Expired');
                 } else {
                     toastr.error('Patient Login Fail');
                 }

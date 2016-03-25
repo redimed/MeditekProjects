@@ -331,7 +331,7 @@ class UpdateProfileViewController: BaseViewController {
 
     
     
-    func addCustomView() {
+    func addCustomViewCountry() {
         viewCountry.backgroundColor = UIColor.blackColor()
         viewCountry.translatesAutoresizingMaskIntoConstraints = false
         self.viewCountry.alpha = 0

@@ -492,11 +492,7 @@
 		AF78A2F61BC36807003E4E98 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< be45c1097fecb972985deaa278982db3acfea159
-				3FD1CA851CA23AD4007D1F67 /* Country.json */,
-=======
 				3FF87B4B1CA390E60068866C /* Country.json */,
->>>>>>> add autocomplete country
 				AF1BCE4D1C4E16DC002CA9A5 /* Suburb.json */,
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
 				AF35B1241C5219560044398D /* UTM AvoBold.ttf */,
@@ -846,11 +842,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
-<<<<<<< be45c1097fecb972985deaa278982db3acfea159
-				3FD1CA861CA23AD4007D1F67 /* Country.json in Resources */,
-=======
 				3FF87B4C1CA390E60068866C /* Country.json in Resources */,
->>>>>>> add autocomplete country
 				AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */,
 				AF1BCE4E1C4E16DC002CA9A5 /* Suburb.json in Resources */,
 				AF73C8481C7BF9030015A625 /* DKCameraResource.bundle in Resources */,

@@ -79,7 +79,7 @@ class SettingTableViewController: UITableViewController ,DTAlertViewDelegate {
     
     @IBAction func logoutButton(sender: AnyObject) {
         print("logout")
-        self.view.showLoading()
+        
         let alertController = UIAlertController(title: "Logout", message: MessageString.MessageLogout, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
@@ -87,6 +87,7 @@ class SettingTableViewController: UITableViewController ,DTAlertViewDelegate {
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            self.view.showLoading()
             if let uuid = defaults.valueForKey("uid") as? String {
                 self.api.updateTokenPush(uuid,deviceToken:"")
             }
@@ -111,7 +112,7 @@ class SettingTableViewController: UITableViewController ,DTAlertViewDelegate {
         alertController.addAction(OKAction)
         
         self.presentViewController(alertController, animated: true) {
-            // ...
+           self.view.hideLoading()
         }
         
     }

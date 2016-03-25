@@ -12,7 +12,7 @@ import SwiftyJSON
 
 
 
-class ViewController: UIViewController,UITextFieldDelegate {
+class RegisterViewController : UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var phoneTextField: DesignableTextField!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -39,7 +39,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     @IBAction func btnCheckPhoneAction(sender: DesignableButton)  {
         view.endEditing(true)
         //Check email if email is valid return message
-        if (phoneTextField.text == "" || config.validateRegex(phoneTextField.text!,regex: Regex.PHONE_REGEX) == false){
+        if (phoneTextField.text == "" || config.validateRegex(phoneTextField.text!,regex: Regex.MobileNumber) == false){
             animationView(viewPhoneNumber)
             config.borderTextFieldValid(phoneTextField, color: colorCustom)
         }
@@ -56,11 +56,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
             response in
             if(response["message"] == "success"){
                 self.hideLoading()
-                self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
+                let VerifyPhone = self.storyboard?.instantiateViewControllerWithIdentifier("VerifyViewControllerID") as! VerifyViewController
+                VerifyPhone.phoneNumber = self.phoneTextField.text!;
+                self.navigationController?.pushViewController(VerifyPhone, animated: true)
             }else {
                 self.hideLoading()
                 let message : String = String(response["ErrorType"])
                 self.alertView.alertMessage("Error", message: message)
+//                let VerifyPhone = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewControllerID") as! LoginViewController
+//                self.navigationController?.pushViewController(VerifyPhone, animated: true)
             }
         })
     }

@@ -35,13 +35,15 @@ class UpdateProfileViewController: BaseViewController {
     var checkDOB = true
     
     let viewSuburb = UIView()
+    let viewCountry = UIView()
     var tableView: UITableView =  UITableView()
+    var tableViewCountry: UITableView =  UITableView()
     var autocompleteUrls = [String]()
     var pastUrls : [String] = []
     var autocompleteUrlsCountry = [String]()
     var pastUrlsCountry : [String] = []
     var assets: [DKAsset]?
-    
+    var suburbCheck = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,11 +70,11 @@ class UpdateProfileViewController: BaseViewController {
         delegateTextField()
         autocompleteUrls = requestTelehealthService.loadDataJson()
         pastUrls = autocompleteUrls
-        autocompleteUrlsCountry = requestTelehealthService.loadDataJsonContry()
-        pastUrlsCountry = autocompleteUrls
+        autocompleteUrlsCountry = requestTelehealthService.loadDataJsonCountry()
+        pastUrlsCountry = autocompleteUrlsCountry
         DatepickerMode()
         addCustomView()
-        // Do any additional setup after loading the view.
+        addCustomViewCountry()
     }
     func delegateTextField(){
         addDoneButton(firstNameTxt)
@@ -196,16 +198,9 @@ class UpdateProfileViewController: BaseViewController {
                             self.uploadImage(image!, userUID: uuid)
                         }
                         
-                        
-                        
                     })
-                    
                 }
-                
-                
             }
-            
-            
             self.presentViewController(pickerController, animated: true) {}
     }
     
@@ -264,13 +259,25 @@ class UpdateProfileViewController: BaseViewController {
     
     
     @IBAction func suburbSearchAction(sender: AnyObject) {
-        searchAutocompleteEntriesWithSubstring(suburbbTxt.text!)
-        if suburbbTxt.text == "" || autocompleteUrls.count == 0 {
-            self.viewSuburb.alpha = 0
-        }else {
-            
-            self.viewSuburb.alpha = 1
-            
+        if(sender.tag == 102){
+            suburbCheck = true
+            searchAutocompleteEntriesWithSubstring(suburbbTxt.text!)
+            if suburbbTxt.text == "" || autocompleteUrls.count == 0 {
+                self.viewSuburb.alpha = 0
+            }else {
+                self.viewSuburb.alpha = 1
+            }
+        }
+        if(sender.tag == 103){
+            suburbCheck = false
+            searchAutocompleteEntriesWithSubstringCountry(countryTxt.text!)
+            if countryTxt.text == "" || autocompleteUrlsCountry.count == 0 {
+                self.viewCountry.alpha = 0
+            }else {
+                
+                self.viewCountry.alpha = 1
+                
+            }
         }
         
     }
@@ -287,9 +294,23 @@ class UpdateProfileViewController: BaseViewController {
     @IBAction func countryEndEdit(sender: AnyObject) {
         self.countryTxt.alpha = 0
     }
- 
     @IBAction func suburbEndEdit(sender: AnyObject) {
-        self.viewSuburb.alpha = 0
+        if(sender.tag == 102){
+            suburbCheck = true
+            self.viewSuburb.alpha = 0
+        }
+        if(sender.tag == 103){
+            suburbCheck = false
+            self.viewCountry.alpha = 0
+        }
+    }
+    func searchAutocompleteEntriesWithSubstringCountry(substring: String)
+    {
+        autocompleteUrlsCountry = requestTelehealthService.handleSearchData(pastUrlsCountry, substring: substring)
+        if substring == "" {
+            autocompleteUrlsCountry = pastUrlsCountry
+        }
+        tableViewCountry.reloadData()
     }
     func searchAutocompleteEntriesWithSubstring(substring: String)
     {
@@ -310,9 +331,36 @@ class UpdateProfileViewController: BaseViewController {
 
     
     
+    func addCustomViewCountry() {
+        viewCountry.backgroundColor = UIColor.blackColor()
+        viewCountry.translatesAutoresizingMaskIntoConstraints = false
+        self.viewCountry.alpha = 0
+        viewUpdateForm.addSubview(viewCountry)
+        
+        
+        tableViewCountry.delegate      =   self
+        tableViewCountry.dataSource    =   self
+        tableViewCountry.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableViewCountry.translatesAutoresizingMaskIntoConstraints = false
+        
+        viewCountry.addSubview(tableViewCountry)
+        
+        // view autolayout
+        NSLayoutConstraint(item: viewCountry, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 120).active = true
+        NSLayoutConstraint(item: viewCountry, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1.0, constant: 2).active = true
+        NSLayoutConstraint(item: viewCountry, attribute: .Top, relatedBy: .Equal, toItem: countryTxt, attribute: .BottomMargin, multiplier: 1.0, constant: 10).active = true
+        NSLayoutConstraint(item: viewCountry, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
+        
+        
+        //table view autolayout
+        NSLayoutConstraint(item: tableViewCountry, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 120).active = true
+        NSLayoutConstraint(item: tableViewCountry, attribute: .Leading, relatedBy: .Equal, toItem: viewCountry, attribute: .Leading, multiplier: 1.0, constant: 0).active = true
+        NSLayoutConstraint(item: tableViewCountry, attribute: .CenterX, relatedBy: .Equal, toItem: viewCountry, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
+        NSLayoutConstraint(item: tableViewCountry, attribute: .CenterY, relatedBy: .Equal, toItem: viewCountry, attribute: .CenterY, multiplier: 1.0, constant: 0.0).active = true
+        
+    }
+    
     func addCustomView() {
-        
-        
         viewSuburb.backgroundColor = UIColor.blackColor()
         viewSuburb.translatesAutoresizingMaskIntoConstraints = false
         self.viewSuburb.alpha = 0
@@ -465,27 +513,43 @@ class UpdateProfileViewController: BaseViewController {
 // TableView
 extension UpdateProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.autocompleteUrls.count
+        if(suburbCheck == true){
+            return self.autocompleteUrls.count
+        }else{
+            return self.autocompleteUrlsCountry.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as UITableViewCell
-        
-        cell.textLabel?.text = self.autocompleteUrls[indexPath.row]
+        if(suburbCheck == true){
+            cell.textLabel?.text = self.autocompleteUrls[indexPath.row]
+        }else{
+            cell.textLabel?.text = self.autocompleteUrlsCountry[indexPath.row]
+        }
         
         return cell
         
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        suburbbTxt.text = self.autocompleteUrls[indexPath.row]
-        requestTelehealthService.borderTextFieldValid(suburbbTxt, color: colorAthenGray,check: true)
+        if(suburbCheck == true){
+            suburbbTxt.text = self.autocompleteUrls[indexPath.row]
+            requestTelehealthService.borderTextFieldValid(suburbbTxt, color: colorAthenGray,check: true)
+        }else{
+            countryTxt.text = self.autocompleteUrlsCountry[indexPath.row]
+            requestTelehealthService.borderTextFieldValid(countryTxt, color: colorAthenGray,check: true)
+        }
         
         
         
         UIView.animateWithDuration(0.5, animations: {
-            self.viewSuburb.alpha = 0
+            if(self.suburbCheck == true){
+                self.viewSuburb.alpha = 0
+            }else{
+                self.viewCountry.alpha = 0
+            }
         })
         
     }

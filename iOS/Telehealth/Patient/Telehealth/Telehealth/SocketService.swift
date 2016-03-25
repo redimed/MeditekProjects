@@ -33,7 +33,7 @@ class SocketService {
                         self.delegate.ShowLoading()
                     }
                 }else if($0.event ==  "connect"){
-                    self.delegate.ShowLoading()
+                    //self.delegate.ShowLoading()
                 }
             }
             // Socket Events
@@ -41,15 +41,17 @@ class SocketService {
                 
                 print("socket connected")
                 complete("socket connected")
+                
                 let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]
-                sharedSocket.socket.emit("get", dictionNary)
-            
-                print(defaults.valueForKey("loading"))
-                if(defaults.valueForKey("loading") as! String == "1"){
-                    self.delegate.HideLoading()
-                }
                 
+                sharedSocket.socket.emit("get", dictionNary)
+                
+                if(defaults.valueForKey("loading") != nil){
+                    if(defaults.valueForKey("loading") as! String == "1"){
+                        self.delegate.HideLoading()
+                    }
+                }
             }
             
             sharedSocket.socket.on("receiveMessage"){data, ack in

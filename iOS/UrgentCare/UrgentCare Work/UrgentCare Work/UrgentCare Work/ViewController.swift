@@ -20,14 +20,16 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     var pastUrls :[String] =   []
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        
         loadDataJson()
+        LoadingAnimation.stopLoading()
     }
     override func viewDidAppear(animated: Bool) {
         pagingImage()
         resetTimer()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
     }
     func resetTimer() {
         timer?.invalidate()
@@ -185,10 +187,6 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             data.fileName = "UrgentCare"
             data.navigationBarString = "ABOUT REDIMED"
             
-        }else if segue.identifier == "OtherServiceSegue"{
-            let data = segue.destinationViewController as! FAQsViewController
-            data.fileName = "OtherServices"
-            data.navigationBarString = "Other Services"
         }
         
     }
@@ -197,6 +195,10 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
          UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
     }
     
+    @IBAction func acctionSetting(sender: AnyObject) {
+        let setting :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("SettingViewControllerID") as! SettingViewController
+        self.navigationController?.pushViewController(setting, animated: true)
+    }
     // load data from JSON file
     func loadDataJson(){
         if let path = NSBundle.mainBundle().pathForResource("Suburb", ofType: "json") {

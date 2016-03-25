@@ -20,6 +20,7 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var selectOptionImage: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var Code: UILabel!
     
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var mobileLabel: UILabel!
@@ -67,6 +68,8 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
         }
         doctorName.text = appointmentDetails.NameDoctor
         status.text = appointmentDetails.Status
+        Code.text = appointmentDetails.Code
+        print(appointmentDetails)
         
      
        

@@ -81,7 +81,8 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                         })
                     }
 
-                    self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
+                    let VerifyPhone = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
+                    self.navigationController?.pushViewController(VerifyPhone, animated: true)
                     
                 }else {
                     self.view.hideLoading()

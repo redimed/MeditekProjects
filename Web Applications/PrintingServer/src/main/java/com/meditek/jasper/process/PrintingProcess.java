@@ -15,6 +15,7 @@ import com.meditek.jasper.model.FormDataModel;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -58,12 +59,14 @@ public class PrintingProcess {
             stamper.setFormFlattening(true);
             for(Enumeration d = data.keys(); d.hasMoreElements();){
                 String key = (String)d.nextElement();
-                if(key.contains("base64")){
-                    PushbuttonField base64Field = form.getNewPushbuttonFromField(key);
-                    base64Field.setLayout(PushbuttonField.LAYOUT_ICON_ONLY);
-                    base64Field.setProportionalIcon(true);
-                    base64Field.setImage(Image.getInstance((byte[])data.get(key)));   
-                    form.replacePushbuttonField(key, base64Field.getField());
+               
+                if(key.contains("base64") || key.contains("image") || key.contains("signature")){
+                    PushbuttonField imgField = form.getNewPushbuttonFromField(key);
+                     System.out.println("This is imgfield: " + imgField);
+                    imgField.setLayout(PushbuttonField.LAYOUT_ICON_ONLY);
+                    imgField.setProportionalIcon(true);
+                    imgField.setImage(Image.getInstance((Image)data.get(key)));
+                    form.replacePushbuttonField(key, imgField.getField());
                 }
                 else stamper.getAcroFields().setField(key, data.get(key).toString());
             }
@@ -103,52 +106,5 @@ public class PrintingProcess {
             return null;
         }
     }
-
-    		
-//    public ByteArrayOutputStream jasperPrinting(Dictionary data){
-//        try {
-//            ReportDataWrapperModel fillData = dataParsing.DataParse(data);
-//            HashMap params = new HashMap();
-//            params.put("patientInfo", fillData.getPatient());
-//            params.put("patientKin", fillData.getPatientKin());
-//            // Fill pdf
-//            JasperPrint print = JasperFillManager.fillReport("/home/rockmanexe1994/JaspersoftWorkspace/MyReports/DemoReport.jasper",params, new JREmptyDataSource());
-//            //Export to ByteArrayOutputStream
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            JasperExportManager.exportReportToPdfStream(print, baos);
-//            return baos;
-//        } catch (JRException ex) {
-//            Logger.getLogger(PrintingProcess.class.getName()).log(Level.SEVERE, null, ex);
-//            return null;
-//        }
-//    }
-    
-//    public ByteArrayOutputStream iTextPrinting(Dictionary data, String templateUID){
-//        try {
-//            String pdfTemplateFile = "/com/meditek/itexttemplate/"+templateUID+".pdf";
-////            String pdfTemplateFile = "/com/meditek/itexttemplate/Workcover WA - FINAL.pdf";
-//            PdfReader pdfTemplate = new PdfReader(pdfTemplateFile);
-//            
-//            ByteArrayOutputStream out = new ByteArrayOutputStream();
-//            PdfStamper stamper = new PdfStamper(pdfTemplate, out);
-//            stamper.setFormFlattening(true);
-////            Fill pdf
-//            for (Enumeration d = data.keys(); d.hasMoreElements();){
-//                String key = ((String)d.nextElement());
-//                String lowerKey = key.toLowerCase();
-//                System.out.println("Key: "+lowerKey+", value: "+data.get(key));
-//                stamper.getAcroFields().setField(lowerKey, data.get(key).toString());
-//            }
-////            stamper.getAcroFields().setField("section1.question1.patientinfo.address1", "must see this");
-//            stamper.close();
-//            pdfTemplate.close();        
-////            Return the output streamoutput
-//            return out;
-//
-//        } catch (IOException | DocumentException ex) {
-//            Logger.getLogger(PrintingProcess.class.getName()).log(Level.SEVERE, null, ex);
-//            return null;
-//        }
-//    }
 
 }

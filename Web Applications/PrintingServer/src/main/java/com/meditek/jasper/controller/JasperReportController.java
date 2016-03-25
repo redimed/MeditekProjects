@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class JasperReportController {
     
     PrintingProcess pdfPrinting = new PrintingProcess();
-    String baseUrl="https://meditek.redimed.com.au:3005";
+//    String baseUrl="https://meditek.redimed.com.au:3005";
     //String baseUrl="https://testapp.redimed.com.au:3005";
     
     @CrossOrigin("*")
@@ -87,7 +87,7 @@ public class JasperReportController {
                 baos = pdfPrinting.iTextPrinting(requestData.getData(), requestData.getTemplateUID());
             }
             else{
-//                String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
+                String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
                 baos = pdfPrinting.jasperPrinting(requestData.getData(), requestData.getTemplateUID(), baseUrl);
             }
             //Return the filled pdf file.
@@ -97,30 +97,4 @@ public class JasperReportController {
             res.getOutputStream().write(baos.toByteArray());           
     }
     
-    @CrossOrigin("*")
-    @RequestMapping(value="/test", method=RequestMethod.GET)
-    public void test(HttpServletRequest req){
-        try {
-                System.out.println(req.getScheme()+"://"+req.getServerName()+":3005");
-                URL url = new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/a26d342d-0cac-4c62-84a9-3bca782127d6");
-//                ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-                
-//                System.out.println(rbc);
-//              ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//              
-//                FileOutputStream fos = new FileOutputStream("tmp");
-//                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-//                System.out.println(fos);
-                BufferedImage image = ImageIO.read(url.openStream());
-                File output = new File("/home/rockmanexe1994/tmp.png");
-                ImageIO.write(image, "png", output);
-              
-//                System.out.println(image);
-//                ImageIO.read(url);
-                
-                
-            } catch (Exception ex) {
-            Logger.getLogger(JasperReportController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

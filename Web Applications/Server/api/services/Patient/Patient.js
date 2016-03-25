@@ -849,7 +849,7 @@ module.exports = {
                                     else{
                                         info.transaction = t;
                                         info.PinNumber = userInfo.PinNumber;
-                                        defer.resolve(info);
+                                        // defer.resolve(info);
                                     }
                                 });
                             }
@@ -864,7 +864,7 @@ module.exports = {
                             else{
                                 info.transaction = t;
                                 info.PinNumber = userInfo.PinNumber;
-                                defer.resolve(info);
+                                // defer.resolve(info);
                             }
                         });
                     }
@@ -876,20 +876,20 @@ module.exports = {
                             else{
                                 info.transaction = t;
                                 info.PinNumber = userInfo.PinNumber;
-                                defer.resolve(info);
+                                // defer.resolve(info);
                             }
                         });
                     }
                     else {
                         info.transaction = t;
                         info.PinNumber = userInfo.PinNumber;
-                        defer.resolve(info);
+                        // defer.resolve(info);
                     }
 
                 }
                 else {
                     info.transaction = t;
-                    defer.resolve(info);
+                    // defer.resolve(info);
                 }
 
             },function(err) {
@@ -898,7 +898,9 @@ module.exports = {
             .then(function(success) {
                 //call send Mail or send SMSs
                 console.log("ishaveUser ",ishaveUser);
-                defer.resolve(success);
+                info.transaction = t;
+                info.PinNumber = userInfo.PinNumber;
+                defer.resolve(info);
             },function(err) {
                 t.rollback();
                 defer.reject(err);

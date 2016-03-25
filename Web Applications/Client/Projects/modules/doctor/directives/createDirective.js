@@ -10,14 +10,14 @@ angular.module('app.authentication.doctor.directive.create', [])
             },
             controller: function($scope, FileUploader, $state, toastr) {
 
-                $scope.buildImg = function(imageType, canvasimg, ctximg, e) {
+                $scope.buildImg = function(imageType, canvasimg, ctximg, e, width, height) {
                     var reader = new FileReader();
                     reader.onload = function(event) {
                         var img = new Image();
                         img.onload = function() {
-                            canvasimg.width = 350;
-                            canvasimg.height = 350;
-                            ctximg.drawImage(img, 0, 0, 350, 350);
+                            // canvasimg.width = 350;
+                            // canvasimg.height = 350;
+                            ctximg.drawImage(img, 0, 0, width, height);
                         };
                         img.src = event.target.result;
                     }
@@ -411,14 +411,14 @@ angular.module('app.authentication.doctor.directive.create', [])
                             imageAvatar.addEventListener('change', function(e) {
                                 var canvas = document.getElementById('imageAvatarCanvas');
                                 var ctx = canvas.getContext('2d');
-                                scope.buildImg(imageAvatar, canvas, ctx, e);
+                                scope.buildImg(imageAvatar, canvas, ctx, e,250,250);
                             }, false);
                         } else if (value == "Signature") {
                             var imageSignature = document.getElementById('imageSignature');
                             imageSignature.addEventListener('change', function(e) {
                                 var canvas1 = document.getElementById('imageSignatureCanvas');
                                 var ctx1 = canvas1.getContext('2d');
-                                scope.buildImg(imageSignature, canvas1, ctx1, e);
+                                scope.buildImg(imageSignature, canvas1, ctx1, e,550,280);
                             }, false);
                         }
                     };

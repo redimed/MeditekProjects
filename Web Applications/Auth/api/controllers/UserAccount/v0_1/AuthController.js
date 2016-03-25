@@ -103,9 +103,11 @@ module.exports = {
                     console.log("chiennnnnnnnnnnnnnnnnnnnnnnnnn", o.const.authTokenExpired[req.headers.systemtype]);
                     var token = jwt.sign(
                         payload,
-                        rt.SecretKey, { expiresIn: o.const.authTokenExpired[req.headers.systemtype] }
+                        rt.SecretKey, {
+                            expiresIn: o.const.authTokenExpired[req.headers.systemtype]
+                        }
                     );
-                    console.log("=====================REQ.LOGIN========================",token);
+                    console.log("=====================REQ.LOGIN========================", token);
                     req.logIn(sessionUser, function(err) {
                         if (err) {
                             res.unauthor(ErrorWrap(err));

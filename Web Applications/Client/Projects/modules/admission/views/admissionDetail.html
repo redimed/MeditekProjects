@@ -50,7 +50,7 @@
                                             <input type="radio" name="medical_eligible" value="Y" ng-model="admissionDetail.MedicareEligible"> Yes
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="medical_eligible" value="N" ng-model="admissionDetail.MedicareEligible" > No
+                                            <input type="radio" name="medical_eligible" value="N" ng-model="admissionDetail.MedicareEligible"> No
                                         </label>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                             <div class="col-lg-4 col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Medicare Number</label>
-                                    <input type="text" class="form-control" ng-model="admissionDetail.MedicareNumber"/>
+                                    <input type="text" class="form-control" ng-model="admissionDetail.MedicareNumber" />
                                 </div>
                             </div>
                         </div>
@@ -70,10 +70,9 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-12">
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label">Expiry Date</label>
-                                    <input type="text" class="form-control date-picker" 
-                                        data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.ExpiryDate" readonly>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.ExpiryDate" readonly>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-12">
@@ -221,7 +220,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Date to cease:</label>
-                                                <input type="text" class="form-control date-picker" ng-model="admissionDetail.anti_coagulant_date_to_cease">
+                                                <input type="text" name="anti_coagulant_date_to_cease" class="form-control date-picker" ng-model="admissionDetail.anti_coagulant_date_to_cease">
                                             </div>
                                         </td>
                                         <td>
@@ -241,7 +240,7 @@
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.anti_inflammatory_comment">
+                                            <input type="text" class="form-control" name="anti_inflammatory_comment" ng-model="admissionDetail.anti_inflammatory_comment">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.anti_inflammatory_note">
@@ -862,7 +861,6 @@
                                     </label>
                                 </div>
                             </div>
-
                             <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Name of Doctor</label>
@@ -874,15 +872,13 @@
                             <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Date</label>
-                                    <input type="text" class="form-control date-picker" 
-                                        data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.DoctorDateChoose" readonly>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.DoctorDateChoose" readonly>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Time</label>
-                                    <input type="text" class="form-control timepicker timepicker-no-seconds" 
-                                        data-default-time="" placeholder="hh:mm" ng-model="admissionDetail.DoctorTimeChoose" readonly>
+                                    <input type="text" class="form-control timepicker timepicker-no-seconds" data-default-time="" placeholder="hh:mm" ng-model="admissionDetail.DoctorTimeChoose" readonly>
                                 </div>
                             </div>
                         </div>

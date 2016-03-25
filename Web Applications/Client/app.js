@@ -14,11 +14,11 @@ var ssl_options = {
 
 var compress = require('compression');
 app.use(compress({
-    threshold : 0, // or whatever you want the lower threshold to be
-     filter    : function(req, res) {
+    threshold: 0, // or whatever you want the lower threshold to be
+    filter: function(req, res) {
         var ct = res.get('content-type');
         return true;
-     }
+    }
 }));
 
 // all environments
@@ -56,6 +56,5 @@ https.createServer(ssl_options, app).listen(app.get('port'), function() {
     console.log('Express server listening on port https ' + app.get('port'));
 });
 // http.createServer(app).listen(app.get('port'), function() {
-            // 	console.log('Express server listening on port http ' + app.get('port'));
-            // });
-
+//     console.log('Express server listening on port http ' + app.get('port'));
+// });

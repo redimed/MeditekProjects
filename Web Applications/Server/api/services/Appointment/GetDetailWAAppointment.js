@@ -18,21 +18,27 @@ module.exports = function(appointmentUID, userInfo) {
         UserAccount: []
     };
     var role = HelperService.GetRole(userInfo.roles);
-    if (role.isInternalPractitioner) {
+    if (role.isInternalPractitioner &&
+        !role.isAdmin &&
+        !role.isAssistant) {
         var filterRoleTemp = {
             '$and': {
                 UserAccountID: userInfo.ID
             }
         };
         filter.InternalPractitioner.push(filterRoleTemp);
-    } else if (role.isExternalPractitioner) {
+    } else if (role.isExternalPractitioner &&
+        !role.isAdmin &&
+        !role.isAssistant) {
         var filterRoleTemp = {
             '$and': {
                 CreatedBy: userInfo.ID
             }
         };
         filter.Appointment.push(filterRoleTemp);
-    } else if (role.isPatient) {
+    } else if (role.isPatient &&
+        !role.isAdmin &&
+        !role.isAssistant) {
         filter.UserAccount.push({
             '$and': {
                 UID: userInfo.UID

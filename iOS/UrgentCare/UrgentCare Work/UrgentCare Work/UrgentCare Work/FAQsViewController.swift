@@ -21,5 +21,9 @@ class FAQsViewController: UIViewController {
         let myRequest = NSURLRequest(URL: localfilePath!);
         webView.loadRequest(myRequest);
     }
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+    }
+        
 
 }

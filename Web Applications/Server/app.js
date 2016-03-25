@@ -55,17 +55,5 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             };
         }
     }
-    //meditek custom cluster
-    var cluster = require('cluster');
-    var os = require('os');
-    var numCPUs = os.cpus().length;
-    if (cluster.isMaster) {
-        for (var i = 0; i < numCPUs; ++i) {
-            cluster.fork();
-        }
-    } else {
-        // Start server
-        sails.lift(rc('sails'));
-        sails.log.info("Sails forked");
-    }
+    sails.lift(rc('sails'));
 })();

@@ -1,20 +1,14 @@
 //
-//  VerifyViewController.swift
+//  LoginViewController.swift
 //  Telehealth
 //
-//  Created by Giap Vo Duc on 9/21/15.
-//  Copyright © 2015 Giap Vo Duc. All rights reserved.
+//  Created by Meditek on 3/24/16.
+//  Copyright © 2016 Giap Vo Duc. All rights reserved.
 //
 
 import UIKit
 
-enum MyError: ErrorType {
-    case UserError
-    case NetworkError
-    case DiscoverydError
-}
-
-class VerifyViewController: UIViewController,UITextFieldDelegate {
+class LoginViewController : UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var textFieldVerifyCode: DesignableTextField!
     //Color red
@@ -60,7 +54,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
             config.borderTextFieldValid(textFieldVerifyCode, color: colorCustom)
             
         } else {
-           self.view.showLoading()
+            self.view.showLoading()
             verifyService.verifyPhoneNumber(textFieldVerifyCode.text!, phoneNumber: phoneNumber, compailer: {
                 response in
                 if response["message"] == "success"{
@@ -76,22 +70,20 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                                 defaults.removeObjectForKey("UIDLogoutFail")
                                 defaults.synchronize()
                             }else{
-                                print("logout fail when internet connect") 
+                                print("logout fail when internet connect")
                             }
                         })
                     }
-
                     let VerifyPhone = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
                     self.navigationController?.pushViewController(VerifyPhone, animated: true)
                     
                 }else {
                     self.view.hideLoading()
-                    print(response)
                     self.textFieldVerifyCode.text = ""
                     if(response["internetConnection"].string == ErrorMessage.internetConnection){
                         self.alertView.alertMessage("Error", message: ErrorMessage.internetConnection)
                     }else if(response["ErrorType"] == "Activation.codeInvalid"){
-                        self.alertView.alertMessage("Error", message: "Verify Code Invalid")
+                        self.alertView.alertMessage("Error", message: "Pin number Invalid")
                     }
                 }
             })

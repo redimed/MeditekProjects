@@ -10,6 +10,7 @@
 		3FD1CA861CA23AD4007D1F67 /* Country.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FD1CA851CA23AD4007D1F67 /* Country.json */; };
 		3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */; };
 		3FF87B4C1CA390E60068866C /* Country.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FF87B4B1CA390E60068866C /* Country.json */; };
+		3FF87B4E1CA3C50E0068866C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */; };
 		3FFBDF411C9BBB1F006F041B /* DTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */; };
 		3FFBDF441C9BBBDE006F041B /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF431C9BBBDE006F041B /* Define.swift */; };
 		3FFBDF461C9BBC95006F041B /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */; };
@@ -93,7 +94,7 @@
 		AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */; };
 		AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */; };
 		AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D61BB0413600471592 /* AppDelegate.swift */; };
-		AFEE34D91BB0413600471592 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D81BB0413600471592 /* ViewController.swift */; };
+		AFEE34D91BB0413600471592 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D81BB0413600471592 /* RegisterViewController.swift */; };
 		AFEE34DC1BB0413600471592 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFEE34DA1BB0413600471592 /* Main.storyboard */; };
 		AFEE34DF1BB0413600471592 /* Telehealth.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34DD1BB0413600471592 /* Telehealth.xcdatamodeld */; };
 		AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFEE34E01BB0413600471592 /* Assets.xcassets */; };
@@ -163,6 +164,7 @@
 		3FD1CA851CA23AD4007D1F67 /* Country.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Country.json; sourceTree = "<group>"; };
 		3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		3FF87B4B1CA390E60068866C /* Country.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Country.json; sourceTree = "<group>"; };
+		3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAlertView.swift; sourceTree = "<group>"; };
 		3FFBDF431C9BBBDE006F041B /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -249,7 +251,7 @@
 		AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationLoginViewController.swift; sourceTree = "<group>"; };
 		AFEE34D31BB0413600471592 /* Telehealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telehealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFEE34D61BB0413600471592 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AFEE34D81BB0413600471592 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AFEE34D81BB0413600471592 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		AFEE34DB1BB0413600471592 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AFEE34DE1BB0413600471592 /* Telehealth.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Telehealth.xcdatamodel; sourceTree = "<group>"; };
 		AFEE34E01BB0413600471592 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -665,12 +667,13 @@
 			isa = PBXGroup;
 			children = (
 				3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */,
-				AFEE34D81BB0413600471592 /* ViewController.swift */,
+				AFEE34D81BB0413600471592 /* RegisterViewController.swift */,
+				AFEE35431BB0577A00471592 /* VerifyViewController.swift */,
+				3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */,
+				AFF21D2F1BB1068A006A190E /* HomeViewController.swift */,
 				AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */,
 				AFF10DB11BB241DA005E9838 /* InformationViewController.swift */,
 				AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */,
-				AFEE35431BB0577A00471592 /* VerifyViewController.swift */,
-				AFF21D2F1BB1068A006A190E /* HomeViewController.swift */,
 				AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */,
 				AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */,
 				AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */,
@@ -956,6 +959,7 @@
 				AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */,
 				AF4498AA1BDF11CE005A905E /* PatientService.swift in Sources */,
 				AF00A6221C86EF6100104E0B /* SignatureViewController.swift in Sources */,
+				3FF87B4E1CA3C50E0068866C /* LoginViewController.swift in Sources */,
 				AFE6422D1C46467F001F0524 /* TokenAPI.swift in Sources */,
 				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
 				AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */,
@@ -966,7 +970,7 @@
 				AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */,
 				AF73C8531C7BF9030015A625 /* DKAssetGroupListVC.swift in Sources */,
 				AFEE352A1BB0415D00471592 /* DesignableButton.swift in Sources */,
-				AFEE34D91BB0413600471592 /* ViewController.swift in Sources */,
+				AFEE34D91BB0413600471592 /* RegisterViewController.swift in Sources */,
 				AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */,
 				AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */,
 				AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */,

@@ -35,7 +35,8 @@ module.exports = React.createClass({
              this.refs.formName.setValue(object.name);
              this.forceUpdate();
         }
-        this.refs.formSize.setValue(object.size)
+        this.refs.formSize.setValue(object.size);
+        this.refs.formRef.setValue(object.ref);
         this.code = object.code;
     },
     _onSave: function(){
@@ -143,6 +144,10 @@ module.exports = React.createClass({
                             <div className="form-group" style={{display: display_height}}>
                                 <label>Height</label>
                                 <CommonInputText placeholder="Type size" ref="formHeight"/>
+                            </div>
+                            <div className="form-group">
+                                <label>Ref</label>
+                                <CommonInputText placeholder="Ref" ref="formRef"/>
                             </div>
                             <div className="form-group" style={{float:'right'}}>
                                 <button type="button" className="btn btn-default" onClick={this.props.onCloseModal}>Close</button>

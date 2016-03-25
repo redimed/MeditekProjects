@@ -13,7 +13,8 @@ module.exports = React.createClass({
                 {code: 'eform_input_check_checkbox', name: 'Checkbox'},
                 {code: 'eform_input_check_radio', name: 'Radio'},
                 {code: 'table', name: 'Table'},
-                {code: 'eform_input_signature', name: 'E-Signature'}
+                {code: 'eform_input_signature', name: 'E-Signature'},
+                {code: 'eform_input_image_doctor', name: 'Image Doctor'}
             ])
         }
     },

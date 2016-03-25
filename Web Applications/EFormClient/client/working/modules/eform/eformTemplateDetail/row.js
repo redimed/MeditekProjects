@@ -7,6 +7,7 @@ var CommonRadio = require('common/radio');
 var CommonLabel = require('common/label');
 var CommonSignature = require('common/signature');
 var CommonTable = require('modules/eform/eformTemplateDetail/tableField');
+var CommonSignatureDoctor = require('common/signatureDoctor');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
 var ComponentListField = require('modules/eform/eformTemplateDetail/listField');
 var ComponentFieldDetail = require('modules/eform/eformTemplateDetail/fieldDetail');
@@ -466,7 +467,7 @@ module.exports = React.createClass({
                                                                 onDeleteColumn={this._onDeleteColumn}
                                                                 onUpdateColumn={this._onUpdateColumn}
                                                                 onRightClickItem={this._onRightClickTableItem}/>
-                                                    else if(type === 'eform_input_signature'){
+                                                    else if(type === 'eform_input_signature')
                                                         return <CommonSignature key={index} type={type}
                                                             groupId={groupId}
                                                             permission={this.props.permission}
@@ -478,7 +479,19 @@ module.exports = React.createClass({
                                                             code={index}
                                                             height={field.get('height')}
                                                             onRightClickItem={this._onRightClickItem}/>
-                                                    }
+                                                        else if(type === 'eform_input_image_doctor')
+                                                            return <CommonSignatureDoctor key={index} type={type}
+                                                                groupId={groupId}
+                                                                permission={this.props.permission}
+                                                                name={field.get('name')}
+                                                                size={field.get('size')}
+                                                                context={displayContextMenu}
+                                                                ref={field.get('ref')}
+                                                                refTemp={field.get('ref')}
+                                                                code={index}
+                                                                type={type}
+                                                                height={field.get('height')}
+                                                                onRightClickItem={this._onRightClickItem}/>
                                                 }, this)
                                             }
                                         </div>
@@ -493,7 +506,7 @@ module.exports = React.createClass({
             var html = (
                 <div className="row">
                     {
-                            this.props.fields.map(function(field,index){                                
+                            this.props.fields.map(function(field,index){
                                 var type = field.get('type');
                                 var groupId = 'fieldgroup_'+this.props.codeSection+'_'+this.props.code+'_'+index;
                                 if(type === 'eform_input_text')
@@ -593,7 +606,7 @@ module.exports = React.createClass({
                                             onDeleteColumn={this._onDeleteColumn}
                                             onUpdateColumn={this._onUpdateColumn}
                                             onRightClickItem={this._onRightClickTableItem}/>
-                                else if(type === 'eform_input_signature'){
+                                else if(type === 'eform_input_signature')
                                     return <CommonSignature key={index} type={type}
                                         groupId={groupId}
                                         permission={this.props.permission}
@@ -606,7 +619,19 @@ module.exports = React.createClass({
                                         type={type}
                                         height={field.get('height')}
                                         onRightClickItem={this._onRightClickItem}/>
-                                }
+                                else if(type === 'eform_input_image_doctor')
+                                    return <CommonSignatureDoctor key={index} type={type}
+                                        groupId={groupId}
+                                        permission={this.props.permission}
+                                        name={field.get('name')}
+                                        size={field.get('size')}
+                                        context={displayContextMenu}
+                                        ref={field.get('ref')}
+                                        refTemp={field.get('ref')}
+                                        code={index}
+                                        type={type}
+                                        height={field.get('height')}
+                                        onRightClickItem={this._onRightClickItem}/>
                             }, this)
                         }
                 </div>

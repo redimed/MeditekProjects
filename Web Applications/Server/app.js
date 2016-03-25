@@ -25,36 +25,47 @@ process.chdir(__dirname);
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // Ensure a "sails" can be located:
 (function() {
-  var sails;
-  try {
-    sails = require('sails');
-  } catch (e) {
-    console.error('To run an app using `node app.js`, you usually need to have a version of `sails` installed in the same directory as your app.');
-    console.error('To do that, run `npm install sails`');
-    console.error('');
-    console.error('Alternatively, if you have sails installed globally (i.e. you did `npm install -g sails`), you can use `sails lift`.');
-    console.error('When you run `sails lift`, your app will still use a local `./node_modules/sails` dependency if it exists,');
-    console.error('but if it doesn\'t, the app will run with the global sails instead!');
-    return;
-  }
-
-  // Try to get `rc` dependency
-  var rc;
-  try {
-    rc = require('rc');
-  } catch (e0) {
+    var sails;
     try {
-      rc = require('sails/node_modules/rc');
-    } catch (e1) {
-      console.error('Could not find dependency: `rc`.');
-      console.error('Your `.sailsrc` file(s) will be ignored.');
-      console.error('To resolve this, run:');
-      console.error('npm install rc --save');
-      rc = function () { return {}; };
+        sails = require('sails');
+    } catch (e) {
+        console.error('To run an app using `node app.js`, you usually need to have a version of `sails` installed in the same directory as your app.');
+        console.error('To do that, run `npm install sails`');
+        console.error('');
+        console.error('Alternatively, if you have sails installed globally (i.e. you did `npm install -g sails`), you can use `sails lift`.');
+        console.error('When you run `sails lift`, your app will still use a local `./node_modules/sails` dependency if it exists,');
+        console.error('but if it doesn\'t, the app will run with the global sails instead!');
+        return;
     }
-  }
 
-
-  // Start server
-  sails.lift(rc('sails'));
+    // Try to get `rc` dependency
+    var rc;
+    try {
+        rc = require('rc');
+    } catch (e0) {
+        try {
+            rc = require('sails/node_modules/rc');
+        } catch (e1) {
+            console.error('Could not find dependency: `rc`.');
+            console.error('Your `.sailsrc` file(s) will be ignored.');
+            console.error('To resolve this, run:');
+            console.error('npm install rc --save');
+            rc = function() {
+                return {};
+            };
+        }
+    }
+    //meditek custom cluster
+    var cluster = require('cluster');
+    var os = require('os');
+    var numCPUs = os.cpus().length;
+    if (cluster.isMaster) {
+        for (var i = 0; i < numCPUs; ++i) {
+            cluster.fork();
+        }
+    } else {
+        // Start server
+        sails.lift(rc('sails'));
+        sails.log.info("Sails forked");
+    }
 })();

@@ -41,11 +41,10 @@
                 <form name="form" novalidate role="form" ng-submit="submit()">
                     <div class="form-body">
                         <div class="row">
-                            <div class="col-lg-4 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label">&nbsp;</label>
+                                    <label class="control-label">Medical Eligible</label>
                                     <div class="radio-list">
-                                        <label class="radio-inline">Medical Eligible</label>
                                         <label class="radio-inline">
                                             <input type="radio" name="medical_eligible" value="Y" ng-model="admissionDetail.MedicareEligible"> Yes
                                         </label>
@@ -55,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Medicare Number</label>
                                     <input type="text" class="form-control" ng-model="admissionDetail.MedicareNumber" />
@@ -63,19 +62,24 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Medicare Reference Number</label>
                                     <input type="text" class="form-control" ng-model="admissionDetail.MedicareReferenceNumber" />
                                 </div>
                             </div>
+<<<<<<< 3adc35e41a6ed703ff4be61e72629b97eea0e4c4
                             <div class="col-lg-4 col-md-12">
                                 <div class="form-group">
+=======
+                            <div class="col-lg-3 col-md-12">
+                                 <div class="form-group">
+>>>>>>> edit layout Medicare Eligible, Medication; Medications,Allergies, Lifetime, All question have  Yes/No
                                     <label class="control-label">Expiry Date</label>
                                     <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.ExpiryDate" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-12">
+                            <div class="col-lg-3 col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">DVA Number</label>
                                     <input type="text" class="form-control" ng-model="admissionDetail.DVANumber" />
@@ -83,7 +87,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <div class="radio-list">
@@ -96,13 +100,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <label>Claim Number</label>
                                     <input type="text" class="form-control" ng-model="admissionDetail.claim_number" />
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <label>INS</label>
                                     <input type="text" class="form-control" ng-model="admissionDetail.ins" />
@@ -203,24 +207,28 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="anti_coagulant" value="N" ng-model="admissionDetail.anti_coagulant">
+                                                <input type="radio" name="anti_coagulant" value="N" ng-model="admissionDetail.anti_coagulant" ng-click="ChangeRadio(['anti_coagulant_still_to_take_1','anti_coagulant_still_to_take','anti_coagulant_date_to_cease'])">
                                             </label>
                                         </td>
                                         <td class="form-inline">
                                             <div class="form-group margin-bottom-10">
+                                                <label class="control-label">Still to take?</label>
                                                 <div class="radio-list">
-                                                    <label class="radio-inline">Still to take?</label>
                                                     <label class="radio-inline">
-                                                        <input type="radio" name="Still_to_take" value="Y" ng-model="admissionDetail.anti_coagulant_still_to_take"> Yes
+                                                        <input type="radio" name="Still_to_take" value="Y" ng-model="admissionDetail.anti_coagulant_still_to_take" name="anti_coagulant_still_to_take_1" ng-disabled="admissionDetail.anti_coagulant != 'Y'"> Yes
                                                     </label>
                                                     <label class="radio-inline">
-                                                        <input type="radio" name="Still_to_take" value="N" ng-model="admissionDetail.anti_coagulant_still_to_take"> No
+                                                        <input type="radio" name="Still_to_take" value="N" ng-model="admissionDetail.anti_coagulant_still_to_take" name="anti_coagulant_still_to_take" ng-disabled="admissionDetail.anti_coagulant != 'Y'"> No
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Date to cease:</label>
+<<<<<<< 3adc35e41a6ed703ff4be61e72629b97eea0e4c4
                                                 <input type="text" name="anti_coagulant_date_to_cease" class="form-control date-picker" ng-model="admissionDetail.anti_coagulant_date_to_cease">
+=======
+                                                <input type="text" class="form-control date-picker" ng-model="admissionDetail.anti_coagulant_date_to_cease" name="anti_coagulant_date_to_cease" ng-disabled="admissionDetail.anti_coagulant != 'Y'">
+>>>>>>> edit layout Medicare Eligible, Medication; Medications,Allergies, Lifetime, All question have  Yes/No
                                             </div>
                                         </td>
                                         <td>
@@ -236,11 +244,16 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="anti_inflammatory" value="N" ng-model="admissionDetail.anti_inflammatory">
+                                                <input type="radio" name="anti_inflammatory" value="N" ng-model="admissionDetail.anti_inflammatory" ng-click="ChangeRadio(['anti_inflammatory_comment'])">
                                             </label>
                                         </td>
                                         <td>
+<<<<<<< 3adc35e41a6ed703ff4be61e72629b97eea0e4c4
                                             <input type="text" class="form-control" name="anti_inflammatory_comment" ng-model="admissionDetail.anti_inflammatory_comment">
+=======
+                                            <input type="text" class="form-control" ng-model="admissionDetail.anti_inflammatory_comment" name="anti_inflammatory_comment"
+                                            ng-disabled="admissionDetail.anti_inflammatory != 'Y'">
+>>>>>>> edit layout Medicare Eligible, Medication; Medications,Allergies, Lifetime, All question have  Yes/No
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.anti_inflammatory_note">
@@ -255,11 +268,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="herbal_supplements" value="N" ng-model="admissionDetail.herbal_supplements">
+                                                <input type="radio" name="herbal_supplements" value="N" ng-model="admissionDetail.herbal_supplements" ng-click="ChangeRadio(['herbal_supplements_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.herbal_supplements_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.herbal_supplements_comment" name="herbal_supplements_comment" 
+                                            ng-disabled="admissionDetail.herbal_supplements != 'Y'"> 
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.herbal_supplements_note">
@@ -321,13 +335,14 @@
                                     <input type="radio" name="adverse_reactions" value="Y" ng-model="admissionDetail.allergies_alerts_hyperthermia"> Yes
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="adverse_reactions" value="N" ng-model="admissionDetail.allergies_alerts_hyperthermia"> No
+                                    <input type="radio" name="adverse_reactions" value="N" ng-model="admissionDetail.allergies_alerts_hyperthermia" ng-click="ChangeRadio(['allergies_alerts_details_reaction'])"> No
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Details/Reaction</label>
-                            <input type="text" class="form-control" ng-model="admissionDetail.allergies_alerts_details_reaction">
+                            <input type="text" class="form-control" ng-model="admissionDetail.allergies_alerts_details_reaction" name="allergies_alerts_details_reaction"
+                            ng-disabled="admissionDetail.allergies_alerts_hyperthermia != 'Y'">
                         </div>
                         <div class="form-group">
                             <div class="radio-list">
@@ -367,18 +382,18 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="dedication1" value="N" ng-model="admissionDetail.lifestyle_smoked">
+                                                <input type="radio" name="dedication1" value="N" ng-model="admissionDetail.lifestyle_smoked" ng-click="ChangeRadio(['lifestyle_smoked_daily_amount','lifestyle_smoked_ceased'])">
                                             </label>
                                         </td>
                                         <td class="form-inline">
                                             <label>Daily Amount?</label>
-                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_smoked_daily_amount">
+                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_smoked_daily_amount" name="lifestyle_smoked_daily_amount" ng-disabled="admissionDetail.lifestyle_smoked != 'Y'">
                                             <label style="margin-left:15px;">Ceased?
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="Ceased" value="Y" ng-model="admissionDetail.lifestyle_smoked_ceased"> Yes
+                                                    <input type="radio" name="Ceased" value="Y" ng-model="admissionDetail.lifestyle_smoked_ceased" name="lifestyle_smoked_ceased" ng-disabled="admissionDetail.lifestyle_smoked != 'Y'"> Yes
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="Ceased" value="N" ng-model="admissionDetail.lifestyle_smoked_ceased"> No
+                                                    <input type="radio" name="Ceased" value="N" ng-model="admissionDetail.lifestyle_smoked_ceased" name="lifestyle_smoked_ceased" ng-disabled="admissionDetail.lifestyle_smoked != 'Y'"> No
                                                 </label>
                                         </td>
                                         <td>
@@ -394,12 +409,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="dedication2" value="N" ng-model="admissionDetail.lifestyle_alcohol">
+                                                <input type="radio" name="dedication2" value="N" ng-model="admissionDetail.lifestyle_alcohol" ng-click="ChangeRadio(['lifestyle_alcohol_daily_amount'])">
                                             </label>
                                         </td>
                                         <td class="form-inline">
                                             <label>Daily Amount?</label>
-                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_alcohol_daily_amount">
+                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_alcohol_daily_amount" name="lifestyle_alcohol_daily_amount" ng-disabled="admissionDetail.lifestyle_alcohol != 'Y'">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.lifestyle_alcohol_nurse_notes">
@@ -414,14 +429,15 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="dedication3" value="N" ng-model="admissionDetail.lifestyle_drugs">
+                                                <input type="radio" name="dedication3" value="N" ng-model="admissionDetail.lifestyle_drugs" 
+                                                ng-click="ChangeRadio(['lifestyle_drugs_daily_amount','lifestyle_drugs_type'])">
                                             </label>
                                         </td>
                                         <td class="form-inline">
-                                            <label>Daily Amount?</label>
-                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_drugs_daily_amount">
-                                            <label style="margin-left:15px;">Type ?</label>
-                                            <input type="text" class="form-control" size="10" ng-model="admissionDetail.lifestyle_drugs_type">
+                                            <label class="control-lable">Daily Amount?</label>
+                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_drugs_daily_amount" name="lifestyle_drugs_daily_amount" ng-disabled="admissionDetail.lifestyle_drugs != 'Y'">
+                                            <label class="control-lable" style="margin-left:15px;">Type ?</label>
+                                            <input type="text" class="form-control" size="10" ng-model="admissionDetail.lifestyle_drugs_type" name="lifestyle_drugs_type" ng-disabled="admissionDetail.lifestyle_drugs != 'Y'">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.lifestyle_drugs_nurse_notes">
@@ -447,16 +463,19 @@
                                         <td>Elevated cholesterol, triglycerides</td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular1" value="Y" ng-model="admissionDetail.cardiovascular_triglycerides">
+                                                <input type="radio" name="Cardiovascular1" value="Y" ng-model="admissionDetail.cardiovascular_triglycerides"
                                             </label>
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular1" value="N" ng-model="admissionDetail.cardiovascular_triglycerides">
+                                                <input type="radio" name="Cardiovascular1" value="N" ng-model="admissionDetail.cardiovascular_triglycerides" ng-click="ChangeRadio(['cardiovascular_triglycerides_comment'])"
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_triglycerides_comment">
+                                            <input type="text" class="form-control" 
+                                            ng-model="admissionDetail.cardiovascular_triglycerides_comment"
+                                            name="cardiovascular_triglycerides_comment" ng-disabled="admissionDetail.cardiovascular_triglycerides !='Y'">
+
                                         </td>
                                     </tr>
                                     <tr>
@@ -468,11 +487,11 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular2" value="N" ng-model="admissionDetail.cardiovascular_hypertension">
+                                                <input type="radio" name="Cardiovascular2" value="N" ng-model="admissionDetail.cardiovascular_hypertension" ng-click="ChangeRadio(['cardiovascular_hypertension_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_hypertension_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_hypertension_comment" name="cardiovascular_hypertension_comment" ng-disabled="admissionDetail.cardiovascular_hypertension !='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -484,11 +503,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular3" value="N" ng-model="admissionDetail.cardiovascular_angina">
+                                                <input type="radio" name="Cardiovascular3" value="N" ng-model="admissionDetail.cardiovascular_angina" ng-click="ChangeRadio(['cardiovascular_angina_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_angina_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_angina_comment" name="cardiovascular_angina_comment"
+                                            ng-disabled="admissionDetail.cardiovascular_angina!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -500,11 +520,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular4" value="N" ng-model="admissionDetail.cardiovascular_fibrillation">
+                                                <input type="radio" name="Cardiovascular4" value="N" ng-model="admissionDetail.cardiovascular_fibrillation" ng-click="ChangeRadio(['cardiovascular_fibrillation_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_fibrillation_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_fibrillation_comment" name="cardiovascular_fibrillation_comment"
+                                            ng-disabled="admissionDetail.cardiovascular_fibrillation!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -516,11 +537,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular5" value="N" ng-model="admissionDetail.cardiovascular_condition">
+                                                <input type="radio" name="Cardiovascular5" value="N" ng-model="admissionDetail.cardiovascular_condition" ng-click="ChangeRadio(['cardiovascular_condition_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_condition_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_condition_comment" name="cardiovascular_condition_comment"
+                                            ng-disabled="admissionDetail.cardiovascular_condition!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -532,11 +554,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular6" value="N" ng-model="admissionDetail.cardiovascular_disease">
+                                                <input type="radio" name="Cardiovascular6" value="N" ng-model="admissionDetail.cardiovascular_disease" ng-click="ChangeRadio(['cardiovascular_disease_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_disease_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_disease_comment" name="cardiovascular_disease_comment"
+                                            ng-disabled="admissionDetail.cardiovascular_disease!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -548,11 +571,11 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Cardiovascular7" value="N" ng-model="admissionDetail.cardiovascular_cardiac_disease">
+                                                <input type="radio" name="Cardiovascular7" value="N" ng-model="admissionDetail.cardiovascular_cardiac_disease" ng-click="ChangeRadio(['cardiovascular_cardiac_disease_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_cardiac_disease_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.cardiovascular_cardiac_disease_comment" name="cardiovascular_cardiac_disease_comment" ng-disabled="admissionDetail.cardiovascular_cardiac_disease!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -567,11 +590,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Endocrinology1" value="N" ng-model="admissionDetail.endocrinology_diabetes">
+                                                <input type="radio" name="Endocrinology1" value="N" ng-model="admissionDetail.endocrinology_diabetes" ng-click="ChangeRadio(['endocrinology_diabetes_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.endocrinology_diabetes_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.endocrinology_diabetes_comment" name="endocrinology_diabetes_comment"
+                                            ng-disabled="admissionDetail.endocrinology_diabetes!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -583,11 +607,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Endocrinology2" value="N" ng-model="admissionDetail.endocrinology_blood_glucose">
+                                                <input type="radio" name="Endocrinology2" value="N" ng-model="admissionDetail.endocrinology_blood_glucose" ng-click="ChangeRadio(['endocrinology_blood_glucose_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.endocrinology_blood_glucose_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.endocrinology_blood_glucose_comment" name="endocrinology_blood_glucose_comment"
+                                            ng-disabled="admissionDetail.endocrinology_blood_glucose!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -599,11 +624,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Endocrinology3" value="N" ng-model="admissionDetail.endocrinology_goitre">
+                                                <input type="radio" name="Endocrinology3" value="N" ng-model="admissionDetail.endocrinology_goitre" ng-click="ChangeRadio(['endocrinology_goitre_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.endocrinology_goitre_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.endocrinology_goitre_comment" name="endocrinology_goitre_comment"
+                                            ng-disabled="admissionDetail.endocrinology_goitre!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -618,11 +644,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Gastrointestinal1" value="N" ng-model="admissionDetail.gastrointestinal_reflux">
+                                                <input type="radio" name="Gastrointestinal1" value="N" ng-model="admissionDetail.gastrointestinal_reflux" ng-click="ChangeRadio(['gastrointestinal_reflux_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.gastrointestinal_reflux_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.gastrointestinal_reflux_comment" name="gastrointestinal_reflux_comment"
+                                            ng-disabled="admissionDetail.gastrointestinal_reflux!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -634,11 +661,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Gastrointestinal2" value="N" ng-model="admissionDetail.gastrointestinal_jaundice">
+                                                <input type="radio" name="Gastrointestinal2" value="N" ng-model="admissionDetail.gastrointestinal_jaundice" ng-click="ChangeRadio(['gastrointestinal_jaundice_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.gastrointestinal_jaundice_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.gastrointestinal_jaundice_comment" name="gastrointestinal_jaundice_comment"
+                                            ng-disabled="admissionDetail.gastrointestinal_jaundice!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -650,11 +678,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Gastrointestinal3" value="N" ng-model="admissionDetail.gastrointestinal_ibs">
+                                                <input type="radio" name="Gastrointestinal3" value="N" ng-model="admissionDetail.gastrointestinal_ibs" ng-click="ChangeRadio(['gastrointestinal_ibs_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.gastrointestinal_ibs_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.gastrointestinal_ibs_comment" name="gastrointestinal_ibs_comment"
+                                            ng-disabled="admissionDetail.gastrointestinal_ibs!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -669,11 +698,11 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Bleeding_Disorders1" value="N" ng-model="admissionDetail.bleeding_disorders_lungs">
+                                                <input type="radio" name="Bleeding_Disorders1" value="N" ng-model="admissionDetail.bleeding_disorders_lungs" ng-click="ChangeRadio(['bleeding_disorders_lungs_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.bleeding_disorders_lungs_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.bleeding_disorders_lungs_comment" name="bleeding_disorders_lungs_comment" ng-disabled="admissionDetail.bleeding_disorders_lungs!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -685,11 +714,11 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Bleeding_Disorders2" value="N" ng-model="admissionDetail.bleeding_disorders_anaemia">
+                                                <input type="radio" name="Bleeding_Disorders2" value="N" ng-model="admissionDetail.bleeding_disorders_anaemia" ng-click="ChangeRadio(['bleeding_disorders_anaemia_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.bleeding_disorders_anaemia_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.bleeding_disorders_anaemia_comment" name="bleeding_disorders_anaemia_comment" ng-disabled="admissionDetail.bleeding_disorders_anaemia!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -701,11 +730,11 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Bleeding_Disorders3" value="N" ng-model="admissionDetail.bleeding_disorders_problems">
+                                                <input type="radio" name="Bleeding_Disorders3" value="N" ng-model="admissionDetail.bleeding_disorders_problems" ng-click="ChangeRadio(['bleeding_disorders_problems_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.bleeding_disorders_problems_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.bleeding_disorders_problems_comment" name="bleeding_disorders_problems_comment" ng-disabled="admissionDetail.bleeding_disorders_problems!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -720,11 +749,11 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Musculoskeletal1" value="N" ng-model="admissionDetail.musculoskeletal_osteoarthritis">
+                                                <input type="radio" name="Musculoskeletal1" value="N" ng-model="admissionDetail.musculoskeletal_osteoarthritis" ng-click="ChangeRadio(['musculoskeletal_osteoarthritis_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.musculoskeletal_osteoarthritis_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.musculoskeletal_osteoarthritis_comment" name="musculoskeletal_osteoarthritis_comment" ng-disabled="admissionDetail.musculoskeletal_osteoarthritis!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -736,11 +765,11 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Musculoskeletal2" value="N" ng-model="admissionDetail.musculoskeletal_problems">
+                                                <input type="radio" name="Musculoskeletal2" value="N" ng-model="admissionDetail.musculoskeletal_problems" ng-click="ChangeRadio(['musculoskeletal_problems_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.musculoskeletal_problems_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.musculoskeletal_problems_comment" name="musculoskeletal_problems_comment" ng-disabled="admissionDetail.musculoskeletal_problems!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -755,11 +784,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Neurology1" value="N" ng-model="admissionDetail.neurology_dystrophies">
+                                                <input type="radio" name="Neurology1" value="N" ng-model="admissionDetail.neurology_dystrophies" ng-click="ChangeRadio(['neurology_dystrophies_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_dystrophies_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_dystrophies_comment" name="neurology_dystrophies_comment"
+                                            ng-disabled="admissionDetail.neurology_dystrophies!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -771,11 +801,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Neurology2" value="N" ng-model="admissionDetail.neurology_tia">
+                                                <input type="radio" name="Neurology2" value="N" ng-model="admissionDetail.neurology_tia" ng-click="ChangeRadio(['neurology_tia_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_tia_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_tia_comment" name="neurology_tia_comment"
+                                            ng-disabled="admissionDetail.neurology_tia!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -787,11 +818,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Neurology3" value="N" ng-model="admissionDetail.neurology_weakness">
+                                                <input type="radio" name="Neurology3" value="N" ng-model="admissionDetail.neurology_weakness" ng-click="ChangeRadio(['neurology_weakness_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_weakness_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_weakness_comment" name="neurology_weakness_comment"
+                                            ng-disabled="admissionDetail.neurology_weakness!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -803,11 +835,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Neurology4" value="N" ng-model="admissionDetail.neurology_turns">
+                                                <input type="radio" name="Neurology4" value="N" ng-model="admissionDetail.neurology_turns" ng-click="ChangeRadio(['neurology_turns_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_turns_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.neurology_turns_comment" name="neurology_turns_comment"
+                                            ng-disabled="admissionDetail.neurology_turns!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -822,11 +855,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Respiratory1" value="N" ng-model="admissionDetail.respiratory_emphysema">
+                                                <input type="radio" name="Respiratory1" value="N" ng-model="admissionDetail.respiratory_emphysema" ng-click="ChangeRadio(['respiratory_emphysema_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.respiratory_emphysema_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.respiratory_emphysema_comment" name="respiratory_emphysema_comment"
+                                            ng-disabled="admissionDetail.respiratory_emphysema!='Y'">
                                         </td>
                                     </tr>
                                     <tr>
@@ -838,11 +872,12 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="Respiratory2" value="N" ng-model="admissionDetail.respiratory_inclines">
+                                                <input type="radio" name="Respiratory2" value="N" ng-model="admissionDetail.respiratory_inclines" ng-click="ChangeRadio(['respiratory_inclines_comment'])">
                                             </label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="admissionDetail.respiratory_inclines_comment">
+                                            <input type="text" class="form-control" ng-model="admissionDetail.respiratory_inclines_comment" name="respiratory_inclines_comment"
+                                            ng-disabled="admissionDetail.respiratory_inclines!='Y'">
                                         </td>
                                     </tr>
                                 </tbody>

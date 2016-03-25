@@ -483,5 +483,23 @@ module.exports = {
                 })
             }
         })
+    },
+    PostHistoryDetail: function(req, res){
+        EFormTemplate.findOne({
+            where: {UID: req.body.EFormTemplateUID},
+            attributes: ['ID']
+        })
+        .then(function(EFormTemplate){
+            var eFormTemplate = EFormTemplate;
+            EForm.findAll({
+                where: {EFormTemplateID: eFormTemplate.ID},
+                include : [
+                    {model: Appointment, required: true }
+                ]
+            })
+            .then(function(result){
+                res.json({data: result});
+            })
+        })
     }
 }

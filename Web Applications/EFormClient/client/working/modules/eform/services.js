@@ -11,6 +11,22 @@ module.exports = {
 		});
 		return p;
 	},
+	getImage: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'GET',
+				headers: { 
+				        'Accept': 'application/json',
+				        'Content-Type': 'application/json' 
+				},
+				responseType:'arraybuffer',
+				url: Config.apiUrl+'api/downloadFileWithoutLogin/'+data.UID,
+				dataType: 'binary',
+				success: resolve
+			})
+		});
+		return p;
+	},
 	createPDFForm: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
@@ -26,6 +42,17 @@ module.exports = {
 				success: resolve,
 				error: reject
 			})
+		});
+		return p;
+	},
+	eformHistoryDetail: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eform/historyDetail',
+				data: data,
+				success: resolve
+			})	
 		});
 		return p;
 	},

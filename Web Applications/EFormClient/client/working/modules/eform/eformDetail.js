@@ -9,6 +9,7 @@ module.exports = React.createClass({
     userUID: null,
     templateUID: null,
     formUID: null,
+    signatureDoctor: null,
     getInitialState: function(){
         return {
             name: '',
@@ -34,13 +35,17 @@ module.exports = React.createClass({
     _serverPreFormDetail: function(content){
         var self = this;
         EFormService.preFormDetail({UID: this.appointmentUID})
-        .then(function(response){
+        .then(function(response){            
+            self.signatureDoctor = response.data.Doctor.FileUpload;
             for(var section_index = 0; section_index < content.length; section_index++){
                 var section = content[section_index];
                 for(var row_index = 0; row_index < section.rows.length; row_index++){
                     var row = section.rows[row_index];
                     for(var field_index = 0; field_index < row.fields.length; field_index++){
                         var field = row.fields[field_index];
+                        if(field.type === 'eform_input_image_doctor'){
+                            self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
+                        }
                         var preCalArray = [];
                         if(typeof field.preCal !== 'undefined'){
                             preCalArray = field.preCal.split('|');
@@ -136,6 +141,9 @@ module.exports = React.createClass({
         var self = this;
         EFormService.eformTemplateDetail({uid: this.templateUID})
         .then(function(response){
+             EFormService.eformHistoryDetail({EFormTemplateUID: self.templateUID, PatientUID: self.patientUID})
+            .then(function(result){
+            })
             var EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
             self._serverPreFormDetail(content);
@@ -214,19 +222,54 @@ module.exports = React.createClass({
                         onSaveForm={this._onComponentPageBarSaveForm}
                         onPrintForm={this._onComponentPageBarPrintForm}/>
                 <h3 className="page-title">{this.state.name}</h3>
-                {
-                        this.state.sections.map(function(section, index){
-                            return <ComponentSection key={index}
-                                ref={section.get('ref')}
-                                refTemp={section.get('ref')}
-                                key={index}
-                                code={index}
-                                type="section"
-                                permission="normal"
-                                rows={section.get('rows')}
-                                name={section.get('name')}/>
-                        }, this)
-                }
+                <div className="row">
+                    <div className="col-md-9">
+                        {
+                            this.state.sections.map(function(section, index){
+                                return <ComponentSection key={index}
+                                    ref={section.get('ref')}
+                                    refTemp={section.get('ref')}
+                                    key={index}
+                                    code={index}
+                                    type="section"
+                                    permission="normal"
+                                    rows={section.get('rows')}
+                                    name={section.get('name')}/>
+                            }, this)
+                        }
+                    </div>
+                    <div className="col-lg-3 col-md-12">
+                        <div className="portlet portlet-fit box blue">
+                            <div className="portlet-title">
+                                <div className="caption">
+                                    <span className="caption-subject bold uppercase">
+                                        <i className="icon-speedometer"></i> History
+                                    </span>
+                                </div>
+                                <div className="tools">
+                                    <a href="javascript:;" className="collapse"> </a>
+                                </div>
+                            </div>
+                            <div className="portlet-body">
+                                <table className="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="1">#</th>
+                                            <th>Created date</th>
+                                            <th>Created by</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>20/11/2015</td><td>Master Angular</td></tr>
+                                        <tr><td>2</td><td>08/03/2015</td><td>Cylops Commit</td></tr>
+                                        <tr><td>3</td><td>30/04/2015</td><td>Peter Parker</td></tr>
+                                        <tr><td>4</td><td>01/06/2015</td><td>Captain Americant</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <ComponentPageBar ref="pageBarBottom"
                         onSaveForm={this._onComponentPageBarSaveForm}
                         onPrintForm={this._onComponentPageBarPrintForm}/>

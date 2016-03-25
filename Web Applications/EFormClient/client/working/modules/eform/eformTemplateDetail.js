@@ -391,7 +391,6 @@ module.exports = React.createClass({
             		      <h3 className="page-title">{this.state.name}</h3>
                                 {
                                     	this.state.sections.map(function(section, index){
-                                            console.log(section.toJS());
                         		      return <ComponentSection key={index}
                         			ref={section.get('ref')}
                                                      refTemp={section.get('ref')}

@@ -1,7 +1,7 @@
 module.exports={
 	'FileUpload/FileUploadController':{
 		'UploadFile':'isAuthenticated',
-		'DownloadFile':'isAuthenticated',
+		'DownloadFile':true,
 		'EnableFile':true,
 		'DisableAllFile':true
 	}

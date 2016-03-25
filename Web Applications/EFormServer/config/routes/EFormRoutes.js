@@ -47,6 +47,10 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostUpdate'
     },
+    'post /eform/historyDetail': {
+        controller: 'EForm/EFormController',
+        action: 'PostHistoryDetail'
+    },
     'post /eformtemplatemodule/create': {
         controller: 'EForm/EFormController',
         action: 'PostCreateEFormTemplateModule'

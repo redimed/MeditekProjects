@@ -5,6 +5,7 @@
  */
 package com.meditek.jasper.process;
 
+import com.lowagie.text.Image;
 import com.meditek.jasper.model.FormDataModel;
 
 import java.awt.image.BufferedImage;
@@ -40,9 +41,17 @@ public class DataProcess {
             else if(d.getType().equals("table")){
                 parsedData = iTextTableParse(d, parsedData, data);
             }
-            else if(d.getType().equals("eform_input_signature")){
-                byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
-                parsedData.put(d.getName().toLowerCase(), imgBytes);
+            else if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("_image") || d.getType().equals("eform_input_signature")){
+                com.itextpdf.text.Image imageRes;
+                if(d.getValue().equals("") || d.getValue()==null){
+                    byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
+                    imageRes=com.itextpdf.text.Image.getInstance(imgBytes);
+                }
+                else {
+                    imageRes=com.itextpdf.text.Image.getInstance(new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/"+d.getValue()));
+                }
+                 parsedData.put(d.getName().toLowerCase(), imageRes);
+                
             }
             else if(d.getType().equals("break")) continue;
             else parsedData.put(d.getName().toLowerCase(), d.getValue());
@@ -91,13 +100,22 @@ public class DataProcess {
             if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
                 if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("_image") || d.getType().equals("eform_input_signature")){
                     try{
+                        
                         BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
                         parsedData.put(d.getName().toLowerCase(), image);
                     }
                     catch(Exception e){
                         // Do nothing
                     }
-//                    BufferedImage image = ImageIO.read(new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/4a3efefb-39a7-441c-9d59-1bc638b527c7").openStream());
+                }
+                else if(d.getType().equals("eform_input_check_radio")) {
+                    if(d.getChecked()==Boolean.TRUE){
+                        System.out.println("run true");
+                        parsedData.put(d.getName().toLowerCase(), d.getValue());
+                    }
+                    else{
+                        System.out.println("run false");
+                    }
                 }
                 else parsedData.put(d.getName().toLowerCase(), d.getValue());
             }

@@ -871,39 +871,43 @@
                             </table>
                         </div>
                         <h4 class="form-section bold margin-top-40">Doctor use only</h4>
-                        <div class="form-group">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="radio-list">
-                                    <label class="radio-inline">Patient history form reviewed by Doctor ?</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="form_reviewed" value="Y" ng-model="admissionDetail.form_reviewed" /> Yes
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="form_reviewed" value="N" ng-model="admissionDetail.form_reviewed" /> No
-                                    </label>
+                        <fieldset ng-disabled="doctorUseOnly()">
+                            <div class="form-group">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="radio-list">
+                                        <label class="radio-inline">Patient history form reviewed by Doctor ?</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="form_reviewed" value="Y" ng-model="admissionDetail.form_reviewed" /> Yes
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="form_reviewed" value="N" ng-model="admissionDetail.form_reviewed" /> No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Name of Doctor</label>
+                                        <input type="text" class="form-control" ng-model="admissionDetail.DoctorFullName" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Name of Doctor</label>
-                                    <input type="text" class="form-control" ng-model="admissionDetail.DoctorFullName" />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Date</label>
+                                        <input type="text" class="form-control date-picker" 
+                                            data-date-format="{{getDate | date:'dd-MM-yyyy'}}" placeholder="{{getDate | date:'dd-MM-yyyy'}}" ng-model="admissionDetail.DoctorDateChoose" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Time</label>
+                                        <input type="text" class="form-control timepicker timepicker-no-seconds" 
+                                            data-default-time="" placeholder="hh:mm" ng-model="admissionDetail.DoctorTimeChoose" readonly>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Date</label>
-                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.DoctorDateChoose" readonly>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Time</label>
-                                    <input type="text" class="form-control timepicker timepicker-no-seconds" data-default-time="" placeholder="hh:mm" ng-model="admissionDetail.DoctorTimeChoose" readonly>
-                                </div>
-                            </div>
-                        </div>
+                        </fieldset>
                     </div>
                     <div class="form-actions margin-top-40" style="text-align:right">
                         <button class="btn btn-lg btn-danger" ng-click="UpdateAdmission()">

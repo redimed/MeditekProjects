@@ -68,13 +68,8 @@
                                     <input type="text" class="form-control" ng-model="admissionDetail.MedicareReferenceNumber" />
                                 </div>
                             </div>
-<<<<<<< 3adc35e41a6ed703ff4be61e72629b97eea0e4c4
                             <div class="col-lg-4 col-md-12">
                                 <div class="form-group">
-=======
-                            <div class="col-lg-3 col-md-12">
-                                 <div class="form-group">
->>>>>>> edit layout Medicare Eligible, Medication; Medications,Allergies, Lifetime, All question have  Yes/No
                                     <label class="control-label">Expiry Date</label>
                                     <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.ExpiryDate" readonly>
                                 </div>
@@ -224,11 +219,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Date to cease:</label>
-<<<<<<< 3adc35e41a6ed703ff4be61e72629b97eea0e4c4
-                                                <input type="text" name="anti_coagulant_date_to_cease" class="form-control date-picker" ng-model="admissionDetail.anti_coagulant_date_to_cease">
-=======
                                                 <input type="text" class="form-control date-picker" ng-model="admissionDetail.anti_coagulant_date_to_cease" name="anti_coagulant_date_to_cease" ng-disabled="admissionDetail.anti_coagulant != 'Y'">
->>>>>>> edit layout Medicare Eligible, Medication; Medications,Allergies, Lifetime, All question have  Yes/No
                                             </div>
                                         </td>
                                         <td>
@@ -248,12 +239,8 @@
                                             </label>
                                         </td>
                                         <td>
-<<<<<<< 3adc35e41a6ed703ff4be61e72629b97eea0e4c4
-                                            <input type="text" class="form-control" name="anti_inflammatory_comment" ng-model="admissionDetail.anti_inflammatory_comment">
-=======
                                             <input type="text" class="form-control" ng-model="admissionDetail.anti_inflammatory_comment" name="anti_inflammatory_comment"
                                             ng-disabled="admissionDetail.anti_inflammatory != 'Y'">
->>>>>>> edit layout Medicare Eligible, Medication; Medications,Allergies, Lifetime, All question have  Yes/No
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.anti_inflammatory_note">
@@ -884,39 +871,43 @@
                             </table>
                         </div>
                         <h4 class="form-section bold margin-top-40">Doctor use only</h4>
-                        <div class="form-group">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="radio-list">
-                                    <label class="radio-inline">Patient history form reviewed by Doctor ?</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="form_reviewed" value="Y" ng-model="admissionDetail.form_reviewed" /> Yes
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="form_reviewed" value="N" ng-model="admissionDetail.form_reviewed" /> No
-                                    </label>
+                        <fieldset ng-disabled="doctorUseOnly()">
+                            <div class="form-group">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="radio-list">
+                                        <label class="radio-inline">Patient history form reviewed by Doctor ?</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="form_reviewed" value="Y" ng-model="admissionDetail.form_reviewed" /> Yes
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="form_reviewed" value="N" ng-model="admissionDetail.form_reviewed" /> No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Name of Doctor</label>
+                                        <input type="text" class="form-control" ng-model="admissionDetail.DoctorFullName" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Name of Doctor</label>
-                                    <input type="text" class="form-control" ng-model="admissionDetail.DoctorFullName" />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Date</label>
+                                        <input type="text" class="form-control date-picker" 
+                                            data-date-format="{{getDate | date:'dd-MM-yyyy'}}" placeholder="{{getDate | date:'dd-MM-yyyy'}}" ng-model="admissionDetail.DoctorDateChoose" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Time</label>
+                                        <input type="text" class="form-control timepicker timepicker-no-seconds" 
+                                            data-default-time="" placeholder="hh:mm" ng-model="admissionDetail.DoctorTimeChoose" readonly>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Date</label>
-                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="admissionDetail.DoctorDateChoose" readonly>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Time</label>
-                                    <input type="text" class="form-control timepicker timepicker-no-seconds" data-default-time="" placeholder="hh:mm" ng-model="admissionDetail.DoctorTimeChoose" readonly>
-                                </div>
-                            </div>
-                        </div>
+                        </fieldset>
                     </div>
                     <div class="form-actions margin-top-40" style="text-align:right">
                         <button class="btn btn-lg btn-danger" ng-click="UpdateAdmission()">

@@ -4,6 +4,8 @@ var path = require('path');
 var templateDirs = path.resolve(__dirname, 'GenerateTemplateEmail');
 var emailTemplates = require('email-templates');
 var emailAddressRequiredError = new Error('email address required');
+var config = sails.config.myconf;
+var defaultEmail ="meditek.bk001@gmail.com";
 
 var transport, isTestApp = 0;
 if (isTestApp === 1) {
@@ -37,7 +39,6 @@ var SendMailService = {
     output: status send mail
     */
     SendMail: function(templateName, emailInfo, fn) {
-        console.log("???????????")
         if (!emailInfo.email) {
             return fn(emailAddressRequiredError);
         }
@@ -56,12 +57,12 @@ var SendMailService = {
                 }
                 transport.sendMail({
                     from: emailInfo.from,
-                    to: emailInfo.email,
+                    to: config.twilioEnv=='product'?emailInfo.email:defaultEmail,
                     subject: emailInfo.subject,
                     html: html,
                     text: text
                 }, function(err, responseStatus) {
-                    if (err) {
+                    if (err  ) {
                         return fn(err);
                     }
                     return fn(null, responseStatus.message, html, text);

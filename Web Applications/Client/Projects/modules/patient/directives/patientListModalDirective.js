@@ -10,7 +10,7 @@
 // </patient-listmodal>
 
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $rootScope, $timeout, $cookies, CommonService, $http, $uibModal){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $rootScope, $timeout, $cookies, CommonService, $http, $uibModal, $compile){
 	return{
 		restrict: 'EA',
         scope: {
@@ -116,6 +116,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			data.FileType = 'ProfileImage';
 
 			scope.view = function(model, data) {
+				console.log(scope.info[model]);
 				if(model == 'Kin'){
 					console.log(scope.isHaveKins);
 					if(scope.isHaveKins == null || scope.isHaveKins != data) {
@@ -238,6 +239,16 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				if(scope.typeShow != type)
 					$('#add1').show();
 				scope.typeShow = type;
+			}
+
+			scope.callData = function(model) {
+				scope.chooseItem = false;
+				PatientService.detailChildPatient({ UID: scope.info.UID , model: [model], where:{Enable:'Y'} })
+				.then(function(response) {
+					scope.info[model+'s'] = response.data[model];
+				},function(err) {
+					console.log(err);
+				});
 			}
 
 			scope.init = function(){
@@ -596,8 +607,10 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 										scope.chooseItem = false;
 										scope.changeoption = true;
 										// scope.onCancel();
-										scope.init();
+										// scope.init();
+										console.log("model ",model);
 										$modalInstance.dismiss('cancel');
+										scope.callData(model);
 									},function(err) {
 										console.log(err);
 										toastr.error("Please check data again.","ERROR");

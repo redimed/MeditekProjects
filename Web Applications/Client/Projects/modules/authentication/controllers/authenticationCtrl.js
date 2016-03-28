@@ -133,10 +133,16 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         o.audio.loop = true;
         o.audio.play();
     };
-// socketTelehealth.funConnect.then(function(value) {
-//     console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
-// });
 
+    socketTelehealth.funConnect = function() {
+        console.log("reconnect socketTelehealth");
+        socketMakeRequest(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
+    }
+
+    socketAuth.funConnect = function() {
+        console.log("reconnect socketAuth");
+        socketMakeRequest(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
+    }
 
     socketTelehealth.funCancel = function(msg) {
         console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);

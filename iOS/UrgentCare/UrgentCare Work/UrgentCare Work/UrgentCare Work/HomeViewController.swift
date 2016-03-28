@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ObjectMapper
 
 class HomeViewController: BaseViewController {
     
@@ -30,8 +31,35 @@ class HomeViewController: BaseViewController {
     }
     @IBAction func actionLogin(sender: AnyObject) {
         LoadingAnimation.showLoading()
-        let login :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-        self.navigationController?.pushViewController(login, animated: true)
+        
+        let login:Login = Login();
+        login.UserName = textField[0].text!;
+        login.Password = textField[1].text!;
+        
+        UserService.postLogin(login) { [weak self] (response) in
+            print(response)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let loginResponse = Mapper<LoginResponse>().map(response.result.value) {
+                            if loginResponse.status == "success"  {
+                                LoadingAnimation.stopLoading()
+                                let loginViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+                                self!.navigationController?.pushViewController(loginViewController, animated: true)
+                            }else{
+                                LoadingAnimation.stopLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                   self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self?.showMessageNoNetwork()
+                }
+                
+            }
+        }
     }
     
 }

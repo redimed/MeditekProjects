@@ -57,7 +57,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     var urgentRequestType : String = "WorkInjury"
     var Info : Information!
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,7 +115,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     }
     
     override func viewWillAppear(animated: Bool) {
-//        customTextField(colorCustomBrow)
+        //        customTextField(colorCustomBrow)
     }
     override func viewDidAppear(animated: Bool) {
         customTextField(colorCustomBrow)
@@ -131,7 +131,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         if aButton?.titleLabel?.text == "Exercise Rehab"{
             exerciseRehab = "Y"
             physiotherapy = "N"
-             handTherapy = "N"
+            handTherapy = "N"
         } else if aButton?.titleLabel?.text == "Physiotherapy" {
             physiotherapy = "Y"
             exerciseRehab = "N"
@@ -214,8 +214,8 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                     borderTextFieldValid(emailTextField, color: colorCustomRed)
                 }
                 else if companyPhoneNumberTextField.text != "" && validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
-                        borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomRed)
-                        alertMessage("Required", message: "Please Check your company phone number!")
+                    borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomRed)
+                    alertMessage("Required", message: "Please Check your company phone number!")
                 }
                 else {
                     
@@ -248,13 +248,13 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         var phoneNumber = infor.phoneNumber
         let getFourCharacterInPhone =  phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(0), end: phoneNumber.startIndex.advancedBy(4)))
         if getFourCharacterInPhone == "0061"{
-          phoneNumber = "+61" + phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(4), end: phoneNumber.endIndex.advancedBy(-1)))
+            phoneNumber = "+61" + phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(4), end: phoneNumber.endIndex.advancedBy(-1)))
         }else {
             
             infor.phoneNumber.removeAtIndex(phoneNumber.startIndex)
             phoneNumber = "+61" + infor.phoneNumber
         }
-
+        
         
         let parameters = [
             "data": [
@@ -279,36 +279,22 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 "exerciseRehab": infor.exerciseRehab
             ]
         ]
-     
         
-        Alamofire.request(.POST,api.submitInjury,headers:headers,parameters: parameters).responseJSON{
-            request, response, result  in
+        
+        Alamofire.request(.POST,api.submitInjury,headers:headers,parameters: parameters).responseJSON{ response  in
             self.view.hideLoading()
             self.btnMakeAppointment.enabled = true
-            switch result {
-            case .Success(let JSONData):
-                let data = JSON(JSONData)
-                if data["data"].string == "success" {
-                     infor.phoneNumber = self.contactPhoneTextField.text
+            print("---->",response)
+            if let _ = response.result.value {
+                let dataJson = JSON(response.result.value!)
+                if dataJson["data"].string == "success" {
+                    infor.phoneNumber = self.contactPhoneTextField.text
                     self.successAlert(infor)
                 }else {
-                
-                    if data["error"]["error"].string == "E_VALIDATION" {
-                         self.alertMessage("Error", message: messageString.invalidParams)
-                    }else {
-                        self.alertMessage("Error", message: messageString.serverErr)
-                    }
-                   
+                   self.alertMessage("Error", message: "Can't make appointment!")
                 }
-                
-                print(JSON(JSONData))
-                
-            case .Failure(let data, let error):
-                print("Request failed with error: \(error)")
+            }else{
                 self.alertMessage("Error", message: "Can't make appointment!")
-                if let data = data {
-                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
-                }
             }
         }
     }
@@ -323,7 +309,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         border.borderWidth = width
         textField.layer.addSublayer(border)
         textField.layer.masksToBounds = true
-
+        
     }
     //check textfile is reqired
     func checkfield() {
@@ -523,7 +509,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     
     //check out focus textfield
     func textFieldDidEndEditing(textField: UITextField) {
-      
+        
         switch textField {
         case firstNameTextField :
             if firstNameTextField.text != "" &&  checkMaxLength(firstNameTextField, length: 50) == true {
@@ -577,7 +563,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                     borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomBrow)
                 }
             }else {
-                 borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomBrow)
+                borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomBrow)
             }
         case birthDayTextField:
             if compareDate(datePicker.date) == false {

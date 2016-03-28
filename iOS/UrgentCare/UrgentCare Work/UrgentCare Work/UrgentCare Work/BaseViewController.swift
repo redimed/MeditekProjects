@@ -10,8 +10,8 @@ import UIKit
 
 class BaseViewController: UIViewController,DTAlertViewDelegate {
     
-    var alertView: DTAlertView!
-    
+    //var alertView: DTAlertView!
+    let alertView = UIAlertView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,10 +25,10 @@ class BaseViewController: UIViewController,DTAlertViewDelegate {
     }
     
     // show alert with param
-    func showAlertWithMessageTitle(message: String, title: String, alertStyle: DTAlertStyle){
-        self.alertView = DTAlertView(alertStyle: alertStyle, message: message, title: title, object: self)
-        self.alertView.show()
-    }
+//    func showAlertWithMessageTitle(message: String, title: String, alertStyle: DTAlertStyle){
+//        self.alertView = DTAlertView(alertStyle: alertStyle, message: message, title: title, object: self)
+//        self.alertView.show()
+//    }
     
     func leftNavButtonClick(sender:UIButton!)
     {

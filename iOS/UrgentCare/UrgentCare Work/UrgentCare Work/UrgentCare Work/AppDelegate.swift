@@ -17,7 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        setDeviceID()
         return true
+    }
+    
+    func setDeviceID(){
+        let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if  defaults.valueForKey("deviceID") as? String == nil {
+            let deviceID = UIDevice.currentDevice().identifierForVendor!.UUIDString
+            defaults.setValue(deviceID, forKey: "deviceID")
+            defaults.synchronize()
+        }else {
+            print(defaults.valueForKey("deviceID") as? String)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

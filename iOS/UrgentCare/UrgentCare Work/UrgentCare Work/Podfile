@@ -4,8 +4,21 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'UrgentCare Work' do
-	pod 'Alamofire', '~> 2.0'
- 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+#    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+#    pod 'FDTake', '~> 0.2.4'
+#    pod 'SVProgressHUD'
+#    pod 'Reachability', '~> 3.1.1'
+#    pod 'SDWebImage', '~> 3.7.1'
+#    pod 'IQKeyboardManager'
+#    pod 'Fabric'
+#    pod 'Crashlytics'
+#    pod 'GoogleMaps'
+#    pod 'Alamofire', '~> 3.0'
+#    pod 'ObjectMapper', '~> 0.18'
+#    pod 'RealmSwift'
+#    pod 'ChameleonFramework/Swift'
+#    pod 'PromiseKit', '3.0.2'
+#    pod 'TYMActivityIndicatorView'
 end
 
 target 'UrgentCare WorkTests' do

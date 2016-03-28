@@ -504,6 +504,16 @@ module.exports = {
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
+    },
+
+    DetailChild: function(req, res) {
+        var data = req.body.data;
+        Services.Patient.DetailChild(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
     }
 
 };

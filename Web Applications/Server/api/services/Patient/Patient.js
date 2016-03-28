@@ -2017,6 +2017,60 @@ module.exports = {
                 throw err;
             });
         }
+    },
+
+    DetailChild : function(data) {
+        var postData = {};
+        if(!data.model) {
+            var err = new Error('DetailChild.error');
+            err.pushError('model.invalid');
+            throw err;
+        }
+        if(!data.UID) {
+            var err = new Error('DetailChild.error');
+            err.pushError('patientUID.invalid');
+            throw err;
+        }
+        return Patient.findOne({
+            where:{
+                UID:data.UID
+            }
+        })
+        .then(function(got_patient){
+            if(!got_patient) {
+                var err = new Error('DetailChild.error');
+                err.pushError('patient.notFound');
+                throw err;
+            }
+            else {
+                return sequelize.Promise.each(data.model,function(modelName,index) {
+                    return sequelize.models[modelName].findAll({
+                        where:{
+                            PatientID : got_patient.ID
+                        },
+                        limit: data.limit?data.limit:null,
+                        offset: data.offset?data.offset:null
+                    })
+                    .then(function(got_model) {
+                        postData[modelName] = got_model;
+                    },function(err) {
+                        throw err;
+                    });
+                })
+                .then(function(result) {
+                },function(err) {
+                    console.log(err);
+                })
+            }
+        },function(err) {
+            console.log(err);
+            throw err;
+        })
+        .then(function(result) {
+            return postData;
+        },function(err){
+            throw err;
+        });
     }
 
 

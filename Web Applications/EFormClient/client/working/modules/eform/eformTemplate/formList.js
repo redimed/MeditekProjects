@@ -1,11 +1,19 @@
 var EFormService = require('modules/eform/services');
 var history = ReactRouter.hashHistory;
+var Modal = require('common/modal');
+var Dropdown = require('common/dropdown');
 
+var printTypes = [
+    {code: 'itext', name: 'IText Report'},
+    {code: 'jasper', name: 'Jasper Report'}
+];
 module.exports = React.createClass({
     propTypes: {
         onClickUpdate: React.PropTypes.func,
-        onClickRemove: React.PropTypes.func
+        onClickRemove: React.PropTypes.func,
+        onPrintForm: React.PropTypes.func
     },
+    item: null,
     userUID: null,
     setUserUID: function(userUID) {
         this.userUID = userUID;
@@ -41,6 +49,16 @@ module.exports = React.createClass({
     _goToDetail: function(l) {
         history.push("/eformTemplate/detail/" + l.UID + '/' + this.userUID);
     },
+    _onOpenPrint: function(l){
+        this.item = l;
+        this.refs.dropdownPrint.setValue(l.PrintType);
+        this.refs.modalPrintTypes.show();
+    },
+    _onPrintForm: function(){
+        var dropdown = this.refs.dropdownPrint.getValue();
+        this.refs.modalPrintTypes.hide();
+        this.props.onPrintForm(this.item, dropdown);
+    },
     render: function(){
         var table = null
         table = <table className="table table-bordered table-striped table-condensed flip-content">
@@ -75,6 +93,11 @@ module.exports = React.createClass({
                                                     View Form
                                                 </a>
                                                 &nbsp;
+                                                <a onClick={this._onOpenPrint.bind(this, l)} 
+                                                    className="label label-sm label-success">
+                                                    Change Print Type
+                                                </a>
+                                                &nbsp;
                                                 <span className="label label-sm label-success" 
                                                     onClick={this._onClickUpdate.bind(this, l)}
                                                     style={{cursor:'pointer'}}>
@@ -95,6 +118,25 @@ module.exports = React.createClass({
                     </table>
             return (
 	   <div className="row">
+                    <Modal ref="modalPrintTypes">
+                        <div className="header">
+                                <h4>Select Print Type</h4>
+                        </div>
+                        <div className="content">
+                            <div className="col-md-12">
+                                <form>
+                                    <div className="form-body">
+                                        <div className="form-group">
+                                            <Dropdown list={printTypes} code="code" name="name" ref="dropdownPrint"/>
+                                        </div>
+                                        <div className="form-group" style={{float:'right'}}>
+                                            <button type="button" className="btn btn-primary" onClick={this._onPrintForm}>Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </Modal>
                     <div className="col-md-12">
                         {table}
                     </div>

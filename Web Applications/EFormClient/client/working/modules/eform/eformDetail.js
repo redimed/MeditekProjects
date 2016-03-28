@@ -10,10 +10,12 @@ module.exports = React.createClass({
     templateUID: null,
     formUID: null,
     signatureDoctor: null,
+    EFormTemplate: null,
     getInitialState: function(){
         return {
             name: '',
-            sections: Immutable.List()
+            sections: Immutable.List(),
+            history: []
         }
     },
     componentDidMount: function() {
@@ -141,19 +143,20 @@ module.exports = React.createClass({
         var self = this;
         EFormService.eformTemplateDetail({uid: this.templateUID})
         .then(function(response){
+            var EFormTemplate = self.EFormTemplate = response.data;
+            var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
              EFormService.eformHistoryDetail({EFormTemplateUID: self.templateUID, PatientUID: self.patientUID})
             .then(function(result){
+                self.setState(function(prevState){
+                    return {
+                        name: EFormTemplate.Name,
+                        sections: Immutable.fromJS(content),
+                        history: result.data.rows
+                    }
+                })
+                self._serverPreFormDetail(content);
+                self._checkServerEFormDetail();
             })
-            var EFormTemplate = response.data;
-            var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
-            self._serverPreFormDetail(content);
-            self.setState(function(prevState){
-                return {
-                    name: EFormTemplate.Name,
-                    sections: Immutable.fromJS(content)
-                }
-            })
-            self._checkServerEFormDetail();
         })
     },
     _onComponentPageBarSaveForm: function(){
@@ -185,7 +188,7 @@ module.exports = React.createClass({
             })
         }
     },
-    _onComponentPageBarPrintForm: function(printType){
+    _onComponentPageBarPrintForm: function(){
         var sections = this.state.sections.toJS();
         var self = this;
         var fields = [];
@@ -198,7 +201,7 @@ module.exports = React.createClass({
             })
         }
         var data = {
-            printMethod: printType,
+            printMethod: this.EFormTemplate.PrintType,
             data: fields,
             templateUID: this.templateUID
         }
@@ -255,15 +258,22 @@ module.exports = React.createClass({
                                     <thead>
                                         <tr>
                                             <th width="1">#</th>
-                                            <th>Created date</th>
-                                            <th>Created by</th>
+                                            <th>Code</th>
+                                            <th>Created Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr><td>1</td><td>20/11/2015</td><td>Master Angular</td></tr>
-                                        <tr><td>2</td><td>08/03/2015</td><td>Cylops Commit</td></tr>
-                                        <tr><td>3</td><td>30/04/2015</td><td>Peter Parker</td></tr>
-                                        <tr><td>4</td><td>01/06/2015</td><td>Captain Americant</td></tr>
+                                        {
+                                            this.state.history.map(function(h, index){
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{index+1}</td>
+                                                        <td>{h.Appointments[0].Code}</td>
+                                                        <td>{moment(h.Appointments[0].CreatedDate).format('DD/MM/YYYY')}</td>
+                                                    </tr>
+                                                )
+                                            }, this)
+                                        }
                                     </tbody>
                                 </table>
                             </div>

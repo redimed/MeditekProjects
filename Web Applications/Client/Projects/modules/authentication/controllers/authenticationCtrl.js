@@ -91,7 +91,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         name: 'Silver Savings Account'
     }];
 
-    function messageTransfer(from, to, message){
+    function messageTransfer(from, to, message) {
         socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
             from: from,
             to: to,
@@ -133,25 +133,22 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         o.audio.loop = true;
         o.audio.play();
     };
+// socketTelehealth.funConnect.then(function(value) {
+//     console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
+// });
 
-    socketTelehealth.funConnect = function() {
-        console.log("connectttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-        // join room telehealth server
-        console.log("+++++++++++++++++++++++++++++++++++", $cookies.getObject('userInfo'));
-        socketTelehealth.get('/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
-    };
 
     socketTelehealth.funCancel = function(msg) {
         console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal.close();
         o.audio.pause();
     }
-    socketTelehealth.funDecline = function(msg){
+    socketTelehealth.funDecline = function(msg) {
         console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
         swal.close();
         o.audio.pause();
     }
-    socketTelehealth.funMisscall = function(msg){
+    socketTelehealth.funMisscall = function(msg) {
         alert("Miss Call");
     }
 });

@@ -4,6 +4,16 @@ var socketAuth = {},
     socketTelehealth = {};
 
 
+socketMakeRequest = function(server, api, obj) {
+    server.get(api, obj, function(data, jwres) {
+        console.log('=============Socket===============', api);
+        console.log(data);
+    });
+}
+
+
+
+
 /*begin socket 3006 */
 socketAuth = io.sails.connect(o.const.authBaseUrl);
 socketAuth.on('connect', function() {
@@ -17,7 +27,11 @@ socketAuth.on('connect', function() {
 socketAuth.on('testmessage', function(msg) {
     console.log(JSON.stringify("a" + msg));
 });
+
 /* end socket 3006 */
+
+
+
 
 
 /* begin socket 3005 */
@@ -39,13 +53,20 @@ function connectedAuth() {
 /* begin socket 3005 */
 
 
+
+
 /* begin socket 3009 */
 function connectedTelehealth() {
+    //====connect 3016
     socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
     socketTelehealth.on('connect', function() {
-        console.log("telehealth connect socket");
-        //====connect 3016
-        connectNc();
+        socketTelehealth.funConnect = new Promise(function(resolve, reject) {
+            resolve("telehealth connect socket");
+        }).then(function(value) {
+            console.log(value);
+            connectedNc();
+        });
+
     });
     socketTelehealth.on('testmessage', function(msg) {
         console.log(JSON.stringify("d" + msg));
@@ -71,11 +92,17 @@ function connectedTelehealth() {
 /* begin socket 3009 */
 
 
+
+
 /* begin socket 3016 */
-function connectNc() {
+function connectedNc() {
     socketNc = io.sails.connect(o.const.ncBaseUrl);
     socketNc.on('connect', function() {
-        console.log('notification center connect socket');
+        socketNc.funConnect = new Promise(function(resolve, reject) {
+            resolve("notification center connect socket");
+        }).then(function(value) {
+            console.log(value);
+        });
     });
     socketNc.on('testmessage', function(msg) {
         console.log(JSON.stringify(msg));

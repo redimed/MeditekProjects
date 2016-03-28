@@ -24,17 +24,20 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
             $scope.publisher = OT.initPublisher('publisher', publisherOptions, function(error) {
                 if (!error) {
                     console.log("publish Success");
-                    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-                        from: uidUser,
-                        to: uidCall,
-                        message: "call",
-                        sessionId: sessionId,
-                        fromName: userInfo.UserName
-                    }, function(data) {
-                        console.log("send call", data);
-                    });
-                    o.audio.loop = true;
-                    o.audio.play();
+                    console.log("calllllllllllllllllllllllllllllllllll", _.isEmpty(socketTelehealth));
+                    if (!_.isEmpty(socketTelehealth)) {
+                        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+                            from: uidUser,
+                            to: uidCall,
+                            message: "call",
+                            sessionId: sessionId,
+                            fromName: userInfo.UserName
+                        }, function(data) {
+                            console.log("send call", data);
+                        });
+                        o.audio.loop = true;
+                        o.audio.play();
+                    }
                 } else {
                     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
                 }
@@ -44,6 +47,10 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
             console.log('There was an error connecting to the session: ', error.code, error.message);
         }
     });
+
+    socketTelehealth.funConnect = function() {
+        console.log("aaaaaaa");
+    }
 
     // Subscribe to a newly created stream
     session.on('streamCreated', function(event) {

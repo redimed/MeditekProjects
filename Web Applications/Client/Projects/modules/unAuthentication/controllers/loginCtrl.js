@@ -11,15 +11,16 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
             toastr.error("Please Input Your Username And Password!", "Error");
         } else {
             UnauthenticatedService.login($scope.user).then(function(data) {
-                //-----------------------------------------------------
-                //Make room for user
-                socketAuth.get('/api/socket/makeUserOwnRoom', { UID: data.user.UID }, function(data, jwres) {
-                    console.log('=============Socket makeUserOwnRoom===============');
-                    console.log(data);
-                });
+                // join room auth server
+                if (socketAuth) {
+                    socketMakeRequest(socketAuth, '/api/socket/makeUserOwnRoom', { UID: data.user.UID });
+                }
                 //-----------------------------------------------------
                 // join room telehealth server
-                socketTelehealth.get('/api/telehealth/socket/joinRoom', { uid: data.user.TelehealthUser.UID });
+                if (socketTelehealth) {
+                    socketMakeRequest(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: data.user.TelehealthUser.UID });
+                }
+                //-----------------------------------------------------
 
                 if (data.user.Activated == 'Y') {
                     $cookies.putObject("userInfo", data.user);

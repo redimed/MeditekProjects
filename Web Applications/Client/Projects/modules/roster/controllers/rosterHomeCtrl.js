@@ -41,7 +41,7 @@ app.controller('rosterHomeCtrl', function($scope, $state, doctorService) {
         $scope.fieldSort[$scope.items[i].field] = 'ASC';
     };
 
-    $scope.toggle = true;
+    $scope.toggle = false;
     $scope.toggleFilter = function() {
         $scope.toggle = $scope.toggle === false ? true : false;
     };

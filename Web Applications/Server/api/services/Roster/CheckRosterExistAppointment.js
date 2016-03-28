@@ -63,7 +63,9 @@ module.exports = function(objCheck) {
                                                 $gte: moment(valueRosterUser.FromTime).toDate()
                                             },
                                             ToTime: {
-                                                $lte: moment(valueRosterUser.ToTime).toDate()
+                                                $or: [null, {
+                                                    $lte: moment(valueRosterUser.ToTime).toDate()
+                                                }]
                                             },
                                             Enable: 'Y'
                                         },
@@ -88,9 +90,11 @@ module.exports = function(objCheck) {
                                                 var FromTimeAppt = moment(valueAppt.FromTime).format('YYYY-MM-DD HH:mm:ss Z');
                                                 var ToTimeAppt = moment(valueAppt.ToTime).format('YYYY-MM-DD HH:mm:ss Z');
                                                 if ((!moment(FromTimeAppt).within(rangeRosterUpdate) &&
-                                                        !_.isEmpty(valueAppt.FromTime)) ||
+                                                        !_.isUndefined(valueAppt.FromTime) &&
+                                                        !_.isNull(valueAppt.FromTime)) ||
                                                     (!moment(ToTimeAppt).within(rangeRosterUpdate) &&
-                                                        !_.isEmpty(valueAppt.ToTime))) {
+                                                        !_.isUndefined(valueAppt.ToTime) &&
+                                                        !_.isNull(valueAppt.ToTime))) {
                                                     var objRosterExistAppt = _.extend({}, rosterCurrentUpdate);
                                                     objRosterExistAppt.Appointment = _.extend({}, valueAppt);
                                                     arrDataExistAppt.push(objRosterExistAppt);

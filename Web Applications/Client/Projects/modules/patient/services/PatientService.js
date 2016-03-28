@@ -120,7 +120,7 @@ angular.module('app.authentication.patient.services',[])
 	// 				error.push({field:"Email1",message:"invalid value"});
 	// 			}
 	// 		}
-			
+
 	// 		//validate Occupation
 	// 		if(info.Occupation){
 	// 			if(info.Occupation.length < 0 || info.Occupation.length > 255){
@@ -320,7 +320,7 @@ angular.module('app.authentication.patient.services',[])
 					}
 				}
 			}
-			
+
 			//validate Occupation
 			if('Occupation' in info){
 				if(info.Occupation){
@@ -560,6 +560,10 @@ angular.module('app.authentication.patient.services',[])
 	PatientService.changeStatusChild = function(data) {
 		var changeStatusChild = api.all('patient/change-status-child');
 		return changeStatusChild.post({data:data});
+	};
+	PatientService.detailChildPatient = function(data) {
+		var detailChildPatient = api.all('patient/detail-child-patient');
+		return detailChildPatient.post({data:data});
 	}
 
 	return PatientService;

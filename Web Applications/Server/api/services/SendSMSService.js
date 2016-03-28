@@ -17,7 +17,7 @@ module.exports = {
         var phoneRegex = /^\+[0-9]{9,15}$/;
         if (phoneNumber != null && phoneNumber.match(phoneRegex) && content != null) {
             SendSMS(phoneNumber, content, function(err, message) {
-                if (err) {
+                if (err && config.twilioEnv == 'product') {
                     callback(err);
                 } else {
                     callback(null);

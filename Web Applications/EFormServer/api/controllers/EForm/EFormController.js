@@ -133,6 +133,26 @@ module.exports = {
             }
         })
     },
+    PostUpdatePrintTypeEFormTemplate: function(req, res){
+        EFormTemplate.find({ where: {ID: req.body.id} })
+        .then(function(EFormTemplate){
+            if(EFormTemplate){
+                UserAccount.findOne({
+                    where: {UID: req.body.userUID},
+                    attributes: ['ID'],
+                })
+                .then(function(UserAccount){
+                    EFormTemplate.update({
+                        PrintType: req.body.printType,
+                        ModifiedBy: UserAccount.ID
+                    })
+                    .then(function(){
+                        res.json({data: EFormTemplate});
+                    })
+                })
+            }
+        })
+    },
     PostDetailEFormTemplate: function(req, res){
         EFormTemplate.find({ where: {UID: req.body.uid}, 
             include: [{
@@ -485,21 +505,24 @@ module.exports = {
         })
     },
     PostHistoryDetail: function(req, res){
-        EFormTemplate.findOne({
-            where: {UID: req.body.EFormTemplateUID},
-            attributes: ['ID']
+        EForm.findAndCountAll({
+            include: [
+                {
+                    model: Patient,
+                    where: {UID: req.body.PatientUID}
+                },
+                {
+                    model: EFormTemplate,
+                    where: {UID: req.body.EFormTemplateUID}
+                },
+                {
+                    model: Appointment,
+                    required: false
+                }
+            ]
         })
-        .then(function(EFormTemplate){
-            var eFormTemplate = EFormTemplate;
-            EForm.findAll({
-                where: {EFormTemplateID: eFormTemplate.ID},
-                include : [
-                    {model: Appointment, required: true }
-                ]
-            })
-            .then(function(result){
-                res.json({data: result});
-            })
+        .then(function(result){
+            res.json({data: result});
         })
     }
 }

@@ -16,6 +16,9 @@ module.exports = {
         Description: {
             type: Sequelize.TEXT()
         },
+        PrintType: {
+            type: Sequelize.STRING(255)
+        },
         Enable: {
             type: Sequelize.STRING(1),
             defaultValue: 'Y'

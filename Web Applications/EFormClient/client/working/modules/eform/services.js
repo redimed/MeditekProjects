@@ -153,6 +153,17 @@ module.exports = {
 		})
 		return p;
 	},
+	eformTemplateUpdatePrintType: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eformtemplate/updatePrintType',
+				success: resolve
+			})	
+		})
+		return p;
+	},
 	formRemove: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

@@ -11,6 +11,10 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostUpdateEFormTemplate'
     },
+    'post /eformtemplate/updatePrintType': {
+        controller: 'EForm/EFormController',
+        action: 'PostUpdatePrintTypeEFormTemplate'
+    },
     'post /eformtemplate/detail': {
         controller: 'EForm/EFormController',
         action: 'PostDetailEFormTemplate'

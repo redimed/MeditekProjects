@@ -1,37 +1,37 @@
 var app = angular.module('app.authentication.admission.detail.controller', []);
 app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices, PatientService) {
     /* THAO */
-    $scope.admissionDetail.cardiovascular_triglycerides= 'N';
-    $scope.admissionDetail.cardiovascular_hypertension= 'N';
-    $scope.admissionDetail.cardiovascular_angina= 'N';
-    $scope.admissionDetail.cardiovascular_fibrillation= 'N';
-    $scope.admissionDetail.cardiovascular_condition= 'N';
-    $scope.admissionDetail.cardiovascular_disease= 'N';
-    $scope.admissionDetail.cardiovascular_cardiac_disease= 'N';
-    $scope.admissionDetail.endocrinology_diabetes= 'N';
-    $scope.admissionDetail.endocrinology_blood_glucose= 'N';
-    $scope.admissionDetail.endocrinology_goitre= 'N';
-    $scope.admissionDetail.gastrointestinal_reflux= 'N';
-    $scope.admissionDetail.gastrointestinal_jaundice= 'N';
-    $scope.admissionDetail.gastrointestinal_ibs= 'N';
-    $scope.admissionDetail.bleeding_disorders_lungs= 'N';
-    $scope.admissionDetail.bleeding_disorders_anaemia= 'N';
-    $scope.admissionDetail.bleeding_disorders_problems= 'N';
-    $scope.admissionDetail.musculoskeletal_osteoarthritis= 'N';
-    $scope.admissionDetail.musculoskeletal_problems= 'N';
-    $scope.admissionDetail.neurology_dystrophies= 'N';
-    $scope.admissionDetail.neurology_tia= 'N';
-    $scope.admissionDetail.neurology_weakness= 'N';
-    $scope.admissionDetail.neurology_turns= 'N';
-    $scope.admissionDetail.respiratory_emphysema= 'N';
-    $scope.admissionDetail.respiratory_inclines= 'N';
-    $scope.admissionDetail.anti_inflammatory= 'N';
-    $scope.admissionDetail.herbal_supplements= 'N';
-    $scope.admissionDetail.lifestyle_alcohol= 'N';
-    $scope.admissionDetail.lifestyle_drugs= 'N';
-    $scope.admissionDetail.allergies_alerts_hyperthermia= 'N';
-    $scope.admissionDetail.anti_coagulant= 'N';
-    $scope.admissionDetail.lifestyle_smoked= 'N';
+    ($scope.admissionDetail.cardiovascular_triglycerides) ? $scope.admissionDetail.cardiovascular_triglycerides: $scope.admissionDetail.cardiovascular_triglycerides = 'N';
+    ($scope.admissionDetail.cardiovascular_hypertension) ? $scope.admissionDetail.cardiovascular_hypertension: $scope.admissionDetail.cardiovascular_hypertension = 'N';
+    ($scope.admissionDetail.cardiovascular_angina) ? $scope.admissionDetail.cardiovascular_angina: $scope.admissionDetail.cardiovascular_angina = 'N';
+    ($scope.admissionDetail.cardiovascular_fibrillation) ? $scope.admissionDetail.cardiovascular_fibrillation: $scope.admissionDetail.cardiovascular_fibrillation = 'N';
+    ($scope.admissionDetail.cardiovascular_condition) ? $scope.admissionDetail.cardiovascular_condition: $scope.admissionDetail.cardiovascular_condition = 'N';
+    ($scope.admissionDetail.cardiovascular_disease) ? $scope.admissionDetail.cardiovascular_disease: $scope.admissionDetail.cardiovascular_disease = 'N';
+    ($scope.admissionDetail.cardiovascular_cardiac_disease) ? $scope.admissionDetail.cardiovascular_cardiac_disease: $scope.admissionDetail.cardiovascular_cardiac_disease = 'N';
+    ($scope.admissionDetail.endocrinology_diabetes) ? $scope.admissionDetail.endocrinology_diabetes: $scope.admissionDetail.endocrinology_diabetes = 'N';
+    ($scope.admissionDetail.endocrinology_blood_glucose) ? $scope.admissionDetail.endocrinology_blood_glucose: $scope.admissionDetail.endocrinology_blood_glucose = 'N';
+    ($scope.admissionDetail.endocrinology_goitre) ? $scope.admissionDetail.endocrinology_goitre: $scope.admissionDetail.endocrinology_goitre = 'N';
+    ($scope.admissionDetail.gastrointestinal_reflux) ? $scope.admissionDetail.gastrointestinal_reflux: $scope.admissionDetail.gastrointestinal_reflux = 'N';
+    ($scope.admissionDetail.gastrointestinal_jaundice) ? $scope.admissionDetail.gastrointestinal_jaundice: $scope.admissionDetail.gastrointestinal_jaundice = 'N';
+    ($scope.admissionDetail.gastrointestinal_ibs) ? $scope.admissionDetail.gastrointestinal_ibs: $scope.admissionDetail.gastrointestinal_ibs = 'N';
+    ($scope.admissionDetail.bleeding_disorders_lungs) ? $scope.admissionDetail.bleeding_disorders_lungs: $scope.admissionDetail.bleeding_disorders_lungs = 'N';
+    ($scope.admissionDetail.bleeding_disorders_anaemia) ? $scope.admissionDetail.bleeding_disorders_anaemia: $scope.admissionDetail.bleeding_disorders_anaemia = 'N';
+    ($scope.admissionDetail.bleeding_disorders_problems) ? $scope.admissionDetail.bleeding_disorders_problems: $scope.admissionDetail.bleeding_disorders_problems = 'N';
+    ($scope.admissionDetail.musculoskeletal_osteoarthritis) ? $scope.admissionDetail.musculoskeletal_osteoarthritis: $scope.admissionDetail.musculoskeletal_osteoarthritis = 'N';
+    ($scope.admissionDetail.musculoskeletal_problems) ? $scope.admissionDetail.musculoskeletal_problems: $scope.admissionDetail.musculoskeletal_problems = 'N';
+    ($scope.admissionDetail.neurology_dystrophies) ? $scope.admissionDetail.neurology_dystrophies: $scope.admissionDetail.neurology_dystrophies = 'N';
+    ($scope.admissionDetail.neurology_tia) ? $scope.admissionDetail.neurology_tia: $scope.admissionDetail.neurology_tia = 'N';
+    ($scope.admissionDetail.neurology_weakness) ? $scope.admissionDetail.neurology_weakness: $scope.admissionDetail.neurology_weakness = 'N';
+    ($scope.admissionDetail.neurology_turns) ? $scope.admissionDetail.neurology_turns: $scope.admissionDetail.neurology_turns = 'N';
+    ($scope.admissionDetail.respiratory_emphysema) ? $scope.admissionDetail.respiratory_emphysema: $scope.admissionDetail.respiratory_emphysema = 'N';
+    ($scope.admissionDetail.respiratory_inclines) ? $scope.admissionDetail.respiratory_inclines: $scope.admissionDetail.respiratory_inclines = 'N';
+    ($scope.admissionDetail.anti_inflammatory) ? $scope.admissionDetail.anti_inflammatory: $scope.admissionDetail.anti_inflammatory = 'N';
+    ($scope.admissionDetail.herbal_supplements) ? $scope.admissionDetail.herbal_supplements: $scope.admissionDetail.herbal_supplements = 'N';
+    ($scope.admissionDetail.lifestyle_alcohol) ? $scope.admissionDetail.lifestyle_alcohol: $scope.admissionDetail.lifestyle_alcohol = 'N';
+    ($scope.admissionDetail.lifestyle_drugs) ? $scope.admissionDetail.lifestyle_drugs: $scope.admissionDetail.lifestyle_drugs = 'N';
+    ($scope.admissionDetail.allergies_alerts_hyperthermia) ? $scope.admissionDetail.allergies_alerts_hyperthermia: $scope.admissionDetail.allergies_alerts_hyperthermia = 'N';
+    ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
+    ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
 
     $scope.ChangeRadio = function(testname) {
         for (var i = 0; i < testname.length; i++) {
@@ -50,11 +50,16 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
             return true;
     };
 
+    $scope.stillToTake = function() {
+        $scope.admissionDetail.anti_coagulant_still_to_take = "Y";
+        $scope.admissionDetail.anti_coagulant_date_to_cease = null;
+    }
+
     /* END THAO */
     $timeout(function() {
         $scope.admissionDetail.DoctorDateChoose = moment().format('DD/MM/YYYY');
         if ($scope.wainformation) {
-             $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible : '';
+            $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible : '';
             $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber : '';
             $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber : '';
             $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate : '';
@@ -78,31 +83,32 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
                 $scope.admissionDetail.DOB = $scope.wainformation.Patients[0].DOB ? $scope.wainformation.Patients[0].DOB : '';
                 $scope.admissionDetail.Gender = $scope.wainformation.Patients[0].Gender ? $scope.wainformation.Patients[0].Gender : '';
                 PatientService.detailChildPatient({ UID: $scope.wainformation.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA', 'PatientKin'] })
-                .then(function(response) {
-                    console.log("detail Patient child ", response);
-                    if (response.data) {
-                        if (response.data.PatientMedicare.length > 0) {
-                            $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : response.data.PatientMedicare[0].MedicareEligible ? response.data.PatientMedicare[0].MedicareEligible : '';
-                            $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : response.data.PatientMedicare[0].MedicareReferenceNumber ? response.data.PatientMedicare[0].MedicareReferenceNumber : '';
-                            $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : response.data.PatientMedicare[0].MedicareNumber ? response.data.PatientMedicare[0].MedicareNumber : '';
-                            $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : response.data.PatientMedicare[0].ExpiryDate ? moment(response.data.PatientMedicare[0].ExpiryDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY') : '';
+                    .then(function(response) {
+                        console.log("detail Patient child ", response);
+                        if (response.data) {
+                            if (response.data.PatientMedicare.length > 0) {
+                                $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : response.data.PatientMedicare[0].MedicareEligible ? response.data.PatientMedicare[0].MedicareEligible : '';
+                                $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : response.data.PatientMedicare[0].MedicareReferenceNumber ? response.data.PatientMedicare[0].MedicareReferenceNumber : '';
+                                $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : response.data.PatientMedicare[0].MedicareNumber ? response.data.PatientMedicare[0].MedicareNumber : '';
+                                $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : response.data.PatientMedicare[0].ExpiryDate ? moment(response.data.PatientMedicare[0].ExpiryDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY') : '';
+                            }
+                            if (response.data.PatientDVA.length > 0) {
+                                $scope.admissionDetail.DVANumber = $scope.admissionDetail.DVANumber ? $scope.admissionDetail.DVANumber : response.data.PatientDVA[0].DVANumber ? response.data.PatientDVA[0].DVANumber : '';
+                            }
+                            if (response.data.PatientKin.length > 0) {
+                                $scope.admissionDetail.KinFirstName = $scope.admissionDetail.KinFirstName ? $scope.admissionDetail.KinFirstName : response.data.PatientKin[0].FirstName ? response.data.PatientKin[0].FirstName : '';
+                                $scope.admissionDetail.KinLastName = $scope.admissionDetail.KinLastName ? $scope.admissionDetail.KinLastName : response.data.PatientKin[0].LastName ? response.data.PatientKin[0].LastName : '';
+                                $scope.admissionDetail.Relationship = $scope.admissionDetail.Relationship ? $scope.admissionDetail.Relationship : response.data.PatientKin[0].Relationship ? response.data.PatientKin[0].Relationship : '';
+                                $scope.admissionDetail.MobilePhoneNumber = $scope.admissionDetail.MobilePhoneNumber ? $scope.admissionDetail.MobilePhoneNumber : response.data.PatientKin[0].MobilePhoneNumber ? response.data.PatientKin[0].MobilePhoneNumber : '';
+                            }
                         }
-                        if (response.data.PatientDVA.length > 0) {
-                            $scope.admissionDetail.DVANumber = $scope.admissionDetail.DVANumber ? $scope.admissionDetail.DVANumber : response.data.PatientDVA[0].DVANumber ? response.data.PatientDVA[0].DVANumber : '';
-                        }
-                        if (response.data.PatientKin.length > 0) {
-                            $scope.admissionDetail.KinFirstName = $scope.admissionDetail.KinFirstName ? $scope.admissionDetail.KinFirstName : response.data.PatientKin[0].FirstName ? response.data.PatientKin[0].FirstName : '';
-                            $scope.admissionDetail.KinLastName = $scope.admissionDetail.KinLastName ? $scope.admissionDetail.KinLastName : response.data.PatientKin[0].LastName ? response.data.PatientKin[0].LastName : '';
-                            $scope.admissionDetail.Relationship = $scope.admissionDetail.Relationship ? $scope.admissionDetail.Relationship : response.data.PatientKin[0].Relationship ? response.data.PatientKin[0].Relationship : '';
-                            $scope.admissionDetail.MobilePhoneNumber = $scope.admissionDetail.MobilePhoneNumber ? $scope.admissionDetail.MobilePhoneNumber : response.data.PatientKin[0].MobilePhoneNumber ? response.data.PatientKin[0].MobilePhoneNumber : '';
-                        }
-                    }
-                }, function(err) {
-                    console.log(err);
-                })
+                    }, function(err) {
+                        console.log(err);
+                    })
             }
         }
-         App.initAjax();
+        // App.initAjax();
+
 
     }, 0);
 

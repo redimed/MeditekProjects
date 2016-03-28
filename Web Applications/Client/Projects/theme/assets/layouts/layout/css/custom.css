@@ -13,7 +13,6 @@
     display: block !important;
 }
 
-
 .patientContent {
     position: absolute;
     top: 0;
@@ -22,7 +21,6 @@
     right: 0;
     margin: 5% auto;
 }
-
 
 .my-form-body-padding {
     padding-left: 2em !important;
@@ -509,163 +507,186 @@ img.profile-imge {
 
 /*end consultation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
+
 /*BEGIN Register Patient>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    html, body.full-background, body.full-background-compaign {
-        min-height: 768px;
-        min-width: 1024px;
-        height:100%;
-        width: 100%;
-    } 
-    body.full-background {
-        background-color: white;
-        background-image: url(../../../global/images/patient1.jpg);
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: left top;
-        position: relative;
-    }
-    body.full-background-compaign {
-        background-color: white;
-        background-image: url(../../../global/images/patient2.jpg);
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: left top;
-        position: relative;
-    }
-    .welcome img{
-        max-width: 300px;
-        width: 25%;
-        margin: 2% 5%;
-    }
-    .welcome .content{
-        background-color: rgba(84, 167, 250, 0.5);
-        border-top-right-radius: 100% !important;
-        border-bottom-left-radius: 20% !important;
-        position: absolute;
-        bottom: 3%;
-        left: 5%;
-        height: 500px;
-        width: 500px;
-    }
-    .welcome .content .button-group{
-        position: absolute;
-        bottom: 6em;
-        left: 3em;
-    }
-    .welcome .content .button-group h1{
-        color: white;
-        font-size: 1.8em;
-        font-weight: bold;
-        margin-bottom: 2em;
-    }
-    .welcome .content .button-group a{
-        display: block;
-        font-size: 1.5em;
-        color: white;
-        opacity: .9;
-        outline: 10px solid rgba(114, 159, 191, 0.26);
-        text-decoration: none;
-        padding: 13px 100px 13px 65px;
-        margin: 30px 0;
-    }
-    .welcome .content .button-group a:hover{
-        opacity: 1;
-    }
 
-    .welcome .content .button-group a.registration{
-        background-color: #f37b21;
-        background-image: url('../../../global/images/icon-edit.png');
-        background-repeat: no-repeat;
-        background-position: 15px 10px;
-        background-size: 40px;
-    }
-    .welcome .content .button-group a.existing{
-        background-color: #288e44;
-        background-image: url('../../../global/images/icon-patient.png');
-        background-repeat: no-repeat;
-        background-position: 15px 10px;
-        background-size: 40px;
-    }
-    .welcome .content .footer {
-        position: absolute;
-        bottom: -5%;
-        right: 0;
-    }
+html,
+body.full-background,
+body.full-background-compaign {
+    min-height: 768px;
+    min-width: 1024px;
+    height: 100%;
+    width: 100%;
+}
+
+body.full-background {
+    background-color: white;
+    background-image: url(../../../global/images/patient1.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: relative;
+}
+
+body.full-background-compaign {
+    background-color: white;
+    background-image: url(../../../global/images/patient2.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: relative;
+}
+
+.welcome img {
+    max-width: 300px;
+    width: 25%;
+    margin: 2% 5%;
+}
+
+.welcome .content {
+    background-color: rgba(84, 167, 250, 0.5);
+    border-top-right-radius: 100% !important;
+    border-bottom-left-radius: 20% !important;
+    position: absolute;
+    bottom: 3%;
+    left: 5%;
+    height: 500px;
+    width: 500px;
+}
+
+.welcome .content .button-group {
+    position: absolute;
+    bottom: 6em;
+    left: 3em;
+}
+
+.welcome .content .button-group h1 {
+    color: white;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 2em;
+}
+
+.welcome .content .button-group a {
+    display: block;
+    font-size: 1.5em;
+    color: white;
+    opacity: .9;
+    outline: 10px solid rgba(114, 159, 191, 0.26);
+    text-decoration: none;
+    padding: 13px 100px 13px 65px;
+    margin: 30px 0;
+}
+
+.welcome .content .button-group a:hover {
+    opacity: 1;
+}
+
+.welcome .content .button-group a.registration {
+    background-color: #f37b21;
+    background-image: url('../../../global/images/icon-edit.png');
+    background-repeat: no-repeat;
+    background-position: 15px 10px;
+    background-size: 40px;
+}
+
+.welcome .content .button-group a.existing {
+    background-color: #288e44;
+    background-image: url('../../../global/images/icon-patient.png');
+    background-repeat: no-repeat;
+    background-position: 15px 10px;
+    background-size: 40px;
+}
+
+.welcome .content .footer {
+    position: absolute;
+    bottom: -5%;
+    right: 0;
+}
+
+
 /*END Register Patient>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*regular-checkbox, regular-radio===============================================================================*/
-    .checkbox-list, 
-    .radio-list {
-        margin-left: 2em;
-    }
-    .checkbox-inline, 
-    .radio-inline {
-        margin-left: 2em;
-        margin-right: 2em;
-    }
-    .regular-checkbox{
-        -webkit-appearance: none;
-        height: 1.5em;
-        width: 1.5em;
-        border: 1px solid #cacece;
-        margin-left: -30px !important;
-        margin-top: 0 !important;
-    }
-    .regular-radio{
-        -webkit-appearance: none;
-        height: 1.5em;
-        width: 1.5em;
-        border: 1px solid #cacece;
-        border-radius: 50%;
-        margin-left: -30px !important;
-        margin-top: 0 !important;
-    }
 
-    .regular-checkbox:hover,
-    .regular-radio:hover{
-        background-color: #efefef;
-    }
 
-    .regular-checkbox:disabled, 
-    .regular-radio:disabled { 
-        border: 1px solid gray;
-        background-color: #eee;
-    }
-
-    .regular-radio:focus, 
-    .regular-radio:checked:focus,
-    .regular-radio:active, 
-    .regular-radio:checked:active,
-    .regular-checkbox:focus, 
-    .regular-checkbox:checked:focus
-    .regular-checkbox:active, 
-    .regular-checkbox:checked:active { 
-        outline: none !important;
-    }
-
-    .regular-radio:checked,
-    .regular-checkbox:checked{
-        text-align: center !important;
-        vertical-align: middle !important;
-        background-color: #999;
-        color: white;
-    }
-    .regular-radio:checked:after,
-    .regular-checkbox:checked:after{
-        content: '\2714';  
-    }
 /*regular-checkbox, regular-radio===============================================================================*/
 
+.checkbox-list,
+.radio-list {
+    margin-left: 2em;
+}
+
+.checkbox-inline,
+.radio-inline {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.regular-checkbox {
+    -webkit-appearance: none;
+    height: 1.5em;
+    width: 1.5em;
+    border: 1px solid #cacece;
+    margin-left: -30px !important;
+    margin-top: 0 !important;
+}
+
+.regular-radio {
+    -webkit-appearance: none;
+    height: 1.5em;
+    width: 1.5em;
+    border: 1px solid #cacece;
+    border-radius: 50% !important;
+    margin-left: -30px !important;
+    margin-top: 0 !important;
+}
+
+.regular-checkbox:hover,
+.regular-radio:hover {
+    background-color: #efefef;
+}
+
+.regular-checkbox:disabled,
+.regular-radio:disabled {
+    border: 1px solid gray;
+    background-color: #eee;
+}
+
+.regular-radio:focus,
+.regular-radio:checked:focus,
+.regular-radio:active,
+.regular-radio:checked:active,
+.regular-checkbox:focus,
+.regular-checkbox:checked:focus .regular-checkbox:active,
+.regular-checkbox:checked:active {
+    outline: none !important;
+}
+
+.regular-radio:checked,
+.regular-checkbox:checked {
+    text-align: center !important;
+    vertical-align: middle !important;
+    background-color: #999;
+    color: white;
+}
+
+.regular-radio:checked:after,
+.regular-checkbox:checked:after {
+    content: '\2714';
+}
 
 
+/*regular-checkbox, regular-radio===============================================================================*/
 
-.dashboard-stat:hover{
+.dashboard-stat:hover {
     cursor: pointer;
 }
 
-.dashboard-stat .details .number{
+.dashboard-stat .details .number {
     font-size: 23px;
     font-weight: bolder;
 }
+
+
 /*phan quoc chien================================================================================*/
 
 .margin-left-right-0 {
@@ -681,7 +702,7 @@ img.profile-imge {
     padding: 0px;
 }
 
-.padding-buttom-30{
+.padding-buttom-30 {
     padding-bottom: 30px;
 }
 

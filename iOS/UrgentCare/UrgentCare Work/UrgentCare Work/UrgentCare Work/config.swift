@@ -21,7 +21,7 @@ struct RegexString  {
 }
 
 struct api{
-    static let submitInjury = "http://testapp.redimed.com.au:3001/api/urgent-care/urgent-request"
+    static let submitInjury = "http://meditek.redimed.com.au:3001/api/urgent-care/urgent-request"
 }
 
 struct model{

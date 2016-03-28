@@ -6,7 +6,7 @@ var moment = require('moment');
 var check  = require('../HelperService');
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
 function SendSMS(toNumber, content, callback) {
-
+    console.log("vao????????????????????????????????????");
     return twilioClient.messages.create({
         body: content,
         to: toNumber,
@@ -839,7 +839,7 @@ module.exports = {
                     if(isCreateByPhoneAndEmail == true) {
                         data.content = data.PinNumber;
                         return Services.Patient.sendSMS(data, t,function(err) {
-                            if(err) {
+                            if(err && config.twilioEnv == 'product') {
                                 throw err;
                             }
                             else {
@@ -871,7 +871,7 @@ module.exports = {
                     else if(isCreateByPhoneNumber == true) {
                         data.content = data.PinNumber;
                         return Services.Patient.sendSMS(data, t,function(err) {
-                            if(err)
+                            if(err && config.twilioEnv == 'product')
                                 throw err;
                             else{
                                 info.transaction = t;

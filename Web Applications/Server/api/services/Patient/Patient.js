@@ -1519,48 +1519,7 @@ module.exports = {
                     as:'Country1',
                     attributes: ['ShortName'],
                     required: false
-                },
-                {
-                    model: PatientDVA,
-                    required: false,
-                    where:{
-                        Enable: 'Y'
-                    }
-                },
-                {
-                    model: PatientKin,
-                    required: false,
-                    where:{
-                        Enable: 'Y'
-                    }
-                },
-                {
-                    model: PatientMedicare,
-                    required: false,
-                    where:{
-                        Enable: 'Y'
-                    }
-                },
-                {
-                    model: PatientPension,
-                    required: false,
-                    where:{
-                        Enable: 'Y'
-                    }
-                },
-                {
-                    model: PatientGP,
-                    required: false,
-                    where:{
-                        Enable: 'Y'
-                    }
-                },
-                {
-                    model: PatientFund,
-                    required: false,
-                    where:{
-                        Enable: 'Y'
-                    }
+
                 }
             ]
         })
@@ -2046,10 +2005,11 @@ module.exports = {
                 return sequelize.Promise.each(data.model,function(modelName,index) {
                     return sequelize.models[modelName].findAll({
                         where:{
-                            PatientID : got_patient.ID
+                            $and:data.where?data.where:null,
+                            PatientID : got_patient.ID,
                         },
                         limit: data.limit?data.limit:null,
-                        offset: data.offset?data.offset:null
+                        offset: data.offset?data.offset:null,
                     })
                     .then(function(got_model) {
                         postData[modelName] = got_model;

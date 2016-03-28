@@ -20,10 +20,10 @@
                                 <a href="index.html#tab_fund" data-toggle="tab" aria-expanded="true">Fund / Payment</a>
                             </li>
                             <li ng-click="typeShow='PatientKin'">
-                                <a href="index.html#tab_kod" data-toggle="tab" aria-expanded="true">Kin / Guardian / Family Members</a>
+                                <a href="index.html#tab_kod" data-toggle="tab" aria-expanded="true" ng-click="callData('PatientKin')">Kin / Guardian / Family Members</a>
                             </li>
                             <li>
-                                <a href="index.html#tab_gp" data-toggle="tab" aria-expanded="true">GP / Clinical Information</a>
+                                <a href="index.html#tab_gp" data-toggle="tab" aria-expanded="true"  ng-click="callData('PatientGP')">GP / Clinical Information</a>
                             </li>
                         </ul>
                         <!-- end header tab -->
@@ -351,10 +351,10 @@
                                 <div class="row margin-top-30">
                                     <div class="col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientFund')">Fund</a>
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientPension')">Pension</a>
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientDVA')">DVA</a>
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientMedicare')">Medicare</a>
+                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientFund');callData('PatientFund')">Fund</a>
+                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientPension');callData('PatientPension')">Pension</a>
+                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientDVA');callData('PatientDVA')">DVA</a>
+                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientMedicare');callData('PatientMedicare')">Medicare</a>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">{{typeShow=='PatientFund'?'Fund List':typeShow=='PatientDVA'?'DVA List':typeShow=='PatientPension'?'Pension List':typeShow=='PatientMedicare'?'Medicare List':''}}</label>

@@ -1,7 +1,9 @@
-var socketAuth = {},
-    socketRest = {},
-    socketNc = {},
-    socketTelehealth = {};
+var ioSocket = {},
+    socketAuth = ioSocket.Auth,
+    socketRest = ioSocket.Rest,
+    socketTelehealth = ioSocket.Telehealth,
+    socketNc = ioSocket.Nc;
+
 
 socketMakeRequest = function(server, api, obj) {
     server.get(api, obj, function(data, jwres) {
@@ -18,8 +20,8 @@ socketAuth = io.sails.connect(o.const.authBaseUrl);
 socketAuth.on('connect', function() {
     connectedAuth();
     console.log("auth connect socket");
-    if (socketAuth.funConnect) {
-        socketAuth.funConnect();
+    if (ioSocket.authConnect) {
+        ioSocket.authConnect();
     }
 });
 socketAuth.on('testmessage', function(msg) {
@@ -55,8 +57,8 @@ function connectedTelehealth() {
     socketTelehealth.on('connect', function() {
         connectedNc();
         console.log("telehealth connect socket");
-        if (socketTelehealth.funConnect) {
-            socketTelehealth.funConnect();
+        if (ioSocket.telehealthConnect) {
+            ioSocket.telehealthConnect();
         }
     });
     socketTelehealth.on('testmessage', function(msg) {
@@ -66,16 +68,16 @@ function connectedTelehealth() {
     socketTelehealth.on('receiveMessage', function(msg) {
         switch (msg.message) {
             case "decline":
-                socketTelehealth.funDecline(msg);
+                ioSocket.telehealthDecline(msg);
                 break;
             case "call":
-                socketTelehealth.funCall(msg);
+                ioSocket.telehealthCall(msg);
                 break;
             case "cancel":
-                socketTelehealth.funCancel(msg);
+                ioSocket.telehealthCancel(msg);
                 break;
             case "misscall":
-                socketTelehealth.funMisscall(msg);
+                ioSocket.telehealthMisscall(msg);
                 break;
         };
     });

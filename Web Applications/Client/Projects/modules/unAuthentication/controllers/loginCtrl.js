@@ -12,12 +12,12 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
         } else {
             UnauthenticatedService.login($scope.user).then(function(data) {
                 // join room auth server
-                if (socketAuth) {
+                if (!_.isEmpty(socketAuth)) {
                     socketMakeRequest(socketAuth, '/api/socket/makeUserOwnRoom', { UID: data.user.UID });
                 }
                 //-----------------------------------------------------
                 // join room telehealth server
-                if (socketTelehealth) {
+                if (!_.isEmpty(socketTelehealth)) {
                     socketMakeRequest(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: data.user.TelehealthUser.UID });
                 }
                 //-----------------------------------------------------

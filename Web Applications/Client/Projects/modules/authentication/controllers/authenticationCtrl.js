@@ -101,7 +101,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         });
     }
 
-    socketTelehealth.funCall = function(msg) {
+    ioSocket.telehealthCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal({
             title: msg.fromName,
@@ -134,27 +134,27 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         o.audio.play();
     };
 
-    socketTelehealth.funConnect = function() {
+    ioSocket.telehealthConnect = function() {
         console.log("reconnect socketTelehealth");
         socketMakeRequest(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
     }
 
-    socketAuth.funConnect = function() {
+    ioSocket.authConnect = function() {
         console.log("reconnect socketAuth");
         socketMakeRequest(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
     }
 
-    socketTelehealth.funCancel = function(msg) {
+    ioSocket.telehealthCancel = function(msg) {
         console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal.close();
         o.audio.pause();
     }
-    socketTelehealth.funDecline = function(msg) {
+    ioSocket.telehealthDecline = function(msg) {
         console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
         swal.close();
         o.audio.pause();
     }
-    socketTelehealth.funMisscall = function(msg) {
+    ioSocket.telehealthMisscall = function(msg) {
         alert("Miss Call");
     }
 });

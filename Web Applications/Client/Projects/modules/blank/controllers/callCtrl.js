@@ -17,6 +17,20 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
     console.log("$stateParams", $stateParams);
     o.loadingPage(true);
     //Connect to the session
+    function sendCall() {
+        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+            from: uidUser,
+            to: uidCall,
+            message: "call",
+            sessionId: sessionId,
+            fromName: userInfo.UserName
+        }, function(data) {
+            console.log("send call", data);
+        });
+        o.audio.loop = true;
+        o.audio.play();
+    };
+
     session.connect(token, function(error) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
@@ -26,20 +40,14 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
                     console.log("publish Success");
                     console.log("calllllllllllllllllllllllllllllllllll", _.isEmpty(socketTelehealth));
                     if (!_.isEmpty(socketTelehealth)) {
-                        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-                            from: uidUser,
-                            to: uidCall,
-                            message: "call",
-                            sessionId: sessionId,
-                            fromName: userInfo.UserName
-                        }, function(data) {
-                            console.log("send call", data);
-                        });
-                        o.audio.loop = true;
-                        o.audio.play();
+                        sendCall();
                     }
                 } else {
                     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
+                    ioSocket.telehealthConnect = function() {
+                        console.log("aaaaaaaaaaaaaaa");
+                        sendCall();
+                    }
                 }
             });
             session.publish($scope.publisher);
@@ -47,10 +55,6 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
             console.log('There was an error connecting to the session: ', error.code, error.message);
         }
     });
-
-    socketTelehealth.funConnect = function() {
-        console.log("aaaaaaa");
-    }
 
     // Subscribe to a newly created stream
     session.on('streamCreated', function(event) {

@@ -199,7 +199,7 @@ app.directive('appointmentDetailDirective', function() {
                     };
                 });
             };
-            socketTelehealth.funDecline = function(msg) {
+            ioSocket.telehealthDecline = function(msg) {
                 console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK", msg);
                 $scope.opentokCallWindow.close();
                 o.audio.pause();

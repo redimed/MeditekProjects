@@ -42,10 +42,12 @@ module.exports = React.createClass({
     },
     setValue: function(value){
         if(value !== null && value !== ''){
-            valueArr = value.join(",");
-            if(valueArr !== "image/jsignature;base30,"){
-                if(typeof $(this.refs.signature).jSignature !== 'undefined')
-                    $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
+            if(typeof value.join !== 'undefined'){
+                valueArr = value.join(",");
+                if(valueArr !== "image/jsignature;base30,"){
+                    if(typeof $(this.refs.signature).jSignature !== 'undefined')
+                        $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
+                }
             }
         }
     },

@@ -20,7 +20,7 @@ module.exports = {
 				        'Content-Type': 'application/json' 
 				},
 				responseType:'arraybuffer',
-				url: Config.apiUrl+'api/downloadFileWithoutLogin/'+data.UID,
+				url: Config.apiServerUrl+'api/downloadFileWithoutLogin/'+data.UID,
 				dataType: 'binary',
 				success: resolve
 			})

@@ -1,7 +1,7 @@
 //var domain = 'https://testapp.redimed.com.au';
-var domain = 'https://meditek.redimed.com.au';
+//var domain = 'https://meditek.redimed.com.au';
 //var domain = 'https://192.168.1.172';
-//var domain = 'https://localhost';
+var domain = 'https://localhost';
 
 module.exports = {
 	//apiUrl: 'https://testapp.redimed.com.au:3015/',
@@ -12,6 +12,7 @@ module.exports = {
 	//apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
 	apiUrl: domain+':3015/',
 	apiServerUrl: domain+':3005/',
+	//apiServerUrl: 'https://meditek.redimed.com.au:3005/',
 	apiPDFUrl: domain+':3013/',
 	//apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
 	getParamsIframe: function(appointmentId, patientId,userId){

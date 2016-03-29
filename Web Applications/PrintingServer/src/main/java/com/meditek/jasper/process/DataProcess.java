@@ -41,17 +41,27 @@ public class DataProcess {
             else if(d.getType().equals("table")){
                 parsedData = iTextTableParse(d, parsedData, data);
             }
-            else if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("_image") || d.getType().equals("eform_input_signature")){
+            else if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("image") || d.getType().equals("eform_input_signature") || d.getType().equals("eform_input_image_doctor")){
                 com.itextpdf.text.Image imageRes;
                 if(d.getValue().equals("") || d.getValue()==null){
                     byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
-                    imageRes=com.itextpdf.text.Image.getInstance(imgBytes);
+                    try {
+                        imageRes=com.itextpdf.text.Image.getInstance(imgBytes);
+                        parsedData.put(d.getName().toLowerCase(), imageRes);
+                    }
+                    catch (Exception ex){
+                        imageRes=null;
+                    } 
                 }
                 else {
-                    imageRes=com.itextpdf.text.Image.getInstance(new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/"+d.getValue()));
-                }
-                 parsedData.put(d.getName().toLowerCase(), imageRes);
-                
+                    try{
+                        imageRes=com.itextpdf.text.Image.getInstance(new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/"+d.getValue()));
+                        parsedData.put(d.getName().toLowerCase(), imageRes);
+                    }
+                    catch (Exception ex){
+                        imageRes=null;
+                    }                    
+                }                
             }
             else if(d.getType().equals("break")) continue;
             else parsedData.put(d.getName().toLowerCase(), d.getValue());

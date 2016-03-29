@@ -32,12 +32,11 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
 
     var userInfo =  JSON.parse($cookies.get('userInfo'));
-    $scope.checkPatient = 'N';
+    $scope.checkPatient = 'Y';
     for(var i = 0; i < userInfo.roles.length; i++){
         var role = userInfo.roles[i];
-        if(role.UID === '333'){
+        if(role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN'){
             $scope.checkPatient = 'Y';
-            break;
         }
     }
 
@@ -59,9 +58,12 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     /* END EFORM */
     //
     $scope.checkRoleUpdate = true;
-    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN') {
-        $scope.checkRoleUpdate = false;
-    };
+     for(var i = 0; i < $cookies.getObject('userInfo').roles.length; i++){
+        if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' 
+            || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
+            $scope.checkRoleUpdate = false;
+        };
+    }
     //
     $scope.Params = $stateParams;
     console.log("$scope.Params", $scope.Params.UID);

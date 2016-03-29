@@ -627,10 +627,12 @@ module.exports = {
                     return SendSMS(phoneNumber, content, function(err, message) {
                         console.log("err sms ~~~~~~~~~~~~~~ ",err);
                         if (err && config.twilioEnv == 'product') {
+                            console.log("vao err ne ???????????????????");
                             transaction.rollback();
                             fn(err);
                         }
                         else {
+                            console.log("da chay thong qua");
                             fn(null);
                         }
                     });
@@ -840,13 +842,18 @@ module.exports = {
                     if(isCreateByPhoneAndEmail == true) {
                         data.content = data.PinNumber;
                         return Services.Patient.sendSMS(data, t,function(err) {
+                            console.log("no tra ve cai gi ",err);
                             if(err && config.twilioEnv == 'product') {
+                                console.log("vao day ??? xay ra loi ne sms 1");
                                 throw err;
                             }
                             else {
                                 return Services.Patient.sendMail(data,t,function(err) {
-                                    if(err)
+                                    if(err){
+                                        console.log(err);
+                                        console.log("vao day ??? xay ra loi ne mail 1");
                                         throw err;
+                                    }
                                     else{
                                         info.transaction = t;
                                         info.PinNumber = userInfo.PinNumber;
@@ -872,7 +879,9 @@ module.exports = {
                     else if(isCreateByPhoneNumber == true) {
                         data.content = data.PinNumber;
                         return Services.Patient.sendSMS(data, t,function(err) {
+                            console.log("no co loi~ kia ",err);
                             if(err && config.twilioEnv == 'product'){
+                                console.log("hay vao day ???");
                                 throw err;
                             }
                             else{

@@ -625,7 +625,8 @@ module.exports = {
                 // var phoneRegex = /^\+[0-9]{9,15}$/;
                 if (phoneNumber != null && content != null) {
                     return SendSMS(phoneNumber, content, function(err, message) {
-                        if (err) {
+                        console.log("err sms ~~~~~~~~~~~~~~ ",err);
+                        if (err && config.twilioEnv == 'product') {
                             transaction.rollback();
                             fn(err);
                         }
@@ -871,8 +872,9 @@ module.exports = {
                     else if(isCreateByPhoneNumber == true) {
                         data.content = data.PinNumber;
                         return Services.Patient.sendSMS(data, t,function(err) {
-                            if(err && config.twilioEnv == 'product')
+                            if(err && config.twilioEnv == 'product'){
                                 throw err;
+                            }
                             else{
                                 info.transaction = t;
                                 info.PinNumber = userInfo.PinNumber;

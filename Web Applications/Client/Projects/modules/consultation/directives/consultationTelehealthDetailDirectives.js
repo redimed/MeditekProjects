@@ -54,9 +54,12 @@ app.directive('telehealthDetail', function() {
                 $scope.FileUploads()
                 $scope.tab_body_part = 'all';
                 $scope.checkRoleUpdate = true;
-                if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
-                    $scope.checkRoleUpdate = false;
-                };
+                for(var i = 0; i < $cookies.getObject('userInfo').roles.length; i++){
+                    if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' 
+                        || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
+                        $scope.checkRoleUpdate = false;
+                    };
+                }
                 $scope.Temp = angular.copy($scope.wainformation)
                 var ClinicalDetailsTemp = [];
                 $scope.loadFuntion = function() {
@@ -410,7 +413,7 @@ app.directive('telehealthDetail', function() {
                             toastr.error(stringAlert);
                         };
                     } else {
-                        console.log($scope.userForm.$error);
+                        console.log($scope.userForm.$valid);
                         toastr.error("Please check input data");
                     }
                 };

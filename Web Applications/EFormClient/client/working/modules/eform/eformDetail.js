@@ -130,7 +130,9 @@ module.exports = React.createClass({
                             if(Config.getPrefixField(field.type, 'radio') > -1 || Config.getPrefixField(field.type, 'checkbox') > -1){
                                 self.refs[section.ref].setValueForRadio(rowRef, fieldRef, field.checked);
                             }else{
-                                self.refs[section.ref].setValue(rowRef, fieldRef, fieldData);
+                                if(field.type !== 'eform_input_image_doctor'){
+                                    self.refs[section.ref].setValue(rowRef, fieldRef, fieldData);
+                                }
                             }
                         }else{
                             var fieldRefChild = field.refChild;
@@ -203,6 +205,7 @@ module.exports = React.createClass({
                 fields.push(field);
             })
         }
+
         var data = {
             printMethod: this.EFormTemplate.PrintType,
             data: fields,

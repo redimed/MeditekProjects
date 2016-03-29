@@ -11,8 +11,8 @@ module.exports = {
 	//apiServerUrl: 'https://meditek.redimed.com.au:3005/',
 	//apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
 	apiUrl: domain+':3015/',
-	apiServerUrl: domain+':3005/',
-	//apiServerUrl: 'https://meditek.redimed.com.au:3005/',
+	//apiServerUrl: domain+':3005/',
+	apiServerUrl: 'https://meditek.redimed.com.au:3005/',
 	apiPDFUrl: domain+':3013/',
 	//apiPDFUrl: 'https://meditek.redimed.com.au:3013/',
 	getParamsIframe: function(appointmentId, patientId,userId){

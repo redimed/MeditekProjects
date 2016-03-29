@@ -8,7 +8,8 @@ app.directive('companyUser', function($uibModal, $timeout, $state, companyServic
 			compuid:'=onComp',
 			type:'=onType',
 			loadagain:'=onLoadAgain',
-			cancel:'=onCancel'
+			cancel:'=onCancel',
+			reset:'=onReset',
 		},
 		templateUrl: 'modules/company/directives/templates/companyUserDirective.html',
 		link: function(scope, elem, attrs){

@@ -4,7 +4,9 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
         scope: {
             appointment: '=',
             staff:'=onStaff',
-            abc: '=onItem'
+            abc: '=onItem',
+            rolecompany:'=roleCompany',
+            reset:'=onReset',
         },
         restrict: "EA",
         controller: function($scope, FileUploader) {
@@ -76,6 +78,9 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
         },
         link: function(scope, elem, attrs) {
+            scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
+
+            console.log("rolecompany ",scope.rolecompany);
             scope.isChoseAvatar = false;
             // State
             scope.state = [
@@ -275,6 +280,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 //service check data
                 return PatientService.validate(data)
                     .then(function(result) {
+                        data.rolecompany = scope.rolecompany;
                         //service call API create patient
                         return PatientService.createPatient(data)
                             .then(function(success) {
@@ -295,6 +301,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                     scope.appointment.runIfSuccess(success.data);
                                 }else if(scope.staff){
                                     scope.staff.runIfSuccess(success.data);
+                                }else if(scope.rolecompany == true) {
+                                    scope.reset();
                                 } else {
                                     toastr.success("Create Successful!!", "SUCCESS");
                                     $state.go('authentication.patient.list', null, {

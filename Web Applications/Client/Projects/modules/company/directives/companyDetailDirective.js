@@ -49,9 +49,14 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 						$scope.loadagain = function() {
 							scope.init();
 						};
+						$scope.reset = function() {
+							toastr.success("Create Successfully","success");
+							scope.init();
+							$modalInstance.dismiss('cancel');
+						}
 					},
 					size: 'lg',
-					windowClass: model=='Staff'?'app-modal-window':null
+					windowClass: model=='Staff'||model=='UserAccount'?'app-modal-window':null
 				});
 			}
 		},

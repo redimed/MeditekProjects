@@ -30,8 +30,8 @@ module.exports = {
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).format('YYYY-MM-DD HH:mm:ss Z'),
-                                toTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).format('YYYY-MM-DD HH:mm:ss Z')
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -44,10 +44,8 @@ module.exports = {
                                 HelperService.CheckExistData(valueDate.toTime) &&
                                 moment(valueDate.fromTime).format('e') ===
                                 moment(startDate).format('e')) {
-                                var dateRepeat = moment(valueDate.fromTime).format('YYYY-MM-DD');
-                                var isdateKey = dateRepeat === dateKey;
                                 var objectRoster = {
-                                    UID: isdateKey ? data.UID ? data.UID : UUIDService.Create() : UUIDService.Create(),
+                                    UID: UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,
@@ -74,8 +72,8 @@ module.exports = {
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).format('YYYY-MM-DD HH:mm:ss Z'),
-                                toTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).format('YYYY-MM-DD HH:mm:ss Z')
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -86,10 +84,8 @@ module.exports = {
                             if (!_.isEmpty(valueDate) &&
                                 HelperService.CheckExistData(valueDate.fromTime) &&
                                 HelperService.CheckExistData(valueDate.toTime)) {
-                                var dateRepeat = moment(valueDate.fromTime).format('YYYY-MM-DD');
-                                var isdateKey = dateRepeat === dateKey;
                                 var objectRoster = {
-                                    UID: isdateKey ? data.UID ? data.UID : UUIDService.Create() : UUIDService.Create(),
+                                    UID: UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,
@@ -116,8 +112,8 @@ module.exports = {
                     if (!_.isEmpty(rangeDateFrom)) {
                         rangeDateFrom.by('days', function(day) {
                             var objectDate = {
-                                fromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).format('YYYY-MM-DD HH:mm:ss Z'),
-                                toTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).format('YYYY-MM-DD HH:mm:ss Z')
+                                fromTime: moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom,
+                                toTime: moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo
                             };
                             arrayDateRepeat.push(objectDate);
                         });
@@ -131,10 +127,8 @@ module.exports = {
                                 moment(valueDate.fromTime).format('e') ===
                                 moment(startDate).format('e') &&
                                 moment(valueDate.fromTime).format('e') <= 5) {
-                                var dateRepeat = moment(valueDate.fromTime).format('YYYY-MM-DD');
-                                var isdateKey = dateRepeat === dateKey;
                                 var objectRoster = {
-                                    UID: isdateKey ? data.UID ? data.UID : UUIDService.Create() : UUIDService.Create(),
+                                    UID: UUIDService.Create(),
                                     FromTime: valueDate.fromTime,
                                     ToTime: valueDate.toTime,
                                     IsRecurrence: data.IsRecurrence,

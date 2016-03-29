@@ -86,8 +86,11 @@ module.exports = function(data, userInfo) {
                                 if (!_.isEmpty(rosterRepeater)) {
                                     //filter all Roster update
                                     _.forEach(rosterRepeater, function(valueRosterRequest, indexRosterRequest) {
+                                        var dateRosterRequest = valueRosterRequest.FromTime.split(' ')[0];
+                                        var clientZone = valueRosterRequest.FromTime.split(' ')[2];
                                         _.forEach(arrRosterUser, function(valueRosterUser, indexRosterUser) {
-                                            if (valueRosterUser.UID === valueRosterRequest.UID) {
+                                            var dateRosterUser = moment(valueRosterUser.FromTime).utcOffset(clientZone).format('YYYY-MM-DD');
+                                            if (dateRosterRequest === dateRosterUser) {
                                                 var objRosterUpdate = {
                                                     UID: valueRosterUser.UID,
                                                     FromTime: valueRosterRequest.FromTime,
@@ -108,9 +111,9 @@ module.exports = function(data, userInfo) {
                                     //filter all Roster create
                                     _.forEach(rosterRepeater, function(valueRosterRequest, indexRosterRequest) {
                                         var isFound = false;
+                                        var dateRosterRequest = valueRosterRequest.FromTime.split(' ')[0];
                                         _.forEach(arrayRosterUpdate, function(valueRosterUpdate, indexRosterUpdate) {
-                                            var dateRosterRequest = moment(valueRosterRequest.FromTime).format('YYYY-MM-DD');
-                                            var dateRosterUpdate = moment(valueRosterUpdate.FromTime).format('YYYY-MM-DD');
+                                            var dateRosterUpdate = valueRosterUpdate.FromTime.split(' ')[0];
                                             if (dateRosterRequest === dateRosterUpdate) {
                                                 isFound = true;
                                             }

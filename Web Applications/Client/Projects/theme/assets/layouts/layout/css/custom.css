@@ -617,7 +617,7 @@ body.full-background-compaign {
 
 .checkbox-inline,
 .radio-inline {
-    margin-left: 2em;
+    /*margin-left: 2em;*/
     margin-right: 2em;
 }
 
@@ -628,6 +628,7 @@ body.full-background-compaign {
     border: 1px solid #cacece;
     margin-left: -30px !important;
     margin-top: 0 !important;
+    vertical-align: middle !important;
 }
 
 .regular-radio {
@@ -638,6 +639,7 @@ body.full-background-compaign {
     border-radius: 50% !important;
     margin-left: -30px !important;
     margin-top: 0 !important;
+    vertical-align: middle !important;
 }
 
 .regular-checkbox:hover,
@@ -665,8 +667,6 @@ body.full-background-compaign {
 .regular-checkbox:checked {
     text-align: center !important;
     vertical-align: middle !important;
-    background-color: #999;
-    color: white;
 }
 
 .regular-radio:checked:after,

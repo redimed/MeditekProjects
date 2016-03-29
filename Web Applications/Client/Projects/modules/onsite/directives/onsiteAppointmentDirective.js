@@ -387,7 +387,7 @@ app.directive('onsiteAppointment', function(){
                 };
                 $scope.submitUpdate = function() {
                     $scope.submited = true
-                    //if ($scope.userForm.$valid) {
+                    if ($scope.userForm.$valid) {
                         var stringAlert = null;
                         if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
                             stringAlert = $scope.CheckValidation();
@@ -410,10 +410,10 @@ app.directive('onsiteAppointment', function(){
                         } else {
                             toastr.error(stringAlert);
                         };
-                    // } else {
-                    //     console.log($scope.userForm.$error);
-                    //     toastr.error("Please check input data");
-                    // }
+                    } else {
+                        console.log($scope.userForm.$error);
+                        toastr.error("Please check input data");
+                    }
                 };
 
                 $timeout(function(){

@@ -413,7 +413,7 @@ app.directive('telehealthDetail', function() {
                             toastr.error(stringAlert);
                         };
                     } else {
-                        console.log($scope.userForm.$error);
+                        console.log($scope.userForm.$valid);
                         toastr.error("Please check input data");
                     }
                 };

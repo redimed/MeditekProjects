@@ -2,6 +2,7 @@ var ComponentSection = require('modules/eform/eformTemplateDetail/section');
 var EFormService = require('modules/eform/services');
 var Config = require('config');
 var ComponentPageBar = require('modules/eform/eformDetail/pageBar');
+var History = ReactRouter.hashHistory;
 
 module.exports = React.createClass({
     appointmentUID: null,
@@ -37,8 +38,9 @@ module.exports = React.createClass({
     _serverPreFormDetail: function(content){
         var self = this;
         EFormService.preFormDetail({UID: this.appointmentUID})
-        .then(function(response){            
-            self.signatureDoctor = response.data.Doctor.FileUpload;
+        .then(function(response){
+            if(typeof response.data.Doctor !== 'undefined')
+                self.signatureDoctor = response.data.Doctor.FileUpload;
             for(var section_index = 0; section_index < content.length; section_index++){
                 var section = content[section_index];
                 for(var row_index = 0; row_index < section.rows.length; row_index++){
@@ -145,6 +147,7 @@ module.exports = React.createClass({
         .then(function(response){
             var EFormTemplate = self.EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
+
              EFormService.eformHistoryDetail({EFormTemplateUID: self.templateUID, PatientUID: self.patientUID})
             .then(function(result){
                 self.setState(function(prevState){
@@ -179,12 +182,12 @@ module.exports = React.createClass({
         if(this.formUID === null){
             EFormService.formSave({templateUID: this.templateUID, appointmentUID: appointmentUID, content: content, name: this.state.name, patientUID: this.patientUID, userUID: this.userUID})
             .then(function(){
-                swal("Success!", "Your form has been saved.", "success");
+                //swal("Success!", "Your form has been saved.", "success");
             })
         }else{
             EFormService.formUpdate({UID: this.formUID, content: content})
             .then(function(){
-                swal("Success!", "Your form has been saved.", "success");
+                //swal("Success!", "Your form has been saved.", "success");
             })
         }
     },
@@ -218,6 +221,11 @@ module.exports = React.createClass({
 
         })
     },
+    _onGoToHistory: function(history){
+        var appointmentUID = history.Appointments[0].UID;
+        window.location.href = '/#/eform/detail?appointmentUID='+appointmentUID+'&patientUID='+this.patientUID+'&templateUID='+this.templateUID+'&userUID='+this.userUID;
+        window.location.reload();
+    },
     render: function(){
         return (
             <div className="page-content">
@@ -241,7 +249,7 @@ module.exports = React.createClass({
                             }, this)
                         }
                     </div>
-                    <div className="col-lg-3 col-md-12">
+                    <div className="col-lg-3 col-md-12" style={{position: 'fixed', top: 40, right: 0}}>
                         <div className="portlet portlet-fit box blue">
                             <div className="portlet-title">
                                 <div className="caption">
@@ -265,10 +273,18 @@ module.exports = React.createClass({
                                     <tbody>
                                         {
                                             this.state.history.map(function(h, index){
+                                                var appointment = h.Appointments[0];
+                                                var backgroundColor = 'none';
+                                                var textColor = 'inherit';
+                                                if(appointment.UID === this.appointmentUID){
+                                                    backgroundColor = 'green';
+                                                    textColor = 'white';
+                                                }
                                                 return (
-                                                    <tr key={index}>
+                                                    <tr key={index} onClick={this._onGoToHistory.bind(this, h)}
+                                                        style={{backgroundColor: backgroundColor, color: textColor, cursor: 'pointer'}}>
                                                         <td>{index+1}</td>
-                                                        <td>{h.Appointments[0].Code}</td>
+                                                        <td>{appointment.Code}</td>
                                                         <td>{moment(h.Appointments[0].CreatedDate).format('DD/MM/YYYY')}</td>
                                                     </tr>
                                                 )
@@ -280,9 +296,6 @@ module.exports = React.createClass({
                         </div>
                     </div>
                 </div>
-                <ComponentPageBar ref="pageBarBottom"
-                        onSaveForm={this._onComponentPageBarSaveForm}
-                        onPrintForm={this._onComponentPageBarPrintForm}/>
             </div>
         )
     }

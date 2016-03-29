@@ -125,7 +125,6 @@ module.exports = {
         })
     },
     DownloadFile: function(req, res) {
-
         var params = req.params.all();
         Services.FileUpload.DownloadFile({
             output: rootPath + '/temp/',

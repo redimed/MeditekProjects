@@ -6,7 +6,7 @@ module.exports = {
     */
     CreatePatient: function(req, res) {
         var data = req.body.data;
-        var otherData = req.body.otherData?req.body.otherData:null;
+        var otherData = req.body.otherData ? req.body.otherData : null;
         // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
         // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
         // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
@@ -15,21 +15,57 @@ module.exports = {
             .then(function(patient) {
                 console.log(patient);
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
-                    patient.transaction.commit();
-                    var info = {
-                        UID: patient.UID,
-                        FirstName: patient.FirstName,
-                        LastName: patient.LastName,
-                        DOB: patient.DOB,
-                        Address1: patient.Address1,
-                        Address2: patient.Address2,
-                        UserAccountUID: patient.UserAccountUID
-                    };
-                    res.ok({
-                        status: 200,
-                        message: "success",
-                        data: info
-                    });
+                    if (data.rolecompany == false) {
+                        patient.transaction.commit();
+                        var info = {
+                            UID: patient.UID,
+                            FirstName: patient.FirstName,
+                            LastName: patient.LastName,
+                            DOB: patient.DOB,
+                            Address1: patient.Address1,
+                            Address2: patient.Address2,
+                            UserAccountUID: patient.UserAccountUID
+                        };
+                        res.ok({
+                            status: 200,
+                            message: "success",
+                            data: info
+                        });
+                    } else {
+                        return RelUserRole.create({
+                                RoleId: 5,
+                                SiteId: 1,
+                                UserAccountId: patient.UserAccountID,
+                                Enable: 'Y'
+                            }, { transaction: patient.transaction })
+                            .then(function(created_companyRole) {
+                                if (!created_companyRole) {
+                                    patient.transaction.rollback();
+                                    var err = new Error('CreatePatient.error');
+                                    err.pushError('AddRole.queryerror');
+                                    return res.serverError(ErrorWrap(err));
+                                } else {
+                                    patient.transaction.commit();
+                                    var info = {
+                                        UID: patient.UID,
+                                        FirstName: patient.FirstName,
+                                        LastName: patient.LastName,
+                                        DOB: patient.DOB,
+                                        Address1: patient.Address1,
+                                        Address2: patient.Address2,
+                                        UserAccountUID: patient.UserAccountUID
+                                    };
+                                    return res.ok({
+                                        status: 200,
+                                        message: "success",
+                                        data: info
+                                    });
+                                }
+                            }, function(err) {
+                                patient.transaction.rollback();
+                                res.serverError(ErrorWrap(err));
+                            })
+                    }
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
@@ -40,21 +76,42 @@ module.exports = {
                 }
             })
             .catch(function(err) {
-                res.serverError({
-                    status: 500,
-                    message: ErrorWrap(err)
-                });
+                if (err.transaction && err.configENV == 'debug') {
+                    if (err.err.message == 'Authentication Error - invalid username') {
+                        err.transaction.commit();
+                        var info = {
+                            UID: err.info.UID,
+                            FirstName: err.info.FirstName,
+                            LastName: err.info.LastName,
+                            DOB: err.info.DOB,
+                            Address1: err.info.Address1,
+                            Address2: err.info.Address2,
+                            UserAccountUID: err.info.UserAccountUID
+                        };
+                        res.ok({
+                            status: 200,
+                            message: "success",
+                            data: info
+                        });
+                    }
+                } else {
+                    err.transaction.rollback();
+                    res.serverError({
+                        status: 500,
+                        message: ErrorWrap(err)
+                    });
+                }
             });
     },
 
     RegisterPatient: function(req, res) {
         var data = req.body.data;
-        for(var key in data) {
-            if(data[key]==null || data[key]=='') {
+        for (var key in data) {
+            if (data[key] == null || data[key] == '') {
                 delete data[key];
             }
         }
-        var otherData = req.body.otherData?req.body.otherData:null;
+        var otherData = req.body.otherData ? req.body.otherData : null;
         // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
         // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
         // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
@@ -88,13 +145,33 @@ module.exports = {
                 }
             })
             .catch(function(err) {
-                res.serverError({
-                    status: 500,
-                    message: ErrorWrap(err)
-                });
+                if (err.transaction && err.configENV == 'debug') {
+                    if (err.err.message == 'Authentication Error - invalid username') {
+                        err.transaction.commit();
+                        var info = {
+                            UID: err.info.UID,
+                            FirstName: err.info.FirstName,
+                            LastName: err.info.LastName,
+                            DOB: err.info.DOB,
+                            Address1: err.info.Address1,
+                            Address2: err.info.Address2,
+                            UserAccountUID: err.info.UserAccountUID
+                        };
+                        res.ok({
+                            status: 200,
+                            message: "success",
+                            data: info
+                        });
+                    }
+                } else {
+                    err.transaction.rollback();
+                    res.serverError({
+                        status: 500,
+                        message: ErrorWrap(err)
+                    });
+                }
             });
     },
-
     /*
         SearchPatient : find patient with condition
         input: Patient's name or PhoneNumber
@@ -103,57 +180,55 @@ module.exports = {
     SearchPatient: function(req, res) {
         var data = req.body.data;
         var count = 0;
-        var array = ['FirstName' , 'LastName' , 'DOB' , 'Gender' , 'PhoneNumber' , 'Email1'];
-        if(typeof data =='object'){
-            for(var i = 0; i < array.length; i++) {
-                for(var key in data) {
-                    if(key == array[i])
+        var array = ['FirstName', 'LastName', 'DOB', 'Gender', 'PhoneNumber', 'Email1'];
+        if (typeof data == 'object') {
+            for (var i = 0; i < array.length; i++) {
+                for (var key in data) {
+                    if (key == array[i])
                         count++;
                 }
             }
-        }
-        else {
+        } else {
             var err = new Error("Search.ERROR");
             err.pushError("invalid.Data");
             res.serverError(ErrorWrap(err));
         }
-        if(count == 0) {
+        if (count == 0) {
             var err = new Error("Search.ERROR");
             err.pushError("notFound.attribute");
             res.serverError(ErrorWrap(err));
-        }
-        else {
+        } else {
             Services.Patient.SearchPatient(data)
-            .then(function(info) {
-                if (info !== undefined) {
-                    if (info === null)
-                        res.ok({
+                .then(function(info) {
+                    if (info !== undefined) {
+                        if (info === null)
+                            res.ok({
+                                status: 200,
+                                message: "success",
+                                data: [],
+                                count: 0
+                            });
+                        else
+                            res.ok({
+                                status: 200,
+                                message: "success",
+                                data: info,
+                            });
+                    } else {
+                        var err = new Error("SERVER ERROR");
+                        err.pushError("No data result");
+                        res.notFound({
                             status: 200,
-                            message: "success",
-                            data: [],
-                            count: 0
+                            message: ErrorWrap(err)
                         });
-                    else
-                        res.ok({
-                            status: 200,
-                            message: "success",
-                            data: info,
-                        });
-                } else {
-                    var err = new Error("SERVER ERROR");
-                    err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    }
+                })
+                .catch(function(err) {
+                    res.serverError({
+                        status: 500,
                         message: ErrorWrap(err)
                     });
-                }
-            })
-            .catch(function(err) {
-                res.serverError({
-                    status: 500,
-                    message: ErrorWrap(err)
                 });
-            });
         }
     },
 
@@ -168,15 +243,15 @@ module.exports = {
         if (typeof(data) == 'string') {
             data = JSON.parse(data);
         }
-        if('UserAccountUID' in req.body) {
+        if ('UserAccountUID' in req.body) {
             data.UserAccountUID = req.body.UserAccountUID;
         }
 
-        var otherData = req.body.otherData?req.body.otherData:{};
+        var otherData = req.body.otherData ? req.body.otherData : {};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
 
-                if (result!=undefined && result!=null && result!="" && result=="success")
+                if (result != undefined && result != null && result != "" && result == "success")
                     res.ok({
                         status: 200,
                         message: "success"
@@ -216,19 +291,19 @@ module.exports = {
                     responseData[0].dataValues.Email = info.Email;
                     responseData[0].dataValues.CountryName = info.Patient.Country1.ShortName;
                     delete responseData[0].dataValues['Country1'];
-                    for(var i = 0; i < info.dataValues.FileUploads.length; i++) {
+                    for (var i = 0; i < info.dataValues.FileUploads.length; i++) {
                         // info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i].FileType=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
                         // info[0].dataValues.Signature = info[0].dataValues.UserAccount.FileUploads[i].FileType=='Signature'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
-                        if(responseData[0].dataValues.ProfileImage == null || responseData[0].dataValues.ProfileImage == '') {
-                            responseData[0].dataValues.ProfileImage = info.dataValues.FileUploads[i].FileType=='ProfileImage'?info.dataValues.FileUploads[i].UID:null;
+                        if (responseData[0].dataValues.ProfileImage == null || responseData[0].dataValues.ProfileImage == '') {
+                            responseData[0].dataValues.ProfileImage = info.dataValues.FileUploads[i].FileType == 'ProfileImage' ? info.dataValues.FileUploads[i].UID : null;
                         }
-                        if(responseData[0].dataValues.Signature == null || responseData[0].dataValues.Signature == '') {
-                            responseData[0].dataValues.Signature = info.dataValues.FileUploads[i].FileType=='Signature'?info.dataValues.FileUploads[i].UID:null;
+                        if (responseData[0].dataValues.Signature == null || responseData[0].dataValues.Signature == '') {
+                            responseData[0].dataValues.Signature = info.dataValues.FileUploads[i].FileType == 'Signature' ? info.dataValues.FileUploads[i].UID : null;
                         }
 
                     }
                     // delete info[0].dataValues['UserAccount'];
-                    
+
                     res.ok({
                         status: 200,
                         message: "Success",
@@ -266,17 +341,17 @@ module.exports = {
                     return FileUpload.findAll({
                             where: {
                                 UserAccountID: info[0].UserAccountID,
-                                FileType: {$in:['ProfileImage','Signature']},
+                                FileType: { $in: ['ProfileImage', 'Signature'] },
                                 Enable: 'Y'
                             }
                         })
                         .then(function(success) {
                             if (success !== undefined && success !== null && success !== '' && success.length !== 0) {
-                                for(var i = 0; i < success.length; i++) {
+                                for (var i = 0; i < success.length; i++) {
                                     // if(info[0].dataValuesFileType == "ProfileImage") 
-                                        info[0].dataValues.ProfileImage = success[i].FileType=='ProfileImage'?success[i].UID:null;
+                                    info[0].dataValues.ProfileImage = success[i].FileType == 'ProfileImage' ? success[i].UID : null;
                                     // if(info[0].dataValuesFileType == "Signature") 
-                                        info[0].dataValues.Signature = success[i].FileType=='Signature'?success[i].UID:null;
+                                    info[0].dataValues.Signature = success[i].FileType == 'Signature' ? success[i].UID : null;
                                 }
                                 info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
                                 delete info[0].dataValues['Country1'];
@@ -486,34 +561,34 @@ module.exports = {
             })
     },
 
-    AddChild : function(req, res) {
+    AddChild: function(req, res) {
         var data = req.body.data;
         Services.Patient.AddChild(data)
-        .then(function(result) {
-            res.ok({message:'success',data:result});
-        },function(err) {
-            res.serverError(ErrorWrap(err));
-        });
+            .then(function(result) {
+                res.ok({ message: 'success', data: result });
+            }, function(err) {
+                res.serverError(ErrorWrap(err));
+            });
     },
 
-    ChangeStatusChild : function(req, res) {
+    ChangeStatusChild: function(req, res) {
         var data = req.body.data;
         Services.Patient.ChangeStatusChild(data)
-        .then(function(result) {
-            res.ok({message:'success',data:result});
-        },function(err) {
-            res.serverError(ErrorWrap(err));
-        });
+            .then(function(result) {
+                res.ok({ message: 'success', data: result });
+            }, function(err) {
+                res.serverError(ErrorWrap(err));
+            });
     },
 
     DetailChild: function(req, res) {
         var data = req.body.data;
         Services.Patient.DetailChild(data)
-        .then(function(result) {
-            res.ok({message:'success',data:result});
-        },function(err) {
-            res.serverError(ErrorWrap(err));
-        });
+            .then(function(result) {
+                res.ok({ message: 'success', data: result });
+            }, function(err) {
+                res.serverError(ErrorWrap(err));
+            });
     }
 
 };

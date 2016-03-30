@@ -735,6 +735,7 @@ module.exports = {
                         throw err;
                     })
                     .then(function(result) {
+                        info.ID = result.ID;
                         if (other != null) {
                             for (var key in other) {
                                 other[key].PatientID = result.ID;

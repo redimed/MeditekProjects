@@ -930,9 +930,189 @@ module.exports = {
 		})
 	},
 
+	DetailCompanyByUser: function(data) {
+		if(!data.uid){
+			var err = new Error('DetailCompanyByUser.error');
+			err.pushError('Uid.invalid');
+			throw err;
+		}
+		return UserAccount.findOne({
+			where: {
+				UID : data.uid,
+				Enable : 'Y'
+			},
+			attributes :['ID','UID','PhoneNumber','Email','UserName'],
+			include:[
+               	{
+                    model:RelUserRole,
+                    attributes:['RoleId','UserAccountId','SiteId'],
+                    where:{
+                    	Enable:'Y'
+                    },
+                    required: false
+                }
+            ]
+		})
+		.then(function(got_user){
+			if(!got_user){
+				var err = new Error('DetailCompanyByUser.error');
+				err.pushError('User.notFound');
+				throw err;
+			}
+			else {
+				return Patient.findOne({
+					where:{
+						UserAccountID: got_user.ID
+					},
+					attributes:['ID','UserAccountID','FirstName','LastName']
+				});
+			}
+		},function(err) {
+			throw err;
+		})
+		.then(function(got_patient){
+			if(!got_patient){
+				var err = new Error('DetailCompanyByUser.error');
+				err.pushError('Patient.notFound');
+				throw err;
+			}
+			else {
+				return got_patient.getCompanies();
+			}
+		},function(err) {
+			throw err;
+		})
+		.then(function(got_company) {
+			if(!got_company) {
+				var err = new Error('DetailCompanyByUser.error');
+				err.pushError('Company.notFound');
+				throw err;
+			}
+			else{
+				return got_company;
+			}
+		},function(err) {
+			throw err;
+		})
+	},
+
+	GetListStaff: function(data) {
+		if(!data.uid){
+			var err = new Error('GetListStaff.error');
+			err.pushError('Uid.invalid');
+			throw err;
+		}
+		return UserAccount.findOne({
+			where: {
+				UID : data.uid,
+				Enable : 'Y'
+			},
+			attributes :['ID','UID','PhoneNumber','Email','UserName'],
+			include:[
+               	{
+                    model:RelUserRole,
+                    attributes:['RoleId','UserAccountId','SiteId'],
+                    where:{
+                    	Enable:'Y'
+                    },
+                    required: false
+                }
+            ]
+		})
+		.then(function(got_user){
+			if(!got_user){
+				var err = new Error('GetListStaff.error');
+				err.pushError('User.notFound');
+				throw err;
+			}
+			else {
+				var isAdminCompany = false;
+				for(var i = 0; i < got_user.RelUserRoles.length; i++) {
+					if(got_user.RelUserRoles[i].RoleId == 5) {
+						isAdminCompany = true;
+					}
+				}
+				if(isAdminCompany == false){
+					var err = new Error('GetListStaff.error');
+					err.pushError('User.NotAdmin');
+					throw err;
+				}
+				else{
+					return got_user;
+				}
+			}
+		},function(err) {
+			throw err;
+		})
+		.then(function(user_isAdmin) {
+			return Patient.findOne({
+				where:{
+					UserAccountID: user_isAdmin.ID
+				},
+				attributes:['ID','UserAccountID','FirstName','LastName']
+			});
+		},function(err) {
+			throw err;
+		})
+		.then(function(got_patient){
+			if(!got_patient) {
+				var err = new Error('GetListStaff.error');
+				err.pushError('patient.notFound');
+				throw err;
+			}
+			else {
+				return got_patient.getCompanies({where:{Active:'Y'}});
+			}
+		},function(err){
+			throw err;
+		})
+		.then(function(got_company){
+			if(!got_company) {
+				var err = new Error('GetListStaff.error');
+				err.pushError('Company.notFound');
+				throw err;
+			}
+			else {
+				return RelCompanyPatient.findAll({
+					where:{
+						Active:'Y',
+						CompanyID:got_company[0].ID
+					},
+					limit:data.limit?data.limit:null,
+					offset:data.offset?data.offset:null
+				});
+			}
+		},function(err){
+			throw err;
+		})
+		.then(function(got_list){
+			if(!got_list) {
+				var err = new Error('GetListStaff.error');
+				err.pushError('listStaff.notFound');
+				throw err;
+			}
+			else {
+				var stringID = [];
+				for(var i = 0; i < got_list.length; i++) {
+					stringID.push(got_list[i].PatientID);
+				}
+				return Patient.findAll({
+					where:{
+						ID:{
+							$in: stringID
+						}
+					}
+				});
+			}
+		},function(err) {
+			throw err;
+		})
+	},
+
 	Test: function() {
 		// var model = sequelize.models[data.model];
 		console.log(sequelize.models['Company'].getAssociation());
-	}
+	},
+
 
 };

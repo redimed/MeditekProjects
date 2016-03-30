@@ -147,8 +147,8 @@
 										<div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1" style="text-align:right">
 											<!-- profileImage -->
 											<div ng-form name="checkInForm" novalidate>
-												<div class="form-group">
-													<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
+												<div >
+													<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" height="250" width="250"></canvas>
 													<img class="thumbnail" src="theme/assets/global/images/no_person.jpg" ng-show="isChoseAvatar==false" style="width:350px; height:350px; ">
 													<div class="container">
 														<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
@@ -339,7 +339,7 @@
 									<div ng-form name="checkInForm1" novalidate>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6" style="margin-left:25%;">
-												<canvas id="imageSignatureCanvas" class="thumbnail" ng-show="isChoseSignature==true" ></canvas>
+												<canvas id="imageSignatureCanvas" class="thumbnail" ng-show="isChoseSignature==true" width="550" height="280" ></canvas>
 												<img class="thumbnail" src="theme/assets/global/images/signature.jpg" ng-show="isChoseSignature==false" style="width:550px; height:280px; ">
 												<div class="container">
 													<label for="imageSignature" style="float:left; padding-right: 1%;"> 

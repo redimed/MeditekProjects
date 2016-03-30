@@ -141,6 +141,27 @@ module.exports = {
         });
     },
 
+    DetailCompanyByUser : function(req, res) {
+        var data = req.params;
+        Services.Company.DetailCompanyByUser(data)
+        .then(function(result) {
+            res.ok({mesage:"success",data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
+    GetListStaff: function(req, res) {
+        var data = req.params;
+        Services.Company.GetListStaff(data)
+        .then(function(result){
+            res.ok({mesage:"success",data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
+    
+
     Test: function(req, res) {
         return UserAccount.findAll({
             include: [{

@@ -45,21 +45,31 @@ module.exports = {
                                     err.pushError('AddRole.queryerror');
                                     return res.serverError(ErrorWrap(err));
                                 } else {
-                                    patient.transaction.commit();
-                                    var info = {
-                                        UID: patient.UID,
-                                        FirstName: patient.FirstName,
-                                        LastName: patient.LastName,
-                                        DOB: patient.DOB,
-                                        Address1: patient.Address1,
-                                        Address2: patient.Address2,
-                                        UserAccountUID: patient.UserAccountUID
-                                    };
-                                    return res.ok({
-                                        status: 200,
-                                        message: "success",
-                                        data: info
-                                    });
+                                    return RelCompanyPatient.create({
+                                        CompanyID : data.compid,
+                                        PatientID : patient.ID,
+                                        Active    : 'Y'
+                                    },{transaction: patient.transaction})
+                                    .then(function(success) {
+                                        patient.transaction.commit();
+                                        var info = {
+                                            UID: patient.UID,
+                                            FirstName: patient.FirstName,
+                                            LastName: patient.LastName,
+                                            DOB: patient.DOB,
+                                            Address1: patient.Address1,
+                                            Address2: patient.Address2,
+                                            UserAccountUID: patient.UserAccountUID
+                                        };
+                                        return res.ok({
+                                            status: 200,
+                                            message: "success",
+                                            data: info
+                                        });
+                                    },function(err) {
+                                        patient.transaction.rollback();
+                                        res.serverError(ErrorWrap(err));
+                                    })
                                 }
                             }, function(err) {
                                 patient.transaction.rollback();

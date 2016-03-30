@@ -53,5 +53,15 @@ module.exports = {
     'post /api/company/create-fund' :{
         controller: 'Company/CompanyController',
         action: 'CreateFund'
+    },
+
+    'get /api/company/detail-company-by-user/:uid':{
+        controller: 'Company/CompanyController',
+        action: 'DetailCompanyByUser'
+    },
+
+    'get /api/company/get-list-staff/:uid':{
+        controller: 'Company/CompanyController',
+        action: 'GetListStaff'
     }
 };

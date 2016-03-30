@@ -917,14 +917,15 @@ module.exports = {
 				attributes:['UID'],
 				where:{
 					FileType:'ProfileImage',
+					Enable:'Y'
 				},
-				required:true
+				required:false
 			});
 		}
 
 		include_data.push({
 			model: TelehealthUser,
-		    required: true,
+		    required: false,
 		    attributes:['UID']
 		});
 
@@ -936,7 +937,7 @@ module.exports = {
 				    where:{
 				       	$or: whereClause.Role
 				   	},
-				    required: true,
+				    required: false,
 				}
 			],
 			model: RelUserRole,
@@ -964,7 +965,7 @@ module.exports = {
 			limit      : data.limit,
 			offset     : data.offset,
 			order      : data.order,
-			subQuery   : false,
+			// subQuery   : false,
 			where: {
 				Enable:'Y',
 				$and: [

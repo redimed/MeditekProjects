@@ -32,7 +32,6 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     ($scope.admissionDetail.allergies_alerts_hyperthermia) ? $scope.admissionDetail.allergies_alerts_hyperthermia: $scope.admissionDetail.allergies_alerts_hyperthermia = 'N';
     ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
     ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
-    ($scope.admissionDetail.anti_coagulant_still_to_take) ? $scope.admissionDetail.anti_coagulant_still_to_take:$scope.admissionDetail.anti_coagulant_still_to_take = 'Y';
     ($scope.admissionDetail.allergies_alerts_substances) ? $scope.admissionDetail.allergies_alerts_substances: $scope.admissionDetail.allergies_alerts_substances = 'N';
 
     var dateFormat = /^\d{2}[/]\d{2}[/]\d{4}$/;
@@ -58,9 +57,17 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     };
 
     $scope.stillToTake = function() {
-        $scope.admissionDetail.anti_coagulant_still_to_take = "Y";
         $scope.admissionDetail.anti_coagulant_date_to_cease = null;
+        $scope.admissionDetail.anti_coagulant_still_to_take = null;
     };
+
+    $scope.ChangeYes = function(){
+        $scope.admissionDetail.anti_coagulant_still_to_take = "Y";
+    };
+
+    $scope.reset = function() {
+        $scope.list = '';
+    }
 
 
     /* END THAO */

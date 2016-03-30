@@ -61,14 +61,9 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
         $scope.admissionDetail.anti_coagulant_still_to_take = null;
     };
 
-    $scope.ChangeYes = function(){
+    $scope.DefaultYes = function(){
         $scope.admissionDetail.anti_coagulant_still_to_take = "Y";
     };
-
-    $scope.reset = function() {
-        $scope.list = '';
-    }
-
 
     /* END THAO */
     $timeout(function() {

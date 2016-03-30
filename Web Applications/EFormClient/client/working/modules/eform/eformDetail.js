@@ -165,63 +165,72 @@ module.exports = React.createClass({
         })
     },
     _onComponentPageBarSaveForm: function(){
-        var templateUID = this.templateUID;
-        var sections = this.state.sections.toJS();
         var self = this;
-        var fields = [];
-        for(var i = 0; i < sections.length; i++){
-            var section = sections[i];
-            var sectionRef = section.ref;
-            var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation('form');
-            tempFields.map(function(field, index){
-                fields.push(field);
-            })
-        }
+        var p = new Promise(function(resolve, reject){
+            var templateUID = self.templateUID;
+            var sections = self.state.sections.toJS();
+            var fields = [];
+            for(var i = 0; i < sections.length; i++){
+                var section = sections[i];
+                var sectionRef = section.ref;
+                var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('form');
+                tempFields.map(function(field, index){
+                    fields.push(field);
+                })
+            }
 
-        var content = JSON.stringify(fields);
-        var appointmentUID = this.appointmentUID;
+            var content = JSON.stringify(fields);
+            var appointmentUID = self.appointmentUID;
 
-        if(this.formUID === null){
-            EFormService.formSave({templateUID: this.templateUID, appointmentUID: appointmentUID, content: content, name: this.state.name, patientUID: this.patientUID, userUID: this.userUID})
-            .then(function(){
-                //swal("Success!", "Your form has been saved.", "success");
-            })
-        }else{
-            EFormService.formUpdate({UID: this.formUID, content: content})
-            .then(function(){
-                //swal("Success!", "Your form has been saved.", "success");
-            })
-        }
+            if(self.formUID === null){
+                EFormService.formSave({templateUID: self.templateUID, appointmentUID: appointmentUID, content: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
+                .then(function(){
+                    resolve();
+                    window.location.reload();
+                })
+            }else{
+                EFormService.formUpdate({UID: self.formUID, content: content})
+                .then(function(){
+                    resolve();
+                    window.location.reload();
+                    //swal("Success!", "Your form has been saved.", "success");
+                })
+            }  
+        });
+        return p;
     },
     _onComponentPageBarPrintForm: function(){
-        var sections = this.state.sections.toJS();
         var self = this;
-        var fields = [];
-        for(var i = 0; i < sections.length; i++){
-            var section = sections[i];
-            var sectionRef = section.ref;
-            var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation('print');
-            tempFields.map(function(field, index){
-                fields.push(field);
+        this._onComponentPageBarSaveForm()
+        .then(function(){
+            var sections = self.state.sections.toJS();
+            var fields = [];
+            for(var i = 0; i < sections.length; i++){
+                var section = sections[i];
+                var sectionRef = section.ref;
+                var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('print');
+                tempFields.map(function(field, index){
+                    fields.push(field);
+                })
+            }
+
+            var data = {
+                printMethod: self.EFormTemplate.PrintType,
+                data: fields,
+                templateUID: self.templateUID
+            }
+
+            EFormService.createPDFForm(data)
+            .then(function(response){
+                var fileName = 'report_'+moment().format('X');
+                var blob = new Blob([response], {
+                    type: 'application/pdf'
+                });
+                saveAs(blob, fileName);
+                //swal("Success!", "Your form has been printed to PDF.", "success");
+            }, function(error){
+
             })
-        }
-
-        var data = {
-            printMethod: this.EFormTemplate.PrintType,
-            data: fields,
-            templateUID: this.templateUID
-        }
-
-        EFormService.createPDFForm(data)
-        .then(function(response){
-            var fileName = 'report_'+moment().format('X');
-            var blob = new Blob([response], {
-                type: 'application/pdf'
-            });
-            saveAs(blob, fileName);
-            //swal("Success!", "Your form has been printed to PDF.", "success");
-        }, function(error){
-
         })
     },
     _onGoToHistory: function(history){

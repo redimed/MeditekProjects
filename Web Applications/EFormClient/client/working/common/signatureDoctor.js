@@ -68,8 +68,7 @@ module.exports = React.createClass({
         }
         return output;
     },
-    setValue: function(value){
-        console.log(value);
+    setValue: function(value){        
         this.imageSignature = value;
         if(this.imageSignature){
             var self = this;
@@ -83,7 +82,6 @@ module.exports = React.createClass({
         }
     },
     getValue: function(){
-        console.log(this.imageSignature);
         return (this.imageSignature)?this.imageSignature.UID:'';
     },
     getName: function(){

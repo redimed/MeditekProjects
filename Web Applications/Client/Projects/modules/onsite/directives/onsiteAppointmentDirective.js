@@ -421,7 +421,22 @@ app.directive('onsiteAppointment', function(){
                     ComponentsDateTimePickers.init();
                     $.uniform.update();
 	            },0);
-            }
+            };
+
+            $scope.openCalendar = function(){
+                modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'modules/onsite/views/onsiteCalendar.html',
+                        controller: 'onsiteCalendarCtrl',
+                        windowClass: 'app-modal-window',
+                        // size: 'lg',
+                        resolve: {
+                            getid: function() {
+                                return true;
+                            }
+                        }
+                    });
+            };
 		},
 	};
 });

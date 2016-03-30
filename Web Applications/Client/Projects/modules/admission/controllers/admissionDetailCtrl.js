@@ -32,7 +32,10 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     ($scope.admissionDetail.allergies_alerts_hyperthermia) ? $scope.admissionDetail.allergies_alerts_hyperthermia: $scope.admissionDetail.allergies_alerts_hyperthermia = 'N';
     ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
     ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
+    ($scope.admissionDetail.anti_coagulant_still_to_take) ? $scope.admissionDetail.anti_coagulant_still_to_take:$scope.admissionDetail.anti_coagulant_still_to_take = 'Y';
+    ($scope.admissionDetail.allergies_alerts_substances) ? $scope.admissionDetail.allergies_alerts_substances: $scope.admissionDetail.allergies_alerts_substances = 'N';
 
+    var dateFormat = /^\d{2}[/]\d{2}[/]\d{4}$/;
     $scope.ChangeRadio = function(text) {
         for (var i = 0; i < text.length; i++) {
             //$("input[name=" + text[i] + "]").val(null);
@@ -43,8 +46,12 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     $scope.getDate = new Date();
 
     $scope.doctorUseOnly = function() {
-        var userprofile = $cookies.getObject("userprofile");
-        if (userprofile.doctor != null) {
+        var userprofile =_.findIndex($cookies.getObject("userInfo").roles, function(doctor) {
+                if (doctor.ID === 4 || doctor.ID === 5) {
+                    return doctor;
+                }
+            });
+        if (userprofile != -1) {
             return false;
         } else
             return true;
@@ -58,12 +65,16 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
 
     /* END THAO */
     $timeout(function() {
+        
+        // console.log(dateFormat.test($scope.admissionDetail.ExpiryDate));
         $scope.admissionDetail.DoctorDateChoose = moment().format('DD/MM/YYYY');
         if ($scope.wainformation) {
             $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible : '';
             $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber : '';
             $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber : '';
             $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate : '';
+            //console.log(dateFormat.test($scope.admissionDetail.ExpiryDate));
+            $scope.admissionDetail.ExpiryDate = dateFormat.test($scope.admissionDetail.ExpiryDate)==false&&$scope.admissionDetail.ExpiryDate?moment($scope.admissionDetail.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):$scope.admissionDetail.ExpiryDate;
             $scope.admissionDetail.DVANumber = $scope.admissionDetail.DVANumber ? $scope.admissionDetail.DVANumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber : '';
             $scope.admissionDetail.KinFirstName = $scope.admissionDetail.KinFirstName ? $scope.admissionDetail.KinFirstName : $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinFirstName ? $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinFirstName : '';
             $scope.admissionDetail.KinLastName = $scope.admissionDetail.KinLastName ? $scope.admissionDetail.KinLastName : $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinLastName ? $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinLastName : '';
@@ -85,13 +96,13 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                 $scope.admissionDetail.Gender = $scope.wainformation.Patients[0].Gender ? $scope.wainformation.Patients[0].Gender : '';
                 PatientService.detailChildPatient({ UID: $scope.wainformation.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA', 'PatientKin'] })
                     .then(function(response) {
-                        console.log("detail Patient child ", response);
                         if (response.data) {
                             if (response.data.PatientMedicare.length > 0) {
                                 $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : response.data.PatientMedicare[0].MedicareEligible ? response.data.PatientMedicare[0].MedicareEligible : '';
                                 $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : response.data.PatientMedicare[0].MedicareReferenceNumber ? response.data.PatientMedicare[0].MedicareReferenceNumber : '';
                                 $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : response.data.PatientMedicare[0].MedicareNumber ? response.data.PatientMedicare[0].MedicareNumber : '';
-                                $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : response.data.PatientMedicare[0].ExpiryDate ? moment(response.data.PatientMedicare[0].ExpiryDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY') : '';
+                                $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : response.data.PatientMedicare[0].ExpiryDate ?response.data.PatientMedicare[0].ExpiryDate : '';
+                                $scope.admissionDetail.ExpiryDate = dateFormat.test($scope.admissionDetail.ExpiryDate)==false&&$scope.admissionDetail.ExpiryDate?moment($scope.admissionDetail.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):$scope.admissionDetail.ExpiryDate;
                             }
                             if (response.data.PatientDVA.length > 0) {
                                 $scope.admissionDetail.DVANumber = $scope.admissionDetail.DVANumber ? $scope.admissionDetail.DVANumber : response.data.PatientDVA[0].DVANumber ? response.data.PatientDVA[0].DVANumber : '';
@@ -137,19 +148,21 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     function saveAddmission(input) {
         //THAO
         var flag = false;
-        flag = isRadioYesNo('anti_coagulant', ['anti_coagulant_still_to_take', 'anti_coagulant_date_to_cease', 'anti_coagulant_note']);
+        flag = isRadioYesNoN('anti_coagulant_still_to_take', ['anti_coagulant_date_to_cease']);
         if (flag === false)
-            flag = isRadioYesNo('anti_inflammatory', ['anti_inflammatory_comment', 'anti_inflammatory_note']);
+            flag = isRadioYesNo('anti_inflammatory', ['anti_inflammatory_comment']);
         if (flag === false)
-            flag = isRadioYesNo('herbal_supplements', ['herbal_supplements_comment', 'herbal_supplements_note']);
+            flag = isRadioYesNo('herbal_supplements', ['herbal_supplements_comment']);
         if (flag === false)
-            flag = isRadioYesNo('adverse_reactions', ['allergies_alerts_details_reaction']);
+            flag = isRadioYesNo('allergies_alerts_hyperthermia', ['allergies_alerts_details_reaction']);
+        if (flag ===false)
+            flag = isRadioYesNo('allergies_alerts_substances', ['allergies_alerts_substances_list']);
         if (flag === false)
-            flag = isRadioYesNo('lifestyle_smoked', ['lifestyle_smoked_daily_amount', 'lifestyle_smoked_ceased', 'lifestyle_smoked_notes']);
+            flag = isRadioYesNo('lifestyle_smoked', ['lifestyle_smoked_daily_amount', 'lifestyle_smoked_ceased']);
         if (flag === false)
-            flag = isRadioYesNo('lifestyle_alcohol', ['lifestyle_alcohol_daily_amount', 'lifestyle_alcohol_nurse_notes']);
+            flag = isRadioYesNo('lifestyle_alcohol', ['lifestyle_alcohol_daily_amount']);
         if (flag === false)
-            flag = isRadioYesNo('lifestyle_drugs', ['lifestyle_drugs_daily_amount', 'lifestyle_drugs_type', 'lifestyle_drugs_nurse_notes']);
+            flag = isRadioYesNo('lifestyle_drugs', ['lifestyle_drugs_daily_amount', 'lifestyle_drugs_type']);
         if (flag === false)
             flag = isRadioYesNo('cardiovascular_triglycerides', ['cardiovascular_triglycerides_comment']);
         if (flag === false)
@@ -198,7 +211,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
             flag = isRadioYesNo('respiratory_emphysema', ['respiratory_emphysema_comment']);
         if (flag === false)
             flag = isRadioYesNo('respiratory_inclines', ['respiratory_inclines_comment']);
-        // alert(flag);
+        //alert(flag);
         if (flag) {
             //xuat thong bao
             toastr.error("You haven't entered enough information", "Error");
@@ -273,20 +286,54 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
         } else {
             return false;
         }
-    }
+    };
+
 
     $scope.checkRadioYesNo = function(nameRadioYesNo, groupsRelation) {
-            var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
-            if (radioValue === 'Y') {
-                groupsRelation.map(function(group) {
-                    $(group + '_' + nameRadioYesNo).addClass('has-error');
-                })
-            } else {
-                groupsRelation.map(function(group) {
-                    $(group + '_' + nameRadioYesNo).removeClass('has-error');
-                })
-            }
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        if (radioValue === 'Y') {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).addClass('has-error');
+             })
+        } else {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).removeClass('has-error');
+            })
         }
+    };
+    //////////////////////////////////////////////////////////////////////////////////////
+    var isRadioYesNoN = function(nameRadioYesNo, fieldsRelation) {
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        var flag = false;
+        if (radioValue === 'N') {
+            fieldsRelation.map(function(field) {
+                var value = $scope.admissionDetail[field];
+                if (value === '' || value === null || typeof value === 'undefined')
+                    flag = true;
+            })
+            return flag;
+        } else {
+            return false;
+        }
+    };
+
+
+    $scope.checkRadioYesNoN = function(nameRadioYesNo, groupsRelation) {
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        if (radioValue === 'N') {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).addClass('has-error');
+             })
+        } else {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).removeClass('has-error');
+            })
+        }
+    };
+
+
+
+
         /* END THAO */
 
     $scope.UpdateAdmission = function() {

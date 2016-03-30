@@ -7,6 +7,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             abc: '=onItem',
             rolecompany:'=roleCompany',
             reset:'=onReset',
+            compid:'=onCompid',
         },
         restrict: "EA",
         controller: function($scope, FileUploader) {
@@ -281,6 +282,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 return PatientService.validate(data)
                     .then(function(result) {
                         data.rolecompany = scope.rolecompany;
+                        data.compid      = scope.compid?scope.compid:null;
                         //service call API create patient
                         return PatientService.createPatient(data)
                             .then(function(success) {

@@ -940,7 +940,8 @@ module.exports = {
 		       		model: UserAccount,
 		      		attributes: ['PhoneNumber','Enable', 'UID'],
 			  		where:{
-			   			$or: whereClause.UserAccount
+			   			$or: whereClause.UserAccount,
+			   			Enable:'Y'
 			   		},
 			   		required: true,
 		    	},
@@ -951,6 +952,7 @@ module.exports = {
 			order      : data.order,
 			subQuery   : false,
 			where: {
+				Enable:'Y',
 				$and: [
 					whereClause.Doctor,
 					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {

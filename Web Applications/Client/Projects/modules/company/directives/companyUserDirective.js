@@ -10,6 +10,7 @@ app.directive('companyUser', function($uibModal, $timeout, $state, companyServic
 			loadagain:'=onLoadAgain',
 			cancel:'=onCancel',
 			reset:'=onReset',
+			compid:'=onCompid'
 		},
 		templateUrl: 'modules/company/directives/templates/companyUserDirective.html',
 		link: function(scope, elem, attrs){

@@ -617,7 +617,7 @@ img.profile-imge {
 
 .checkbox-inline,
 .radio-inline {
-    /*margin-left: 2em;*/
+    margin-left: 2em;
     margin-right: 2em;
 }
 
@@ -630,6 +630,8 @@ img.profile-imge {
     margin-top: 0 !important;
     vertical-align: middle !important;
 }
+
+
 
 .regular-radio {
     -webkit-appearance: none;
@@ -674,7 +676,9 @@ img.profile-imge {
     content: '\2714';
 }
 
-
+.regular-no-lable {
+    margin-left: 0 !important;
+}
 /*regular-checkbox, regular-radio===============================================================================*/
 
 .dashboard-stat:hover {

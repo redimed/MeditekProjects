@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.admission.detail.controller', []);
-app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices, PatientService) {
+app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices, PatientService) {
     /* THAO */
     ($scope.admissionDetail.cardiovascular_triglycerides) ? $scope.admissionDetail.cardiovascular_triglycerides: $scope.admissionDetail.cardiovascular_triglycerides = 'N';
     ($scope.admissionDetail.cardiovascular_hypertension) ? $scope.admissionDetail.cardiovascular_hypertension: $scope.admissionDetail.cardiovascular_hypertension = 'N';
@@ -33,11 +33,11 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
     ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
     ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
 
-    $scope.ChangeRadio = function(testname) {
-        for (var i = 0; i < testname.length; i++) {
-            $("input[name=" + testname[i] + "]").val(null);
+    $scope.ChangeRadio = function(text) {
+        for (var i = 0; i < text.length; i++) {
+            //$("input[name=" + text[i] + "]").val(null);
+            $scope.admissionDetail[text[i]] = '';
         }
-
     };
 
     $scope.getDate = new Date();
@@ -53,7 +53,8 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
     $scope.stillToTake = function() {
         $scope.admissionDetail.anti_coagulant_still_to_take = "Y";
         $scope.admissionDetail.anti_coagulant_date_to_cease = null;
-    }
+    };
+
 
     /* END THAO */
     $timeout(function() {
@@ -112,6 +113,8 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
 
     }, 0);
 
+
+
     var PREVIOUS_SURGERY_PROCEDURES = ($scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES) ? $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES : $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES = [];
     var MEDICATIONS = ($scope.admissionDetail.MEDICATIONS) ? $scope.admissionDetail.MEDICATIONS : $scope.admissionDetail.MEDICATIONS = [];
     $scope.admission = {
@@ -129,54 +132,162 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
             }]
         }
     };
-    console.log('wainformation ', $scope.wainformation);
-
+    //console.log('wainformation ', $scope.wainformation);
+    
     function saveAddmission(input) {
-        swal({
-            title: "Are you sure?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#2196F3",
-            confirmButtonText: "OK",
-            closeOnConfirm: false
-        }, function() {
-            _.forEach($scope.admissionDetail, function(value, name) {
-                if (value.length > 0) {
-                    // console.log(name, value);
-                    var data = {
-                        Section: "Admission Details",
-                        Category: "Admission",
-                        Type: "Admission",
-                        Name: name,
-                        Value: null
-                    }
-                    if (name == "PREVIOUS_SURGERY_PROCEDURES" || name == "MEDICATIONS") {
-                        data.Value = JSON.stringify(value);
-                    } else {
-                        data.Value = value;
-                    };
-                    input.Admissions[0].AdmissionData.push(data);
-                }
-            });
-            // console.log(input);
-            if (input == $scope.admission.update) {
-                // console.log('update');
-                AdmissionService.UpdateAdmission(input).then(function(data) {
-                    swal("Update success!", "", "success");
-                }, function(error) {
-                    swal("Update error!", "", "error");
-                });
-            } else {
-                // console.log('create');
-                AdmissionService.CreateAdmission($scope.admission.create).then(function(data) {
-                    swal("Create success!", "", "success");
-                }, function(error) {
-                    swal("Create error!", "", "error");
-                });
-            };
+        //THAO
+        var flag = false;
+        flag = isRadioYesNo('anti_coagulant', ['anti_coagulant_still_to_take', 'anti_coagulant_date_to_cease', 'anti_coagulant_note']);
+        if (flag === false)
+            flag = isRadioYesNo('anti_inflammatory', ['anti_inflammatory_comment', 'anti_inflammatory_note']);
+        if (flag === false)
+            flag = isRadioYesNo('herbal_supplements', ['herbal_supplements_comment', 'herbal_supplements_note']);
+        if (flag === false)
+            flag = isRadioYesNo('adverse_reactions', ['allergies_alerts_details_reaction']);
+        if (flag === false)
+            flag = isRadioYesNo('lifestyle_smoked', ['lifestyle_smoked_daily_amount', 'lifestyle_smoked_ceased', 'lifestyle_smoked_notes']);
+        if (flag === false)
+            flag = isRadioYesNo('lifestyle_alcohol', ['lifestyle_alcohol_daily_amount', 'lifestyle_alcohol_nurse_notes']);
+        if (flag === false)
+            flag = isRadioYesNo('lifestyle_drugs', ['lifestyle_drugs_daily_amount', 'lifestyle_drugs_type', 'lifestyle_drugs_nurse_notes']);
+        if (flag === false)
+            flag = isRadioYesNo('cardiovascular_triglycerides', ['cardiovascular_triglycerides_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('cardiovascular_hypertension', ['cardiovascular_hypertension_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('cardiovascular_angina', ['cardiovascular_angina_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('cardiovascular_fibrillation', ['cardiovascular_fibrillation_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('cardiovascular_condition', ['cardiovascular_condition_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('cardiovascular_disease', ['cardiovascular_disease_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('cardiovascular_cardiac_disease', ['cardiovascular_cardiac_disease_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('endocrinology_diabetes', ['endocrinology_diabetes_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('endocrinology_blood_glucose', ['endocrinology_blood_glucose_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('endocrinology_goitre', ['endocrinology_goitre_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('gastrointestinal_reflux', ['gastrointestinal_reflux_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('gastrointestinal_jaundice', ['gastrointestinal_jaundice_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('gastrointestinal_ibs', ['gastrointestinal_ibs_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('bleeding_disorders_lungs', ['bleeding_disorders_lungs_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('bleeding_disorders_anaemia', ['bleeding_disorders_anaemia_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('bleeding_disorders_problems', ['bleeding_disorders_problems_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('musculoskeletal_osteoarthritis', ['musculoskeletal_osteoarthritis_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('musculoskeletal_problems', ['musculoskeletal_problems_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('neurology_dystrophies', ['neurology_dystrophies_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('neurology_tia', ['neurology_tia_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('neurology_weakness', ['neurology_weakness_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('neurology_turns', ['neurology_turns_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('respiratory_emphysema', ['respiratory_emphysema_comment']);
+        if (flag === false)
+            flag = isRadioYesNo('respiratory_inclines', ['respiratory_inclines_comment']);
+        // alert(flag);
+        if (flag) {
+            //xuat thong bao
+            toastr.error("You haven't entered enough information", "Error");
+            return;
+        }
+        //END THAO
 
-        });
+        swal({
+                title: "Are you sure?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#2196F3",
+                confirmButtonText: "OK",
+                closeOnConfirm: false
+            },
+            function() {
+                _.forEach($scope.admissionDetail, function(value, name) {
+                    if (value === null) value = '';
+                    if (value.length > 0) {
+                        var data = {
+                            Section: "Admission Details",
+                            Category: "Admission",
+                            Type: "Admission",
+                            Name: name,
+                            Value: null
+                        }
+                        if (name == "PREVIOUS_SURGERY_PROCEDURES" || name == "MEDICATIONS") {
+                            data.Value = JSON.stringify(value);
+                        } else {
+                            data.Value = value;
+                        };
+                        input.Admissions[0].AdmissionData.push(data);
+                    }
+
+                });
+
+                if (input == $scope.admission.update) {
+                    //console.log('update');
+                    AdmissionService.UpdateAdmission(input).then(function(data) {
+                        swal("Update success!", "", "success");
+                        location.reload(true);
+
+                    }, function(error) {
+                        swal("Update error!", "", "error");
+                    });
+                } else {
+                    // console.log('create');
+                    AdmissionService.CreateAdmission($scope.admission.create).then(function(data) {
+                        swal("Create success!", "", "success");
+                        location.reload(true);
+                    }, function(error) {
+                        swal("Create error!", "", "error");
+                    });
+                };
+
+            });
+
+
     };
+
+    /* THAO */
+    var isRadioYesNo = function(nameRadioYesNo, fieldsRelation) {
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        var flag = false;
+        if (radioValue === 'Y') {
+            fieldsRelation.map(function(field) {
+                var value = $scope.admissionDetail[field];
+                if (value === '' || value === null || typeof value === 'undefined')
+                    flag = true;
+            })
+            return flag;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.checkRadioYesNo = function(nameRadioYesNo, groupsRelation) {
+            var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+            if (radioValue === 'Y') {
+                groupsRelation.map(function(group) {
+                    $(group + '_' + nameRadioYesNo).addClass('has-error');
+                })
+            } else {
+                groupsRelation.map(function(group) {
+                    $(group + '_' + nameRadioYesNo).removeClass('has-error');
+                })
+            }
+        }
+        /* END THAO */
 
     $scope.UpdateAdmission = function() {
         if ($scope.admissionUID) {
@@ -384,7 +495,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
             }
         }
         consultationServices.PrintPDF(postdata).then(function(responsePrintPDF) {
-            console.log(responsePrintPDF)
+            //console.log(responsePrintPDF)
             var blob = new Blob([responsePrintPDF.data], {
                 type: 'application/pdf'
             });
@@ -392,7 +503,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
         }, function(err) {
             console.log(err);
         });
-        console.log(postdata);
+        //console.log(postdata);
     };
 
     // $scope.Disabled = function() {
@@ -400,4 +511,6 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, $timeout, $uibM
     //   element(by.model('radio')).click();
     //   expect(element(by.css('text')).getAttribute('disabled')).toBeTruthy();
     // };
+
+
 });

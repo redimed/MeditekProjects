@@ -883,6 +883,8 @@ module.exports = {
 		LoadlistDoctor: Get all data	
 	*/
 	LoadlistDoctor: function(data, transaction) {
+		var isAvatar = data.isAvatar?data.isAvatar:false;
+		var include_data = [];
 		var FirstName = '',LastName = '';
 		var attributes = [];
 		var isConcat = false;
@@ -908,35 +910,47 @@ module.exports = {
 		else{
 			attributes = defaultAtrributes;
 		}
+
+		if(isAvatar == true) {
+			include_data.push({
+				model:FileUpload,
+				attributes:['UID'],
+				where:{
+					FileType:'ProfileImage',
+				},
+				required:true
+			});
+		}
+
+		include_data.push({
+			model: TelehealthUser,
+		    required: true,
+		    attributes:['UID']
+		});
+
+		include_data.push({
+			include:[
+				{
+					model: Role,
+				    attributes: ['RoleName','RoleCode'],
+				    where:{
+				       	$or: whereClause.Role
+				   	},
+				    required: true,
+				}
+			],
+			model: RelUserRole,
+			attributes: ['RoleId'],
+			where:{
+			    RoleId : {in:[4,5]}
+			},
+			required: true,
+		});
+
 		return Doctor.findAndCountAll({
 			include:[
 				{
-					include:[
-						{
-							include:[
-								{
-									model: Role,
-				          			attributes: ['RoleName'],
-				          			where:{
-				          				$or: whereClause.Role
-				          			},
-				          			required: true,
-						  		}
-							],
-			          		model: RelUserRole,
-			          		attributes: ['RoleId'],
-			          		where:{
-			          			RoleId : {in:[4,5]}
-			          		},
-			          		required: true,
-
-				    	},
-				    	{
-		      				model: TelehealthUser,
-		      				required: false,
-		      				attributes:['UID']
-		      			}
-					],
+					include:include_data,
 		       		model: UserAccount,
 		      		attributes: ['PhoneNumber','Enable', 'UID'],
 			  		where:{
@@ -1308,6 +1322,7 @@ module.exports = {
 				userID = user.ID;
 				data.UserAccountID = user.ID;
 				data.HealthLink = data.HealthLinkID;
+				data.Enable = 'Y';
 				return Doctor.create(data,{transaction:t});
 			},function(err){
 				t.rollback();
@@ -1322,13 +1337,22 @@ module.exports = {
 				throw err;
 			})
 			.then(function(addSpecialitiesComplete){
-				return User.addRole(data.RoleId,{transaction:t});
+				var addData = {
+					RoleId : data.RoleId,
+					SiteId : 1
+				};
+
+				// return User.addRole(data.RoleId,{SiteId:1},{transaction:t});
+				return RelUserRole.create({
+					RoleId : data.RoleId,
+					SiteId : 1,
+					UserAccountId : User.ID
+				},{transaction:t});
 			},function(err){
 				t.rollback();
 				throw err;
 			})
 			.then(function(success){
-
 				t.commit();
 				var response = {
 					userID  : userID,

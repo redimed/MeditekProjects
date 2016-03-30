@@ -41,13 +41,14 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies) {
                     console.log("calllllllllllllllllllllllllllllllllll", _.isEmpty(socketTelehealth));
                     if (!_.isEmpty(socketTelehealth)) {
                         sendCall();
+                    } else {
+                        ioSocket.telehealthConnect = function() {
+                            console.log("aaaaaaaaaaaaaaa");
+                            sendCall();
+                        }
                     }
                 } else {
                     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
-                    ioSocket.telehealthConnect = function() {
-                        console.log("aaaaaaaaaaaaaaa");
-                        sendCall();
-                    }
                 }
             });
             session.publish($scope.publisher);

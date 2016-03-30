@@ -19,7 +19,13 @@ angular.module('app.authentication.service', [])
                 data: data
             });
         };
-        
+
+        services.getListDoctor = function(data) {
+            return api.all("doctor/loadlist-doctor").post({
+                data: data
+            });
+        };
+
         services.CreateRoomInOpentok = function() {
             return apiTelehealth.one('telehealth/socket/generateSession').get();
         };

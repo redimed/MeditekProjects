@@ -5,15 +5,22 @@ var ioSocket = {},
     socketNc = ioSocket.Nc;
 
 
-socketMakeRequest = function(server, api, obj) {
+socketJoinRoom = function(server, api, obj) {
     server.get(api, obj, function(data, jwres) {
         console.log('=============Socket===============', api);
         console.log(data);
     });
 }
 
-
-
+messageTransfer = function(from, to, message) {
+    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        from: from,
+        to: to,
+        message: message
+    }, function(data) {
+        console.log("send call", data);
+    });
+}
 
 /*begin socket 3006 */
 socketAuth = io.sails.connect(o.const.authBaseUrl);

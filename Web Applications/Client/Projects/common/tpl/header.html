@@ -44,7 +44,7 @@
                             <a href="#">3 doctors</a>
                         </li>
                         <li>
-                            <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+                            <ul class="dropdown-menu-list scroller" style="height: 500px;" data-handle-color="#637283">
                                 <li class="text-center" style="padding-left:10px; padding-right:10px;">
                                     <form class="form-horizontal margin-top-10">
                                         <div class="input-icon right">
@@ -53,43 +53,13 @@
                                         </div>
                                     </form>
                                 </li>
-                                <li>
+                                <li ng-repeat="doctor in listDoctor">
                                     <a href="#">
                                         <span class="photo">
                                             <img src="theme/assets/layouts/layout/img/avatar2.jpg" class="img-circle" alt=""> </span>
                                         <span class="subject">
-                                            <span class="from"> Mohamed Sory </span>
-                                            <span class="time font-green-jungle">Online</span>
-                                        </span>
-                                        <span class="message">
-                                            <br>
-                                            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                            <span class="btn btn-sm green-jungle"><i class="fa fa-phone"></i> Call</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="photo">
-                                            <img src="theme/assets/layouts/layout/img/avatar3.jpg" class="img-circle" alt=""> </span>
-                                        <span class="subject">
-                                            <span class="from"> Ivanchito Selano</span>
-                                            <span class="time font-yellow-lemon">Away</span>
-                                        </span>
-                                        <span class="message">
-                                            <br>
-                                            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                            <span class="btn btn-sm green-jungle"><i class="fa fa-phone"></i> Call</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="photo">
-                                            <img src="theme/assets/layouts/layout/img/avatar4.jpg" class="img-circle" alt=""> </span>
-                                        <span class="subject">
-                                            <span class="from">Arapsaori Hibatoshi</span>
-                                            <span class="time font-red-thunderbird">Offline</span>
+                                            <span class="from"> {{(doctor.FirstName === null) + " " + doctor.MiddleName + " " +doctor.LastName}} </span>
+                                            <!-- <span class="time font-green-jungle">Online</span> -->
                                         </span>
                                         <span class="message">
                                             <br>

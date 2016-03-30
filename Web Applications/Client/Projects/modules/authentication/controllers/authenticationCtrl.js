@@ -91,15 +91,18 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         name: 'Silver Savings Account'
     }];
 
-    function messageTransfer(from, to, message) {
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-            from: from,
-            to: to,
-            message: message
-        }, function(data) {
-            console.log("send call", data);
-        });
-    }
+    //phan quoc chien
+
+    AuthenticationService.getListDoctor({limit: 6,
+        offset: 8,
+        attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+        isAvatar: true})
+    .then(function(data) {
+        console.log("list doctor", data.data);
+        $scope.listDoctor = data.data;
+    });
+
+
 
     ioSocket.telehealthCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
@@ -136,12 +139,12 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     ioSocket.telehealthConnect = function() {
         console.log("reconnect socketTelehealth");
-        socketMakeRequest(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
+        socketJoinRoom(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
     }
 
     ioSocket.authConnect = function() {
         console.log("reconnect socketAuth");
-        socketMakeRequest(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
+        socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
     }
 
     ioSocket.telehealthCancel = function(msg) {
@@ -155,6 +158,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         o.audio.pause();
     }
     ioSocket.telehealthMisscall = function(msg) {
-        alert("Miss Call");
-    }
+            alert("Miss Call");
+        }
+        // end chien
 });

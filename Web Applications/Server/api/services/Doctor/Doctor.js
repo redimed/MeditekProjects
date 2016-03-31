@@ -30,7 +30,8 @@ var defaultAtrributes = [
 		'Signature',
 		'HealthLink',
 		'ProviderNumber',
-		'Enable'
+		'Enable',
+		'CreatedDate'
 	];
 
 module.exports = {
@@ -885,6 +886,10 @@ module.exports = {
 	LoadlistDoctor: function(data, transaction) {
 		var isAvatar = data.isAvatar?data.isAvatar:false;
 		var include_data = [];
+		var Role_Arr = [4,5];
+		if(data.RoleID) {
+			Role_Arr = data.RoleID;
+		}
 		var FirstName = '',LastName = '';
 		var attributes = [];
 		var isConcat = false;
@@ -912,6 +917,7 @@ module.exports = {
 		else{
 			attributes = defaultAtrributes;
 		}
+		// data.order = data.order?data.order+',Doctor.CreatedDate ASC':'CreatedDate ASC';
 
 		if(isAvatar == true) {
 			include_data.push({
@@ -945,10 +951,21 @@ module.exports = {
 			model: RelUserRole,
 			attributes: ['RoleId'],
 			where:{
-			    RoleId : {in:[4,5]}
+			    RoleId : {in:Role_Arr}
 			},
 			required: true,
 		});
+
+		var indexArr = attributes.indexOf('CreatedDate');
+		if(indexArr == -1) {
+			attributes.push('CreatedDate');
+		}
+
+		var order = [];
+		order.push(['CreatedDate', 'ASC']);
+		if(data.order) {
+			order.push(data.order);
+		}
 
 		return Doctor.findAndCountAll({
 			include:[
@@ -966,7 +983,7 @@ module.exports = {
 			attributes : attributes,
 			limit      : data.limit,
 			offset     : data.offset,
-			order      : data.order,
+			order      : order,
 			// subQuery   : false,
 			where: {
 				Enable:'Y',

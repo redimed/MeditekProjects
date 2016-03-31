@@ -93,17 +93,28 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     //phan quoc chien
     $scope.loadListDoctor = function(fullname) {
-        var info = {
+        //INTERNAL
+        AuthenticationService.getListDoctor({
             Search: {
-                FirstName: (fullname) ? fullname : null
-                    // FullName:(fullname)?fullname:null
+                FullName: (fullname) ? fullname : null
             },
             attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
-            isAvatar: true
-        };
-        AuthenticationService.getListDoctor(info).then(function(data) {
-            console.log("list doctor", data.data);
-            $scope.listDoctor = data.data;
+            isAvatar: true,
+            RoleID: [4]
+        }).then(function(data) {
+            $scope.listDoctorInternal = data.data;
+        });
+
+        //EXTERNAL 
+        AuthenticationService.getListDoctor({
+            Search: {
+                FullName: (fullname) ? fullname : null
+            },
+            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+            isAvatar: true,
+            RoleID: [5]
+        }).then(function(data) {
+            $scope.listDoctorExternal = data.data;
         });
     };
 
@@ -112,9 +123,10 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     $scope.callDoctor = function(data) {
         console.log(data);
         console.log(data.UserAccount.TelehealthUser.UID);
-        console.log(((data.FirstName === null) ? "" : data.FirstName) +" "+ ((data.MiddleName === null) ? "" : data.MiddleName) +" "+ ((data.LastName === null) ? "" : data.LastName));
+        console.log(ioSocket.telehealthOpentok);
+        console.log(((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName));
         var userInfo = $cookies.getObject('userInfo');
-        var userName = ((data.FirstName === null) ? "" : data.FirstName) +" "+ ((data.MiddleName === null) ? "" : data.MiddleName) +" "+ ((data.LastName === null) ? "" : data.LastName);
+        var userName = ((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName);
         var userCall = data.UserAccount.TelehealthUser.UID;
         ioSocket.telehealthDoctorCallWindow = window.open($state.href("blank.call", {
             apiKey: ioSocket.telehealthOpentok.apiKey,
@@ -125,11 +137,25 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             uidUser: userInfo.TelehealthUser.UID,
         }), "CAll", { directories: "no" });
     }
+    ioSocket.getRoomOpentok = function() {
+        AuthenticationService.CreateRoomInOpentok().then(function(data) {
+            ioSocket.telehealthOpentok = data.data;
+            if (ioSocket.telehealthMesageCall) {
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> call neee",ioSocket.telehealthMesageCall);
+                ioSocket.telehealthCall(ioSocket.telehealthMesageCall);
+                delete ioSocket.telehealthMesageCall;
+                console.log("xoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",ioSocket.telehealthMesageCall);
 
-    AuthenticationService.CreateRoomInOpentok().then(function(data) {
-        ioSocket.telehealthOpentok = data.data;
-    });
+            }
+            if (ioSocket.telehealthMesageMisscall) {
+                alert("miss call");
+                delete ioSocket.telehealthMesageMisscall;
+            }
 
+        });
+    }
+
+    ioSocket.getRoomOpentok();
 
     ioSocket.telehealthCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
@@ -160,7 +186,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             o.audio.pause();
             swal.close();
         });
-        console.log(ioSocket.telehealthSwalCall);
         o.audio.loop = true;
         o.audio.play();
     };

@@ -75,16 +75,29 @@ function connectedTelehealth() {
     socketTelehealth.on('receiveMessage', function(msg) {
         switch (msg.message) {
             case "decline":
-                ioSocket.telehealthDecline(msg);
+                if (ioSocket.telehealthDecline)
+                    ioSocket.telehealthDecline(msg);
+                else
+                    ioSocket.telehealthMesageDecline = msg;
                 break;
             case "call":
-                ioSocket.telehealthCall(msg);
+                if (ioSocket.telehealthCall)
+                    ioSocket.telehealthCall(msg);
+                else
+                    ioSocket.telehealthMesageCall = msg;
                 break;
             case "cancel":
-                ioSocket.telehealthCancel(msg);
+                if (ioSocket.telehealthCancel)
+                    ioSocket.telehealthCancel(msg);
+                else
+                    ioSocket.telehealthMesageCancel = msg;
                 break;
             case "misscall":
-                ioSocket.telehealthMisscall(msg);
+
+                if (ioSocket.telehealthMisscall)
+                    ioSocket.telehealthMisscall(msg);
+                else
+                    ioSocket.telehealthMesageMisscall = msg;
                 break;
         };
     });

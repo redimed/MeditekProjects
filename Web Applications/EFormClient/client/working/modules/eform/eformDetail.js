@@ -206,19 +206,33 @@ module.exports = React.createClass({
     },
     _onComponentPageBarPrintForm: function(){
         var self = this;
-        this._onDetailSaveForm()
-        .then(function(){
-            EFormService.createPDFForm(data)
-            .then(function(response){
-                var fileName = 'report_'+moment().format('X');
-                var blob = new Blob([response], {
-                    type: 'application/pdf'
-                });
-                saveAs(blob, fileName);
-                //swal("Success!", "Your form has been printed to PDF.", "success");
-            }, function(error){
-
+        var sections = self.state.sections.toJS();
+        var fields = [];
+        for(var i = 0; i < sections.length; i++){
+            var section = sections[i];
+            var sectionRef = section.ref;
+            var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('print');
+            tempFields.map(function(field, index){
+                fields.push(field);
             })
+        }
+
+        var data = {
+            printMethod: self.EFormTemplate.PrintType,
+            data: fields,
+            templateUID: self.templateUID
+        }
+
+        EFormService.createPDFForm(data)
+        .then(function(response){
+            var fileName = 'report_'+moment().format('X');
+            var blob = new Blob([response], {
+                type: 'application/pdf'
+            });
+            saveAs(blob, fileName);
+            //swal("Success!", "Your form has been printed to PDF.", "success");
+        }, function(error){
+
         })
     },
     _onGoToHistory: function(history){

@@ -531,7 +531,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					    imageAvatar.addEventListener('change', function(e){
 					    	var canvas = document.getElementById('imageAvatarCanvas');
 							var ctx = canvas.getContext('2d');
-							scope.buildImg(imageAvatar, canvas, ctx,e,250,250);
+							scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
 					    }, false);
 					
 				}
@@ -545,6 +545,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					}
 				}
 				if(value=="ProfileImage"){
+					$('#imageAvatar').val('');
+					$('#imageAvatarCanvas').val('');
 					scope.isChoseAvatar = false;
 				}
 			}

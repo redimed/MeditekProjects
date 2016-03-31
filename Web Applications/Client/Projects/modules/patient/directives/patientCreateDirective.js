@@ -369,6 +369,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     }
                 }
                 if (value == "ProfileImage") {
+                    $('#imageAvatar').val('');
+                    $('#imageAvatarCanvas').val('');
                     scope.isChoseAvatar = false;
                 }
             }

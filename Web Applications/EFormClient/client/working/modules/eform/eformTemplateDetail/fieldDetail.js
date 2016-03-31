@@ -1,9 +1,12 @@
 var CommonInputText = require('common/inputText');
 var Markdown = require('common/markdown');
+var CommonCheckbox = require('common/checkbox');
 var Config = require('config');
+var EFormService = require('modules/eform/services');
 
 module.exports = React.createClass({
     code: 0,
+    roles: [],
     ref: '',
     type: '',
     propTypes: {
@@ -38,6 +41,14 @@ module.exports = React.createClass({
         this.refs.formSize.setValue(object.size);
         this.refs.formRef.setValue(object.ref);
         this.code = object.code;
+    },
+    componentDidMount: function(){
+        var self = this;
+        EFormService.getAllUserRoles()
+        .then(function(response){
+            self.roles = response.data;
+            self.forceUpdate();
+        })
     },
     _onSave: function(){
         var size = this.refs.formSize.getValue();
@@ -148,6 +159,25 @@ module.exports = React.createClass({
                             <div className="form-group">
                                 <label>Ref</label>
                                 <CommonInputText placeholder="Ref" ref="formRef"/>
+                            </div>
+                            <div className="form-group">
+                                <div className="icheck-inline">
+                                    <label>
+                                        <CommonCheckbox/>
+                                        &nbsp;
+                                        He he he
+                                    </label>
+                                    <label>
+                                        <CommonCheckbox/>
+                                        &nbsp;
+                                        He he he
+                                    </label>
+                                    <label>
+                                        <CommonCheckbox/>
+                                        &nbsp;
+                                        He he he
+                                    </label>
+                                </div>
                             </div>
                             <div className="form-group" style={{float:'right'}}>
                                 <button type="button" className="btn btn-default" onClick={this.props.onCloseModal}>Close</button>

@@ -1,6 +1,16 @@
 var Config = require('config');
 
 module.exports = {
+	getAllUserRoles: function(){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'GET',
+				url: Config.apiUrl+'eformtemplate/getUserRoles',
+				success: resolve
+			})	
+		});
+		return p;
+	},
 	getUserRoles: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

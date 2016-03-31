@@ -27,6 +27,10 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostSaveEFormTemplate'
     },
+    'get /eformtemplate/getUserRoles': {
+        controller: 'EForm/EFormController',
+        action: 'GetEFormUserRoles'
+    },
     'post /eform/list': {
         controller: 'EForm/EFormController',
         action: 'PostList'

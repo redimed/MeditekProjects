@@ -92,16 +92,43 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
 
     //phan quoc chien
+    $scope.loadListDoctor = function(fullname) {
+        var info = {
+            Search: {
+                FirstName: (fullname) ? fullname : null
+                    // FullName:(fullname)?fullname:null
+            },
+            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+            isAvatar: true
+        };
+        AuthenticationService.getListDoctor(info).then(function(data) {
+            console.log("list doctor", data.data);
+            $scope.listDoctor = data.data;
+        });
+    };
 
-    AuthenticationService.getListDoctor({limit: 6,
-        offset: 8,
-        attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
-        isAvatar: true})
-    .then(function(data) {
-        console.log("list doctor", data.data);
-        $scope.listDoctor = data.data;
+    $scope.loadListDoctor();
+
+    $scope.callDoctor = function(data) {
+        console.log(data);
+        console.log(data.UserAccount.TelehealthUser.UID);
+        console.log(((data.FirstName === null) ? "" : data.FirstName) +" "+ ((data.MiddleName === null) ? "" : data.MiddleName) +" "+ ((data.LastName === null) ? "" : data.LastName));
+        var userInfo = $cookies.getObject('userInfo');
+        var userName = ((data.FirstName === null) ? "" : data.FirstName) +" "+ ((data.MiddleName === null) ? "" : data.MiddleName) +" "+ ((data.LastName === null) ? "" : data.LastName);
+        var userCall = data.UserAccount.TelehealthUser.UID;
+        ioSocket.telehealthDoctorCallWindow = window.open($state.href("blank.call", {
+            apiKey: ioSocket.telehealthOpentok.apiKey,
+            sessionId: ioSocket.telehealthOpentok.sessionId,
+            token: ioSocket.telehealthOpentok.token,
+            userName: userName,
+            uidCall: userCall,
+            uidUser: userInfo.TelehealthUser.UID,
+        }), "CAll", { directories: "no" });
+    }
+
+    AuthenticationService.CreateRoomInOpentok().then(function(data) {
+        ioSocket.telehealthOpentok = data.data;
     });
-
 
 
     ioSocket.telehealthCall = function(msg) {
@@ -120,7 +147,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             allowEscapeKey: false,
         }, function(isConfirm) {
             if (isConfirm) {
-                $scope.opentokReceiveWindow = window.open($state.href("blank.receive", {
+                ioSocket.telehealthReceiveWindow = window.open($state.href("blank.receive", {
                     apiKey: msg.apiKey,
                     sessionId: msg.sessionId,
                     token: msg.token,
@@ -133,6 +160,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             o.audio.pause();
             swal.close();
         });
+        console.log(ioSocket.telehealthSwalCall);
         o.audio.loop = true;
         o.audio.play();
     };
@@ -149,14 +177,23 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     ioSocket.telehealthCancel = function(msg) {
         console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
+        console.log(ioSocket.telehealthSwalCall);
         swal.close();
         o.audio.pause();
     }
+
     ioSocket.telehealthDecline = function(msg) {
         console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
+        if (ioSocket.telehealthPatientCallWindow) {
+            ioSocket.telehealthPatientCallWindow.close();
+        }
+        if (ioSocket.telehealthDoctorCallWindow) {
+            ioSocket.telehealthDoctorCallWindow.close();
+        }
         swal.close();
         o.audio.pause();
     }
+
     ioSocket.telehealthMisscall = function(msg) {
             alert("Miss Call");
         }

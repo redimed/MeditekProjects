@@ -47,6 +47,7 @@ module.exports = React.createClass({
         EFormService.getAllUserRoles()
         .then(function(response){
             self.roles = response.data;
+            console.log(self.roles);
             self.forceUpdate();
         })
     },
@@ -95,6 +96,7 @@ module.exports = React.createClass({
         var display_rows = 'none';
         var display_precal = 'block';
         var display_height = 'none';
+        var display_role = 'block';
 
         if(Config.getPrefixField(this.type, 'eform_input') > -1){
             display_name = 'block';
@@ -107,6 +109,7 @@ module.exports = React.createClass({
             if(Config.getPrefixField(this.type, 'label') > -1){
                 display_name = 'none';
                 display_precal = 'none';
+                display_role = 'none';
             }
             if(Config.getPrefixField(this.type, 'html') > -1){
                 display_label = 'none';
@@ -160,23 +163,19 @@ module.exports = React.createClass({
                                 <label>Ref</label>
                                 <CommonInputText placeholder="Ref" ref="formRef"/>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" style={{display: display_role}}>
                                 <div className="icheck-inline">
-                                    <label>
-                                        <CommonCheckbox/>
-                                        &nbsp;
-                                        He he he
-                                    </label>
-                                    <label>
-                                        <CommonCheckbox/>
-                                        &nbsp;
-                                        He he he
-                                    </label>
-                                    <label>
-                                        <CommonCheckbox/>
-                                        &nbsp;
-                                        He he he
-                                    </label>
+                                {
+                                    this.roles.map(function(role, index){
+                                        return (
+                                            <label key={index}>
+                                                <CommonCheckbox ref={role.RoleCode}/>
+                                                &nbsp;
+                                                {role.RoleCode}
+                                            </label>
+                                        )
+                                    })
+                                }
                                 </div>
                             </div>
                             <div className="form-group" style={{float:'right'}}>

@@ -411,7 +411,7 @@ angular.module('app.authentication.doctor.directive.create', [])
                             imageAvatar.addEventListener('change', function(e) {
                                 var canvas = document.getElementById('imageAvatarCanvas');
                                 var ctx = canvas.getContext('2d');
-                                scope.buildImg(imageAvatar, canvas, ctx, e,250,250);
+                                scope.buildImg(imageAvatar, canvas, ctx, e,350,350);
                             }, false);
                         } else if (value == "Signature") {
                             var imageSignature = document.getElementById('imageSignature');
@@ -425,14 +425,20 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 
                     scope.Remove = function(value) {
+                        console.log("uploader1 ",scope.uploader);
                         for (var i = 0; i < scope.uploader.queue.length; i++) {
                             if (scope.uploader.queue[i].formData[0].fileType == value) {
                                 scope.uploader.queue.splice(i, 1);
                             }
                         }
+                        console.log("uploader2 ",scope.uploader);
                         if (value == "ProfileImage") {
+                            $('#imageAvatarCanvas').val('');
+                            $('#imageAvatar').val('');
                             scope.isChoseAvatar = false;
                         } else if (value == "Signature") {
+                            $('#imageSignatureCanvas').val('');
+                            $('#imageSignature').val('');
                             scope.isChoseSignature = false;
                         }
                     }

@@ -148,15 +148,15 @@
 											<!-- profileImage -->
 											<div ng-form name="checkInForm" novalidate>
 												<div >
-													<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" height="250" width="250"></canvas>
+													<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" height="350" width="350"></canvas>
 													<img class="thumbnail" src="theme/assets/global/images/no_person.jpg" ng-show="isChoseAvatar==false" style="width:350px; height:350px; ">
 													<div class="container">
 														<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
 															<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
 															<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
+															<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
 														</label> 
 														<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
-														<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
 													</div>
 
 												</div>
@@ -345,9 +345,9 @@
 													<label for="imageSignature" style="float:left; padding-right: 1%;"> 
 														<span class="btn green" ng-if="isChoseSignature==false" style="width: 120px;">Select Image</span>
 														<span class="btn green" ng-if="isChoseSignature==true" style="width: 120px;">Change</span>
-													</label> 
+														<input type="file" id="imageSignature" ng-click="setType('Signature')" nv-file-select uploader="uploader" name="imageSignature" style="color: transparent;  opacity: 0 !important; position: fixed;">
+													</label>
 													<span class="btn red" ng-if="isChoseSignature==true"style="width: 120px; float:left;" ng-click="Remove('Signature')">Remove</span>
-													<input type="file" id="imageSignature" ng-click="setType('Signature')" nv-file-select uploader="uploader" name="imageSignature" style="color: transparent;  opacity: 0 !important; position: fixed;">
 												</div>
 
 											</div>

@@ -377,7 +377,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					    imageAvatar.addEventListener('change', function(e){
 					    	var canvas = document.getElementById('imageAvatarCanvas');
 							var ctx = canvas.getContext('2d');
-							scope.buildImg(imageAvatar, canvas, ctx,e,250,250);
+							scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
 					    }, false);
 				}
 				else if(value =="Signature") {
@@ -399,9 +399,13 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					}
 				}
 				if(value=="ProfileImage"){
+					$('#imageAvatar').val('');
+					$('#imageAvatarCanvas').val('');
 					scope.isChoseAvatar = false;
 				}
 				else if(value=="Signature"){
+					$('#imageSignatureCanvas').val('');
+					$('#imageSignature').val('');
 					scope.isChoseSignature = false;
 				}
 			}

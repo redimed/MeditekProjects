@@ -38,13 +38,13 @@ public class PrintingProcess {
     public PrintingProcess() {
     }
     
-    public ByteArrayOutputStream iTextPrinting(List<FormDataModel> formData, String formUID) throws Exception{
+    public ByteArrayOutputStream iTextPrinting(List<FormDataModel> formData, String formUID, String baseUrl) throws Exception{
         try {
             // init params
             String basePath = "com/meditek/itexttemplate/";
             String pdfTemplateFile = "/"+basePath+formUID+".pdf";
             // Get populated data
-            Hashtable data = dataParsing.iTextDataParse(formData);
+            Hashtable data = dataParsing.iTextDataParse(formData, baseUrl);
             for (Enumeration data1 = data.keys(); data1.hasMoreElements();){
                 String key= (String)data1.nextElement();
                 System.out.println("Key: "+key+" Value: "+ data.get(key));

@@ -84,7 +84,8 @@ public class JasperReportController {
             // Filling pdf file
             ByteArrayOutputStream baos;
             if(requestData.getPrintMethod().equals("itext")){
-                baos = pdfPrinting.iTextPrinting(requestData.getData(), requestData.getTemplateUID());
+                String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
+                baos = pdfPrinting.iTextPrinting(requestData.getData(), requestData.getTemplateUID(), baseUrl);
             }
             else{
                 String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";

@@ -24,7 +24,7 @@ import javax.imageio.ImageIO;
  */
 public class DataProcess {
     
-    public Hashtable iTextDataParse (List<FormDataModel> data) throws Exception{
+    public Hashtable iTextDataParse (List<FormDataModel> data, String baseUrl) throws Exception{
         //init params
         Hashtable parsedData = new Hashtable();
         for (FormDataModel d: data){
@@ -55,7 +55,7 @@ public class DataProcess {
                 }
                 else {
                     try{
-                        imageRes=com.itextpdf.text.Image.getInstance(new URL("https://meditek.redimed.com.au:3005/api/downloadFileWithoutLogin/"+d.getValue()));
+                        imageRes=com.itextpdf.text.Image.getInstance(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()));
                         parsedData.put(d.getName().toLowerCase(), imageRes);
                     }
                     catch (Exception ex){

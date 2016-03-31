@@ -164,7 +164,7 @@ module.exports = React.createClass({
             })
         })
     },
-    _onComponentPageBarSaveForm: function(){
+    _onDetailSaveForm: function(){
         var self = this;
         var p = new Promise(function(resolve, reject){
             var templateUID = self.templateUID;
@@ -192,34 +192,22 @@ module.exports = React.createClass({
                 EFormService.formUpdate({UID: self.formUID, content: content})
                 .then(function(){
                     resolve();
-                    window.location.reload();
                     //swal("Success!", "Your form has been saved.", "success");
                 })
             }  
         });
         return p;
     },
+    _onComponentPageBarSaveForm: function(){
+        this._onDetailSaveForm()
+        .then(function(){
+            window.location.reload();
+        })
+    },
     _onComponentPageBarPrintForm: function(){
         var self = this;
-        this._onComponentPageBarSaveForm()
+        this._onDetailSaveForm()
         .then(function(){
-            var sections = self.state.sections.toJS();
-            var fields = [];
-            for(var i = 0; i < sections.length; i++){
-                var section = sections[i];
-                var sectionRef = section.ref;
-                var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('print');
-                tempFields.map(function(field, index){
-                    fields.push(field);
-                })
-            }
-
-            var data = {
-                printMethod: self.EFormTemplate.PrintType,
-                data: fields,
-                templateUID: self.templateUID
-            }
-
             EFormService.createPDFForm(data)
             .then(function(response){
                 var fileName = 'report_'+moment().format('X');

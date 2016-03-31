@@ -1,4 +1,11 @@
 module.exports = {
+    GetEFormUserRoles: function(req, res){
+        Role.findAll({
+        })
+        .then(function(data){
+            res.json({data: data});
+        })
+    },
     GetListEFormGroup: function(req, res){
         EFormGroup.findAll({
             where: {Enable: 'Y'},

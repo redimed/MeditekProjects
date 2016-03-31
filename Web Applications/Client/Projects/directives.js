@@ -167,18 +167,14 @@ app.directive('appointmentDetailDirective', function() {
                 };
             }, function(error) {});
 
-            function getDetailRoomOpentok() {
-                AuthenticationService.CreateRoomInOpentok().then(function(data) {
-                    console.log(data.data);
-                    console.log(socketTelehealth);
-                    $scope.opentok = data.data;
-                });
+            var userInfo = $cookies.getObject('userInfo');
+            if (!ioSocket.telehealthOpentok) {
+                ioSocket.getRoomOpentok();
             };
 
-            getDetailRoomOpentok();
-
-            var userInfo = $cookies.getObject('userInfo');
             $scope.funCallOpentok = function() {
+                console.log(ioSocket.telehealthOpentok);
+                return
                 WAAppointmentService.GetDetailPatientByUid({
                     UID: $scope.appointmentInfo.Patients[0].UID
                 }).then(function(data) {
@@ -186,10 +182,10 @@ app.directive('appointmentDetailDirective', function() {
                     if (data.data[0].TeleUID != null) {
                         var userCall = data.data[0].TeleUID;
                         var userName = data.data[0].FirstName + " " + data.data[0].LastName;
-                        $scope.opentokCallWindow = window.open($state.href("blank.call", {
-                            apiKey: $scope.opentok.apiKey,
-                            sessionId: $scope.opentok.sessionId,
-                            token: $scope.opentok.token,
+                        ioSocket.telehealthPatientCallWindow = window.open($state.href("blank.call", {
+                            apiKey: ioSocket.telehealthOpentok.apiKey,
+                            sessionId: ioSocket.telehealthOpentok.sessionId,
+                            token: ioSocket.telehealthOpentok.token,
                             userName: userName,
                             uidCall: userCall,
                             uidUser: userInfo.TelehealthUser.UID,
@@ -199,11 +195,6 @@ app.directive('appointmentDetailDirective', function() {
                     };
                 });
             };
-            ioSocket.telehealthDecline = function(msg) {
-                console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK", msg);
-                $scope.opentokCallWindow.close();
-                o.audio.pause();
-            }
         },
     };
 });

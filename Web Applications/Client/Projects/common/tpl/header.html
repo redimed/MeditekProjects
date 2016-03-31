@@ -1,18 +1,17 @@
 <!-- BEGIN HEADER -->
-	<!-- BEGIN HEADER INNER -->
-	<div class="page-header-inner">
-		
-		<!-- BEGIN LOGO -->
-		<div class="page-logo">
-			<a href="javascript:;" ui-sref="loggedIn.home.list">
-				<img src="/{{settings.globalPath}}/images/logoRedimed.png" alt="logo" class="logo-default" width="100%" />
-			</a>
-			<div class="menu-toggler sidebar-toggler"></div>
-		</div>
-		<!-- END LOGO -->
-		<!-- BEGIN HEADER SEARCH BOX -->
-        <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-        <!-- <form class="search-form open" action="extra_search.html" method="GET">
+<!-- BEGIN HEADER INNER -->
+<div class="page-header-inner">
+    <!-- BEGIN LOGO -->
+    <div class="page-logo">
+        <a href="javascript:;" ui-sref="loggedIn.home.list">
+            <img src="/{{settings.globalPath}}/images/logoRedimed.png" alt="logo" class="logo-default" width="100%" />
+        </a>
+        <div class="menu-toggler sidebar-toggler"></div>
+    </div>
+    <!-- END LOGO -->
+    <!-- BEGIN HEADER SEARCH BOX -->
+    <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
+    <!-- <form class="search-form open" action="extra_search.html" method="GET">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Patient search ..." name="query">
                 <span class="input-group-btn">
@@ -22,127 +21,111 @@
                 </span>
             </div>
         </form> -->
-        <!-- END HEADER SEARCH BOX -->
-		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
-		<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a>
-		<!-- END RESPONSIVE MENU TOGGLER -->
-		<!-- BEGIN TOP NAVIGATION MENU -->
-		<div class="top-menu">
-			<ul class="nav navbar-nav pull-right">
-				<!-- BEGIN NOTIFICATION DROPDOWN -->
-				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-				<li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                        <i class="icon-call-end"></i>
-                        <!-- <span class="badge badge-default"> 4 </span> -->
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="external">
-                            <h3>
+    <!-- END HEADER SEARCH BOX -->
+    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a>
+    <!-- END RESPONSIVE MENU TOGGLER -->
+    <!-- BEGIN TOP NAVIGATION MENU -->
+    <div class="top-menu">
+        <ul class="nav navbar-nav pull-right">
+            <!-- BEGIN NOTIFICATION DROPDOWN -->
+            <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+            <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <i class="icon-call-end"></i>
+                    <!-- <span class="badge badge-default"> 4 </span> -->
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="external">
+                        <h3>
                                 <span class="bold">List of Doctor</span>
                             </h3>
-                            <a href="#">3 doctors</a>
-                        </li>
-                        <li>
-                            <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                <li class="text-center" style="padding-left:10px; padding-right:10px;">
-                                    <form class="form-horizontal margin-top-10">
-                                        <div class="input-icon right">
-                                            <input type="text" class="form-control" placeholder="search">
-                                            <i class="glyphicon glyphicon-search"></i>
-                                        </div>
-                                    </form>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="photo">
-                                            <img src="theme/assets/layouts/layout/img/avatar2.jpg" class="img-circle" alt=""> </span>
-                                        <span class="subject">
-                                            <span class="from"> Mohamed Sory </span>
-                                            <span class="time font-green-jungle">Online</span>
-                                        </span>
-                                        <span class="message">
+                        <a href="#">{{(listDoctorInternal.length) + (listDoctorExternal.length)}} doctors</a>
+                    </li>
+                    <li>
+                        <ul class="dropdown-menu-list scroller" style="height: 500px;" data-handle-color="#637283">
+                            <li class="text-center" style="padding-left:10px; padding-right:10px;">
+                                <form class="form-horizontal margin-top-10">
+                                    <div class="input-icon right">
+                                        <input type="text" class="form-control" placeholder="search" ng-model="fullname" ng-enter="loadListDoctor(fullname)">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </div>
+                                </form>
+                            </li>
+                            <li ng-repeat="doctor in listDoctorInternal">
+                                <a href="#">
+                                    <span class="photo">
+                                            <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" class="img-circle" alt="" ng-if="ddoctor.UserAccount.FileUploads[0].UID">
+                                            <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
+                                    <span class="subject">
+                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span>
+                                    <!-- <span class="time font-green-jungle">Online</span> -->
+                                    </span>
+                                    <span class="message">
                                             <br>
                                             <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                            <span class="btn btn-sm green-jungle"><i class="fa fa-phone"></i> Call</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="photo">
-                                            <img src="theme/assets/layouts/layout/img/avatar3.jpg" class="img-circle" alt=""> </span>
-                                        <span class="subject">
-                                            <span class="from"> Ivanchito Selano</span>
-                                            <span class="time font-yellow-lemon">Away</span>
-                                        </span>
-                                        <span class="message">
+                                    <button class="btn btn-sm green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-repeat="doctor in listDoctorExternal">
+                                <a href="#">
+                                    <span class="photo">
+                                            <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" class="img-circle" alt="" ng-if="doctor.UserAccount.FileUploads[0].UID">
+                                            <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
+                                    <span class="subject">
+                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span>
+                                    <!-- <span class="time font-green-jungle">Online</span> -->
+                                    </span>
+                                    <span class="message">
                                             <br>
                                             <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                            <span class="btn btn-sm green-jungle"><i class="fa fa-phone"></i> Call</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="photo">
-                                            <img src="theme/assets/layouts/layout/img/avatar4.jpg" class="img-circle" alt=""> </span>
-                                        <span class="subject">
-                                            <span class="from">Arapsaori Hibatoshi</span>
-                                            <span class="time font-red-thunderbird">Offline</span>
-                                        </span>
-                                        <span class="message">
-                                            <br>
-                                            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                            <span class="btn btn-sm green-jungle"><i class="fa fa-phone"></i> Call</span>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-				<li class="dropdown dropdown-user">
-					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <button class="btn btn-sm green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-user">
+                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" dimage dimage-uid="info.fileupload[0].UID" dimage-size="'300'" class="img-circle" ng-if="info.fileupload.length > 0" />
 					<img alt="" src="theme/assets/global/images/no_person.jpg" class="img-circle" ng-if="info.fileupload.length == 0">
 					<span class="username username-hide-on-mobile">
 					{{info.doctor?info.doctor.FirstName+' '+info.doctor.LastName:info.patient.FirstName+' '+info.patient.LastName}} </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
-					<ul class="dropdown-menu dropdown-menu-default">
-						<li>
-							<a href="javascript:;" ui-sref="authentication.user.profile">
-							<i class="icon-user"></i> User Profile </a>
-						</li>
-						<li>
-							<a href="javascript:;">
-							<i class="icon-lock"></i> Lock Screen </a>
-						</li>
-						<li>
-							<a href="javascript:;" ng-click="logout()">
-							<i class="icon-key"></i> Log Out </a>
-						</li>
-					</ul>
-				</li>
-				<!-- END USER LOGIN DROPDOWN -->
-				<!-- BEGIN QUICK SIDEBAR TOGGLER -->
-				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-				<!-- <li class="dropdown dropdown-quick-sidebar-toggler">
+                <ul class="dropdown-menu dropdown-menu-default">
+                    <li>
+                        <a href="javascript:;" ui-sref="authentication.user.profile">
+                            <i class="icon-user"></i> User Profile </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-lock"></i> Lock Screen </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="logout()">
+                            <i class="icon-key"></i> Log Out </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END USER LOGIN DROPDOWN -->
+            <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+            <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+            <!-- <li class="dropdown dropdown-quick-sidebar-toggler">
 					<a href="javascript:;" class="dropdown-toggle">
 					<i class="icon-logout"></i>
 					</a>
 				</li> -->
-				<!-- END QUICK SIDEBAR TOGGLER -->
-			</ul>
-		</div>
-		<!-- END TOP NAVIGATION MENU -->
-	</div>
-	<!-- END HEADER INNER -->
+            <!-- END QUICK SIDEBAR TOGGLER -->
+        </ul>
+    </div>
+    <!-- END TOP NAVIGATION MENU -->
+</div>
+<!-- END HEADER INNER -->
 <!-- END HEADER -->
-
 <script>
-	Layout.init(); // init current layout
+Layout.init(); // init current layout
 </script>
-
-

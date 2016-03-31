@@ -23,7 +23,6 @@
                     <td>
                         <span ng-if="apptTime && apptTime != null">{{apptTime}}</span>
                         <span ng-if="!apptTime || apptTime == null">N/A</span>
-                        
                     </td>
                 </tr>
                 <tr>
@@ -31,7 +30,6 @@
                     <td>
                         <span ng-if="appointmentInfo.Status && appointmentInfo.Status != null">{{appointmentInfo.Status}}</span>
                         <span ng-if="!appointmentInfo.Status || appointmentInfo.Status == null">N/A</span>
-                        
                     </td>
                 </tr>
                 <tr>
@@ -48,9 +46,8 @@
                 <tr>
                     <td>Online Users</td>
                     <td>
-                        <a class="btn btn-sm btn-info" ng-click="funCallOpentok()" ng-disabled="!opentok">
-                            Call &nbsp;&nbsp;<i class="glyphicon glyphicon-earphone"></i></a>
-                    </td>
+                        <button class="btn btn-sm btn-info" ng-click="funCallOpentok()">
+                            Call &nbsp;&nbsp;<i class="glyphicon glyphicon-earphone"></i></button>
                 </tr>
             </table>
         </div>

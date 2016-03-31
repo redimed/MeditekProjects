@@ -889,7 +889,9 @@ module.exports = {
 		var attributes = [];
 		var isConcat = false;
 		var whereClause = Services.Doctor.whereClause(data);
+		var FullName;
 		if(data.Search){
+			FullName = data.Search.FullName?data.Search.FullName:null;
 			if(data.Search.FirstName!='' && data.Search.LastName!=''
 			&& data.Search.FirstName!=undefined && data.Search.LastName!=undefined){
 				FirstName = data.Search.FirstName;
@@ -972,6 +974,8 @@ module.exports = {
 					whereClause.Doctor,
 					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
 		    	   	like: '%'+FirstName+' '+LastName+'%'}):null,
+		    	   	FullName?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
+		    	   	like: '%'+FullName+'%'}):null,
 				]			
 			},
 			transaction:transaction

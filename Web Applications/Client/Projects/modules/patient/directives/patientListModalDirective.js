@@ -241,8 +241,11 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				scope.typeShow = type;
 			}
 
-			scope.callData = function(model) {
+			scope.callData = function(model,isChoose) {
 				scope.chooseItem = false;
+				if(isChoose) {
+					scope.chooseItem = isChoose;
+				}
 				PatientService.detailChildPatient({ UID: scope.info.UID , model: [model], where:{Enable:'Y'} })
 				.then(function(response) {
 					scope.info[model+'s'] = response.data[model];
@@ -504,8 +507,15 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
 							// scope.uploader.uploadAll();
 							toastr.success("update success!!!","SUCCESS");
-							scope.chooseItem = false;
-							scope.init();
+							// scope.chooseItem = false;
+							// scope.init();
+							// console.log(scope.typeShow);
+							if(scope.typeShow)
+								scope.callData(scope.typeShow,true);
+							else {
+								scope.chooseItem = false;
+								scope.init();
+							}
 							// scope.onCancel();
 						},function(err){
 							toastr.error(err.data.message.errors,"ERROR");
@@ -531,7 +541,17 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					    imageAvatar.addEventListener('change', function(e){
 					    	var canvas = document.getElementById('imageAvatarCanvas');
 							var ctx = canvas.getContext('2d');
-							scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
+							var blank = document.createElement('canvas');
+	                        blank.width = canvas.width;
+	                        blank.height = canvas.height;
+	                        if(canvas.toDataURL() == blank.toDataURL()) {
+	                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+	                        }
+	                        else {
+	                            ctx.clearRect(0, 0, 350, 350);
+	                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+	                        }
+							// scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
 					    }, false);
 					
 				}
@@ -623,35 +643,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						size: 'lg',
 						windowClass: model=='Staff'?'app-modal-window':null
 					});
-				// console.log(model,' ',data);
-				// if(model == null || model == ''){
-				// 	toastr.error("Please choose tab","error");
-				// } 
-				// else{
-				// 	console.log(data);
-				// 	data[model] = {
-				// 		PatientID : scope.info.ID,
-				// 		Enable    : 'Y'
-				// 	};
-				// 	// data[model].PatientID = scope.info.ID;
-				// 	// data[model].Enable = 'Y';
-				// 	if(data[model].ExpiryDate) {
-				// 		var parts = data[model].ExpiryDate.split('/');
-    //                     var date = parts[2].toString()+'-'+(parts[1]).toString()+'-'+parts[0].toString()+' +0700';
-    //                     data[model].ExpiryDate = moment(date).toDate();
-				// 	}
-				// 	PatientService.addChild({model:model,data:data[model]})
-				// 	.then(function(response){
-				// 		console.log(response);
-				// 		toastr.success("update success!!!","SUCCESS");
-				// 		scope.changeoption = true;
-				// 		// scope.onCancel();
-				// 		scope.init();
-				// 	},function(err) {
-				// 		console.log(err);
-				// 		toastr.error("Please check data again.","ERROR");
-				// 	});
-				// }
 			};
 
 			scope.DisableChild = function(model, data) {

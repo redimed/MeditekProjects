@@ -1266,7 +1266,8 @@ module.exports = {
 
 	CheckUserExist : function(data, transaction) {
 		var postData = [];
-		var whereClause    = {};
+		var whereClause = {};
+		var userID = [];
 		if(data.UserName!=undefined && data.UserName!=null && data.UserName!=''){
 			whereClause.UserName = data.UserName;
 		}
@@ -1293,18 +1294,41 @@ module.exports = {
 		})
 		.then(function(result){
 			for(var i = 0; i < result.length; i++){
+				userID.push(result[i].dataValues.ID);
 				if(result[i].dataValues.UserName == data.UserName){
-					postData.push('UserName');
+					postData.push({field:'UserName',ID:result[i].dataValues.ID});
 				}
 				if(result[i].dataValues.Email == data.Email){
-					postData.push('Email');
+					postData.push({field:'Email',ID:result[i].dataValues.ID});
 				}
 				if(result[i].dataValues.PhoneNumber == data.PhoneNumber){
-					postData.push('PhoneNumber');
+					postData.push({field:'PhoneNumber',ID:result[i].dataValues.ID});
 				}
 			}
-			return postData;
+			return Doctor.findAll({
+				where:{
+					UserAccountID :{
+						$in : userID
+					}
+				}
+			});
+			// return postData;
 		},function(err){
+			throw err;
+		})
+		.then(function(got_doctor){
+			var responseData = [];
+			if(got_doctor) {
+				for(var i = 0; i < got_doctor.length; i++) {
+					for(var j = 0; j < postData.length; j++) {
+						if(got_doctor[i].UserAccountID == postData[j].ID) {
+							responseData.push(postData[j].field);
+						}
+					}
+				}
+			}
+			return responseData;
+		},function(err) {
 			throw err;
 		});
 	},
@@ -1328,34 +1352,63 @@ module.exports = {
 	CreateDoctorByNewAccount : function(data, transaction) {
 		var userUID,userID,Doctors,User;
 		var SpecialityList = [];
+		var userInfo = {};
 		return sequelize.transaction()
 		.then(function(t){
 			return Services.Doctor.validation(data,true)
 			.then(function(result){
 				if(result.status=="success"){
-					data.UID = UUIDService.Create();
-					var userInfo = {
-						UserName    : data.UserName,
-						PhoneNumber : data.PhoneNumber,
-						Email       : data.Email,
-						Password    : generatePassword(12, false)
-					};
-					return Services.UserAccount.CreateUserAccount(userInfo,t);
+					// data.UID = UUIDService.Create();
+					// var userInfo = {
+					// 	UserName    : data.UserName,
+					// 	PhoneNumber : data.PhoneNumber,
+					// 	Email       : data.Email,
+					// 	Password    : generatePassword(12, false)
+					// };
+					// return Services.UserAccount.CreateUserAccount(userInfo,t);
+					userInfo.UserName = data.UserName;
+                    userInfo.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
+                    userInfo.Email = data.Email;
+                    return Services.UserAccount.GetUserAccountDetails(userInfo, null, t);
 				}
 			},function(err){
-				t.rollback();
 				throw err;
 			})
-			.then(function(user){
-				User = user;
-				userUID = user.UID;
-				userID = user.ID;
+			.then(function(got_checkuser) {
+				if (got_checkuser == '' || got_checkuser == null) {
+                    userInfo.Password = generatePassword(12, false);
+                    userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false);
+                    return Services.UserAccount.CreateUserAccount(userInfo, t);
+                } else {
+                    return got_checkuser;
+                }
+			},function(err) {
+				throw err;
+			})
+			.then(function(user) {
 				data.UserAccountID = user.ID;
-				data.HealthLink = data.HealthLinkID;
-				data.Enable = 'Y';
-				return Doctor.create(data,{transaction:t});
-			},function(err){
-				t.rollback();
+                data.UserAccountUID = user.UID;
+                return Doctor.findOne({
+                    where: {
+                        UserAccountID: data.UserAccountID
+                    },
+                   	transaction: t
+                });
+			},function(err) {
+				throw err;
+			})
+			.then(function(got_doctor){
+				if (got_doctor == null || got_doctor == '') {
+					data.UID = UUIDService.Create();
+					data.HealthLink = data.HealthLinkID;
+					data.Enable = 'Y';
+					return Doctor.create(data,{transaction:t});
+                } else {
+                    var err = new Error("CreateDoctorByNewAccount.Error");
+                    err.pushError("UserAccount.Has.Used");
+                    throw err;
+                }
+			},function(err) {
 				throw err;
 			})
 			.then(function(doctorObj){
@@ -1376,7 +1429,7 @@ module.exports = {
 				return RelUserRole.create({
 					RoleId : data.RoleId,
 					SiteId : 1,
-					UserAccountId : User.ID
+					UserAccountId : data.UserAccountID
 				},{transaction:t});
 			},function(err){
 				t.rollback();
@@ -1385,8 +1438,8 @@ module.exports = {
 			.then(function(success){
 				t.commit();
 				var response = {
-					userID  : userID,
-					userUID : userUID
+					userID  : data.UserAccountID,
+					userUID : data.UserAccountUID
 				};
 				return response;
 			},function(err){

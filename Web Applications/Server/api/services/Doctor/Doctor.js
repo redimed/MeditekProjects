@@ -31,7 +31,8 @@ var defaultAtrributes = [
 		'HealthLink',
 		'ProviderNumber',
 		'Enable',
-		'CreatedDate'
+		'CreatedDate',
+		'UserAccount.PhoneNumber'
 	];
 
 module.exports = {
@@ -945,7 +946,7 @@ module.exports = {
 				    where:{
 				       	$or: whereClause.Role
 				   	},
-				    required: false,
+				    required: true,
 				}
 			],
 			model: RelUserRole,
@@ -962,9 +963,12 @@ module.exports = {
 		}
 
 		var order = [];
-		order.push(['CreatedDate', 'ASC']);
+		// order.push(['CreatedDate', 'ASC']);
 		if(data.order) {
 			order.push(data.order);
+		}
+		else {
+			order.push(['CreatedDate', 'ASC']);
 		}
 
 		return Doctor.findAndCountAll({
@@ -1005,6 +1009,10 @@ module.exports = {
 	},
 
 	DetailDoctor: function(data, transaction) {
+		var index = defaultAtrributes.indexOf('UserAccount.PhoneNumber');
+		if(index != -1) {
+			defaultAtrributes.splice(index,1);
+		}
 		return Doctor.findOne({
 			include:[
 				{

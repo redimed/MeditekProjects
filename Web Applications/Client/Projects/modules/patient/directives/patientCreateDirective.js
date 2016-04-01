@@ -355,7 +355,17 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     imageAvatar.addEventListener('change', function(e) {
                         var canvas = document.getElementById('imageAvatarCanvas');
                         var ctx = canvas.getContext('2d');
-                        scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+                        var blank = document.createElement('canvas');
+                        blank.width = canvas.width;
+                        blank.height = canvas.height;
+                        if(canvas.toDataURL() == blank.toDataURL()) {
+                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+                        }
+                        else {
+                            ctx.clearRect(0, 0, 350, 350);
+                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+                        }
+                        // scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
                     }, false);
                 }
             };

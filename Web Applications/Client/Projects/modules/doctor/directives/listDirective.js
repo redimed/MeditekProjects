@@ -18,8 +18,8 @@ angular.module('app.authentication.doctor.directive.list', [])
 			];
 			scope.typeDoctor = [
 				{id:null,name:"All"},
-				{id:"Speciality",name:"Speciality"},
-				{id:"GP",name:"GP"}
+				{id:"Internal Practitioner",name:"Internal Practitioner"},
+				{id:"External Practitioner",name:"External Practitioner"}
 			];
 			scope.fieldSort={};
 			scope.itemDefault = [
@@ -99,7 +99,9 @@ angular.module('app.authentication.doctor.directive.list', [])
 				if(field=='Role'){
 					field = 'RoleName';
 				}
-				var data = field+" "+sort;
+				var data = [];
+				data.push(field);
+				data.push(sort);
 				scope.searchObjectMap.order = data;
 				scope.loadList(scope.searchObjectMap);
 			};

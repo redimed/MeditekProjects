@@ -11,6 +11,10 @@ angular.module('app.authentication.doctor.directive.create', [])
             controller: function($scope, FileUploader, $state, toastr) {
 
                 $scope.buildImg = function(imageType, canvasimg, ctximg, e, width, height) {
+                    if(imageType == 'ProfileImage') {
+                        $('#imageAvatarCanvas').val('');
+                        $('#imageAvatar').val('');
+                    }
                     var reader = new FileReader();
                     reader.onload = function(event) {
                         var img = new Image();
@@ -18,10 +22,11 @@ angular.module('app.authentication.doctor.directive.create', [])
                             // canvasimg.width = 350;
                             // canvasimg.height = 350;
                             ctximg.drawImage(img, 0, 0, width, height);
+                            
+                            
                         };
                         img.src = event.target.result;
                     }
-                    console.log(e.target.files[0]);
                     reader.readAsDataURL(e.target.files[0]);
                 }
 
@@ -64,7 +69,6 @@ angular.module('app.authentication.doctor.directive.create', [])
                     if ($scope.typeFile == "Signature") {
                         $scope.isChoseSignature = true;
                     }
-                    console.log(uploader.queue);
                 };
 
                 uploader.onAfterAddingAll = function(addedFileItems) {
@@ -101,12 +105,12 @@ angular.module('app.authentication.doctor.directive.create', [])
                 };
                 uploader.onCompleteAll = function() {
                     // console.info('onCompleteAll');
-                    console.log($scope.value);
+                    // console.log($scope.value);
                     doctorService.updateSignature($scope.value)
                         .then(function(result) {
-                            console.log(result);
+                            // console.log(result);
                         }, function(err) {
-                            console.log(err);
+                            // console.log(err);
                         });
                 };
 
@@ -411,27 +415,45 @@ angular.module('app.authentication.doctor.directive.create', [])
                             imageAvatar.addEventListener('change', function(e) {
                                 var canvas = document.getElementById('imageAvatarCanvas');
                                 var ctx = canvas.getContext('2d');
-                                scope.buildImg(imageAvatar, canvas, ctx, e,350,350);
+                                var blank = document.createElement('canvas');
+                                blank.width = canvas.width;
+                                blank.height = canvas.height;
+                                if(canvas.toDataURL() == blank.toDataURL()) {
+                                    scope.buildImg(imageAvatar, canvas, ctx, e,350,350);
+                                }
+                                else {
+                                    ctx.clearRect(0, 0, 350, 350);
+                                    scope.buildImg(imageAvatar, canvas, ctx, e,350,350);
+                                }
+                                // scope.buildImg(imageAvatar, canvas, ctx, e,350,350);
                             }, false);
                         } else if (value == "Signature") {
                             var imageSignature = document.getElementById('imageSignature');
                             imageSignature.addEventListener('change', function(e) {
                                 var canvas1 = document.getElementById('imageSignatureCanvas');
                                 var ctx1 = canvas1.getContext('2d');
-                                scope.buildImg(imageSignature, canvas1, ctx1, e,550,280);
+                                var blank1 = document.createElement('canvas');
+                                blank1.width = canvas1.width;
+                                blank1.height = canvas1.height;
+                                if(canvas1.toDataURL() == blank1.toDataURL()) {
+                                    scope.buildImg(imageSignature, canvas1, ctx1, e,550,280);
+                                }
+                                else {
+                                    ctx1.clearRect(0, 0, 550, 280);
+                                    scope.buildImg(imageSignature, canvas1, ctx1, e,550,280);
+                                }
+                                // scope.buildImg(imageSignature, canvas1, ctx1, e,550,280);
                             }, false);
                         }
                     };
 
 
                     scope.Remove = function(value) {
-                        console.log("uploader1 ",scope.uploader);
                         for (var i = 0; i < scope.uploader.queue.length; i++) {
                             if (scope.uploader.queue[i].formData[0].fileType == value) {
                                 scope.uploader.queue.splice(i, 1);
                             }
                         }
-                        console.log("uploader2 ",scope.uploader);
                         if (value == "ProfileImage") {
                             $('#imageAvatarCanvas').val('');
                             $('#imageAvatar').val('');

@@ -377,7 +377,17 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					    imageAvatar.addEventListener('change', function(e){
 					    	var canvas = document.getElementById('imageAvatarCanvas');
 							var ctx = canvas.getContext('2d');
-							scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
+							var blank = document.createElement('canvas');
+                            blank.width = canvas.width;
+                            blank.height = canvas.height;
+                            if(canvas.toDataURL() == blank.toDataURL()) {
+                                scope.buildImg(imageAvatar, canvas, ctx, e,350,350);
+                            }
+                            else {
+                                ctx.clearRect(0, 0, 350, 350);
+                                scope.buildImg(imageAvatar, canvas, ctx, e,350,350);
+                            }
+							// scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
 					    }, false);
 				}
 				else if(value =="Signature") {
@@ -385,7 +395,17 @@ angular.module('app.authentication.doctor.directive.detail', [])
 			    		imageSignature.addEventListener('change', function(e){
 			    			var canvas1 = document.getElementById('imageSignatureCanvas');
 							var ctx1 = canvas1.getContext('2d');
-							scope.buildImg(imageSignature, canvas1, ctx1,e,550,280);
+							var blank1 = document.createElement('canvas');
+                            blank1.width = canvas1.width;
+                            blank1.height = canvas1.height;
+                            if(canvas1.toDataURL() == blank1.toDataURL()) {
+                                scope.buildImg(imageSignature, canvas1, ctx1, e,550,280);
+                            }
+                            else {
+                                ctx1.clearRect(0, 0, 550, 280);
+                                scope.buildImg(imageSignature, canvas1, ctx1, e,550,280);
+                            }
+							// scope.buildImg(imageSignature, canvas1, ctx1,e,550,280);
 			    		}, false);
 				}
 			};

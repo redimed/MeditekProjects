@@ -13,7 +13,6 @@ module.exports = {
         // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
         Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
-                console.log(patient);
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
                     if (data.rolecompany == false) {
                         patient.transaction.commit();
@@ -86,31 +85,36 @@ module.exports = {
                 }
             })
             .catch(function(err) {
-                if (err.transaction && err.configENV == 'debug') {
-                    if (err.err.message == 'Authentication Error - invalid username') {
-                        err.transaction.commit();
-                        var info = {
-                            UID: err.info.UID,
-                            FirstName: err.info.FirstName,
-                            LastName: err.info.LastName,
-                            DOB: err.info.DOB,
-                            Address1: err.info.Address1,
-                            Address2: err.info.Address2,
-                            UserAccountUID: err.info.UserAccountUID
-                        };
-                        res.ok({
-                            status: 200,
-                            message: "success",
-                            data: info
-                        });
-                    }
-                } else {
-                    err.transaction.rollback();
-                    res.serverError({
-                        status: 500,
-                        message: ErrorWrap(err)
-                    });
-                }
+                // if (err.transaction && err.configENV == 'debug') {
+                //     if (err.err.message == 'Authentication Error - invalid username') {
+                //         err.transaction.commit();
+                //         var info = {
+                //             UID: err.info.UID,
+                //             FirstName: err.info.FirstName,
+                //             LastName: err.info.LastName,
+                //             DOB: err.info.DOB,
+                //             Address1: err.info.Address1,
+                //             Address2: err.info.Address2,
+                //             UserAccountUID: err.info.UserAccountUID
+                //         };
+                //         res.ok({
+                //             status: 200,
+                //             message: "success",
+                //             data: info
+                //         });
+                //     }
+                // } else {
+                //     err.transaction.rollback();
+                //     res.serverError({
+                //         status: 500,
+                //         message: ErrorWrap(err)
+                //     });
+                // }
+                err.transaction.rollback();
+                res.serverError({
+                    status: 500,
+                    message: ErrorWrap(err)
+                });
             });
     },
 
@@ -155,31 +159,38 @@ module.exports = {
                 }
             })
             .catch(function(err) {
-                if (err.transaction && err.configENV == 'debug') {
-                    if (err.err.message == 'Authentication Error - invalid username') {
-                        err.transaction.commit();
-                        var info = {
-                            UID: err.info.UID,
-                            FirstName: err.info.FirstName,
-                            LastName: err.info.LastName,
-                            DOB: err.info.DOB,
-                            Address1: err.info.Address1,
-                            Address2: err.info.Address2,
-                            UserAccountUID: err.info.UserAccountUID
-                        };
-                        res.ok({
-                            status: 200,
-                            message: "success",
-                            data: info
-                        });
-                    }
-                } else {
-                    err.transaction.rollback();
-                    res.serverError({
-                        status: 500,
-                        message: ErrorWrap(err)
-                    });
-                }
+                // if (err.transaction && err.configENV == 'debug') {
+                //     if (err.err.message == 'Authentication Error - invalid username') {
+                //         err.transaction.commit();
+                //         var info = {
+                //             UID: err.info.UID,
+                //             FirstName: err.info.FirstName,
+                //             LastName: err.info.LastName,
+                //             DOB: err.info.DOB,
+                //             Address1: err.info.Address1,
+                //             Address2: err.info.Address2,
+                //             UserAccountUID: err.info.UserAccountUID
+                //         };
+                //         res.ok({
+                //             status: 200,
+                //             message: "success",
+                //             data: info
+                //         });
+                //     }
+                // } else {
+                //     err.transaction.rollback();
+                //     res.serverError({
+                //         status: 500,
+                //         message: ErrorWrap(err)
+                //     });
+                // }
+
+                err.transaction.rollback();
+                res.serverError({
+                    status: 500,
+                    message: ErrorWrap(err)
+                });
+
             });
     },
     /*

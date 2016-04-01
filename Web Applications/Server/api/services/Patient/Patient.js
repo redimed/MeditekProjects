@@ -698,7 +698,7 @@ module.exports = {
                     .then(function(got_user) {
                         if (got_user == '' || got_user == null) {
                             userInfo.Password = generatePassword(12, false);
-                            userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false);
+                            userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
                             return Services.UserAccount.CreateUserAccount(userInfo, t);
                         } else {
                             return got_user;
@@ -762,6 +762,7 @@ module.exports = {
                         } else {
                             if (PatientDetail != null && PatientDetail != '') {
                                 if (PatientDetail.PatientMedicare != null && PatientDetail.PatientMedicare != '') {
+                                    PatientDetail.PatientMedicare.Enable = 'Y';
                                     return PatientMedicare.create(PatientDetail.PatientMedicare, { transaction: t });
                                 }
                             }
@@ -772,6 +773,7 @@ module.exports = {
                     .then(function(created_patientMedicare) {
                         if (PatientDetail != null && PatientDetail != '') {
                             if (PatientDetail.PatientKin != null && PatientDetail.PatientKin != '') {
+                                PatientDetail.PatientKin.Enable = 'Y';
                                 return PatientKin.create(PatientDetail.PatientKin, { transaction: t });
                             }
                         }
@@ -781,6 +783,7 @@ module.exports = {
                     .then(function(created_patientKin) {
                         if (PatientDetail != null && PatientDetail != '') {
                             if (PatientDetail.Fund != null && PatientDetail.Fund != '') {
+                                PatientDetail.Fund.Enable = 'Y';
                                 return PatientFund.create(PatientDetail.Fund, { transaction: t });
                             }
                         }
@@ -790,6 +793,7 @@ module.exports = {
                     .then(function(created_patientFund) {
                         if (PatientDetail != null && PatientDetail != '') {
                             if (PatientDetail.PatientDVA != null && PatientDetail.PatientDVA != '') {
+                                PatientDetail.PatientDVA.Enable = 'Y';
                                 return PatientDVA.create(PatientDetail.PatientDVA, { transaction: t });
                             }
                         }
@@ -799,6 +803,7 @@ module.exports = {
                     .then(function(created_patientDVA) {
                         if (PatientDetail != null && PatientDetail != '') {
                             if (PatientDetail.PatientGP != null && PatientDetail.PatientGP != '') {
+                                PatientDetail.PatientGP.Enable = 'Y';
                                 return PatientGP.create(PatientDetail.PatientGP, { transaction: t });
                             }
                         }
@@ -808,73 +813,74 @@ module.exports = {
                     .then(function(created_patientGP) {
                         if (PatientDetail != null && PatientDetail != '') {
                             if (PatientDetail.PatientPension != null && PatientDetail.PatientPension != '') {
+                                PatientDetail.PatientPension.Enable = 'Y';
                                 return PatientPension.create(PatientDetail.PatientPension, { transaction: t });
                             }
                         }
                     }, function(err) {
                         throw err;
                     })
-                    .then(function(created_patientPension) {
-                        if (ishaveUser == false) {
-                            if (isCreateByPhoneAndEmail == true) {
-                                data.content = data.PinNumber;
-                                return Services.Patient.sendSMS(data, t, function(err) {
-                                    console.log("no tra ve cai gi ", err);
-                                    if (err && config.twilioEnv == 'product') {
-                                        console.log("vao day ??? xay ra loi ne sms 1");
-                                        throw err;
-                                    } else {
-                                        return Services.Patient.sendMail(data, t, function(err) {
-                                            if (err) {
-                                                console.log(err);
-                                                console.log("vao day ??? xay ra loi ne mail 1");
-                                                throw err;
-                                            } else {
-                                                info.transaction = t;
-                                                info.PinNumber = userInfo.PinNumber;
-                                                // defer.resolve(info);
-                                            }
-                                        });
-                                    }
-                                });
-                            } else if (isCreateByEmail == true) {
-                                return Services.Patient.sendMail(data, t, function(err) {
-                                    if (err) {
-                                        console.log(err);
-                                        throw err;
-                                    } else {
-                                        info.transaction = t;
-                                        info.PinNumber = userInfo.PinNumber;
-                                        // defer.resolve(info);
-                                    }
-                                });
-                            } else if (isCreateByPhoneNumber == true) {
-                                data.content = data.PinNumber;
-                                return Services.Patient.sendSMS(data, t, function(err) {
-                                    console.log("no co loi~ kia ", err);
-                                    if (err && config.twilioEnv == 'product') {
-                                        console.log("hay vao day ???");
-                                        throw err;
-                                    } else {
-                                        info.transaction = t;
-                                        info.PinNumber = userInfo.PinNumber;
-                                        // defer.resolve(info);
-                                    }
-                                });
-                            } else {
-                                info.transaction = t;
-                                info.PinNumber = userInfo.PinNumber;
-                                // defer.resolve(info);
-                            }
+                    // .then(function(created_patientPension) {
+                    //     if (ishaveUser == false) {
+                    //         if (isCreateByPhoneAndEmail == true) {
+                    //             data.content = data.PinNumber;
+                    //             return Services.Patient.sendSMS(data, t, function(err) {
+                    //                 console.log("no tra ve cai gi ", err);
+                    //                 if (err && config.twilioEnv == 'product') {
+                    //                     console.log("vao day ??? xay ra loi ne sms 1");
+                    //                     throw err;
+                    //                 } else {
+                    //                     return Services.Patient.sendMail(data, t, function(err) {
+                    //                         if (err) {
+                    //                             console.log(err);
+                    //                             console.log("vao day ??? xay ra loi ne mail 1");
+                    //                             throw err;
+                    //                         } else {
+                    //                             info.transaction = t;
+                    //                             info.PinNumber = userInfo.PinNumber;
+                    //                             // defer.resolve(info);
+                    //                         }
+                    //                     });
+                    //                 }
+                    //             });
+                    //         } else if (isCreateByEmail == true) {
+                    //             return Services.Patient.sendMail(data, t, function(err) {
+                    //                 if (err) {
+                    //                     console.log(err);
+                    //                     throw err;
+                    //                 } else {
+                    //                     info.transaction = t;
+                    //                     info.PinNumber = userInfo.PinNumber;
+                    //                     // defer.resolve(info);
+                    //                 }
+                    //             });
+                    //         } else if (isCreateByPhoneNumber == true) {
+                    //             data.content = data.PinNumber;
+                    //             return Services.Patient.sendSMS(data, t, function(err) {
+                    //                 console.log("no co loi~ kia ", err);
+                    //                 if (err && config.twilioEnv == 'product') {
+                    //                     console.log("hay vao day ???");
+                    //                     throw err;
+                    //                 } else {
+                    //                     info.transaction = t;
+                    //                     info.PinNumber = userInfo.PinNumber;
+                    //                     // defer.resolve(info);
+                    //                 }
+                    //             });
+                    //         } else {
+                    //             info.transaction = t;
+                    //             info.PinNumber = userInfo.PinNumber;
+                    //             // defer.resolve(info);
+                    //         }
 
-                        } else {
-                            info.transaction = t;
-                            // defer.resolve(info);
-                        }
+                    //     } else {
+                    //         info.transaction = t;
+                    //         // defer.resolve(info);
+                    //     }
 
-                    }, function(err) {
-                        throw err;
-                    })
+                    // }, function(err) {
+                    //     throw err;
+                    // })
                     .then(function(success) {
                         //call send Mail or send SMSs
                         console.log("ishaveUser ", ishaveUser);
@@ -883,8 +889,9 @@ module.exports = {
                         defer.resolve(info);
                     }, function(err) {
                         //t.rollback();
-                        defer.reject({ err: err, transaction: t, configENV: config.twilioEnv, info: info });
+                        // defer.reject({ err: err, transaction: t, configENV: config.twilioEnv, info: info });
                         // throw err;
+                        defer.reject({ err: err, transaction: t, info: info });
                     });
             });
         return defer.promise;

@@ -1,4 +1,5 @@
 var winston = require('winston');
+var graylog2 = require('winston-graylog2');
 var fs = require('fs');
 if (!fs.existsSync('./logs')) {
     fs.mkdirSync('./logs');
@@ -46,10 +47,19 @@ var customLogger = new winston.Logger({
             formatter: true,
             filename: './logs/log'
         }),
+	// transport to graylog2
+	new graylog2({
+		name:'Graylog2',
+		level:'debug',
+		graylog:{
+			servers:[{host:'192.168.1.2', port:12201}]			
+		}
+	})
     ],
     levels: config.levels,
     colors: config.colors
 });
+
 customLogger.add(Mail, {
     host: "smtp.gmail.com",
     port: 465,

@@ -180,10 +180,12 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
             }
             $scope.loadListContry();
             $scope.Next = function(number) {
+                o.loadingPage(true);
                 $scope.submitted = true;
                 var isEmail = false;
                 var isPhoneNumber = false;
                 var data = '?';
+                $('#btn2').prop('disabled',true);
                 if ($scope.step1.$valid && number == 1) {
                     if($scope.postData.data.PhoneNumber) {
                         data = data+'&PhoneNumber='+$scope.postData.data.PhoneNumber;
@@ -195,8 +197,11 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         if(response == null || response == '' || response.length == 0) {
                             $scope.number++;
                             $scope.submitted = false;
+                            o.loadingPage(false);
+                            $('#btn2').prop('disabled',false);
                         }
                         else { 
+                            o.loadingPage(false);
                             if($scope.postData.data.PhoneNumber.indexOf('0') == 0){
                                 var parsePhone = $scope.postData.data.PhoneNumber.substr(0, 0)+"+614"+$scope.postData.data.PhoneNumber.substr(2);
                             }
@@ -240,16 +245,23 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
 
                         // }
                     }, function(err) {
+                        o.loadingPage(false);
                         console.log(err.data.message);
                     })
                 } else if ($scope.step2.$valid && number == 2) {
+                    o.loadingPage(false);
                     $scope.number++;
                     $scope.submitted = false;
+                    $('#btn2').prop('disabled',false);
                     if ($scope.NextOfKin == 'N') {
                         if ($scope.postData.otherData.PatientKin) {
                             $scope.postData.otherData.PatientKin = {};
                         };
                     };
+                }
+                else if ($scope.step2.$invalid) {
+                    $('#btn2').prop('disabled',false);
+                    o.loadingPage(false);
                 }
             };
             $scope.Back = function() {

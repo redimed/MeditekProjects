@@ -24,6 +24,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 
 	// Check User
 	$scope.checkUser = function(data) {
+		o.loadingPage(true);
 		$scope.loadingpage = true;
 		$scope.validateCheck(data)
 		.then(function(success) {
@@ -32,7 +33,9 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 				.then(function(result) {
 					$scope.step++;
 					$scope.loadingpage = false;
+					o.loadingPage(false);
 				},function(err){
+					o.loadingPage(false);
 					console.log(err);
 					$scope.loadingpage = false;
 					toastr.error("Please check data","Error");
@@ -44,6 +47,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 				}); // end check
 			}
 			else {
+				o.loadingPage(false);
 				toastr.error("Password and RePassword does not match", "Error");
 				$scope.loadingpage = false;
 				$scope.ermsg['Password'] = {};
@@ -54,6 +58,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 				$scope.ermsg['RePassword'].msg = "does not match";
 			}
 		},function(err){
+			o.loadingPage(false);
 			$scope.loadingpage = false;
 			console.log(err);
 			toastr.error("Please check data","Error");

@@ -154,6 +154,7 @@ module.exports = React.createClass({
                             .set('size', dataField.size)
                             .set('rows', dataField.rows)
                             .set('preCal', dataField.preCal)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'checkbox') > -1){
@@ -164,6 +165,7 @@ module.exports = React.createClass({
                             .set('label', dataField.label)
                             .set('value', dataField.value)
                             .set('preCal', dataField.preCal)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'radio') > -1){
@@ -174,6 +176,7 @@ module.exports = React.createClass({
                             .set('label', dataField.label)
                             .set('value', dataField.value)
                             .set('preCal', dataField.preCal)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'label') > -1){
@@ -182,6 +185,7 @@ module.exports = React.createClass({
                             val.set('size', dataField.size)
                             .set('label', dataField.label)
                             .set('value', dataField.value)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'signature') > -1){
@@ -190,7 +194,9 @@ module.exports = React.createClass({
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
                             .set('preCal', dataField.preCal)
-                            .set('height', dataField.height))
+                            .set('height', dataField.height)
+                            .set('roles', Immutable.fromJS(dataField.roles))
+                    )
                     return {
                         sections: sections
                    }
@@ -200,6 +206,7 @@ module.exports = React.createClass({
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
                             .set('preCal', dataField.preCal)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }
@@ -210,6 +217,7 @@ module.exports = React.createClass({
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                         val.set('name', dataField.name)
                         .set('size', dataField.size)
+                        .set('roles', Immutable.fromJS(dataField.roles))
                     )
                 }
             })

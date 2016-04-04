@@ -54,6 +54,14 @@ module.exports = React.createClass({
     setHeight: function(height){
         $(this.refs.signature).jSignature({height: height});
     },
+    setDisplay: function(type){
+        if(type === 'disable'){
+            $(this.refs.signature).attr('disabled', true);
+        }else{
+            $(this.refs.signature).css('display', 'none');
+            $(this.refs.reset).css('display', 'none');
+        }
+    },
     getValue: function(){
         return $(this.refs.signature).jSignature('getData', 'base30');
     },
@@ -73,6 +81,9 @@ module.exports = React.createClass({
     },
     getHeight: function(){
         return this.props.height;
+    },
+    getRoles: function(){
+        return this.props.roles;
     },
     _onReset: function(){
         $(this.refs.signature).jSignature("reset");
@@ -95,7 +106,7 @@ module.exports = React.createClass({
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <a className="btn btn-primary btn-sm" onClick={this._onReset}>
+                                <a className="btn btn-primary btn-sm" onClick={this._onReset} ref="reset">
                                     Reset
                                 </a>
                                 <div ref="signature" style={{background: '#EEEEEE', height: this.props.height}}/>

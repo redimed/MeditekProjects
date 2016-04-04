@@ -41,6 +41,13 @@ module.exports = React.createClass({
     setValue: function(value){
         $(this.refs.input).val(value)
     },
+    setDisplay: function(type){
+        if(type === 'disable'){
+            $(this.refs.input).attr('disabled', true);
+        }else{
+            $(this.refs.input).css('display', 'none');
+        }
+    },
     getValue: function(){
         return $(this.refs.input).val()
     },
@@ -58,6 +65,9 @@ module.exports = React.createClass({
     },
     getPreCal: function(){
         return this.props.preCal;
+    },
+    getRoles: function(){
+        return this.props.roles;
     },
     render: function(){
         var type = this.props.type;

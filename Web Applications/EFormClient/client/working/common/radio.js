@@ -55,6 +55,13 @@ module.exports = React.createClass({
         else
            $(this.refs.input).iCheck('uncheck'); 
     },
+    setDisplay: function(type){
+        if(type === 'disable'){
+            $(this.refs.input).prop('disabled', true);
+        }else{
+            $(this.refs.input).css('display', 'none');
+        }
+    },
     isChecked: function(){
         return $(this.refs.input).prop('checked');
     },
@@ -75,6 +82,9 @@ module.exports = React.createClass({
     },
     getPreCal: function(){
         return this.props.preCal;
+    },
+    getRoles: function(){
+        return this.props.roles;
     },
     render: function(){
         var type = this.props.type;

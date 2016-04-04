@@ -56,6 +56,10 @@ module.exports = React.createClass({
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].setValue(value);
     },
+    setDisplay: function(fieldRef, type){
+        if(typeof this.refs[fieldRef] !== 'undefined')
+            this.refs[fieldRef].setDisplay(type);
+    },
     setValueForRadio: function(fieldRef, fieldChecked){
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].setChecked(fieldChecked);
@@ -87,6 +91,7 @@ module.exports = React.createClass({
             id = $(e.target).parent().attr('id')
         var type = this.refs[ref].getType();
         var size = this.refs[ref].getSize();
+        var roles = this.refs[ref].getRoles();
         var dataFieldDetail = null;
         if(Config.getPrefixField(type, 'eform_input') > -1){
             var name = (typeof(this.refs[ref].getName)!=='undefined')?this.refs[ref].getName():'';
@@ -97,7 +102,8 @@ module.exports = React.createClass({
                 type: type,
                 ref: ref,
                 name: name,
-                preCal: preCal
+                preCal: preCal,
+                roles: roles
             }
             if(Config.getPrefixField(type, 'textarea') > -1){
                 dataFieldDetail.rows = this.refs[ref].getRows();
@@ -376,6 +382,7 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                roles={field.get('roles')}
                                                                 preCal={field.get('preCal')}
                                                                 onRightClickItem={this._onRightClickItem}/>
                                                     else if(type === 'eform_input_date'){
@@ -386,6 +393,7 @@ module.exports = React.createClass({
                                                                 permission={this.props.permission}
                                                                 context={displayContextMenu}
                                                                 ref={field.get('ref')}
+                                                                roles={field.get('roles')}
                                                                 refTemp={field.get('ref')}
                                                                 preCal={field.get('preCal')}
                                                                 code={index}
@@ -400,6 +408,7 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                roles={field.get('roles')}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 preCal={field.get('preCal')}
                                                                 rows={field.get('rows')}/>
@@ -413,6 +422,7 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                roles={field.get('roles')}
                                                                 value={field.get('value')}
                                                                 preCal={field.get('preCal')}
                                                                 onRightClickItem={this._onRightClickItem}
@@ -429,6 +439,7 @@ module.exports = React.createClass({
                                                                 code={index}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 label={field.get('label')}
+                                                                roles={field.get('roles')}
                                                                 preCal={field.get('preCal')}
                                                                 value={field.get('value')}/>
                                                     else if(type === 'eform_input_check_label')
@@ -440,6 +451,7 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                roles={field.get('roles')}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 label={field.get('label')}/>
                                                     else if(type === 'eform_input_check_label_html')
@@ -451,6 +463,7 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                roles={field.get('roles')}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 label={field.get('label')}/>
                                                     else if(type === 'table')
@@ -463,6 +476,7 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                roles={field.get('roles')}
                                                                 size={field.get('size')}
                                                                 onDeleteColumn={this._onDeleteColumn}
                                                                 onUpdateColumn={this._onUpdateColumn}
@@ -477,6 +491,7 @@ module.exports = React.createClass({
                                                             ref={field.get('ref')}
                                                             refTemp={field.get('ref')}
                                                             code={index}
+                                                            roles={field.get('roles')}
                                                             height={field.get('height')}
                                                             onRightClickItem={this._onRightClickItem}/>
                                                         else if(type === 'eform_input_image_doctor')
@@ -489,6 +504,7 @@ module.exports = React.createClass({
                                                                 ref={field.get('ref')}
                                                                 refTemp={field.get('ref')}
                                                                 code={index}
+                                                                roles={field.get('roles')}
                                                                 type={type}
                                                                 height={field.get('height')}
                                                                 onRightClickItem={this._onRightClickItem}/>
@@ -590,7 +606,7 @@ module.exports = React.createClass({
                                             ref={field.get('ref')}
                                             refTemp={field.get('ref')}
                                             code={index}
-                                            onRightClickItem={this._onRightClickItem}
+                                            onRightClickItem={this._onRightClickItem}                                            
                                             label={field.get('label')}/>
                                 else if(type === 'table')
                                         return <CommonTable key={index} type={type}

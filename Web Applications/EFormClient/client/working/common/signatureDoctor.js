@@ -99,6 +99,9 @@ module.exports = React.createClass({
     getPreCal: function(){
         return this.props.preCal;
     },
+    getRoles: function(){
+        return this.props.roles;
+    },
     render: function(){
         var type = this.props.type;
         var html = null;

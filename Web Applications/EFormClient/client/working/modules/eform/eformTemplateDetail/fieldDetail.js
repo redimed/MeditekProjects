@@ -1,8 +1,14 @@
 var CommonInputText = require('common/inputText');
+var CommonDropdown = require('common/dropdown');
 var Markdown = require('common/markdown');
 var CommonCheckbox = require('common/checkbox');
 var Config = require('config');
 var EFormService = require('modules/eform/services');
+
+var optionsView = [
+    {code: 'hidden', name: 'Hide'},
+    {code: 'disable', name: 'Disable'}
+]
 
 module.exports = React.createClass({
     code: 0,
@@ -16,6 +22,25 @@ module.exports = React.createClass({
     init: function(object){
         this.type = object.type;
         this.ref = object.ref;
+        var self = this;
+
+        if(typeof object.roles !== 'undefined'){
+            var roles = object.roles.toJS();
+            self.refs.optionView.setValue(roles.view.option);
+            roles.view.list.map(function(role, index){
+                var checked = (role.value === 'yes')?true:false;
+                self.refs[role.ref].setChecked(checked);
+            })
+            roles.edit.map(function(role, index){
+                var checked = (role.value === 'yes')?true:false;
+                self.refs[role.ref].setChecked(checked);
+            })
+            roles.print.map(function(role, index){
+                var checked = (role.value === 'yes')?true:false;
+                self.refs[role.ref].setChecked(checked);
+            })
+        }
+
         if(Config.getPrefixField(this.type, 'eform_input') > -1){
             if(typeof object.name !== 'undefined')
                 this.refs.formName.setValue(object.name);
@@ -47,20 +72,47 @@ module.exports = React.createClass({
         EFormService.getAllUserRoles()
         .then(function(response){
             self.roles = response.data;
-            console.log(self.roles);
             self.forceUpdate();
         })
+        this.refs.optionView.setValue(optionsView[0].code)
     },
     _onSave: function(){
         var size = this.refs.formSize.getValue();
         var data = null;
+        var self = this;
+
+        var Permission = {
+            view: {option: this.refs.optionView.getValue(), list: []},
+            edit: [],
+            print: []
+        }
+
+        this.roles.map(function(role, index){
+            Permission.view.list.push({
+                id: role.ID,
+                ref: 'view_'+role.RoleCode,
+                value: self.refs['view_'+role.RoleCode].getValueTable()
+            })
+            Permission.edit.push({
+                id: role.ID,
+                ref: 'edit_'+role.RoleCode,
+                value: self.refs['edit_'+role.RoleCode].getValueTable()
+            })
+            Permission.print.push({
+                id: role.ID,
+                ref: 'print_'+role.RoleCode,
+                value: self.refs['print_'+role.RoleCode].getValueTable()
+            })
+        })
+
         if(Config.getPrefixField(this.type, 'eform_input') > -1){
             data = {
                 name: this.refs.formName.getValue(),
                 code: this.code,
                 type: this.type,
                 size: size,
-                preCal: this.refs.formPrecal.getValue()
+                preCal: this.refs.formPrecal.getValue(),
+                roles: Permission
             }
             if(Config.getPrefixField(this.type, 'textarea') > -1)
                 data.rows = this.refs.formRows.getValue();
@@ -78,12 +130,14 @@ module.exports = React.createClass({
             if(Config.getPrefixField(this.type, 'signature') > -1){
                 data.height = this.refs.formHeight.getValue();
             }
+
         }else if(this.type === 'table'){
             data = {
                 name: this.refs.formName.getValue(),
                 code: this.code,
                 type: 'table',
-                size: size
+                size: size,
+                roles: Permission
             }
         }
         this.props.onSave(data);
@@ -163,13 +217,50 @@ module.exports = React.createClass({
                                 <label>Ref</label>
                                 <CommonInputText placeholder="Ref" ref="formRef"/>
                             </div>
-                            <div className="form-group" style={{display: display_role}}>
+                            <div className="form-group">
+                                <label>Option View</label>
+                                <CommonDropdown list={optionsView} code="code" name="name" ref="optionView"/>
+                            </div>
+                            <div className="form-group">
+                                <label>VIEW</label>
                                 <div className="icheck-inline">
                                 {
                                     this.roles.map(function(role, index){
                                         return (
                                             <label key={index}>
-                                                <CommonCheckbox ref={role.RoleCode}/>
+                                                <CommonCheckbox ref={'view_'+role.RoleCode}/>
+                                                &nbsp;
+                                                {role.RoleCode}
+                                            </label>
+                                        )
+                                    })
+                                }
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>EDIT</label>
+                                <div className="icheck-inline">
+                                {
+                                    this.roles.map(function(role, index){
+                                        return (
+                                            <label key={index}>
+                                                <CommonCheckbox ref={'edit_'+role.RoleCode}/>
+                                                &nbsp;
+                                                {role.RoleCode}
+                                            </label>
+                                        )
+                                    })
+                                }
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>PRINT</label>
+                                <div className="icheck-inline">
+                                {
+                                    this.roles.map(function(role, index){
+                                        return (
+                                            <label key={index}>
+                                                <CommonCheckbox ref={'print_'+role.RoleCode}/>
                                                 &nbsp;
                                                 {role.RoleCode}
                                             </label>

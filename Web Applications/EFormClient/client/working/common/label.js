@@ -40,6 +40,9 @@ module.exports = React.createClass({
     getType: function(){
         return this.props.type;
     },
+    getRoles: function(){
+        return this.props.roles;
+    },
     render: function(){
         var type = this.props.type;
         var html = null;

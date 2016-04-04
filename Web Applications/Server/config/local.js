@@ -37,10 +37,10 @@ module.exports = {
      * In this example, we'll assume you created a folder in your project,     *
      * `config/ssl` and dumped your certificate/key files there:               *
      ***************************************************************************/
-    ssl: {
-        key: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.key'),
-        cert: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.pem')
-    },
+    // ssl: {
+    //     key: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.key'),
+    //     cert: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.pem')
+    // },
 
 
     /***************************************************************************

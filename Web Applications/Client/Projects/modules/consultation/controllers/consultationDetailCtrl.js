@@ -7,18 +7,15 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr, EFormService) {
     /* EFORM */
     var postData = {
-            Filter: [
-                    {
-                        EFormTemplate: {
-                            Enable: 'Y'
-                        }
-                    },
-                    {
-                        Appointment: {
-                            UID: $stateParams.UID
-                        }
-                    }
-            ]
+        Filter: [{
+            EFormTemplate: {
+                Enable: 'Y'
+            }
+        }, {
+            Appointment: {
+                UID: $stateParams.UID
+            }
+        }]
     }
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
@@ -31,36 +28,35 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         $state.go("authentication.consultation.detail.eForm.LoadForm", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient, UIDFormTemplate: eformTemplate.UID });
     };
 
-    var userInfo =  JSON.parse($cookies.get('userInfo'));
+    var userInfo = JSON.parse($cookies.get('userInfo'));
     $scope.checkPatient = 'Y';
-    for(var i = 0; i < userInfo.roles.length; i++){
+    for (var i = 0; i < userInfo.roles.length; i++) {
         var role = userInfo.roles[i];
-        if(role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN'){
+        if (role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN') {
             $scope.checkPatient = 'Y';
         }
     }
 
-    $scope.styleFunction = function(EForms){
-        var check = false;
-        for(var i = 0; i < EForms.length; i++){
-            var EForm = EForms[i];
-            var Appointments = EForm.Appointments;
-            for(var j = 0; j < Appointments.length; j++){
-               var Appointment = Appointments[j];
-               if(Appointment.UID === $stateParams.UID){
-                    check = true;
-                    break;
-               } 
+    $scope.styleFunction = function(EForms) {
+            var check = false;
+            for (var i = 0; i < EForms.length; i++) {
+                var EForm = EForms[i];
+                var Appointments = EForm.Appointments;
+                for (var j = 0; j < Appointments.length; j++) {
+                    var Appointment = Appointments[j];
+                    if (Appointment.UID === $stateParams.UID) {
+                        check = true;
+                        break;
+                    }
+                }
             }
+            return (check) ? 'green-jungle' : 'blue-steel';
         }
-        return (check)?'green-jungle':'blue-steel';
-    }
-    /* END EFORM */
-    //
+        /* END EFORM */
+        //
     $scope.checkRoleUpdate = true;
-     for(var i = 0; i < $cookies.getObject('userInfo').roles.length; i++){
-        if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' 
-            || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
+    for (var i = 0; i < $cookies.getObject('userInfo').roles.length; i++) {
+        if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
             $scope.checkRoleUpdate = false;
         };
     }
@@ -70,7 +66,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     $scope.getTelehealthDetail = function(UID) {
         WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
             $scope.wainformation = data.data;
-            console.log(" o day wainformation ",$scope.wainformation);
+            console.log(" o day wainformation ", $scope.wainformation);
             WAAppointmentService.GetDetailPatientByUid({
                 UID: $scope.wainformation.Patients[0].UID
             }).then(function(data) {
@@ -142,26 +138,45 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             if (data.count > 0) {
                 $scope.admissionUID = data.rows[0].UID;
                 setDetailAdmission(data.rows[0].AdmissionData, $scope.admissionDetail);
-                console.log('$scope.admissionApptDetail', $scope.admissionDetail);
-                return "success";
+                console.log('updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', $scope.admissionDetail);
+                return "AdmissionAppointmentExists";
             };
-            return "error";
-        }, function(error) {
-            console.log(error);
+            return "AdmissionAppointmentNotExists";
         })
         .then(function(data) {
             console.log(data)
-            if (data == 'error') {
+            if (data == 'AdmissionAppointmentNotExists') {
                 promiseGetListAdmission($scope.admissionInfo.patientAdmission).then(function(data) {
                     console.log("1111", data);
                     if (data.count > 0) {
                         setDetailAdmission(data.rows[0].AdmissionData, $scope.admissionDetail);
+                        return { message: "AdmissionPatientExists", data: data.rows[0] };
                     };
-                    console.log('$scope.admissionPatientDetail', $scope.admissionDetail);
+                    console.log("createeeeeeeeeeeeeeeeeeeeeeeeee");
+                    return { message: "AdmissionPatientNotExists" };
+                }).then(function(data) {
+                    console.log(data);
+                    var info = {
+                        UID: $stateParams.UID,
+                        Admissions: [{
+                            AdmissionData: (data.message === "AdmissionPatientExists") ? data.AdmissionData : []
+                        }]
+                    };
+                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",info);
+                    AdmissionService.CreateAdmission(info).then(function(data) {
+                        console.log("create admission",data);
+                        return "success"
+                    }, function(error) {
+                        return "error"
+                    }).then(function(data) {
+                        if (data == "success") {
+
+                        };
+                    });
                 });
             };
-        });
-    /*==addmission end==*/
+        })
+        /*==addmission end==*/
     $scope.eForms = function() {
         $state.go("authentication.consultation.detail.eForm.appointment", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient });
     };

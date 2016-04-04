@@ -1,7 +1,7 @@
 var app = angular.module('app.authentication.consultation', [
     'app.authentication.consultation.controller',
     'app.authentication.consultation.services',
-    'app.authentication.consultation.directives.TelehealthDetail'
+    'app.authentication.consultation.TelehealthDetail.directives'
 ]);
 
 app.config(function($stateProvider) {

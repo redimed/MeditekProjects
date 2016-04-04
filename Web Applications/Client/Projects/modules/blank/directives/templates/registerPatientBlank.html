@@ -26,19 +26,22 @@
                                         <p class="help-block required-text" ng-if="submitted && step1.Title.$error.required">
                                             This field is required.</p>
                                     </div>
-                                    <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.FirstName.$invalid]">
+                                    <div class="form-group" ng-class="{true: 'has-error', false: ''}[(submitted && step1.FirstName.$invalid) || step1.FirstName.$error.pattern]">
                                         <label class="control-label">First Name <span class="required">*</span></label>
-                                        <input type="text" class="form-control" name="FirstName" ng-model="postData.data.FirstName" required>
+                                        <input type="text" class="form-control" name="FirstName" ng-model="postData.data.FirstName" ng-pattern="/^[a-zA-Z0-9\s]{0,255}$/" required />
+                                        <p ng-show="submitted && step1.FirstName.$error.pattern" class="help-block required-text">Please enter a valid First Name.</p>
                                         <p class="help-block required-text" ng-if="submitted && step1.FirstName.$error.required">
                                             This field is required.</p>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{true: 'has-error', false: ''}[step1.MiddleName.$error.pattern]">
                                         <label class="control-label">Middle Name</label>
-                                        <input type="text" class="form-control" name="MiddleName" ng-model="postData.data.MiddleName">
+                                        <input type="text" class="form-control" name="MiddleName" ng-model="postData.data.MiddleName" ng-pattern="/^[a-zA-Z0-9\s]{0,255}$/" />
+                                        <p ng-show="step1.MiddleName.$error.pattern" class="help-block required-text">Please enter a valid Middle Name.</p>
                                     </div>
-                                    <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.LastName.$invalid]">
+                                    <div class="form-group" ng-class="{true: 'has-error', false: ''}[(submitted && step1.LastName.$invalid) || step1.LastName.$error.pattern]">
                                         <label class="control-label">Last Name <span class="required">*</span></label>
-                                        <input type="text" name="LastName" class="form-control" ng-model="postData.data.LastName" required>
+                                        <input type="text" name="LastName" class="form-control" ng-model="postData.data.LastName" ng-pattern="/^[a-zA-Z0-9\s]{0,255}$/" required />
+                                        <p ng-show="submitted && step1.LastName.$error.pattern" class="help-block required-text">Please enter a valid Last Name.</p>
                                         <p class="help-block required-text" ng-if="submitted && step1.LastName.$error.required">
                                             This field is required.</p>
                                     </div>
@@ -188,25 +191,28 @@
                                         </div>
                                     </div>
                                     <div ng-if="NextOfKin !=='N'">
-                                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.FirstName.$invalid]">
+                                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[(submitted && step2.FirstName.$invalid)||step2.FirstName.$error.pattern]">
                                             <label class="control-label">
                                                 First Name <span class="required">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="FirstName" ng-model="postData.otherData.PatientKin.FirstName" ng-required="NextOfKin !=='N'">
+                                            <input type="text" class="form-control" name="FirstName" ng-model="postData.otherData.PatientKin.FirstName" ng-pattern="/^[a-zA-Z0-9\s]{0,255}$/" ng-required="NextOfKin !=='N'" />
                                             <p class="help-block required-text" ng-if="submitted && step2.FirstName.$error.required">This field is required.</p>
+                                            <p class="help-block required-text" ng-if="step2.FirstName.$error.pattern">Please enter a valid First Name.</p>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[step2.MiddleName.$error.pattern]">
                                             <label class="control-label">
                                                 Middle Name <span class="required">&nbsp;</span>
                                             </label>
-                                            <input type="text" class="form-control" ng-model="postData.otherData.PatientKin.MiddleName">
+                                            <input type="text" class="form-control" name="MiddleName" ng-model="postData.otherData.PatientKin.MiddleName" ng-pattern="/^[a-zA-Z0-9\s]{0,255}$/" />
+                                            <p class="help-block required-text" ng-if="step2.MiddleName.$error.pattern">Please enter a valid Middle Name.</p>
                                         </div>
-                                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.LastName.$invalid]">
+                                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[(submitted && step2.LastName.$invalid)||step2.LastName.$error.pattern]">
                                             <label class="control-label">
                                                 Last Name <span class="required">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="LastName" ng-model="postData.otherData.PatientKin.LastName" ng-required="NextOfKin !=='N'">
+                                            <input type="text" class="form-control" name="LastName" ng-model="postData.otherData.PatientKin.LastName" ng-pattern="/^[a-zA-Z0-9\s]{0,255}$/" ng-required="NextOfKin !=='N'"/>
                                             <p class="help-block required-text" ng-if="submitted && step2.LastName.$error.required">This field is required.</p>
+                                            <p class="help-block required-text" ng-if="step2.LastName.$error.pattern">Please enter a valid First Name.</p>
                                         </div>
                                         <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.HomePhoneNumber.$invalid]">
                                             <label class="control-label">
@@ -405,7 +411,7 @@
                     <div class="form-actions right">
                         <button class="btn btn-lg btn-default" ng-click="Back()">
                             <i class="glyphicon glyphicon-arrow-left"></i> Back</button>
-                        <button type="submit" class="btn btn-lg btn-primary" ng-click="Next(2)">
+                        <button type="submit" class="btn btn-lg btn-primary" id ="btn2" ng-click="Next(2)">
                             Next <i class="glyphicon glyphicon-arrow-right"></i></button>
                     </div>
                 </form>

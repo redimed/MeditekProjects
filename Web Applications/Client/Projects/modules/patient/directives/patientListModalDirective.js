@@ -177,7 +177,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				else if(model == 'Pension'){
 					console.log(scope.isHavePensions);
 					if(scope.isHavePensions == null || scope.isHavePensions != data) {
-						if(data.ExpiryDate) data.ExpiryDate = moment(data.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
+						if(data.ExpiryDate && /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.test(data.ExpiryDate) == false) data.ExpiryDate = moment(data.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
 						scope.chooseItem = true;
 						scope.isHavePensions = data;
 						delete scope.info['PatientGP'];
@@ -215,7 +215,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				}
 				else if(model == 'Medicare'){
 					console.log(scope.isHaveMedicares);
-					if(data.ExpiryDate) data.ExpiryDate = moment(data.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
+					if(data.ExpiryDate && /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.test(data.ExpiryDate) == false) data.ExpiryDate = moment(data.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
 					if(scope.isHaveMedicares == null || scope.isHaveMedicares != data) {
 						scope.chooseItem = true;
 						scope.isHaveMedicares = data;
@@ -249,6 +249,14 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				PatientService.detailChildPatient({ UID: scope.info.UID , model: [model], where:{Enable:'Y'} })
 				.then(function(response) {
 					scope.info[model+'s'] = response.data[model];
+					if(scope.chooseItem == true) {
+						scope.typeShow = model;
+						scope.info[scope.typeShow] = scope.info[model+'s'][scope.info[model+'s'].length-1];
+						if(scope.info[scope.typeShow]['ExpiryDate'] && /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.test(scope.info[scope.typeShow]['ExpiryDate']) == false) {
+							scope.info[scope.typeShow]['ExpiryDate'] = moment(scope.info[scope.typeShow]['ExpiryDate'],'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
+						}
+					}
+
 				},function(err) {
 					console.log(err);
 				});
@@ -630,9 +638,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 										scope.changeoption = true;
 										// scope.onCancel();
 										// scope.init();
-										console.log("model ",model);
 										$modalInstance.dismiss('cancel');
-										scope.callData(model);
+										scope.callData(model,true);
 									},function(err) {
 										console.log(err);
 										toastr.error("Please check data again.","ERROR");

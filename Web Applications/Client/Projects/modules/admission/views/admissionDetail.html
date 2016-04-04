@@ -43,13 +43,15 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label">Medical Eligible</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="regular-radio" name="medical_eligible" value="Y" ng-model="admissionDetail.MedicareEligible"> Yes
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="regular-radio" name="medical_eligible" value="N" ng-model="admissionDetail.MedicareEligible"> No
-                                    </label>
+                                    <div class="radio-list">
+                                        <label class="radio-inline">Medical Eligible</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="regular-radio" name="medical_eligible" value="Y" ng-model="admissionDetail.MedicareEligible"> Yes
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="regular-radio" name="medical_eligible" value="N" ng-model="admissionDetail.MedicareEligible"> No
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-12">
@@ -187,7 +189,7 @@
                                         <th></th>
                                         <th width="1">Yes</th>
                                         <th width="1">No</th>
-                                        <th width="30%">Comments</th>
+                                        <th width="35%">Comments</th>
                                         <th width="20%">Notes</th>
                                     </tr>
                                 </thead>
@@ -207,8 +209,8 @@
                                         </td>
                                         <td class="form-inline" id="comments_anti_coagulant">
                                             <div class="form-group margin-bottom-10">
-                                                <label class="control-label">Still to take?</label>
                                                 <div class="radio-list">
+                                                    <label class="radio-inline">Still to take?</label>
                                                     <label class="radio-inline">
                                                         <input type="radio" class="regular-radio" name="anti_coagulant_still_to_take" value="Y" ng-model="admissionDetail.anti_coagulant_still_to_take" ng-click="ChangeRadio(['anti_coagulant_date_to_cease'])" ng-change="checkRadioYesNoN('anti_coagulant_still_to_take',['#comments'])"> Yes
                                                     </label>
@@ -217,7 +219,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="form-group" id="comments_anti_coagulant_still_to_take">
+                                            <div class="form-group" id="comments_anti_coagulant_still_to_take" style="margin-left: 2em">
                                                 <label class="control-label">Date to cease:</label>
                                                 <input type="text" class="form-control date-picker" ng-model="admissionDetail.anti_coagulant_date_to_cease" name="anti_coagulant_date_to_cease" ng-disabled="admissionDetail.anti_coagulant_still_to_take !='N'">
                                             </div>
@@ -369,15 +371,19 @@
                                             </label>
                                         </td>
                                         <td class="form-inline" id="comments_lifestyle_smoked">
-                                            <label>Daily Amount?</label>
-                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_smoked_daily_amount" name="lifestyle_smoked_daily_amount">
-                                            <label style="margin-left:15px;">Ceased?
+                                            <div class="form-group">
+                                                <label class="control-label">Daily Amount?</label>
+                                                <input type="text" class="form-control" size="10" ng-model="admissionDetail.lifestyle_smoked_daily_amount" name="lifestyle_smoked_daily_amount">
+                                            </div>
+                                           
+                                                <label class="radio-inline">Ceased?</label>
                                                 <label class="radio-inline">
                                                     <input type="radio" class="regular-radio" name="Ceased" value="Y" ng-model="admissionDetail.lifestyle_smoked_ceased" name="lifestyle_smoked_ceased"> Yes
                                                 </label>
                                                 <label class="radio-inline">
                                                     <input type="radio" class="regular-radio" name="Ceased" value="Y" ng-model="admissionDetail.lifestyle_smoked_ceased" name="lifestyle_smoked_ceased"> No
                                                 </label>
+                                           
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.lifestyle_smoked_notes">
@@ -397,7 +403,7 @@
                                         </td>
                                         <td class="form-inline" id="comments_lifestyle_alcohol">
                                             <label>Daily Amount?</label>
-                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_alcohol_daily_amount" name="lifestyle_alcohol_daily_amount">
+                                            <input type="text" class="form-control" size="10" ng-model="admissionDetail.lifestyle_alcohol_daily_amount" name="lifestyle_alcohol_daily_amount">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.lifestyle_alcohol_nurse_notes">
@@ -417,7 +423,7 @@
                                         </td>
                                         <td class="form-inline" id="comments_lifestyle_drugs">
                                             <label class="control-lable">Daily Amount?</label>
-                                            <input type="text" class="form-control" size="15" ng-model="admissionDetail.lifestyle_drugs_daily_amount" name="lifestyle_drugs_daily_amount">
+                                            <input type="text" class="form-control" size="10" ng-model="admissionDetail.lifestyle_drugs_daily_amount" name="lifestyle_drugs_daily_amount">
                                             <label class="control-lable" style="margin-left:15px;">Type ?</label>
                                             <input type="text" class="form-control" size="10" ng-model="admissionDetail.lifestyle_drugs_type" name="lifestyle_drugs_type">
                                         </td>

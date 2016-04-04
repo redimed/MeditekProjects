@@ -62,7 +62,7 @@ module.exports = function(data, userInfo) {
             }]
         }, {
             attributes: Services.AttributesAdmission.AdmissionData(),
-            required: true,
+            required: false,
             model: AdmissionData,
             where: pagination.Admission
         }],

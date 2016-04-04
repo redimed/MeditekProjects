@@ -49,22 +49,24 @@ module.exports = React.createClass({
                         for(var field_index = 0; field_index < row.fields.length; field_index++){
                             var field = row.fields[field_index];
                             /* ROLES */
-                            var view_flag = false;
-                            var view_option = field.roles.view.option;
-                            for(var role_id = 0; role_id < responseRoles.roles.length; role_id++){
-                                var role = responseRoles.roles[role_id];
-                                /* VIEW */
-                                for(var role_field_id = 0; role_field_id < field.roles.view.list.length; role_field_id++){
-                                    var field_role = field.roles.view.list[role_field_id];
-                                    if(field_role.id === role.RoleId && field_role.value === 'yes'){
-                                        view_flag = true;
-                                        break;
+                            if(typeof field.roles !== 'undefined'){
+                                var view_flag = false;
+                                var view_option = field.roles.view.option;
+                                for(var role_id = 0; role_id < responseRoles.roles.length; role_id++){
+                                    var role = responseRoles.roles[role_id];
+                                    /* VIEW */
+                                    for(var role_field_id = 0; role_field_id < field.roles.view.list.length; role_field_id++){
+                                        var field_role = field.roles.view.list[role_field_id];
+                                        if(field_role.id === role.RoleId && field_role.value === 'yes'){
+                                            view_flag = true;
+                                            break;
+                                        }
                                     }
+                                    /* END VIEW */
                                 }
-                                /* END VIEW */
+                                if(!view_flag)
+                                    self.refs[section.ref].setDisplay(row.ref, field.ref, view_option);
                             }
-                            if(!view_flag)
-                                self.refs[section.ref].setDisplay(row.ref, field.ref, view_option);
                             /* END ROLES */
                             if(field.type === 'eform_input_image_doctor'){
                                 self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);

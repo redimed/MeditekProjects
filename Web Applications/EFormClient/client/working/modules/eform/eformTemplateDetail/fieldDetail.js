@@ -142,6 +142,13 @@ module.exports = React.createClass({
         }
         this.props.onSave(data);
     },
+    _onChangeCheckAllView: function(value){
+        var self = this;
+        this.roles.map(function(role, index){
+            var checked = (value === 'yes')?true:false;
+            self.refs['view_'+role.RoleCode].setChecked(checked);
+        })
+    },
     render: function(){
         var display_name = 'none';
         var display_labelh = 'none';
@@ -223,6 +230,14 @@ module.exports = React.createClass({
                             </div>
                             <div className="form-group">
                                 <label>VIEW</label>
+                                <div className="icheck-inline">
+                                    <label>
+                                        <CommonCheckbox ref="checkall_view"
+                                            onChange={this._onChangeCheckAllView}/>
+                                        &nbsp;
+                                        Check All View
+                                    </label>
+                                </div>
                                 <div className="icheck-inline">
                                 {
                                     this.roles.map(function(role, index){

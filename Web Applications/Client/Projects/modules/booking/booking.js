@@ -1,6 +1,7 @@
 var app = angular.module('app.authentication.booking',[
 	'app.authentication.booking.controller',
-	'app.authentication.booking.services'
+	'app.authentication.booking.services',
+	'app.authentication.booking.directive',
 ]);
 
 app.config(function($stateProvider){
@@ -17,6 +18,11 @@ app.config(function($stateProvider){
 			url: '/scheduler',
 			templateUrl: 'modules/booking/views/scheduler.html',
 			controller: 'schedulerCtrl',
+		})
+		.state('authentication.booking.patient',{
+			url:'/bookingPatient',
+			templateUrl:'modules/booking/views/bookingPatient.html',
+			controller:'bookingPatientCtrl',
 		})
 		;
 });

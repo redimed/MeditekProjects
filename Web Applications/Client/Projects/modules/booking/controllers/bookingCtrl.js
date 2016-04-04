@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.booking.controller',[
 	'app.authentication.booking.scheduler.controller',
+	'app.authentication.booking.patient',
 ]);
 
 app.controller('bookingCtrl', function(){

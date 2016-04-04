@@ -119,6 +119,13 @@ module.exports = React.createClass({
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].setValue(value);
     },
+    setDisplay: function(type){
+        if(type === 'disable'){
+            $(this.refs.table).attr('disabled', true);
+        }else{
+            $(this.refs.table).css('display', 'none');
+        }
+    },
     render: function(){
         var content = this.props.content
         var rows = Immutable.List()

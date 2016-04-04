@@ -48,6 +48,13 @@ module.exports = React.createClass({
         //value = Config.setDate(value);
         $(this.refs.input).datepicker("update", value);
     },
+    setDisplay: function(type){
+        if(type === 'disable'){
+            $(this.refs.input).attr('disabled', true);
+        }else{
+            $(this.refs.input).css('display', 'none');
+        }
+    },
     getValue: function(){
         var value = $(this.refs.input).val();
         return Config.getDateTimeZone(value);
@@ -70,6 +77,9 @@ module.exports = React.createClass({
     },
     getPreCal: function(){
         return this.props.preCal;
+    },
+    getRoles: function(){
+        return this.props.roles;
     },
     render: function(){
         var type = this.props.type;

@@ -27,89 +27,109 @@ module.exports = React.createClass({
         this.templateUID = locationParams.templateUID;
 
         this._serverTemplateDetail();
-        this._serverPermissionUser();
     },
-    _serverPermissionUser: function(){
+    /*_serverPermissionUser: function(){
         EFormService.getUserRoles({UID: this.userUID})
         .then(function(response){
-            
+            console.log(response);
         })
-    },
+    },*/
     _serverPreFormDetail: function(content){
         var self = this;
-        EFormService.preFormDetail({UID: this.appointmentUID})
-        .then(function(response){
-            if(typeof response.data.Doctor !== 'undefined')
-                self.signatureDoctor = response.data.Doctor.FileUpload;
-            for(var section_index = 0; section_index < content.length; section_index++){
-                var section = content[section_index];
-                for(var row_index = 0; row_index < section.rows.length; row_index++){
-                    var row = section.rows[row_index];
-                    for(var field_index = 0; field_index < row.fields.length; field_index++){
-                        var field = row.fields[field_index];
-                        if(field.type === 'eform_input_image_doctor'){
-                            self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
-                        }
-                        var preCalArray = [];
-                        if(typeof field.preCal !== 'undefined'){
-                            preCalArray = field.preCal.split('|');
-                        }
-                        preCalArray.map(function(preCal){
-                            /* CONCAT PREFIX */
-                            if(Config.getPrefixField(preCal,'CONCAT') > -1){
-                                if(preCal !== ''){
-                                    var preCalRes = Config.getArrayConcat(preCal);
-                                    var value = '';
-                                    preCalRes.map(function(preCalResItem){
-                                        var preCalResItemArr = preCalResItem.split('.');
-                                        var responseTemp = null;
-                                        var preCalResItemTemp = '';
-                                        if(preCalResItemArr.length > 1){
-                                            responseTemp = response.data[preCalResItemArr[0]];
-                                            preCalResItemTemp = preCalResItemArr[1];
-                                        }else{
-                                            responseTemp = response.data;
-                                            preCalResItemTemp = preCalResItem;
-                                        }
-                                        for(var key in responseTemp){
-                                            if(key === preCalResItemTemp){
-                                                if(Config.getPrefixField(field.type,'checkbox') > -1){
-                                                    if(field.value === responseTemp[key]){
-                                                        value = 'yes';
-                                                    }
-                                                }
-                                                else if(Config.getPrefixField(field.type,'radio') > -1){
-                                                    if(field.value === responseTemp[key]){
-                                                        value = 'yes';
-                                                    }
-                                                }else{
-                                                    if(responseTemp[key] !== null)
-                                                        value += responseTemp[key]+' ';
-                                                }
-                                                break;
-                                            }
-                                        }
-                                    })
-                                    self.refs[section.ref].setValue(row.ref, field.ref, value);
-                                }
-                            }
-                            /* END CONCAT PREFIX */
-                            /* DEFAULT PREFIX */
-                            if(Config.getPrefixField(preCal,'DEFAULT') > -1){
-                                if(preCal !== ''){
-                                    var preCalRes = Config.getArrayDefault(preCal);
-                                    var value = preCalRes[0];
-
-                                    if(value === 'TODAY'){
-                                        self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+        EFormService.getUserRoles({UID: this.userUID})
+        .then(function(responseRoles){
+            EFormService.preFormDetail({UID: self.appointmentUID})
+            .then(function(response){
+                if(typeof response.data.Doctor !== 'undefined')
+                    self.signatureDoctor = response.data.Doctor.FileUpload;
+                for(var section_index = 0; section_index < content.length; section_index++){
+                    var section = content[section_index];
+                    for(var row_index = 0; row_index < section.rows.length; row_index++){
+                        var row = section.rows[row_index];
+                        for(var field_index = 0; field_index < row.fields.length; field_index++){
+                            var field = row.fields[field_index];
+                            /* ROLES */
+                            var view_flag = false;
+                            var view_option = field.roles.view.option;
+                            for(var role_id = 0; role_id < responseRoles.roles.length; role_id++){
+                                var role = responseRoles.roles[role_id];
+                                /* VIEW */
+                                for(var role_field_id = 0; role_field_id < field.roles.view.list.length; role_field_id++){
+                                    var field_role = field.roles.view.list[role_field_id];
+                                    if(field_role.id === role.RoleId && field_role.value === 'yes'){
+                                        view_flag = true;
+                                        break;
                                     }
                                 }
+                                /* END VIEW */
                             }
-                            /* END DEFAULT PREFIX */
-                        })
+                            if(!view_flag)
+                                self.refs[section.ref].setDisplay(row.ref, field.ref, view_option);
+                            /* END ROLES */
+                            if(field.type === 'eform_input_image_doctor'){
+                                self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
+                            }
+                            var preCalArray = [];
+                            if(typeof field.preCal !== 'undefined'){
+                                preCalArray = field.preCal.split('|');
+                            }
+                            preCalArray.map(function(preCal){
+                                /* CONCAT PREFIX */
+                                if(Config.getPrefixField(preCal,'CONCAT') > -1){
+                                    if(preCal !== ''){
+                                        var preCalRes = Config.getArrayConcat(preCal);
+                                        var value = '';
+                                        preCalRes.map(function(preCalResItem){
+                                            var preCalResItemArr = preCalResItem.split('.');
+                                            var responseTemp = null;
+                                            var preCalResItemTemp = '';
+                                            if(preCalResItemArr.length > 1){
+                                                responseTemp = response.data[preCalResItemArr[0]];
+                                                preCalResItemTemp = preCalResItemArr[1];
+                                            }else{
+                                                responseTemp = response.data;
+                                                preCalResItemTemp = preCalResItem;
+                                            }
+                                            for(var key in responseTemp){
+                                                if(key === preCalResItemTemp){
+                                                    if(Config.getPrefixField(field.type,'checkbox') > -1){
+                                                        if(field.value === responseTemp[key]){
+                                                            value = 'yes';
+                                                        }
+                                                    }
+                                                    else if(Config.getPrefixField(field.type,'radio') > -1){
+                                                        if(field.value === responseTemp[key]){
+                                                            value = 'yes';
+                                                        }
+                                                    }else{
+                                                        if(responseTemp[key] !== null)
+                                                            value += responseTemp[key]+' ';
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        })
+                                        self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                    }
+                                }
+                                /* END CONCAT PREFIX */
+                                /* DEFAULT PREFIX */
+                                if(Config.getPrefixField(preCal,'DEFAULT') > -1){
+                                    if(preCal !== ''){
+                                        var preCalRes = Config.getArrayDefault(preCal);
+                                        var value = preCalRes[0];
+
+                                        if(value === 'TODAY'){
+                                            self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                        }
+                                    }
+                                }
+                                /* END DEFAULT PREFIX */
+                            })
+                        }
                     }
                 }
-            }
+            })
         })
     },
     _checkServerEFormDetail: function(){

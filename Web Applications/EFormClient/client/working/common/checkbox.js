@@ -10,7 +10,8 @@ module.exports = React.createClass({
         type: React.PropTypes.string,
         context: React.PropTypes.string,
         onRightClickItem: React.PropTypes.func,
-        preCal: React.PropTypes.string
+        preCal: React.PropTypes.string,
+        onChange: React.PropTypes.func
     },
     getDefaultProps: function(){
         return {
@@ -30,9 +31,13 @@ module.exports = React.createClass({
         })
         $(this.refs.input).on('ifChecked', function(event){
             self.value = 'yes';
+            if(typeof self.props.onChange !== 'undefined')
+                self.props.onChange(self.value);
         })
         $(this.refs.input).on('ifUnchecked', function(event){
             self.value = 'no';
+            if(typeof self.props.onChange !== 'undefined')
+                self.props.onChange(self.value);
         })
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({

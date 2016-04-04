@@ -76,7 +76,7 @@ module.exports = function(admissionUID, userInfo) {
             }, {
                 attributes: Services.AttributesAdmission.AdmissionData(),
                 model: AdmissionData,
-                required: true,
+                required: false,
                 include: [{
                     attributes: Services.AttributesAppt.FileUpload(),
                     model: FileUpload,

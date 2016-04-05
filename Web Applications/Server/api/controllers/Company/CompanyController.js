@@ -2,7 +2,7 @@ module.exports = {
 
     CreateCompany: function(req, res) {
         // var data = req.body.data;
-        // res.ok({mesage:data});
+        // res.ok({message:data});
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             var err = new Error("create.Error");
@@ -11,7 +11,7 @@ module.exports = {
         } else {
             Services.Company.CreateCompany(data)
                 .then(function(success) {
-                    res.ok({mesage:'success',data:success});
+                    res.ok({message:'success',data:success});
                 }, function(err) {
                     res.serverError(ErrorWrap(err));
                 });
@@ -22,7 +22,7 @@ module.exports = {
         var data = req.body.data;
         Services.Company.getList(data)
         .then(function(result) {
-            res.ok({mesage:"success",data:result});
+            res.ok({message:"success",data:result});
         })
         .catch(function(err) {
             res.serverError(ErrorWrap(err));
@@ -34,10 +34,10 @@ module.exports = {
         Services.Company.detailCompany(data)
         .then(function(result) {
             if(result== null || result == '')
-                res.ok({mesage:"empty"});
+                res.ok({message:"empty"});
             else {
                 res.ok({
-                    mesage:"success",
+                    message:"success",
                     data: result
                 });
             }
@@ -61,7 +61,7 @@ module.exports = {
         }
         Services.Company.loadDetail(data)
         .then(function(result) {
-            res.ok({mesage:"success",data:result});
+            res.ok({message:"success",data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
@@ -71,7 +71,7 @@ module.exports = {
         var data = req.body.data;
         Services.Company.Create(data)
         .then(function(result) {
-            res.ok({mesage:'success',data:result});
+            res.ok({message:'success',data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
@@ -81,7 +81,7 @@ module.exports = {
         var data = req.body.data;
         Services.Company.Update(data)
         .then(function(result) {
-            res.ok({mesage:'success',data:result});
+            res.ok({message:'success',data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
@@ -91,7 +91,7 @@ module.exports = {
         var data = req.body.data;
         Services.Company.ChangeStatus(data)
         .then(function(result) {
-            res.ok({mesage:'success',data:result});
+            res.ok({message:'success',data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
@@ -111,7 +111,7 @@ module.exports = {
         }
         Services.Company.CreateStaff(data)
         .then(function(result) {
-            res.ok({mesage:"success",data:result});
+            res.ok({message:"success",data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
@@ -125,7 +125,7 @@ module.exports = {
             offset     : data.offset
         })
         .then(function(result){
-            res.ok({mesage:"success",data:result.rows,count:result.count});
+            res.ok({message:"success",data:result.rows,count:result.count});
         },function(err) {
             res.serverError(ErrorWrap(err));
         })
@@ -135,7 +135,7 @@ module.exports = {
         var data = req.body.data;
         Services.Company.CreateFund(data)
         .then(function(result) {
-            res.ok({mesage:"success",data:result});
+            res.ok({message:"success",data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
@@ -145,7 +145,7 @@ module.exports = {
         var data = req.params;
         Services.Company.DetailCompanyByUser(data)
         .then(function(result) {
-            res.ok({mesage:"success",data:result});
+            res.ok({message:"success",data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });
@@ -155,7 +155,7 @@ module.exports = {
         var data = req.params;
         Services.Company.GetListStaff(data)
         .then(function(result){
-            res.ok({mesage:"success",data:result});
+            res.ok({message:"success",data:result});
         },function(err) {
             res.serverError(ErrorWrap(err));
         });

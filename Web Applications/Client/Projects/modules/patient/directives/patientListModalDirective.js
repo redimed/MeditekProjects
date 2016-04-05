@@ -112,12 +112,15 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			var data = {};
 			scope.updatedata = {};
         	scope.info = {};
+        	scope.style = {};
 			data.UID = scope.uid;
 			data.FileType = 'ProfileImage';
 
 			scope.view = function(model, data) {
+				scope.style = {};
 				console.log(scope.info[model]);
 				if(model == 'Kin'){
+					scope.callData(scope.typeShow,scope.chooseItem,true);
 					console.log(scope.isHaveKins);
 					if(scope.isHaveKins == null || scope.isHaveKins != data) {
 						scope.chooseItem = true;
@@ -127,7 +130,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientKin = data;
+						scope.info.PatientKin = angular.copy(data);;
 						console.log(scope.info.PatientKin);
 					}
 					else if (scope.isHaveKins == data) {
@@ -137,6 +140,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					}
 				} 
 				else if(model == 'GP'){
+					scope.callData(scope.typeShow,scope.chooseItem,true);
 					console.log(scope.isHaveGPs);
 					if(scope.isHaveGPs == null || scope.isHaveGPs != data) {
 						scope.chooseItem = true;
@@ -146,7 +150,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientGP = data;
+						scope.info.PatientGP = angular.copy(data);
 						console.log(scope.info.PatientGP);
 					}
 					else if (scope.isHaveGPs == data) {
@@ -157,6 +161,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				}
 				else if(model == 'Fund'){
 					console.log(scope.isHaveFunds);
+					scope.callData(scope.typeShow,scope.chooseItem,true);
 					if(scope.isHaveFunds == null || scope.isHaveFunds != data) {
 						scope.chooseItem = true;
 						scope.isHaveFunds = data;
@@ -165,7 +170,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
-						scope.info.PatientFund = data;
+						scope.info.PatientFund = angular.copy(data);;
 						console.log(scope.info.PatientFund);
 					}
 					else if (scope.isHaveFunds == data) {
@@ -175,6 +180,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					}
 				}
 				else if(model == 'Pension'){
+					scope.callData(scope.typeShow,scope.chooseItem,true);
 					console.log(scope.isHavePensions);
 					if(scope.isHavePensions == null || scope.isHavePensions != data) {
 						if(data.ExpiryDate && /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.test(data.ExpiryDate) == false) data.ExpiryDate = moment(data.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
@@ -185,7 +191,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientPension = data;
+						scope.info.PatientPension = angular.copy(data);;
 						console.log(scope.info.PatientPension);
 					}
 					else if (scope.isHavePensions == data) {
@@ -195,6 +201,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					}
 				}
 				else if(model == 'DVA'){
+					scope.callData(scope.typeShow,scope.chooseItem,true);
 					console.log(scope.isHaveDVAs);
 					if(scope.isHaveDVAs == null || scope.isHaveDVAs != data) {
 						scope.chooseItem = true;
@@ -204,7 +211,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientDVA = data;
+						scope.info.PatientDVA = angular.copy(data);;
 						console.log(scope.info.PatientDVA);
 					}
 					else if (scope.isHaveDVAs == data) {
@@ -214,6 +221,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					}
 				}
 				else if(model == 'Medicare'){
+					scope.callData(scope.typeShow,scope.chooseItem,true);
 					console.log(scope.isHaveMedicares);
 					if(data.ExpiryDate && /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.test(data.ExpiryDate) == false) data.ExpiryDate = moment(data.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
 					if(scope.isHaveMedicares == null || scope.isHaveMedicares != data) {
@@ -224,7 +232,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientMedicare = data;
+						scope.info.PatientMedicare = angular.copy(data);;
 						console.log(scope.info.PatientMedicare);
 					}
 					else if (scope.isHaveMedicares == data) {
@@ -241,15 +249,22 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				scope.typeShow = type;
 			}
 
-			scope.callData = function(model,isChoose) {
+			scope.callData = function( model, isChoose, ischangeView) {
+				scope.typeShow = model;
+				scope.style = {};
 				scope.chooseItem = false;
+				var ischangeview = false;
 				if(isChoose) {
 					scope.chooseItem = isChoose;
+				}
+				if(ischangeView) {
+					ischangeview = ischangeView;
 				}
 				PatientService.detailChildPatient({ UID: scope.info.UID , model: [model], where:{Enable:'Y'} })
 				.then(function(response) {
 					scope.info[model+'s'] = response.data[model];
-					if(scope.chooseItem == true) {
+					console.log(scope.chooseItem);
+					if(scope.chooseItem == true && ischangeview == false) {
 						scope.typeShow = model;
 						scope.info[scope.typeShow] = scope.info[model+'s'][scope.info[model+'s'].length-1];
 						if(scope.info[scope.typeShow]['ExpiryDate'] && /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.test(scope.info[scope.typeShow]['ExpiryDate']) == false) {
@@ -260,6 +275,36 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				},function(err) {
 					console.log(err);
 				});
+			}
+
+			scope.validateChild = function( model, attr, regexChar, message, required) {
+				if(scope.info[model]) {
+					if(scope.info[model][attr]) {
+						if(required) {
+							//if input must be required
+						}
+						else {
+							var regexchar = new RegExp(regexChar);
+							console.log(regexchar);
+							console.log(scope.info[model][attr]);
+							console.log(regexchar.test(scope.info[model][attr]));
+							if(regexchar.test(scope.info[model][attr]) == false) {
+								scope.style[attr] = {};
+								scope.style[attr].css = {'border': '2px solid #DCA7B0'};
+								if(!message)
+									scope.style[attr].message = attr + ' Invalid';
+								else
+									scope.style[attr].message = message;
+							}
+							else {
+								delete scope.style[attr];
+							}
+						}
+					}
+					else {
+						delete scope.style[attr];
+					}
+				}
 			}
 
 			scope.init = function(){
@@ -457,88 +502,94 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    };
 
 		    scope.savechange = function(){
-		    	scope.updatedata.ID            = scope.info.ID;
-		    	scope.updatedata.Title         = scope.info.Title;
-		    	scope.updatedata.Gender        = scope.info.Gender;
-		    	scope.updatedata.FirstName     = scope.info.FirstName;
-		    	scope.updatedata.LastName      = scope.info.LastName;
-		    	scope.updatedata.DOB           = scope.info.DOB;
-		    	scope.updatedata.Address1      = scope.info.Address1;
-		    	scope.updatedata.Suburb        = scope.info.Suburb;
-		    	scope.updatedata.Postcode      = scope.info.Postcode;
-		    	scope.updatedata.Occupation    = scope.info.Occupation;
-		    	scope.updatedata.State         = scope.info.State;
-		    	scope.updatedata.CountryID1    = scope.info.CountryID1;
-		    	scope.updatedata.UserAccountID = scope.info.UserAccountID;
-				scope.updatedata.UID           = scope.info.UID;
-		    	console.log(scope.updatedata);
-		    	if(scope.info.PatientKin != null && scope.info.PatientKin != '') scope.updatedata.PatientKin = scope.info.PatientKin;
-		    	if(scope.info.PatientGP != null && scope.info.PatientGP != '') scope.updatedata.PatientGP = scope.info.PatientGP;
-		    	if(scope.info.PatientFund != null && scope.info.PatientFund != '') scope.updatedata.PatientFund = scope.info.PatientFund;
-		    	if(scope.info.PatientPension != null && scope.info.PatientPension != '') scope.updatedata.PatientPension = scope.info.PatientPension;
-		    	if(scope.info.PatientDVA != null && scope.info.PatientDVA != '') scope.updatedata.PatientDVA = scope.info.PatientDVA;
-		    	if(scope.info.PatientMedicare != null && scope.info.PatientMedicare != '') scope.updatedata.PatientMedicare = scope.info.PatientMedicare;
+		    	if(_.isEmpty(scope.style) == false) {
+		    		toastr.error('Please check information','Error');
+		    	}
+		    	else {
+			    	scope.updatedata.ID            = scope.info.ID;
+			    	scope.updatedata.Title         = scope.info.Title;
+			    	scope.updatedata.Gender        = scope.info.Gender;
+			    	scope.updatedata.FirstName     = scope.info.FirstName;
+			    	scope.updatedata.LastName      = scope.info.LastName;
+			    	scope.updatedata.DOB           = scope.info.DOB;
+			    	scope.updatedata.Address1      = scope.info.Address1;
+			    	scope.updatedata.Suburb        = scope.info.Suburb;
+			    	scope.updatedata.Postcode      = scope.info.Postcode;
+			    	scope.updatedata.Occupation    = scope.info.Occupation;
+			    	scope.updatedata.State         = scope.info.State;
+			    	scope.updatedata.CountryID1    = scope.info.CountryID1;
+			    	scope.updatedata.UserAccountID = scope.info.UserAccountID;
+					scope.updatedata.UID           = scope.info.UID;
+			    	console.log(scope.updatedata);
+			    	if(scope.info.PatientKin != null && scope.info.PatientKin != '') scope.updatedata.PatientKin = scope.info.PatientKin;
+			    	if(scope.info.PatientGP != null && scope.info.PatientGP != '') scope.updatedata.PatientGP = scope.info.PatientGP;
+			    	if(scope.info.PatientFund != null && scope.info.PatientFund != '') scope.updatedata.PatientFund = scope.info.PatientFund;
+			    	if(scope.info.PatientPension != null && scope.info.PatientPension != '') scope.updatedata.PatientPension = scope.info.PatientPension;
+			    	if(scope.info.PatientDVA != null && scope.info.PatientDVA != '') scope.updatedata.PatientDVA = scope.info.PatientDVA;
+			    	if(scope.info.PatientMedicare != null && scope.info.PatientMedicare != '') scope.updatedata.PatientMedicare = scope.info.PatientMedicare;
 
-				PatientService.validate(scope.updatedata)
-					.then(function(result){
-						scope.er ='';
-						scope.ermsg ='';
-						scope.updatedata.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?null:3;
-						scope.updatedata.timezone = new Date().toString().match(/([\+-][0-9]+)/)[1];
-						PatientService.updatePatient(scope.updatedata).then(function(response){
-							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
-							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-								//viet lai phan disable file
-								var postData = {};
-								postData.UserAccountID = scope.info.UserAccountID;
-								postData.Enable="N";
-								postData.FileType = [];
-							   	for(var i = 0; i < scope.uploader.queue.length; i++) {
-							   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
-							   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
-							   		scope.uploader.queue[i].headers.userUID = scope.info.UserAccount.UID;
-							   		scope.uploader.queue[i].headers.fileType = scope.uploader.queue[i].formData[0].fileType;
-							   	}
-							   	PatientService.changeStatusFile(postData)
-							   	.then(function(result){
-							   		console.log(result);
-							   		scope.uploader.uploadAll();
-							   	},function(err){
-							   		console.log(err);
-							   		if(err.data.errors[0] == "FileType.Null"){
-							   			// console.log("FileType.Null");
-							   			scope.uploader.uploadAll();
-							   		}
-							   	});
-							   //end
-							}
-							// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-							// scope.uploader.uploadAll();
-							toastr.success("update success!!!","SUCCESS");
-							// scope.chooseItem = false;
-							// scope.init();
-							// console.log(scope.typeShow);
-							if(scope.typeShow)
-								scope.callData(scope.typeShow,true);
-							else {
-								scope.chooseItem = false;
-								scope.init();
-							}
-							// scope.onCancel();
-						},function(err){
-							toastr.error(err.data.message.errors,"ERROR");
-							scope.info = angular.copy(oriInfo);
-						});
-				}, function(err){
+					PatientService.validate(scope.updatedata)
+						.then(function(result){
+							scope.er ='';
+							scope.ermsg ='';
+							scope.updatedata.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?null:3;
+							scope.updatedata.timezone = new Date().toString().match(/([\+-][0-9]+)/)[1];
+							PatientService.updatePatient(scope.updatedata).then(function(response){
+								if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
+								   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
+									//viet lai phan disable file
+									var postData = {};
+									postData.UserAccountID = scope.info.UserAccountID;
+									postData.Enable="N";
+									postData.FileType = [];
+								   	for(var i = 0; i < scope.uploader.queue.length; i++) {
+								   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
+								   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
+								   		scope.uploader.queue[i].headers.userUID = scope.info.UserAccount.UID;
+								   		scope.uploader.queue[i].headers.fileType = scope.uploader.queue[i].formData[0].fileType;
+								   	}
+								   	PatientService.changeStatusFile(postData)
+								   	.then(function(result){
+								   		console.log(result);
+								   		scope.uploader.uploadAll();
+								   	},function(err){
+								   		console.log(err);
+								   		if(err.data.errors[0] == "FileType.Null"){
+								   			// console.log("FileType.Null");
+								   			scope.uploader.uploadAll();
+								   		}
+								   	});
+								   //end
+								}
+								// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+								// scope.uploader.uploadAll();
+								toastr.success("update success!!!","SUCCESS");
+								// scope.chooseItem = false;
+								// scope.init();
+								// console.log(scope.typeShow);
+								console.log(scope.typeShow);
+								if(scope.typeShow)
+									scope.callData(scope.typeShow,true,true);
+								else {
+									scope.chooseItem = false;
+									scope.init();
+								}
+								// scope.onCancel();
+							},function(err){
+								toastr.error(err.data.message.errors,"ERROR");
+								scope.info = angular.copy(oriInfo);
+							});
+					}, function(err){
 
-					toastr.error("Please check data again.","ERROR");
-					scope.er ={};
-					scope.ermsg ={};
-					for(var i = 0; i < err.length; i++){
-						scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
-						scope.ermsg[err[i].field] = err[i].message;
-					}
-				})
+						toastr.error("Please check data again.","ERROR");
+						scope.er ={};
+						scope.ermsg ={};
+						for(var i = 0; i < err.length; i++){
+							scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
+							scope.ermsg[err[i].field] = err[i].message;
+						}
+					})
+				}
 			},
 
 			scope.typeFile;
@@ -594,6 +645,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						scope:scope,
 						controller: function($scope,$modalInstance){
 							$scope.insertData = {};
+							$scope.style = {};
 							console.log(scope);
 							$scope.typeShow = model;
 							$scope.name = model=='PatientKin'?
@@ -615,35 +667,70 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						    };
 							$scope.Save = function(model, data) {
 								console.log(model,' ',data);
-								if(model == null || model == ''){
-									toastr.error("Please choose tab","error");
-								} 
+								if(_.isEmpty(scope.style) == false) {
+									toastr.error('Please check information','Error');
+								}
 								else{
-									console.log(data);
-									data[model] = $scope.insertData[model];
-									data[model].PatientID = scope.info.ID;
-									data[model].Enable    = 'Y';
-									// data[model].PatientID = scope.info.ID;
-									// data[model].Enable = 'Y';
-									if(data[model].ExpiryDate) {
-										var parts = data[model].ExpiryDate.split('/');
-				                        var date = parts[2].toString()+'-'+(parts[1]).toString()+'-'+parts[0].toString()+' +0700';
-				                        data[model].ExpiryDate = moment(date).toDate();
+									if(model == null || model == ''){
+										toastr.error("Please choose tab","error");
+									} 
+									else{
+										console.log(data);
+										data[model] = $scope.insertData[model];
+										data[model].PatientID = scope.info.ID;
+										data[model].Enable    = 'Y';
+										// data[model].PatientID = scope.info.ID;
+										// data[model].Enable = 'Y';
+										if(data[model].ExpiryDate) {
+											var parts = data[model].ExpiryDate.split('/');
+					                        var date = parts[2].toString()+'-'+(parts[1]).toString()+'-'+parts[0].toString()+' +0700';
+					                        data[model].ExpiryDate = moment(date).toDate();
+										}
+										PatientService.addChild({model:model,data:data[model]})
+										.then(function(response){
+											console.log(response);
+											toastr.success("update success!!!","SUCCESS");
+											scope.chooseItem = false;
+											scope.changeoption = true;
+											// scope.onCancel();
+											// scope.init();
+											$modalInstance.dismiss('cancel');
+											scope.callData(model,true);
+										},function(err) {
+											console.log(err);
+											toastr.error("Please check data again.","ERROR");
+										});
 									}
-									PatientService.addChild({model:model,data:data[model]})
-									.then(function(response){
-										console.log(response);
-										toastr.success("update success!!!","SUCCESS");
-										scope.chooseItem = false;
-										scope.changeoption = true;
-										// scope.onCancel();
-										// scope.init();
-										$modalInstance.dismiss('cancel');
-										scope.callData(model,true);
-									},function(err) {
-										console.log(err);
-										toastr.error("Please check data again.","ERROR");
-									});
+								}
+							};
+
+							$scope.validateChild = function( model, attr, regexChar, message, required) {
+								if($scope.insertData[model]) {
+									if($scope.insertData[model][attr]) {
+										if(required) {
+											//if input must be required
+										}
+										else {
+											var regexchar = new RegExp(regexChar);
+											console.log(regexchar);
+											console.log($scope.insertData[model][attr]);
+											console.log(regexchar.test($scope.insertData[model][attr]));
+											if(regexchar.test($scope.insertData[model][attr]) == false) {
+												$scope.style[attr] = {};
+												$scope.style[attr].css = {'border': '2px solid #DCA7B0'};
+												if(!message)
+													$scope.style[attr].message = attr + ' Invalid';
+												else
+													$scope.style[attr].message = message;
+											}
+											else {
+												delete $scope.style[attr];
+											}
+										}
+									}
+									else {
+										delete $scope.style[attr];
+									}
 								}
 							};
 						},

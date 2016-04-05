@@ -425,19 +425,22 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">FirstName</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.FirstName" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientKin.FirstName" ng-change="validateChild('PatientKin','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css"/>
+                                                    <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">MiddleName</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.MiddleName" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientKin.MiddleName" ng-change="validateChild('PatientKin','MiddleName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.MiddleName.css" />
+                                                    <p style="color:red;" ng-if="style.MiddleName != null && style.MiddleName != undefined">{{style.MiddleName.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">LastName</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.LastName" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientKin.LastName" ng-change="validateChild('PatientKin','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
+                                                    <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -460,19 +463,22 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">HomePhone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.HomePhoneNumber" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientKin.HomePhoneNumber" ng-change="validateChild('PatientKin','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.HomePhoneNumber.css" />
+                                                    <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">MobilePhone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.MobilePhoneNumber" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientKin.MobilePhoneNumber" ng-change="validateChild('PatientKin','MobilePhoneNumber','^04[0-9]{8}$','Phone Number is a 10 digits number. Eg: 04 xxxx xxxx')" ng-style="style.MobilePhoneNumber.css" />
+                                                    <p style="color:red;" ng-if="style.MobilePhoneNumber != null && style.MobilePhoneNumber != undefined">{{style.MobilePhoneNumber.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">WorkPhone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.WorkPhoneNumber" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientKin.WorkPhoneNumber" ng-change="validateChild('PatientKin','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.WorkPhoneNumber.css" />
+                                                    <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -500,7 +506,8 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Postcode</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.Postcode" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientKin.Postcode" ng-change="validateChild('PatientKin','Postcode','^[0-9]{4,10}$','Post code is a 4 digits number. Eg: xxxx.')" ng-style="style.Postcode.css" />
+                                                    <p style="color:red;" ng-if="style.Postcode != null && style.Postcode != undefined">{{style.Postcode.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6">
@@ -522,102 +529,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="row">
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Partner Name</label>
-											<input type="text" class="form-control" ng-model="info.PartnerName" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Partner DOB</label>
-											<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.PartnerDOB" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Partner Occupation</label>
-											<input type="text" class="form-control" ng-model="info.PartnerOccupation" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">NOK Emerge Contact</label>
-											<input type="text" class="form-control" ng-model="info.NOKEmergeContact" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">NOK Phone</label>
-											<input type="text" class="form-control" ng-model="info.NOKPhone" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Clinic</label>
-											<input type="text" class="form-control" ng-model="info.Clinic">
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Alias First Name</label>
-											<input type="text" class="form-control" ng-model="info.AliasFirstName" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Alias Sur Name</label>
-											<input type="text" class="form-control" ng-model="info.AliasSurName" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Specialty</label>
-											<input type="text" class="form-control" ng-model="info.Specialty" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Usual Provider</label>
-											<input type="text" class="form-control" ng-model="info.UsualProvider" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Referral Source</label>
-											<input type="text" class="form-control" ng-model="info.UsualProvider" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">UR No</label>
-											<input type="text" class="form-control" ng-model="info.URNo" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">&nbsp;</label>
-											<div class="checkbox-list">
-												<label><input type="checkbox" ng-model="info.Diabetic" /> Diabetic</label>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">&nbsp;</label>
-											<div class="checkbox-list">
-												<label><input type="checkbox" ng-model="info.Inactive" /> Inactive</label>
-											</div>
-										</div>
-									</div>
-								</div> -->
                             </div>
                             <div class="tab-pane" id="tab_gp">
                                 <div class="row margin-top-30">
@@ -636,13 +547,15 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">GP First Name</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.FirstName" ng-change="checkDataNull('PatientGP.GPFirstName')" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientGP.FirstName" ng-change="validateChild('PatientGP','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css" />
+                                                    <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">GP Last Name</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.LastName" ng-change="checkDataNull('PatientGP.GPLastName')" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientGP.LastName" ng-change="validateChild('PatientGP','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
+                                                    <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -662,7 +575,8 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Email</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.Email" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientGP.Email" ng-change="validateChild('PatientGP','Email','^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9]+\.[a-z]{2,4}')" ng-style="style.Email.css" />
+                                                    <p style="color:red;" ng-if="style.Email != null && style.Email != undefined">{{style.Email.message}}.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -670,19 +584,22 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Mobile</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.PhoneNumber" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientGP.PhoneNumber" ng-change="validateChild('PatientGP','PhoneNumber','^04[0-9]{8}$','Mobile Phone is a 10 digits number. Eg: 04 xxxx xxxx.')" ng-style="style.PhoneNumber.css" />
+                                                    <p style="color:red;" ng-if="style.PhoneNumber != null && style.PhoneNumber != undefined">{{style.PhoneNumber.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Home Phone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.HomePhoneNumber" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientGP.HomePhoneNumber" ng-change="validateChild('PatientGP','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.HomePhoneNumber.css" />
+                                                    <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Work phone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.WorkPhoneNumber" />
+                                                    <input type="text" class="form-control" ng-model="info.PatientGP.WorkPhoneNumber" ng-change="validateChild('PatientGP','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.WorkPhoneNumber.css" />
+                                                    <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -792,19 +709,22 @@ ComponentsDateTimePickers.init();
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">FirstName</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientKin.FirstName" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientKin.FirstName" ng-change="validateChild('PatientKin','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css"/>
+                        <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">MiddleName</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientKin.MiddleName" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientKin.MiddleName" ng-change="validateChild('PatientKin','MiddleName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.MiddleName.css" />
+                        <p style="color:red;" ng-if="style.MiddleName != null && style.MiddleName != undefined">{{style.MiddleName.message}}.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">LastName</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientKin.LastName" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientKin.LastName" ng-change="validateChild('PatientKin','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
+                        <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
                     </div>
                 </div>
             </div>
@@ -827,19 +747,22 @@ ComponentsDateTimePickers.init();
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">HomePhone</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientKin.HomePhoneNumber" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientKin.HomePhoneNumber" ng-change="validateChild('PatientKin','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.HomePhoneNumber.css" />
+                        <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">MobilePhone</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientKin.MobilePhoneNumber" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientKin.MobilePhoneNumber" ng-change="validateChild('PatientKin','MobilePhoneNumber','^04[0-9]{8}$','Phone Number is a 10 digits number. Eg: 04 xxxx xxxx')" ng-style="style.MobilePhoneNumber.css" />
+                        <p style="color:red;" ng-if="style.MobilePhoneNumber != null && style.MobilePhoneNumber != undefined">{{style.MobilePhoneNumber.message}}.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">WorkPhone</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientKin.WorkPhoneNumber" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientKin.WorkPhoneNumber" ng-change="validateChild('PatientKin','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.WorkPhoneNumber.css" />
+                        <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
                     </div>
                 </div>
             </div>
@@ -867,7 +790,8 @@ ComponentsDateTimePickers.init();
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">Postcode</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientKin.Postcode" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientKin.Postcode" ng-change="validateChild('PatientKin','Postcode','^[0-9]{4,10}$','Post code is a 4 digits number. Eg: xxxx.')" ng-style="style.Postcode.css" />
+                        <p style="color:red;" ng-if="style.Postcode != null && style.Postcode != undefined">{{style.Postcode.message}}.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
@@ -891,13 +815,15 @@ ComponentsDateTimePickers.init();
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">GP First Name</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientGP.FirstName" ng-change="checkDataNull('PatientGP.GPFirstName')" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientGP.FirstName" ng-change="validateChild('PatientGP','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css" />
+                        <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">GP Last Name</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientGP.LastName" ng-change="checkDataNull('PatientGP.GPLastName')" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientGP.LastName" ng-change="validateChild('PatientGP','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
+                        <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
                     </div>
                 </div>
             </div>
@@ -917,7 +843,8 @@ ComponentsDateTimePickers.init();
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">Email</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientGP.Email" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientGP.Email" ng-change="validateChild('PatientGP','Email','^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9]+\.[a-z]{2,4}')" ng-style="style.Email.css" />
+                        <p style="color:red;" ng-if="style.Email != null && style.Email != undefined">{{style.Email.message}}.</p>
                     </div>
                 </div>
             </div>
@@ -925,19 +852,22 @@ ComponentsDateTimePickers.init();
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">Mobile</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientGP.PhoneNumber" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientGP.PhoneNumber" ng-change="validateChild('PatientGP','PhoneNumber','^04[0-9]{8}$','Mobile Phone is a 10 digits number. Eg: 04 xxxx xxxx.')" ng-style="style.PhoneNumber.css" />
+                        <p style="color:red;" ng-if="style.PhoneNumber != null && style.PhoneNumber != undefined">{{style.PhoneNumber.message}}</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">Home Phone</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientGP.HomePhoneNumber" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientGP.HomePhoneNumber" ng-change="validateChild('PatientGP','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.HomePhoneNumber.css" />
+                        <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">Work phone</label>
-                        <input type="text" class="form-control" ng-model="insertData.PatientGP.WorkPhoneNumber" />
+                        <input type="text" class="form-control" ng-model="insertData.PatientGP.WorkPhoneNumber" ng-change="validateChild('PatientGP','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.WorkPhoneNumber.css" />
+                        <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
                     </div>
                 </div>
             </div>

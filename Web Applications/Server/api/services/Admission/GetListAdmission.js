@@ -66,7 +66,6 @@ module.exports = function(data, userInfo) {
             model: AdmissionData,
             where: pagination.Admission
         }],
-        subQuery: false,
         order: pagination.order,
         limit: pagination.limit,
         offset: pagination.offset

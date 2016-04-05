@@ -137,10 +137,11 @@ module.exports = React.createClass({
                                     }
                                 }
                                 /* END DEFAULT PREFIX */
-                            })
+                            })//end pre cal array
                         }
                     }
-                }
+                }//end for
+                self._checkServerEFormDetail();
             })
         })
     },
@@ -151,6 +152,7 @@ module.exports = React.createClass({
             if(response.data){
                 self.formUID = response.data.UID;
                 var EFormDataContent = JSON.parse(response.data.EFormData.FormData);
+                console.log(EFormDataContent);
                 EFormDataContent.map(function(field, indexField){
                     var fieldRef = field.ref;
                     var fieldData = field.value;
@@ -192,7 +194,6 @@ module.exports = React.createClass({
                     }
                 })
                 self._serverPreFormDetail(content);
-                self._checkServerEFormDetail();
             })
         })
     },

@@ -16,7 +16,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.LogoutWhenIsAuthenticated), name: Define.LogoutFunction, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,5 +46,13 @@ class BaseViewController: UIViewController,DTAlertViewDelegate {
     }
     func DTAlertViewDidDismiss(alertView: DTAlertView) {
         NSLog("%@", "did Dismiss")
+    }
+    func LogoutWhenIsAuthenticated(){
+        Context.deleteDatDefaults(Define.keyNSDefaults.Authorization)
+        Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
+        Context.deleteDatDefaults(Define.keyNSDefaults.Cookie)
+        Context.deleteDatDefaults(Define.keyNSDefaults.userInfor)
+        let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
+        self.navigationController?.pushViewController(account, animated: true)
     }
 }

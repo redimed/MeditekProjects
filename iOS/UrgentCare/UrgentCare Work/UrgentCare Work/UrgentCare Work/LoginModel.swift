@@ -11,8 +11,8 @@ import ObjectMapper
 import RealmSwift
 
 class Login: BaseModel {
-    dynamic var UserName = "admin_manh"
-    dynamic var Password = "123456"
+    dynamic var UserName = ""
+    dynamic var Password = ""
     
     required convenience init?(_ map: Map) {
         self.init()

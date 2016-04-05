@@ -7,20 +7,31 @@
 //
 
 import UIKit
+import ObjectMapper
 
-class SettingViewController: UIViewController,UITableViewDelegate ,UITableViewDataSource {
+class SettingViewController: BaseViewController,UITableViewDelegate ,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-
-    var array = [["Mineral"],["Harry Berry", "Add New Account"],["Other services", "About Redimed", "LOGOUT"]]
+    
+    var nameComapny :String = "name"
+    var array = [[],["Harry Berry", "Add New Account"],["Other services", "About Redimed", "LOGOUT"]]
     var arrayTitle = ["Company", "Accounts", "", "", ""]
     var StringIncompleteProfile :String = "Incomplete Profile"
+    var companyInfo = DetailCompanyResponse()
+    var userInfor = LoginResponse()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         
+        let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
+        companyInfo = Mapper().map(companyInfoDict)!
+        print(companyInfo)
+        array[0].append(companyInfo.data[0].CompanyName)
+        
+        let userInforDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.userInfor) as! NSDictionary
+        userInfor = Mapper().map(userInforDict)!
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,7 +52,7 @@ class SettingViewController: UIViewController,UITableViewDelegate ,UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.section == 1 && indexPath.row == 0){
             let cell = tableView.dequeueReusableCellWithIdentifier("CellInfor", forIndexPath: indexPath) as! CustomTableViewCell;
-            cell.lbName.text = array[indexPath.section][indexPath.row]
+            cell.lbName.text = userInfor.user?.UserName
             cell.lbProfile.text = StringIncompleteProfile
             return cell
         }else{
@@ -79,9 +90,7 @@ class SettingViewController: UIViewController,UITableViewDelegate ,UITableViewDa
             self.navigationController?.pushViewController(faqs, animated: true)
         }
         if(indexPath.row == 2 && indexPath.section == 2){
-            let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
-            self.navigationController?.pushViewController(account, animated: true)
-
+            LogoutWhenIsAuthenticated()
         }
     }
     

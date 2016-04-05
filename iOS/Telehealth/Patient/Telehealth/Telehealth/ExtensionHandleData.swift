@@ -240,9 +240,7 @@ extension ConfigurationSystem {
             return (disposition, credential)
         }
     }
-    
-  
-    
+
     mutating func setHeader(){
         if let token = defaults.valueForKey("token") as? String {
             headers["Authorization"] =  "Bearer \(token)"

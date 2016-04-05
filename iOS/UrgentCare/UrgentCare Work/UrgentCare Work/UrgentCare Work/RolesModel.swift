@@ -11,19 +11,21 @@ import ObjectMapper
 import RealmSwift
 
 class Roles: BaseModel {
-    dynamic var ID = "admin_manh"
-    dynamic var RoleCode = "123456"
-    dynamic var RoleName = "123456"
-    dynamic var SiteId = "123456"
-    dynamic var UID = "123456"
+    dynamic var ID = ""
+    dynamic var RoleCode = ""
+    dynamic var RoleName = ""
+    dynamic var SiteId = ""
+    dynamic var UID = ""
     
     required convenience init?(_ map: Map) {
         self.init()
     }
     
     override func mapping(map: Map) {
+        
         ID    <- map["ID"]
         RoleCode    <- map["RoleCode"]
+        RoleName    <- map["RoleName"]
         SiteId    <- map["SiteId"]
         UID    <- map["UID"]
     }

@@ -8,7 +8,9 @@
 
 import UIKit
 import SwiftyJSON
-class ViewController: UIViewController,UIPageViewControllerDataSource,ContentViewDelegate{
+import ObjectMapper
+
+class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentViewDelegate{
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var viewPaging: UIView!
@@ -22,6 +24,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
         super.viewDidLoad()
         loadDataJson()
         LoadingAnimation.stopLoading()
+        loadInformationData()
     }
     override func viewDidAppear(animated: Bool) {
         pagingImage()
@@ -33,8 +36,39 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     }
     func resetTimer() {
         timer?.invalidate()
-        let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "handleIdleEventAutoSlide:", userInfo: nil, repeats: true)
+        let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(ViewController.handleIdleEventAutoSlide(_:)), userInfo: nil, repeats: true)
         timer = nextTimer
+    }
+    
+    func loadInformationData(){
+        let data = Context.getDataDefasults(Define.keyNSDefaults.userInfor)
+        let respone = Mapper<LoginResponse>().map(data)
+        
+        UserService.getDetailCompanyByUser((respone?.user!.UID)!) { [weak self] (response) in
+            print(response)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let detailCompanyResponse = Mapper<DetailCompanyResponse>().map(response.result.value) {
+                            
+                            if detailCompanyResponse.message == "success"  {
+                                let companyInfor = Mapper().toJSON(detailCompanyResponse)
+                                Context.setDataDefaults(companyInfor, key: Define.keyNSDefaults.companyInfor)
+                            }else{
+                                LoadingAnimation.stopLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self?.showMessageNoNetwork()
+                }
+                
+            }
+        }
+        
     }
     
     func handleIdleEventAutoSlide(timer: NSTimer) {
@@ -46,10 +80,10 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             if page == numberofPage {
                 page = 0
                 autoSlide(page + 1)
-                page++
+                page += 1
             }else{
                 autoSlide(page + 1)
-                page++
+                page += 1
             }
         }
     }
@@ -116,7 +150,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             
         }
         
-        index--
+        index -= 1
         return self.viewControllerAtIndex(index)
         
     }
@@ -131,7 +165,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             return nil
         }
         
-        index++
+        index += 1
         
         if (index == self.pageTitles.count)
         {

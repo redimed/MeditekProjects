@@ -11,7 +11,7 @@ import ObjectMapper
 import RealmSwift
 
 class ErrorModel: BaseModel {
-    dynamic var ErrorType = "admin_manh"
+    dynamic var ErrorType = ""
 
     required convenience init?(_ map: Map) {
         self.init()

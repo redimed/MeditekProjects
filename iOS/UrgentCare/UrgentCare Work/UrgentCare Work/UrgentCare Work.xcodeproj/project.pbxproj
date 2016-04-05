@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F2656311CB246C9001110AB /* DetailCompanyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2656301CB246C9001110AB /* DetailCompanyModel.swift */; };
 		3F5C40C91CA4E578005703DC /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40C81CA4E578005703DC /* UITextFieldExtension.swift */; };
 		3F5C40CD1CA4E786005703DC /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40CC1CA4E786005703DC /* SettingViewController.swift */; };
 		3F5C40CF1CA521CC005703DC /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40CE1CA521CC005703DC /* CustomTableViewCell.swift */; };
@@ -123,6 +124,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F2656301CB246C9001110AB /* DetailCompanyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCompanyModel.swift; sourceTree = "<group>"; };
 		3F5C40C81CA4E578005703DC /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		3F5C40CC1CA4E786005703DC /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		3F5C40CE1CA521CC005703DC /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				3FA53DAC1CA91D82000B8BE5 /* RolesModel.swift */,
 				3FA53DAE1CA91E10000B8BE5 /* TelehealthUserModel.swift */,
 				3FA53DB01CA92622000B8BE5 /* ErrorModel.swift */,
+				3F2656301CB246C9001110AB /* DetailCompanyModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -430,7 +433,7 @@
 				54EEAEB01C83F1830096CA1F /* SubmitInjuryViewController */,
 				54EEAEAF1C83F1740096CA1F /* FAQsViewController */,
 				54EEAEAE1C83F15E0096CA1F /* ContenViewController */,
-				54EEAEAD1C83F1510096CA1F /* MainVieController */,
+				54EEAEAD1C83F1510096CA1F /* MainViewController */,
 				54EEAEAC1C83F1320096CA1F /* AutoCompleteTableViewController */,
 			);
 			name = ViewControllers;
@@ -444,12 +447,12 @@
 			name = AutoCompleteTableViewController;
 			sourceTree = "<group>";
 		};
-		54EEAEAD1C83F1510096CA1F /* MainVieController */ = {
+		54EEAEAD1C83F1510096CA1F /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
 				AF26B2261BEC869C006F37A4 /* ViewController.swift */,
 			);
-			name = MainVieController;
+			name = MainViewController;
 			sourceTree = "<group>";
 		};
 		54EEAEAE1C83F15E0096CA1F /* ContenViewController */ = {
@@ -929,6 +932,7 @@
 				AF26B2AB1BEC8787006F37A4 /* LoadingView.swift in Sources */,
 				AF26B2B21BEC8787006F37A4 /* SpringImageView.swift in Sources */,
 				54EEAEE21C83F3960096CA1F /* LoadingAnimation.swift in Sources */,
+				3F2656311CB246C9001110AB /* DetailCompanyModel.swift in Sources */,
 				54EEAEE11C83F3960096CA1F /* Define.swift in Sources */,
 				54EEAEC31C83F2DD0096CA1F /* FunnyDotsA.swift in Sources */,
 				AF26B2A11BEC8787006F37A4 /* DesignableButton.swift in Sources */,

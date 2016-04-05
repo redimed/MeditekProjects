@@ -15,7 +15,13 @@ class RequestFactory {
     class func get(url:String, completion: Response <AnyObject, NSError> -> Void )-> Request {
         let request = NSMutableURLRequest(URL: NSURL(string: url)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 5)
         request.HTTPMethod = "GET"
+        
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        request.setValue("IOS", forHTTPHeaderField: "systemType")
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Authorization) as? String, forHTTPHeaderField: "Authorization")
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Cookie) as? String, forHTTPHeaderField: "Cookie")
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.deviceID) as? String, forHTTPHeaderField: "deviceId")
+        request.setValue(Context.getAppID(), forHTTPHeaderField: "appid")
         
         let alamofireRequest = Alamofire.request(request)
         alamofireRequest.responseJSON{response in completion(response)}
@@ -39,14 +45,15 @@ class RequestFactory {
         let jsonString = Mapper().toJSONString(model, prettyPrint: true)
 
         let request = NSMutableURLRequest(URL: NSURL(string: url)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 5)
+        
         request.HTTPMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
         request.setValue("IOS", forHTTPHeaderField: "systemType")
-        request.setValue(Context.getDeviceID(), forHTTPHeaderField: "Cookie")
-        request.setValue(Context.getDeviceID(), forHTTPHeaderField: "deviceID")
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Authorization) as? String, forHTTPHeaderField: "Authorization")
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Cookie) as? String, forHTTPHeaderField: "Cookie")
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.deviceID) as? String, forHTTPHeaderField: "deviceId")
         request.setValue(Context.getAppID(), forHTTPHeaderField: "appid")
         
-       
         request.HTTPBody = jsonString?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         print(request)
         let almofireRequest = Alamofire.request(request)

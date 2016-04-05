@@ -11,8 +11,8 @@ import ObjectMapper
 import RealmSwift
 
 class TelehealthUser: BaseModel {
-    dynamic var ID = "admin_manh"
-    dynamic var UID = "123456"
+    dynamic var ID = ""
+    dynamic var UID = ""
     required convenience init?(_ map: Map) {
         self.init()
     }

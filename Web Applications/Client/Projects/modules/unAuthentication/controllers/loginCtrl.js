@@ -1,6 +1,13 @@
 var app = angular.module('app.unAuthentication.login.controller', []);
 app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, UnauthenticatedService, toastr, $timeout, $q) {
-    console.log('login')
+    console.log('login');
+    $timeout(function(){
+        if(_.isEmpty($cookies.getObject('remember')) == false) {
+            $scope.user = {};
+            $scope.user.UserName = $cookies.getObject('remember').UserName;
+            $scope.user.check = $cookies.getObject('remember').check;
+        }
+    },0);
     o.loadingPage(false);
     $scope.showClickedValidation = false;
     $scope.login = function() {
@@ -11,6 +18,17 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
             toastr.error("Please Input Your Username And Password!", "Error");
         } else {
             UnauthenticatedService.login($scope.user).then(function(data) {
+
+                //put username into cookies to remember
+                if($scope.user.check === 1 || $scope.user.check === '1'){
+                    $cookies.putObject("remember", { UserName: $scope.user.UserName, check: $scope.user.check });
+                }
+                else {
+                    if(_.isEmpty($cookies.getObject('remember')) == false) {
+                        $cookies.remove('remember');
+                    }
+                }
+
                 // join room auth server
                 if (!_.isEmpty(socketAuth)) {
                     socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: data.user.UID });

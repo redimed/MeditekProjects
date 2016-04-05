@@ -6,9 +6,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     // Chinh kich thuoc man hinh khi su dung ipad mini
     var w = $(window).width();
     if (w < 1024 && w > 768) {
-        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md page-sidebar-closed";
+        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-closed";
     } else {
-        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md";
+        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-content-white";
     }
 
     $scope.info = {};

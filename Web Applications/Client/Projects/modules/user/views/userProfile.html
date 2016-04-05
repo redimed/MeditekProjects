@@ -1,6 +1,18 @@
 <!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">User Profile</h1>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>User Profile</b>
+        </li>
+    </ul>
+</div>
 <!-- END PAGE HEADER-->
+<h3 class="page-title bold">User Profile <small>User Profile</small></h3>
 
 <!-- DOCTOR PROFILE -->
 <div class="row" ng-if="user.doctor!=null">

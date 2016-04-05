@@ -57,8 +57,10 @@ module.exports = React.createClass({
             this.refs[fieldRef].setValue(value);
     },
     setDisplay: function(fieldRef, type){
-        if(typeof this.refs[fieldRef] !== 'undefined')
-            this.refs[fieldRef].setDisplay(type);
+        if(typeof this.refs[fieldRef] !== 'undefined'){
+            if(typeof this.refs[fieldRef].setDisplay !== 'undefined')
+                this.refs[fieldRef].setDisplay(type);
+        }
     },
     setValueForRadio: function(fieldRef, fieldChecked){
         if(typeof this.refs[fieldRef] !== 'undefined')

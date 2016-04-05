@@ -74,7 +74,7 @@ module.exports = React.createClass({
             self.roles = response.data;
             self.forceUpdate();
         })
-        this.refs.optionView.setValue(optionsView[0].code)
+        this.refs.optionView.setValue(optionsView[1].code)
     },
     _onSave: function(){
         var size = this.refs.formSize.getValue();

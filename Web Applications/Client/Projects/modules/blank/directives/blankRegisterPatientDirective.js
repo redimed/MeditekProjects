@@ -23,57 +23,57 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 UserUID: "",
                 PinNumber: ""
             }
-            // $scope.postData = {
-            //     "data": {
-            //         "Gender":"Male"
-            //     },
-            //     "otherData": {
-            //         "PatientKin": {},
-            //         "PatientMedicare": {},
-            //         "Fund": {},
-            //         "PatientDVA": {},
-            //         "PatientPension": {}
-            //     }
-            // }
             $scope.postData = {
-              "data": {
-                "Gender": "Male",
-                "State": "WA",
-                "CountryID1": 14,
-                "Title": "Master",
-                "FirstName": "123",
-                "LastName": "123",
-                "DOB": "03/04/2016",
-                "PhoneNumber": "0412312318",
-                "Address1": "13123",
-                "Suburb": "1234",
-                "Postcode": "1234"
-              },
-              "otherData": {
-                "PatientKin": {
-                  "State": "WA",
-                  "CountryID": 14,
-                  "FirstName": "1",
-                  "LastName": "1",
-                  "MobilePhoneNumber": "0412345677",
-                  "Address1": "13123",
-                  "Suburb": "1234",
-                  "Postcode": "1234"
+                "data": {
+                    "Gender":"Male"
                 },
-                "PatientMedicare": {
-                  
-                },
-                "Fund": {
-                  
-                },
-                "PatientDVA": {
-                  
-                },
-                "PatientPension": {
-                  
+                "otherData": {
+                    "PatientKin": {},
+                    "PatientMedicare": {},
+                    "Fund": {},
+                    "PatientDVA": {},
+                    "PatientPension": {}
                 }
-              }
             };
+            // $scope.postData = {
+            //   "data": {
+            //     "Gender": "Male",
+            //     "State": "WA",
+            //     "CountryID1": 14,
+            //     "Title": "Master",
+            //     "FirstName": "123",
+            //     "LastName": "123",
+            //     "DOB": "03/04/2016",
+            //     "PhoneNumber": "0412312318",
+            //     "Address1": "13123",
+            //     "Suburb": "1234",
+            //     "Postcode": "1234"
+            //   },
+            //   "otherData": {
+            //     "PatientKin": {
+            //       "State": "WA",
+            //       "CountryID": 14,
+            //       "FirstName": "1",
+            //       "LastName": "1",
+            //       "MobilePhoneNumber": "0412345677",
+            //       "Address1": "13123",
+            //       "Suburb": "1234",
+            //       "Postcode": "1234"
+            //     },
+            //     "PatientMedicare": {
+                  
+            //     },
+            //     "Fund": {
+                  
+            //     },
+            //     "PatientDVA": {
+                  
+            //     },
+            //     "PatientPension": {
+                  
+            //     }
+            //   }
+            // };
             var checkDateUndefined = function(data) {
                 if (data == ' ' || data == '' || data == undefined || data == null) {
                     return false;

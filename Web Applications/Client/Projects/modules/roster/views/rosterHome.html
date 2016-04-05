@@ -11,7 +11,7 @@
         </li>
     </ul>
 </div>
-<br>
+<h3 class="page-title bold">Roster Managerment <small>Roster Managerment</small></h3>
 
 <!-- END PAGE HEADER-->
 
@@ -20,7 +20,7 @@
 	<div class="portlet-title">
 		<div class="caption">
 			<i class="icon-list"></i>
-			<span class="caption-subject bold uppercase"> {{$state.current.data.pageTitle}}</span>
+			<span class="caption-subject bold uppercase"> Roster Managerment</span>
 		</div>
 		<div class="actions">
 			<a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()">
@@ -54,7 +54,7 @@
 					</th>
 				</tr>
 				<tr ng-hide="toggle">
-					<td>#</td>
+					<td></td>
 					<td ng-repeat="i in items">
 						<input ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="{{i.field}}" />
 					</td>
@@ -68,9 +68,9 @@
 					<td>{{d.stt}}</td>
 					<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
 					<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
-					<td>
+					<td class="text-center">
 						<span ng-if="d.UserAccount.Enable != 'N'">
-							<i class="fa fa-check"></i>
+							<i class="fa fa-check font-green"></i>
 						</span>
 					</td>
 				</tr>

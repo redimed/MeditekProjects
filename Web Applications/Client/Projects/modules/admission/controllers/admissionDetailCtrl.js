@@ -199,7 +199,13 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
             UID: $scope.admissionUID
         }]
     };
-
+    $scope.inputParam = {
+        uid: $stateParams.UIDPatient,
+        onClick: function(data) {
+            console.log("lay dc roi ne",data);
+        }
+    };
+    console.log("$stateParams",$stateParams);
 
     $scope.UpdateAdmission = function() {
 

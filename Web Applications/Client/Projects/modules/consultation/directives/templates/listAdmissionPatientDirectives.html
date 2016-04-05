@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="glyphicon glyphicon-pencil"></i>
-            <span class="caption-subject bold uppercase">Patient Consult History</span>
+            <span class="caption-subject bold uppercase">Patient Admission History</span>
             <!-- <span class="caption-helper"></span> -->
         </div>
         <div class="tools">
@@ -20,16 +20,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="p in consultation" ng-click="uid.show(p.UID)">
-                    <td>{{(searchObjectMap.currentPage-1)*searchObjectMap.Limit +$index +1}}</td>
-                    <td>{{p.Appointments[0].Doctors[0].FirstName}} {{p.Appointments[0].Doctors[0].LastName}}</td>
-                    <td>{{p.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
+                <tr ng-repeat="admission in listAdmission" ng-click="params.onClick(admission)">
+                    <td>{{$index + 1}}</td>
+                    <td></td>
+                    <td>{{admission.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
                 </tr>
             </tbody>
         </table>
         <div class="row">
             <div class="col-md-5 col-sm-12">
-                Total {{CountRow }} records
+                Total {{listAdmission.length}} records
             </div>
             <div class="col-md-7 col-sm-12" style="text-align:right">
                 <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">

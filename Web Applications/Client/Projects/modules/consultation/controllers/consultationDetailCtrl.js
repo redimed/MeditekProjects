@@ -67,11 +67,6 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
             $scope.wainformation = data.data;
             console.log(" o day wainformation ", $scope.wainformation);
-            WAAppointmentService.GetDetailPatientByUid({
-                UID: $scope.wainformation.Patients[0].UID
-            }).then(function(data) {
-                console.log("aaaaaaaaaaaaaaaaaaaa", data);
-            })
         }, function(error) {
 
         });
@@ -138,6 +133,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             if (data.count > 0) {
                 $scope.admissionUID = data.rows[0].UID;
                 setDetailAdmission(data.rows[0].AdmissionData, $scope.admissionDetail);
+                console.log('updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', data);
                 console.log('updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', $scope.admissionDetail);
                 return "AdmissionAppointmentExists";
             };
@@ -155,7 +151,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     console.log("createeeeeeeeeeeeeeeeeeeeeeeeee");
                     return { message: "AdmissionPatientNotExists" };
                 }).then(function(data) {
-                    console.log(data);
+                    console.log("huuuuuuuuuuuuu",data);
                     var info = {
                         UID: $stateParams.UID,
                         Admissions: [{

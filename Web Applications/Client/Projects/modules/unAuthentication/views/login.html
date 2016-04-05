@@ -23,7 +23,7 @@
     <div class="form-actions">
         <button ladda-button="laddaLoading" data-style="zoom-in" type="submit" class="ladda-button btn green uppercase">Login </button>
         <label class="rememberme check">
-            <input type="checkbox" name="remember" value="1" /> Remember</label>
+            <input type="checkbox" name="remember" ng-model="user.check" ng-true-value="1" ng-false-value="0" /> Remember</label>
         <a href="javascript:;" id="forget-password" class="forget-password" ui-sref="unAuthentication.forgot">Forgot Password?</a>
     </div>
     <div class="create-account" style="padding:0 !important">

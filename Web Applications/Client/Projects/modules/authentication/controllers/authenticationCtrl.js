@@ -16,7 +16,8 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         AuthenticationService.logout().then(function() {
             var cookies = $cookies.getAll();
             angular.forEach(cookies, function(v, k) {
-                $cookies.remove(k);
+                if(k != 'remember')
+                    $cookies.remove(k);
             });
             $state.go("unAuthentication.login", null, {
                 location: "replace",

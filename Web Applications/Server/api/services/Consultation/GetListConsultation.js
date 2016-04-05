@@ -61,7 +61,6 @@ module.exports = function(data, userInfo) {
                 where: pagination.Patient
             }]
         }],
-        subQuery: false,
         order: pagination.order,
         limit: pagination.limit,
         offset: pagination.offset

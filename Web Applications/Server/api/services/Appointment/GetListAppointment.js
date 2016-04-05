@@ -84,8 +84,7 @@ module.exports = function(data, userInfo, objRequired) {
             where: pagination.Appointment,
             order: pagination.order,
             limit: pagination.limit,
-            offset: pagination.offset,
-            subQuery: false
+            offset: pagination.offset
         })
         .then(function(apptTelehealth) {
             defer.resolve({

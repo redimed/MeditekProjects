@@ -57,9 +57,13 @@ module.exports = React.createClass({
                                     /* VIEW */
                                     for(var role_field_id = 0; role_field_id < field.roles.view.list.length; role_field_id++){
                                         var field_role = field.roles.view.list[role_field_id];
-                                        if(field_role.id === role.RoleId && field_role.value === 'yes'){
-                                            view_flag = true;
-                                            break;
+                                        if(field_role.id === role.RoleId){
+                                            if(field_role.value === 'yes'){
+                                                view_flag = true;
+                                                break;
+                                            }else{
+                                                //console.log(field);
+                                            }
                                         }
                                     }
                                     /* END VIEW */

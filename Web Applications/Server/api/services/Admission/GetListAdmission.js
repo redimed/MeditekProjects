@@ -50,7 +50,7 @@ module.exports = function(data, userInfo) {
             required: !_.isEmpty(pagination.Appointment),
             where: pagination.Appointment,
             include: [{
-                attributes: ['UID'],
+                attributes: Services.AttributesAppt.Doctor(),
                 required: !_.isEmpty(pagination.Doctor),
                 model: Doctor,
                 where: pagination.Doctor

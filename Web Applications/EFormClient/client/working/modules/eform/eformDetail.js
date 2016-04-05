@@ -28,12 +28,6 @@ module.exports = React.createClass({
 
         this._serverTemplateDetail();
     },
-    /*_serverPermissionUser: function(){
-        EFormService.getUserRoles({UID: this.userUID})
-        .then(function(response){
-            console.log(response);
-        })
-    },*/
     _serverPreFormDetail: function(content){
         var self = this;
         EFormService.getUserRoles({UID: this.userUID})
@@ -51,6 +45,7 @@ module.exports = React.createClass({
                             /* ROLES */
                             if(typeof field.roles !== 'undefined'){
                                 var view_flag = false;
+                                var edit_flag = false;
                                 var view_option = field.roles.view.option;
                                 for(var role_id = 0; role_id < responseRoles.roles.length; role_id++){
                                     var role = responseRoles.roles[role_id];
@@ -61,15 +56,26 @@ module.exports = React.createClass({
                                             if(field_role.value === 'yes'){
                                                 view_flag = true;
                                                 break;
-                                            }else{
-                                                //console.log(field);
                                             }
                                         }
                                     }
                                     /* END VIEW */
+                                    /* EDIT */
+                                    for(var role_field_id = 0; role_field_id < field.roles.edit.length; role_field_id++){
+                                        var field_role = field.roles.edit[role_field_id];
+                                        if(field_role.id === role.RoleId){
+                                            if(field_role.value === 'yes'){
+                                                edit_flag = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    /* END EDIT */
                                 }
+                                if(!edit_flag)
+                                    self.refs[section.ref].setDisplay(row.ref, field.ref, 'disable');
                                 if(!view_flag)
-                                    self.refs[section.ref].setDisplay(row.ref, field.ref, view_option);
+                                    self.refs[section.ref].setDisplay(row.ref, field.ref, 'hidden');
                             }
                             /* END ROLES */
                             if(field.type === 'eform_input_image_doctor'){

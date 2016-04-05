@@ -5,11 +5,6 @@ var CommonCheckbox = require('common/checkbox');
 var Config = require('config');
 var EFormService = require('modules/eform/services');
 
-var optionsView = [
-    {code: 'hidden', name: 'Hide'},
-    {code: 'disable', name: 'Disable'}
-]
-
 module.exports = React.createClass({
     code: 0,
     roles: [],
@@ -26,16 +21,11 @@ module.exports = React.createClass({
 
         if(typeof object.roles !== 'undefined'){
             var roles = object.roles.toJS();
-            self.refs.optionView.setValue(roles.view.option);
             roles.view.list.map(function(role, index){
                 var checked = (role.value === 'yes')?true:false;
                 self.refs[role.ref].setChecked(checked);
             })
             roles.edit.map(function(role, index){
-                var checked = (role.value === 'yes')?true:false;
-                self.refs[role.ref].setChecked(checked);
-            })
-            roles.print.map(function(role, index){
                 var checked = (role.value === 'yes')?true:false;
                 self.refs[role.ref].setChecked(checked);
             })
@@ -74,7 +64,6 @@ module.exports = React.createClass({
             self.roles = response.data;
             self.forceUpdate();
         })
-        this.refs.optionView.setValue(optionsView[1].code)
     },
     _onSave: function(){
         var size = this.refs.formSize.getValue();
@@ -82,9 +71,8 @@ module.exports = React.createClass({
         var self = this;
 
         var Permission = {
-            view: {option: this.refs.optionView.getValue(), list: []},
-            edit: [],
-            print: []
+            view: {option: 'hide', list: []},
+            edit: []
         }
 
         this.roles.map(function(role, index){
@@ -97,11 +85,6 @@ module.exports = React.createClass({
                 id: role.ID,
                 ref: 'edit_'+role.RoleCode,
                 value: self.refs['edit_'+role.RoleCode].getValueTable()
-            })
-            Permission.print.push({
-                id: role.ID,
-                ref: 'print_'+role.RoleCode,
-                value: self.refs['print_'+role.RoleCode].getValueTable()
             })
         })
 
@@ -147,6 +130,13 @@ module.exports = React.createClass({
         this.roles.map(function(role, index){
             var checked = (value === 'yes')?true:false;
             self.refs['view_'+role.RoleCode].setChecked(checked);
+        })
+    },
+    _onChangeCheckAllEdit: function(value){
+        var self = this;
+        this.roles.map(function(role, index){
+            var checked = (value === 'yes')?true:false;
+            self.refs['edit_'+role.RoleCode].setChecked(checked);
         })
     },
     render: function(){
@@ -225,11 +215,6 @@ module.exports = React.createClass({
                                 <CommonInputText placeholder="Ref" ref="formRef"/>
                             </div>
                             <div className="form-group">
-                                <label>Option View</label>
-                                <CommonDropdown list={optionsView} code="code" name="name" ref="optionView"/>
-                            </div>
-                            <div className="form-group">
-                                <label>VIEW</label>
                                 <div className="icheck-inline">
                                     <label>
                                         <CommonCheckbox ref="checkall_view"
@@ -253,29 +238,20 @@ module.exports = React.createClass({
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label>EDIT</label>
+                                <div className="icheck-inline">
+                                    <label>
+                                        <CommonCheckbox ref="checkall_edit"
+                                            onChange={this._onChangeCheckAllEdit}/>
+                                        &nbsp;
+                                        Check All Edit
+                                    </label>
+                                </div>
                                 <div className="icheck-inline">
                                 {
                                     this.roles.map(function(role, index){
                                         return (
                                             <label key={index}>
                                                 <CommonCheckbox ref={'edit_'+role.RoleCode}/>
-                                                &nbsp;
-                                                {role.RoleCode}
-                                            </label>
-                                        )
-                                    })
-                                }
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label>PRINT</label>
-                                <div className="icheck-inline">
-                                {
-                                    this.roles.map(function(role, index){
-                                        return (
-                                            <label key={index}>
-                                                <CommonCheckbox ref={'print_'+role.RoleCode}/>
                                                 &nbsp;
                                                 {role.RoleCode}
                                             </label>

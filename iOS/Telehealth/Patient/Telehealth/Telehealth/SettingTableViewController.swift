@@ -134,8 +134,6 @@ class SettingTableViewController: UITableViewController ,DTAlertViewDelegate {
             let info = segue.destinationViewController as! InformationViewController
             info.patientInformation = patientInformation
         }else if segue.identifier == "Aboutsegue"{
-//           let alertView = DTAlertView(alertStyle: DTAlertStyle.DTAlertStyleSuccess, message: "Connecting to server...", title: "Notification", object: self)
-//            alertView.show()
             let FAQs = segue.destinationViewController as! FAQsViewController
             FAQs.titleString = "ABOUT US"
         }

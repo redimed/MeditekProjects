@@ -31,8 +31,17 @@ class Define: NSObject {
     static let kGoogleMapAPIServerKey = "AIzaSyDxAGN7lH46zvPedRH9QrCOtvYAWq2Gfc4"
     
     static let myLocation = "myLocation"
+    static let LogoutFunction = "LogoutFunction"
+    struct keyNSDefaults {
+        static let Authorization = "Authorization"
+        static let userInfor = "userInfor"
+        static let Cookie = "Cookie"
+        static let deviceID = "deviceID"
+        static let appid = "appid"
+        static let userLogin = "userLogin"
+        static let companyInfor = "companyInfor"
+    }
     
-
     enum UIUserInterfaceIdiom : Int
     {
         case Unspecified

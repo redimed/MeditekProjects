@@ -11,11 +11,11 @@ import ObjectMapper
 import RealmSwift
 
 class LoginResponse: BaseModel {
-    dynamic var message = "admin_manh"
-    dynamic var refreshCode = "123456"
-    dynamic var status = "123456"
-    dynamic var token = "123456"
-    var user : User!
+    dynamic var message = ""
+    dynamic var refreshCode = ""
+    dynamic var status = ""
+    dynamic var token = ""
+    var user : User?
     required convenience init?(_ map: Map) {
         self.init()
     }

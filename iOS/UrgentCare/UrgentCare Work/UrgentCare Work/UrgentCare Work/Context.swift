@@ -35,6 +35,11 @@ class Context {
             message = "User Not Found !"
         }else if(ErrorType == "Password.Invalid"){
             message = "Password Invalid !"
+        }else if(ErrorType == "DetailCompanyByUser.error"){
+            message = "Detail Company By User Error"
+        }else if(ErrorType == "Policies.isAuthenticated.Error" ){
+            NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
+            message = "Please login again !"
         }
         return message
     }
@@ -66,6 +71,11 @@ class Context {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(data, forKey: key)
         defaults.synchronize()
+    }
+    class func deleteDatDefaults(key:String) -> Void {
+        let preferences = NSUserDefaults.standardUserDefaults()
+        preferences.removeObjectForKey(key)
+        preferences.synchronize()
     }
     class func getDataDefasults(key:String)->AnyObject{
         if (NSUserDefaults.standardUserDefaults().objectForKey(key) == nil){

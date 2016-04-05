@@ -1,0 +1,6 @@
+framework module Pods_UrgentCare_Work {
+  umbrella header "Pods-UrgentCare Work-umbrella.h"
+
+  export *
+  module * { export * }
+}

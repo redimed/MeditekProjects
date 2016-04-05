@@ -13,4 +13,8 @@ class UserService {
     class func postLogin(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.User.URL_POST_LOGIN, model: model, completion: completion)
     }
+    
+    class func getDetailCompanyByUser(userID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.get(Constants.User.URL_GET_DETAIL_COMPANY_BY_USER+"/"+userID, completion: completion)
+    }
 }

@@ -151,16 +151,16 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     console.log("createeeeeeeeeeeeeeeeeeeeeeeeee");
                     return { message: "AdmissionPatientNotExists" };
                 }).then(function(data) {
-                    console.log("huuuuuuuuuuuuu",data);
+                    console.log("huuuuuuuuuuuuu", data);
                     var info = {
                         UID: $stateParams.UID,
                         Admissions: [{
-                            AdmissionData: (data.message === "AdmissionPatientExists") ? data.AdmissionData : []
+                            AdmissionData: ((data.message === "AdmissionPatientExists") ? data.AdmissionData : [])
                         }]
                     };
-                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",info);
+                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", info);
                     AdmissionService.CreateAdmission(info).then(function(data) {
-                        console.log("create admission",data);
+                        console.log("create admission", data);
                         return "success"
                     }, function(error) {
                         return "error"

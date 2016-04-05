@@ -202,10 +202,28 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     $scope.inputParam = {
         uid: $stateParams.UIDPatient,
         onClick: function(data) {
-            console.log("lay dc roi ne",data);
+            function setDetailAdmission(input, output) {
+                _.forEach(input, function(value, name) {
+                    var itemData = null;
+                    if (value.Name == "PREVIOUS_SURGERY_PROCEDURES" || value.Name == "MEDICATIONS") {
+                        itemData = JSON.parse(value.Value);
+                    } else {
+                        itemData = value.Value;
+                    };
+                    output[value.Name] = itemData;
+                });
+            };
+
+            AdmissionService.GetDetailAdmission(data.UID).then(function(data) {
+                console.log("$scope.admissionDetail", data);
+                if (data.data.AdmissionData.length > 0) {
+                    setDetailAdmission(data.data.AdmissionData, $scope.admissionDetail);
+                }
+                console.log("$scope.admissionDetail", $scope.admissionDetail);
+            });
         }
     };
-    console.log("$stateParams",$stateParams);
+    console.log("$stateParams", $stateParams);
 
     $scope.UpdateAdmission = function() {
 
@@ -310,7 +328,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                     }
 
                 });
-
+                console.log("admission", $scope.admission);
                 AdmissionService.UpdateAdmission($scope.admission).then(function(data) {
                     swal("Update success!", "", "success");
                     location.reload(true);

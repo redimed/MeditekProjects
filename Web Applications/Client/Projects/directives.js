@@ -168,13 +168,12 @@ app.directive('appointmentDetailDirective', function() {
             }, function(error) {});
 
             var userInfo = $cookies.getObject('userInfo');
-            if (!ioSocket.telehealthOpentok) {
-                ioSocket.getRoomOpentok();
-            };
-
+            ioSocket.getRoomOpentok.then(function (data) {
+                $scope.Opentok = data.data;
+                console.log("$scope.Opentok",$scope.Opentok);
+            })
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
-                return
                 WAAppointmentService.GetDetailPatientByUid({
                     UID: $scope.appointmentInfo.Patients[0].UID
                 }).then(function(data) {

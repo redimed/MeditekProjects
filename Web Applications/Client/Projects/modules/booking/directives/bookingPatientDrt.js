@@ -5,12 +5,16 @@ var app = angular.module('app.authentication.booking.patient.directive',[
 app.directive('bookingPatient', function(){
 	return {
 		templateUrl:'modules/booking/directives/templates/bookingPatientDrt.html',
+        scope:{
+            item:'=onItem'
+        },
 		controller:'bookingController'
 	}
 })
 
 app.controller("bookingController", function($scope, $timeout, $uibModal, $cookies, RosterService, BookingService, toastr){
-	$('#datepicker-inline').datepicker({
+	//console.log("scope ",$scope.item);
+    $('#datepicker-inline').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
     });
@@ -436,8 +440,8 @@ app.controller("bookingController", function($scope, $timeout, $uibModal, $cooki
                     var modalInstance = $uibModal.open({
                         animation: true,
                         size: 'md',
-                        templateUrl: 'modules/booking/views/schedulerCreate.html',
-                        controller: 'schedulerCreateCtrl',
+                        templateUrl: 'modules/booking/directives/templates/schedulerDirectiveCreate.html',
+                        controller: 'schedulerCreateDirectiveCtrl',
                         resolve: {
                             event: function() {
                                 return currentEvent;
@@ -447,6 +451,9 @@ app.controller("bookingController", function($scope, $timeout, $uibModal, $cooki
                             },
                             end: function() {
                                 return end;
+                            },
+                            item: function(){
+                                return $scope.item;
                             }
                         }
                     });

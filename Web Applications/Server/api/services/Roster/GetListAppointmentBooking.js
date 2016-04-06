@@ -10,7 +10,8 @@ module.exports = function(data, userInfo) {
                 required: true,
                 where: pagination.Doctor
             }],
-            where: pagination.Appointment
+            where: pagination.Appointment,
+            subQuery: false
         })
         .then(function(arrApptRes) {
             defer.resolve({

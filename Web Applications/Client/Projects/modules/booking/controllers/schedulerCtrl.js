@@ -441,7 +441,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                             },
                             end: function() {
                                 return end;
-                            }
+                            },
                         }
                     });
                     modalInstance.result

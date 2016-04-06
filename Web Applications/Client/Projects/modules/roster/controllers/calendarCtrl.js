@@ -4,7 +4,7 @@ var app = angular.module('app.authentication.roster.calendar.controller', [
     'app.authentication.roster.calendar.delete.controller',
 ]);
 
-app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterService, $scope, $compile, $filter, $timeout, uiCalendarConfig, $uibModal){
+app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterService, $scope, $compile, $filter, $timeout, uiCalendarConfig, $uibModal, doctorService){
     $('#datepicker-inline').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
@@ -18,6 +18,10 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
             })
         }        
     });
+
+
+    
+
     var userRole = 0;
     if(typeof $cookies.getObject('userInfo')){
         userRole = $cookies.getObject('userInfo').roles[0].ID;
@@ -51,7 +55,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
     $scope.eventAfterRender = function(event, element, view){
         angular.element('.fc-other-month').css('background-color', '#eee');
         element.find('.fc-time').html(moment(event.start).format('hh:mm').toLowerCase()+'-'+moment(event.enddate).format('hh:mm').toLowerCase()+'<br/>');
-        element.find('.fc-title').html('<h4><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
+        element.find('.fc-title').html('<h4 class="text-center"><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
         if(userRole === 1){
             $(element).attr('id', 'event_id_'+event.UID);
             $.contextMenu({
@@ -224,6 +228,18 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
             select: $scope.select,
         }
     }; 
+    
+    /* Thao*/
+    //console.log($stateParams.doctorId);
+    doctorService.getDoctor({UID:$stateParams.doctorId})
+        .then(function(response) {
+            console.log($stateParams.doctorId);
+            $scope.doctorName = response.data.FirstName+" "+response.data.LastName;
+        },function(err) {
+            console.log(err);
+        });
+    /* End Thao*/
+
     function ServerListCalendar(startDate, endDate){
             var postData = {
                     Filter: [
@@ -250,8 +266,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
             .then(function(response){
                     _.forEach(response.data.rows, function(item, index){
                             var Service = item.Services[0];
-                            $scope.doctorName = item.UserAccounts[0].Doctor.FirstName+" "+item.UserAccounts[0].Doctor.LastName;
-
+                            //$scope.doctorName = item.UserAccounts[0].Doctor.FirstName+" "+item.UserAccounts[0].Doctor.LastName;
                             var color = (item.IsRecurrence === 'Y')?'green':'green';
                             var textColor = 'white';
                             var textOccurance =  (item.IsRecurrence === 'Y')?'Occur':'';

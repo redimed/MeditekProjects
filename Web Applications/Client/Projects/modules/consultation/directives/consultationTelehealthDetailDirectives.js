@@ -424,6 +424,7 @@ app.directive('telehealthDetail', function() {
             }
 
             $scope.openCalendar = function(){
+                //var PatientAppointment = $scope.wainformation.TelehealthAppointment.PatientAppointment;
                 modalInstance = $modal.open({
                         animation: true,
                         templateUrl: 'modules/onsite/views/onsiteCalendar.html',
@@ -431,8 +432,8 @@ app.directive('telehealthDetail', function() {
                         windowClass: 'app-modal-window',
                         // size: 'lg',
                         resolve: {
-                            getid: function() {
-                                return true;
+                            getItem: function() {
+                                return $scope.wainformation.Patients[0];
                             }
                         }
                     });

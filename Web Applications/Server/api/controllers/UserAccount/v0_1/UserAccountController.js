@@ -450,6 +450,33 @@ module.exports = {
 		},function(err){
 			res.serverError(ErrorWrap(err));
 		})
+	},
+
+	GetDetail:function(req, res)
+	{
+		var data = req.params;
+		if(!data) {
+			var err = new Error('GetDetail.Error');
+			err.pushError('UID.notFound');
+			res.serverError(ErrorWrap(err));
+		}
+		UserAccount.findOne({
+			where:{
+				UID: data.uid
+			}
+		})
+		.then(function(result) {
+			if(!result) {
+				var err = new Error('GetDetail.Error');
+				err.pushError('UserDetail.notFound');
+				res.serverError(ErrorWrap(err));
+			}
+			else {
+				res.ok({message:"success",data:result});
+			}
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		})
 	}
 
 

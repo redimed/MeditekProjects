@@ -63,5 +63,10 @@ module.exports = {
     'get /api/company/get-list-staff/:uid':{
         controller: 'Company/CompanyController',
         action: 'GetListStaff'
-    }
+    },
+
+    'get /api/company/get-list-site/:companyuid' :{
+        controller: 'Company/CompanyController',
+        action: 'GetListSite'
+    },
 };

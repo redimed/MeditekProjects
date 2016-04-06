@@ -160,6 +160,16 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         });
     },
+
+    GetListSite : function(req, res) {
+        var data = req.params;
+        Services.Company.GetListSite(data)
+        .then(function(result){
+            res.ok({message:"success",data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
     
 
     Test: function(req, res) {

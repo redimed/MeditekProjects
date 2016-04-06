@@ -28,7 +28,8 @@ module.exports = function(data, userInfo) {
             limit: pagination.limit,
             offset: pagination.offset,
             where: pagination.Roster,
-            order: pagination.order
+            order: pagination.order,
+            subQuery: false
         })
         .then(function(listRosterRes) {
             defer.resolve({

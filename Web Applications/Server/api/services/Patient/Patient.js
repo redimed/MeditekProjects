@@ -235,7 +235,8 @@ module.exports = {
 
                 if (data.Title != undefined && data.Title) {
                     if (data.Title != 'Dr' && data.Title != 'Ms' &&
-                        data.Title != 'Mr' && data.Title != 'Mrs') {
+                        data.Title != 'Mr' && data.Title != 'Mrs' &&
+                        data.Title != 'Miss' && data.Title != 'Master') {
                         errors.push({ field: "Title", message: "invalid value" });
                         err.pushErrors(errors);
                     }
@@ -447,7 +448,8 @@ module.exports = {
                 if ('Title' in data) {
                     if (data.Title) {
                         if (data.Title != 'Dr' && data.Title != 'Ms' &&
-                            data.Title != 'Mr' && data.Title != 'Mrs') {
+                            data.Title != 'Mr' && data.Title != 'Mrs' &&
+                            data.Title != 'Miss' && data.Title != 'Master') {
                             errors.push({ field: "Title", message: "invalid value" });
                             err.pushErrors(errors);
                         }

@@ -96,10 +96,12 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
             // Title
             scope.titles = [
-                { 'id': 'Mr', 'name': 'Mr' },
-                { 'id': 'Mrs', 'name': 'Mrs' },
-                { 'id': 'Ms', 'name': 'Ms' },
-                { 'id': 'Dr', 'name': 'Dr' }
+                {'id':'Mr', 'name':'Mr'},
+                {'id':'Mrs', 'name':'Mrs'},
+                {'id':'Ms', 'name':'Ms'},
+                {'id':'Miss', 'name':'Miss'},
+                {'id':'Master', 'name':'Master'},
+                {'id':'Dr', 'name':'Dr'}
             ];
             //services getListCountry
             //call Api getListCountry from server

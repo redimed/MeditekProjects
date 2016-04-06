@@ -17,7 +17,8 @@ PatientService.validate = function(info) {
 			if('Title' in info)
 			if(info.Title){
 				if(info.Title != "Dr" && info.Title != "Mr" &&
-					info.Title != "Ms" && info.Title != "Mrs"){
+					info.Title != "Ms" && info.Title != "Mrs" &&
+					info.Title != "Miss" && info.Title != "Master"){
 					error.push({field:"Title",message:"invalid value"});
 				}
 			}

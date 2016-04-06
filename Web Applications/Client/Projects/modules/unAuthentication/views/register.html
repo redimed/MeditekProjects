@@ -171,13 +171,13 @@
                     <label for="State" class="control-label">States<span class="required">* </span></label>
                     <select ng-model="data.State" id="States" class="form-control" ng-style="ermsg.State.css" ng-change="ermsg.State='';checkDataNull('State')">
                         <option value=""></option>
-                        <option value="Victoria">Victoria</option>
-                        <option value="New_South_Wales">New South Wales</option>
-                        <option value="Queensland">Queensland</option>
-                        <option value="Austria_Capital_Territory">Austria Capital Territory</option>
-                        <option value="Northern_Territory">Northern Territory</option>
-                        <option value="Western_Australia">Western Australia</option>
-                        <option value="Tasmania">Tasmania</option>
+                        <option value="VIC">Victoria</option>
+                        <option value="NSW">New South Wales</option>
+                        <option value="QLD">Queensland</option>
+                        <option value="ACT">Austria Capital Territory</option>
+                        <option value="NT">Northern Territory</option>
+                        <option value="WA">Western Australia</option>
+                        <option value="TAS">Tasmania</option>
                     </select>
                     <span style="color:red;">{{ermsg.State.msg}}</span>
                 </div>

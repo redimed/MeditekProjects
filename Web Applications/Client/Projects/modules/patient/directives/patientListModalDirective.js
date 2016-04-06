@@ -110,6 +110,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			scope.isHaveMedicares;
 			scope.isChoseAvatar = false;
 			var data = {};
+			scope.er ={};
+			scope.ermsg ={};
 			scope.updatedata = {};
         	scope.info = {};
         	scope.style = {};
@@ -356,9 +358,9 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	scope.uploader.queue.length = 0;
 		    };
 		    $timeout(function(){
-		    	if(scope.disable == true) {
-		    		$('#modalBody :input').attr('disabled', true);
-		    	}
+		    	// if(scope.disable == true) {
+		    	// 	$('#modalBody :input').attr('disabled', true);
+		    	// }
 		    	scope.checkcolumm =[];
 				if(scope.listShow!= undefined && scope.listShow!=null && scope.listShow!='' && scope.listShow.length!=0){
 					if(scope.listShow.columm1==true){
@@ -576,6 +578,14 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 								}
 								// scope.onCancel();
 							},function(err){
+								console.log(err);
+								scope.er ={};
+								scope.ermsg ={};
+								for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+									scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+									scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+									console.log(scope.ermsg);
+								}
 								toastr.error(err.data.message.errors,"ERROR");
 								scope.info = angular.copy(oriInfo);
 							});
@@ -780,6 +790,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				{'id':'Mr', 'name':'Mr'},
 				{'id':'Mrs', 'name':'Mrs'},
 				{'id':'Ms', 'name':'Ms'},
+				{'id':'Miss', 'name':'Miss'},
+				{'id':'Master', 'name':'Master'},
 				{'id':'Dr', 'name':'Dr'}
 			];
 

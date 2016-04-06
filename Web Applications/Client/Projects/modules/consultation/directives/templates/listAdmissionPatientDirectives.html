@@ -22,7 +22,7 @@
             <tbody>
                 <tr ng-repeat="admission in info.listAdmission.rows" ng-click="params.onClick(admission)">
                     <td>{{$index + 1}}</td>
-                    <td>{{((admission.Appointments[0].Doctors[0] != null && admission.Appointments[0].Doctors[0].FirstName != null)?admission.Appointments[0].Doctors[0].FirstName:"") +" "+ ((admission.Appointments[0].Doctors[0] != null && admission.Appointments[0].Doctors[0].LastName != null)?admission.Appointments[0].Doctors[0].LastName:"")}}</td>
+                    <td>{{((admission.Appointments[0].Doctors[0] != null && admission.Appointments[0].Doctors[0].FirstName != null)?admission.Appointments[0].Doctors[0].FirstName:"N/A") +" "+ ((admission.Appointments[0].Doctors[0] != null && admission.Appointments[0].Doctors[0].LastName != null)?admission.Appointments[0].Doctors[0].LastName:"")}}</td>
                     <td>{{admission.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
                 </tr>
             </tbody>

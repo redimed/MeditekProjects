@@ -15,7 +15,7 @@ app.directive('listAdmissionPatient', function() {
                 },
                 data: {
                     Limit: 5,
-                    Offset: 10,
+                    Offset: 0,
                     Filter: [{
                         Patient: {
                             UID: $scope.params.uid

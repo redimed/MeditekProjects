@@ -1,39 +1,42 @@
 var app = angular.module('app.authentication.admission.detail.controller', []);
 app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices, PatientService) {
     /* THAO */
-    ($scope.admissionDetail.cardiovascular_triglycerides) ? $scope.admissionDetail.cardiovascular_triglycerides: $scope.admissionDetail.cardiovascular_triglycerides = 'N';
-    ($scope.admissionDetail.cardiovascular_hypertension) ? $scope.admissionDetail.cardiovascular_hypertension: $scope.admissionDetail.cardiovascular_hypertension = 'N';
-    ($scope.admissionDetail.cardiovascular_angina) ? $scope.admissionDetail.cardiovascular_angina: $scope.admissionDetail.cardiovascular_angina = 'N';
-    ($scope.admissionDetail.cardiovascular_fibrillation) ? $scope.admissionDetail.cardiovascular_fibrillation: $scope.admissionDetail.cardiovascular_fibrillation = 'N';
-    ($scope.admissionDetail.cardiovascular_condition) ? $scope.admissionDetail.cardiovascular_condition: $scope.admissionDetail.cardiovascular_condition = 'N';
-    ($scope.admissionDetail.cardiovascular_disease) ? $scope.admissionDetail.cardiovascular_disease: $scope.admissionDetail.cardiovascular_disease = 'N';
-    ($scope.admissionDetail.cardiovascular_cardiac_disease) ? $scope.admissionDetail.cardiovascular_cardiac_disease: $scope.admissionDetail.cardiovascular_cardiac_disease = 'N';
-    ($scope.admissionDetail.endocrinology_diabetes) ? $scope.admissionDetail.endocrinology_diabetes: $scope.admissionDetail.endocrinology_diabetes = 'N';
-    ($scope.admissionDetail.endocrinology_blood_glucose) ? $scope.admissionDetail.endocrinology_blood_glucose: $scope.admissionDetail.endocrinology_blood_glucose = 'N';
-    ($scope.admissionDetail.endocrinology_goitre) ? $scope.admissionDetail.endocrinology_goitre: $scope.admissionDetail.endocrinology_goitre = 'N';
-    ($scope.admissionDetail.gastrointestinal_reflux) ? $scope.admissionDetail.gastrointestinal_reflux: $scope.admissionDetail.gastrointestinal_reflux = 'N';
-    ($scope.admissionDetail.gastrointestinal_jaundice) ? $scope.admissionDetail.gastrointestinal_jaundice: $scope.admissionDetail.gastrointestinal_jaundice = 'N';
-    ($scope.admissionDetail.gastrointestinal_ibs) ? $scope.admissionDetail.gastrointestinal_ibs: $scope.admissionDetail.gastrointestinal_ibs = 'N';
-    ($scope.admissionDetail.bleeding_disorders_lungs) ? $scope.admissionDetail.bleeding_disorders_lungs: $scope.admissionDetail.bleeding_disorders_lungs = 'N';
-    ($scope.admissionDetail.bleeding_disorders_anaemia) ? $scope.admissionDetail.bleeding_disorders_anaemia: $scope.admissionDetail.bleeding_disorders_anaemia = 'N';
-    ($scope.admissionDetail.bleeding_disorders_problems) ? $scope.admissionDetail.bleeding_disorders_problems: $scope.admissionDetail.bleeding_disorders_problems = 'N';
-    ($scope.admissionDetail.musculoskeletal_osteoarthritis) ? $scope.admissionDetail.musculoskeletal_osteoarthritis: $scope.admissionDetail.musculoskeletal_osteoarthritis = 'N';
-    ($scope.admissionDetail.musculoskeletal_problems) ? $scope.admissionDetail.musculoskeletal_problems: $scope.admissionDetail.musculoskeletal_problems = 'N';
-    ($scope.admissionDetail.neurology_dystrophies) ? $scope.admissionDetail.neurology_dystrophies: $scope.admissionDetail.neurology_dystrophies = 'N';
-    ($scope.admissionDetail.neurology_tia) ? $scope.admissionDetail.neurology_tia: $scope.admissionDetail.neurology_tia = 'N';
-    ($scope.admissionDetail.neurology_weakness) ? $scope.admissionDetail.neurology_weakness: $scope.admissionDetail.neurology_weakness = 'N';
-    ($scope.admissionDetail.neurology_turns) ? $scope.admissionDetail.neurology_turns: $scope.admissionDetail.neurology_turns = 'N';
-    ($scope.admissionDetail.respiratory_emphysema) ? $scope.admissionDetail.respiratory_emphysema: $scope.admissionDetail.respiratory_emphysema = 'N';
-    ($scope.admissionDetail.respiratory_inclines) ? $scope.admissionDetail.respiratory_inclines: $scope.admissionDetail.respiratory_inclines = 'N';
-    ($scope.admissionDetail.anti_inflammatory) ? $scope.admissionDetail.anti_inflammatory: $scope.admissionDetail.anti_inflammatory = 'N';
-    ($scope.admissionDetail.herbal_supplements) ? $scope.admissionDetail.herbal_supplements: $scope.admissionDetail.herbal_supplements = 'N';
-    ($scope.admissionDetail.lifestyle_alcohol) ? $scope.admissionDetail.lifestyle_alcohol: $scope.admissionDetail.lifestyle_alcohol = 'N';
-    ($scope.admissionDetail.lifestyle_drugs) ? $scope.admissionDetail.lifestyle_drugs: $scope.admissionDetail.lifestyle_drugs = 'N';
-    ($scope.admissionDetail.allergies_alerts_hyperthermia) ? $scope.admissionDetail.allergies_alerts_hyperthermia: $scope.admissionDetail.allergies_alerts_hyperthermia = 'N';
-    ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
-    ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
-    ($scope.admissionDetail.allergies_alerts_substances) ? $scope.admissionDetail.allergies_alerts_substances: $scope.admissionDetail.allergies_alerts_substances = 'N';
+    function setValue() {
+        ($scope.admissionDetail.cardiovascular_triglycerides) ? $scope.admissionDetail.cardiovascular_triglycerides: $scope.admissionDetail.cardiovascular_triglycerides = 'N';
+        ($scope.admissionDetail.cardiovascular_hypertension) ? $scope.admissionDetail.cardiovascular_hypertension: $scope.admissionDetail.cardiovascular_hypertension = 'N';
+        ($scope.admissionDetail.cardiovascular_angina) ? $scope.admissionDetail.cardiovascular_angina: $scope.admissionDetail.cardiovascular_angina = 'N';
+        ($scope.admissionDetail.cardiovascular_fibrillation) ? $scope.admissionDetail.cardiovascular_fibrillation: $scope.admissionDetail.cardiovascular_fibrillation = 'N';
+        ($scope.admissionDetail.cardiovascular_condition) ? $scope.admissionDetail.cardiovascular_condition: $scope.admissionDetail.cardiovascular_condition = 'N';
+        ($scope.admissionDetail.cardiovascular_disease) ? $scope.admissionDetail.cardiovascular_disease: $scope.admissionDetail.cardiovascular_disease = 'N';
+        ($scope.admissionDetail.cardiovascular_cardiac_disease) ? $scope.admissionDetail.cardiovascular_cardiac_disease: $scope.admissionDetail.cardiovascular_cardiac_disease = 'N';
+        ($scope.admissionDetail.endocrinology_diabetes) ? $scope.admissionDetail.endocrinology_diabetes: $scope.admissionDetail.endocrinology_diabetes = 'N';
+        ($scope.admissionDetail.endocrinology_blood_glucose) ? $scope.admissionDetail.endocrinology_blood_glucose: $scope.admissionDetail.endocrinology_blood_glucose = 'N';
+        ($scope.admissionDetail.endocrinology_goitre) ? $scope.admissionDetail.endocrinology_goitre: $scope.admissionDetail.endocrinology_goitre = 'N';
+        ($scope.admissionDetail.gastrointestinal_reflux) ? $scope.admissionDetail.gastrointestinal_reflux: $scope.admissionDetail.gastrointestinal_reflux = 'N';
+        ($scope.admissionDetail.gastrointestinal_jaundice) ? $scope.admissionDetail.gastrointestinal_jaundice: $scope.admissionDetail.gastrointestinal_jaundice = 'N';
+        ($scope.admissionDetail.gastrointestinal_ibs) ? $scope.admissionDetail.gastrointestinal_ibs: $scope.admissionDetail.gastrointestinal_ibs = 'N';
+        ($scope.admissionDetail.bleeding_disorders_lungs) ? $scope.admissionDetail.bleeding_disorders_lungs: $scope.admissionDetail.bleeding_disorders_lungs = 'N';
+        ($scope.admissionDetail.bleeding_disorders_anaemia) ? $scope.admissionDetail.bleeding_disorders_anaemia: $scope.admissionDetail.bleeding_disorders_anaemia = 'N';
+        ($scope.admissionDetail.bleeding_disorders_problems) ? $scope.admissionDetail.bleeding_disorders_problems: $scope.admissionDetail.bleeding_disorders_problems = 'N';
+        ($scope.admissionDetail.musculoskeletal_osteoarthritis) ? $scope.admissionDetail.musculoskeletal_osteoarthritis: $scope.admissionDetail.musculoskeletal_osteoarthritis = 'N';
+        ($scope.admissionDetail.musculoskeletal_problems) ? $scope.admissionDetail.musculoskeletal_problems: $scope.admissionDetail.musculoskeletal_problems = 'N';
+        ($scope.admissionDetail.neurology_dystrophies) ? $scope.admissionDetail.neurology_dystrophies: $scope.admissionDetail.neurology_dystrophies = 'N';
+        ($scope.admissionDetail.neurology_tia) ? $scope.admissionDetail.neurology_tia: $scope.admissionDetail.neurology_tia = 'N';
+        ($scope.admissionDetail.neurology_weakness) ? $scope.admissionDetail.neurology_weakness: $scope.admissionDetail.neurology_weakness = 'N';
+        ($scope.admissionDetail.neurology_turns) ? $scope.admissionDetail.neurology_turns: $scope.admissionDetail.neurology_turns = 'N';
+        ($scope.admissionDetail.respiratory_emphysema) ? $scope.admissionDetail.respiratory_emphysema: $scope.admissionDetail.respiratory_emphysema = 'N';
+        ($scope.admissionDetail.respiratory_inclines) ? $scope.admissionDetail.respiratory_inclines: $scope.admissionDetail.respiratory_inclines = 'N';
+        ($scope.admissionDetail.anti_inflammatory) ? $scope.admissionDetail.anti_inflammatory: $scope.admissionDetail.anti_inflammatory = 'N';
+        ($scope.admissionDetail.herbal_supplements) ? $scope.admissionDetail.herbal_supplements: $scope.admissionDetail.herbal_supplements = 'N';
+        ($scope.admissionDetail.lifestyle_alcohol) ? $scope.admissionDetail.lifestyle_alcohol: $scope.admissionDetail.lifestyle_alcohol = 'N';
+        ($scope.admissionDetail.lifestyle_drugs) ? $scope.admissionDetail.lifestyle_drugs: $scope.admissionDetail.lifestyle_drugs = 'N';
+        ($scope.admissionDetail.allergies_alerts_hyperthermia) ? $scope.admissionDetail.allergies_alerts_hyperthermia: $scope.admissionDetail.allergies_alerts_hyperthermia = 'N';
+        ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
+        ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
+        ($scope.admissionDetail.allergies_alerts_substances) ? $scope.admissionDetail.allergies_alerts_substances: $scope.admissionDetail.allergies_alerts_substances = 'N';
+    }
 
+    setValue();
     var dateFormat = /^\d{2}[/]\d{2}[/]\d{4}$/;
     $scope.ChangeRadio = function(text) {
         for (var i = 0; i < text.length; i++) {
@@ -213,12 +216,11 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                     output[value.Name] = itemData;
                 });
             };
-
             AdmissionService.GetDetailAdmission(data.UID).then(function(data) {
                 console.log("$scope.admissionDetail", data);
-                if (data.data.AdmissionData.length > 0) {
-                    setDetailAdmission(data.data.AdmissionData, $scope.admissionDetail);
-                }
+                $scope.admissionDetail = {};
+                setDetailAdmission(data.data.AdmissionData, $scope.admissionDetail);
+                setValue();
                 console.log("$scope.admissionDetail", $scope.admissionDetail);
             });
         }
@@ -331,7 +333,6 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                 console.log("admission", $scope.admission);
                 AdmissionService.UpdateAdmission($scope.admission).then(function(data) {
                     swal("Update success!", "", "success");
-                    location.reload(true);
                 }, function(error) {
                     swal("Update error!", "", "error");
                 });

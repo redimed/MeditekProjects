@@ -161,8 +161,9 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     };
                     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", info);
                     AdmissionService.CreateAdmission(info).then(function(data) {
-                        console.log("create admission", data);
-                        $scope.admissionUID = "";
+                        console.log("create admission", data.admissionResponse);
+                        console.log("create admissionResponse", data.admissionResponse[0].UID);
+                        $scope.admissionUID = data.admissionResponse[0].UID;
                         return "success"
                     }, function(error) {
                         return "error"

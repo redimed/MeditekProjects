@@ -80,9 +80,14 @@
 	                        });
 	                    })
 	                    .then(function(relAppointmentAdmissionCreated) {
+	                        var admissionResponse = [];
+	                        _.forEach(admissionObject, function(value, index) {
+	                            admissionResponse.push({ UID: value.UID });
+	                        });
 	                        defer.resolve({
 	                            transaction: t,
-	                            status: 'success'
+	                            status: 'success',
+	                            admissionResponse: admissionResponse
 	                        });
 	                    }, function(err) {
 	                        defer.reject({

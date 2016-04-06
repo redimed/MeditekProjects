@@ -10,7 +10,7 @@ module.exports = {
                         HelperService.CheckExistData(success.transaction)) {
                         success.transaction.commit();
                     }
-                    res.ok('success');
+                    res.ok({ admissionResponse: success.admissionResponse });
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction)) {

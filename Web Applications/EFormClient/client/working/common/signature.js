@@ -56,7 +56,7 @@ module.exports = React.createClass({
     },
     setDisplay: function(type){
         if(type === 'disable'){
-            $(this.refs.signature).attr('disabled', true);
+            $(this.refs.layer).css('zIndex', '100');
         }else{
             $(this.refs.signature).css('display', 'none');
             $(this.refs.reset).css('display', 'none');
@@ -92,6 +92,7 @@ module.exports = React.createClass({
         var type = this.props.type;
         var html = null;
         var display_name = null;
+        var layer = parseInt(this.props.height)+34;
         if(this.props.permission === 'eformDev'){
             display_name = (
                 <div style={{position: 'absolute', top: -30, left: 0, backgroundColor: 'green', color: 'white', padding: 5}}>
@@ -103,6 +104,7 @@ module.exports = React.createClass({
             case 'eform_input_signature':
                 html = (
                     <div className={"dragField col-xs-"+this.props.size} ref="group">
+                        <div style={{position: 'absolute', height: layer, top: 0, left: 0, width: '100%', zIndex: -1}} ref="layer"/>
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">

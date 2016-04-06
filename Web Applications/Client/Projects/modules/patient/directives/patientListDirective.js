@@ -7,7 +7,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			isShowSelectButton:'=onSelect',
 			uidReturn:'=',
 			appointment:'=',
-			staff:'=onStaff'
+			staff:'=onStaff',
+			limit:'=onLimit'
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
@@ -66,7 +67,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			};
 			scope.init = function() {
 	            scope.searchObject = {
-	                limit: 20,
+	                limit: isNaN(scope.limit)?20:scope.limit,
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,

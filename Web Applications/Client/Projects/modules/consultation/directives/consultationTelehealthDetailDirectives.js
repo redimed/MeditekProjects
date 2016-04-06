@@ -1,4 +1,4 @@
-var app = angular.module('app.authentication.consultation.directives.TelehealthDetail', []);
+var app = angular.module('app.authentication.consultation.TelehealthDetail.directives', []);
 app.directive('telehealthDetail', function() {
     return {
         scope:{

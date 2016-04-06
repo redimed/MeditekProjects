@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.controller', [
 
 ]);
 
-app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cookies, AuthenticationService, toastr, CommonService) {
+app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cookies, AuthenticationService, toastr, CommonService, $q) {
     // Chinh kich thuoc man hinh khi su dung ipad mini
     var w = $(window).width();
     if (w < 1024 && w > 768) {
@@ -146,25 +146,30 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             uidUser: userInfo.TelehealthUser.UID,
         }), "CAll", { directories: "no" });
     }
-    ioSocket.getRoomOpentok = function() {
-        AuthenticationService.CreateRoomInOpentok().then(function(data) {
-            ioSocket.telehealthOpentok = data.data;
-            if (ioSocket.telehealthMesageCall) {
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> call neee",ioSocket.telehealthMesageCall);
-                ioSocket.telehealthCall(ioSocket.telehealthMesageCall);
-                delete ioSocket.telehealthMesageCall;
-                console.log("xoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",ioSocket.telehealthMesageCall);
 
-            }
-            if (ioSocket.telehealthMesageMisscall) {
-                alert("miss call");
-                delete ioSocket.telehealthMesageMisscall;
-            }
-
+    function getRoomOpentok() {
+        return $q(function(resolve, reject) {
+            AuthenticationService.CreateRoomInOpentok().then(function(data) {
+                ioSocket.telehealthOpentok = data.data;
+                if (ioSocket.telehealthMesageCall) {
+                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> call neee", ioSocket.telehealthMesageCall);
+                    ioSocket.telehealthCall(ioSocket.telehealthMesageCall);
+                    delete ioSocket.telehealthMesageCall;
+                    console.log("xoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", ioSocket.telehealthMesageCall);
+                }
+                if (ioSocket.telehealthMesageMisscall) {
+                    alert("miss call");
+                    delete ioSocket.telehealthMesageMisscall;
+                }
+                console.log("telehealthOpentok", data.data);
+                resolve({ message: "success", data: data.data });
+            }, function(error) {
+                reject({ message: "error", error: error });
+            });
         });
     }
 
-    ioSocket.getRoomOpentok();
+    ioSocket.getRoomOpentok = getRoomOpentok();
 
     ioSocket.telehealthCall = function(msg) {
         console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);

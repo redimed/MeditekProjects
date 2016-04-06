@@ -1,82 +1,56 @@
 var app = angular.module('app.authentication.admission.detail.controller', []);
 app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeout, $uibModal, AdmissionService, $stateParams, consultationServices, PatientService) {
     /* THAO */
-    ($scope.admissionDetail.cardiovascular_triglycerides) ? $scope.admissionDetail.cardiovascular_triglycerides: $scope.admissionDetail.cardiovascular_triglycerides = 'N';
-    ($scope.admissionDetail.cardiovascular_hypertension) ? $scope.admissionDetail.cardiovascular_hypertension: $scope.admissionDetail.cardiovascular_hypertension = 'N';
-    ($scope.admissionDetail.cardiovascular_angina) ? $scope.admissionDetail.cardiovascular_angina: $scope.admissionDetail.cardiovascular_angina = 'N';
-    ($scope.admissionDetail.cardiovascular_fibrillation) ? $scope.admissionDetail.cardiovascular_fibrillation: $scope.admissionDetail.cardiovascular_fibrillation = 'N';
-    ($scope.admissionDetail.cardiovascular_condition) ? $scope.admissionDetail.cardiovascular_condition: $scope.admissionDetail.cardiovascular_condition = 'N';
-    ($scope.admissionDetail.cardiovascular_disease) ? $scope.admissionDetail.cardiovascular_disease: $scope.admissionDetail.cardiovascular_disease = 'N';
-    ($scope.admissionDetail.cardiovascular_cardiac_disease) ? $scope.admissionDetail.cardiovascular_cardiac_disease: $scope.admissionDetail.cardiovascular_cardiac_disease = 'N';
-    ($scope.admissionDetail.endocrinology_diabetes) ? $scope.admissionDetail.endocrinology_diabetes: $scope.admissionDetail.endocrinology_diabetes = 'N';
-    ($scope.admissionDetail.endocrinology_blood_glucose) ? $scope.admissionDetail.endocrinology_blood_glucose: $scope.admissionDetail.endocrinology_blood_glucose = 'N';
-    ($scope.admissionDetail.endocrinology_goitre) ? $scope.admissionDetail.endocrinology_goitre: $scope.admissionDetail.endocrinology_goitre = 'N';
-    ($scope.admissionDetail.gastrointestinal_reflux) ? $scope.admissionDetail.gastrointestinal_reflux: $scope.admissionDetail.gastrointestinal_reflux = 'N';
-    ($scope.admissionDetail.gastrointestinal_jaundice) ? $scope.admissionDetail.gastrointestinal_jaundice: $scope.admissionDetail.gastrointestinal_jaundice = 'N';
-    ($scope.admissionDetail.gastrointestinal_ibs) ? $scope.admissionDetail.gastrointestinal_ibs: $scope.admissionDetail.gastrointestinal_ibs = 'N';
-    ($scope.admissionDetail.bleeding_disorders_lungs) ? $scope.admissionDetail.bleeding_disorders_lungs: $scope.admissionDetail.bleeding_disorders_lungs = 'N';
-    ($scope.admissionDetail.bleeding_disorders_anaemia) ? $scope.admissionDetail.bleeding_disorders_anaemia: $scope.admissionDetail.bleeding_disorders_anaemia = 'N';
-    ($scope.admissionDetail.bleeding_disorders_problems) ? $scope.admissionDetail.bleeding_disorders_problems: $scope.admissionDetail.bleeding_disorders_problems = 'N';
-    ($scope.admissionDetail.musculoskeletal_osteoarthritis) ? $scope.admissionDetail.musculoskeletal_osteoarthritis: $scope.admissionDetail.musculoskeletal_osteoarthritis = 'N';
-    ($scope.admissionDetail.musculoskeletal_problems) ? $scope.admissionDetail.musculoskeletal_problems: $scope.admissionDetail.musculoskeletal_problems = 'N';
-    ($scope.admissionDetail.neurology_dystrophies) ? $scope.admissionDetail.neurology_dystrophies: $scope.admissionDetail.neurology_dystrophies = 'N';
-    ($scope.admissionDetail.neurology_tia) ? $scope.admissionDetail.neurology_tia: $scope.admissionDetail.neurology_tia = 'N';
-    ($scope.admissionDetail.neurology_weakness) ? $scope.admissionDetail.neurology_weakness: $scope.admissionDetail.neurology_weakness = 'N';
-    ($scope.admissionDetail.neurology_turns) ? $scope.admissionDetail.neurology_turns: $scope.admissionDetail.neurology_turns = 'N';
-    ($scope.admissionDetail.respiratory_emphysema) ? $scope.admissionDetail.respiratory_emphysema: $scope.admissionDetail.respiratory_emphysema = 'N';
-    ($scope.admissionDetail.respiratory_inclines) ? $scope.admissionDetail.respiratory_inclines: $scope.admissionDetail.respiratory_inclines = 'N';
-    ($scope.admissionDetail.anti_inflammatory) ? $scope.admissionDetail.anti_inflammatory: $scope.admissionDetail.anti_inflammatory = 'N';
-    ($scope.admissionDetail.herbal_supplements) ? $scope.admissionDetail.herbal_supplements: $scope.admissionDetail.herbal_supplements = 'N';
-    ($scope.admissionDetail.lifestyle_alcohol) ? $scope.admissionDetail.lifestyle_alcohol: $scope.admissionDetail.lifestyle_alcohol = 'N';
-    ($scope.admissionDetail.lifestyle_drugs) ? $scope.admissionDetail.lifestyle_drugs: $scope.admissionDetail.lifestyle_drugs = 'N';
-    ($scope.admissionDetail.allergies_alerts_hyperthermia) ? $scope.admissionDetail.allergies_alerts_hyperthermia: $scope.admissionDetail.allergies_alerts_hyperthermia = 'N';
-    ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
-    ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
-    ($scope.admissionDetail.allergies_alerts_substances) ? $scope.admissionDetail.allergies_alerts_substances: $scope.admissionDetail.allergies_alerts_substances = 'N';
+    var PREVIOUS_SURGERY_PROCEDURES = [];
+    var MEDICATIONS = [];
 
-    var dateFormat = /^\d{2}[/]\d{2}[/]\d{4}$/;
-    $scope.ChangeRadio = function(text) {
-        for (var i = 0; i < text.length; i++) {
-            //$("input[name=" + text[i] + "]").val(null);
-            $scope.admissionDetail[text[i]] = '';
-        }
-    };
+    function setValue() {
+        //thao
+        ($scope.admissionDetail.cardiovascular_triglycerides) ? $scope.admissionDetail.cardiovascular_triglycerides: $scope.admissionDetail.cardiovascular_triglycerides = 'N';
+        ($scope.admissionDetail.cardiovascular_hypertension) ? $scope.admissionDetail.cardiovascular_hypertension: $scope.admissionDetail.cardiovascular_hypertension = 'N';
+        ($scope.admissionDetail.cardiovascular_angina) ? $scope.admissionDetail.cardiovascular_angina: $scope.admissionDetail.cardiovascular_angina = 'N';
+        ($scope.admissionDetail.cardiovascular_fibrillation) ? $scope.admissionDetail.cardiovascular_fibrillation: $scope.admissionDetail.cardiovascular_fibrillation = 'N';
+        ($scope.admissionDetail.cardiovascular_condition) ? $scope.admissionDetail.cardiovascular_condition: $scope.admissionDetail.cardiovascular_condition = 'N';
+        ($scope.admissionDetail.cardiovascular_disease) ? $scope.admissionDetail.cardiovascular_disease: $scope.admissionDetail.cardiovascular_disease = 'N';
+        ($scope.admissionDetail.cardiovascular_cardiac_disease) ? $scope.admissionDetail.cardiovascular_cardiac_disease: $scope.admissionDetail.cardiovascular_cardiac_disease = 'N';
+        ($scope.admissionDetail.endocrinology_diabetes) ? $scope.admissionDetail.endocrinology_diabetes: $scope.admissionDetail.endocrinology_diabetes = 'N';
+        ($scope.admissionDetail.endocrinology_blood_glucose) ? $scope.admissionDetail.endocrinology_blood_glucose: $scope.admissionDetail.endocrinology_blood_glucose = 'N';
+        ($scope.admissionDetail.endocrinology_goitre) ? $scope.admissionDetail.endocrinology_goitre: $scope.admissionDetail.endocrinology_goitre = 'N';
+        ($scope.admissionDetail.gastrointestinal_reflux) ? $scope.admissionDetail.gastrointestinal_reflux: $scope.admissionDetail.gastrointestinal_reflux = 'N';
+        ($scope.admissionDetail.gastrointestinal_jaundice) ? $scope.admissionDetail.gastrointestinal_jaundice: $scope.admissionDetail.gastrointestinal_jaundice = 'N';
+        ($scope.admissionDetail.gastrointestinal_ibs) ? $scope.admissionDetail.gastrointestinal_ibs: $scope.admissionDetail.gastrointestinal_ibs = 'N';
+        ($scope.admissionDetail.bleeding_disorders_lungs) ? $scope.admissionDetail.bleeding_disorders_lungs: $scope.admissionDetail.bleeding_disorders_lungs = 'N';
+        ($scope.admissionDetail.bleeding_disorders_anaemia) ? $scope.admissionDetail.bleeding_disorders_anaemia: $scope.admissionDetail.bleeding_disorders_anaemia = 'N';
+        ($scope.admissionDetail.bleeding_disorders_problems) ? $scope.admissionDetail.bleeding_disorders_problems: $scope.admissionDetail.bleeding_disorders_problems = 'N';
+        ($scope.admissionDetail.musculoskeletal_osteoarthritis) ? $scope.admissionDetail.musculoskeletal_osteoarthritis: $scope.admissionDetail.musculoskeletal_osteoarthritis = 'N';
+        ($scope.admissionDetail.musculoskeletal_problems) ? $scope.admissionDetail.musculoskeletal_problems: $scope.admissionDetail.musculoskeletal_problems = 'N';
+        ($scope.admissionDetail.neurology_dystrophies) ? $scope.admissionDetail.neurology_dystrophies: $scope.admissionDetail.neurology_dystrophies = 'N';
+        ($scope.admissionDetail.neurology_tia) ? $scope.admissionDetail.neurology_tia: $scope.admissionDetail.neurology_tia = 'N';
+        ($scope.admissionDetail.neurology_weakness) ? $scope.admissionDetail.neurology_weakness: $scope.admissionDetail.neurology_weakness = 'N';
+        ($scope.admissionDetail.neurology_turns) ? $scope.admissionDetail.neurology_turns: $scope.admissionDetail.neurology_turns = 'N';
+        ($scope.admissionDetail.respiratory_emphysema) ? $scope.admissionDetail.respiratory_emphysema: $scope.admissionDetail.respiratory_emphysema = 'N';
+        ($scope.admissionDetail.respiratory_inclines) ? $scope.admissionDetail.respiratory_inclines: $scope.admissionDetail.respiratory_inclines = 'N';
+        ($scope.admissionDetail.anti_inflammatory) ? $scope.admissionDetail.anti_inflammatory: $scope.admissionDetail.anti_inflammatory = 'N';
+        ($scope.admissionDetail.herbal_supplements) ? $scope.admissionDetail.herbal_supplements: $scope.admissionDetail.herbal_supplements = 'N';
+        ($scope.admissionDetail.lifestyle_alcohol) ? $scope.admissionDetail.lifestyle_alcohol: $scope.admissionDetail.lifestyle_alcohol = 'N';
+        ($scope.admissionDetail.lifestyle_drugs) ? $scope.admissionDetail.lifestyle_drugs: $scope.admissionDetail.lifestyle_drugs = 'N';
+        ($scope.admissionDetail.allergies_alerts_hyperthermia) ? $scope.admissionDetail.allergies_alerts_hyperthermia: $scope.admissionDetail.allergies_alerts_hyperthermia = 'N';
+        ($scope.admissionDetail.anti_coagulant) ? $scope.admissionDetail.anti_coagulant: $scope.admissionDetail.anti_coagulant = 'N';
+        ($scope.admissionDetail.lifestyle_smoked) ? $scope.admissionDetail.lifestyle_smoked: $scope.admissionDetail.lifestyle_smoked = 'N';
+        ($scope.admissionDetail.allergies_alerts_substances) ? $scope.admissionDetail.allergies_alerts_substances: $scope.admissionDetail.allergies_alerts_substances = 'N';
 
-    $scope.getDate = new Date();
+        //chien
+        PREVIOUS_SURGERY_PROCEDURES = ($scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES) ? $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES : $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES = [];
+        MEDICATIONS = ($scope.admissionDetail.MEDICATIONS) ? $scope.admissionDetail.MEDICATIONS : $scope.admissionDetail.MEDICATIONS = [];
 
-    $scope.doctorUseOnly = function() {
-        var userprofile =_.findIndex($cookies.getObject("userInfo").roles, function(doctor) {
-                if (doctor.ID === 4 || doctor.ID === 5) {
-                    return doctor;
-                }
-            });
-        if (userprofile != -1) {
-            return false;
-        } else
-            return true;
-    };
-
-    $scope.stillToTake = function() {
-        $scope.admissionDetail.anti_coagulant_date_to_cease = null;
-        $scope.admissionDetail.anti_coagulant_still_to_take = null;
-    };
-
-    $scope.DefaultYes = function(){
-        $scope.admissionDetail.anti_coagulant_still_to_take = "Y";
-    };
-
-    /* END THAO */
-    $timeout(function() {
-        
-        // console.log(dateFormat.test($scope.admissionDetail.ExpiryDate));
+        //giang
         $scope.admissionDetail.DoctorDateChoose = moment().format('DD/MM/YYYY');
         if ($scope.wainformation) {
             $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible : '';
             $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber : '';
             $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber : '';
             $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate ? $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate : '';
-            //console.log(dateFormat.test($scope.admissionDetail.ExpiryDate));
-            $scope.admissionDetail.ExpiryDate = dateFormat.test($scope.admissionDetail.ExpiryDate)==false&&$scope.admissionDetail.ExpiryDate?moment($scope.admissionDetail.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):$scope.admissionDetail.ExpiryDate;
+            $scope.admissionDetail.ExpiryDate = dateFormat.test($scope.admissionDetail.ExpiryDate) == false && $scope.admissionDetail.ExpiryDate ? moment($scope.admissionDetail.ExpiryDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY') : $scope.admissionDetail.ExpiryDate;
             $scope.admissionDetail.DVANumber = $scope.admissionDetail.DVANumber ? $scope.admissionDetail.DVANumber : $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber ? $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber : '';
             $scope.admissionDetail.KinFirstName = $scope.admissionDetail.KinFirstName ? $scope.admissionDetail.KinFirstName : $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinFirstName ? $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinFirstName : '';
             $scope.admissionDetail.KinLastName = $scope.admissionDetail.KinLastName ? $scope.admissionDetail.KinLastName : $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinLastName ? $scope.wainformation.TelehealthAppointment.PatientAppointment.PatientKinLastName : '';
@@ -103,8 +77,8 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                                 $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : response.data.PatientMedicare[0].MedicareEligible ? response.data.PatientMedicare[0].MedicareEligible : '';
                                 $scope.admissionDetail.MedicareReferenceNumber = $scope.admissionDetail.MedicareReferenceNumber ? $scope.admissionDetail.MedicareReferenceNumber : response.data.PatientMedicare[0].MedicareReferenceNumber ? response.data.PatientMedicare[0].MedicareReferenceNumber : '';
                                 $scope.admissionDetail.MedicareNumber = $scope.admissionDetail.MedicareNumber ? $scope.admissionDetail.MedicareNumber : response.data.PatientMedicare[0].MedicareNumber ? response.data.PatientMedicare[0].MedicareNumber : '';
-                                $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : response.data.PatientMedicare[0].ExpiryDate ?response.data.PatientMedicare[0].ExpiryDate : '';
-                                $scope.admissionDetail.ExpiryDate = dateFormat.test($scope.admissionDetail.ExpiryDate)==false&&$scope.admissionDetail.ExpiryDate?moment($scope.admissionDetail.ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):$scope.admissionDetail.ExpiryDate;
+                                $scope.admissionDetail.ExpiryDate = $scope.admissionDetail.ExpiryDate ? $scope.admissionDetail.ExpiryDate : response.data.PatientMedicare[0].ExpiryDate ? response.data.PatientMedicare[0].ExpiryDate : '';
+                                $scope.admissionDetail.ExpiryDate = dateFormat.test($scope.admissionDetail.ExpiryDate) == false && $scope.admissionDetail.ExpiryDate ? moment($scope.admissionDetail.ExpiryDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY') : $scope.admissionDetail.ExpiryDate;
                             }
                             if (response.data.PatientDVA.length > 0) {
                                 $scope.admissionDetail.DVANumber = $scope.admissionDetail.DVANumber ? $scope.admissionDetail.DVANumber : response.data.PatientDVA[0].DVANumber ? response.data.PatientDVA[0].DVANumber : '';
@@ -121,33 +95,149 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                     })
             }
         }
-        // App.initAjax();
-
-
-    }, 0);
-
-
-
-    var PREVIOUS_SURGERY_PROCEDURES = ($scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES) ? $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES : $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES = [];
-    var MEDICATIONS = ($scope.admissionDetail.MEDICATIONS) ? $scope.admissionDetail.MEDICATIONS : $scope.admissionDetail.MEDICATIONS = [];
-    $scope.admission = {
-        create: {
-            UID: $stateParams.UID,
-            Admissions: [{
-                AdmissionData: []
-            }]
-        },
-        update: {
-            UID: $stateParams.UID,
-            Admissions: [{
-                AdmissionData: [],
-                UID: $scope.admissionUID
-            }]
+    }
+    var dateFormat = /^\d{2}[/]\d{2}[/]\d{4}$/;
+    $scope.ChangeRadio = function(text) {
+        for (var i = 0; i < text.length; i++) {
+            //$("input[name=" + text[i] + "]").val(null);
+            $scope.admissionDetail[text[i]] = '';
         }
     };
-    //console.log('wainformation ', $scope.wainformation);
-    
-    function saveAddmission(input) {
+
+    $scope.getDate = new Date();
+
+    $scope.doctorUseOnly = function() {
+        var userprofile = _.findIndex($cookies.getObject("userInfo").roles, function(doctor) {
+            if (doctor.ID === 4 || doctor.ID === 5) {
+                return doctor;
+            }
+        });
+        if (userprofile != -1) {
+            return false;
+        } else
+            return true;
+    };
+
+    $scope.stillToTake = function() {
+        $scope.admissionDetail.anti_coagulant_date_to_cease = null;
+        $scope.admissionDetail.anti_coagulant_still_to_take = null;
+    };
+
+    $scope.DefaultYes = function() {
+        $scope.admissionDetail.anti_coagulant_still_to_take = "Y";
+    };
+
+    /* END THAO */
+    $timeout(function() {
+        setValue();
+    }, 0);
+
+    /* THAO */
+    var isRadioYesNo = function(nameRadioYesNo, fieldsRelation) {
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        var flag = false;
+        if (radioValue === 'Y') {
+            fieldsRelation.map(function(field) {
+                var value = $scope.admissionDetail[field];
+                if (value === '' || value === null || typeof value === 'undefined')
+                    flag = true;
+            })
+            return flag;
+        } else {
+            return false;
+        }
+    };
+
+
+    $scope.checkRadioYesNo = function(nameRadioYesNo, groupsRelation) {
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        if (radioValue === 'Y') {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).addClass('has-error');
+            })
+        } else {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).removeClass('has-error');
+            })
+        }
+    };
+    var isRadioYesNoN = function(nameRadioYesNo, fieldsRelation) {
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        var flag = false;
+        if (radioValue === 'N') {
+            fieldsRelation.map(function(field) {
+                var value = $scope.admissionDetail[field];
+                if (value === '' || value === null || typeof value === 'undefined')
+                    flag = true;
+            })
+            return flag;
+        } else {
+            return false;
+        }
+    };
+
+
+    $scope.checkRadioYesNoN = function(nameRadioYesNo, groupsRelation) {
+        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
+        if (radioValue === 'N') {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).addClass('has-error');
+            })
+        } else {
+            groupsRelation.map(function(group) {
+                $(group + '_' + nameRadioYesNo).removeClass('has-error');
+            })
+        }
+    };
+
+
+
+
+    /* END THAO */
+    $scope.admission = {
+        UID: $stateParams.UID,
+        Admissions: [{
+            AdmissionData: [],
+            UID: $scope.admissionUID
+        }]
+    };
+    $scope.admissionDesibale = false;
+    $scope.inputParam = {
+        idAdmission: null,
+        uid: $stateParams.UIDPatient,
+        onClick: function(data) {
+            function setDetailAdmission(input, output) {
+                _.forEach(input, function(value, name) {
+                    var itemData = null;
+                    if (value.Name == "PREVIOUS_SURGERY_PROCEDURES" || value.Name == "MEDICATIONS") {
+                        itemData = JSON.parse(value.Value);
+                    } else {
+                        itemData = value.Value;
+                    };
+                    output[value.Name] = itemData;
+                });
+            };
+            AdmissionService.GetDetailAdmission(data.UID).then(function(data) {
+                console.log("$scope.admissionDetail", data);
+                $scope.admissionDetail = {};
+                setDetailAdmission(data.data.AdmissionData, $scope.admissionDetail);
+                setValue();
+                console.log($scope.admissionUID);
+                console.log(data.data.UID);
+                if ($scope.admissionUID != data.data.UID)
+                    $scope.admissionDesibale = true;
+                else
+                    $scope.admissionDesibale = false;
+                console.log("$scope.admissionDetail", $scope.admissionDetail);
+                console.log("admissionDesibale", $scope.admissionDesibale);
+                toastr.success("Select admission success", "Success");
+            });
+        }
+    };
+    console.log("$stateParams", $stateParams);
+
+    $scope.UpdateAdmission = function() {
+
         //THAO
         var flag = false;
         flag = isRadioYesNoN('anti_coagulant_still_to_take', ['anti_coagulant_date_to_cease']);
@@ -157,7 +247,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
             flag = isRadioYesNo('herbal_supplements', ['herbal_supplements_comment']);
         if (flag === false)
             flag = isRadioYesNo('allergies_alerts_hyperthermia', ['allergies_alerts_details_reaction']);
-        if (flag ===false)
+        if (flag === false)
             flag = isRadioYesNo('allergies_alerts_substances', ['allergies_alerts_substances_list']);
         if (flag === false)
             flag = isRadioYesNo('lifestyle_smoked', ['lifestyle_smoked_daily_amount', 'lifestyle_smoked_ceased']);
@@ -245,105 +335,18 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                         } else {
                             data.Value = value;
                         };
-                        input.Admissions[0].AdmissionData.push(data);
+                        $scope.admission.Admissions[0].AdmissionData.push(data);
                     }
 
                 });
-
-                if (input == $scope.admission.update) {
-                    //console.log('update');
-                    AdmissionService.UpdateAdmission(input).then(function(data) {
-                        swal("Update success!", "", "success");
-                        location.reload(true);
-
-                    }, function(error) {
-                        swal("Update error!", "", "error");
-                    });
-                } else {
-                    // console.log('create');
-                    AdmissionService.CreateAdmission($scope.admission.create).then(function(data) {
-                        swal("Create success!", "", "success");
-                        location.reload(true);
-                    }, function(error) {
-                        swal("Create error!", "", "error");
-                    });
-                };
+                console.log("admission update ne", $scope.admission);
+                AdmissionService.UpdateAdmission($scope.admission).then(function(data) {
+                    swal("Update success!", "", "success");
+                }, function(error) {
+                    swal("Update error!", "", "error");
+                });
 
             });
-
-
-    };
-
-    /* THAO */
-    var isRadioYesNo = function(nameRadioYesNo, fieldsRelation) {
-        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
-        var flag = false;
-        if (radioValue === 'Y') {
-            fieldsRelation.map(function(field) {
-                var value = $scope.admissionDetail[field];
-                if (value === '' || value === null || typeof value === 'undefined')
-                    flag = true;
-            })
-            return flag;
-        } else {
-            return false;
-        }
-    };
-
-
-    $scope.checkRadioYesNo = function(nameRadioYesNo, groupsRelation) {
-        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
-        if (radioValue === 'Y') {
-            groupsRelation.map(function(group) {
-                $(group + '_' + nameRadioYesNo).addClass('has-error');
-             })
-        } else {
-            groupsRelation.map(function(group) {
-                $(group + '_' + nameRadioYesNo).removeClass('has-error');
-            })
-        }
-    };
-    //////////////////////////////////////////////////////////////////////////////////////
-    var isRadioYesNoN = function(nameRadioYesNo, fieldsRelation) {
-        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
-        var flag = false;
-        if (radioValue === 'N') {
-            fieldsRelation.map(function(field) {
-                var value = $scope.admissionDetail[field];
-                if (value === '' || value === null || typeof value === 'undefined')
-                    flag = true;
-            })
-            return flag;
-        } else {
-            return false;
-        }
-    };
-
-
-    $scope.checkRadioYesNoN = function(nameRadioYesNo, groupsRelation) {
-        var radioValue = $('input[name="' + nameRadioYesNo + '"]:checked').val();
-        if (radioValue === 'N') {
-            groupsRelation.map(function(group) {
-                $(group + '_' + nameRadioYesNo).addClass('has-error');
-             })
-        } else {
-            groupsRelation.map(function(group) {
-                $(group + '_' + nameRadioYesNo).removeClass('has-error');
-            })
-        }
-    };
-
-
-
-
-        /* END THAO */
-
-    $scope.UpdateAdmission = function() {
-        if ($scope.admissionUID) {
-            saveAddmission($scope.admission.update);
-        } else {
-            saveAddmission($scope.admission.create);
-        };
     };
 
     $scope.openModalAdd1 = function() {

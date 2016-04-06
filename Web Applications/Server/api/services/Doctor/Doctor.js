@@ -1127,18 +1127,21 @@ module.exports = {
 				throw err;
 			})
 			.then(function(doctor){
-				return doctor.setSpecialities(data.info.Speciality,{transaction:t});
+				if(_.isEmpty(data.info.Speciality) == false)
+					return doctor.setSpecialities(data.info.Speciality,{transaction:t});
 			},function(err){
 				t.rollback();
 				throw err;
 			})
 			.then(function(updatedSpecial){
-				return UserAccount.update(data.info.UserAccount,{
-					where : {
-						UID : uid
-					},
-					transaction:t
-				});
+				if(_.isEmpty(data.info.UserAccount) == false){
+					return UserAccount.update(data.info.UserAccount,{
+						where : {
+							UID : uid
+						},
+						transaction:t
+					});
+				}
 			},function(err){
 				t.rollback();
 				throw err;

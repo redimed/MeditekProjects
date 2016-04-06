@@ -53,7 +53,8 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    				toastr.success("Update Successfully!","Success!!");
 		    				console.log($scope.uploader.queue);
 		    				console.log($scope.onCancel);
-		    				$scope.onCancel();
+		    				if($scope.onCancel != undefined)
+		    					$scope.onCancel();
 		    			}
 		    		},function(err){
 		    			console.log(err);
@@ -204,7 +205,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					
 					tabtable.removeChild(tab1);
 					tabtablecontent.removeChild(tab_UserAccount);
-					$("#tabtablecontent :input").prop('disabled', true);
+					// $("#tabtablecontent :input").prop('disabled', true);
 				}
 
 				if(scope.listShow!= undefined && scope.listShow!=null && 

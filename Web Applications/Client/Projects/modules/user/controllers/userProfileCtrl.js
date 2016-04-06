@@ -40,6 +40,7 @@ app.controller('userProfileCtrl', function($scope, PatientService, doctorService
 	if(userprofile.doctor!=null){
 		doctorService.getDoctor(data).then(function(response){
 			$scope.data = response.data;
+			$scope.data.UserAccount.UID = $cookies.getObject("userInfo").UID;
 			response.data.Speciality = [];
 			for(var i = 0; i < response.data.Specialities.length; i++){
 				response.data.Speciality.push(response.data.Specialities[i].ID);

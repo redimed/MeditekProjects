@@ -134,4 +134,9 @@ module.exports={
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'forceChangePass'
 	},
+
+	'get /api/user-account/get-detail/:uid' :{
+		controller:'UserAccount/v0_1/UserAccountController',
+    	action:'GetDetail'
+	},
 };

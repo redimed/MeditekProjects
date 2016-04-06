@@ -1109,6 +1109,46 @@ module.exports = {
 		})
 	},
 
+	GetListSite: function(data) {
+		if(!data.companyuid) {
+			var err = new Error('GetListSite.Error');
+			err.pushError('CompanyUID.invalid');
+			throw err;
+		}
+		return Company.findOne({
+			where:{
+				UID : data.companyuid,
+				Enable:'Y'
+			},
+			attributes:['ID','UID','CompanyName'],
+		})
+		.then(function(got_company) {
+			if(!got_company) {
+				var err = new Error('GetListSite.Error');
+				err.pushError('Company.notFound');
+				throw err;
+			}
+			else {
+				return got_company.getCompanySites();
+			}
+		},function(err) {
+			throw err;
+		})
+		.then(function(got_site) {
+			// console.log(got_site);
+			if(!got_site) {
+				var err = new Error('GetListSite.Error');
+				err.pushError('Site.notFound');
+				throw err;
+			}
+			else {
+				return got_site;
+			}
+		},function(err) {
+			throw err;
+		})
+	},
+
 	Test: function() {
 		// var model = sequelize.models[data.model];
 		console.log(sequelize.models['Company'].getAssociation());

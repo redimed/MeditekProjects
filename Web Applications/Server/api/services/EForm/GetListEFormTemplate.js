@@ -14,9 +14,12 @@ module.exports = function(data, userInfo) {
                     required: false
                 }],
                 required: false
+            }, {
+                attributes: ['UID'],
+                model: Role,
+                required: false
             }],
             where: pagination.EFormTemplate,
-            subQuery: false,
             order: pagination.order,
             limit: pagination.limit,
             offset: pagination.offset

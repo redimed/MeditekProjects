@@ -84,6 +84,11 @@ module.exports = function(data, userInfo, objRequired) {
                         model: UserAccount,
                         attributes: Services.AttributesAppt.UserAccount(),
                         required: false
+                    },{
+                        model: Company,
+                        exclude: ['CreatedDate', 'CreatedBy', 'ModifiedDate', 'ModifiedBy'],
+                        where: pagination.Company,
+                        required: !_.isEmpty(pagination.Company)
                     }]
                 }],
                 where: pagination.Appointment,

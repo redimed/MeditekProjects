@@ -504,5 +504,15 @@ module.exports = {
         TelehealthUser.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
+
+        //association EFormTemplate - Role
+        EFormTemplate.belongsToMany(Role,{
+            through: 'RelEFormTemplateRole',
+            foreignKey: 'EFormTemplateID'
+        });
+        Role.belongsToMany(EFormTemplate,{
+            through: 'RelEFormTemplateRole',
+            foreignKey: 'RoleID'
+        });
     }
 };

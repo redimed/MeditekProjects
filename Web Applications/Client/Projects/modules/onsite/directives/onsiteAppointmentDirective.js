@@ -431,9 +431,19 @@ app.directive('onsiteAppointment', function(){
                         windowClass: 'app-modal-window',
                         // size: 'lg',
                         resolve: {
-                            getid: function() {
-                                return true;
+                            getItem: function() {
+                                return $scope.wainformation.Patients[0];
+                            },
+                            bookingType:function(){
+                                return "Onsite";
+                            },
+                            appDate:function(){
+                            return "info.appointmentDate";
+                            },
+                            appTime:function(){
+                                return "info.appointmentTime";
                             }
+
                         }
                     });
             };

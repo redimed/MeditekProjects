@@ -6,14 +6,16 @@ app.directive('bookingPatient', function(){
 	return {
 		templateUrl:'modules/booking/directives/templates/bookingPatientDrt.html',
         scope:{
-            item:'=onItem'
+            item:'=onItem',
+            type:'=onType',
+            date:'=onDate',
+            time:'=onTime'
         },
 		controller:'bookingController'
 	}
 })
 
 app.controller("bookingController", function($scope, $timeout, $uibModal, $cookies, RosterService, BookingService, toastr){
-	//console.log("scope ",$scope.item);
     $('#datepicker-inline').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
@@ -439,7 +441,7 @@ app.controller("bookingController", function($scope, $timeout, $uibModal, $cooki
                 if(service.Bookable === 'Y'){
                     var modalInstance = $uibModal.open({
                         animation: true,
-                        size: 'md',
+                        size: 'lg',
                         templateUrl: 'modules/booking/directives/templates/schedulerDirectiveCreate.html',
                         controller: 'schedulerCreateDirectiveCtrl',
                         resolve: {
@@ -454,6 +456,15 @@ app.controller("bookingController", function($scope, $timeout, $uibModal, $cooki
                             },
                             item: function(){
                                 return $scope.item;
+                            },
+                            type:function(){
+                                return $scope.type;
+                            },
+                            date:function(){
+                                return $scope.date;
+                            },
+                            time:function(){
+                                return $scope.time;
                             }
                         }
                     });
@@ -502,6 +513,7 @@ app.controller("bookingController", function($scope, $timeout, $uibModal, $cooki
         slotDuration: '00:05:00', //'00:5:00', // khoang cach thoi gian
         selectable: true, //true, // ko cho select
         eventLimit: true, // allow "more" link when too many events
+        height:450,
         scrollTime: moment(),
         minTime: "00:00:00",
         maxTime: "24:00:00",

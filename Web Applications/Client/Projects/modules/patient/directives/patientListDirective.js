@@ -30,12 +30,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				{id:"N",name:"Disable"}
 			];
 			//check user add data items into directive
-			if(scope.items){
-				if(!scope.items.hasOwnProperty('field') || !scope.items.hasOwnProperty('name')){
-					scope.items = scope.itemDefault;
-				}
-			}
-			else{
+			if(!scope.items){
 				scope.items = scope.itemDefault;
 			}
 
@@ -142,6 +137,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 
 			scope.selectPatient = function(patientUID,stt,Enable,FirstName,LastName){
 				console.log(FirstName);
+				console.log(Enable);
+				console.log(scope.appointment);
 				if(Enable=='Y'){
 					if(scope.appointment) {
 

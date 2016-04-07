@@ -14,7 +14,7 @@
 		<div class="col-md-6 col-sm-6 form-group">
 			<label class="control-label">Select Patient</label>
 			<br/>
-			<span><b>{{formData.Patient.FirstName}} {{formData.Patient.LastName}}</b></span>
+			<span><b> {{formData.Patient.FirstName}} {{formData.Patient.LastName}}</b></span>
 			<a style="float:right" class="btn btn-primary btn-large" ng-click="choosePatientDialog()">Choose</a>
 		</div>
 		<div class="col-md-4 col-sm-4 form-group">
@@ -52,6 +52,9 @@
 				ng-options="item.SiteName for item in listSites track by item.UID"
 				ng-model="formData.site">
 			</select>
+		</div>
+		<div class="col-md-12 form-group" ng-if="!formData.Patient">
+			<patient-list on-item="items" on-limit="5" on-select="true" appointment="patient" ></patient-list>
 		</div>
 	</div>
 	<center style="margin-bottom: 10px;">

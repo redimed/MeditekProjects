@@ -426,19 +426,28 @@ app.directive('telehealthDetail', function() {
             $scope.openCalendar = function(){
                 //var PatientAppointment = $scope.wainformation.TelehealthAppointment.PatientAppointment;
                 modalInstance = $modal.open({
-                        animation: true,
-                        templateUrl: 'modules/onsite/views/onsiteCalendar.html',
-                        controller: 'onsiteCalendarCtrl',
-                        windowClass: 'app-modal-window',
+                    animation: true,
+                    templateUrl: 'modules/onsite/views/onsiteCalendar.html',
+                    controller: 'onsiteCalendarCtrl',
+                    windowClass: 'app-modal-window',
                         // size: 'lg',
-                        resolve: {
-                            getItem: function() {
-                                return $scope.wainformation.Patients[0];
-                            }
+                    resolve: {
+                        getItem: function() {
+                            return $scope.wainformation.Patients[0];
+                        },
+                        bookingType:function(){
+                            return "Telehealth";
+                        },
+                        appDate:function(){
+                            return $scope.info.appointmentDate;
+                        },
+                        appTime:function(){
+                            return $scope.info.appointmentTime;
                         }
-                    });
-            };
+                    },
+                });
+            }
 
         }
     };
-})
+});

@@ -1,5 +1,5 @@
 <div class="portlet box green" style="margin-bottom:0px;">
-    <div class="portlet-title bold uppercase" style="padding:10px;">
+    <div class="portlet-title bold uppercase" >
         <div class="caption">
             <i class="glyphicon glyphicon-th-list"></i>
             <span class="caption-subject">Appointment Detail</span>
@@ -223,7 +223,7 @@
                         </div>
                         <div class="tab-pane" id="tab_patient">
                             <div class="my-modal-body">
-                                <div class="row" ng-if="wainformation.Patients.length != 0">
+                                <div class="row margin-top-30" ng-if="wainformation.Patients.length != 0">
                                     <div class="col-md-12 co-xs-12 pull-left">
                                         <h4>
                                             <b>PATIENT NO :</b>
@@ -670,8 +670,8 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab_referral">
-                            <div class="my-modal-body scroller" style="height:600px">
-                                <div class="row profile-account">
+                            <div class="margin-top-20 my-modal-body scroller" style="height:600px">
+                                <div class="row margin-top-30 profile-account">
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
                                         <ul class="nav nav-tabs tabs-left">
@@ -1118,19 +1118,19 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab_clinical">
-                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Clinical.html'"></div>
+                            <div class="margin-top-40 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Clinical.html'"></div>
                         </div>
                         <div class="tab-pane" id="tab_treating">
-                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Treating.html'"></div>
+                            <div class="margin-top-30 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Treating.html'"></div>
                         </div>
                         <div class="tab-pane" id="tab_medical_images">
-                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_MedicalImages.html'"></div>
+                            <div class="margin-top-30 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_MedicalImages.html'"></div>
                         </div>
                         <div class="tab-pane" id="tab_referring">
-                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referring.html'"></div>
+                            <div class="margin-top-40 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referring.html'"></div>
                         </div>
                         <div class="tab-pane" id="tab_complain">
-                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_ComplainAndAllergy.html'"></div>
+                            <div class="margin-top-40 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_ComplainAndAllergy.html'"></div>
                         </div>
                     </div>
                 </div>

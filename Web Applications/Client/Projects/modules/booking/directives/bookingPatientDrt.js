@@ -505,6 +505,7 @@ app.controller("bookingController", function($scope, $timeout, $uibModal, $cooki
         scrollTime: moment(),
         minTime: "00:00:00",
         maxTime: "24:00:00",
+        height: 450,
         header: {
             left: 'today prev,next ',
             center: 'title',

@@ -2,6 +2,7 @@ var EFormService = require('modules/eform/services');
 var history = ReactRouter.hashHistory;
 var Modal = require('common/modal');
 var Dropdown = require('common/dropdown');
+var FormRole = require('modules/eform/eformTemplate/formRole');
 
 var printTypes = [
     {code: 'itext', name: 'IText Report'},
@@ -59,8 +60,18 @@ module.exports = React.createClass({
         this.refs.modalPrintTypes.hide();
         this.props.onPrintForm(this.item, dropdown);
     },
+    _onOpenRoles: function(l){
+        this.refs.modalRoles.show();
+        this.refs.formRole.init(l);
+    },
+    _onSaveRole: function(type){
+        if(type === 'success'){
+            this.refs.modalRoles.hide();
+            this._serverListForm();
+        }
+    },
     render: function(){
-        var table = null
+        var table = null;
         table = <table className="table table-bordered table-striped table-condensed flip-content">
                         <thead className="flip-content">
                             <tr>
@@ -93,6 +104,11 @@ module.exports = React.createClass({
                                                     View Form
                                                 </a>
                                                 &nbsp;
+                                                <a onClick={this._onOpenRoles.bind(this, l)} 
+                                                    className="label label-sm label-success">
+                                                    Select Role
+                                                </a>
+                                                &nbsp;
                                                 <a onClick={this._onOpenPrint.bind(this, l)} 
                                                     className="label label-sm label-success">
                                                     Change Print Type
@@ -118,6 +134,19 @@ module.exports = React.createClass({
                     </table>
             return (
 	   <div className="row">
+                    <Modal ref="modalRoles">
+                        <div className="header">
+                                <h4>Select Role</h4>
+                        </div>
+                        <div className="content">
+                            <div className="col-md-12">
+                                <form>
+                                    <FormRole ref="formRole"
+                                        onSave={this._onSaveRole}/>
+                                </form>
+                            </div>
+                        </div>
+                    </Modal>
                     <Modal ref="modalPrintTypes">
                         <div className="header">
                                 <h4>Select Print Type</h4>

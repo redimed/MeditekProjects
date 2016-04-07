@@ -7,19 +7,39 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr, EFormService) {
     /* EFORM */
     var postData = {
-        Filter: [{
-            EFormTemplate: {
-                Enable: 'Y'
-            }
-        }, {
-            Appointment: {
-                UID: $stateParams.UID
-            }
-        }]
-    }
+            Filter: [
+                    {
+                        EFormTemplate: {
+                            Enable: 'Y'
+                        }
+                    },
+                    {
+                        Appointment: {
+                            UID: $stateParams.UID
+                        }
+                    }
+            ]
+    };
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
-            $scope.eformTemplates = response.data.rows;
+            var checkedUser = false;
+            var eformTemplates = response.data.rows;
+            $scope.eformTemplates = [];
+            for(var i = 0; i < $cookies.getObject('userInfo').roles.length; i++){
+                var role = $cookies.getObject('userInfo').roles[i];
+                for(var j = 0; j < eformTemplates.length; j++){
+                    var template = eformTemplates[j];
+                    for(var k = 0; k < template.Roles.length; k++){
+                        var RelEFormTemplateRole = template.Roles[k].RelEFormTemplateRole;
+                        if(RelEFormTemplateRole.RoleID === role.ID && RelEFormTemplateRole.View === 'Y'){
+                            checkedUser = true;
+                            $scope.eformTemplates.push(template);
+                            break;
+                        }
+                    }
+                }
+            }
+            
         }, function(error) {
 
         })

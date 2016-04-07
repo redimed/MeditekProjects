@@ -95,6 +95,10 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostRemoveEFormGroup'
     },
+    'post /eformtemplate/saveRoles': {
+        controller: 'EForm/EFormController',
+        action: 'PostSaveRolesEFormTemplate'
+    },
     'get /eformgroup/list': {
         controller: 'EForm/EFormController',
         action: 'GetListEFormGroup'

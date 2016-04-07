@@ -1,6 +1,17 @@
 var Config = require('config');
 
 module.exports = {
+	saveEFormTemplateRole: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eformtemplate/saveRoles',
+				data: data,
+				success: resolve
+			})	
+		});
+		return p;
+	},
 	getAllUserRoles: function(){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

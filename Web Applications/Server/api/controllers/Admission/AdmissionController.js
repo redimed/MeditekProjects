@@ -27,7 +27,7 @@ module.exports = {
         } else {
             Services.GetListAdmission(data, req.user)
                 .then(function(AdmissionDetailRes) {
-                    res.ok(AdmissionDetailRes);
+                    res.ok(AdmissionDetailRes.data);
                 }, function(err) {
                     res.serverError(ErrorWrap(err));
                 });

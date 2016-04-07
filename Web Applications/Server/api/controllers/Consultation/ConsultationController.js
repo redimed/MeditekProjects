@@ -32,7 +32,7 @@ module.exports = {
         } else {
             Services.GetListConsultation(data, req.user)
                 .then(function(consultationDetailRes) {
-                    res.ok(consultationDetailRes);
+                    res.ok(consultationDetailRes.data);
                 }, function(err) {
                     res.serverError(ErrorWrap(err));
                 });

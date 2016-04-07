@@ -15,23 +15,23 @@
         <form name="userForm" novalidate>
             <div class="form-body" style="margin-left:1em; margin-right:1em;">
                 <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="index.html#tab_1" data-toggle="tab"> Basic Information</a>
+                    </li>
                     <li>
-                        <a href="index.html#tab_4" data-toggle="tab"> Medical Images</a>
+                        <a href="index.html#tab_2" data-toggle="tab"> Patient</a>
                     </li>
                     <li>
                         <a href="index.html#tab_3" data-toggle="tab"> Treating Practitioner</a>
                     </li>
                     <li>
-                        <a href="index.html#tab_2" data-toggle="tab"> Patient</a>
-                    </li>
-                    <li class="active">
-                        <a href="index.html#tab_1" data-toggle="tab"> Basic Information</a>
+                        <a href="index.html#tab_4" data-toggle="tab"> Medical Images</a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
                         <div class="row">
-                            <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
+                            <div class="col-lg-10 col-md-12 col-lg-offset-1">
                                 <h3 class="form-section bold">
                                     <a href="javascript:;" 
                                         class="btn yellow-gold pull-right"
@@ -158,7 +158,7 @@
                     </div>
                     <div class="tab-pane" id="tab_2">
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 col-md-offset-1 col-sm-offset-1">
+                            <div class="col-lg-4 col-md-12 col-lg-offset-1">
                                 <h3 class="form-section bold">Basic Information</h3>
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
@@ -286,7 +286,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1">
+                            <div class="col-lg-5 col-md-12 col-lg-offset-1">
                                 <h3 class="form-section bold">Contact Information</h3>
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
@@ -376,7 +376,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 col-md-offset-1 col-sm-offset-1">
+                            <div class="col-lg-4 col-md-12 col-lg-offset-1">
                                 <h3 class="form-section bold">Next of Kin/Guardian</h3>
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
@@ -401,10 +401,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1">
+                            <div class="col-lg-5 col-md-12 col-lg-offset-1">
                                 <h3 class="form-section bold">Medicare Information</h3>
                                 <div class="row">
-                                    <div class="col-md-12 -col-sm-12">
+                                    <div class="col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <div class="radio-list">
                                                 <label class="radio-inline">Medicare Eligible</label>
@@ -450,9 +450,13 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_3">
-                        <h3 class="form-section bold">Treating Practitioner</h3>
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 col-md-offset-1 col-sm-offset-1">
+                            <div class="col-lg-10 col-md-12 col-lg-offset-1">
+                                <h3 class="form-section bold">Treating Practitioner</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 col-lg-offset-1">
                                 <div class="form-group">
                                     <label class="control-label">Doctor Type</label>
                                     <select size="1" class="form-control" ng-model="doctorType">
@@ -468,7 +472,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1">
+                            <div class="col-lg-5 col-md-12 col-lg-offset-1">
                                 <div class="form-group">
                                     <label class="control-label">Firstname</label>
                                     <div class="form-control">{{wainformation.Doctors[0].FirstName}}</div>
@@ -493,8 +497,8 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_4">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3">
+                        <div class="row margin-top-40">
+                            <div class="col-lg-2 col-md-3 col-sm-12 col-lg-offset-1">
                                 <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
                                 <ul class="nav nav-tabs tabs-left">
                                     <li class="filter active" data-filter="Arm Foot Head Body" ng-click="tab_body_part='all';">
@@ -502,7 +506,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-9 col-sm-9">
+                            <div class="col-lg-8 col-md-7 col-sm-12">
                                 <div class="row mix-grid" style="">
                                     <div class="col-md-3 col-sm-3 mix Arm Foot Head Body mix_all" style=" display: block; opacity: 1;" ng-repeat="p in FileUploadImage" ng-if="p.FileType == 'MedicalImage'">
                                         <div class="mix-inner">

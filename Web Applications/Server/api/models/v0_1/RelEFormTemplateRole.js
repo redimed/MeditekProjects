@@ -36,6 +36,36 @@ module.exports = {
                 model: 'Role',
                 key: 'ID'
             }
+        },
+        View: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Edit: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Print: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
         }
     },
     associations: function() {},

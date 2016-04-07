@@ -66,9 +66,9 @@ module.exports = React.createClass({
         }
     },
     setValue: function(checked){
-        if(checked === 'yes')
+        if(checked === 'yes' || checked === 'Y')
             $(this.refs.input).iCheck('check');
-        else
+        else if(checked === 'no' || checked === 'N')
            $(this.refs.input).iCheck('uncheck'); 
     },
     setDisplay: function(type){

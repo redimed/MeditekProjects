@@ -20,6 +20,29 @@ module.exports = {
             res.json({data: data});
         })
     },
+    PostSaveRolesEFormTemplate: function(req, res){
+        RelEFormTemplateRole.findOne({
+            EFormTemplateID: req.body.data[0].EFormTemplateID
+        })
+        .then(function(rowOne){
+            if(rowOne){
+                return sequelize.transaction(function(t){
+                    return RelEFormTemplateRole.destroy({
+                        where: {EFormTemplateID: req.body.data[0].EFormTemplateID}
+                    }, {transaction: t})
+                    .then(function(){
+                        return RelEFormTemplateRole.bulkCreate(req.body.data, {transaction: t})
+                    })
+                    .then(function(){
+
+                    })
+                })
+                .then(function(){
+                    res.json({status: 'success'})
+                })
+            }
+        })
+    },
     PostCreateEFormGroup: function(req, res){
         var userAccount = null;
         return sequelize.transaction(function(t){
@@ -76,6 +99,10 @@ module.exports = {
                     model: EFormTemplateData,
                     required: false,
                     as: 'EFormTemplateData'
+                },
+                {
+                    model: Role,
+                    required: false
                 },
                 {
                     model: UserAccount,
@@ -496,7 +523,7 @@ module.exports = {
                     if(EFormTemplateModuleData){
                         UserAccount.findOne({
                             where: {UID: req.body.userUID},
-                            attributes: ['ID'],
+                            attributes: ['ID']
                         })
                         .then(function(UserAccount){
                             EFormTemplateModuleData.update({

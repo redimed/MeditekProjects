@@ -438,10 +438,10 @@ app.directive('onsiteAppointment', function(){
                                 return "Onsite";
                             },
                             appDate:function(){
-                            return "info.appointmentDate";
+                            return $scope.info.appointmentDate;
                             },
                             appTime:function(){
-                                return "info.appointmentTime";
+                                return $scope.info.appointmentTime;
                             }
 
                         }

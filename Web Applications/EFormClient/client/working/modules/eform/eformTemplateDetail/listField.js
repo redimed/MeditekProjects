@@ -20,7 +20,8 @@ module.exports = React.createClass({
     },
     _onSelectItem: function(item){
         var self = this;
-        swal({
+        self.props.onSelectItem(item);
+        /*swal({
             title: 'Are you sure?',
             text: 'You will select field: '+item.get('name'),
             type: 'warning',
@@ -28,8 +29,7 @@ module.exports = React.createClass({
             closeOnConfirm: false,
             allowOutsideClick: true
         }, function(){
-            self.props.onSelectItem(item)
-        })
+        })*/
     },
     render: function(){
         return (

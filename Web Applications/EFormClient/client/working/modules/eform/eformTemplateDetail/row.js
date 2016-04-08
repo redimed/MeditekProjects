@@ -72,7 +72,8 @@ module.exports = React.createClass({
     },
     _onRemoveRow: function(){
         var self = this;
-        swal({
+        self.props.onRemoveRow(self.props.codeSection, self.props.code);
+        /*swal({
             title: 'Are you sure?',
             text: 'You will delete this row',
             type: 'warning',
@@ -81,7 +82,7 @@ module.exports = React.createClass({
             allowOutsideClick: true
         }, function() {
             self.props.onRemoveRow(self.props.codeSection, self.props.code);
-        })
+        })*/
     },
     _onComponentListFieldSelect: function(item){
         this.refs.modalCreateFieldSection.hide();

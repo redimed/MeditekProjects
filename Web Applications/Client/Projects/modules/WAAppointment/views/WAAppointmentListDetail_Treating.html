@@ -2,51 +2,45 @@
     <div class="form-body">
         <div class="row">
             <div class="col-md-3 col-sm-3">
-                <div class="form-group form-md-line-input ">
+                <div class="form-group">
+                    <label class="control-label">Doctor Type</label>
                     <select size="1" class="form-control" ng-model="doctorType">
                         <option value="">All</option>
                         <option value="PlasticSurgeon">Plastic Surgeon</option>
                         <option value="OrthopaedicSurgeon">Orthopaedic Surgeon</option>
                     </select>
-                    <label class="control-label">Doctor Type</label>
                 </div>
-                <div class="form-group form-md-line-input ">
+                <div class="form-group">
+                    <label class="control-label">Doctor List</label>
                     <select size="5" class="form-control">
                         <option ng-repeat="item in info.listDoctorTreatingPractitioner | filter:doctorType" ng-click="selectTreatingPractitioner(item.UID)">{{((item.Title !=null)?item.Title:"")+" "+((item.FirstName != null)?item.FirstName:"") +" "+((item.LastName != null)?item.LastName:"")}}</option>
                     </select>
-                    <label class="control-label">Doctor List</label>
+                    
                 </div>
             </div>
             <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
-                <div class="form-group form-md-line-input">
-                    <div class="form-control">{{wainformation.Doctors[0].FirstName}}</div>
+                <div class="form-group">
                     <label class="control-label">First name</label>
-                    <div class="form-control-focus"> </div>
+                    <div class="form-control">{{wainformation.Doctors[0].FirstName}}</div>
                 </div>
-                <div class="form-group form-md-line-input">
-                    <div class="form-control">{{wainformation.Doctors[0].MiddleName}}</div>
+                <div class="form-group">
                     <label class="control-label">Middle name</label>
-                    <div class="form-control-focus"> </div>
+                    <div class="form-control">{{wainformation.Doctors[0].MiddleName}}</div>
                 </div>
-                <div class="form-group form-md-line-input">
-                    <div class="form-control">{{wainformation.Doctors[0].LastName}}</div>
+                <div class="form-group">
                     <label class="control-label">Last name</label>
-                    <div class="form-control-focus"> </div>
+                    <div class="form-control">{{wainformation.Doctors[0].LastName}}</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control">{{wainformation.Doctors[0].HomePhoneNumber}}</div>
-                        <label class="control-label">Contact number</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Contact number</label>
+                    <div class="form-control">{{wainformation.Doctors[0].HomePhoneNumber}}</div>
+                        
                 </div>
-                <div class="form-group form-md-line-input">
-                    <div class="form-control">{{wainformation.Doctors[0].Department.DepartmentName}}</div>
+                <div class="form-group">
                     <label class="control-label">Department</label>
-                    <div class="form-control-focus"> </div>
+                    <div class="form-control">{{wainformation.Doctors[0].Department.DepartmentName}}</div>
                 </div>
             </div>
         </div>

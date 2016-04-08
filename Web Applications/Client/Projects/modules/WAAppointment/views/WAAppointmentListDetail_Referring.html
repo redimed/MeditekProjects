@@ -1,123 +1,91 @@
 <div class="row">
-    <div class="col-md-4 col-sm-4">
-        <div class="form-group form-md-line-input">
-            <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].FirstName}}</div>
-            <label class="control-label">First name</label>
-            <div class="form-control-focus"> </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-sm-4">
-        <div class="form-group form-md-line-input">
-            <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].MiddleName}}</div>
-            <label class="control-label">Middle name</label>
-            <div class="form-control-focus"> </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-sm-4">
-        <div class="form-group form-md-line-input">
-            <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].LastName}}</div>
-            <label class="control-label">Last name</label>
-            <div class="form-control-focus"> </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4 col-sm-4">
-        <div class="form-group form-md-line-input">
-            <div class="input-icon">
-                <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].WorkPhoneNumber}}</div>
-                <label class="control-label">Work Phone</label>
-                <div class="form-control-focus"> </div>
-                <i class="glyphicon glyphicon-phone"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-sm-4">
-        <div class="form-group form-md-line-input">
-            <div class="input-icon">
-                <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].HomePhoneNumber}}</div>
-                <label class="control-label">Home Phone</label>
-                <div class="form-control-focus"> </div>
-                <i class="glyphicon glyphicon-phone-alt"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-sm-4">
-        <div class="form-group form-md-line-input">
-            <div class="input-icon">
-                <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].FaxNumber}}</div>
-                <label class="control-label">Fax</label>
-                <div class="form-control-focus"> </div>
-                <i class="glyphicon glyphicon-print"></i>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-lg-6 col-md-12 col-lg-offset-1">
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].HealthLink}}</div>
+                <div class="form-group">
                     <label class="control-label">Healthlink ID</label>
-                    <div class="form-control-focus"> </div>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].HealthLink}}</div>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].ProviderNumber}}</div>
+                <div class="form-group">
                     <label class="control-label">Provider Number</label>
-                    <div class="form-control-focus"> </div>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].ProviderNumber}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">First name</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].FirstName}}</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Middle name</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].MiddleName}}</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Last name</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].LastName}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Work Phone</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].WorkPhoneNumber}}</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Home Phone</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].HomePhoneNumber}}</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Fax</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].FaxNumber}}</div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Address1}}</div>
-                        <label class="control-label">Address1</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-road"></i>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Address1</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Address1}}</div>
                 </div>
             </div>
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Address2}}</div>
-                        <label class="control-label">Address2</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-road"></i>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Address2</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Address2}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Postcode</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Postcode}}</div>
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-8">
+                <div class="form-group">
+                    <label class="control-label">Suburb</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Suburb}}</div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Postcode}}</div>
-                        <label class="control-label">Postcode</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-map-marker"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Suburb}}</div>
-                        <label class="control-label">Suburb</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-tree-conifer"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
+                <div class="form-group">
+                    <label class="control-label">State</label>
                      <select class="form-control" ng-model="wainformation.TelehealthAppointment.Doctors[0].State" disabled>
                             <option value=""></option>
                             <option value="WA">Western Australia</option>
@@ -128,36 +96,27 @@
                             <option value="NT">Northern Territory</option>
                             <option value="ACT">Australian Capital Territory</option>
                     </select>
-                    <label class="control-label">State</label>
-                    <!-- <div class="input-icon">
-                        <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].State}}</div>
-                        <label class="control-label">State</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-globe"></i>
-                    </div> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Country.ShortName}}</div>
-                        <label class="control-label">Country</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="fa fa-flag"></i>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Country</label>
+                    <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].Country.ShortName}}</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-4">
-        <div class="form-group ">
+    <div class="col-lg-3 col-md-12 col-lg-offset-1">
+        <div class="form-group margin-top-50">
             <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
                     <img dimage dimage-uid="wainformation.TelehealthAppointment.Doctors[0].FileUpload.UID" width="100%" height="100%" ng-if="wainformation.TelehealthAppointment.Doctors[0].FileUpload.UID != null">
-                    <img src="./theme/assets/global/images/signature.jpg" width="100%" height="100%" ng-if="wainformation.TelehealthAppointment.Doctors[0].FileUpload.UID == null">
+                    <img src="./theme/assets/global/images/no_signature.jpg" width="100%" height="100%" ng-if="wainformation.TelehealthAppointment.Doctors[0].FileUpload.UID == null">
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
+
+

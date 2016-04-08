@@ -282,7 +282,7 @@ module.exports = React.createClass({
         var content = this.state.sections.toJS();
         EFormService.eformTemplateSave({ uid: templateUID, content: JSON.stringify(content), userUID: this.props.userUID })
             .then(function(response) {
-                //swal("Success!", "Your form has been saved.", "success");
+                swal("Success!", "Your form has been saved.", "success");
             }.bind(this))
     },
     _onComponentPageBarAddNewModule: function(){

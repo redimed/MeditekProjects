@@ -251,7 +251,7 @@ module.exports = React.createClass({
                 }
             })
             //swal("Success!", "Delete row table successfully.", "success")
-        } else
+        }
             //swal("Warning!", "Must contain 1 row.", "warning")
     },
     _onComponentSectionRemoveTableColumn: function(codeSection, codeRow, codeField, codeColumn) {
@@ -263,7 +263,7 @@ module.exports = React.createClass({
                 }
             })
             //swal("Success!", "Delete column table successfully.", "success")
-        } else
+        }
             //swal("Warning!", "Must contain 1 column.", "warning")
     },
     _onComponentSectionUpdateTableColumn: function(codeSection, codeRow, codeField, data) {

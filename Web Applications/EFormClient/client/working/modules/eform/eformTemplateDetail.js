@@ -15,18 +15,18 @@ module.exports = React.createClass({
     userUID: null,
     _loadPreview: function() {
         EFormService.eformTemplateDetail({ uid: this.props.params.templateUID })
-            .then(function(response) {
-                this.refs.pageBar.setName(response.data.Name);
-                this.refs.pageBarBottom.setName(response.data.Name);
-                var EFormTemplate = response.data;
-                var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
-                this.setState(function(prevState) {
-                    return {
-                        name: EFormTemplate.Name,
-                        sections: Immutable.fromJS(content)
-                    }
-                })
-            }.bind(this))
+        .then(function(response) {
+            this.refs.pageBar.setName(response.data.Name);
+            this.refs.pageBarBottom.setName(response.data.Name);
+            var EFormTemplate = response.data;
+            var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
+            this.setState(function(prevState) {
+                return {
+                    name: EFormTemplate.Name,
+                    sections: Immutable.fromJS(content)
+                }
+            })
+        }.bind(this))
     },
     componentDidMount: function() {
         this._loadPreview();
@@ -47,7 +47,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List(), page: page }))
             }
         })
-        swal("Success!", "Your section has been created.", "success");
+        //swal("Success!", "Your section has been created.", "success");
     },
     _onComponentSectionUpdate: function(code, name) {
         this.setState(function(prevState) {
@@ -63,7 +63,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.delete(code)
             }
         })
-        swal("Deleted!", "Your section has been deleted.", "success")
+        //swal("Deleted!", "Your section has been deleted.", "success")
     },
     _onComponentSectionDrag: function(fromObj, toObj) {
         var fromImmutable = this.state.sections.get(fromObj.codeSection);
@@ -76,7 +76,7 @@ module.exports = React.createClass({
                 sections: sections
             }
         })
-        swal("Success!", "Drag change section successfully.", "success");
+        //swal("Success!", "Drag change section successfully.", "success");
     },
     _onComponentSectionSelectField: function(codeSection, codeRow, refSection, refRow, typeField) {
         var fields = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields');
@@ -121,7 +121,7 @@ module.exports = React.createClass({
                 }
             })
         }
-        swal("Success!", "Add field successfully.", "success")
+        //swal("Success!", "Add field successfully.", "success")
     },
     _onComponentSectionDragRow: function(fromObj, toObj) {
         var fromImmutable = this.state.sections.get(fromObj.codeSection).get('rows').get(fromObj.codeRow);
@@ -134,7 +134,7 @@ module.exports = React.createClass({
                 sections: sections
             }
         })
-        swal("Success!", "Drag change field successfully.", "success");
+        //swal("Success!", "Drag change field successfully.", "success");
     },
     _onComponentSectionRemoveField: function(codeSection, codeRow, codeField) {
         this.setState(function(prevState) {
@@ -142,7 +142,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField])
             }
         })
-        swal("Deleted!", "Delete field successfully.", "success");
+        //swal("Deleted!", "Delete field successfully.", "success");
     },
     _onComponentSectionSaveFieldDetail: function(codeSection, codeRow, dataField) {
         if(Config.getPrefixField(dataField.type, 'eform_input') > -1){
@@ -222,7 +222,7 @@ module.exports = React.createClass({
                 }
             })
         }
-        swal("Success!", "Edit field successfully.", "success");
+        //swal("Success!", "Edit field successfully.", "success");
     },
     _onComponentSectionCreateTableRow: function(codeSection, codeRow, codeField) {
         this.setState(function(prevState) {
@@ -230,7 +230,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], val => val + 1)
             }
         })
-        swal("Success!", "Add row table successfully.", "success")
+        //swal("Success!", "Add row table successfully.", "success")
     },
     _onComponentSectionCreateTableColumn: function(codeSection, codeRow, codeField) {
         this.setState(function(prevState) {
@@ -240,7 +240,7 @@ module.exports = React.createClass({
                 ))
             }
         })
-        swal("Success!", "Add column table successfully.", "success");
+        //swal("Success!", "Add column table successfully.", "success");
     },
     _onComponentSectionRemoveTableRow: function(codeSection, codeRow, codeField) {
         var row = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields').get(codeField).get('content').get('rows');
@@ -250,9 +250,9 @@ module.exports = React.createClass({
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], val => val - 1)
                 }
             })
-            swal("Success!", "Delete row table successfully.", "success")
+            //swal("Success!", "Delete row table successfully.", "success")
         } else
-            swal("Warning!", "Must contain 1 row.", "warning")
+            //swal("Warning!", "Must contain 1 row.", "warning")
     },
     _onComponentSectionRemoveTableColumn: function(codeSection, codeRow, codeField, codeColumn) {
         var columns = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields').get(codeField).get('content').get('cols')
@@ -262,9 +262,9 @@ module.exports = React.createClass({
                     sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'cols', codeColumn])
                 }
             })
-            swal("Success!", "Delete column table successfully.", "success")
+            //swal("Success!", "Delete column table successfully.", "success")
         } else
-            swal("Warning!", "Must contain 1 column.", "warning")
+            //swal("Warning!", "Must contain 1 column.", "warning")
     },
     _onComponentSectionUpdateTableColumn: function(codeSection, codeRow, codeField, data) {
         this.setState(function(prevState) {
@@ -275,14 +275,14 @@ module.exports = React.createClass({
                 )
             }
         })
-        swal("Success!", "Update column table successfully.", "success")
+        //swal("Success!", "Update column table successfully.", "success")
     },
     _onComponentPageBarSaveForm: function() {
         var templateUID = this.props.params.templateUID;
         var content = this.state.sections.toJS();
         EFormService.eformTemplateSave({ uid: templateUID, content: JSON.stringify(content), userUID: this.props.userUID })
             .then(function(response) {
-                swal("Success!", "Your form has been saved.", "success");
+                //swal("Success!", "Your form has been saved.", "success");
             }.bind(this))
     },
     _onComponentPageBarAddNewModule: function(){
@@ -297,7 +297,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection, 'rows'], val => val.push(Immutable.Map({ref: rowRef, type: 'row', fields: Immutable.List(), size: 12})))
             }
         })
-        swal("Success!", "Your row has been created.", "success");
+        //swal("Success!", "Your row has been created.", "success");
     },
     _onComponentSectionRemoveRow: function(codeSection, codeRow){
         this.setState(function(prevState) {
@@ -305,7 +305,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow])
             }
         })
-        swal("Deleted!", "Your section has been deleted.", "success")
+        //swal("Deleted!", "Your section has been deleted.", "success")
     },
     _onSelectEFormTemplateModule: function(list){
         var page = 1;
@@ -331,7 +331,7 @@ module.exports = React.createClass({
                     sections: sections
                 }
             })
-            swal("Success!", "Your section has been created.", "success");
+            //swal("Success!", "Your section has been created.", "success");
         }
         this.refs.modalListEFormTemplateModule.hide();
     },
@@ -341,7 +341,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection], val => val.set('page', value))
             }
         })
-        swal("Success!", "Your section has change page to "+value, "success");
+        //swal("Success!", "Your section has change page to "+value, "success");
     },
     _onComponentSectionOrderSection: function(codeSection, value){
         var sections = this.state.sections.deleteIn([codeSection]);
@@ -359,7 +359,7 @@ module.exports = React.createClass({
                 sections: finalSections
             }
         })
-        swal("Success!", "Your section has order to "+value, "success");
+        //swal("Success!", "Your section has order to "+value, "success");
     },
     _onComponentSectionOrderRow: function(codeSection, codeRow, value){
         var rows = this.state.sections.deleteIn([codeSection, 'rows', codeRow]);
@@ -378,7 +378,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection, 'rows'], val => finalRows)
             }
         })
-        swal("Success!", "Your row has change order", "success"); 
+        //swal("Success!", "Your row has change order", "success"); 
     },
     render: function(){
 	return (

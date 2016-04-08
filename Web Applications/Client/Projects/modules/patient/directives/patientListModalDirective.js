@@ -28,8 +28,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				reader.onload = function(event){
 					var img = new Image();
 					img.onload = function(){
-					    canvasimg.width = width;
-				        canvasimg.height = height;
+					    canvasimg.style.width = "100%";
+				        canvasimg.style.height = "100%";
 					    ctximg.drawImage(img,0,0,width,height);
 					};
 					img.src = event.target.result;

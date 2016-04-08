@@ -31,121 +31,78 @@
                         <div class="tab-content" id="tabContent2">
                             <div class="tab-pane active" id="Personal_info">
                                 <div class="row margin-top-30">
-                                    <div class="col-md-3 col-sm-3" id="columm1" ng-if="listShow.columm1">
-                                        <!-- avatar -->
+                                    <div class="col-lg-3 col-md-12" id="columm1" ng-if="listShow.columm1">
                                         <div ng-form name="checkInForm" novalidate>
                                             <div class="form-group">
                                                 <div id="viewIMG">
-                                                    <canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true"></canvas>
-                                                    <img dimage dimage-uid="info.ProfileImage" dimage-size="'350'" ng-show="info.ProfileImage!=null && info.ProfileImage!=undefined && isChoseAvatar==false">
-                                                    <img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.ProfileImage==null || info.ProfileImage==undefined) && isChoseAvatar==false" style="width:350px; height:350px; ">
+                                                    <canvas id="imageAvatarCanvas" ng-show="isChoseAvatar==true" style="width:100% !important"></canvas>
+                                                    <img dimage dimage-uid="info.ProfileImage" dimage-size="'350'" ng-show="info.ProfileImage!=null && info.ProfileImage!=undefined && isChoseAvatar==false" width="100%">
+                                                    <img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.ProfileImage==null || info.ProfileImage==undefined) && isChoseAvatar==false" width="100%">
                                                 </div>
                                                 <div class="container">
                                                     <label for="imageAvatar" style="float:left; padding-right: 1%;">
-                                                        <span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
-                                                        <span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
+                                                        <span class="btn green" ng-if="isChoseAvatar==false">Select Image</span>
+                                                        <span class="btn green" ng-if="isChoseAvatar==true">Change</span>
                                                         <input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
                                                     </label>
                                                     <span class="btn red" ng-if="isChoseAvatar==true" style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- end avatar -->
                                     </div>
-                                    <div class="col-md-5 col-sm-5" id="columm2" ng-if="listShow.columm2">
+                                    <div class="col-lg-3 col-md-12" id="columm2" ng-if="listShow.columm2">
                                         <h4 class="form-section bold">Person Information</h4>
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <!-- begin title -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Title</label>
-                                                    <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
-                                                    <span style="color:red;">{{ermsg.Title}}</span>
-                                                </div>
-                                                <!-- end title -->
+                                         <div class="form-group">
+                                            <label class="control-label">Title</label>
+                                            <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
+                                            <span style="color:red;">{{ermsg.Title}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">First Name</label>
+                                            <input type="text" class="form-control" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')"><span style="color:red;">{{ermsg.FirstName}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Middle Name</label>
+                                            <input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"><span style="color:red;">{{ermsg.MiddleName}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Sur Name</label>
+                                            <input type="text" class="form-control" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')"><span style="color:red;">{{ermsg.LastName}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Date of Birth</label>
+                                            <div class="input-icon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" />
+                                                <span style="color:red;">{{ermsg.DOB}}</span>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <!-- First Name -->
-                                                <div class="form-group">
-                                                    <label class="control-label">First Name</label>
-                                                    <input type="text" class="form-control" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')"><span style="color:red;">{{ermsg.FirstName}}</span>
-                                                </div>
-                                                <!-- end First Name -->
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <!-- Middle Name -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Middle Name</label>
-                                                    <input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"><span style="color:red;">{{ermsg.MiddleName}}</span>
-                                                </div>
-                                                <!-- end Middle Name -->
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <!-- Sur Name -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Sur Name</label>
-                                                    <input type="text" class="form-control" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')"><span style="color:red;">{{ermsg.LastName}}</span>
-                                                </div>
-                                                <!-- end Sur Name -->
+                                        <div class="form-group">
+                                            <label class="control-label">Gender</label>
+                                            <div class="input-icon">
+                                                <i class="fa fa-intersex"></i>
+                                                <select class="form-control" ng-model="info.Gender" ng-change="checkDataNull('Gender')">
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-6">
-                                                <!-- Date of Birth -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Date of Birth</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-calendar"></i>
-                                                        <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" />
-                                                        <span style="color:red;">{{ermsg.DOB}}</span>
-                                                    </div>
-                                                </div>
-                                                <!-- end Date of Birth -->
-                                            </div>
-                                            <div class="col-md-6 col-sm-6">
-                                                <!-- Gender -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Gender</label>
-                                                    <div class="input-icon">
-                                                        <i class="fa fa-intersex"></i>
-                                                        <select class="form-control" ng-model="info.Gender" ng-change="checkDataNull('Gender')">
-                                                            <option value="Male">Male</option>
-                                                            <option value="Female">Female</option>
-                                                            <option value="Other">Other</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <!-- end Gender -->
+                                        <div class="form-group">
+                                            <label class="control-label">Occupation</label>
+                                            <div class="input-icon">
+                                                <i class="fa fa-odnoklassniki"></i>
+                                                <input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-8 col-sm-8">
-                                                <!-- Occupation -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Occupation</label>
-                                                    <div class="input-icon">
-                                                        <i class="fa fa-odnoklassniki"></i>
-                                                        <input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
-                                                    </div>
-                                                </div>
-                                                <!-- end Occupation -->
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <!-- Enable User -->
-                                                <div class="form-group">
-                                                    <label class="control-label">&nbsp;</label>
-                                                    <div class="checkbox-list">
-                                                        <label class="control-label">
-                                                            <input type="checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)" />Enable</label>
-                                                    </div>
-                                                </div>
-                                                <!-- end Enable User -->
+                                        <div class="form-group">
+                                            <div class="checkbox-list">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="regular-checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)"/>Enable</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-sm-4" id="columm3" ng-if="listShow.columm3">
+                                    <div class="col-lg-5 col-md-12 col-lg-offset-1" id="columm3" ng-if="listShow.columm3">
                                         <h4 class="form-section bold">Contact Information</b></h4>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-6">

@@ -170,7 +170,7 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
 });
 
 /*Thao*/
-app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr, type, date, time, $stateParams) {
+app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr, type, date, time, $stateParams,$state) {
     $scope.item = item;
     $scope.type = type;
     $scope.date = date;
@@ -344,6 +344,7 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
                     .then(function(response) {
                         toastr.success('Update Booking Successfully');
                         window.location.reload();
+                        //$state.go('authentication.onsite.appointment',{UID:$stateParams.UID},{reload:true});
                     }, function(error) {
                         if(typeof error.data !== 'undefined'){
                             var type = error.data.status;

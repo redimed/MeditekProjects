@@ -69,4 +69,14 @@ module.exports = {
         controller: 'Company/CompanyController',
         action: 'GetListSite'
     },
+
+    'post /api/company/get-child-detail': {
+        controller: 'Company/CompanyController',
+        action: 'GetDetailChild'
+    },
+
+    'post /api/company/create-user' : {
+        controller: 'Company/CompanyController',
+        action: 'CreateUser'
+    }
 };

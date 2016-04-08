@@ -15,16 +15,16 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 			scope.init = function(){
 				companyService.detailcompany({UID:scope.uid})
 				.then(function(response) {
-					console.log(response);
-					scope.info = response.data;
-					for(var i = 0; i < scope.info.CompanySites.length; i++) {
-						if(scope.info.CompanySites[i].Enable == 'Y') {
-							scope.styles = {width:1}
-						}
-						else
-							scope.styles = {};
+					if(response.data){
+						scope.info = response.data;
+						companyService.getDetailChild({UID:response.data.UID,model:'CompanySites'})
+						.then(function(result){
+							console.log(result);
+							scope.info.CompanySites = result.data;
+						},function(err) {
+							console.log(err);
+						})
 					}
-
 				}, function(err) {
 					console.log(err);
 				});
@@ -34,7 +34,7 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 
 			scope.openmodal = function(model, type, uid) {
 				// console.log(uid);
-				var Url = model=='CompanySite'?'CompanySitemodal':model=='UserAccount'?'Usermodal':model=='Staff'?'Staffmodal':'Insuresmodal';
+				var Url = model=='CompanySite'?'CompanySitemodal':model=='UserAccounts'?'Usermodal':model=='Staff'?'Staffmodal':'Insuresmodal';
 				// console.log(type," ",uid);
 				var modalInstance = $uibModal.open({
 					templateUrl: Url,
@@ -47,18 +47,116 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 							$modalInstance.dismiss('cancel');
 						};
 						$scope.loadagain = function() {
-							scope.init();
+							var compareModel = model=='CompanySite'?'CompanySites':model=='UserAccounts'?'UserAccounts':model=='Staff'?'Patients':'Funds';
+							scope.viewmodel(compareModel);
 						};
 						$scope.reset = function() {
 							toastr.success("Create Successfully","success");
-							scope.init();
+							// scope.init();
+							scope.viewmodel(model);
 							$modalInstance.dismiss('cancel');
 						}
 					},
 					size: 'lg',
-					windowClass: model=='Staff'||model=='UserAccount'?'app-modal-window':null
+					windowClass: model=='Staff'||model=='UserAccounts'?'app-modal-window':null
 				});
-			}
+			};
+
+			scope.openLinkPatient = function() {
+				var uid = scope.info.UID;
+				var modalInstance = $uibModal.open({
+					templateUrl: 'linkPatient',
+					controller: function($scope,$modalInstance){
+						$scope.cancel = function(){
+							$modalInstance.dismiss('cancel');
+						};
+						$scope.compid = scope.info.ID;
+						$scope.staff = {};
+						$scope.staff.runIfSuccess = function(data){
+							console.log(data);
+							console.log(uid);
+							companyService.createUser({CompanyUID:uid,patientUID:data.UID})
+							.then(function(success) {
+								console.log(success);
+								toastr.success("success","success");
+								$scope.cancel();
+								scope.viewmodel('UserAccounts');
+								// scope.loadagain();
+							},function(err) {
+								console.log(err);
+								if(err.data.ErrorsList[0] == 'UserAccount.Company.HasAssociation') {
+									toastr.error("UserAccount has linked with Company","error");
+								}
+								else {
+									toastr.error("error","error");	
+								}
+							});
+						};
+						$scope.staff.createSuccess = function(data) {
+							console.log(data);
+							toastr.success("success","success");
+							$scope.cancel();
+							scope.viewmodel('UserAccounts');
+						};
+						$scope.loadagain = function() {
+							scope.viewmodel('UserAccounts');
+						};
+						$scope.reset = function() {
+							toastr.success("Create Successfully","success");
+							// scope.init();
+							scope.viewmodel('UserAccounts');
+							$modalInstance.dismiss('cancel');
+						}
+					},
+					size: 'lg',
+					windowClass: 'app-modal-window'
+				});
+			};
+
+			scope.openCreateStaff = function() {
+				var uid = scope.info.UID;
+				var modalInstance = $uibModal.open({
+					templateUrl: 'CreateStaff',
+					controller: function($scope,$modalInstance){
+						$scope.cancel = function(){
+							$modalInstance.dismiss('cancel');
+						};
+						$scope.compid   = scope.info.ID;
+						$scope.staff = {};
+						$scope.staff.runIfSuccess = function(data){
+							toastr.success("success","success");
+							$scope.cancel();
+							scope.viewmodel('Patients');
+						};
+						$scope.loadagain = function() {
+							scope.viewmodel('Patients');
+						};
+						$scope.reset = function() {
+							toastr.success("Create Successfully","success");
+							// scope.init();
+							scope.viewmodel('Patients');
+							$modalInstance.dismiss('cancel');
+						}
+					},
+					size: 'lg',
+					windowClass: 'app-modal-window'
+				});
+			};
+
+			scope.viewmodel = function(model) {
+				if(!model) {
+					console.log("invalid.model");
+				}
+				else {
+					companyService.getDetailChild({UID:scope.info.UID,model:model})
+					.then(function(result){
+						console.log(result);
+						scope.info[model] = result.data;
+					},function(err) {
+						console.log(err);
+					});
+				}
+			};
 		},
 	};
 });

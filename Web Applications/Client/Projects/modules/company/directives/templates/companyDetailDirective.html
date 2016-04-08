@@ -11,16 +11,16 @@
         </div> -->
         <ul class="nav nav-tabs">
             <li>
-                <a href="index.html#tab_4" data-toggle="tab"> User Account </a>
+                <a href="index.html#tab_4" data-toggle="tab" ng-click="viewmodel('UserAccounts')"> User Account </a>
             </li>
             <li>
-                <a href="index.html#tab_3" data-toggle="tab"> Staff List </a>
+                <a href="index.html#tab_3" data-toggle="tab" ng-click="viewmodel('Patients')" > Staff List </a>
             </li>
             <li>
-                <a href="index.html#tab_2" data-toggle="tab"> Insurer List </a>
+                <a href="index.html#tab_2" data-toggle="tab" ng-click="viewmodel('Funds')" > Insurer List </a>
             </li>
             <li class="active">
-                <a href="index.html#tab_1" data-toggle="tab"> Basic Information </a>
+                <a href="index.html#tab_1" data-toggle="tab" ng-click="viewmodel('CompanySites')" > Basic Information </a>
             </li>
         </ul>
     </div>
@@ -43,7 +43,7 @@
                         </div>
                         <h3 class="form-section bold">Site info
                             <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="openmodal('CompanySite','create',null)">
-                                <i class="glyphicon glyphicon-plus"></i> Add</a>
+                                <i class="glyphicon glyphicon-plus"></i> Link Staff</a>
                         </h3>
                         <div class="table-scrollable margin-top-30">
                             <table class="table table-bordered table-hover table-striped">
@@ -111,9 +111,10 @@
                     <div class="tab-pane" id="tab_3">
                         <h3 class="form-section bold">
                             Staff List
+                            <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="openCreateStaff()">
+                                <i class="glyphicon glyphicon-plus"></i> Add</a>
                             <a class="btn btn-lg green pull-right" ng-click="openmodal('Staff','create',-1)">
-                                <i class="glyphicon glyphicon-plus"></i> Add
-                            </a>
+                                <i class="glyphicon glyphicon-plus"></i> Link</a>
                         </h3>
                         <div class="table-scrollable margin-top-30">
                             <table class="table table-bordered table-hover table-striped">
@@ -145,8 +146,11 @@
                     <div class="tab-pane" id="tab_4">
                         <h3 class="form-section bold">
                             User Account
-                            <a class="btn btn-lg green pull-right" ng-click="openmodal('UserAccount','create',null)">
+                            <a class="btn btn-lg green pull-right" ng-click="openmodal('UserAccounts','create',null)">
                                 <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                            <a class="btn btn-lg green pull-right" ng-click="openLinkPatient()">
+                                <i class="glyphicon glyphicon-plus"></i> Link
                             </a>
                         </h3>
                         <div class="table-scrollable margin-top-30">
@@ -163,10 +167,10 @@
                                 <tbody>
                                     <tr ng-repeat="u in info.UserAccounts">
                                         <td>{{$index+1}}</td>
-                                        <td>{{u.UserName}}</td>
-                                        <td>{{u.PhoneNumber}}</td>
-                                        <td>{{u.Email}}</td>
-                                        <td ng-click="openmodal('UserAccount','delete',u)" ><i ng-class="{'glyphicon glyphicon-ok turquoisetype':u.Enable==='Y','glyphicon glyphicon-remove redtype':u.Enable==='N'}"></i></td>
+                                        <td>{{u.UserAccount.UserName}}</td>
+                                        <td>{{u.UserAccount.PhoneNumber}}</td>
+                                        <td>{{u.UserAccount.Email}}</td>
+                                        <td ng-click="openmodal('UserAccounts','delete',u)" ><i ng-class="{'glyphicon glyphicon-ok turquoisetype':u.Enable==='Y','glyphicon glyphicon-remove redtype':u.Enable==='N'}"></i></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -186,8 +190,16 @@
     <company-user on-type="type" on-uid="uid" on-comp="Compuid" on-cancel="cancel" on-compid="Compid" on-load-again="loadagain" on-reset="reset" ></company-user>
 </script>
 
+<script type="text/ng-template " id="linkPatient">
+    <patient-list on-select="true" on-staff="staff" on-compid="compid" on-roleid="5"></patient-list>
+</script>
+
 <script type="text/ng-template " id="Staffmodal">
     <company-staff on-type="type" on-uid="uid" on-comp="Compuid" on-compid="Compid" on-cancel="cancel" on-load-again="loadagain" ></company-staff>
+</script>
+
+<script type="text/ng-template " id="CreateStaff">
+    <patient-create on-item="true" on-staff="staff" on-compid="compid" on-reset="reset" role-company="true" ></patient-create>
 </script>
 
 <script type="text/ng-template " id="Insuresmodal">

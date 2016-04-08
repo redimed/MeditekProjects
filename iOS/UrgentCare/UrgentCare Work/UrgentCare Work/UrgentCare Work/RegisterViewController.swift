@@ -9,10 +9,10 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import ObjectMapper
 
 
-
-class RegisterViewController : UIViewController,UITextFieldDelegate {
+class RegisterViewController : BaseViewController {
     
     @IBOutlet weak var phoneTextField: DesignableTextField!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -21,14 +21,14 @@ class RegisterViewController : UIViewController,UITextFieldDelegate {
     
     //Color is red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
-    let verifyService = VerifyService()
-    let alertView = UIAlertView()
+    
     var phoneNumber = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         phoneTextField.delegate = self
-        versionBuildLabel.text = MessageString.VersionAndBuild
+        //versionBuildLabel.text = MessageString.VersionAndBuild
+        self.navigationController?.navigationBarHidden = true
         
     }
     
@@ -39,7 +39,7 @@ class RegisterViewController : UIViewController,UITextFieldDelegate {
     @IBAction func btnCheckPhoneAction(sender: DesignableButton)  {
         view.endEditing(true)
         //Check email if email is valid return message
-        if (phoneTextField.text == "" || config.validateRegex(phoneTextField.text!,regex: Regex.MobileNumber) == false){
+        if (phoneTextField.text == "" || config.validateRegex(phoneTextField.text!,regex: Constants.Regex.MobileNumber) == false){
             animationView(viewPhoneNumber)
             config.borderTextFieldValid(phoneTextField, color: colorCustom)
         }
@@ -52,22 +52,40 @@ class RegisterViewController : UIViewController,UITextFieldDelegate {
     
     //Sending phone number to server and check user in DB
     func requestPhoneNumberToServer(){
-        verifyService.checkPhoneNumber(phoneTextField.text!, compailer: {
-            response in
-            print(response)
-            if(response["message"] == "success"){
-                self.hideLoading()
-                let VerifyPhone = self.storyboard?.instantiateViewControllerWithIdentifier("VerifyViewControllerID") as! VerifyViewController
-                VerifyPhone.phoneNumber = self.phoneTextField.text!;
-                self.navigationController?.pushViewController(VerifyPhone, animated: true)
-            }else {
-                self.hideLoading()
-                let message : String = String(response["ErrorType"])
-                self.alertView.alertMessage("Error", message: message)
-//                let VerifyPhone = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewControllerID") as! LoginViewController
-//                self.navigationController?.pushViewController(VerifyPhone, animated: true)
+        
+        let requestRegisterPost:RequestRegisterPost = RequestRegisterPost();
+        let requestRegister:RequestRegister = RequestRegister();
+        var phoneString : String = phoneTextField.text!
+        phoneString.removeAtIndex(phoneString.startIndex)
+        
+        requestRegister.phone = Constants.StringContant.prefixesPhoneNumber + String(phoneString)
+        requestRegisterPost.data = requestRegister
+        
+        UserService.postRequestVerify(requestRegisterPost) { [weak self] (response) in
+            print(response.result.value)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let responseRegister = Mapper<ResponseRegister>().map(response.result.value) {
+                            if(responseRegister.status == "success"){
+                                self!.hideLoading()
+                                let VerifyPhone = self!.storyboard?.instantiateViewControllerWithIdentifier("VerifyViewControllerID") as! VerifyViewController
+                                VerifyPhone.phoneNumber = Constants.StringContant.prefixesPhoneNumber + String(phoneString);
+                                self!.navigationController?.pushViewController(VerifyPhone, animated: true)
+                            }else{
+                                self!.hideLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self!.hideLoading()
+                    self?.showMessageNoNetwork()
+                }
             }
-        })
+        }
     }
     
     //sending data by segue
@@ -89,7 +107,7 @@ class RegisterViewController : UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func backToHomeAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     //Giap: Animation phone view

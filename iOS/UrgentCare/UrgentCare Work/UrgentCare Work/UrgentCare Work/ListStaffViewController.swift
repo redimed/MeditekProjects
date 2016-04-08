@@ -1,15 +1,15 @@
 //
-//  SettingViewController.swift
+//  ListStaffViewController.swift
 //  UrgentCare Work
 //
-//  Created by Meditek on 3/25/16.
+//  Created by Meditek on 4/8/16.
 //  Copyright © 2016 Giap Vo Duc. All rights reserved.
 //
 
 import UIKit
 import ObjectMapper
 
-class SettingViewController: BaseViewController,UITableViewDelegate ,UITableViewDataSource {
+class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,16 +24,40 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        loadData()
+    }
+    func loadData(){
         
-//        let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
-//        companyInfo = Mapper().map(companyInfoDict)!
-//        print(companyInfo)
-//        array[0].append(companyInfo.data[0].CompanyName)
+        showloading("Loading.....")
         
         let userInforDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.userInfor) as! NSDictionary
-        userInfor = Mapper().map(userInforDict)!
+        let userInfor :LoginResponse = Mapper().map(userInforDict)!
+        let user: User = userInfor.user!
+        
+        UserService.getListStaff(user.UID) { [weak self] (response) in
+            print(response.result.value)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let listStaff = Mapper<ListStaff>().map(response.result.value) {
+                            if(listStaff.message == "success"){
+                                self!.hideLoading()
+                            }else{
+                                self!.hideLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self!.hideLoading()
+                    self?.showMessageNoNetwork()
+                }
+            }
+        }
+
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -62,7 +86,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
         }
         
     }
-     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
         return arrayTitle[section]
     }

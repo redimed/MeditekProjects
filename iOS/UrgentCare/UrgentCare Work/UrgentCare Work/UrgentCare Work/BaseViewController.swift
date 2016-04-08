@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController,DTAlertViewDelegate {
+class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelegate {
     
     //var alertView: DTAlertView!
     let alertView = UIAlertView()
@@ -51,8 +51,11 @@ class BaseViewController: UIViewController,DTAlertViewDelegate {
         Context.deleteDatDefaults(Define.keyNSDefaults.Authorization)
         Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
         Context.deleteDatDefaults(Define.keyNSDefaults.Cookie)
-        Context.deleteDatDefaults(Define.keyNSDefaults.userInfor)
-        let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
+        Context.deleteDatDefaults(Define.keyNSDefaults.companyInfor)
+        Context.deleteDatDefaults(Define.keyNSDefaults.UIDLogoutFail)
+        Context.deleteDatDefaults(Define.keyNSDefaults.UID)
+        
+        let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
         self.navigationController?.pushViewController(account, animated: true)
     }
 }

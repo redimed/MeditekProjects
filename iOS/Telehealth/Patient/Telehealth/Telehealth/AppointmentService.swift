@@ -169,11 +169,11 @@ class AppointmentService {
             response in
             
             if response["status"] == "success"{
+                config.headers["useruid"] = ""
+                config.headers["Authorization"] = "Bearer "
                 let fileUID =  response["fileUID"].string!
                 compailer(["message":"success","data":fileUID])
             }else {
-                print("error",response)
-                
                 if let _ = response["ErrorType"].string {
                     compailer(["message":"error","ErrorType":response["ErrorType"].string!])
                 }else if (response["internetConnection"].string == ErrorMessage.internetConnection){

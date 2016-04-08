@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3FD1CA861CA23AD4007D1F67 /* Country.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FD1CA851CA23AD4007D1F67 /* Country.json */; };
+		3F2EEDD91CB75C2500516422 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2EEDD81CB75C2500516422 /* Context.swift */; };
 		3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */; };
 		3FF87B4C1CA390E60068866C /* Country.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FF87B4B1CA390E60068866C /* Country.json */; };
 		3FF87B4E1CA3C50E0068866C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */; };
@@ -161,7 +161,7 @@
 
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
-		3FD1CA851CA23AD4007D1F67 /* Country.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Country.json; sourceTree = "<group>"; };
+		3F2EEDD81CB75C2500516422 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		3FF87B4B1CA390E60068866C /* Country.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Country.json; sourceTree = "<group>"; };
 		3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -416,6 +416,7 @@
 		AF4498A71BDF1141005A905E /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				3F2EEDD81CB75C2500516422 /* Context.swift */,
 				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
 			);
 			name = Other;
@@ -973,6 +974,7 @@
 				3FFBDF411C9BBB1F006F041B /* DTAlertView.swift in Sources */,
 				AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */,
 				AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */,
+				3F2EEDD91CB75C2500516422 /* Context.swift in Sources */,
 				AF73C8491C7BF9030015A625 /* DKGroupDataManager.swift in Sources */,
 				AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */,
 				AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */,

@@ -9,8 +9,10 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import ObjectMapper
 import SystemConfiguration
-class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelegate,UITextViewDelegate,UITextFieldDelegate {
+
+class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDelegate,UITextViewDelegate {
     let colorCustomRed = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     let  colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -54,10 +56,13 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     var handTherapy:String = "N"
     var exerciseRehab:String = "N"
     
+    
     var urgentRequestType : String = "WorkInjury"
     var Info : Information!
     
-    
+    //
+    let userInfo = LoginResponse()
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,11 +112,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         
         getPersonalData()
         DatepickerMode()
-        
-        
-        
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -146,15 +146,13 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     //custom textFiled
     func customTextField(color:UIColor){
         var arrText : [UITextField] = [firstNameTextField,lastNameTextField,contactPhoneTextField,suburbTextField,birthDayTextField,emailTextField,companyName,contactPersonTextField,companyPhoneNumberTextField]
-        for var i = 0; i < arrText.count ; i++ {
+        for var i = 0; i < arrText.count ; i += 1 {
             borderTextFieldValid(arrText[i], color: color)
         }
     }
     
     //get localdata and set texfield
     func getPersonalData(){
-        
-        
         let defaults = NSUserDefaults.standardUserDefaults()
         firstNameTextField.text = defaults.stringForKey(model.firstName)
         lastNameTextField.text = defaults.stringForKey(model.lastName)
@@ -378,9 +376,9 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         toolBar.sizeToFit()
         
         // Adds the buttons
-        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "doneClick")
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(SubmitInjuryViewController.doneClick))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(SubmitInjuryViewController.cancelClick))
         toolBar.setItems([cancelButton,spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
@@ -408,12 +406,12 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         
     }
     
-    //cancel button in datepicker
+    //Cancel button in datepicker
     func cancelClick() {
         birthDayTextField.resignFirstResponder()
     }
     
-    //check date
+    //Check date
     func compareDate(dateDOB:NSDate)->Bool {
         let now = NSDate()
         if now.compare(dateDOB) == NSComparisonResult.OrderedDescending
@@ -425,7 +423,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         }
     }
     
-    //Giap: Show alert message
+    //Show alert message
     func alertMessage(title : String,message : String){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
@@ -477,6 +475,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         }
         
     }
+    
     //check connection
     class func isConnectedToNetwork() -> Bool {
         
@@ -507,7 +506,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     }
     
     
-    //check out focus textfield
+    //Check out focus textfield
     func textFieldDidEndEditing(textField: UITextField) {
         
         switch textField {
@@ -584,6 +583,10 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 descriptionTextView.text = descriptionTextView.text.capitalizeFirst
             }
         }
+    }
+    @IBAction func actionSelectStaff(sender: AnyObject) {
+        let listStaffViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListStaffViewControllerID") as! ListStaffViewController
+        self.navigationController?.pushViewController(listStaffViewController, animated: true)
     }
     
     

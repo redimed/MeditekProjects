@@ -59,7 +59,8 @@ class TelehealthAPI : TokenAPI{
                 "FileUploads": FileUploads
             ]
         ]
-        //print(parameter)
+        print(config.headers)
+        print(parameter)
         if(UIApplication.sharedApplication().isConnectedToNetwork()){
             Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlTelehealth.requestTelehealth ,headers:config.headers,parameters:parameter,encoding: .JSON).responseJSON{
                 response in

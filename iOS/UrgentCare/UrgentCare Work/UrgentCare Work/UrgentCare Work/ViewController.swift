@@ -19,12 +19,17 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     var pageImages: NSArray!
     weak var timer: NSTimer?
     var page = 0
+    @IBOutlet weak var buttonLogin: UIButton!
     var pastUrls :[String] =   []
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDataJson()
         LoadingAnimation.stopLoading()
-        loadInformationData()
+        self.navigationController?.navigationBarHidden = true
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            buttonLogin.hidden = true
+        }
+        //loadInformationData()
     }
     override func viewDidAppear(animated: Bool) {
         pagingImage()
@@ -231,6 +236,10 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     
     @IBAction func acctionSetting(sender: AnyObject) {
         let setting :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("SettingViewControllerID") as! SettingViewController
+        self.navigationController?.pushViewController(setting, animated: true)
+    }
+    @IBAction func actionLogin(sender: AnyObject) {
+        let setting :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("RegisterViewControllerID") as! RegisterViewController
         self.navigationController?.pushViewController(setting, animated: true)
     }
     // load data from JSON file

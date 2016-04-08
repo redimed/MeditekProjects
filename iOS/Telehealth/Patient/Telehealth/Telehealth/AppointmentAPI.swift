@@ -73,8 +73,6 @@ class AppointmentAPI:TokenAPI {
     func uploadImageNotLogin(image:UIImage,userUID:String,fileType:String = "MedicalImage",completionHandler:(JSON) -> Void)
     {
         config.invalidSertificate()
-        print(fileType)
-        print(userUID)
         
         config.setHeader()
         config.headers["fileType"] = fileType

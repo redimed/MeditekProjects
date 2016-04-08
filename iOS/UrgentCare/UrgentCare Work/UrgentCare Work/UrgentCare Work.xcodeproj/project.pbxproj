@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3F2656311CB246C9001110AB /* DetailCompanyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2656301CB246C9001110AB /* DetailCompanyModel.swift */; };
+		3F2EEDDB1CB79CC700516422 /* ListStaffModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2EEDDA1CB79CC700516422 /* ListStaffModel.swift */; };
+		3F2EEDE01CB7AB3400516422 /* ListStaffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2EEDDF1CB7AB3400516422 /* ListStaffViewController.swift */; };
 		3F5C40C91CA4E578005703DC /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40C81CA4E578005703DC /* UITextFieldExtension.swift */; };
 		3F5C40CD1CA4E786005703DC /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40CC1CA4E786005703DC /* SettingViewController.swift */; };
 		3F5C40CF1CA521CC005703DC /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40CE1CA521CC005703DC /* CustomTableViewCell.swift */; };
@@ -24,6 +26,11 @@
 		3FA53DB31CA929D1000B8BE5 /* UIAlertViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA53DB21CA929D1000B8BE5 /* UIAlertViewExtension.swift */; };
 		3FC565DA1CA8C67200706908 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC565D91CA8C67200706908 /* Context.swift */; };
 		3FC565DC1CA8C6E800706908 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC565DB1CA8C6E800706908 /* BaseModel.swift */; };
+		3FC8D5B01CB6207E0008B3DC /* RequestVerify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5AF1CB6207E0008B3DC /* RequestVerify.swift */; };
+		3FC8D5B21CB620830008B3DC /* VerifyCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B11CB620830008B3DC /* VerifyCodeModel.swift */; };
+		3FC8D5B41CB620AD0008B3DC /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B31CB620AD0008B3DC /* VerifyViewController.swift */; };
+		3FC8D5B61CB620B50008B3DC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B51CB620B50008B3DC /* RegisterViewController.swift */; };
+		3FC8D5B81CB654F80008B3DC /* LogoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B71CB654F80008B3DC /* LogoutModel.swift */; };
 		547640B51C857ECF00E90D69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 547640B41C857ECF00E90D69 /* Main.storyboard */; };
 		54EEAEC01C83F2DD0096CA1F /* DTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EEAEB21C83F2DD0096CA1F /* DTAlertView.swift */; };
 		54EEAEC11C83F2DD0096CA1F /* DotSpinningLikeSkype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EEAEB41C83F2DD0096CA1F /* DotSpinningLikeSkype.swift */; };
@@ -125,6 +132,8 @@
 
 /* Begin PBXFileReference section */
 		3F2656301CB246C9001110AB /* DetailCompanyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCompanyModel.swift; sourceTree = "<group>"; };
+		3F2EEDDA1CB79CC700516422 /* ListStaffModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListStaffModel.swift; sourceTree = "<group>"; };
+		3F2EEDDF1CB7AB3400516422 /* ListStaffViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListStaffViewController.swift; sourceTree = "<group>"; };
 		3F5C40C81CA4E578005703DC /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		3F5C40CC1CA4E786005703DC /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		3F5C40CE1CA521CC005703DC /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -141,6 +150,11 @@
 		3FA53DB21CA929D1000B8BE5 /* UIAlertViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertViewExtension.swift; sourceTree = "<group>"; };
 		3FC565D91CA8C67200706908 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		3FC565DB1CA8C6E800706908 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		3FC8D5AF1CB6207E0008B3DC /* RequestVerify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestVerify.swift; sourceTree = "<group>"; };
+		3FC8D5B11CB620830008B3DC /* VerifyCodeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyCodeModel.swift; sourceTree = "<group>"; };
+		3FC8D5B31CB620AD0008B3DC /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		3FC8D5B51CB620B50008B3DC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		3FC8D5B71CB654F80008B3DC /* LogoutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutModel.swift; sourceTree = "<group>"; };
 		547640B41C857ECF00E90D69 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		54EEAEB21C83F2DD0096CA1F /* DTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAlertView.swift; sourceTree = "<group>"; };
 		54EEAEB41C83F2DD0096CA1F /* DotSpinningLikeSkype.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotSpinningLikeSkype.swift; sourceTree = "<group>"; };
@@ -263,6 +277,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F2EEDDE1CB7AAF200516422 /* ListStaffViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3F2EEDDF1CB7AB3400516422 /* ListStaffViewController.swift */,
+			);
+			name = ListStaffViewController;
+			sourceTree = "<group>";
+		};
 		3F6C461D1CA5356B002A936B /* AccountViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +296,8 @@
 		3FC565D51CA8C5CB00706908 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3FC8D5B11CB620830008B3DC /* VerifyCodeModel.swift */,
+				3FC8D5AF1CB6207E0008B3DC /* RequestVerify.swift */,
 				3FC565DB1CA8C6E800706908 /* BaseModel.swift */,
 				3FA53DA61CA8EE26000B8BE5 /* LoginModel.swift */,
 				3FA53DA81CA91A2A000B8BE5 /* LoginResponse.swift */,
@@ -282,6 +306,8 @@
 				3FA53DAE1CA91E10000B8BE5 /* TelehealthUserModel.swift */,
 				3FA53DB01CA92622000B8BE5 /* ErrorModel.swift */,
 				3F2656301CB246C9001110AB /* DetailCompanyModel.swift */,
+				3FC8D5B71CB654F80008B3DC /* LogoutModel.swift */,
+				3F2EEDDA1CB79CC700516422 /* ListStaffModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -424,6 +450,9 @@
 		54EEAEAB1C83F1130096CA1F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3FC8D5B51CB620B50008B3DC /* RegisterViewController.swift */,
+				3FC8D5B31CB620AD0008B3DC /* VerifyViewController.swift */,
+				3F2EEDDE1CB7AAF200516422 /* ListStaffViewController */,
 				3F6C461D1CA5356B002A936B /* AccountViewController */,
 				547640B11C85797700E90D69 /* CompanyViewController */,
 				54EEAEE81C844EA90096CA1F /* SettingViewController */,
@@ -873,6 +902,7 @@
 				AF26B29E1BEC8787006F37A4 /* AsyncImageView.swift in Sources */,
 				AF26B2951BEC8787006F37A4 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				54EEAEC51C83F2DD0096CA1F /* RotatingCircle.swift in Sources */,
+				3FC8D5B01CB6207E0008B3DC /* RequestVerify.swift in Sources */,
 				54EEAECA1C83F2DD0096CA1F /* SWRevealViewController.m in Sources */,
 				AF26B2A61BEC8787006F37A4 /* DesignableTextView.swift in Sources */,
 				AF26B2A01BEC8787006F37A4 /* BlurView.swift in Sources */,
@@ -907,11 +937,15 @@
 				AF26B29A1BEC8787006F37A4 /* SubmitInjuryViewController.swift in Sources */,
 				3FA53DA71CA8EE26000B8BE5 /* LoginModel.swift in Sources */,
 				AF26B2A21BEC8787006F37A4 /* DesignableImageView.swift in Sources */,
+				3FC8D5B81CB654F80008B3DC /* LogoutModel.swift in Sources */,
 				54EEAEE71C84414F0096CA1F /* HomeViewController.swift in Sources */,
 				54EEAEC91C83F2DD0096CA1F /* TimingFunction.swift in Sources */,
 				3FA53DAB1CA91C9D000B8BE5 /* UserModel.swift in Sources */,
+				3FC8D5B41CB620AD0008B3DC /* VerifyViewController.swift in Sources */,
 				AF26B29C1BEC8787006F37A4 /* SSRadioButtonsController.swift in Sources */,
+				3F2EEDE01CB7AB3400516422 /* ListStaffViewController.swift in Sources */,
 				3FA53DAD1CA91D82000B8BE5 /* RolesModel.swift in Sources */,
+				3FC8D5B21CB620830008B3DC /* VerifyCodeModel.swift in Sources */,
 				AF26B2BA1BEC8787006F37A4 /* InformationUrgentCare.swift in Sources */,
 				AF26B2A71BEC8787006F37A4 /* DesignableView.swift in Sources */,
 				AF26B2B81BEC8787006F37A4 /* TransitionZoom.swift in Sources */,
@@ -922,6 +956,7 @@
 				54EEAECD1C83F30F0096CA1F /* BaseViewController.swift in Sources */,
 				AF26B2981BEC8787006F37A4 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				AF26B2C31BEC8787006F37A4 /* AutocompleteTableViewCell.swift in Sources */,
+				3F2EEDDB1CB79CC700516422 /* ListStaffModel.swift in Sources */,
 				AF26B2B01BEC8787006F37A4 /* SpringAnimation.swift in Sources */,
 				3FA53DB31CA929D1000B8BE5 /* UIAlertViewExtension.swift in Sources */,
 				AF26B2B71BEC8787006F37A4 /* TransitionManager.swift in Sources */,
@@ -930,6 +965,7 @@
 				AF26B2B91BEC8787006F37A4 /* UnwindSegue.swift in Sources */,
 				3F5C40CD1CA4E786005703DC /* SettingViewController.swift in Sources */,
 				AF26B2AB1BEC8787006F37A4 /* LoadingView.swift in Sources */,
+				3FC8D5B61CB620B50008B3DC /* RegisterViewController.swift in Sources */,
 				AF26B2B21BEC8787006F37A4 /* SpringImageView.swift in Sources */,
 				54EEAEE21C83F3960096CA1F /* LoadingAnimation.swift in Sources */,
 				3F2656311CB246C9001110AB /* DetailCompanyModel.swift in Sources */,

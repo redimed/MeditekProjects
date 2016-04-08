@@ -78,9 +78,8 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 
 			if(info.Email){
-				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
-				var Email=info.Email.replace('/[\(\)\s\-]/g','');
-				if(!EmailPattern.test(Email)){
+				var EmailPattern=new RegExp(/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/);
+				if(!EmailPattern.test(info.Email)){
 					error.push({field:"Email",message:"invalid email"});
 					// toastr.error('Email not invalid');
 				}

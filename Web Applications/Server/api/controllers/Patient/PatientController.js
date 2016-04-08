@@ -31,49 +31,78 @@ module.exports = {
                             data: info
                         });
                     } else {
-                        return RelUserRole.create({
-                                RoleId: 5,
-                                SiteId: 1,
-                                UserAccountId: patient.UserAccountID,
-                                Enable: 'Y'
-                            }, { transaction: patient.transaction })
-                            .then(function(created_companyRole) {
-                                if (!created_companyRole) {
-                                    patient.transaction.rollback();
-                                    var err = new Error('CreatePatient.error');
-                                    err.pushError('AddRole.queryerror');
-                                    return res.serverError(ErrorWrap(err));
-                                } else {
-                                    return RelCompanyPatient.create({
-                                        CompanyID : data.compid,
-                                        PatientID : patient.ID,
-                                        Active    : 'Y'
-                                    },{transaction: patient.transaction})
-                                    .then(function(success) {
-                                        patient.transaction.commit();
-                                        var info = {
-                                            UID: patient.UID,
-                                            FirstName: patient.FirstName,
-                                            LastName: patient.LastName,
-                                            DOB: patient.DOB,
-                                            Address1: patient.Address1,
-                                            Address2: patient.Address2,
-                                            UserAccountUID: patient.UserAccountUID
-                                        };
-                                        return res.ok({
-                                            status: 200,
-                                            message: "success",
-                                            data: info
-                                        });
-                                    },function(err) {
+                        if(data.RoleId){
+                            return RelUserRole.create({
+                                    RoleId: data.RoleId,
+                                    SiteId: 1,
+                                    UserAccountId: patient.UserAccountID,
+                                    Enable: 'Y'
+                                }, { transaction: patient.transaction })
+                                .then(function(created_companyRole) {
+                                    if (!created_companyRole) {
                                         patient.transaction.rollback();
-                                        res.serverError(ErrorWrap(err));
-                                    })
-                                }
-                            }, function(err) {
+                                        var err = new Error('CreatePatient.error');
+                                        err.pushError('AddRole.queryerror');
+                                        return res.serverError(ErrorWrap(err));
+                                    } else {
+                                        return RelCompanyPatient.create({
+                                            CompanyID : data.compid,
+                                            PatientID : patient.ID,
+                                            Active    : 'Y'
+                                        },{transaction: patient.transaction})
+                                        .then(function(success) {
+                                            patient.transaction.commit();
+                                            var info = {
+                                                UID: patient.UID,
+                                                FirstName: patient.FirstName,
+                                                LastName: patient.LastName,
+                                                DOB: patient.DOB,
+                                                Address1: patient.Address1,
+                                                Address2: patient.Address2,
+                                                UserAccountUID: patient.UserAccountUID
+                                            };
+                                            return res.ok({
+                                                status: 200,
+                                                message: "success",
+                                                data: info
+                                            });
+                                        },function(err) {
+                                            patient.transaction.rollback();
+                                            res.serverError(ErrorWrap(err));
+                                        })
+                                    }
+                                }, function(err) {
+                                    patient.transaction.rollback();
+                                    res.serverError(ErrorWrap(err));
+                                })
+                        }
+                        else {
+                            return RelCompanyPatient.create({
+                                CompanyID : data.compid,
+                                PatientID : patient.ID,
+                                Active    : 'Y'
+                            },{transaction: patient.transaction})
+                            .then(function(success) {
+                                patient.transaction.commit();
+                                var info = {
+                                    UID: patient.UID,
+                                    FirstName: patient.FirstName,
+                                    LastName: patient.LastName,
+                                    DOB: patient.DOB,
+                                    Address1: patient.Address1,
+                                    Address2: patient.Address2,
+                                    UserAccountUID: patient.UserAccountUID
+                                };
+                                return res.ok({
+                                    status: 200,
+                                    message: "success",
+                                    data: info
+                                });
+                            },function(err) {
                                 patient.transaction.rollback();
                                 res.serverError(ErrorWrap(err));
                             })
+                        }
                     }
                 } else {
                     var err = new Error("SERVER ERROR");

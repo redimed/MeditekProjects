@@ -80,7 +80,20 @@ module.exports = React.createClass({
             if (el.parentNode == target) {
                 target.removeChild(el)
             }
-            swal({
+            var fromEl = el.id
+            var targetArray = $(target).find('.portlet')
+            $.each(targetArray, function(index, value) {
+                var tempId = $(value).attr('id')
+                if (tempId !== fromEl) {
+                    var fromArr = fromEl.split('_')
+                    var toArr = tempId.split('_')
+                    var fromObj = { codeSection: fromArr[1] }
+                    var toObj = { codeSection: toArr[1] };
+                    self.props.onDragSection(fromObj, toObj);
+                    return false;
+                }
+            })
+            /*swal({
                 title: 'Are you sure?',
                 text: 'You will change this section',
                 type: 'warning',
@@ -105,7 +118,20 @@ module.exports = React.createClass({
                 } else {
                     swal("No change", "Form will refresh.", "success")
                 }
-            })
+            })*/
+            var fromEl = el.id
+            var targetArray = $(target).find('.portlet')
+            $.each(targetArray, function(index, value) {
+                var tempId = $(value).attr('id')
+                if (tempId !== fromEl) {
+                    var fromArr = fromEl.split('_')
+                    var toArr = tempId.split('_')
+                    var fromObj = { codeSection: fromArr[1] }
+                    var toObj = { codeSection: toArr[1] };
+                    self.props.onDragSection(fromObj, toObj);
+                    return false;
+                }
+            })//end each
         })
     },
     _dragAndDropRows: function() {        
@@ -152,6 +178,8 @@ module.exports = React.createClass({
     },
     _onCreateRow: function(){
         var self = this;
+        self.props.onCreateRow(self.props.code, self.props.refTemp);
+        /*self.props.onCreateRow(self.props.code, self.props.refTemp);
         swal({
             title: 'Are you sure?',
             text: 'You will create new row',
@@ -161,14 +189,15 @@ module.exports = React.createClass({
             allowOutsideClick: true
         }, function() {
             self.props.onCreateRow(self.props.code, self.props.refTemp);
-        })
+        })*/
     },
     _onUpdateSection: function() {
         this.refs.modalUpdateSection.show();
     },
     _onRemoveSection: function() {
         var self = this;
-        swal({
+        self.props.onRemoveSection(self.props.code);
+        /*swal({
             title: 'Are you sure?',
             text: 'You will delete section ' + this.props.name,
             type: 'warning',
@@ -177,12 +206,14 @@ module.exports = React.createClass({
             allowOutsideClick: true
         }, function() {
             self.props.onRemoveSection(self.props.code);
-        })
+        })*/
     },
     _onSaveUpdateSection: function() {
         var name = this.refs.formUpdateSection.getName();
         var self = this;
-        swal({
+        self.refs.modalUpdateSection.hide();
+        self.props.onUpdateSection(self.props.code, name);
+        /*swal({
             title: 'Are you sure?',
             text: 'You will update section ' + this.props.name,
             type: 'warning',
@@ -192,7 +223,7 @@ module.exports = React.createClass({
         }, function() {
             self.refs.modalUpdateSection.hide();
             self.props.onUpdateSection(self.props.code, name);
-        })
+        })*/
     },
     _onOrderSection: function(){
         this.refs.modalOrderSection.show();

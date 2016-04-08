@@ -128,7 +128,8 @@ module.exports = React.createClass({
                 break;
             case 'deleteField':
                 var self = this;
-                swal({
+                self.props.onRemoveField(self.props.codeSection, self.props.code, code);
+                /*swal({
                     title: 'Are you sure?',
                     text: 'You will delete this field ?',
                     type: 'warning',
@@ -137,13 +138,15 @@ module.exports = React.createClass({
                     allowOutsideClick: true
                 }, function() {
                     self.props.onRemoveField(self.props.codeSection, self.props.code, code);
-                })
+                })*/
                 break;
         }
     },
     _onComponentFieldDetailSave: function(data) {
         var self = this;
-        swal({
+        self.props.onSaveFieldDetail(self.props.codeSection, self.props.code, data);
+        self.refs.modalFieldDetail.hide();
+        /*swal({
             title: 'Are you sure?',
             text: 'You will edit this field',
             type: 'warning',
@@ -153,7 +156,7 @@ module.exports = React.createClass({
         }, function() {
             self.props.onSaveFieldDetail(self.props.codeSection, self.props.code, data);
             self.refs.modalFieldDetail.hide()
-        })
+        })*/
     },
     _onDeleteColumn: function(codeField, codeColumn) {
         this.props.onRemoveTableColumn(this.props.codeSection, this.props.code, codeField, codeColumn);
@@ -169,7 +172,8 @@ module.exports = React.createClass({
         var self = this;
         switch (id) {
             case 'deleteTable':
-                swal({
+                self.props.onRemoveField(self.props.codeSection, self.props.code, code);
+                /*swal({
                     title: 'Are you sure?',
                     text: 'You will delete this table.',
                     type: 'warning',
@@ -178,10 +182,11 @@ module.exports = React.createClass({
                     allowOutsideClick: true
                 }, function() {
                     self.props.onRemoveField(self.props.codeSection, self.props.code, code);
-                })
+                })*/
                 break;
             case 'addRow':
-                swal({
+                self.props.onCreateTableRow(self.props.codeSection, self.props.code, code);
+                /*swal({
                     title: 'Are you sure?',
                     text: 'You will add a row into this table.',
                     type: 'warning',
@@ -190,10 +195,11 @@ module.exports = React.createClass({
                     allowOutsideClick: true
                 }, function() {
                     self.props.onCreateTableRow(self.props.codeSection, self.props.code, code);
-                })
+                })*/
                 break;
             case 'deleteRow':
-                swal({
+                self.props.onRemoveTableRow(self.props.codeSection, self.props.code, code);
+                /*swal({
                     title: 'Are you sure?',
                     text: 'You will delete a row in this table.',
                     type: 'warning',
@@ -202,10 +208,11 @@ module.exports = React.createClass({
                     allowOutsideClick: true
                 }, function() {
                     self.props.onRemoveTableRow(self.props.codeSection, self.props.code, code);
-                })
+                })*/
                 break;
             case 'addCol':
-                swal({
+                self.props.onCreateTableColumn(self.props.codeSection, self.props.code, code);
+                /*swal({
                     title: 'Are you sure?',
                     text: 'You will add a column into this table.',
                     type: 'warning',
@@ -214,7 +221,7 @@ module.exports = React.createClass({
                     allowOutsideClick: true
                 }, function() {
                     self.props.onCreateTableColumn(self.props.codeSection, self.props.code, code);
-                })
+                })*/
                 break;
             case 'editTable':
                 var name = self.refs[refTemp].getName();

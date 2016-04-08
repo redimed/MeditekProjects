@@ -18,8 +18,8 @@ module.exports = React.createClass({
                 this.props.onAddNewModule();
             },
 	_onAddNewSection: function(){
-                	var self = this;
-                	swal({
+                    this.props.onAddNewSection();
+                	/*swal({
                 		title: 'Are you sure?',
                 		text: 'You will create new Section for this E-Form',
                 		type: 'warning',
@@ -27,8 +27,7 @@ module.exports = React.createClass({
                 		closeOnConfirm: false,
                 		allowOutsideClick: true
                 	}, function(){
-                		self.props.onAddNewSection();
-                	})
+                	})*/
 	},
 	_onSaveForm: function(){
                          this.props.onSaveForm();

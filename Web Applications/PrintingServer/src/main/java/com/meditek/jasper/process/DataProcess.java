@@ -63,6 +63,13 @@ public class DataProcess {
                     }                    
                 }                
             }
+            else if(d.getType().equals("eform_input_date")){
+                String dateString = d.getValue().toString();
+                parsedData.put(d.getName().toLowerCase()+"_date", (dateString.split("/"))[0]);
+                parsedData.put(d.getName().toLowerCase()+"_month", (dateString.split("/"))[1]);
+                parsedData.put(d.getName().toLowerCase()+"_year", (dateString.split("/"))[2]);
+                parsedData.put(d.getName().toLowerCase(), dateString);
+            }
             else if(d.getType().equals("break")) continue;
             else parsedData.put(d.getName().toLowerCase(), d.getValue());
         }

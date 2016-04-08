@@ -10,19 +10,11 @@
 import Foundation
 import UIKit
 
-#if DEBUG
-    func DLog(message: String, filename: String = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
-        NSLog("[\(filename.componentsSeparatedByString("/").last):\(line)] \(function) - \(message)")
-    }
-#else
-    func DLog(message: String, filename: String = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
-    }
-#endif
-
 class Define: NSObject {
     
     static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-   
+    static let versionBuild = "UIApplication.sharedApplication().versionBuild()"
+    
     
     static let storyboardHome = UIStoryboard(name: "Home", bundle: nil)
     
@@ -33,13 +25,16 @@ class Define: NSObject {
     static let myLocation = "myLocation"
     static let LogoutFunction = "LogoutFunction"
     struct keyNSDefaults {
+        static let deviceID = "deviceID"
+        static let appid = "appid"
+        
         static let Authorization = "Authorization"
         static let userInfor = "userInfor"
         static let Cookie = "Cookie"
-        static let deviceID = "deviceID"
-        static let appid = "appid"
         static let userLogin = "userLogin"
         static let companyInfor = "companyInfor"
+        static let UIDLogoutFail = "UIDLogoutFail"
+        static let UID = "UID"
     }
     
     enum UIUserInterfaceIdiom : Int

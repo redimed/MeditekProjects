@@ -11,8 +11,12 @@ import ObjectMapper
 import RealmSwift
 
 class Login: BaseModel {
-    dynamic var UserName = ""
-    dynamic var Password = ""
+    dynamic var UserName = "1"
+    dynamic var Password = "2"
+    dynamic var UserUID = ""
+    dynamic var DeviceID = Context.getDataDefasults(Define.keyNSDefaults.deviceID)
+    dynamic var VerificationToken = ""
+    dynamic var AppID = UIApplication.sharedApplication().bundleID()
     
     required convenience init?(_ map: Map) {
         self.init()
@@ -21,6 +25,10 @@ class Login: BaseModel {
     override func mapping(map: Map) {
         UserName    <- map["UserName"]
         Password    <- map["Password"]
+        UserUID    <- map["UserUID"]
+        DeviceID    <- map["DeviceID"]
+        VerificationToken    <- map["VerificationToken"]
+        AppID    <- map["AppID"]
     }
     
 }

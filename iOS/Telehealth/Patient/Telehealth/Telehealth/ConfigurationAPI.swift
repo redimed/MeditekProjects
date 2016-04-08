@@ -41,7 +41,7 @@ struct UrlTelehealth {
 struct httpUrl{
     static let httpTestApp :String = "https://testapp.redimed.com.au"
     static let httpMeditek :String = "https://meditek.redimed.com.au"
-    static let httpChien : String = "http://192.168.1.215"
+    static let httpChien : String = "http://192.168.1.235"
 }
 
 //Giap: API Socket

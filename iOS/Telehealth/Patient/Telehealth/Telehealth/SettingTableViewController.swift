@@ -96,8 +96,9 @@ class SettingTableViewController: UITableViewController ,DTAlertViewDelegate {
                 print(response)
                 if response["status"] == "success"{
                     self.view.hideLoading()
-                    self.performSegueWithIdentifier("logOutUnwind", sender: self)
                     self.patientService.logOut()
+                    self.performSegueWithIdentifier("logOutUnwind", sender: self)
+                    
                 }else{
                     self.view.hideLoading()
                     let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()

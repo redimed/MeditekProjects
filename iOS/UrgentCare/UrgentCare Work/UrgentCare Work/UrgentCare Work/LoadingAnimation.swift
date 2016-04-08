@@ -28,7 +28,7 @@ class LoadingAnimation {
     }
     class func stopLoading() {
         let adelegate : AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        for (var i = 0; i < adelegate.window?.subviews.count; i++) {
+        for (var i = 0; i < adelegate.window?.subviews.count; i += 1) {
             let view = adelegate.window?.subviews[i]
             if view?.tag == 999 || view?.tag == 991{
                 view?.removeFromSuperview()

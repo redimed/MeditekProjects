@@ -7,7 +7,7 @@
 //
 
 import Foundation
-var cookies :String = String()
+
 class Context {
     class func getTokenHeader() -> [String : String]{
         if (NSUserDefaults.standardUserDefaults().objectForKey("token") == nil){
@@ -38,10 +38,8 @@ class Context {
             message = "Password Invalid !"
         }else if(ErrorType == "DetailCompanyByUser.error"){
             message = "Detail Company By User Error"
-        }else if(ErrorType == "Missing credentials"){
-            message = "Missing credentials"
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){
-            NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
+           // NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
             message = "Please login again !"
         }
         return message
@@ -51,7 +49,7 @@ class Context {
         let appid =  NSBundle.mainBundle().bundleIdentifier!
         return appid
     }
-    
+
     class func setDataDefaults(data :AnyObject, key:String) {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(data, forKey: key)

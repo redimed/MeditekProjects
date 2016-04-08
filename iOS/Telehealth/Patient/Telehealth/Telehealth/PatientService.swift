@@ -112,8 +112,8 @@ class PatientService{
             
             completionHandler(response)
         })
-
-
+        
+        
     }
     
     func updateAvatar(fileImageUID:String, completionHandler:(JSON) -> Void){
@@ -133,15 +133,17 @@ class PatientService{
     }
     
     func logOut(){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey("verifyUser")
-        defaults.removeObjectForKey("uid")
-        defaults.removeObjectForKey("token")
-        defaults.removeObjectForKey("patientUID")
-        defaults.removeObjectForKey("userUID")
-        defaults.removeObjectForKey("refreshCode")
-        defaults.removeObjectForKey("deviceToken")
-        defaults.synchronize()
+        config.headers["useruid"] = ""
+        config.headers["Authorization"] = "Bearer "
+        config.headers["Cookie"] = ""
+        Context.deleteDatDefaults("Set-Cookie")
+        Context.deleteDatDefaults("verifyUser")
+        Context.deleteDatDefaults("uid")
+        Context.deleteDatDefaults("token")
+        Context.deleteDatDefaults("patientUID")
+        Context.deleteDatDefaults("userUID")
+        Context.deleteDatDefaults("refreshCode")
+        Context.deleteDatDefaults("deviceToken")
         sharedSocket.socket.disconnect()
     }
     

@@ -18,3 +18,16 @@ extension UIAlertView {
         alert.show()
     }
 }
+
+extension UITextField {
+    func addDoneButton(textField:UITextField) {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
+                                            target: nil, action: nil)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
+                                            target: self, action: #selector(UIView.endEditing(_:)))
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        textField.inputAccessoryView = keyboardToolbar
+    }
+}

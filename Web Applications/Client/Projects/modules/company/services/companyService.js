@@ -221,7 +221,7 @@ angular.module('app.authentication.company.service', [])
     };
 
     services.getDetailChild = function(data) {
-    	var getDetailChild = api.all('company/get-detail-child');
+    	var getDetailChild = api.all('company/get-child-detail');
     	return getDetailChild.post({data:data});
     };
 

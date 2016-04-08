@@ -70,7 +70,7 @@ module.exports = {
         action: 'GetListSite'
     },
 
-    'post /api/company/get-detail-child': {
+    'post /api/company/get-child-detail': {
         controller: 'Company/CompanyController',
         action: 'GetDetailChild'
     },

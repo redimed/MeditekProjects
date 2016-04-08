@@ -220,5 +220,15 @@ angular.module('app.authentication.company.service', [])
     	return createFund.post({data:data});
     };
 
+    services.getDetailChild = function(data) {
+    	var getDetailChild = api.all('company/get-detail-child');
+    	return getDetailChild.post({data:data});
+    };
+
+    services.createUser = function(data) {
+    	var createUser = api.all('company/create-user');
+    	return createUser.post({data:data});
+    };
+
 	return services;
 });

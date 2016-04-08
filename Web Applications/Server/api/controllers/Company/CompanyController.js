@@ -117,6 +117,26 @@ module.exports = {
         });
     },
 
+    CreateUser : function(req, res) {
+        var data = req.body.data;
+        if(!data.CompanyUID){
+            var err = new Error("CreateUser.Error");
+            err.pushError("CompanyUID.invalidParams");
+            res.serverError(ErrorWrap(err));
+        }
+        if(!data.patientUID){
+            var err = new Error("CreateUser.Error");
+            err.pushError("patientUID.invalidParams");
+            res.serverError(ErrorWrap(err));
+        }
+        Services.Company.CreateUser(data)
+        .then(function(result) {
+            res.ok({message:"success",data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
     GetListFund : function(req, res) {
         var data = req.body.data;
         return Fund.findAndCountAll({
@@ -166,6 +186,23 @@ module.exports = {
         Services.Company.GetListSite(data)
         .then(function(result){
             res.ok({message:"success",data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
+    GetDetailChild : function(req, res) {
+        var data = req.body.data;
+        Services.Company.GetDetailChild(data)
+        .then(function(result) {
+            if(data.model == 'CompanySites'){
+                console.log("tra o dayu");
+                res.ok({message:"success",data:result.rows,count:result.count});
+            }
+            else{
+                console.log("tra o dayu12312312131");
+                res.ok({message:"success",data:result,count:result.count});
+            }
         },function(err) {
             res.serverError(ErrorWrap(err));
         });

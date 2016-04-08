@@ -8,6 +8,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             rolecompany:'=roleCompany',
             reset:'=onReset',
             compid:'=onCompid',
+            RoleId:'=onRoleid'
         },
         restrict: "EA",
         controller: function($scope, FileUploader) {
@@ -22,7 +23,6 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     };
                     img.src = event.target.result;
                 }
-                console.log(e.target.files[0]);
                 reader.readAsDataURL(e.target.files[0]);
             }
 
@@ -57,7 +57,6 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 if ($scope.typeFile == "ProfileImage") {
                     $scope.isChoseAvatar = true;
                 }
-                console.log(uploader.queue);
             };
             uploader.onBeforeUploadItem = function(item) {
                 item.headers.Authorization = 'Bearer ' + $cookies.get("token");
@@ -80,8 +79,6 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
         },
         link: function(scope, elem, attrs) {
             scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
-
-            console.log("rolecompany ",scope.rolecompany);
             scope.isChoseAvatar = false;
             // State
             scope.state = [
@@ -185,7 +182,6 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     scope.ermsg['PhoneNumber'] = 'required';
                 }
                 else{
-                    console.log(data);
                     PatientService.validateCheckPhone(data)
                     .then(function(success) {
                         scope.er = '';
@@ -214,7 +210,6 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                         scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
                                         // scope.data.DOB = new Date('1/1/1990');
                                     } else {
-                                        console.log(result);
                                         // toastr.error("Information was used to create patient", "ERROR");
                                         scope.isBlockStep1 = false;
                                         scope.loadingCheck = false;
@@ -278,13 +273,13 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             //and show notification success
             //****show notification error if validate data error 
             scope.createPatient = function(data) {
-                console.log(data);
                 scope.loadingCreate = true;
                 //service check data
                 return PatientService.validate(data)
                     .then(function(result) {
                         data.rolecompany = scope.rolecompany;
                         data.compid      = scope.compid?scope.compid:null;
+                        data.RoleId      = scope.RoleId?scope.RoleId:null;
                         //service call API create patient
                         return PatientService.createPatient(data)
                             .then(function(success) {

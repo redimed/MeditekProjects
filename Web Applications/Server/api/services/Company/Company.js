@@ -372,22 +372,21 @@ module.exports = {
 		.then(function(t) {
 
 			return Company.findOne({
-				include:[
-					{
-						all:true,
+				// include:[
+				// 	{
+				// 		all:true,
+				// 		required:false
+				// 	},
+				// 	{
+				// 		model:Patient,
+				// 		through:
+				// 		{
 
-						required:false
-					},
-					{
-						model:Patient,
-						through:
-						{
-
-							required:true
-						},
-						required:false
-					}
-				],
+				// 			required:true
+				// 		},
+				// 		required:false
+				// 	}
+				// ],
 				where: {
 					UID : data.UID
 				},
@@ -402,14 +401,6 @@ module.exports = {
 					throw err;
 				}
 				else {
-					// returnData.Company = got_company;
-					// return CompanySite.findAll({
-					// 	where :{
-					// 		CompanyID : got_company.ID,
-					// 		Enable    : 'Y'
-					// 	},
-					// 	transaction: t
-					// });
 					t.commit();
 					return got_company;
 				}
@@ -418,20 +409,6 @@ module.exports = {
 				t.rollback();
 				throw err;
 			})
-			// .then(function(got_companysite) {
-			// 	if(got_companysite != null && got_companysite != ''){
-			// 		t.commit();
-			// 		returnData.CompanySite = got_companysite;
-			// 		return returnData;
-					
-			// 	}
-			// 	else {
-			// 		return returnData;
-			// 	}
-			// },function(err) {
-			// 	t.rollback();
-			// 	throw err;
-			// });
 
 		},function(err) {
 			throw err;
@@ -819,6 +796,150 @@ module.exports = {
 		});
 	},
 
+	CreateUser : function(data) {
+		var company;
+		return sequelize.transaction()
+		.then(function(t) {
+			return Company.findOne({
+				where : {
+					UID : data.CompanyUID,
+					Enable:'Y'
+				},
+				transaction :t
+			})
+			.then(function(got_company) {
+				if(got_company == null || got_company == ''){
+					t.rollback();
+					var err = new Error("CreateUser.Error");
+					err.pushError("Company.notFound");
+					throw err;
+				}
+				else {
+					company = got_company.ID;
+					return Patient.findOne({
+						where:{
+							UID : data.patientUID
+						},
+						transaction :t
+					});
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+			.then(function(got_patient) {
+				if(got_patient == null || got_patient == ''){
+					t.rollback();
+					var err = new Error("CreateUser.Error");
+					err.pushError("Patient.notFound");
+					throw err;
+				}
+				else {
+					patient = got_patient;
+					console.log(company);
+					console.log(got_patient.ID);
+					return RelCompanyPatient.findOne({
+						where: {
+							CompanyID : company,
+							PatientID : patient.ID
+						},
+						transaction:t
+					});
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+			.then(function(checked_association){
+				console.log(checked_association);
+				if(checked_association == null || checked_association == ''){
+					return RelCompanyPatient.create({
+						CompanyID : company,
+						PatientID : patient.ID,
+						Active    : 'Y'
+					},{transaction:t});
+				}
+				else {
+					return checked_association;
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+			.then(function(created_association) {
+				if(created_association == null || created_association == ''){
+					t.rollback();
+					var err = new Error("CreateUser.Error");
+					err.pushError("CreateAssociation.Queryerror");
+					throw err;
+				}
+				else {
+					// t.commit();
+					// return created_association;
+					return RelUserRole.findOne({
+						where:{
+							Enable:'Y',
+							UserAccountId:patient.UserAccountID,
+							RoleId:5
+						},
+						transaction:t
+					});
+				}
+			},function(err) {
+				// t.rollback();
+				throw err;
+			})
+			.then(function(check_userRole) {
+				if(check_userRole == null || check_userRole == ''){
+					return RelUserRole.create({
+						UserAccountId:patient.UserAccountID,
+						RoleId : 5,
+						Enable   : 'Y',
+						SiteId : 1,
+					},{transaction:t});
+				}
+				else {
+					if(check_userRole.Enable == 'Y') {
+						t.rollback();
+						var err = new Error("CreateUser.Error");
+						err.pushError("UserAccount.Company.HasAssociation");
+						throw err;
+					}
+					else {
+						return RelUserRole.update({
+							Enable    : 'Y'
+						},{
+							where:{
+								UserAccountId:patient.UserAccountID,
+								RoleId : 5,
+							},
+							transaction:t
+						});
+					}
+				}
+			},function(err) {
+				throw err;
+			})
+			.then(function(success) {
+				if(success == null || success == ''){
+					t.rollback();
+					var err = new Error("CreateUser.Error");
+					err.pushError("CreateAssociation.Queryerror");
+					throw err;
+				}
+				else {
+					t.commit();
+					return success;
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			});
+		},function(err) {
+			throw err;
+		});
+	},
+
 	CreateFund : function(data) {
 		var CompanyID,FundID;
 		if(!data.FundUID || data.FundUID == null || data.FundUID == '') {
@@ -1147,6 +1268,166 @@ module.exports = {
 		},function(err) {
 			throw err;
 		})
+	},
+
+	GetDetailChild: function(data) {
+		var count;
+		if(!data) {
+			var err = new Error('GetDetailChild.error');
+			err.pushError('notFound.params');
+			throw err;
+		}
+		if(!data.UID) {
+			var err = new Error('GetDetailChild.error');
+			err.pushError('UID.invalid');
+			throw err;
+		}
+		if(!data.model) {
+			var err = new Error('GetDetailChild.error');
+			err.pushError('model.invalid');
+			throw err;
+		}
+
+		return Company.findOne({
+			attributes:['UID','ID'],
+			where: {
+				UID : data.UID
+			}
+		})
+		.then(function(got_company) {
+			if(!got_company) {
+				var err = new Error('GetDetailChild.error');
+				err.pushError('Company.notFound');
+				throw err;
+			}
+			else {
+				//Fund,Staff,CompanySite,UserAccount
+				switch(data.model) {
+					case 'Funds' :
+						return RelFundCompany.count({
+							where:{
+								CompanyID: got_company.ID
+							}
+						})
+						.then(function(result) {
+							console.log("count ",result);
+							count = result;
+							return got_company.getFunds({
+								where:['RelFundCompany.Active=?','Y'],
+								limit:data.limit,
+								offset:data.offset
+							});
+						},function(err) {
+							throw err;
+						})
+						break;
+
+					case 'Patients' :
+						return RelCompanyPatient.count({
+							where: {
+								CompanyID: got_company.ID
+							}
+						})
+						.then(function(result){
+							console.log("count ",result);
+							count = result;
+							return got_company.getPatients({
+								where:['RelCompanyPatient.Active=?','Y'],
+								include:[
+									{
+										model:UserAccount,
+										include:[
+											{
+												model:Role,
+												attributes:['RoleCode'],
+												where:{
+													ID: {$in:[3,5]}
+												},
+												required:true
+											}
+										],
+										attributes:['PhoneNumber','ID'],
+										required:true
+									}
+								],
+								limit:data.limit,
+								offset:data.offset
+							});
+						},function(err) {
+							throw err;
+						});
+						break;
+
+					case 'CompanySites' :
+						return CompanySite.findAndCountAll({
+							where:{
+								CompanyID : got_company.ID,
+								Enable:'Y'
+							},
+							limit:data.limit,
+							offset:data.offset,
+						});
+						break;
+
+					case 'UserAccounts' :
+						return RelCompanyPatient.count({
+							where: {
+								CompanyID: got_company.ID
+							}
+						})
+						.then(function(result){
+							console.log("count ",result);
+							count = result;
+							return got_company.getPatients({
+								where:['RelCompanyPatient.Active=?','Y'],
+								include:[
+									{
+										model:UserAccount,
+										include:[
+											{
+												model:Role,
+												attributes:['RoleCode'],
+												where:{
+													ID: 5
+												},
+												required:true
+											}
+										],
+										attributes:['PhoneNumber','ID','Email','UserName'],
+										required:true
+									}
+								],
+								limit:data.limit,
+								offset:data.offset
+							});
+						},function(err) {
+							throw err;
+						});
+						break;
+
+					default :
+						break;	
+				}
+
+			}
+		},function(err) {
+			throw err;
+		})
+		.then(function(result) {
+			if(!result) {
+				var err = new Error('GetDetailChild.error');
+				err.pushError('Model.notFound');
+				throw err;
+			}
+			else {
+				if(count)
+					result.count = count;
+				return result;
+			}
+		},function(err) {
+			throw err;
+		});
+
 	},
 
 	Test: function() {

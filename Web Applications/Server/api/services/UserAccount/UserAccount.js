@@ -5,6 +5,7 @@
 
 var $q = require('q');
 var regexp = require('node-regexp');
+var config = sails.config.myconf;
 var generatePassword = require("password-generator");
 var o=require("../HelperService");
 var jwt = require('jsonwebtoken');
@@ -1114,7 +1115,8 @@ module.exports = {
             email   : data.email?data.email:data.Email,
             subject : 'Forgot Password',
             data    : token,
-            UID     : data.UID
+            UID     : data.UID,
+            url		: config.url
         };
         return UserForgot.create({
         	UserAccountUID : data.UID,

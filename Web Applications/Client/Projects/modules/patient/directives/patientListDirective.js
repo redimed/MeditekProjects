@@ -8,7 +8,9 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			uidReturn:'=',
 			appointment:'=',
 			staff:'=onStaff',
-			limit:'=onLimit'
+			limit:'=onLimit',
+			compid:'=onCompid',
+			roleid:'=onRoleid',
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
@@ -30,7 +32,12 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				{id:"N",name:"Disable"}
 			];
 			//check user add data items into directive
-			if(!scope.items){
+			if(scope.items){
+				if(!scope.items.hasOwnProperty('field') || !scope.items.hasOwnProperty('name')){
+					scope.items = scope.itemDefault;
+				}
+			}
+			else{
 				scope.items = scope.itemDefault;
 			}
 
@@ -137,8 +144,6 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 
 			scope.selectPatient = function(patientUID,stt,Enable,FirstName,LastName){
 				console.log(FirstName);
-				console.log(Enable);
-				console.log(scope.appointment);
 				if(Enable=='Y'){
 					if(scope.appointment) {
 
@@ -166,7 +171,6 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						});
 					}
 					else if(scope.staff) {
-						console.log(scope.staff);
 						scope.uidReturn=patientUID;
 						swal({   
 							title: "Are you sure?", 
@@ -237,6 +241,10 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 					var modalInstance = $uibModal.open({
 						templateUrl: 'patientCreatemodal',
 						controller: function($scope,$modalInstance){
+							// $scope.rolecompany = true;
+							$scope.compid = scope.compid;
+							$scope.role = scope.roleid?true:false;
+							$scope.roleid = scope.roleid?scope.roleid:null;
 							$scope.close = function() {
 								$modalInstance.close();
 							};
@@ -254,7 +262,10 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 					});
 					modalInstance.result.then(function (data) {
 						if (data && data.status == 'success') {
-				      		scope.staff.runIfSuccess(data.data);
+				      		if(!scope.compid)
+				      			scope.staff.runIfSuccess(data.data);
+				      		else
+				      			scope.staff.createSuccess(data.data);
 						};
 				    });
 				}else{

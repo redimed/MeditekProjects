@@ -9,7 +9,7 @@ var o = require("../HelperService");
 var moment = require("moment");
 module.exports = {
     /**
-     * TODO
+     *
      */
     CheckActivated: function(userInfo, transaction) {
     	var error = new Error("UserActivation.Error");
@@ -57,7 +57,46 @@ module.exports = {
             })
             .then(function(user){
             	if (user) {
-	                return user;
+                    if(user.Activated=='Y')
+                    {
+                        //User da activate
+                        return {Activated:'Y', UserUID: user.UID};
+                    }
+                    else
+                    {
+                        //User chua activate
+                        var PinNumber=user.PinNumber;
+
+                        if(!PinNumber)
+                        {
+                            PinNumber=randomstring.generate({
+                                length: o.const.verificationCodeLength,
+                                charset: 'numeric'
+                            });
+
+                            return user.updateAttributes({ PinNumber: PinNumber, ExpiryPin: 5},{transaction:transaction})
+                            .then(function(userUpdated) {
+                                if(userUpdated)
+                                {
+                                    return {Activated:'N', PinNumber:PinNumber, UserUID: user.UID}
+                                }
+                                else
+                                {
+                                    error.pushError("CheckActivated.userUpdateNotFound");
+                                    throw error;
+                                }
+                            }, function(err) {
+                                console.log(err);
+                                error.pushError("CheckActivated.updatePinNumberError");
+                                throw error;
+                            })
+                        }
+                        else
+                        {
+                            return {Activated:'N', PinNumber:PinNumber, UserUID: user.UID}
+                        }
+                    }
+
 	            } else {
 	                error.pushError("CheckActivated.UserIsNotExist");
 	                throw error;

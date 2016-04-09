@@ -41,24 +41,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private boolean shouldFinish = false;
     private UrgentRequest urgentRequestApi;
 
-    @Bind(R.id.slider)
-    ViewPager slider;
-    @Bind(R.id.circleIndicator)
-    PageIndicator circleIndicator;
-    @Bind(R.id.btnCall)
-    Button btnCall;
-    @Bind(R.id.btnFAQ)
-    Button btnFAQ;
-    @Bind(R.id.btnUrgentCare)
-    Button btnUrgent;
-    @Bind(R.id.btnRehab)
-    Button btnRehab;
-    @Bind(R.id.btnSpec)
-    Button btnSpec;
-    @Bind(R.id.btnGP)
-    Button btnGP;
-    @Bind(R.id.btnOther)
-    Button btnOther;
+    @Bind(R.id.slider) ViewPager slider;
+    @Bind(R.id.circleIndicator) PageIndicator circleIndicator;
+    @Bind(R.id.btnCall) Button btnCall;
+    @Bind(R.id.btnFAQ) Button btnFAQ;
+    @Bind(R.id.btnUrgentCare) Button btnUrgent;
+    @Bind(R.id.btnRehab) Button btnRehab;
+    @Bind(R.id.btnSpec) Button btnSpec;
+    @Bind(R.id.btnGP) Button btnGP;
+    @Bind(R.id.btnOther) Button btnOther;
+    @Bind(R.id.btnLogin) Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +90,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnSpec.setOnClickListener(this);
         btnGP.setOnClickListener(this);
         btnOther.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
     }
 
     //CreateJsonDataSuburb : if suburb.json file not exists then create file suburb.json
@@ -194,6 +187,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 i = new Intent(this, WorkActivity.class);
                 i.putExtra("URType", "gp");
                 startActivity(i);
+                finish();
+                break;
+            case  R.id.btnLogin:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
                 break;
         }

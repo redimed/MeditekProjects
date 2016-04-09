@@ -1,9 +1,11 @@
 package patient.telehealth.redimed.workinjury.network;
 
 import android.content.Context;
-import android.util.Log;
+
 import com.squareup.okhttp.OkHttpClient;
+
 import java.util.concurrent.TimeUnit;
+
 import patient.telehealth.redimed.workinjury.api.UrgentRequest;
 import patient.telehealth.redimed.workinjury.utils.Config;
 import patient.telehealth.redimed.workinjury.utils.RetrofitErrorHandler;
@@ -15,6 +17,7 @@ public class RESTClient {
     private static RestAdapter restAdapter;
     private static OkHttpClient okHttpClient;
     private static Context context;
+    private static RestAdapter telehealthAdapter;
 
     public static void InitRESTClient(Context ctx) {
         context = ctx;
@@ -33,6 +36,15 @@ public class RESTClient {
                 .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler())
                 .build();
+        
+        telehealthAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setEndpoint(Config.Telehealth)
+                .setClient(new OkClient(okHttpClient))
+                .setRequestInterceptor(new SessionRequestInterceptor())
+                .setErrorHandler(new RetrofitErrorHandler())
+                .build();
+        
     }
 
     private static class SessionRequestInterceptor implements RequestInterceptor {

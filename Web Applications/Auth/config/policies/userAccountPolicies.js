@@ -31,7 +31,8 @@ module.exports={
 
   	'UserAccount/v0_1/UserActivationController':{
   		'CreateUserActivation':true,
-  		'Activation':true,
+      'Activation':true,
+  		'CheckActivated':true,
   		'DeactivationUserAccount':['isAuthenticated','isAdmin'],
   		'ActivationUserAccount':['isAuthenticated','isAdmin']
   	},

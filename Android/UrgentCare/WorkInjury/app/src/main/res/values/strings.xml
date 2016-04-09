@@ -61,5 +61,6 @@
 
     <!-- FAQs-->
     <string name="title_activity_faqs">FAQsActivity</string>
+    <string name="title_activity_launcher">LauncherActivity</string>
 
 </resources>

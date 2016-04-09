@@ -1,4 +1,5 @@
 <resources>
+
     <style name="MyTheme" parent="MyTheme.Base">
         <!-- Customize your theme here. -->
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
@@ -40,4 +41,8 @@
         <!-- You can also set colorControlNormal, colorControlActivated
             colorControlHighlight and colorSwitchThumbNormal. -->
     </style>
+
+    <style name="MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

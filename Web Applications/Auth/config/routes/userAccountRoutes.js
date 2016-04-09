@@ -1,153 +1,155 @@
+module.exports = {
+    'get /TestSocket': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestSocket',
+    },
 
-module.exports={
-	'get /TestSocket':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestSocket',
-	},
-	
-	'post /TestPushNotify':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestPushNotify',
-	},
-	'post /TestPushEmail':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestPushEmail',
-	},
-	'post /TestPushSMS':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestPushSMS',
-	},
-	'post /TestPushFinishJob':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestPushFinishJob',
-	},
-	'post /TestPushBuryJob':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestPushBuryJob',
-	},
+    'post /TestPushNotify': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestPushNotify',
+    },
+    'post /TestPushEmail': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestPushEmail',
+    },
+    'post /TestPushSMS': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestPushSMS',
+    },
+    'post /TestPushFinishJob': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestPushFinishJob',
+    },
+    'post /TestPushBuryJob': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestPushBuryJob',
+    },
 
-	'get /api/user-account/test':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'Test',
-		// policy:'hasToken'
-	},
-	// 'get /api/user-account/test':function(req,res){
-	// 	res.json({status:"heheehehhehe"});
-	// },
-	// 
-	'get /api/user-account/test-url/:param1/:param2/:param3':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestURL',
-	},
+    'get /api/user-account/test': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'Test',
+        // policy:'hasToken'
+    },
+    // 'get /api/user-account/test':function(req,res){
+    // 	res.json({status:"heheehehhehe"});
+    // },
+    // 
+    'get /api/user-account/test-url/:param1/:param2/:param3': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestURL',
+    },
 
-	'post /api/user-account/testPost':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'TestPost'
-	},
+    'post /api/user-account/testPost': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestPost'
+    },
 
-	'post /api/user-account/CreateUserAccount':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'CreateUserAccount'
-	},
+    'post /api/user-account/CreateUserAccount': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'CreateUserAccount'
+    },
 
-	'put /api/user-account/UpdateUserAccount':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'UpdateUserAccount'
-	},
+    'put /api/user-account/UpdateUserAccount': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'UpdateUserAccount'
+    },
 
 
-	'delete /api/user-account/DisableUserAccount':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'DisableUserAccount'
-	},
+    'delete /api/user-account/DisableUserAccount': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'DisableUserAccount'
+    },
 
-	'put /api/user-account/EnableUserAccount':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'EnableUserAccount'
-	},
+    'put /api/user-account/EnableUserAccount': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'EnableUserAccount'
+    },
 
-	'delete /api/user-account/RemoveIdentifierImage':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'RemoveIdentifierImage'
-	},
+    'delete /api/user-account/RemoveIdentifierImage': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'RemoveIdentifierImage'
+    },
 
-	'get /api/user-account/GetIdentifierImageInfo':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'GetIdentifierImageInfo'
-	},
+    'get /api/user-account/GetIdentifierImageInfo': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'GetIdentifierImageInfo'
+    },
 
-	'get /api/user-account/CheckExistUser':{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'CheckExistUser'
-	},
+    'get /api/user-account/CheckExistUser': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'CheckExistUser'
+    },
 
-	'put /api/user-activation/DeactivationUserAccount':{
-		controller:'UserAccount/v0_1/UserActivationController',
-		action:'DeactivationUserAccount'
-	},
+    'put /api/user-activation/DeactivationUserAccount': {
+        controller: 'UserAccount/v0_1/UserActivationController',
+        action: 'DeactivationUserAccount'
+    },
 
-	'put /api/user-activation/ActivationUserAccount':{
-		controller:'UserAccount/v0_1/UserActivationController',
-		action:'ActivationUserAccount'
-	},
+    'put /api/user-activation/ActivationUserAccount': {
+        controller: 'UserAccount/v0_1/UserActivationController',
+        action: 'ActivationUserAccount'
+    },
 
-	'get /api/user-account/GetUserAccountDetails':
-	{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'GetUserAccountDetails'
-	},
+    'get /api/user-account/GetUserAccountDetails': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'GetUserAccountDetails'
+    },
 
-	'post /api/user-account/GetListUsers':
-	{
-		controller:'UserAccount/v0_1/UserAccountController',
-		action:'GetListUsers'
-	},
+    'post /api/user-account/GetListUsers': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'GetListUsers'
+    },
 
-	
 
-	'post /api/login':{
-		controller:'UserAccount/v0_1/AuthController',
-    	action:'login'
-	},
 
-	'get /api/socket/makeUserOwnRoom':{
-		controller:'UserAccount/v0_1/AuthController',
-    	action:'makeUserOwnRoom'
-	},
+    'post /api/login': {
+        controller: 'UserAccount/v0_1/AuthController',
+        action: 'login'
+    },
 
-	'get /api/logout':{
-		controller:'UserAccount/v0_1/AuthController',
-		action:'logout'
-	},
+    'get /api/socket/makeUserOwnRoom': {
+        controller: 'UserAccount/v0_1/AuthController',
+        action: 'makeUserOwnRoom'
+    },
 
-	'get /api/user-account/find-by-phone':{
-		controller:'UserAccount/v0_1/UserAccountController',
-    	action:'FindByPhoneNumber'
-	},
+    'get /api/logout': {
+        controller: 'UserAccount/v0_1/AuthController',
+        action: 'logout'
+    },
 
-	'post /api/user-activation/create-user-activation':{
-		controller:'UserAccount/v0_1/UserActivationController',
-    	action:'CreateUserActivation'
-	},
+    'get /api/user-account/find-by-phone': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'FindByPhoneNumber'
+    },
 
-	
-	'get /api/user-activation/activation':{
-		controller:'UserAccount/v0_1/UserActivationController',
-    	action:'Activation'
-	},
+    'post /api/user-activation/create-user-activation': {
+        controller: 'UserAccount/v0_1/UserActivationController',
+        action: 'CreateUserActivation'
+    },
 
-	'post /api/refresh-token/GetNewToken':{
-		controller:'UserAccount/v0_1/RefreshTokenController',
-		action:'GetNewToken'
-	},
+    'post /api/check-activated': {
+        controller: 'UserAccount/v0_1/UserActivationController',
+        action: 'CheckActivated'
+    },
 
-	'post /api/user-account/get-DetailUser':{
-		controller:'UserAccount/v0_1/UserAccountController',
-    	action:'getDetailUser'
-	},
 
-	'get /api/user-account/force/changepass':{
-		controller:'UserAccount/v0_1/UserAccountController',
-    	action:'forceChangePass'
-	},
+    'get /api/user-activation/activation': {
+        controller: 'UserAccount/v0_1/UserActivationController',
+        action: 'Activation'
+    },
+
+    'post /api/refresh-token/GetNewToken': {
+        controller: 'UserAccount/v0_1/RefreshTokenController',
+        action: 'GetNewToken'
+    },
+
+    'post /api/user-account/get-DetailUser': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'getDetailUser'
+    },
+
+    'get /api/user-account/force/changepass': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'forceChangePass'
+    },
 };

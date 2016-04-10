@@ -223,6 +223,8 @@ module.exports = {
             res.json(err.getCode(), err.getBody());
         })
     },
+
+    //khong xai nua
     UpdateDeviceToken: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
             var err = new Error("Telehealth.UpdateDeviceToken.Error");
@@ -266,6 +268,7 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
+    //khong xai nua
     Logout: function(req, res) {
         console.log("================================", req.body.data);
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
@@ -321,6 +324,7 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
+    //khong xai nua
     RequestActivationCode: function(req, res) {
         console.log("RequestActivationCode", JSON.stringify(req.body));
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
@@ -389,6 +393,7 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
+    //khong xai nua
     VerifyActivationCode: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
             var err = new Error("Telehealth.VerifyActivationCode.Error");
@@ -619,5 +624,50 @@ module.exports = {
                 msg: 'No Device Found!'
             });
         })
-    }
+    },
+    CheckActivation: function(req, res) {
+        console.log("Activation", JSON.stringify(req.body));
+        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
+            var err = new Error("Telehealth.Activation.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body.data);
+        var phoneNumber = info.phone;
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.systemtype;
+        var phoneRegex = /^\+[0-9]{9,15}$/;
+        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType) {
+            return TelehealthService.MakeRequest({
+                host: config.AuthAPI,
+                path: '/api/check-activated',
+                method: 'POST',
+                body: {
+                    PhoneNumber: phoneNumber
+                },
+                headers: {
+                    'DeviceID': req.headers.deviceid,
+                    'SystemType': deviceType,
+                    'AppID': req.headers.appid
+                }
+            }).then(function(response) {
+                var data = response.getBody();
+                if (data.Activated === "N") {
+                    sendSMS(phoneNumber, "Your REDiMED account pin number is " + data.PinNumber).then(function(mess) {
+                        return res.ok(data);
+                    }, function(error) {
+                        return res.serverError(ErrorWrap(error));
+                    });
+                }
+                res.ok(data);
+            }).catch(function(err) {
+                res.serverError(err.getBody());
+            });
+        } else {
+            var err = new Error("Telehealth.Activation.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
+    },
 }

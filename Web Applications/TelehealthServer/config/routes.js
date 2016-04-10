@@ -1,21 +1,33 @@
 module.exports.routes = {
     //=================Telehealth User Routes======================
+    // khong xai nua
     'POST /api/telehealth/user/updateToken': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'UpdateDeviceToken'
     },
+    //khong xai nua
     'POST /api/telehealth/user/logout': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'Logout'
     },
+    //khong xai nua
     'POST /api/telehealth/user/requestActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'RequestActivationCode'
     },
+    //khong xai nua
     'POST /api/telehealth/user/verifyActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'VerifyActivationCode'
     },
+
+    //=================Login====================
+    'POST /api/telehealth/checkActivation': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'CheckActivation'
+    },
+    //=====================================
+
     'GET /api/telehealth/user/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetTelehealthUser'

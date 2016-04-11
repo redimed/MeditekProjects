@@ -70,6 +70,25 @@ public class DataProcess {
                 parsedData.put(d.getName().toLowerCase()+"_year", (dateString.split("/"))[2]);
                 parsedData.put(d.getName().toLowerCase(), dateString);
             }
+            else if(d.getName().split("#").length > 1){
+                String[] splStr = d.getName().split("#");
+                int indexStart=0;
+                for (int i = 1; i<splStr.length; i++){
+                    try{
+                        int numOfChar=Integer.parseInt(splStr[i]);
+                        if (d.getValue().length()<numOfChar){
+                            parsedData.put(splStr[0]+"_row"+i, d.getValue());
+                            break;
+                        }
+                        parsedData.put(splStr[0]+"_row"+i, d.getValue().substring(indexStart, indexStart+numOfChar));
+                        indexStart=indexStart+numOfChar;
+                    }
+                    catch (Exception e){
+                        continue;
+                    }
+                    
+                }
+            }
             else if(d.getType().equals("break")) continue;
             else parsedData.put(d.getName().toLowerCase(), d.getValue());
         }

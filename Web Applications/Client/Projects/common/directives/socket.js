@@ -6,7 +6,14 @@ var ioSocket = {},
 
 
 socketJoinRoom = function(server, api, obj) {
-    server.get(api, obj, function(data, jwres) {
+    server.request({
+        method: 'get',
+        url: api,
+        headers: {
+            systemtype:"WEB"
+        },
+        data:obj
+    }, function(data, jwres) {
         console.log('=============Socket===============', api);
         console.log(data);
     });

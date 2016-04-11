@@ -14,6 +14,11 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     $scope.info = {};
     $scope.logout = function() {
         AuthenticationService.logout().then(function() {
+            socketJoinRoom(socketTelehealth, '/api/telehealth/logout', { 
+                uid: $cookies.getObject('userInfo').TelehealthUser.UID,
+                deviceid:"30f56b7cb6a4abbc0a1ca359deb",
+                systemtype:"ARD" 
+            });
             var cookies = $cookies.getAll();
             angular.forEach(cookies, function(v, k) {
                 if(k != 'remember')
@@ -234,7 +239,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }
 
     ioSocket.telehealthMisscall = function(msg) {
-            alert("Miss Call");
-        }
-        // end chien
+        alert("Miss Call");
+    }
+    // end chien
 });

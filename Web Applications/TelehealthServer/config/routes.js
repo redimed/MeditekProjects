@@ -5,11 +5,7 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'UpdateDeviceToken'
     },
-    //khong xai nua
-    'POST /api/telehealth/user/logout': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'Logout'
-    },
+
     //khong xai nua
     'POST /api/telehealth/user/requestActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
@@ -68,6 +64,14 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetListCountry'
     },
+    'POST /api/telehealth/requesPostServerCore': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'RequestPostServerCore'
+    },
+    'GET /api/telehealth/requesGetServerCore': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'RequestGetServerCore'
+    },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',
@@ -76,6 +80,10 @@ module.exports.routes = {
     '/api/telehealth/socket/messageTransfer': {
         controller: 'SocketController',
         action: 'MessageTransfer'
+    },
+    '/api/telehealth/logout': {
+        controller: 'SocketController',
+        action: 'Logout'
     },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',

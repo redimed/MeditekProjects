@@ -57,8 +57,8 @@ module.exports = {
         if (!_.isEmpty(body) &&
             !_.isEmpty(body.data)) {
             TelehealthService.UpdatePatientDetails(headers, body).then(function(response) {
-                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                 console.log("UpdatePatientDetails", response.getBody());
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
@@ -75,8 +75,8 @@ module.exports = {
         if (!_.isEmpty(body) &&
             !_.isEmpty(body.data)) {
             TelehealthService.ChangeEnableFile(headers, body).then(function(response) {
-                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                 console.log("ChangeEnableFile", response.getBody());
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
@@ -93,8 +93,8 @@ module.exports = {
         if (!_.isEmpty(body) &&
             !_.isEmpty(body.data)) {
             TelehealthService.GetListDoctor(headers, body).then(function(response) {
-                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                 console.log("GetListDoctor", response.getBody());
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
@@ -157,7 +157,6 @@ module.exports = {
             !_.isEmpty(body.data)) {
             TelehealthService.GetAppointmentsByPatient(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                console.log("response.getBody()");
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());
@@ -223,6 +222,8 @@ module.exports = {
             res.json(err.getCode(), err.getBody());
         })
     },
+
+    //khong xai nua
     UpdateDeviceToken: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
             var err = new Error("Telehealth.UpdateDeviceToken.Error");
@@ -266,61 +267,50 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
+
     Logout: function(req, res) {
         console.log("================================", req.body.data);
+        var err = new Error("Telehealth.Logout.Error");
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.Logout.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
             return;
         }
         var info = HelperService.toJson(req.body.data);
+        var uid = info.uid;
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
-        var deviceToken = info.token || null;
-        var uid = info.uid;
+        var roomList = sails.sockets.rooms();
         if (uid && deviceType && deviceId) {
-            console.log("+++++++++++++++++++++++++++++++++++++", uid, deviceType, deviceId, deviceToken);
             return TelehealthService.FindByUID(uid).then(function(teleUser) {
-                return TelehealthDevice.findOrCreate({
+                return TelehealthDevice.update({
+                    DeviceToken: null
+                },{
                     where: {
                         TelehealthUserID: teleUser.ID,
                         DeviceID: deviceId,
                         Type: deviceType
-                    },
-                    defaults: {
-                        UID: UUIDService.Create(),
-                        DeviceToken: deviceToken
                     }
-                }).spread(function(device, created) {
-                    console.log("neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", device);
-                    return device.update({
-                        DeviceToken: null
-                    }).then(function() {
-                        return TelehealthService.MakeRequest({
-                            host: config.AuthAPI,
-                            path: '/api/logout',
-                            method: 'GET',
-                            headers: req.headers
-                        }).then(function(response) {
-                            res.ok({
-                                status: 'success',
-                                message: 'Success!'
-                            })
-                        }).catch(function(err) {
-                            res.serverError(err.getBody());
-                        });
-                    }).catch(function(err) {
-                        res.serverError(ErrorWrap(err));
-                    })
-                })
+                }).then(function(result)
+                {
+                    console.log("111111111111111111111111111111",result);
+                    console.log("=============================== Logout roomList",roomList);
+                    sails.sockets.leave(req.socket ,uid);
+                    console.log("=============================== Logout roomList",sails.sockets.rooms());
+                    return res.ok({
+                        status:"success"
+                    }); 
+                },function(error){
+                    err.pushError("Update Telehealth Device Error");
+                    return res.serverError(ErrorWrap(error));
+                });
             })
         } else {
-            var err = new Error("Telehealth.Logout.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
         }
     },
+    //khong xai nua
     RequestActivationCode: function(req, res) {
         console.log("RequestActivationCode", JSON.stringify(req.body));
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
@@ -389,6 +379,7 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
+    //khong xai nua
     VerifyActivationCode: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
             var err = new Error("Telehealth.VerifyActivationCode.Error");
@@ -619,5 +610,79 @@ module.exports = {
                 msg: 'No Device Found!'
             });
         })
-    }
+    },
+    CheckActivation: function(req, res) {
+        console.log("Activation", JSON.stringify(req.body));
+        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
+            var err = new Error("Telehealth.Activation.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body.data);
+        var phoneNumber = info.phone;
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.systemtype;
+        var phoneRegex = /^\+[0-9]{9,15}$/;
+        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType) {
+            return TelehealthService.MakeRequest({
+                host: config.AuthAPI,
+                path: '/api/check-activated',
+                method: 'POST',
+                body: {
+                    PhoneNumber: phoneNumber
+                },
+                headers: {
+                    'DeviceID': deviceId,
+                    'SystemType': deviceType
+                }
+            }).then(function(response) {
+                var data = response.getBody();
+                if (data.Activated === "N") {
+                    sendSMS(phoneNumber, "Your REDiMED account pin number is " + data.PinNumber).then(function(mess) {
+                        return res.ok(data);
+                    }, function(error) {
+                        return res.serverError(ErrorWrap(error));
+                    });
+                }
+                res.ok(data);
+            }).catch(function(err) {
+                res.serverError(err.getBody());
+            });
+        } else {
+            var err = new Error("Telehealth.Activation.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
+    },
+    RequestPostServerCore: function(req, res) {
+        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
+            var err = new Error("Telehealth.RequestServerCore.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body.data);
+        var api = info.api;
+        var data = info.data;
+        var headers = req.headers;
+        if (api && data && headers) {
+            return TelehealthService.MakeRequest({
+                host: config.CoreAPI,
+                path: api,
+                method: "POST",
+                body: data,
+                headers: headers
+            }).then(function(response) {
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                    return res.ok(response.getBody());
+            }).catch(function(err) {
+                res.serverError(err.getBody());
+            });
+        } else {
+            var err = new Error("Telehealth.Activation.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
+    },
 }

@@ -1,21 +1,29 @@
 module.exports.routes = {
     //=================Telehealth User Routes======================
+    // khong xai nua
     'POST /api/telehealth/user/updateToken': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'UpdateDeviceToken'
     },
-    'POST /api/telehealth/user/logout': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'Logout'
-    },
+
+    //khong xai nua
     'POST /api/telehealth/user/requestActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'RequestActivationCode'
     },
+    //khong xai nua
     'POST /api/telehealth/user/verifyActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'VerifyActivationCode'
     },
+
+    //=================Login====================
+    'POST /api/telehealth/checkActivation': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'CheckActivation'
+    },
+    //=====================================
+
     'GET /api/telehealth/user/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetTelehealthUser'
@@ -56,6 +64,14 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetListCountry'
     },
+    'POST /api/telehealth/requesPostServerCore': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'RequestPostServerCore'
+    },
+    'GET /api/telehealth/requesGetServerCore': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'RequestGetServerCore'
+    },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',
@@ -64,6 +80,10 @@ module.exports.routes = {
     '/api/telehealth/socket/messageTransfer': {
         controller: 'SocketController',
         action: 'MessageTransfer'
+    },
+    '/api/telehealth/logout': {
+        controller: 'SocketController',
+        action: 'Logout'
     },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',

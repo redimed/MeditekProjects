@@ -53,11 +53,14 @@ module.exports = {
         var uid = req.param('uid');
         var error = null;
         if (uid) {
+            console.log("JoinConferenceRoom vao roi ne");
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
-                    sails.sockets.leave(req.socket, req.socket.id);
+                    console.log("roomList", sails.sockets.rooms());
+                    sails.sockets.leave(req.socket ,req.socket.id);
                     console.log("JoinConferenceRoom Successfully", uid);
+                    console.log("roomList", sails.sockets.rooms());
                     RedisWrap.hget(redisKey, uid).then(function(data) {
                         if (data != null) {
                             var awaitTime = moment(new Date()) - moment(data.timeCall);
@@ -207,5 +210,57 @@ module.exports = {
         var toal = sails.sockets.subscribers(roomId).length;
         console.log("userInRoom",userInRoom);
         res.ok({userInRoom:userInRoom,toal:toal});
-    }
+    },
+    Logout: function(req, res) {
+        console.log("aaaaaaa", req.param('uid'), req.isSocket);
+        console.log("headers", req.headers.systemtype);
+        var err = new Error("Socket.Logout.Error");
+        if (!req.isSocket) {
+            err.pushError("Socket Request Only!");
+            return res.serverError(ErrorWrap(err));
+        }
+
+        var uid = req.param('uid');
+        if (req.headers.systemtype === "WEB") {
+            sails.sockets.leave(req.socket ,uid);
+            console.log("roomList", sails.sockets.rooms());
+            return res.ok({
+                status:"success"
+            });
+        }
+
+        /*request header*/
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.systemtype;
+        
+        /*push param */
+        // var deviceId = req.param('deviceid');
+        // var deviceType = req.param('systemtype');
+        var roomList = sails.sockets.rooms();
+        if (uid && deviceType && deviceId) {
+            return TelehealthService.FindByUID(uid).then(function(teleUser) {
+                return TelehealthDevice.update({
+                    DeviceToken: null
+                },{
+                    where: {
+                        TelehealthUserID: teleUser.ID,
+                        DeviceID: deviceId,
+                        Type: deviceType
+                    }
+                }).then(function(result)
+                {
+                    sails.sockets.leave(req.socket ,uid);
+                    return res.ok({
+                        status:"success"
+                    }); 
+                },function(error){
+                    err.pushError("Update Telehealth Device Error");
+                    return res.serverError(ErrorWrap(error));
+                });
+            })
+        } else {
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
+    },
 }

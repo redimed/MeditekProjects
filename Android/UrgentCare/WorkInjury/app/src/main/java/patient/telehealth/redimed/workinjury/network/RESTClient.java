@@ -52,11 +52,16 @@ public class RESTClient {
             paramRequestFacade.addHeader("Accept", "application/json");
             paramRequestFacade.addHeader("Content-Type", "application/json");
             paramRequestFacade.addHeader("Version", "1.0");
+
         }
     }
 
     public static UrgentRequest getRegisterApi() {
         return restAdapter.create(UrgentRequest.class);
+    }
+
+    public static UrgentRequest getTelehealthApi(){
+        return telehealthAdapter.create(UrgentRequest.class);
     }
 
 }

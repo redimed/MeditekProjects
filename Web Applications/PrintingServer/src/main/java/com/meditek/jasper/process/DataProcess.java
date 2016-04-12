@@ -63,7 +63,7 @@ public class DataProcess {
                     }                    
                 }                
             }
-            else if(d.getType().equals("eform_input_date")){
+            else if(d.getType().equals("eform_input_date") && (d.getValue().split("/").length)==3){
                 String dateString = d.getValue().toString();
                 parsedData.put(d.getName().toLowerCase()+"_date", (dateString.split("/"))[0]);
                 parsedData.put(d.getName().toLowerCase()+"_month", (dateString.split("/"))[1]);

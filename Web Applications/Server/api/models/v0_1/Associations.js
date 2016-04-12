@@ -514,5 +514,13 @@ module.exports = {
             through: 'RelEFormTemplateRole',
             foreignKey: 'RoleID'
         });
+
+        //association Patient - RelCompanyPatient
+        Patient.hasMany(RelCompanyPatient, {
+            foreignKey: 'PatientID'
+        });
+        RelCompanyPatient.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
     }
 };

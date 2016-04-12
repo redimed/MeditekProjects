@@ -73,20 +73,29 @@ public class DataProcess {
             else if(d.getName().split("#").length > 1){
                 String[] splStr = d.getName().split("#");
                 int indexStart=0;
+                String fillData = d.getValue().toString();
                 for (int i = 1; i<splStr.length; i++){
                     try{
                         int numOfChar=Integer.parseInt(splStr[i]);
-                        if (d.getValue().length()<numOfChar){
-                            parsedData.put(splStr[0]+"_row"+i, d.getValue());
-                            break;
-                        }
-                        parsedData.put(splStr[0]+"_row"+i, d.getValue().substring(indexStart, indexStart+numOfChar));
+                        parsedData.put(splStr[0]+"_row"+i, fillData);
                         indexStart=indexStart+numOfChar;
+                        fillData=fillData.substring(indexStart);
                     }
                     catch (Exception e){
-                        continue;
+                        break;
                     }
-                    
+//                    try{
+//                        int numOfChar=Integer.parseInt(splStr[i]);
+//                        if (d.getValue().length()<numOfChar){
+//                            parsedData.put(splStr[0]+"_row"+i, d.getValue());
+//                            break;
+//                        }
+//                        parsedData.put(splStr[0]+"_row"+i, d.getValue().substring(indexStart, indexStart+numOfChar));
+//                        indexStart=indexStart+numOfChar;
+//                    }
+//                    catch (Exception e){
+//                        continue;
+//                    }
                 }
             }
             else if(d.getType().equals("break")) continue;

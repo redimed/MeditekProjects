@@ -1,4 +1,4 @@
-package com.redimed.telehealth.patient.faq;
+package com.redimed.telehealth.patient.faq.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
-import com.redimed.telehealth.patient.confirm.ConfirmFragment;
+import com.redimed.telehealth.patient.faq.view.IFAQsView;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
+import com.redimed.telehealth.patient.models.FileUpload;
+import com.redimed.telehealth.patient.request.RequestFragment;
 
 /**
  * Created by Fox on 1/14/2016.
@@ -31,7 +33,6 @@ public class FAQsPresenter implements IFAQsPresenter {
     @Override
     public void contentFAQs(Bundle bundle) {
         backupConfirm = bundle;
-        Log.d(TAG, backupConfirm + " " + bundle);
         String url = "file:///android_asset/FAQs.html";
         if (bundle != null) {
             String page = bundle.getString("msg");
@@ -60,7 +61,7 @@ public class FAQsPresenter implements IFAQsPresenter {
     public void backToHome(Boolean flag) {
         IMainPresenter iMainPresenter = new MainPresenter(context, activity);
         if (flag) {
-            Fragment fragment = new ConfirmFragment();
+            Fragment fragment = new RequestFragment();
             fragment.setArguments(backupConfirm.getBundle("dataConfirm"));
             iMainPresenter.replaceFragment(fragment);
         } else

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.redimed.telehealth.patient.utlis.DialogAlert;
 import com.redimed.telehealth.patient.utlis.DialogConnection;
 import com.redimed.telehealth.patient.utlis.PageIndicator;
 import com.redimed.telehealth.patient.utlis.AdapterSlider;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -106,7 +109,6 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         btnContact.setOnClickListener(this);
         btnFAQ.setOnClickListener(this);
         btnUrgentCare.setOnClickListener(this);
-
         return v;
     }
 
@@ -115,7 +117,6 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         iHomePresenter.checkExistsPatient();
         iHomePresenter.createdJsonDataSuburb();
         iHomePresenter.createdJsonDataCountry();
-
     }
 
     //Generation Slider Image
@@ -192,8 +193,8 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        getView().requestFocus();
         getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -214,12 +215,10 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     }
 
     @Override
-    public void changeView(boolean result) {
-        if (result){
-            iHomePresenter.getInfoPatient();
-            btnLogin.setVisibility(View.GONE);
-            vfHome.setDisplayedChild(vfHome.indexOfChild(layoutPatient));
-        }
+    public void changeView() {
+        iHomePresenter.getInfoPatient();
+        btnLogin.setVisibility(View.GONE);
+        vfHome.setDisplayedChild(vfHome.indexOfChild(layoutPatient));
     }
 
     @Override
@@ -236,4 +235,5 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                     .show();
         }
     }
+
 }

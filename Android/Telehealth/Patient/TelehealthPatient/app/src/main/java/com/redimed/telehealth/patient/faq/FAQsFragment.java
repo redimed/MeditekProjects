@@ -12,11 +12,12 @@ import android.view.ViewGroup;
 
 import android.webkit.WebView;
 
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.main.presenter.MainPresenter;
+import com.redimed.telehealth.patient.faq.presenter.FAQsPresenter;
+import com.redimed.telehealth.patient.faq.presenter.IFAQsPresenter;
+import com.redimed.telehealth.patient.faq.view.IFAQsView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +36,8 @@ public class FAQsFragment extends Fragment implements IFAQsView {
     @Bind(R.id.layoutBack)
     LinearLayout layoutBack;
 
-    public FAQsFragment() {}
+    public FAQsFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,8 +82,8 @@ public class FAQsFragment extends Fragment implements IFAQsView {
     @Override
     public void onResume() {
         super.onResume();
-        getView().requestFocus();
         getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

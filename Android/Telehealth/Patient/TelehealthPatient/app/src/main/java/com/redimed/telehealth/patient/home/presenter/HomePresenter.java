@@ -3,7 +3,6 @@ package com.redimed.telehealth.patient.home.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,17 +11,16 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.activation.ActivationFragment;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.faq.FAQsFragment;
 import com.redimed.telehealth.patient.home.view.IHomeView;
+import com.redimed.telehealth.patient.sign_in.SignInFragment;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
-import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.network.RetrofitErrorHandler;
 import com.redimed.telehealth.patient.request.RequestFragment;
-import com.redimed.telehealth.patient.service.SocketService;
+import com.redimed.telehealth.patient.services.SocketService;
 import com.redimed.telehealth.patient.setting.SettingFragment;
 import com.redimed.telehealth.patient.tracking.TrackingFragment;
 
@@ -30,7 +28,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -49,8 +46,7 @@ public class HomePresenter implements IHomePresenter {
     private IHomeView iHomeView;
     private RegisterApi registerApi;
     private IMainPresenter iMainPresenter;
-    private SweetAlertDialog progressDialog;
-    private SharedPreferences uidTelehealth, spDevice, existsUser;
+    private SharedPreferences uidTelehealth, spDevice;
     private static final String TAG = "===HOME_PRESENTER===";
 
     //Constructor
@@ -65,13 +61,6 @@ public class HomePresenter implements IHomePresenter {
         iMainPresenter = new MainPresenter(context, activity);
         spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
-        existsUser = context.getSharedPreferences("ExistsUser", Context.MODE_PRIVATE);
-
-        //init progressDialog
-        progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        progressDialog.setTitleText("Loading");
-        progressDialog.setCancelable(false);
     }
 
     //CreatedJsonDataSuburb : if suburb.json file not exists then create file suburb.json
@@ -81,7 +70,7 @@ public class HomePresenter implements IHomePresenter {
                 context.getResources().getString(R.string.fileSuburb));
         if (!file.exists()) {
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLogLevel(RestAdapter.LogLevel.BASIC)
                     .setEndpoint("http://testapp.redimed.com.au:3001/api/urgent-care")
                     .setErrorHandler(new RetrofitErrorHandler(context))
                     .build();
@@ -139,19 +128,17 @@ public class HomePresenter implements IHomePresenter {
         }
     }
 
+    // TODO: 3/24/2016 Check Patient is Activated
     @Override
     public void checkExistsPatient() {
-        SharedPreferences.Editor editor = existsUser.edit();
-        File xmlUser = new File("/data/data/" + context.getPackageName() + "/shared_prefs/TelehealthUser.xml");
-        if (xmlUser.exists()) {
+        SharedPreferences preferencesLogin = context.getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+        boolean isLogin = preferencesLogin.getBoolean("isLogin", false);
+
+        if (isLogin) {
             updateToken();
-            iHomeView.changeView(true);
+            iHomeView.changeView();
             context.startService(new Intent(context, SocketService.class));
-            editor.putBoolean("exists", true);
-        } else {
-            editor.putBoolean("exists", false);
         }
-        editor.apply();
     }
 
     public void updateToken() {
@@ -163,21 +150,22 @@ public class HomePresenter implements IHomePresenter {
 
         RESTClient.getRegisterApi().updateToken(dataJson, new Callback<JsonObject>() {
             @Override
-            public void success(JsonObject jsonObject, Response response) {}
+            public void success(JsonObject jsonObject, Response response) {
+            }
 
             @Override
-            public void failure(RetrofitError error) {}
+            public void failure(RetrofitError error) {
+            }
         });
     }
 
     @Override
     public void login() {
-        iMainPresenter.replaceFragment(new ActivationFragment());
+        iMainPresenter.replaceFragment(new SignInFragment());
     }
 
     @Override
     public void getInfoPatient() {
-        progressDialog.show();
         registerApi.getDetailsPatient(uidTelehealth.getString("uid", ""), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -188,13 +176,11 @@ public class HomePresenter implements IHomePresenter {
                     SharedPreferences.Editor patientInfo = context.getSharedPreferences("PatientInfo", Context.MODE_PRIVATE).edit();
                     patientInfo.putString("info", dataPatient);
                     patientInfo.apply();
-                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progressDialog.dismiss();
                 iHomeView.onLoadError(error.getLocalizedMessage());
             }
         });
@@ -219,7 +205,6 @@ public class HomePresenter implements IHomePresenter {
     @Override
     public void displaySetting() {
         bundle.putString("telehealthUID", uidTelehealth.getString("uid", ""));
-        bundle.putString("dataPatient", dataPatient);
         fragment = new SettingFragment();
         fragment.setArguments(bundle);
         iMainPresenter.replaceFragment(fragment);
@@ -228,7 +213,7 @@ public class HomePresenter implements IHomePresenter {
     @Override
     public void displayFAQs(String content) {
         fragment = new FAQsFragment();
-        switch (content){
+        switch (content) {
             case "UR":
                 bundle.putString("msg", "UR");
                 fragment.setArguments(bundle);
@@ -246,6 +231,4 @@ public class HomePresenter implements IHomePresenter {
         }
         iMainPresenter.replaceFragment(fragment);
     }
-
-
 }

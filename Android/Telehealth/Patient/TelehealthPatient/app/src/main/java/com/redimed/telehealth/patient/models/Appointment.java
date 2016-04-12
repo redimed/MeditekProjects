@@ -32,8 +32,8 @@ public class Appointment {
     @SerializedName("Type")
     private String Type;
 
-    @SerializedName("Enable")
-    private String Enable;
+    @SerializedName("Code")
+    private String Code;
 
     @SerializedName("Doctors")
     private Doctor[] Doctors;
@@ -106,6 +106,14 @@ public class Appointment {
 
     public void setType(String type) {
         Type = type;
+    }
+
+    public String getCode() {
+        return Code;
+    }
+
+    public void setCode(String code) {
+        Code = code;
     }
 
     public Doctor[] getDoctor() {

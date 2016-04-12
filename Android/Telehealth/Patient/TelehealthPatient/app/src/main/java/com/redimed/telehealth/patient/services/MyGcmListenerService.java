@@ -1,4 +1,4 @@
-package com.redimed.telehealth.patient.service;
+package com.redimed.telehealth.patient.services;
 
 import android.os.Bundle;
 import android.util.Log;

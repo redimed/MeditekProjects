@@ -84,7 +84,8 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -163,27 +164,27 @@
         </receiver>
 
         <service
-            android:name=".service.SocketService"
+            android:name=".services.SocketService"
             android:enabled="true" />
         <service
-            android:name=".service.MyGcmListenerService"
+            android:name=".services.MyGcmListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name=".service.MyInstanceIDListenerService"
+            android:name=".services.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <service
-            android:name=".service.RegistrationIntentService"
+            android:name=".services.RegistrationIntentService"
             android:exported="false" />
         <service
-            android:name=".service.GPSTrackerService"
+            android:name=".services.GPSTrackerService"
             android:enabled="true"
             android:exported="false" />
 

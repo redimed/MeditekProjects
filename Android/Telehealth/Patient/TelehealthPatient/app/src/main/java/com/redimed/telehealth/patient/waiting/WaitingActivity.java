@@ -33,12 +33,12 @@ import butterknife.ButterKnife;
 
 public class WaitingActivity extends AppCompatActivity implements IWaitingView, View.OnClickListener {
 
-    private String TAG = "WAITING";
-    private boolean flagDestroy = false;
-    private SharedPreferences callPreferences;
+//    private boolean flagDestroy = false;
+//    private SharedPreferences callPreferences;
     private IWaitingPresenter iWaitingPresenter;
     private NotificationManager notificationManager;
     private LocalBroadcastManager localBroadcastManager;
+    private static final String TAG = "=====WAITING=====";
 
     @Bind(R.id.lblNameCaller)
     TextView lblNameCaller;
@@ -74,7 +74,7 @@ public class WaitingActivity extends AppCompatActivity implements IWaitingView, 
         iWaitingPresenter.playRingTone();
         iWaitingPresenter.listenSocket(getIntent());
 
-        callPreferences = getSharedPreferences("FlagCall", MODE_PRIVATE);
+//        callPreferences = getSharedPreferences("FlagCall", MODE_PRIVATE);
 
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
@@ -93,11 +93,11 @@ public class WaitingActivity extends AppCompatActivity implements IWaitingView, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnDecline:
-                flagDestroy = true;
+//                flagDestroy = true;
                 iWaitingPresenter.declineCall();
                 break;
             case R.id.btnAnswer:
-                flagDestroy = true;
+//                flagDestroy = true;
                 iWaitingPresenter.answerCall();
                 break;
         }
@@ -148,7 +148,7 @@ public class WaitingActivity extends AppCompatActivity implements IWaitingView, 
 
     @Override
     public void onResultDecline() {
-        flagDestroy = true;
+//        flagDestroy = true;
         finish();
     }
 

@@ -67,11 +67,11 @@ import retrofit.client.Response;
 public class InfoPresenter implements IInfoPresenter {
 
     private Gson gson;
-    private String pathSign;
     private Context context;
     private Patient[] patients;
     private IInfoView iInfoView;
     private ArrayAdapter adapter;
+    private String pathSign = null;
     private RegisterApi restClient;
     private SimpleDateFormat dateFormat;
     private IMainPresenter iMainPresenter;
@@ -347,13 +347,13 @@ public class InfoPresenter implements IInfoPresenter {
                 .into(new SimpleTarget<Bitmap>(myWidth, myHeight) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                        iInfoView.onResultSignature(resource);
+                        iInfoView.onLoadSignature(resource, null);
                     }
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         Bitmap errorBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_error_image);
-                        iInfoView.onResultSignature(errorBitmap);
+                        iInfoView.onLoadSignature(errorBitmap, null);
                     }
                 });
     }

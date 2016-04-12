@@ -13,13 +13,9 @@ import java.util.List;
  */
 public interface IAppointmentView {
 
-    void onLoadToolbar();
-
     void onLoadError(String msg);
 
     void onLoadAppointment(JsonObject dataAppt);
-
-    void onResultUpload(String picturePath, boolean result);
 
     void onLoadListImage(List<String> listImage, SharedPreferences spTelehealth);
 

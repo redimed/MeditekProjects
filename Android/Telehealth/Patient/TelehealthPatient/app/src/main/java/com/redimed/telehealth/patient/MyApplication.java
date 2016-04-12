@@ -12,12 +12,12 @@ import android.support.annotation.NonNull;
 
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
-import com.redimed.telehealth.patient.service.RegistrationIntentService;
+import com.redimed.telehealth.patient.services.RegistrationIntentService;
 
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 /**
@@ -25,10 +25,10 @@ import java.util.Date;
  */
 public class MyApplication extends Application {
 
-    private String TAG = "MyApplication";
     private static MyApplication myApplication;
     private static SharedPreferences.Editor editor;
     private static SharedPreferences appPreferences;
+    private static final String TAG = "=====APPLICATION=====";
 
     public static MyApplication getInstance() {
         return myApplication;
@@ -82,11 +82,13 @@ public class MyApplication extends Application {
     @NonNull
     public String ConvertDate(String dataTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date myDate = null;
         String finalDate = "NONE";
         try {
             myDate = dateFormat.parse(dataTime);
             SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy");
+            timeFormat.setTimeZone(TimeZone.getDefault());
             finalDate = timeFormat.format(myDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -97,11 +99,13 @@ public class MyApplication extends Application {
     @NonNull
     public String ConvertTime(String dataTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date myDate = null;
         String finalDate = "NONE";
         try {
             myDate = dateFormat.parse(dataTime);
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            timeFormat.setTimeZone(TimeZone.getDefault());
             finalDate = timeFormat.format(myDate);
         } catch (ParseException e) {
             e.printStackTrace();

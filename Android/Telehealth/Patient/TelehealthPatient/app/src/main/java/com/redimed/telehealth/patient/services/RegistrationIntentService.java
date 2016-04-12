@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.redimed.telehealth.patient.service;
+package com.redimed.telehealth.patient.services;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -33,9 +33,6 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.redimed.telehealth.patient.activation.presenter.IActivationPresenter;
-import com.redimed.telehealth.patient.main.MainActivity;
-import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;

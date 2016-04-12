@@ -5,7 +5,6 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -19,11 +18,9 @@ import retrofit.mime.TypedByteArray;
  */
 public class RetrofitErrorHandler implements ErrorHandler {
 
-    private Context context;
-    private String TAG = "=========RETROFIT_ERROR===========";
+    private static final String TAG = "===RETROFIT_ERROR===";
 
     public RetrofitErrorHandler(Context ctx) {
-        context = ctx;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
         String errorDescription;
         if (cause.getCause() instanceof ConnectException || cause.getCause() instanceof UnknownHostException) {
             errorDescription = "Network Error";
-        } else if (cause.getCause() instanceof SocketTimeoutException){
+        } else if (cause.getCause() instanceof SocketTimeoutException) {
             errorDescription = "Network Timeout";
         } else {
             if (cause.getResponse() == null) {
@@ -46,7 +43,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
                         JSONObject dataObject = new JSONObject(json);
                         String strError = dataObject.optString("ErrorsList") == null ? "" : dataObject.optString("ErrorsList");
                         if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]") || strError.equalsIgnoreCase("[\"isAuthenticated.oldRefreshCodeExpired\"]")) {
-                            errorDescription = "Sorry for inconvenience, please activation application again!";
+                            errorDescription = "TokenExpiredError";
                         } else if (strError.equalsIgnoreCase("[\"isAuthenticated.sessionUserMismatchedUserAccess\"]")) {
                             errorDescription = "Session Mismatched, please refresh again!";
                         } else {

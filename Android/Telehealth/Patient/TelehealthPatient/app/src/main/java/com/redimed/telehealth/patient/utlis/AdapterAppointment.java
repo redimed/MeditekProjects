@@ -124,9 +124,17 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
         return listAppointment.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
+    public void setLoaded() {
+        loading = false;
+    }
+
     @Override
     public int getItemCount() {
         return listAppointment.size();
+    }
+
+    public void setOnLoadMoreListener(EndlessRecyclerOnScrollListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
     }
 
     @Override
@@ -157,10 +165,10 @@ public class AdapterAppointment extends RecyclerView.Adapter<ViewHolder> {
             appointmentViewHolder.lblDoctorRef.setText(refName);
             appointmentViewHolder.lblDoctorPre.setText(GetDoctorName(position));
 
-            Animation animation = AnimationUtils.loadAnimation(context,
-                    (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-            appointmentViewHolder.itemView.startAnimation(animation);
-            lastPosition = position;
+//            Animation animation = AnimationUtils.loadAnimation(context,
+//                    (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+//            appointmentViewHolder.itemView.startAnimation(animation);
+//            lastPosition = position;
         } else {
             ((ProgressViewHolder) viewHolder).progressBar.setIndeterminate(true);
         }

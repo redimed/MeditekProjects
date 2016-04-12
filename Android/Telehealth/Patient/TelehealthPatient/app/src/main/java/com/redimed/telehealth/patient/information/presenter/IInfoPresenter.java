@@ -37,5 +37,4 @@ public interface IInfoPresenter {
     void saveBitmapSign(SignaturePad signaturePad);
 
     void updateProfile(ArrayList<EditText> arrEditText, String suburb, String country);
-
 }

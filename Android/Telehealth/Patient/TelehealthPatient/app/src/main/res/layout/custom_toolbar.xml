@@ -32,8 +32,8 @@
                 android:id="@+id/lblSubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HOME"
-                android:textSize="10sp"
+                android:text="@string/home_title"
+                android:textSize="12sp"
                 android:layout_gravity="center"
                 android:textColor="@color/lightFont"/>
 
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Title"
+            android:text="@string/title_activity_launcher"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/lightFont"
             android:textSize="@dimen/size_title"

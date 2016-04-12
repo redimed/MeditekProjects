@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.Connection;
@@ -20,9 +18,8 @@ import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.call.CallActivity;
 import com.redimed.telehealth.patient.call.view.ICallView;
-import com.redimed.telehealth.patient.service.SocketService;
+import com.redimed.telehealth.patient.services.SocketService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

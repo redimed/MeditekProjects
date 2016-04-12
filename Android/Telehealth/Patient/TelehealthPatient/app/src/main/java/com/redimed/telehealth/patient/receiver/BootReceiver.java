@@ -11,7 +11,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.redimed.telehealth.patient.MyApplication;
-import com.redimed.telehealth.patient.service.SocketService;
+import com.redimed.telehealth.patient.services.SocketService;
 import com.redimed.telehealth.patient.utlis.CustomPhoneStateListener;
 
 import java.util.HashMap;
@@ -27,18 +27,20 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
+        //Check state phone
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(new CustomPhoneStateListener(context), PhoneStateListener.LISTEN_CALL_STATE);
 
-        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        if (keyguardManager.inKeyguardRestrictedInputMode()) {
-            if (action.equals(Intent.ACTION_SCREEN_OFF) && MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
-                // when screen lock do requirements for device screen off and socket service running
-            }
-        }
-        if (action.equals(Intent.ACTION_SCREEN_ON) && !MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
-            // do requirements for device screen on and socket service not running
-        }
+        //Check screen and device lock or not
+//        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+//        if (keyguardManager.inKeyguardRestrictedInputMode()) {
+//            if (action.equals(Intent.ACTION_SCREEN_OFF) && MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
+//                // when screen lock do requirements for device screen off and socket service running
+//            }
+//        }
+//        if (action.equals(Intent.ACTION_SCREEN_ON) && !MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
+//            // do requirements for device screen on and socket service not running
+//        }
         if (action.equalsIgnoreCase("notification_cancelled")) {
             if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
                 context.startService(new Intent(context, SocketService.class));

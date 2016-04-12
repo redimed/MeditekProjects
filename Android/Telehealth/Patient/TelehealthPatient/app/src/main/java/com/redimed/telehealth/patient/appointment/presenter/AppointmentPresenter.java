@@ -55,10 +55,6 @@ public class AppointmentPresenter implements IAppointmentPresenter {
     private IMainPresenter iMainPresenter;
     private IAppointmentView iAppointmentView;
 
-    private Uri fileUri;
-    private static final int RESULT_PHOTO = 1;
-    private static final int RESULT_CAMERA = 2;
-    private static final int RESULT_RELOAD = 3;
     private static final int MEDIA_TYPE_IMAGE = 1;
     private String TAG = "APPT_PRESENTER";
 
@@ -67,7 +63,6 @@ public class AppointmentPresenter implements IAppointmentPresenter {
         this.iAppointmentView = iAppointmentView;
 
         gson = new Gson();
-        iAppointmentView.onLoadToolbar();
         listUrl = new ArrayList<String>();
         listImage = new ArrayList<String>();
         registerApi = RESTClient.getRegisterApi();
@@ -128,7 +123,6 @@ public class AppointmentPresenter implements IAppointmentPresenter {
 
     @Override
     public void getListImage(JsonObject jsonObject) {
-
         //Get image from ClinicalDetails
         String strClinicDetail = jsonObject.get("data").getAsJsonObject().get("TelehealthAppointment").getAsJsonObject().get("ClinicalDetails").toString();
         ClinicalDetails[] clinicalDetails = gson.fromJson(strClinicDetail, ClinicalDetails[].class);
@@ -158,14 +152,15 @@ public class AppointmentPresenter implements IAppointmentPresenter {
     @Override
     public void viewStatus(String status, String apptTime) {
         if (status != null) {
+
             Bundle bundle = new Bundle();
             bundle.putString("statusAppt", status);
             bundle.putString("timeAppt", apptTime);
+
             Fragment fragment = new StatusFragment();
             fragment.setArguments(bundle);
             iMainPresenter.replaceFragment(fragment);
         }
-
     }
 
     //Add data url to list

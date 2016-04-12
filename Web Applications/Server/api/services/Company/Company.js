@@ -5,8 +5,8 @@ var generatePassword = require('password-generator');
 var config = sails.config.myconf;
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
-var CompanyRole = 6;//Role Company
-var PatientRole = 3;//Role Patient
+var CompanyRole = check.const.rolesID.organization;//Role Company
+var PatientRole = check.const.rolesID.patient;;//Role Patient
 function SendSMS(toNumber, content, callback) {
     return twilioClient.messages.create({
         body: content,

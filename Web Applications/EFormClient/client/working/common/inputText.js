@@ -37,6 +37,12 @@ module.exports = React.createClass({
         if(this.props.permission === 'eformDev'){
             $(this.refs.input).prop('disabled', true);
         }
+        if(typeof this.props.defaultValue !== 'undefined'){
+            $(this.refs.input).val(this.props.defaultValue);
+        }
+    },
+    componentWillReceiveProps: function(nextProps){
+        $(this.refs.input).val(nextProps.defaultValue);
     },
     setValue: function(value){
         $(this.refs.input).val(value)

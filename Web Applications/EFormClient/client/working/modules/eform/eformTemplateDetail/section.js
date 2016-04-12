@@ -368,6 +368,9 @@ module.exports = React.createClass({
                                                             onCreateTableColumn={this.props.onCreateTableColumn}
                                                             onCreateTableRow={this.props.onCreateTableRow}
                                                             onRemoveTableRow={this.props.onRemoveTableRow}
+                                                            onSaveTableDynamicRow={this.props.onSaveTableDynamicRow}
+                                                            onEditTableDynamicRow={this.props.onEditTableDynamicRow}
+                                                            onRemoveTableDynamicRow={this.props.onRemoveTableDynamicRow}
                                                             onOrderRow={this.props.onOrderRow}/>
                                         }, this)
                                     }

@@ -23,7 +23,6 @@
   },
   "engine": "node 0.4.1",
   "dependencies": {
-    "appdynamics": "^4.1.7",
     "compression": "^1.6.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",

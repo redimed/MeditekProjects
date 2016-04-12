@@ -7,6 +7,7 @@ var CommonRadio = require('common/radio');
 var CommonLabel = require('common/label');
 var CommonSignature = require('common/signature');
 var CommonTable = require('modules/eform/eformTemplateDetail/tableField');
+var CommonTableDynamic = require('common/dynamicTable');
 var CommonSignatureDoctor = require('common/signatureDoctor');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
 var ComponentListField = require('modules/eform/eformTemplateDetail/listField');
@@ -286,6 +287,15 @@ module.exports = React.createClass({
         this.refs.modalOrderRow.hide();
         this.props.onOrderRow(this.props.codeSection, this.props.code, value);
     },
+    _onSaveRow: function(codeField, fieldValues){
+        this.props.onSaveTableDynamicRow(this.props.codeSection, this.props.code, codeField, fieldValues);
+    },
+    _onEditRow: function(codeField, position, fieldValues){
+        this.props.onEditTableDynamicRow(this.props.codeSection, this.props.code, codeField, position, fieldValues);
+    },
+    _onRemoveRow: function(codeField, position){
+        this.props.onRemoveTableDynamicRow(this.props.codeSection, this.props.code, codeField, position);
+    },
     render: function(){
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';
         var displayContextTableMenu = (this.props.permission === 'eformDev')?'contextTableMenu':'none';
@@ -476,6 +486,23 @@ module.exports = React.createClass({
                                                                 roles={field.get('roles')}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 label={field.get('label')}/>
+                                                    else if(type === 'dynamic_table')
+                                                            return <CommonTableDynamic key={index} type={type}
+                                                                name={field.get('name')}
+                                                                permission={this.props.permission}
+                                                                content={field.get('content')}
+                                                                groupId={groupId}
+                                                                context={displayContextTableMenu}
+                                                                ref={field.get('ref')}
+                                                                refTemp={field.get('ref')}
+                                                                code={index}
+                                                                size={field.get('size')}
+                                                                onDeleteColumn={this._onDeleteColumn}
+                                                                onSaveRow={this._onSaveRow}
+                                                                onEditRow={this._onEditRow}
+                                                                onRemoveRow={this._onRemoveRow}
+                                                                onUpdateColumn={this._onUpdateColumn}
+                                                                onRightClickItem={this._onRightClickTableItem}/>
                                                     else if(type === 'table')
                                                             return <CommonTable key={index} type={type}
                                                                 name={field.get('name')}
@@ -629,6 +656,21 @@ module.exports = React.createClass({
                                             refTemp={field.get('ref')}
                                             code={index}
                                             size={field.get('size')}
+                                            onDeleteColumn={this._onDeleteColumn}
+                                            onUpdateColumn={this._onUpdateColumn}
+                                            onRightClickItem={this._onRightClickTableItem}/>
+                                else if(type === 'dynamic_table')
+                                        return <CommonTableDynamic key={index} type={type}
+                                            name={field.get('name')}
+                                            permission={this.props.permission}
+                                            content={field.get('content')}
+                                            groupId={groupId}
+                                            context={displayContextTableMenu}
+                                            ref={field.get('ref')}
+                                            refTemp={field.get('ref')}
+                                            code={index}
+                                            size={field.get('size')}
+                                            onSaveRow={this._onSaveRow}
                                             onDeleteColumn={this._onDeleteColumn}
                                             onUpdateColumn={this._onUpdateColumn}
                                             onRightClickItem={this._onRightClickTableItem}/>

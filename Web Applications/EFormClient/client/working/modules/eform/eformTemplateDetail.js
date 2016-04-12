@@ -84,6 +84,7 @@ module.exports = React.createClass({
         var rowRefNumber = refRow.split('_')[2];
 
         var ref = "field_" + sectionRefNumber + '_' + rowRefNumber + '_' +fields.size;
+
         if(Config.getPrefixField(typeField, 'eform_input') > -1){
             var object = { type: typeField, name: '', size: '12', ref: ref, preCal: ''};
             if(Config.getPrefixField(typeField, 'textarea') > -1)
@@ -115,6 +116,24 @@ module.exports = React.createClass({
                             content: {
                                 cols: [{label: 'Label Table', type: 'it'}],
                                 rows: 1
+                            }
+                        })
+                    ))
+                }
+            })
+        }else if(typeField === 'dynamic_table'){
+            this.setState(function(prevState){
+                return {
+                    sections: prevState.sections.updateIn([codeSection,'rows',codeRow,'fields'], val => val.push(
+                        Immutable.fromJS({
+                            code: typeField,
+                            type: typeField,
+                            name: '',
+                            size: '12',
+                            ref: ref,
+                            content: {
+                                cols: [{label: 'Label Table', type: 'it'}],
+                                rows: []
                             }
                         })
                     ))
@@ -281,9 +300,9 @@ module.exports = React.createClass({
         var templateUID = this.props.params.templateUID;
         var content = this.state.sections.toJS();
         EFormService.eformTemplateSave({ uid: templateUID, content: JSON.stringify(content), userUID: this.props.userUID })
-            .then(function(response) {
-                swal("Success!", "Your form has been saved.", "success");
-            }.bind(this))
+        .then(function(response) {
+            swal("Success!", "Your form has been saved.", "success");
+        }.bind(this))
     },
     _onComponentPageBarAddNewModule: function(){
         this.refs.modalListEFormTemplateModule.show();
@@ -380,6 +399,29 @@ module.exports = React.createClass({
         })
         //swal("Success!", "Your row has change order", "success"); 
     },
+    _onComponentSectionSaveTableDynamicRow: function(codeSection, codeRow, codeField, row){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], 
+                    val => val.push(Immutable.fromJS(row)))
+            }
+        })
+    },
+    _onComponentSectionEditTableDynamicRow: function(codeSection, codeRow, codeField, position, row){        
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position], 
+                    val => Immutable.fromJS(row))
+            }
+        })
+    },
+    _onComponentSectionRemoveTableDynamicRow: function(codeSection, codeRow, codeField, position){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position])
+            }
+        })
+    },
     render: function(){
 	return (
 		<div className="page-content">
@@ -426,6 +468,9 @@ module.exports = React.createClass({
                                                      onDragRow={this._onComponentSectionDragRow}
                                                      onChangePage={this._onComponentSectionChangePage}
                                                      onOrderSection={this._onComponentSectionOrderSection}
+                                                     onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
+                                                     onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
+                                                     onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
                                                      onOrderRow={this._onComponentSectionOrderRow}/>
                                     	}, this)
                                 }

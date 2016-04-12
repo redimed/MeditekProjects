@@ -84,18 +84,6 @@ public class DataProcess {
                     catch (Exception e){
                         break;
                     }
-//                    try{
-//                        int numOfChar=Integer.parseInt(splStr[i]);
-//                        if (d.getValue().length()<numOfChar){
-//                            parsedData.put(splStr[0]+"_row"+i, d.getValue());
-//                            break;
-//                        }
-//                        parsedData.put(splStr[0]+"_row"+i, d.getValue().substring(indexStart, indexStart+numOfChar));
-//                        indexStart=indexStart+numOfChar;
-//                    }
-//                    catch (Exception e){
-//                        continue;
-//                    }
                 }
             }
             else if(d.getType().equals("break")) continue;

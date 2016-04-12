@@ -5,6 +5,8 @@ var generatePassword = require('password-generator');
 var config = sails.config.myconf;
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
+var CompanyRole = 6;//Role Company
+var PatientRole = 3;//Role Patient
 function SendSMS(toNumber, content, callback) {
     return twilioClient.messages.create({
         body: content,
@@ -515,7 +517,7 @@ module.exports = {
 									if(data.model == 'UserAccount'){
 										return RelUserRole.create({
 											UserAccountId : created.ID,
-											RoleId        : 6
+											RoleId        : CompanyRole
 										},{transaction:t})
 										.then(function(success) {
 											if(success == null || success == ''){
@@ -917,7 +919,7 @@ module.exports = {
 						where:{
 							// Enable:'Y',
 							UserAccountId:patient.UserAccountID,
-							RoleId:6
+							RoleId:CompanyRole
 						},
 						transaction:t
 					});
@@ -930,7 +932,7 @@ module.exports = {
 				if(check_userRole == null || check_userRole == ''){
 					return RelUserRole.create({
 						UserAccountId:patient.UserAccountID,
-						RoleId : 6,
+						RoleId : CompanyRole,
 						Enable   : 'Y',
 						SiteId : 1,
 					},{transaction:t});
@@ -948,7 +950,7 @@ module.exports = {
 						},{
 							where:{
 								UserAccountId:patient.UserAccountID,
-								RoleId : 6,
+								RoleId : CompanyRole,
 							},
 							transaction:t
 						});
@@ -1184,7 +1186,7 @@ module.exports = {
 			else {
 				var isAdminCompany = false;
 				for(var i = 0; i < got_user.Roles.length; i++) {
-					if(got_user.Roles[i].RelUserRole.RoleId == 6 && got_user.Roles[i].RelUserRole.Enable == 'Y') {
+					if(got_user.Roles[i].RelUserRole.RoleId == CompanyRole && got_user.Roles[i].RelUserRole.Enable == 'Y') {
 						isAdminCompany = true;
 					}
 				}
@@ -1403,7 +1405,7 @@ module.exports = {
 												model:Role,
 												attributes:['RoleCode'],
 												where:{
-													ID: {$in:[3,6]}
+													ID: {$in:[CompanyRole,PatientRole]}
 												},
 												required:true
 											}
@@ -1455,7 +1457,7 @@ module.exports = {
 													}
 												},
 												attributes:['RoleCode'],
-												where: {ID: 6},
+												where: {ID: CompanyRole},
 												required:true
 											}
 										],

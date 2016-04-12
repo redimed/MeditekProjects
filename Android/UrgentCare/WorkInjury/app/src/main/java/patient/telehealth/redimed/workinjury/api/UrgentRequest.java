@@ -16,4 +16,13 @@ public interface UrgentRequest {
 
     @GET("/suburb")
     void getListSuburb(Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/checkActivation")
+    void checkActivation(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/login")
+    void login(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @GET("/api/logout")
+    void logout(Callback<JsonObject> callback);
 }

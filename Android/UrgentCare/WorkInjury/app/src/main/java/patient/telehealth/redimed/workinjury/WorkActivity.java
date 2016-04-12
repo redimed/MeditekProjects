@@ -8,11 +8,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -68,52 +66,29 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     private File f;
     private SweetAlertDialog dialog;
 
-    @Bind(R.id.txtFirstName)
-    EditText txtFirstName;
-    @Bind(R.id.txtLastName)
-    EditText txtLastName;
-    @Bind(R.id.txtContactPhone)
-    EditText txtContactPhone;
-    @Bind(R.id.txtDOB)
-    EditText txtDOB;
-    @Bind(R.id.txtEmail)
-    EditText txtEmail;
-    @Bind(R.id.txtDescription)
-    EditText txtDescription;
-    @Bind(R.id.autoCompleteSuburb)
-    AutoCompleteTextView autoCompleteSuburb;
-    @Bind(R.id.btnWorkInjury)
-    Button btnWorkInjury;
-    @Bind(R.id.btnBack)
-    Button btnBack;
-    @Bind(R.id.txtTitle)
-    TextView txtTitle;
-    @Bind(R.id.lblFNRequire)
-    TextView lblFNRequire;
-    @Bind(R.id.lblLNRequire)
-    TextView lblLNRequire;
-    @Bind(R.id.lblPhoneRequire)
-    TextView lblPhoneRequire;
-    @Bind(R.id.lblCTRequire)
-    TextView lblCTRequire;
-    @Bind(R.id.lblCNRequire)
-    TextView lblCNRequire;
-    @Bind(R.id.txtCompanyName)
-    EditText txtCompanyName;
-    @Bind(R.id.txtContactPerson)
-    EditText txtContactPerson;
-    @Bind(R.id.txtCompanyPhone)
-    EditText txtCompanyPhone;
-    @Bind(R.id.radioGroupGPReferral)
-    RadioGroup radioGroupGPReferral;
-    @Bind(R.id.relativeLayoutGPReferral)
-    RelativeLayout relativeLayoutGPReferral;
-    @Bind(R.id.radioY)
-    RadioButton radioY;
-    @Bind(R.id.relativeLayoutTreatment)
-    RelativeLayout relativeLayoutTreatment;
-    @Bind(R.id.radioGroupTypeTreatment)
-    RadioGroup radioGroupTypeTreatment;
+    @Bind(R.id.txtFirstName) EditText txtFirstName;
+    @Bind(R.id.txtLastName) EditText txtLastName;
+    @Bind(R.id.txtContactPhone) EditText txtContactPhone;
+    @Bind(R.id.txtDOB) EditText txtDOB;
+    @Bind(R.id.txtEmail) EditText txtEmail;
+    @Bind(R.id.txtDescription) EditText txtDescription;
+    @Bind(R.id.autoCompleteSuburb) AutoCompleteTextView autoCompleteSuburb;
+    @Bind(R.id.btnWorkInjury) Button btnWorkInjury;
+    @Bind(R.id.btnBack) Button btnBack;
+    @Bind(R.id.txtTitle) TextView txtTitle;
+    @Bind(R.id.lblFNRequire) TextView lblFNRequire;
+    @Bind(R.id.lblLNRequire) TextView lblLNRequire;
+    @Bind(R.id.lblPhoneRequire) TextView lblPhoneRequire;
+    @Bind(R.id.lblCTRequire) TextView lblCTRequire;
+    @Bind(R.id.lblCNRequire) TextView lblCNRequire;
+    @Bind(R.id.txtCompanyName) EditText txtCompanyName;
+    @Bind(R.id.txtContactPerson) EditText txtContactPerson;
+    @Bind(R.id.txtCompanyPhone) EditText txtCompanyPhone;
+    @Bind(R.id.radioGroupGPReferral) RadioGroup radioGroupGPReferral;
+    @Bind(R.id.relativeLayoutGPReferral) RelativeLayout relativeLayoutGPReferral;
+    @Bind(R.id.radioY) RadioButton radioY;
+    @Bind(R.id.relativeLayoutTreatment) RelativeLayout relativeLayoutTreatment;
+    @Bind(R.id.radioGroupTypeTreatment) RadioGroup radioGroupTypeTreatment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

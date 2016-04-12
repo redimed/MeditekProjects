@@ -28,8 +28,41 @@
         android:layout_height="wrap_content"
         android:background="@color/common_signin_btn_default_background"
         android:layout_below="@+id/txtPhone"
-        android:text="Submit"
+        android:text="Activation"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/button_text_color"/>
+        android:textColor="@color/button_text_color"
+        android:id="@+id/btnCheckActivation"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="code"
+        android:layout_below="@+id/btnCheckActivation"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txtPinNumber"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@+id/txtPinNumber"
+        android:text="Login"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/button_text_color"
+        android:id="@+id/btnCheckPinNumber"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/blueFont"
+        android:layout_below="@+id/btnCheckPinNumber"
+        android:layout_marginTop="20dp"
+        android:text="Logout"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/button_text_color"
+        android:id="@+id/btnLogout"/>
 </RelativeLayout>
 

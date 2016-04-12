@@ -27,7 +27,18 @@
  * http://sailsjs.org/#!/documentation/anatomy/myApp/config/local.js.html
  */
 
-module.exports = {
+var local={};
+if (process.argv.indexOf("--nossl") >= 0) {
+  //config http
+} else {
+  local.ssl={
+    key: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.key'),
+    cert: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.pem')
+  }
+}
+
+module.exports = local;
+//{
 
     /***************************************************************************
      * Your SSL certificate and key, if you want to be able to serve HTTP      *
@@ -82,4 +93,4 @@ module.exports = {
 
     // environment: process.env.NODE_ENV || 'development'
 
-};
+//};

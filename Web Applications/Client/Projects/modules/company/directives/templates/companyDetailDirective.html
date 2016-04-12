@@ -43,7 +43,7 @@
                         </div>
                         <h3 class="form-section bold">Site info
                             <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="openmodal('CompanySite','create',null)">
-                                <i class="glyphicon glyphicon-plus"></i> Link Staff</a>
+                                <i class="glyphicon glyphicon-plus"></i> Add</a>
                         </h3>
                         <div class="table-scrollable margin-top-30">
                             <table class="table table-bordered table-hover table-striped">
@@ -128,6 +128,30 @@
                                         <th>Home Phone</th>
                                         <th width="1">Active</th>
                                     </tr>
+                                    <tr style="width:100%;">
+                                        <th>&nbsp;</th>
+                                        <th>
+                                            <input type="text" class="form-control" placeholder="First Name" ng-model="search.FirstName" ng-keypress="Search(search,$event.which)" ng-change="checknull('FirstName')" >
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control" placeholder="Last Name" ng-model="search.LastName" ng-keypress="Search(search,$event.which)" ng-change="checknull('LastName')" >
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" id="DOB" ng-model="search.DOB" ng-change="Search(search,'13')" ng-change="checknull('DOB')">
+                                        </th>
+                                        <th>
+                                            <select class="form-control" placeholder="Gender" ng-model="search.Gender" ng-change="Search(search,'13');checknull('Gender')" >
+                                                <option value="">All</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control" placeholder="Home Phone" ng-model="search.HomePhoneNumber" ng-keypress="Search(search,$event.which)" ng-change="checknull('HomePhoneNumber')">
+                                        </th>
+                                        <th>&nbsp;</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="s in info.Patients">
@@ -137,11 +161,34 @@
                                         <td>{{s.DOB}}</td>
                                         <td>{{s.Gender}}</td>
                                         <td>{{s.HomePhoneNumber}}</td>
-                                        <td ng-click="openmodal('Staff','delete',s)" ><i ng-class="{'glyphicon glyphicon-ok turquoisetype':s.RelCompanyPatient.Active==='Y','glyphicon glyphicon-remove redtype':s.RelCompanyPatient.Active==='N'}"></i></td>
+                                        <td ng-click="openmodal('Staff','delete',s)" ><i class="glyphicon glyphicon-ok turquoisetype"></i></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+                        <!-- begin pagination -->
+                        <div class="row">
+                            <div class="col-md-5 col-sm-12">
+                                &nbsp;
+                            </div>
+                            <div class="col-md-7 col-sm-12" style="text-align:right">
+                                <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                                    <uib-pagination 
+                                    boundary-links="true" 
+                                    total-items="count" 
+                                    ng-model="searchObjectMap.currentPage" 
+                                    class="pagination-lg " 
+                                    previous-text="&lsaquo; " 
+                                    next-text="&rsaquo; " 
+                                    first-text="&laquo; " 
+                                    last-text="&raquo; " 
+                                    items-per-page="searchObjectMap.limit" 
+                                    max-size="searchObjectMap.maxSize"
+                                    ng-change="setPage('Patients')"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end pagination -->
                     </div>
                     <div class="tab-pane" id="tab_4">
                         <h3 class="form-section bold">
@@ -161,6 +208,7 @@
                                         <th>User Name</th>
                                         <th>PhoneNumber</th>
                                         <th>Email</th>
+                                        <th width="1">&nbsp;</th>
                                         <th width="1">Enable</th>
                                     </tr>
                                 </thead>
@@ -170,7 +218,11 @@
                                         <td>{{u.UserAccount.UserName}}</td>
                                         <td>{{u.UserAccount.PhoneNumber}}</td>
                                         <td>{{u.UserAccount.Email}}</td>
+                                        <td><button type="button" class="btn btn-danger" ng-click="deleteUser(u)" >Delete</button></td>
                                         <td ng-click="openmodal('UserAccounts','delete',u)" ><i ng-class="{'glyphicon glyphicon-ok turquoisetype':u.Enable==='Y','glyphicon glyphicon-remove redtype':u.Enable==='N'}"></i></td>
+                                    </tr>
+                                    <tr>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -191,7 +243,7 @@
 </script>
 
 <script type="text/ng-template " id="linkPatient">
-    <patient-list on-select="true" on-staff="staff" on-compid="compid" on-roleid="5"></patient-list>
+    <patient-list on-select="true" on-staff="staff" on-compid="compid" on-roleid="6"></patient-list>
 </script>
 
 <script type="text/ng-template " id="Staffmodal">

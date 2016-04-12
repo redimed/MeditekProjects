@@ -5,6 +5,8 @@ var generatePassword = require('password-generator');
 var config = sails.config.myconf;
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
+var CompanyRole = check.const.rolesID.organization;//Role Company
+var PatientRole = check.const.rolesID.patient;;//Role Patient
 function SendSMS(toNumber, content, callback) {
     return twilioClient.messages.create({
         body: content,
@@ -515,7 +517,7 @@ module.exports = {
 									if(data.model == 'UserAccount'){
 										return RelUserRole.create({
 											UserAccountId : created.ID,
-											RoleId        : 6
+											RoleId        : CompanyRole
 										},{transaction:t})
 										.then(function(success) {
 											if(success == null || success == ''){
@@ -634,51 +636,88 @@ module.exports = {
 		var model = sequelize.models[data.model];
 		return sequelize.transaction()
 		.then(function(t) {
-			return model.findOne({
-				where:{
-					// UID: data.info.UID,
-					$and: data.whereClauses
-				},
-				transaction : t
-			})
-			.then(function(got_model) {
-				if(got_model == null || got_model == ''){
-					t.rollback();
-					var err = new Error('Update.Error');
-					err.pushError('modelFind.notFound');
+			function callChangeStatus(transaction) {
+				var q = $q.defer();
+				model.findOne({
+					where:{
+						// UID: data.info.UID,
+						$and: data.whereClauses
+					},
+					transaction : transaction
+				})
+				.then(function(got_model) {
+					if(got_model == null || got_model == ''){
+						var err = new Error('Update.Error');
+						err.pushError('modelFind.notFound');
+						throw err;
+					}
+					else {
+						var UID = data.info.UID;
+						// delete data.info['UID'];
+						return model.update(
+							data.info
+						,{
+							where:{
+								$and: data.whereClauses
+							},
+							transaction: transaction
+						});
+					}
+				},function(err) {
 					throw err;
-				}
-				else {
-					var UID = data.info.UID;
-					// delete data.info['UID'];
-					return model.update(
-						data.info
-					,{
-						where:{
-							$and: data.whereClauses
-						},
-						transaction:t
-					});
-				}
-			},function(err) {
-				t.rollback();
-				throw err;
-			})
-			.then(function(updated) {
-				if(updated == null || updated == ''){
-					t.rollback();
-					var err = new Error('Updated.Error');
-					err.pushError('Model.Update.Queryerror');
-					throw err;
-				}
-				else {
+				})
+				.then(function(updated) {
+					if(updated == null || updated == ''){
+						var err = new Error('Updated.Error');
+						err.pushError('Model.Update.Queryerror');
+						throw err;
+					}
+					else {
+						q.resolve(updated);
+					}
+				},function(err) {
+					q.reject(err);
+				})
+				return q.promise;
+			}
+			if(!data.isRemoveAdmin) {
+				return callChangeStatus(t)
+				.then(function(result) {
 					t.commit();
-					return updated;
+					return result;
+				},function(err) {
+					t.rollback();
+					throw err;
+				})
+			}
+			else {
+				if(data.isRemoveAdmin == true) {
+					return callChangeStatus(t)
+					.then(function(result) {
+						// t.commit();
+						// return result;
+						return RelCompanyPatient.update({
+							Active: data.info.Enable
+						},{
+							where:{
+								PatientID : data.PatientID,
+								CompanyID     : data.CompanyID
+							},
+							transaction: t
+						});
+					},function(err) {
+						// t.rollback();
+						throw err;
+					})
+					.then(function(success) {
+						t.commit();
+						return success;
+					},function(err) {
+						t.rollback();
+						throw err;
+					})
 				}
-			},function(err) {
-				t.rollback();
-				throw err;
-			})
+			}
 		},function(err) {
 			throw err;
 		});
@@ -878,9 +917,9 @@ module.exports = {
 					// return created_association;
 					return RelUserRole.findOne({
 						where:{
-							Enable:'Y',
+							// Enable:'Y',
 							UserAccountId:patient.UserAccountID,
-							RoleId:5
+							RoleId:CompanyRole
 						},
 						transaction:t
 					});
@@ -893,7 +932,7 @@ module.exports = {
 				if(check_userRole == null || check_userRole == ''){
 					return RelUserRole.create({
 						UserAccountId:patient.UserAccountID,
-						RoleId : 5,
+						RoleId : CompanyRole,
 						Enable   : 'Y',
 						SiteId : 1,
 					},{transaction:t});
@@ -911,7 +950,7 @@ module.exports = {
 						},{
 							where:{
 								UserAccountId:patient.UserAccountID,
-								RoleId : 5,
+								RoleId : CompanyRole,
 							},
 							transaction:t
 						});
@@ -1138,6 +1177,7 @@ module.exports = {
             ]
 		})
 		.then(function(got_user){
+			console.log(got_user.Roles[0].RelUserRole);
 			if(!got_user){
 				var err = new Error('GetListStaff.error');
 				err.pushError('User.notFound');
@@ -1146,7 +1186,7 @@ module.exports = {
 			else {
 				var isAdminCompany = false;
 				for(var i = 0; i < got_user.Roles.length; i++) {
-					if(got_user.Roles[i].RelUserRole.RoleId == 6 && got_user.Roles[i].RelUserRole.Enable == 'Y') {
+					if(got_user.Roles[i].RelUserRole.RoleId == CompanyRole && got_user.Roles[i].RelUserRole.Enable == 'Y') {
 						isAdminCompany = true;
 					}
 				}
@@ -1320,16 +1360,43 @@ module.exports = {
 						break;
 
 					case 'Patients' :
-						return RelCompanyPatient.count({
-							where: {
-								CompanyID: got_company.ID
+						var whereClause = {};
+						// whereClause = data.Search?data.Search:{};
+						if(data.Search) {
+							for(var key in data.Search) {
+								if(key != 'Gender'){
+									whereClause[key] = {
+										like: '%' + data.Search[key] + '%'
+									};
+								}
+								else {
+									whereClause[key] = data.Search[key];
+								}
 							}
+						}
+						return RelCompanyPatient.findAndCountAll({
+							include:[
+								{
+									model:Patient,
+									required:true,
+									where:whereClause
+								}
+							],
+							where: {
+								CompanyID: got_company.ID,
+								Active:'Y'
+							},
+							limit:data.limit,
+							offset:data.offset
 						})
 						.then(function(result){
-							console.log("count ",result);
-							count = result;
-							return got_company.getPatients({
-								where:['RelCompanyPatient.Active=?','Y'],
+							console.log("count ",result.count);
+							count = result.count;
+							var arrId = [];
+							for(var i = 0; i < result.rows.length; i++) {
+								arrId.push(result.rows[i].PatientID);
+							}
+							return Patient.findAll({
 								include:[
 									{
 										model:UserAccount,
@@ -1338,7 +1405,7 @@ module.exports = {
 												model:Role,
 												attributes:['RoleCode'],
 												where:{
-													ID: {$in:[3,5]}
+													ID: {$in:[CompanyRole,PatientRole]}
 												},
 												required:true
 											}
@@ -1347,9 +1414,10 @@ module.exports = {
 										required:true
 									}
 								],
-								limit:data.limit,
-								offset:data.offset
-							});
+								where:{
+									ID:{$in:arrId}
+								}
+							})
 						},function(err) {
 							throw err;
 						});
@@ -1383,19 +1451,20 @@ module.exports = {
 										include:[
 											{
 												model:Role,
-												attributes:['RoleCode'],
-												where:{
-													ID: 5
+												through:{
+													where:{
+														Enable:'Y'
+													}
 												},
+												attributes:['RoleCode'],
+												where: {ID: CompanyRole},
 												required:true
 											}
 										],
 										attributes:['PhoneNumber','ID','Email','UserName'],
 										required:true
 									}
-								],
-								limit:data.limit,
-								offset:data.offset
+								]
 							});
 						},function(err) {
 							throw err;

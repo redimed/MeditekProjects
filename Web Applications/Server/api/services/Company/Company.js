@@ -1131,12 +1131,9 @@ module.exports = {
 			attributes :['ID','UID','PhoneNumber','Email','UserName'],
 			include:[
                	{
-                    model:RelUserRole,
-                    attributes:['RoleId','UserAccountId','SiteId'],
-                    where:{
-                    	Enable:'Y'
-                    },
-                    required: false
+                    model:Role,
+                    attributes:['RoleCode'],
+                    required: true
                 }
             ]
 		})
@@ -1148,8 +1145,8 @@ module.exports = {
 			}
 			else {
 				var isAdminCompany = false;
-				for(var i = 0; i < got_user.RelUserRoles.length; i++) {
-					if(got_user.RelUserRoles[i].RoleId == 5) {
+				for(var i = 0; i < got_user.Roles.length; i++) {
+					if(got_user.Roles[i].RelUserRole.RoleId == 6 && got_user.Roles[i].RelUserRole.Enable == 'Y') {
 						isAdminCompany = true;
 					}
 				}

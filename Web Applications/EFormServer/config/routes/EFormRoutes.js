@@ -99,8 +99,12 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostSaveRolesEFormTemplate'
     },
-    'get /eformgroup/list': {
+    'post /eformgroup/list': {
         controller: 'EForm/EFormController',
         action: 'GetListEFormGroup'
-    }
+    },
+    'post /eformtemplate/list-filter': {
+        controller: 'EForm/EFormController',
+        action: 'GetListEFormTemplateFilter'
+    },
 };

@@ -1,16 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/lightBackground"
     tools:context="com.redimed.telehealth.patient.request.RequestFragment">
-
-    <include layout="@layout/custom_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#F2F2F2"
         android:orientation="vertical">
 
         <com.redimed.telehealth.patient.font.RobotoTextView
@@ -24,21 +23,20 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/res_sub_title"
-            android:textColor="@color/greyFont" />
+            android:textColor="@color/greyFont"/>
 
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollViewSportInjury"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/lightBackground"
-        android:fillViewport="true"
+        android:layout_height="match_parent"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:isScrollContainer="false"
+        android:scrollbars="none"
+        android:fillViewport="true"
         android:orientation="vertical"
-        android:scrollbars="none">
+        android:isScrollContainer="false"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,9 +47,9 @@
                 android:id="@+id/tblRequest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/lightBackground"
                 android:shrinkColumns="1"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:background="@color/lightBackground">
 
                 <TableRow
                     android:layout_marginLeft="15dp"
@@ -61,18 +59,18 @@
                         android:id="@+id/txtFirstName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:padding="15dp"
                         android:layout_column="1"
+                        android:layout_weight="1"
+                        android:singleLine="true"
                         android:layout_marginLeft="-15dp"
                         android:layout_marginStart="-15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_border_table"
                         android:hint="@string/res_first_name"
                         android:inputType="textCapSentences"
-                        android:maxLength="50"
-                        android:maxLines="1"
-                        android:padding="15dp"
-                        android:singleLine="true"
-                        android:textColorHint="@color/hintFont" />
+                        android:textColorHint="@color/hintFont"
+                        android:background="@drawable/custom_border_table" />
 
                     <EditText
                         android:id="@+id/txtLastName"
@@ -98,18 +96,18 @@
                         android:id="@+id/txtMobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginStart="-15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_border_table"
-                        android:hint="@string/res_mobile"
                         android:maxLines="1"
                         android:padding="15dp"
                         android:maxLength="13"
+                        android:layout_column="1"
+                        android:layout_weight="1"
                         android:singleLine="true"
                         android:inputType="number"
-                        android:textColorHint="@color/hintFont" />
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:hint="@string/res_mobile"
+                        android:textColorHint="@color/hintFont"
+                        android:background="@drawable/custom_border_table"/>
 
                     <EditText
                         android:id="@+id/txtHome"
@@ -135,16 +133,16 @@
                         android:id="@+id/autoCompleteSuburb"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginStart="-15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_border_table"
-                        android:hint="@string/res_suburb"
                         android:maxLines="1"
                         android:padding="15dp"
+                        android:layout_column="1"
+                        android:layout_weight="1"
                         android:singleLine="true"
-                        android:textColorHint="@color/hintFont" />
+                        android:hint="@string/res_suburb"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:textColorHint="@color/hintFont"
+                        android:background="@drawable/custom_border_table" />
 
                 </TableRow>
 
@@ -163,13 +161,13 @@
                             android:id="@+id/lblInvisibleError"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_alignRight="@+id/spinnerApptType"
-                            android:layout_alignEnd="@+id/spinnerApptType"
-                            android:layout_centerInParent="true"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginEnd="20dp"
                             android:focusable="true"
-                            android:focusableInTouchMode="true"/>
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
+                            android:focusableInTouchMode="true"
+                            android:layout_centerInParent="true"
+                            android:layout_alignRight="@+id/spinnerApptType"
+                            android:layout_alignEnd="@+id/spinnerApptType"/>
 
                         <Spinner
                             android:id="@+id/spinnerApptType"
@@ -190,16 +188,16 @@
                         android:id="@+id/txtDOB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginStart="-15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_border_table"
-                        android:hint="@string/res_dob"
                         android:maxLines="1"
                         android:padding="15dp"
+                        android:layout_weight="1"
+                        android:layout_column="1"
                         android:singleLine="true"
-                        android:textColorHint="@color/hintFont" />
+                        android:hint="@string/res_dob"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:textColorHint="@color/hintFont"
+                        android:background="@drawable/custom_border_table" />
                 </TableRow>
 
                 <TableRow
@@ -210,17 +208,17 @@
                         android:id="@+id/txtEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginStart="-15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_border_table"
-                        android:hint="@string/res_email"
-                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:padding="15dp"
+                        android:layout_weight="1"
+                        android:layout_column="1"
                         android:singleLine="true"
-                        android:textColorHint="@color/hintFont" />
+                        android:hint="@string/res_email"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="@color/hintFont"
+                        android:background="@drawable/custom_border_table" />
                 </TableRow>
 
                 <TableRow
@@ -231,21 +229,21 @@
                         android:id="@+id/txtDescription"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:maxLines="5"
                         android:layout_column="1"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginStart="15dp"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:gravity="start|end"
+                        android:scrollbars="vertical"
                         android:hint="@string/res_des"
                         android:imeOptions="actionDone"
-                        android:inputType="textMultiLine|textCapSentences"
-                        android:isScrollContainer="true"
-                        android:maxLines="5"
                         android:overScrollMode="always"
+                        android:isScrollContainer="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:scrollbarStyle="insideInset"
-                        android:scrollbars="vertical"
-                        android:textColorHint="@color/hintFont" />
+                        android:textColorHint="@color/hintFont"
+                        android:background="@android:color/transparent"
+                        android:inputType="textMultiLine|textCapSentences" />
 
                 </TableRow>
 
@@ -255,25 +253,25 @@
                 android:id="@+id/layoutUpload"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:visibility="gone"
+                android:layout_marginTop="10dp"
                 android:background="@color/hintFont">
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
                     android:id="@+id/lblImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/no_image_result"
+                    android:visibility="visible"
                     android:layout_centerInParent="true"
-                    android:visibility="visible" />
+                    android:text="@string/no_image_result"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvRequestImage"
                     android:layout_width="match_parent"
                     android:layout_height="170dp"
-                    android:layout_gravity="center"
                     android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
                     android:scrollbarStyle="insideOverlay" />
 
             </RelativeLayout>
@@ -284,8 +282,8 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
                     android:id="@+id/lblUpload"
@@ -307,7 +305,7 @@
                     android:gravity="center"
                     android:text="@string/btn_submit"
                     android:textColor="@color/lightFont"
-                    android:background="@color/greyFont" />
+                    android:background="@android:color/holo_blue_dark" />
 
             </LinearLayout>
 
@@ -316,3 +314,5 @@
     </ScrollView>
 
 </LinearLayout>
+
+

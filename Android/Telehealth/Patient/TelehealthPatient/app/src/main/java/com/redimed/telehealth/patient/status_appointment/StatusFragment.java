@@ -25,6 +25,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.appointment.AppointmentFragment;
 import com.redimed.telehealth.patient.status_appointment.presenter.IStatusPresenter;
 import com.redimed.telehealth.patient.status_appointment.presenter.StatusPresenter;
 import com.redimed.telehealth.patient.status_appointment.view.IStatusView;
@@ -44,7 +45,7 @@ public class StatusFragment extends Fragment implements IStatusView {
     private Context context;
     private Picasso picasso;
     private IStatusPresenter iStatusPresenter;
-    private String TAG = "STATUS";
+    private final static String TAG = "=====STATUS=====";
 
     @Bind(R.id.layoutApptStatus)
     LinearLayout layoutApptStatus;
@@ -92,8 +93,10 @@ public class StatusFragment extends Fragment implements IStatusView {
         View v = inflater.inflate(R.layout.fragment_status_appointment, container, false);
         this.context = v.getContext();
         ButterKnife.bind(this, v);
+
         initVariable();
         animationBG();
+
         return v;
     }
 
@@ -202,7 +205,7 @@ public class StatusFragment extends Fragment implements IStatusView {
 
         //Set text  and icon title appointment details
         lblTitle.setText(getResources().getString(R.string.list_appt_title));
-        lblSubTitle.setText(getResources().getString(R.string.list_appt_title));
+        lblSubTitle.setText(getResources().getString(R.string.sub_title));
         layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

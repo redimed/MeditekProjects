@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
@@ -22,7 +23,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Header;
@@ -110,7 +110,7 @@ public class RESTClient {
 
         //3005
         restAdapterCore = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLCore)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
@@ -127,7 +127,7 @@ public class RESTClient {
                 .build();
     }
 
-    public static class SessionRequestInterceptor implements RequestInterceptor {
+    public static class SessionRequestInterceptor extends RequestInterceptor implements retrofit.RequestInterceptor {
         public void intercept(RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("SystemType", "ARD");
             paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", ""));
@@ -166,10 +166,10 @@ public class RESTClient {
                     editor.putString("cookie", header.getValue());
                     editor.apply();
                 }
-                if (header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")) {
+                if (null != header.getName() && header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")) {
 
                     JsonObject dataRefresh = new JsonObject();
-                    dataRefresh.addProperty("refreshCode", uidTelehealth.getString("refreshCode", null));
+                    dataRefresh.addProperty("refreshCode", uidTelehealth.getString("refreshCode", ""));
 
                     RESTClient.getRegisterApiLogin().getNewToken(dataRefresh, new Callback<JsonObject>() {
                         @Override
@@ -188,6 +188,28 @@ public class RESTClient {
                 }
             }
             return response;
+        }
+    }
+
+    public static class RequestInterceptor implements Interceptor {
+
+        public RequestInterceptor() {
+        }
+
+        @Override
+        public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+            com.squareup.okhttp.Request originalRequest = chain.request();
+
+            com.squareup.okhttp.Request compressedRequest = originalRequest.newBuilder()
+                    .header("SystemType", "ARD")
+                    .header("DeviceID", spDevice.getString("deviceID", ""))
+                    .header("Authorization", "Bearer " + uidTelehealth.getString("token", ""))
+                    .header("UserUID", uidTelehealth.getString("userUID", ""))
+                    .header("Cookie", uidTelehealth.getString("cookie", ""))
+                    .header("AppID", "com.redimed.telehealth.patient")
+                    .build();
+
+            return chain.proceed(compressedRequest);
         }
     }
 }

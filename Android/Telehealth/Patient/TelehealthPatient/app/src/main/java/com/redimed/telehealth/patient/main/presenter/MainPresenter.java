@@ -30,18 +30,15 @@ import retrofit.client.Response;
  */
 public class MainPresenter implements IMainPresenter {
 
-    private Gson gson;
     private Context context;
     private IMainView iMainView;
     private FragmentActivity activity;
-    private String TAG = "=====MAIN=====";
+    private static final String TAG = "=====MAIN=====";
 
     //Constructor
     public MainPresenter(Context context, FragmentActivity activity) {
         this.context = context;
         this.activity = activity;
-
-        gson = new Gson();
     }
 
     @Override

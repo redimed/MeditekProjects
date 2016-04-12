@@ -1,33 +1,31 @@
 package com.redimed.telehealth.patient.setting;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.home.presenter.HomePresenter;
-import com.redimed.telehealth.patient.home.presenter.IHomePresenter;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.setting.presenter.ISettingPresenter;
 import com.redimed.telehealth.patient.setting.presenter.SettingPresenter;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
-import com.redimed.telehealth.patient.utlis.DialogAlert;
 import com.redimed.telehealth.patient.utlis.DialogConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit.http.Part;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +34,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
 
     private String uid;
     private Context context;
+    private SweetAlertDialog progressDialog;
     private ISettingPresenter iSettingPresenter;
     private static final String TAG = "=====SETTING=====";
 
@@ -58,7 +57,8 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     @Bind(R.id.lblTitle)
     TextView lblTitle;
 
-    public SettingFragment() {}
+    public SettingFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,8 +82,31 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
         Bundle bundle = getArguments();
         if (bundle != null) {
             uid = bundle.getString("telehealthUID", "");
-            iSettingPresenter.getInfoPatient(bundle.getString("dataPatient", ""));
+            iSettingPresenter.getInfoPatient(uid);
         }
+
+        //init progressDialog
+        progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#B42047"));
+        progressDialog.setTitleText("Loading");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    @Override
+    public void onLoadError(String msg) {
+        if (msg.equalsIgnoreCase("Network Error")) {
+            new DialogConnection(context).show();
+        } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(getResources().getString(R.string.token_expired))
+                    .show();
+        } else {
+            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                    .setContentText(msg)
+                    .show();
+        }
+        progressDialog.dismiss();
     }
 
     @Override
@@ -97,6 +120,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
                 lblName.setText(firstName + " " + lastName);
             }
         }
+        progressDialog.dismiss();
     }
 
     public void onLoadToolbar() {
@@ -133,8 +157,8 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     @Override
     public void onResume() {
         super.onResume();
-        getView().requestFocus();
         getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

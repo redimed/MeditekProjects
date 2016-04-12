@@ -12,7 +12,7 @@
         android:id="@+id/layoutApptStatus"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|left"
+        android:gravity="center|start"
         android:orientation="vertical">
 
         <RelativeLayout

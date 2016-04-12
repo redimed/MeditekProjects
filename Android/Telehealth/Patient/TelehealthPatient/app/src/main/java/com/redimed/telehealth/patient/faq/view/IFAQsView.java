@@ -1,4 +1,4 @@
-package com.redimed.telehealth.patient.faq;
+package com.redimed.telehealth.patient.faq.view;
 
 /**
  * Created by Fox on 1/14/2016.

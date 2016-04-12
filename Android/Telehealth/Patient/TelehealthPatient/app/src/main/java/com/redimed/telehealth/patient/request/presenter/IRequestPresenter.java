@@ -1,9 +1,11 @@
 package com.redimed.telehealth.patient.request.presenter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.redimed.telehealth.patient.models.CustomGallery;
@@ -17,25 +19,35 @@ import java.util.ArrayList;
  */
 public interface IRequestPresenter {
 
-    void changeActivity();
-
     ArrayAdapter loadJsonData();
 
-    void getValueSign(String sign);
+    String getCurrentDateSystem();
 
     Patient[] loadDataInfoExists();
 
+    ArrayAdapter<String> setDataApptType();
+
+    void returnData(Bundle bundle);
+
+    void getValueSign(String sign);
+
     void displayDatePickerDialog();
 
-    void hideKeyboardFragment(View v);
+    void uploadNonLogin(String path);
 
-    ArrayAdapter<String> setDataApptType();
+    void hideKeyboardFragment(View v);
 
     void setImageGallery(String[] allPath);
 
     void changeFragment(Fragment fragment);
 
-    void uploadImage(ArrayList<CustomGallery> customGalleries);
+    void saveBitmapSign(SignaturePad signaturePad);
+
+    void displayFAQs(ArrayList<CustomGallery> customGalleries);
+
+    void completeRequest(ArrayList<CustomGallery> customGalleries);
 
     void checkFields(ArrayList<EditText> arrEditText, String suburb, String apptType);
+
+    boolean isCheckPatientConsent(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3);
 }

@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
@@ -19,19 +18,14 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.faq.FAQsFragment;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.information.InformationFragment;
-import com.redimed.telehealth.patient.information.presenter.InfoPresenter;
-import com.redimed.telehealth.patient.main.MainActivity;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.service.SocketService;
-import com.redimed.telehealth.patient.setting.SettingFragment;
+import com.redimed.telehealth.patient.services.RegistrationIntentService;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -60,9 +54,22 @@ public class SettingPresenter implements ISettingPresenter {
     }
 
     @Override
-    public void getInfoPatient(String dataPatient) {
-        patients = gson.fromJson(dataPatient, Patient[].class);
-        iSettingView.displayShortInfo(patients);
+    public void getInfoPatient(String teleUID) {
+        restClient.getDetailsPatient(teleUID, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                String message = jsonObject.get("message").getAsString();
+                if (message.equalsIgnoreCase("success")) {
+                    patients = gson.fromJson(jsonObject.get("data").toString(), Patient[].class);
+                    iSettingView.displayShortInfo(patients);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                iSettingView.onLoadError(error.getLocalizedMessage());
+            }
+        });
     }
 
     @Override
@@ -76,7 +83,6 @@ public class SettingPresenter implements ISettingPresenter {
 
             iMainPresenter.replaceFragment(fragment);
         }
-
     }
 
     @Override
@@ -104,9 +110,9 @@ public class SettingPresenter implements ISettingPresenter {
         alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Logout", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                clearDataServer(uid);
                 clearApplication();
-                context.stopService(new Intent(context, SocketService.class));
+                clearDataServer(uid);
+                context.startService(new Intent(context, RegistrationIntentService.class));
                 iMainPresenter.replaceFragment(new HomeFragment());
             }
         });
@@ -130,7 +136,6 @@ public class SettingPresenter implements ISettingPresenter {
         restClient.logout(dataJson, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                Log.d(TAG, jsonObject + "");
             }
 
             @Override
@@ -140,32 +145,59 @@ public class SettingPresenter implements ISettingPresenter {
         });
     }
 
+
     private void clearApplication() {
         File cache = context.getCacheDir();
         File appDir = new File(cache.getParent());
-
         if (appDir.exists()) {
             //Get all folder include /data/data/com.redimed.telehealth.patient
             String[] children = appDir.list();
             for (String s : children) {
-                if (!s.equals("lib")) {
-                    deleteDir(new File(appDir, s));
+                if (s.equals("shared_prefs")) {
+                    clearSharedPreferences(new File(appDir, s));
                 }
             }
         }
     }
 
-    private static boolean deleteDir(File dir) {
+    private void clearSharedPreferences(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             //Get child in each folder
             for (String aChildren : children) {
-                boolean success = deleteDir(new File(dir, aChildren));
-                if (!success) {
-                    return false;
-                }
+                String prefName = aChildren.substring(0, aChildren.length() - 4);
+                SharedPreferences pref = context.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear().apply();
             }
         }
-        return dir.delete();
     }
+
+//    private void clearApplication() {
+//        File cache = context.getCacheDir();
+//        File appDir = new File(cache.getParent());
+//        if (appDir.exists()) {
+//            //Get all folder include /data/data/com.redimed.telehealth.patient
+//            String[] children = appDir.list();
+//            for (String s : children) {
+//                if (!s.equals("lib")) {
+//                    deleteDir(new File(appDir, s));
+//                }
+//            }
+//        }
+//    }
+//
+//    private static boolean deleteDir(File dir) {
+//        if (dir != null && dir.isDirectory()) {
+//            String[] children = dir.list();
+//            //Get child in each folder
+//            for (String aChildren : children) {
+//                boolean success = deleteDir(new File(dir, aChildren));
+//                if (!success) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return dir.delete();
+//    }
 }

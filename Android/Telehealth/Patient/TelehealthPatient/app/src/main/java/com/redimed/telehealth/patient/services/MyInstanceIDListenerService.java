@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.redimed.telehealth.patient.service;
+package com.redimed.telehealth.patient.services;
 
 import android.content.Intent;
 
-import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.iid.InstanceIDListenerService;
 
 public class MyInstanceIDListenerService extends InstanceIDListenerService {

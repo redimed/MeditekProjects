@@ -26,7 +26,7 @@ public interface IInfoView {
 
     void onResultField(EditText editText);
 
-    void onResultSignature(Bitmap bitmap);
+//    void onResultSignature(Bitmap bitmap);
 
     void onLoadSignature(Bitmap bitmap, String pathSign);
 }

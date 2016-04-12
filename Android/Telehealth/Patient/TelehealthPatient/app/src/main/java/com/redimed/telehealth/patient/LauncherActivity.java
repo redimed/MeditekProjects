@@ -19,8 +19,6 @@ import butterknife.ButterKnife;
 
 public class LauncherActivity extends AppCompatActivity {
 
-    private String TAG = "Launcher";
-
     @Bind(R.id.logo)
     ImageView mLogo;
     @Bind(R.id.welcome_text)
@@ -40,6 +38,7 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         }, 3500);
     }

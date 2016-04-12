@@ -1,4 +1,4 @@
-package com.redimed.telehealth.patient.service;
+package com.redimed.telehealth.patient.services;
 
 import android.app.NotificationManager;
 import android.app.Service;
@@ -30,7 +30,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.security.cert.X509Certificate;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;

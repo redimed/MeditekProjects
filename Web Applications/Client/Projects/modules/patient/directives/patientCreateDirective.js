@@ -78,6 +78,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
         },
         link: function(scope, elem, attrs) {
+            console.log(scope.RoleId);
             scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
             scope.isChoseAvatar = false;
             // State

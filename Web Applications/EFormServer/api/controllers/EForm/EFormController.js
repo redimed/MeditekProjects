@@ -7,18 +7,25 @@ module.exports = {
         })
     },
     GetListEFormGroup: function(req, res){
-        EFormGroup.findAll({
-            where: {Enable: 'Y'},
-            include: [
-                {
-                    model: UserAccount,
-                    required: false
+        var data = null
+        if(!_.isEmpty(req) &&
+            !_.isEmpty(req.body)) {
+            data = req.body.data
+        }
+        Services.GetListEFormGroup(data, req.user)
+            .then(function(success) {
+                res.ok(success);
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
+                    err.transaction.rollback();
+                    res.serverError(ErrorWrap(err.error));
+                } else {
+                    res.serverError(ErrorWrap(err));
                 }
-            ]
-        })
-        .then(function(data){
-            res.json({data: data});
-        })
+            });
+        
     },
     PostSaveRolesEFormTemplate: function(req, res){
         RelEFormTemplateRole.findOne({
@@ -558,5 +565,26 @@ module.exports = {
         .then(function(result){
             res.json({data: result});
         })
-    }
+    },
+    GetListEFormTemplateFilter: function(req, res){
+        var data = null
+        if(!_.isEmpty(req) &&
+            !_.isEmpty(req.body)) {
+            data = req.body.data
+        }
+        Services.GetListEFormTemplateFilter(data, req.user)
+            .then(function(success) {
+                res.ok(success);
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
+                    err.transaction.rollback();
+                    res.serverError(ErrorWrap(err.error));
+                } else {
+                    res.serverError(ErrorWrap(err));
+                }
+            });
+        
+    },
 }

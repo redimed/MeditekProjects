@@ -88,11 +88,12 @@ module.exports = {
 		});
 		return p;
 	},
-	eformGroupList: function(){
+	eformGroupList: function(dataFilter){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
-				type: 'GET',
+				type: 'POST',
 				url: Config.apiUrl+'eformgroup/list',
+				data: dataFilter,
 				success: resolve
 			})	
 		})
@@ -336,5 +337,16 @@ module.exports = {
 			})	
 		})
 		return p;
-	}
+	},
+	eformTemplateListFilter: function(dataFilter){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eformtemplate/list-filter',
+				data: dataFilter,
+				success: resolve
+			})	
+		})
+		return p;
+	},
 }

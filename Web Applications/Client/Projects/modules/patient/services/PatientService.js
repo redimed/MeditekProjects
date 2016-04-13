@@ -3,6 +3,7 @@ angular.module('app.authentication.patient.services',[])
 	var PatientService = {};
 	var api = Restangular.all("api");
 	var characterRegex = /^[a-zA-Z0-9\s]{0,255}$/;
+	var userRegex = /^[a-zA-Z0-9\.]{0,255}$/;
 	var addressRegex = /^[a-zA-Z0-9\s,'-\/]{0,255}$/;
 	var postcodeRegex = /^[0-9]{4}$/;
 	var postData ={};
@@ -219,10 +220,25 @@ PatientService.validate = function(info) {
 		return q.promise;
 	};
 
-	PatientService.validateCheckPhone = function(info) {
+	PatientService.validateCheckPhone = function(info, isHaveUser) {
 		var error = [];
 		var q = $q.defer();
 		try {
+			//validate UserName
+			if(isHaveUser == true) {
+				if(info.UserName){
+					if(info.UserName.length < 0 || info.UserName.length > 50){
+						error.push({field:"UserName",message:"max length"});
+					}
+					if(!userRegex.test(info.UserName)){
+						error.push({field:"UserName",message:"invalid value"});
+					}
+				}
+				else {
+					error.push({field:"UserName",message:"required"});
+				}
+			}
+
 			//validate FirstName
 			if(info.FirstName){
 				if(info.FirstName.length < 0 || info.FirstName.length > 50){

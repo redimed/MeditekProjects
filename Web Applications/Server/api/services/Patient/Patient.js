@@ -674,23 +674,23 @@ module.exports = {
                     .then(function(success) {
                         if (data.Email && data.PhoneNumber) {
                             isCreateByPhoneAndEmail = true;
-                            userInfo.UserName = check.parseAuMobilePhone(data.PhoneNumber);
+                            userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
                             userInfo.PhoneNumber = data.PhoneNumber;
                             userInfo.Email = data.Email;
                             return Services.UserAccount.GetUserAccountDetails(data, null, t);
                         } else if (data.Email) {
                             isCreateByEmail = true;
-                            userInfo.UserName = data.Email;
+                            userInfo.UserName = data.UserName?data.UserName:data.Email;
                             userInfo.Email = data.Email;
                             return Services.UserAccount.GetUserAccountDetails(data, null, t);
                         } else if (data.PhoneNumber) {
                             isCreateByPhoneNumber = true;
-                            userInfo.UserName = check.parseAuMobilePhone(data.PhoneNumber);
+                            userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
                             userInfo.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
                             return Services.UserAccount.GetUserAccountDetails(data, null, t);
                         } else {
                             isCreateByName = true;
-                            userInfo.UserName = data.FirstName + "." + data.LastName + "." + generatePassword(4, false);
+                            userInfo.UserName = data.UserName?data.UserName:data.FirstName + "." + data.LastName + "." + generatePassword(4, false);
                             return success;
                         }
                     }, function(err) {
@@ -1659,43 +1659,6 @@ module.exports = {
                 }, function(err) {
                     throw err;
                 })
-                // return Services.UserAccount.GetUserAccountDetails(data,null,transaction)
-                // .then(function(user){
-                //     if(check.checkData(user)){
-                //         info.Email = user.Email;
-                //         info.PhoneNumber = user.PhoneNumber;
-                //         return Patient.findAll({
-                //                 where :{
-                //                     UserAccountID : user.ID
-                //                 },
-                //                 transaction:transaction
-                //             });
-
-            //     }
-            //     else
-            //         return ({
-            //             isCreated:false
-            //         });
-            // },function(err){
-            //     throw err;
-            // })
-            // .then(function(result){
-            //     if(check.checkData(result) && result.isCreated!==false){
-            //         return ({
-            //             isCreated:true
-            //         });
-            //     }
-            //     else
-            //         return ({
-            //             isCreated:false,
-            //             data: {
-            //                 Email : info.Email,
-            //                 PhoneNumber: info.PhoneNumber
-            //             }
-            //         });
-            // },function(err){
-            //     throw err;
-            // });
         } else if (check.checkData(data.PhoneNumber)) {
             // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
             return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber, transaction)
@@ -1777,9 +1740,6 @@ module.exports = {
             error.pushErrors("invalid.params");
             throw error;
         }
-        // },function(err){
-        // throw err;
-        // })
     },
 
 

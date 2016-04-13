@@ -115,15 +115,15 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 				var modalInstance = $uibModal.open({
 					templateUrl: 'CreateStaff',
 					controller: function($scope,$modalInstance){
-						$scope.cancel = function(){
-							$modalInstance.dismiss('cancel');
-						};
 						$scope.compid   = scope.info.ID;
 						$scope.staff = {};
 						$scope.staff.runIfSuccess = function(data){
 							toastr.success("success","success");
 							$scope.cancel();
 							scope.viewmodel('Patients');
+						};
+						$scope.staff.runIfClose = function(){
+							$modalInstance.dismiss('cancel');
 						};
 						$scope.loadagain = function() {
 							scope.viewmodel('Patients');

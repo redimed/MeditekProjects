@@ -20,6 +20,8 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     }
             ]
     };
+
+    $scope.isRolePatient = false;
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
             var checkedUser = false;
@@ -54,6 +56,9 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         var role = userInfo.roles[i];
         if (role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN') {
             $scope.checkPatient = 'Y';
+        }
+        if(role.RoleCode === 'PATIENT') {
+            $scope.isRolePatient = true;
         }
     }
 

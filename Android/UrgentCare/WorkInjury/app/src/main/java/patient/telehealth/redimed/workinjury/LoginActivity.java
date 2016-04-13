@@ -1,12 +1,19 @@
 package patient.telehealth.redimed.workinjury;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.google.gson.JsonObject;
 
@@ -19,11 +26,20 @@ import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @Bind(R.id.btnBack) Button btnBack;
+    @Bind(R.id.logo) ImageView mLogo;
+
+    //=======Layout 1=========
     @Bind(R.id.btnCheckActivation) Button btnCheckActivation;
+    @Bind(R.id.lblPhoneCode) TextView lblPhoneCode;
     @Bind(R.id.txtPhone) EditText txtPhone;
-    @Bind(R.id.btnCheckPinNumber) Button btnCheckPinNumber;
-    @Bind(R.id.txtPinNumber) EditText txtPinNumber;
-    @Bind(R.id.btnLogout) Button btnLogout;
+
+    //======Layout 2==========
+    @Bind(R.id.btnSubmitPinNumber) Button btnSubmitPinNumber;
+    @Bind(R.id.txtVerifyCode) EditText txtVerifyCode;
+
+    @Bind(R.id.layoutContainer) ViewFlipper layoutContainer;
+    @Bind(R.id.layoutRegisterFone) LinearLayout layoutRegisterFone;
     private String UserUID;
 
     @Override
@@ -31,15 +47,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        layoutContainer.setAnimateFirstView(true);
+        layoutContainer.setAlpha(0.0f);
+        layoutContainer.setDisplayedChild(layoutContainer.indexOfChild(layoutRegisterFone));
+
+        //init function
+        animationLogo();
+        animationContainer();
+
+        //set listener
+        btnSubmitPinNumber.setOnClickListener(this);
         btnCheckActivation.setOnClickListener(this);
-        btnCheckPinNumber.setOnClickListener(this);
-        btnLogout.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
+    }
+
+    public void animationLogo() {
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.translate_center_to_top);
+        mLogo.startAnimation(anim);
+    }
+
+    public void animationContainer() {
+        layoutContainer.animate().setStartDelay(1700).setDuration(500).alpha(1.0f);
+    }
+
+    public void switchView(int inAnimation, int outAnimation, View v) {
+        layoutContainer.setInAnimation(this, inAnimation);
+        layoutContainer.setOutAnimation(this, outAnimation);
+        if (layoutContainer.indexOfChild(v) == 0)
+            layoutContainer.showNext();
+        else
+            layoutContainer.showPrevious();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnCheckActivation :
+        switch (v.getId()) {
+            case R.id.btnBack:
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+                break;
+            case R.id.btnCheckActivation:
+                btnCheckActivation.setEnabled(false);
                 Log.d("Login", String.valueOf(txtPhone.getText()));
                 JsonObject objData = new JsonObject();
                 objData.addProperty("phone", String.valueOf(txtPhone.getText()));
@@ -51,6 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void success(JsonObject jsonObject, Response response) {
                         UserUID = jsonObject.get("UserUID").getAsString();
                         Log.d("Succccccccccccccccccc", UserUID);
+                        switchView(R.anim.in_from_left, R.anim.out_to_right, layoutRegisterFone);
                     }
 
                     @Override
@@ -59,14 +108,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
                 break;
-            case R.id.btnCheckPinNumber :
+            case R.id.btnSubmitPinNumber:
                 Log.d("Succccccccccccccccccc", UserUID);
                 JsonObject objLogin = new JsonObject();
                 objLogin.addProperty("UserUID", UserUID);
-                objLogin.addProperty("PinNumber", String.valueOf(txtPinNumber.getText()));
+                objLogin.addProperty("PinNumber", String.valueOf(txtVerifyCode.getText()));
                 objLogin.addProperty("UserName", "1");
                 objLogin.addProperty("Password", "1");
-
 
                 RESTClient.getAuthApi().login(objLogin, new Callback<JsonObject>() {
                     @Override
@@ -75,10 +123,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d("response", String.valueOf(response));
                         SharedPreferences.Editor editor = getSharedPreferences("WorkInjury", MODE_PRIVATE).edit();
                         String token = jsonObject.get("token").getAsString();
-//                        String user = jsonObject.get("user").getAsString();
+                        String refreshCode = jsonObject.get("refreshCode").getAsString();
+                        String ueriud = (jsonObject.get("user").getAsJsonObject()).get("UID").getAsString();
+                        String username = (jsonObject.get("user").getAsJsonObject()).get("UserName").getAsString();
+                        Log.d("ueriud", ueriud);
+                        Log.d("username", username);
                         editor.putString("token", token);
-//                        editor.putString("user", user);
+                        editor.putString("refreshCode", refreshCode);
+                        editor.putString("useruid", ueriud);
+                        editor.putString("username", username);
+                        editor.putBoolean("isAuthenticated",true);
                         editor.commit();
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        finish();
                     }
 
                     @Override
@@ -87,20 +144,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
                 break;
-            case R.id.btnLogout:
-                RESTClient.getAuthApi().logout(new Callback<JsonObject>() {
-                    @Override
-                    public void success(JsonObject jsonObject, Response response) {
-                        Log.d("Logout", String.valueOf(jsonObject));
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
-                break;
-
         }
     }
 }

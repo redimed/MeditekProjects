@@ -5,61 +5,61 @@ import com.google.gson.annotations.SerializedName;
 public class UrgentRequestModel {
 
     @SerializedName("firstName")
-    public String FirstName;
+    private String FirstName;
 
     @SerializedName("lastName")
-    public String LastName;
+    private String LastName;
 
     @SerializedName("phoneNumber")
-    public String ContactPhone;
+    private String ContactPhone;
 
     @SerializedName("suburb")
-    public String Suburb;
+    private String Suburb;
 
     @SerializedName("requestDate")
-    public String RequestDate;
+    private String RequestDate;
 
     @SerializedName("DOB")
-    public String DOB;
+    private String DOB;
 
     @SerializedName("email")
-    public String email;
+    private String email;
 
     @SerializedName("description")
-    public String Description;
+    private String Description;
 
     @SerializedName("GPReferral")
-    public String GPReferral;
+    private String GPReferral;
 
     @SerializedName("physiotherapy")
-    public String PhysioTherapy;
+    private String PhysioTherapy;
 
     @SerializedName("specialist")
-    public String SpecialList;
+    private String SpecialList;
 
     @SerializedName("handTherapy")
-    public String HandTherapy;
+    private String HandTherapy;
 
     @SerializedName("treatment")
-    public String Rehab;
+    private String Rehab;
 
     @SerializedName("exerciseRehab")
-    public String ExerciseRehab;
+    private String ExerciseRehab;
 
     @SerializedName("GP")
-    public String GeneralClinic;
+    private String GeneralClinic;
 
     @SerializedName("urgentRequestType")
-    public String UrgentRequestType;
+    private String UrgentRequestType;
 
     @SerializedName("companyName")
-    public String CompanyName;
+    private String CompanyName;
 
     @SerializedName("contactPerson")
-    public String ContactPerson;
+    private String ContactPerson;
 
     @SerializedName("companyPhoneNumber")
-    public String CompanyPhone;
+    private String CompanyPhone;
 
     public String getFirstName() {
         return FirstName;

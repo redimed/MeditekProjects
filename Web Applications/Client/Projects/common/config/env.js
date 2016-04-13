@@ -1,32 +1,52 @@
 var env = 'meditekServer'; //local,meditekServer,testApp,app
 
 var configRestBaseUrl = {
+<<<<<<< c9eb9ef88ce541ad521768651af00b8d902a4ab1
     'local':'https://192.168.1.235:3005',
     //'local': 'http://localhost:3005',
+=======
+    //'local':'https://192.168.1.235:3005',
+    'local': 'http://192.168.1.215:3005',
+>>>>>>> update workinjury
     'meditekServer': 'https://meditek.redimed.com.au:3005',
     'testApp': 'https://testapp.redimed.com.au:3005',
     'app': 'https://apps.redimed.com.au:3005'
 };
 
 var configAuthBaseUrl = {
+<<<<<<< c9eb9ef88ce541ad521768651af00b8d902a4ab1
     'local':'https://192.168.1.235:3006',
     //'local': 'http://localhost:3006',
+=======
+    //'local':'https://192.168.1.235:3006',
+    'local': 'http://192.168.1.215:3006',
+>>>>>>> update workinjury
     'meditekServer': 'https://meditek.redimed.com.au:3006',
     'testApp': 'https://testapp.redimed.com.au:3006',
     'app': 'https://apps.redimed.com.au:3006',
 };
 
 var configTelehealthBaseUrl = {
+<<<<<<< c9eb9ef88ce541ad521768651af00b8d902a4ab1
     'local':'https://192.168.1.235:3009',
     //'local': 'http://localhost:3009',
+=======
+    //'local':'https://192.168.1.235:3009',
+    'local': 'http://192.168.1.215:3009',
+>>>>>>> update workinjury
     'meditekServer': 'https://meditek.redimed.com.au:3009',
     'testApp': 'https://testapp.redimed.com.au:3009',
     'app': 'https://apps.redimed.com.au:3009',
 };
 
 var configNcBaseUrl = {
+<<<<<<< c9eb9ef88ce541ad521768651af00b8d902a4ab1
     'local':'https://192.168.1.235:3016',
     //'local': 'http://localhost:3016',
+=======
+    //'local':'https://192.168.1.235:3016',
+    'local': 'http://192.168.1.215:3016',
+>>>>>>> update workinjury
     'meditekServer': 'https://meditek.redimed.com.au:3016',
     'testApp': 'https://testapp.redimed.com.au:3016',
     'app': 'https://apps.redimed.com.au:3016',

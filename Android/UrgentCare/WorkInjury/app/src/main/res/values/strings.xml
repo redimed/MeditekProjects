@@ -3,13 +3,14 @@
     <string name="app_name">REDIMED Health Work Injury</string>
 
     <!-- Home Activity-->
-    <string name="green_btn">Treatment</string>
+    <string name="green_btn">Rehab</string>
     <string name="blue_btn">Specialist</string>
     <string name="red_btn">GP</string>
-    <string name="orange_btn">Other Service</string>
+    <string name="orange_btn">Setting</string>
     <string name="urgent_btn">About Us</string>
     <string name="faq_btn">FAQs</string>
     <string name="call_btn">Call Us</string>
+    <string name="login_btn">Login</string>
     <string name="phone_call">0892300900</string>
     <string name="time_available">08:00AM - 05:00PM</string>
     <string name="contain_bottom1">Personalised + Customised,</string>
@@ -34,6 +35,9 @@
     <string name="contentDialogErrorFrom">Please input required information</string>
     <string name="confirmSaveInfo">Do you want to save information</string>
     <string name="title_action_bar">Work Injury Clinic Booking</string>
+    <string name="title_action_bar_login">Login</string>
+    <string name="title_action_bar_setting">Setting</string>
+    <string name="title_action_bar_staff_list">Staff List</string>
     <string name="required_field">*</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
@@ -62,5 +66,28 @@
     <!-- FAQs-->
     <string name="title_activity_faqs">FAQsActivity</string>
     <string name="title_activity_launcher">LauncherActivity</string>
+
+    <!---->
+    <string name="welcome">Welcome to REDiMED</string>
+    <string name="phone_code">+61</string>
+    <string name="hint_phone">Phone Number</string>
+    <string name="btn_requestCode">Continue</string>
+    <string name="btn_VerifyCode">Verify</string>
+    <string name="hint_code">Verify Code</string>
+    <string name="title_bottom_activation">© REDIMED 2015 - App Design by Meditek</string>
+    <string name="text_contains">Enter your phone number and click continue</string>
+
+    <!-- Setting Layout-->
+    <string name="setting_title">Setting</string>
+    <string name="setting_company">COMPANY</string>
+    <string name="setting_account">ACCOUNT</string>
+    <string name="setting_profile">PATIENT PROFILE</string>
+    <string name="complete_profile">Incomplete Profile</string>
+    <string name="add_new">Add New Account</string>
+    <string name="about">About Redimed</string>
+    <string name="other">Other services</string>
+    <string name="setting_logout">LOGOUT</string>
+    <string name="logout">Log Out</string>
+    <string name="none">NONE</string>
 
 </resources>

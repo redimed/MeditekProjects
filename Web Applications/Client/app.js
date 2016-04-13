@@ -38,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'Projects')));
 app.use('/Projects', express.static(__dirname + '/Projects'));
 
 app.use(express.errorHandler());
+<<<<<<< 2f97d265942f3ec13260a7c88c87479503dbe5ca
 if (process.argv.indexOf("--nossl") >= 0) {
     console.log("============================== development");
     http.createServer(app).listen(app.get('port'), function() {

@@ -2,6 +2,7 @@ package patient.telehealth.redimed.workinjury;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -40,6 +41,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private int currentItem = 0;
     private boolean shouldFinish = false;
     private UrgentRequest urgentRequestApi;
+    private static SharedPreferences workInjury;
+    private boolean isAuthenticated;
 
     @Bind(R.id.slider) ViewPager slider;
     @Bind(R.id.circleIndicator) PageIndicator circleIndicator;
@@ -58,6 +61,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         TypefaceUtil.applyFont(this, findViewById(R.id.activityHome), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
+        workInjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
+        isAuthenticated = workInjury.getBoolean("isAuthenticated", false);
+        if (isAuthenticated){
+            btnLogin.setVisibility(View.GONE);
+            Log.d("aaaaaaaaaaaaaa","neeeeeeeeeeeeeeeeeeeeee");
+        }
+        Log.d("huhuhuhuhu", String.valueOf(isAuthenticated));
         urgentRequestApi = RESTClient.getRegisterApi();
         sliderImageAdapter = new SliderImageAdapter(this);
         slider.setAdapter(sliderImageAdapter);
@@ -166,8 +176,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.btnOther:
-                i = new Intent(this, FAQsActivity.class);
-                i.putExtra("doc", "other");
+                i = new Intent(this, SettingActivity.class);
                 startActivity(i);
                 finish();
                 break;

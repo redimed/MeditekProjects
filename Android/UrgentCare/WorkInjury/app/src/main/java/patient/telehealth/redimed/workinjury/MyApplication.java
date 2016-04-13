@@ -12,6 +12,7 @@ public class MyApplication extends Application {
     private String TAG = "MyApplication";
     private static MyApplication myApplication;
 
+
     public static MyApplication getInstance() {
         return myApplication;
     }

@@ -2,7 +2,9 @@ package patient.telehealth.redimed.workinjury.network;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.google.gson.JsonObject;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
@@ -21,8 +23,10 @@ import javax.net.ssl.X509TrustManager;
 import patient.telehealth.redimed.workinjury.api.UrgentRequest;
 import patient.telehealth.redimed.workinjury.utils.Config;
 import patient.telehealth.redimed.workinjury.utils.RetrofitErrorHandler;
+import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.Header;
 import retrofit.client.OkClient;
 import retrofit.client.Request;
@@ -91,7 +95,6 @@ public class RESTClient {
             paramRequestFacade.addHeader("appid", "com.redimed.telehealth.workinjury");
             paramRequestFacade.addHeader("Authorization", "Bearer " + workInjury.getString("token", ""));
             paramRequestFacade.addHeader("Cookie", workInjury.getString("cookie", ""));
-
         }
     }
 
@@ -177,24 +180,23 @@ public class RESTClient {
                     editor.apply();
                 }
                 if (header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")) {
+                    JsonObject dataRefresh = new JsonObject();
+                    dataRefresh.addProperty("refreshCode", workInjury.getString("refreshCode", null));
+                    Log.d("requireupdatetoken",dataRefresh+"");
+                    RESTClient.getAuthApi().getNewToken(dataRefresh, new Callback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject jsonObject, Response response) {
+                            SharedPreferences.Editor editor = workInjury.edit();
+                            editor.putString("token", jsonObject.get("token").isJsonNull() ? " " : jsonObject.get("token").getAsString());
+                            editor.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ? " " : jsonObject.get("refreshCode").getAsString());
+                            editor.apply();
+                        }
 
-//                    JsonObject dataRefresh = new JsonObject();
-//                    dataRefresh.addProperty("refreshCode", uidTelehealth.getString("refreshCode", null));
-//
-//                    RESTClient.getRegisterApiLogin().getNewToken(dataRefresh, new Callback<JsonObject>() {
-//                        @Override
-//                        public void success(JsonObject jsonObject, Response response) {
-//                            editor = uidTelehealth.edit();
-//                            editor.putString("token", jsonObject.get("token").isJsonNull() ? " " : jsonObject.get("token").getAsString());
-//                            editor.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ? " " : jsonObject.get("refreshCode").getAsString());
-//                            editor.apply();
-//                        }
-//
-//                        @Override
-//                        public void failure(RetrofitError error) {
-//                            Log.d(TAG, "ERROR" + error.getLocalizedMessage());
-//                        }
-//                    });
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("=====REST_CLIENT=====", "ERROR" + error.getLocalizedMessage());
+                        }
+                    });
                 }
             }
             return response;

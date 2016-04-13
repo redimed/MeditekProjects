@@ -11,9 +11,12 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			limit:'=onLimit',
 			compid:'=onCompid',
 			roleid:'=onRoleid',
+			ishaveusername:'=isHaveUsername'
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
+			console.log(scope.ishaveusername);
+			scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
 			scope.fieldSort={};
 			scope.search  = {};
 			scope.checked = {};
@@ -242,6 +245,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						templateUrl: 'patientCreatemodal',
 						controller: function($scope,$modalInstance){
 							// $scope.rolecompany = true;
+							$scope.check = scope.ishaveusername;
 							$scope.compid = scope.compid;
 							$scope.role = scope.roleid?true:false;
 							$scope.roleid = scope.roleid?scope.roleid:null;

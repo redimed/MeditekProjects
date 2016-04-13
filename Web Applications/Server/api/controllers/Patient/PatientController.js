@@ -528,11 +528,56 @@ module.exports = {
         Services.Patient.CheckPatient(data)
             .then(function(result) {
                 if (result !== undefined && result !== null) {
-                    res.ok({
-                        status: 200,
-                        message: "success",
-                        data: result
-                    });
+                    // res.ok({
+                    //     status: 200,
+                    //     message: "success",
+                    //     data: result
+                    // });
+                    if(!data.UserName) {
+                        res.ok({
+                            status: 200,
+                            message: "success",
+                            data: result
+                        });
+                    }
+                    else {
+                        return UserAccount.findOne({
+                            where:{
+                                UserName: data.UserName
+                            }
+                        })
+                        .then(function(got_user) {
+                            if(got_user !== undefined && got_user !== null) {
+                                if(result.isCreated == false) {
+                                    result.isCreated = true;
+                                    result.field = {};
+                                    result.field.UserName = true;
+                                    res.ok({
+                                        status: 200,
+                                        message:"success",
+                                        data: result
+                                    });
+                                }
+                                else {
+                                    result.field.UserName = true;
+                                    res.ok({
+                                        status: 200,
+                                        message:"success",
+                                        data: result
+                                    });
+                                }
+                            }
+                            else {
+                                res.ok({
+                                    status: 200,
+                                    message: "success",
+                                    data: result
+                                });
+                            }
+                        },function(err) {
+                            res.serverError(ErrorWrap(err));
+                        });
+                    }
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");

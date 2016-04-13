@@ -8,7 +8,9 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             rolecompany:'=roleCompany',
             reset:'=onReset',
             compid:'=onCompid',
-            RoleId:'=onRoleid'
+            RoleId:'=onRoleid',
+            ishaveusername:'=isHaveUsername',
+            cancel:'=onCancel'
         },
         restrict: "EA",
         controller: function($scope, FileUploader) {
@@ -78,6 +80,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
         },
         link: function(scope, elem, attrs) {
+            scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
+            console.log(scope.ishaveusername);
             console.log(scope.RoleId);
             scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
             scope.isChoseAvatar = false;
@@ -155,6 +159,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     State: data.State,
                     LastName: data.LastName,
                     PhoneNumber: data.PhoneNumber,
+                    UserName: data.UserName,
                     DOB: data.DOB,
                     Address1: data.Address1,
                     Address2: data.Address2,
@@ -171,6 +176,10 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                         scope.er['FirstName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['FirstName'] = 'required';
                     }
+                    if(data.UserName == null || data.UserName == ''){
+                        scope.er['UserName'] = { 'border': '2px solid #DCA7B0' };
+                        scope.ermsg['UserName'] = 'required';
+                    }
                     if(data.LastName == null || data.LastName == ''){
                         scope.er['LastName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['LastName'] = 'required';
@@ -183,7 +192,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     scope.ermsg['PhoneNumber'] = 'required';
                 }
                 else{
-                    PatientService.validateCheckPhone(data)
+
+                    PatientService.validateCheckPhone(data,scope.ishaveusername)
                     .then(function(success) {
                         scope.er = '';
                         scope.ermsg = '';
@@ -214,15 +224,21 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                         // toastr.error("Information was used to create patient", "ERROR");
                                         scope.isBlockStep1 = false;
                                         scope.loadingCheck = false;
-                                        if(result.data.field.Email && result.data.field.PhoneNumber) {
-                                            toastr.error("Mobile Phone Number and Email existed");
+                                        var existedField = '';
+                                        for(var key in result.data.field) {
+                                            if(key == 'PhoneNumber') {
+                                                existedField+=' Mobile Phone Number and';
+                                            }
+                                            else {
+                                                existedField+=' '+key+' and';
+                                            }
                                         }
-                                        else if (result.data.field.Email) {
-                                            toastr.error("Email existed");
+                                        if(existedField.substr(existedField.length - 3) == 'and') {
+                                            existedField = existedField.slice(0, -3);
+                                            existedField+=' existed';
+                                            toastr.error(existedField);
                                         }
-                                        else if (result.data.field.PhoneNumber) {
-                                            toastr.error("Mobile Phone Number existed");
-                                        }
+                                        
                 
                                     }
                                 }
@@ -259,11 +275,15 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 }
                 else if(scope.staff){
                     scope.staff.runIfClose();
-                } else {
+                } 
+                else if(scope.cancel) {
+                    scope.cancel();
+                }
+                else {
                     $state.go('authentication.patient.list', null, {
                         'reload': true
                     });
-                };
+                }
             };
 
 

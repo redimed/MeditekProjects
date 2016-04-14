@@ -75,6 +75,22 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(relDoctorAppointmentUpdated) {
+                        if(!_.isEmpty(data.DoctorGroups) &&
+                            !_.isEmpty(appointmentObject)) {
+                            var objectRelAppointmentDoctorGroup = {
+                                where: data.DoctorGroups,
+                                transaction: t,
+                                appointmentObject: appointmentObject
+                            };
+                            return Services.RelAppointmentDoctorGroup(objectRelAppointmentDoctorGroup);
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(relAppointmentGroupDoctorCreated) {
                         if (HelperService.CheckExistData(data.Patients) &&
                             HelperService.CheckExistData(data.Patients[0]) &&
                             HelperService.CheckExistData(appointmentObject)) {

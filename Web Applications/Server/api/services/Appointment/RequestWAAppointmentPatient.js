@@ -152,6 +152,25 @@ module.exports = function(data, userInfo) {
                             });
                         })
                         .then(function(relDoctorApptCreated) {
+                            if (!_.isEmpty(data.DoctorGroups) &&
+                                !_.isEmpty(appointmentObject)) {
+                                if (_.isString(data.DoctorGroups)) {
+                                    data.DoctorGroups = JSON.parse(data.DoctorGroups);
+                                }
+                                var objectRelAppointmentDoctorGroup = {
+                                    where: data.DoctorGroups,
+                                    transaction: t,
+                                    appointmentObject: appointmentObject
+                                };
+                                return Services.RelAppointmentDoctorGroup(objectRelAppointmentDoctorGroup);
+                            }
+                        }, function(err) {
+                            defer.reject({
+                                error: err,
+                                transaction: t
+                            });
+                        })
+                        .then(function(relAppointmentDoctorGroupCreated) {
                             if (!_.isEmpty(data.AppointmentData)) {
                                 if (_.isString(data.AppointmentData)) {
                                     data.AppointmentData = JSON.parse(data.AppointmentData);

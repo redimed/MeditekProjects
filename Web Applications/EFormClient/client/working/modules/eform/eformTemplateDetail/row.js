@@ -71,6 +71,10 @@ module.exports = React.createClass({
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].setValue(fieldRefChild, value);
     },
+    addRowForDynamicTable: function(field){
+        if(typeof this.refs[field.fields[0].ref] !== 'undefined')
+            this.refs[field.fields[0].ref].addRowForDynamicTable(field);
+    },
     _onRemoveRow: function(){
         var self = this;
         self.props.onRemoveRow(self.props.codeSection, self.props.code);
@@ -243,7 +247,7 @@ module.exports = React.createClass({
             var fieldRef = field.ref;
             if(typeof this.refs[fieldRef] !== 'undefined'){
                 var type = this.refs[fieldRef].getType();
-                if(type !== 'table' && 
+                if(type !== 'table' && type !== 'dynamic_table' &&
                     Config.getPrefixField(type, 'label') === -1 && 
                     Config.getPrefixField(type, 'check') === -1 && 
                     Config.getPrefixField(type, 'date') === -1 &&
@@ -277,6 +281,12 @@ module.exports = React.createClass({
                         var name = this.refs[fieldRef].getName();
                         results.push({base64Data: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, value: ''});
                     }
+                }else if(type === 'dynamic_table'){
+                    var tableFields = this.refs[fieldRef].getAllValue();
+                    tableFields.map(function(tableField, index){
+                        tableField.refRow = self.props.refTemp;
+                        results.push(tableField);
+                    })      
                 }
             }
         }
@@ -660,20 +670,22 @@ module.exports = React.createClass({
                                             onUpdateColumn={this._onUpdateColumn}
                                             onRightClickItem={this._onRightClickTableItem}/>
                                 else if(type === 'dynamic_table')
-                                        return <CommonTableDynamic key={index} type={type}
-                                            name={field.get('name')}
-                                            permission={this.props.permission}
-                                            content={field.get('content')}
-                                            groupId={groupId}
-                                            context={displayContextTableMenu}
-                                            ref={field.get('ref')}
-                                            refTemp={field.get('ref')}
-                                            code={index}
-                                            size={field.get('size')}
-                                            onSaveRow={this._onSaveRow}
-                                            onDeleteColumn={this._onDeleteColumn}
-                                            onUpdateColumn={this._onUpdateColumn}
-                                            onRightClickItem={this._onRightClickTableItem}/>
+                                    return <CommonTableDynamic key={index} type={type}
+                                        name={field.get('name')}
+                                        permission={this.props.permission}
+                                        content={field.get('content')}
+                                        groupId={groupId}
+                                        context={displayContextTableMenu}
+                                        ref={field.get('ref')}
+                                        refTemp={field.get('ref')}
+                                        code={index}
+                                        size={field.get('size')}
+                                        onDeleteColumn={this._onDeleteColumn}
+                                        onSaveRow={this._onSaveRow}
+                                        onEditRow={this._onEditRow}
+                                        onRemoveRow={this._onRemoveRow}
+                                        onUpdateColumn={this._onUpdateColumn}
+                                        onRightClickItem={this._onRightClickTableItem}/>
                                 else if(type === 'eform_input_signature')
                                     return <CommonSignature key={index} type={type}
                                         groupId={groupId}

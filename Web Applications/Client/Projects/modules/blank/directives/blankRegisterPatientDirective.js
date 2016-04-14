@@ -330,6 +330,9 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 }
             }
             $scope.Submit = function() {
+                if($scope.postData.data.Email1) {
+                    $scope.postData.data.Email = $scope.postData.data.Email1;
+                }
                 $scope.submitted = true;
                 if ($scope.step3.$valid) {
                     if($scope.postData) {

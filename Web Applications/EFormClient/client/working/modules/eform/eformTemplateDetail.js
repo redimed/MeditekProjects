@@ -421,6 +421,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position])
             }
         })
+        swal("Success!", "Deleted", "success");
     },
     render: function(){
 	return (

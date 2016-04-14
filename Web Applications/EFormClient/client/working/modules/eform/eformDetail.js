@@ -152,7 +152,10 @@ module.exports = React.createClass({
             if(response.data){
                 self.formUID = response.data.UID;
                 var EFormDataContent = JSON.parse(response.data.EFormData.FormData);
-                console.log(EFormDataContent);
+                var rowDynamicTable = {fields: []};
+                var countRowDynamicTable = 0;
+                var countFieldDynamicTable = 0;
+                var currentRefDynamicTable = '';
                 EFormDataContent.map(function(field, indexField){
                     var fieldRef = field.ref;
                     var fieldData = field.value;
@@ -169,8 +172,36 @@ module.exports = React.createClass({
                                 }
                             }
                         }else{
-                            var fieldRefChild = field.refChild;
-                            self.refs[section.ref].setValueForTable(rowRef, fieldRef, fieldRefChild, fieldData);
+                            if(field.type === 'table'){
+                                var fieldRefChild = field.refChild;
+                                self.refs[section.ref].setValueForTable(rowRef, fieldRef, fieldRefChild, fieldData);
+                            }else if(field.type === 'dynamic_table'){
+                                var refRow = parseInt(field.refChild.split('_')[1]);
+                                if(currentRefDynamicTable !== field.ref){
+                                    if(currentRefDynamicTable !== null){
+                                        rowDynamicTable = {fields: []};
+                                        countRowDynamicTable = 0;
+                                        countFieldDynamicTable = 0;
+                                    }
+                                    currentRefDynamicTable = field.ref;
+                                }
+                                    
+                                if(countRowDynamicTable <= refRow){
+                                    rowDynamicTable.fields.push(field);
+                                    if(field.cols-1 > countFieldDynamicTable){
+                                        countFieldDynamicTable++;
+                                    }
+                                    else{
+                                        countFieldDynamicTable = 0;
+                                        self.refs[section.ref].addRowForDynamicTable(rowDynamicTable);
+                                    }
+                                    if(refRow > countRowDynamicTable){
+                                        rowDynamicTable.fields = [];
+                                        rowDynamicTable.fields.push(field);
+                                        countRowDynamicTable++;
+                                    }
+                                }
+                            }
                         }
                     }
                 })
@@ -211,7 +242,6 @@ module.exports = React.createClass({
                     fields.push(field);
                 })
             }
-
             var content = JSON.stringify(fields);
             var appointmentUID = self.appointmentUID;
 
@@ -225,9 +255,8 @@ module.exports = React.createClass({
                 EFormService.formUpdate({UID: self.formUID, content: content})
                 .then(function(){
                     resolve();
-                    //swal("Success!", "Your form has been saved.", "success");
                 })
-            }  
+            }
         });
         return p;
     },
@@ -273,6 +302,30 @@ module.exports = React.createClass({
         window.location.href = '/#/eform/detail?appointmentUID='+appointmentUID+'&patientUID='+this.patientUID+'&templateUID='+this.templateUID+'&userUID='+this.userUID;
         window.location.reload();
     },
+    _onComponentSectionSaveTableDynamicRow: function(codeSection, codeRow, codeField, row){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], 
+                    val => val.push(Immutable.fromJS(row)))
+            }
+        })
+    },
+    _onComponentSectionEditTableDynamicRow: function(codeSection, codeRow, codeField, position, row){        
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position], 
+                    val => Immutable.fromJS(row))
+            }
+        })
+    },
+    _onComponentSectionRemoveTableDynamicRow: function(codeSection, codeRow, codeField, position){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position])
+            }
+        })
+        swal("Success!", "Deleted", "success");
+    },
     render: function(){
         return (
             <div className="page-content">
@@ -291,6 +344,9 @@ module.exports = React.createClass({
                                     code={index}
                                     type="section"
                                     permission="normal"
+                                    onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
+                                    onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
+                                    onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
                                     rows={section.get('rows')}
                                     name={section.get('name')}/>
                             }, this)

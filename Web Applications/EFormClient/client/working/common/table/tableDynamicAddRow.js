@@ -7,8 +7,8 @@ module.exports = React.createClass({
     cols: [],
     rows: 0,
     init: function(content){
-        this.cols = content.get('cols').toJS();
-        this.rows = content.get('rows').toJS().length;
+        this.cols = content.cols;
+        this.rows = content.rows.length;
         this.forceUpdate();
     },
     _onSave: function(){
@@ -18,7 +18,7 @@ module.exports = React.createClass({
             var refTemp = 'field_'+self.rows+'_'+col_i;
             var fieldRef = self.refs[refTemp];
             var fieldValue = fieldRef.getValue();
-            fields.push({ref: refTemp, value: fieldValue, type: col.type});
+            fields.push({refChild: refTemp, value: fieldValue, type: col.type, typeChild: col.type, row: self.rows, cols: self.cols.length});
         })
         var row = {fields: fields};
         this.props.onSave(row);

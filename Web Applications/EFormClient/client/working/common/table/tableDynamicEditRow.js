@@ -7,7 +7,7 @@ module.exports = React.createClass({
     cols: [],
     position: 0,
     init: function(content, position){
-        this.cols = content.get('fields').toJS();
+        this.cols = content.fields;
         this.position = position;
         this.forceUpdate();
     },
@@ -18,7 +18,7 @@ module.exports = React.createClass({
             var refTemp = 'field_'+self.position+'_'+col_i;
             var fieldRef = self.refs[refTemp];
             var fieldValue = fieldRef.getValue();
-            fields.push({ref: refTemp, value: fieldValue, type: col.type});
+            fields.push({refChild: refTemp, value: fieldValue, typeChild: col.type});
         })
         var row = {fields: fields};
         this.props.onSave(row, this.position);
@@ -31,7 +31,7 @@ module.exports = React.createClass({
                         {
                             this.cols.map(function(col, index){
                                 var control = null;
-                                switch(col.type){
+                                switch(col.typeChild){
                                     case 'it':
                                         control = <CommonInputText ref={'field_'+this.position+'_'+index} defaultValue={col.value}/>;
                                         break;

@@ -7,6 +7,10 @@ var TableDynamicAddRow = require('common/table/tableDynamicAddRow');
 var TableDynamicEditRow = require('common/table/tableDynamicEditRow');
 
 module.exports = React.createClass({
+    content: {
+        cols: [], rows: []
+    },
+    fieldExtend: null,
     propTypes: {
         content: React.PropTypes.object,
         context: React.PropTypes.string,
@@ -57,9 +61,9 @@ module.exports = React.createClass({
                         this.execDeleteCol(code);
                         break;
                     case 'editCol':
-                        var col = this.props.content.get('cols').get(code);
+                        var col = this.content.cols[code];
                         this.refs.modalEditTableColumn.show();
-                        this.refs.formEditTableColumn.init(col,code);
+                        this.refs.formEditTableColumn.init(Immutable.fromJS(col),code);
                         break;
                 }
             }.bind(this)
@@ -73,25 +77,21 @@ module.exports = React.createClass({
         this.props.onUpdateColumn(this.props.code, data);
     },
     getAllValue: function(){
-        var content = this.props.content.toJS();
+        var content = this.content;
         var rows = content.rows;
-        var cols = content.cols;
-        var self = this;
         var results = [];
         var self = this;
-        for(var i = 0; i < rows; i++){
-            cols.map(function(col, indexCol){
-                var refChild = "field_"+i+"_"+indexCol;
-                if(col.type !== 'c')
-                    var value = self.refs[refChild].getValue();
-                else
-                    var value = self.refs[refChild].getValueTable();
-                var typeChild = self.refs[refChild].getType();
-                var type = 'table';
+        rows.map(function(row, rowIndex){
+            row.fields.map(function(field, fieldIndex){
+                var type = 'dynamic_table';
                 var name = self.getName();
-                results.push({refChild: refChild, value: value, type: type, typeChild: typeChild, ref: self.props.refTemp, name: name});
+                var ref = self.props.refTemp;
+                results.push({refChild: field.refChild, value: field.value, type: type, typeChild: field.typeChild, ref: ref, name: name, cols: self.content.cols.length})
             })
-        }
+        })
+
+        console.log(results);
+
         return results;
     },
     getName: function(){
@@ -113,7 +113,7 @@ module.exports = React.createClass({
     },
     _onAddTableRow: function(){
         this.refs.modalAddRow.show();
-        this.refs.tableDynamicAddRow.init(this.props.content);
+        this.refs.tableDynamicAddRow.init(this.content);
     },
     _onSaveRow: function(fields){
         this.props.onSaveRow(this.props.code, fields);
@@ -121,7 +121,7 @@ module.exports = React.createClass({
     },
     _onEditRow: function(fields, position){
        this.props.onEditRow(this.props.code, position, fields);
-        this.refs.modalEditRow.hide(); 
+        this.refs.modalEditRow.hide();
     },
     _onClickEdit: function(item, position){
         this.refs.modalEditRow.show();
@@ -140,8 +140,11 @@ module.exports = React.createClass({
             self.props.onRemoveRow(self.props.code, position);
         })
     },
+    addRowForDynamicTable: function(field){
+        this.props.onSaveRow(this.props.code, field);
+    },
     render: function(){
-        var content = this.props.content
+        this.content = this.props.content.toJS();
         return (
             <div className="col-md-12 dragField" ref="table">
                 <div ref="contextColumnMenu">
@@ -188,8 +191,8 @@ module.exports = React.createClass({
                             <thead className="flip-content">
                                 <tr>
                                     {
-                                        content.get('cols').map((row,index)=>{
-                                            return <th id={index} className="bg-blue-dark bg-font-blue-dark context-col" key={index}>{row.get('label')}</th>
+                                        this.content.cols.map((row,index)=>{
+                                            return <th id={index} className="bg-blue-dark bg-font-blue-dark context-col" key={index}>{row.label}</th>
                                         })
                                     }
                                     <th className="bg-blue-dark bg-font-blue-dark context-col">Action</th>
@@ -197,14 +200,14 @@ module.exports = React.createClass({
                             </thead>
                             <tbody ref="table">
                                 {
-                                    content.get('rows').map(function(row, indexRow){
+                                    this.content.rows.map(function(row, indexRow){
                                         return (
                                             <tr key={indexRow}>
                                                 {
-                                                    row.get('fields').map(function(field, indexField){
+                                                    row.fields.map(function(field, indexField){
                                                         return (
                                                             <td key={indexField}>
-                                                                {field.get('value')}
+                                                                {field.value}
                                                             </td>
                                                         )
                                                     })

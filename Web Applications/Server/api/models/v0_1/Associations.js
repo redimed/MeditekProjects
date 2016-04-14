@@ -522,5 +522,16 @@ module.exports = {
         RelCompanyPatient.belongsTo(Patient, {
             foreignKey: 'PatientID'
         });
+
+        //association Doctor - DoctorGroup
+        Doctor.belongsToMany(DoctorGroup,{
+            through: 'RelDoctorGroup',
+            foreignKey: 'DoctorID'
+        });
+        DoctorGroup.belongsToMany(Doctor, {
+            through: 'RelDoctorGroup',
+            foreignKey: 'DoctorGroupID'
+        });
+
     }
 };

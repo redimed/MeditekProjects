@@ -74,7 +74,23 @@ module.exports = function(data, userInfo) {
                             error: err
                         });
                     })
-                    .then(function(relDoctorAppointmentUpdated) {
+                    .then(function(relAppointmentDoctorUpdated) {
+                        if (!_.isEmpty(data.DoctorGroups) &&
+                            !_.isEmpty(appointmentObject)) {
+                            var objectRelAppointmentDoctorGroup = {
+                                where: data.DoctorGroups,
+                                appointmentObject: appointmentObject,
+                                transaction: t
+                            };
+                            return Services.RelAppointmentDoctorGroup(objectRelAppointmentDoctorGroup);
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(relAppointmentDoctorGroupUpdated) {
                         if (HelperService.CheckExistData(data.Patients) &&
                             HelperService.CheckExistData(data.Patients[0]) &&
                             HelperService.CheckExistData(appointmentObject)) {

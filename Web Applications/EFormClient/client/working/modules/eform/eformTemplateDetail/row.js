@@ -72,7 +72,7 @@ module.exports = React.createClass({
             this.refs[fieldRef].setValue(fieldRefChild, value);
     },
     addRowForDynamicTable: function(field){
-        if(typeof this.refs[field.fields[0].ref] !== 'undefined')
+        if(typeof this.refs[field.fields[0].ref].addRowForDynamicTable !== 'undefined')
             this.refs[field.fields[0].ref].addRowForDynamicTable(field);
     },
     _onRemoveRow: function(){

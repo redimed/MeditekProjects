@@ -658,16 +658,9 @@
       "resolved": "https://registry.npmjs.org/connect-flash/-/connect-flash-0.1.1.tgz"
     },
     "connect-redis": {
-      "version": "1.5.0",
-      "from": "connect-redis@>=1.4.5 <2.0.0",
-      "resolved": "https://registry.npmjs.org/connect-redis/-/connect-redis-1.5.0.tgz",
-      "dependencies": {
-        "redis": {
-          "version": "0.10.3",
-          "from": "redis@>=0.10.0 <0.11.0",
-          "resolved": "https://registry.npmjs.org/redis/-/redis-0.10.3.tgz"
-        }
-      }
+      "version": "1.4.5",
+      "from": "connect-redis@1.4.5",
+      "resolved": "https://registry.npmjs.org/connect-redis/-/connect-redis-1.4.5.tgz"
     },
     "connect-timeout": {
       "version": "1.6.2",
@@ -2282,11 +2275,6 @@
       "version": "0.3.0",
       "from": "media-typer@0.3.0",
       "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
-    },
-    "meditek_library": {
-      "version": "0.0.17",
-      "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git",
-      "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#f92b8e4035f7db68dc82e837ca6ac3dca3a086ac"
     },
     "memoizee": {
       "version": "0.3.9",

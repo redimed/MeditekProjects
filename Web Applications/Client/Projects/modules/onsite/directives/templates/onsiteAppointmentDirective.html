@@ -151,10 +151,10 @@
                                             <label class="control-label">GP Referral</label>
                                             <div class="radio-list">
                                                 <label class="radio-inline">
-                                                    <input type="radio" class="regular-radio" name="gp_referral" value="Y" /> Yes
+                                                    <input type="radio" class="regular-radio" name="gp_referral" id="gp_referral_Y" value="Y" /> Yes
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" class="regular-radio" name="gp_referral" value="N" /> No
+                                                    <input type="radio" class="regular-radio" name="gp_referral" id="gp_referral_N" value="N" /> No
                                                 </label>
                                             </div>
                                         </div>
@@ -164,13 +164,13 @@
                                             <label class="control-label">Type of Treatment</label>
                                             <div class="radio-list">
                                                 <label class="radio-inline">
-                                                    <input type="radio" class="regular-radio" name="gp_referral" value="Physiotherapy" /> Physiotherapy
+                                                    <input type="radio" class="regular-radio" name="type_of_treatment" id="Physiotherapy" value="Physiotherapy" ng-click="_onChangeChecked('physiotherapy',type_of_treatment)" /> Physiotherapy
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" class="regular-radio" name="gp_referral" value="Exercuse_Rehab" /> Exercuse Rehab
+                                                    <input type="radio" class="regular-radio" name="type_of_treatment" id="Exercuse_Rehab" value="Exercuse_Rehab" ng-click="_onChangeChecked('exerciseRehab',type_of_treatment)" /> Exercise Rehab
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" class="regular-radio" name="gp_referral" value="Hand_Therapy" /> Hand Therapy
+                                                    <input type="radio" class="regular-radio" name="type_of_treatment" id="Hand_Therapy" value="Hand_Therapy" ng-click="_onChangeChecked('handTherapy',type_of_treatment)" /> Hand Therapy
                                                 </label>
                                             </div>
                                         </div>

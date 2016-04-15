@@ -9,8 +9,7 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		var maxRole=o.getMaxRole(req.user.roles);
-		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});
+		res.ok({status:'success'});
 	},
 
 	TestURL:function(req,res)

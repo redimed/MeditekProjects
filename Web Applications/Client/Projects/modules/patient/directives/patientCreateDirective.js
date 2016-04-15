@@ -81,8 +81,6 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
         },
         link: function(scope, elem, attrs) {
             scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
-            console.log(scope.ishaveusername);
-            console.log(scope.RoleId);
             scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
             scope.isChoseAvatar = false;
             // State
@@ -153,34 +151,34 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 scope.loadingCheck = true;
                 //service validate data
                 var verifyData = {
-                    FirstName: data.FirstName,
-                    MiddleName: data.MiddleName,
-                    Title: data.Title,
-                    State: data.State,
-                    LastName: data.LastName,
-                    PhoneNumber: data.PhoneNumber,
-                    UserName: data.UserName,
-                    DOB: data.DOB,
-                    Address1: data.Address1,
-                    Address2: data.Address2,
-                    Suburb: data.Suburb,
-                    Postcode: data.Postcode,
-                    Email1: data.Email,
-                    Email : data.Email,
-                    HomePhoneNumber: data.HomePhoneNumber,
-                    Gender: data.Gender
+                    FirstName: data?data.FirstName:null,
+                    MiddleName: data?data.MiddleName:null,
+                    Title: data?data.Title:null,
+                    State: data?data.State:null,
+                    LastName: data?data.LastName:null,
+                    PhoneNumber: data?data.PhoneNumber:null,
+                    DOB: data?data.DOB:null,
+                    Address1: data?data.Address1:null,
+                    Address2: data?data.Address2:null,
+                    Suburb: data?data.Suburb:null,
+                    Postcode: data?data.Postcode:null,
+                    Email1: data?data.Email:null,
+                    Email : data?data.Email:null,
+                    HomePhoneNumber: data?data.HomePhoneNumber:null,
+                    Gender: data?data.Gender:null,
+                    UserName:data?data.UserName:null
                 };
-                if((data.Email == null || data.Email == '') &&
-                   (data.PhoneNumber == null || data.PhoneNumber == '')){
-                    if(data.FirstName == null || data.FirstName == ''){
+                if((verifyData.Email == null || verifyData.Email == '') &&
+                   (verifyData.PhoneNumber == null || verifyData.PhoneNumber == '')){
+                    if(verifyData.FirstName == null || verifyData.FirstName == ''){
                         scope.er['FirstName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['FirstName'] = 'required';
                     }
-                    if(data.UserName == null || data.UserName == ''){
+                    if(verifyData.UserName == null || verifyData.UserName == ''){
                         scope.er['UserName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['UserName'] = 'required';
                     }
-                    if(data.LastName == null || data.LastName == ''){
+                    if(verifyData.LastName == null || verifyData.LastName == ''){
                         scope.er['LastName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['LastName'] = 'required';
                     }

@@ -6,34 +6,50 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
         ComponentsDateTimePickers.init();
     });
 
-    $scope.choosePatientDialog = function() {
-        var modalInstance = $modal.open({
-            animation: true,
-            templateUrl: '../../modules/appointment/views/appointmentSelectPatientModal.html',
-            controller: function($scope, $modalInstance) {
-                $scope.patient = {
-                    runIfSuccess: function(data) {
-                        $modalInstance.close({
-                            status: 'success',
-                            data: data
-                        });
-                    },
-                    runIfClose: function() {
-                        $modalInstance.close();
-                    }
-                };
-            },
-            windowClass: 'app-modal-window',
-            resolve: {
-                patientInfo: function() {
-                    return true;
-                }
-            }
-        });
-        modalInstance.result.then(function(data) {
-            $scope.formData.Patient = data.data;
-        });
-    }
+    $scope.items = [
+        {field:"FirstName",name:"First Name"},
+        {field:"LastName",name:"Last Name"},
+        {field:"UserAccount",name:"Mobile"},
+    ];
+    $scope.patient = {
+        runIfSuccess: function(data) {
+           $timeout(function(){
+                $scope.formData.Patient = data;
+            },0);
+        },
+        runIfClose: function() {
+            $modalInstance.close();
+        }
+    };
+
+    // $scope.choosePatientDialog = function() {
+    //     var modalInstance = $modal.open({
+    //         animation: true,
+    //         templateUrl: '../../modules/appointment/views/appointmentSelectPatientModal.html',
+    //         controller: function($scope, $modalInstance) {
+    //             $scope.patient = {
+    //                 runIfSuccess: function(data) {
+    //                     $modalInstance.close({
+    //                         status: 'success',
+    //                         data: data
+    //                     });
+    //                 },
+    //                 runIfClose: function() {
+    //                     $modalInstance.close();
+    //                 }
+    //             };
+    //         },
+    //         windowClass: 'app-modal-window',
+    //         resolve: {
+    //             patientInfo: function() {
+    //                 return true;
+    //             }
+    //         }
+    //     });
+    //     modalInstance.result.then(function(data) {
+    //         $scope.formData.Patient = data.data;
+    //     });
+    // }
 
     /*function getListService() {
         RosterService.GetListService()
@@ -61,17 +77,14 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
         name: 'Telehealth'
     }];
     $scope.formData = {
+        aaa:'asdasdadasdasada',
         service: event.Services[0],
         site: event.Sites[0],
         fromTime: moment(start).format('HH:mm'),
         toTime: moment(end).format('HH:mm'),
         date: moment(start).format('DD/MM/YYYY'),
         Doctor: event.UserAccounts[0].Doctor,
-        Patient: {
-            UID: '',
-            FirstName: '',
-            LastName: ''
-        },
+        Patient: null,
         type: 'Onsite'
     };
     $scope.cancel = function() {
@@ -202,34 +215,34 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
 };
 
 
-    $scope.choosePatientDialog = function() {
-        var modalInstance = $modal.open({
-            animation: true,
-            templateUrl: '../../modules/appointment/views/appointmentSelectPatientModal.html',
-            controller: function($scope, $modalInstance) {
-                $scope.patient = {
-                    runIfSuccess: function(data) {
-                        $modalInstance.close({
-                            status: 'success',
-                            data: data
-                        });
-                    },
-                    runIfClose: function() {
-                        $modalInstance.close();
-                    }
-                };
-            },
-            windowClass: 'app-modal-window',
-            resolve: {
-                patientInfo: function() {
-                    return true;
-                }
-            }
-        });
-        modalInstance.result.then(function(data) {
-            $scope.formData.Patient = data.data;
-        });
-    }
+    // $scope.choosePatientDialog = function() {
+    //     var modalInstance = $modal.open({
+    //         animation: true,
+    //         templateUrl: '../../modules/appointment/views/appointmentSelectPatientModal.html',
+    //         controller: function($scope, $modalInstance) {
+    //             $scope.patient = {
+    //                 runIfSuccess: function(data) {
+    //                     $modalInstance.close({
+    //                         status: 'success',
+    //                         data: data
+    //                     });
+    //                 },
+    //                 runIfClose: function() {
+    //                     $modalInstance.close();
+    //                 }
+    //             };
+    //         },
+    //         windowClass: 'app-modal-window',
+    //         resolve: {
+    //             patientInfo: function() {
+    //                 return true;
+    //             }
+    //         }
+    //     });
+    //     modalInstance.result.then(function(data) {
+    //         $scope.formData.Patient = data.data;
+    //     });
+    // }
 
     /*function getListService() {
         RosterService.GetListService()

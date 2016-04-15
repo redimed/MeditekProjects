@@ -425,7 +425,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                 if (service.Bookable === 'Y') {
                     var modalInstance = $uibModal.open({
                         animation: true,
-                        size: 'md',
+                        size: 'lg',
                         templateUrl: 'modules/booking/views/schedulerCreate.html',
                         controller: 'schedulerCreateCtrl',
                         resolve: {

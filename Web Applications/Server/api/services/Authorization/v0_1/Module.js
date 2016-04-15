@@ -131,6 +131,16 @@ var modules=[
 			'INTERNAL_PRACTITIONER',
 		]
 	},
+	{
+		uid:'16',
+		state:'authentication.company.list',
+		name:'Company',
+		parent:'root',
+		order:'11',
+		roles:[
+			'ADMIN',
+		]
+	}
 	
 
 ]

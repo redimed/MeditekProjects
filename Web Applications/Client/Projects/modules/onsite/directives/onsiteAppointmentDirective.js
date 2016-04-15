@@ -14,6 +14,28 @@ app.directive('onsiteAppointment', function(){
             }, function(error) {});
 
             var runAll = function() {
+                $timeout(function(){
+                    for(var i = 0; i < $scope.wainformation.AppointmentData.length; i++) {
+                        if($scope.wainformation.AppointmentData[i].Name == "GPReferral") {
+                            if($scope.wainformation.AppointmentData[i].Value == "Y")
+                                $('#gp_referral_Y').attr('checked', 'checked');
+                            else
+                                $('#gp_referral_N').attr('checked', 'checked');
+                        }
+                        if($scope.wainformation.AppointmentData[i].Name == "physiotherapy") {
+                            if($scope.wainformation.AppointmentData[i].Value == "Y")
+                                $('#Physiotherapy').attr('checked', 'checked');
+                        }
+                        if($scope.wainformation.AppointmentData[i].Name == "handTherapy") {
+                            if($scope.wainformation.AppointmentData[i].Value == "Y")
+                                $('#Hand_Therapy').attr('checked', 'checked');
+                        }
+                        if($scope.wainformation.AppointmentData[i].Name == "exerciseRehab") {
+                            if($scope.wainformation.AppointmentData[i].Value == "Y")
+                                $('#Exercuse_Rehab').attr('checked', 'checked');
+                        }
+                    }
+                },0);
                 $scope.loadListContry = function() {
                     AuthenticationService.getListCountry().then(function(response) {
                         $scope.ListContry = response.data;
@@ -447,6 +469,47 @@ app.directive('onsiteAppointment', function(){
                         }
                     });
             };
+
+
+            $scope.type_of_treatment = ['physiotherapy','exerciseRehab','handTherapy'];
+            $scope._onChangeChecked = function(id, list_id) {
+                var filterArr;
+                if(list_id.length != 0) {
+                    list_id = list_id.filter(function(el) { return el != id; });
+                }
+                if($scope.wainformation) {
+                    for(var i = 0; i < $scope.wainformation.AppointmentData.length; i++) {
+                        if($scope.wainformation.AppointmentData[i].Name == id) {
+                            $scope.wainformation.AppointmentData[i].Value = 'Y';
+                        }
+                        for(var j = 0; j < list_id.length; j++) {
+                            if($scope.wainformation.AppointmentData[i].Name == list_id[j]) {
+                                $scope.wainformation.AppointmentData[i].Value = 'N';
+                            }
+                        }
+                    }
+                }
+            };
+
+            $scope.setValue = function(value, name) {
+                if($scope.wainformation) {
+                    for(var i = 0; i < $scope.wainformation.AppointmentData.length; i++) {
+                        if($scope.wainformation.AppointmentData[i].Name == name) {
+                            $scope.wainformation.AppointmentData[i].Value = value;
+                        }
+                    }
+                }
+            }
+
+            $("#gp_referral_Y").click(function(){
+                var value = $("#gp_referral_Y").val();
+                $scope.setValue(value,'GPReferral');
+            });
+
+            $("#gp_referral_N").click(function(){
+                var value = $("#gp_referral_N").val();
+                $scope.setValue(value,'GPReferral');
+            });
 		},
 	};
 });

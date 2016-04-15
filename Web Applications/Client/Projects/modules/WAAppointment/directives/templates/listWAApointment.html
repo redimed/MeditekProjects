@@ -23,7 +23,8 @@
         </div>
     </div>
     <div class="portlet-body">
-        <div class="table-scrollable margin-top-10">
+        <!-- <div class="table-scrollable margin-top-10"> -->
+        <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
@@ -38,12 +39,9 @@
                         </th>
                         <th width="1" align="center" style="text-align:center">
                             Referral Tracking
-                            <br>
                             <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
                         </th>
-                        <th width="160px">
-                            Appointment Type
-                        </th>
+                        <th width="160px">Appointment Type</th>
                         <th>
                             Appointment Date
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
@@ -52,8 +50,7 @@
                         <th width="1">Correspondence</th>
                     </tr>
                     <tr ng-hide="info.toggle">
-                        <td>
-                        </td>
+                        <td></td>
                         <td>
                             <input type="text" class="form-control" ng-model="info.data.Filter[0].Appointment.Code" ng-enter="reloadData()" capitalize>
                         </td>
@@ -128,7 +125,7 @@
             </div>
             <div class="col-md-7 col-md-7" style="text-align:right">
                 <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                    <pagination boundary-links="true" total-items="info.listWaapointment.count" ng-model="info.paging.currentPage" class="pagination-lg" previous-text="&lsaquo;" next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo;" items-per-page="info.paging.itemsPerPage" max-size="info.paging.maxSize" ng-change="reloadData()"></pagination>
+                    <pagination boundary-links="true" total-items="info.listWaapointment.count" ng-model="info.paging.currentPage" class="pagination-md" previous-text="&lsaquo;" next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo;" items-per-page="info.paging.itemsPerPage" max-size="info.paging.maxSize" ng-change="reloadData()"></pagination>
                 </div>
             </div>
         </div>

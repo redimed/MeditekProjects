@@ -1,6 +1,7 @@
 var $q = require('q');
 var moment = require('moment');
 var check  = require('../HelperService');
+var _ = require('lodash');
 var generatePassword = require('password-generator');
 var config = sails.config.myconf;
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
@@ -347,6 +348,9 @@ module.exports = {
 			attrs = defaultAttr;
 		}
         var whereClause = Services.Company.whereClause(data);
+        console.log("whereClause ",whereClause);
+        if(_.isEmpty(whereClause.Company))
+        	whereClause = {};
         return Company.findAndCountAll({
             attributes : attrs,
             limit      : data.limit,

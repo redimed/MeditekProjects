@@ -31,7 +31,6 @@
     "jsonwebtoken": "^5.4.0",
     "lodash": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz",
     "md5": "^2.0.0",
-    "meditek_library": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master",
     "mkdirp": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz",
     "moment": "^2.10.6",
     "mysql": "^2.9.0",
@@ -72,5 +71,8 @@
     "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
   },
   "author": "anonymous node/sails user",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "meditek_library": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master"
+  }
 }

@@ -94,31 +94,27 @@ class DTAlertView: UIView {
         self.message = messageDefault
         self.title = titleDefault
         self.animationDuration = 0.6
-        self.alertDuration = 5.0
+        self.alertDuration = 3.0
         
         self.backgroundColor = UIColor.colorBackgroundAlert()
         if originY() == 0{
-            MARGIN_TOP = 21.0
+            MARGIN_TOP = 20.0
         } else {
-            MARGIN_TOP = 41.0
+            MARGIN_TOP = 20.0
         }
         self.translatesAutoresizingMaskIntoConstraints = true
         
-        let gesture: UITapGestureRecognizer! = UITapGestureRecognizer(target: self, action: Selector("hide"))
+        let gesture: UITapGestureRecognizer! = UITapGestureRecognizer(target: self, action: #selector(DTAlertView.hide))
         self.addGestureRecognizer(gesture)
         
         
-        self.imgIcon = UIImageView(frame: CGRectMake(MARGIN_TOP, MARGIN_TOP, HEIGT_IMAGE_ICON, WIDH_IMAGE_ICON))
-        self.addSubview(self.imgIcon!)
-        
-        
-        let frame:CGRect =  CGRectMake(MARGIN_TOP * 2 + HEIGT_IMAGE_ICON, MARGIN_TOP, Define.ScreenSize.SCREEN_WIDTH - HEIGT_IMAGE_ICON - 3 * MARGIN_TOP, 21)
+        let frame:CGRect =  CGRectMake(MARGIN_TOP * 2, MARGIN_TOP, Define.ScreenSize.SCREEN_WIDTH - 3 * MARGIN_TOP, 21)
         self.lbTitle = UILabel(frame: frame)
         self.lbTitle.numberOfLines = 0
         self.lbTitle.font = UIFont(name: "Helvetica", size: 14)
         self.addSubview(self.lbTitle)
         
-        let frm: CGRect = CGRectMake(MARGIN_TOP * 2 + HEIGT_IMAGE_ICON, MARGIN_TOP + frame.size.height + 5, Define.ScreenSize.SCREEN_WIDTH - HEIGT_IMAGE_ICON - 3 * MARGIN_TOP, 21)
+        let frm: CGRect = CGRectMake(MARGIN_TOP * 2 , MARGIN_TOP + frame.size.height + 5, Define.ScreenSize.SCREEN_WIDTH - 3 * MARGIN_TOP, 21)
         self.lbMessage = UILabel(frame: frm)
         self.lbMessage.numberOfLines = 0;
         self.lbMessage.font = UIFont(name: "Helvetica", size: 14)
@@ -149,17 +145,19 @@ class DTAlertView: UIView {
             break
         case .DTAlertStyleSuccess:
             image = UIImage(named: "AlertViewSucessIcon")
-            color = UIColor.colorAlertSuccess()
+            color = UIColor.blueColor()
             break
         }
         
-        self.imgIcon!.image = image
+        //self.imgIcon!.image = image
         self.lbTitle.textColor = color;
+        self.lbTitle.textAlignment = .Center;
         self.lbMessage.textColor = color;
+        self.lbMessage.textAlignment = .Center;
     }
     func hide()
     {
-        if (self.delegate .respondsToSelector(Selector("DTAlertViewWillDismiss:")))
+        if (self.delegate .respondsToSelector(#selector(DTAlertViewDelegate.DTAlertViewWillDismiss(_:))))
         {
             self.delegate.DTAlertViewWillDismiss!(self)
         }
@@ -175,7 +173,7 @@ class DTAlertView: UIView {
                 {
                     self.isPresenting = false
                     self.removeFromSuperview()
-                    if (self.delegate .respondsToSelector(Selector("DTAlertViewDidDismiss:")))
+                    if (self.delegate .respondsToSelector(#selector(DTAlertViewDelegate.DTAlertViewDidDismiss(_:))))
                     {
                         self.delegate.DTAlertViewDidDismiss!(self)
                     }
@@ -206,7 +204,7 @@ class DTAlertView: UIView {
         let index: NSInteger! = application.keyWindow?.subviews.count
         var isHas = false
         if self.alertViewStyle == DTAlertStyle.DTAlertStyleError {
-            for var i = 0; i < application.keyWindow?.subviews.count; i++ {
+            for var i = 0; i < application.keyWindow?.subviews.count; i += 1 {
                 let view: UIView = (application.keyWindow?.subviews[i])!
                 if view.tag == 400 {
                     isHas = true
@@ -232,11 +230,11 @@ class DTAlertView: UIView {
             self.alpha = 1
             }, completion: {
                 (value: Bool) in
-                if (self.delegate .respondsToSelector(Selector("didPresentDTAlertView:")))
+                if (self.delegate .respondsToSelector(#selector(DTAlertViewDelegate.didPresentDTAlertView(_:))))
                 {
                     self.delegate.didPresentDTAlertView!(self)
                 }
-                self.performSelector(Selector("hide"), withObject: self, afterDelay: 5.0)
+                self.performSelector(#selector(DTAlertView.hide), withObject: self, afterDelay: 3.0)
         })
         
         
@@ -252,15 +250,9 @@ class DTAlertView: UIView {
         
         let heightView : CGFloat = heightTitle + heightMessage + MARGIN_TOP + 5 + MARGIN_TOP
         
-        let heightImage: CGFloat = self.imgIcon!.frame.origin.y + HEIGT_IMAGE_ICON
         let heighFrame: CGFloat
-        if heightImage >= heightView
-        {
-            heighFrame = heightImage + MARGIN_TOP
-        } else {
-            heighFrame = heightView
-        }
-        
+
+        heighFrame = heightView
         var frame: CGRect = self.frame
         frame.size.height = heighFrame
         self.frame = frame

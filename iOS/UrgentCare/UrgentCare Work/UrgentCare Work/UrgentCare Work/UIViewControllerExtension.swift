@@ -8,8 +8,6 @@
 
 import UIKit
 
-import UIKit
-
 extension UIViewController {
     
     private func removeInactiveViewController(inactiveViewController: UIViewController?) {
@@ -31,7 +29,7 @@ extension UIViewController {
     {
         let alert = UIAlertView()
         alert.title = "Warning"
-        alert.message = "Please check your Internet connection !"
+        alert.message = "Not connect to server"
         alert.addButtonWithTitle("OK")
         alert.show()
     }
@@ -49,6 +47,6 @@ extension UIViewController {
         presentViewController(alert, animated: true, completion: nil)
     }
     func hideLoading(){
-        dismissViewControllerAnimated(false, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

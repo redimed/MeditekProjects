@@ -13,7 +13,7 @@ import RealmSwift
 
 class RequestRegister: BaseModel {
     dynamic var phone = ""
-    dynamic var deviceType = "ios"
+    //dynamic var deviceType = "ios"
     
     required convenience init?(_ map: Map) {
         self.init()
@@ -21,7 +21,7 @@ class RequestRegister: BaseModel {
     
     override func mapping(map: Map) {
         phone    <- map["phone"]
-        deviceType    <- map["deviceType"]
+        //deviceType    <- map["deviceType"]
     }
     
 }
@@ -58,8 +58,9 @@ class ResponseVerifyCode: BaseModel {
 }
 
 class ResponseRegister: BaseModel {
-    dynamic var message = ""
-    dynamic var status =  ""
+    dynamic var PinNumber = ""
+    dynamic var Activated = ""
+    dynamic var UserUID =  ""
     
     
     required convenience init?(_ map: Map) {
@@ -67,8 +68,9 @@ class ResponseRegister: BaseModel {
     }
     
     override func mapping(map: Map) {
-        message    <- map["message"]
-        status     <- map["status"]
+        UserUID    <- map["UserUID"]
+        Activated     <- map["Activated"]
+        PinNumber     <- map["PinNumber"]
     }
     
 }

@@ -27,9 +27,6 @@ class RegisterViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         phoneTextField.delegate = self
-        //versionBuildLabel.text = MessageString.VersionAndBuild
-        self.navigationController?.navigationBarHidden = true
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,14 +42,13 @@ class RegisterViewController : BaseViewController {
         }
         else{
             phoneTextField.layer.borderWidth = 0
-            showloading("Please wait...")
+            showloading(Define.MessageString.PleaseWait)
             requestPhoneNumberToServer()
         }
     }
     
     //Sending phone number to server and check user in DB
     func requestPhoneNumberToServer(){
-        
         let requestRegisterPost:RequestRegisterPost = RequestRegisterPost();
         let requestRegister:RequestRegister = RequestRegister();
         var phoneString : String = phoneTextField.text!
@@ -62,16 +58,25 @@ class RegisterViewController : BaseViewController {
         requestRegisterPost.data = requestRegister
         
         UserService.postRequestVerify(requestRegisterPost) { [weak self] (response) in
-            print(response.result.value)
+            print(response.result)
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
                         if let responseRegister = Mapper<ResponseRegister>().map(response.result.value) {
-                            if(responseRegister.status == "success"){
+                            
+                            if(responseRegister.UserUID != ""){
                                 self!.hideLoading()
-                                let VerifyPhone = self!.storyboard?.instantiateViewControllerWithIdentifier("VerifyViewControllerID") as! VerifyViewController
-                                VerifyPhone.phoneNumber = Constants.StringContant.prefixesPhoneNumber + String(phoneString);
-                                self!.navigationController?.pushViewController(VerifyPhone, animated: true)
+                                Context.setDataDefaults(responseRegister.UserUID, key: Define.keyNSDefaults.UID)
+                                
+                                let VerifyPhone :VerifyViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("VerifyViewControllerID") as! VerifyViewController
+                                VerifyPhone.UserUID = responseRegister.UserUID
+                                VerifyPhone.Activated = responseRegister.Activated
+                                
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self?.navigationController?.pushViewController(VerifyPhone, animated: true)
+                                })
+                                
                             }else{
                                 self!.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
@@ -90,11 +95,6 @@ class RegisterViewController : BaseViewController {
     
     //sending data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "phoneRegisterSegue" {
-            let destVC = segue.destinationViewController as! VerifyViewController
-            destVC.phoneNumber = phoneTextField.text!
-            
-        }
     }
     //Giap:  Close keyboard if touch out textfield
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

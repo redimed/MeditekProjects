@@ -21,7 +21,7 @@ class DetailCompanyResponse: BaseModel {
     }
     override func mapping(map: Map) {
         data      <- map["data"]
-        message    <- map["mesage"]
+        message    <- map["message"]
     }
     
 }

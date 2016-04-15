@@ -167,7 +167,7 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
         // Adds the buttons
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
-            target: view, action: Selector("endEditing:"))
+            target: view, action: #selector(UIView.endEditing(_:)))
         //        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
         toolBar.setItems([spaceButton,doneBarButton], animated: false)
         toolBar.userInteractionEnabled = true

@@ -22,8 +22,8 @@ class Define: NSObject {
     static let kGoogleMapAPIiOSKey = "AIzaSyBwaTicbxV4hr1K49YDnHFPQZlf6Bolj48"
     static let kGoogleMapAPIServerKey = "AIzaSyDxAGN7lH46zvPedRH9QrCOtvYAWq2Gfc4"
     
-    static let myLocation = "myLocation"
     static let LogoutFunction = "LogoutFunction"
+    
     struct keyNSDefaults {
         static let deviceID = "deviceID"
         static let appid = "appid"
@@ -35,6 +35,19 @@ class Define: NSObject {
         static let companyInfor = "companyInfor"
         static let UIDLogoutFail = "UIDLogoutFail"
         static let UID = "UID"
+        static let refreshCode = "refreshCode"
+        
+        static let DetailStaff = "DetailStaff"
+        static let DetailStaffCheck = "DetailStaffCheck"
+        
+        static let DetailSite = "DetailSite"
+        static let DetailSiteCheck = "DetailSiteCheck"
+    }
+    
+    struct MessageString {
+        static let required = "Required"
+        static let PleaseWait = "Please wait..."
+    
     }
     
     enum UIUserInterfaceIdiom : Int
@@ -70,4 +83,5 @@ class Define: NSObject {
         static let iOS8 = (Version.SYS_VERSION_FLOAT >= 8.0 && Version.SYS_VERSION_FLOAT < 9.0)
         static let iOS9 = (Version.SYS_VERSION_FLOAT >= 9.0 && Version.SYS_VERSION_FLOAT < 10.0)
     }
+
 }

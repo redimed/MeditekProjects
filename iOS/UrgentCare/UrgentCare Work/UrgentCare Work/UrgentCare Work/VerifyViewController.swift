@@ -17,29 +17,30 @@ enum MyError: ErrorType {
     case DiscoverydError
 }
 
-class VerifyViewController: UIViewController,UITextFieldDelegate {
+class VerifyViewController: BaseViewController {
     
     @IBOutlet weak var textFieldVerifyCode: DesignableTextField!
-    //Color red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
-    var phoneNumber = String()
-    
-    let alertView = UIAlertView()
+    var UserUID = String()
+    var Activated = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = false
         textFieldVerifyCode.delegate = self
+        if(Activated == "N"){
+            self.showAlertWithMessageTitle("Please check your mobile device now", title: "Notification", alertStyle: DTAlertStyle.DTAlertStyleSuccess)
+        }
     }
     
-    //Close keyboard if out touch text field
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
-        
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
     }
@@ -56,84 +57,15 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
             config.borderTextFieldValid(textFieldVerifyCode, color: colorCustom)
             
         } else {
-            showloading("Please wait...")
-            let verifyCodeRequest:VerifyCodeRequest = VerifyCodeRequest();
-            let verifyCode:VerifyCode = VerifyCode();
-            verifyCode.code = textFieldVerifyCode.text!
-            verifyCode.phone = phoneNumber
-            
-            verifyCodeRequest.data = verifyCode
-            
-            UserService.postCheckVerifyCode(verifyCodeRequest) { [weak self] (response) in
-                print(response)
-                if let _ = self {
-                    if response.result.isSuccess {
-                        if let _ = response.result.value {
-                            if let responseVerifyCode = Mapper<ResponseVerifyCode>().map(response.result.value) {
-                                if(responseVerifyCode.verifyCode != ""){
-                                    self?.LogInPhoneNumber(responseVerifyCode.userUID, VerificationToken: responseVerifyCode.verifyCode)
-                                }else{
-                                    self!.hideLoading()
-                                    if let errorModel = Mapper<ErrorModel>().map(response.result.value){
-                                        self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        self!.hideLoading()
-                        self?.showMessageNoNetwork()
-                    }
-                }
-            }
+            showloading(Define.MessageString.PleaseWait)
+            self.LogInPhoneNumber(UserUID, PinNumber: textFieldVerifyCode.text!)
         }
     }
-//    func LogoutWhenLogOutFail(){
-//        if( Context.getDataDefasults(Define.keyNSDefaults.UIDLogoutFail) as! String != "" ){
-//            showloading("Please wait...")
-//            let verifyCodeRequest:VerifyCodeRequest = VerifyCodeRequest();
-//            let verifyCode:VerifyCode = VerifyCode();
-//            verifyCode.code = textFieldVerifyCode.text!
-//            verifyCode.phone = phoneNumber
-//            
-//            verifyCodeRequest.data = verifyCode
-//            
-//            UserService.postCheckVerifyCode(verifyCodeRequest) { [weak self] (response) in
-//                print(response)
-//                if let _ = self {
-//                    if response.result.isSuccess {
-//                        if let _ = response.result.value {
-//                            if let requestVerifyPost = Mapper<ResponseVerifyPost>().map(response.result.value) {
-//                                if(requestVerifyPost.verifyCode != ""){
-//                                    self!.hideLoading()
-//                                    self!.LogoutWhenLogOutFail()
-//                                    //                                    self!.getInformationPatientBy(requestVerifyPost.patientUID)
-//                                    //                                    let loginViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-//                                    //                                    self!.navigationController?.pushViewController(loginViewController, animated: true)
-//                                }else{
-//                                    self!.hideLoading()
-//                                    if let errorModel = Mapper<ErrorModel>().map(response.result.value){
-//                                        self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    } else {
-//                        self!.hideLoading()
-//                        self?.showMessageNoNetwork()
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-    func LogInPhoneNumber(UserUID:String,VerificationToken:String){
-       
-        
+    func LogInPhoneNumber(UserUID:String,PinNumber:String){
         let login:Login = Login();
         login.UserUID = UserUID
-        login.VerificationToken = VerificationToken
-
+        login.PinNumber = PinNumber
+        
         UserService.postLogin(login) { [weak self] (response) in
             print(response)
             if let _ = self {
@@ -141,11 +73,10 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     if let _ = response.result.value {
                         if let loginResponse = Mapper<LoginResponse>().map(response.result.value) {
                             
+                            
                             if loginResponse.status == "success"  {
-                                
-                                self?.hideLoading()
-                                
                                 //Set hearder data
+                                Context.setDataDefaults(loginResponse.refreshCode, key: Define.keyNSDefaults.refreshCode)
                                 let token =  "Bearer \(loginResponse.token)"
                                 Context.setDataDefaults(token, key: Define.keyNSDefaults.Authorization)
                                 Context.setDataDefaults("login", key: Define.keyNSDefaults.userLogin)
@@ -156,10 +87,12 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                                 let profile = Mapper().toJSON(loginResponse)
                                 Context.setDataDefaults(profile, key: Define.keyNSDefaults.userInfor)
                                 //end setHeader data
-                                
-                                let loginViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-                                self!.navigationController?.pushViewController(loginViewController, animated: true)
-                                
+                                self?.hideLoading()
+                                let loginViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self?.navigationController?.pushViewController(loginViewController, animated: true)
+                                })
                             }else{
                                 self?.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
@@ -169,37 +102,15 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                         }
                     }
                 } else {
+                    self?.hideLoading()
                     self?.showMessageNoNetwork()
                 }
                 
             }
         }
-
+        
         
     }
-    func getInformationPatientBy(patientUID:String) {
-        if(Context.getDataDefasults(Define.keyNSDefaults.UIDLogoutFail) as! String != ""){
-            let logoutPost : LogoutPost = LogoutPost()
-            let logout : Logout = Logout()
-            logout.uid = Context.getDataDefasults(Define.keyNSDefaults.UIDLogoutFail) as! String
-            logoutPost.data = logout
-            
-            UserService.postLogin(logoutPost) { [weak self] (response) in
-                print(response)
-                if let _ = self {
-                    if response.result.isSuccess {
-                        if let _ = response.result.value {
-                            
-                        }
-                    } else {
-                        self?.showMessageNoNetwork()
-                    }
-                }
-            }
-        }
-    }
-    
-    //Giap: Check textfield maxlength == 6
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         let length = ((textField.text?.length)! + string.length)

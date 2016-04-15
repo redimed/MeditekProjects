@@ -15,7 +15,7 @@ class Login: BaseModel {
     dynamic var Password = "2"
     dynamic var UserUID = ""
     dynamic var DeviceID = Context.getDataDefasults(Define.keyNSDefaults.deviceID)
-    dynamic var VerificationToken = ""
+    dynamic var PinNumber = ""
     dynamic var AppID = UIApplication.sharedApplication().bundleID()
     
     required convenience init?(_ map: Map) {
@@ -27,7 +27,7 @@ class Login: BaseModel {
         Password    <- map["Password"]
         UserUID    <- map["UserUID"]
         DeviceID    <- map["DeviceID"]
-        VerificationToken    <- map["VerificationToken"]
+        PinNumber    <- map["PinNumber"]
         AppID    <- map["AppID"]
     }
     

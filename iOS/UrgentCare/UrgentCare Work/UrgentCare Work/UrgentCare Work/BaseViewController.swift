@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import ObjectMapper
 
 class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelegate {
     
     //var alertView: DTAlertView!
-    let alertView = UIAlertView()
+    var alertView = UIAlertView()
+    var alertDTAlertView: DTAlertView!
+    let delay = 0.5 * Double(NSEC_PER_SEC)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,13 +28,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // show alert with param
-//    func showAlertWithMessageTitle(message: String, title: String, alertStyle: DTAlertStyle){
-//        self.alertView = DTAlertView(alertStyle: alertStyle, message: message, title: title, object: self)
-//        self.alertView.show()
-//    }
-    
+      
     func leftNavButtonClick(sender:UIButton!)
     {
         self.navigationController?.popViewControllerAnimated(true)
@@ -47,15 +46,50 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     func DTAlertViewDidDismiss(alertView: DTAlertView) {
         NSLog("%@", "did Dismiss")
     }
+    func showAlertWithMessageTitle(message: String, title: String, alertStyle: DTAlertStyle){
+        self.alertDTAlertView = DTAlertView(alertStyle: alertStyle, message: message, title: title, object: self)
+        self.alertDTAlertView.show()
+    }
     func LogoutWhenIsAuthenticated(){
+        
+        CallAPILogout(Context.getDataDefasults(Define.keyNSDefaults.UID) as! String)
         Context.deleteDatDefaults(Define.keyNSDefaults.Authorization)
         Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
         Context.deleteDatDefaults(Define.keyNSDefaults.Cookie)
         Context.deleteDatDefaults(Define.keyNSDefaults.companyInfor)
         Context.deleteDatDefaults(Define.keyNSDefaults.UIDLogoutFail)
-        Context.deleteDatDefaults(Define.keyNSDefaults.UID)
-        
-        let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
-        self.navigationController?.pushViewController(account, animated: true)
+        Context.deleteDatDefaults(Define.keyNSDefaults.UID)  
+    }
+    
+    func CallAPILogout(uid:String){
+       self.showloading(Define.MessageString.PleaseWait)
+        UserService.getLogout() { [weak self] (response) in
+            print(response.result.value)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let logoutResponse = Mapper<LogoutResponse>().map(response.result.value) {
+                            self!.hideLoading()
+                            if(logoutResponse.status == "success"){
+                                let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self?.navigationController?.pushViewController(loginViewController, animated: true)
+                                })
+                            }else{
+                                let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self?.navigationController?.pushViewController(loginViewController, animated: true)
+                                })
+                            }
+                        }
+                    }
+                } else {
+                    self!.hideLoading()
+                    self?.showMessageNoNetwork()
+                }
+            }
+        }
     }
 }

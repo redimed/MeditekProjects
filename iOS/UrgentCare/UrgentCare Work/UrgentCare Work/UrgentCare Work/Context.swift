@@ -7,7 +7,10 @@
 //
 
 import Foundation
+import SystemConfiguration
 var cookies :String = String()
+import UIKit
+
 class Context {
     class func getTokenHeader() -> [String : String]{
         if (NSUserDefaults.standardUserDefaults().objectForKey("token") == nil){
@@ -38,8 +41,12 @@ class Context {
             message = "Password Invalid !"
         }else if(ErrorType == "DetailCompanyByUser.error"){
             message = "Detail Company By User Error"
-        }else if(ErrorType == "Missing credentials"){
-            message = "Missing credentials"
+        }else if(ErrorType == "UserActivation.Error"){
+            message = "User Is Not Exist"
+        }else if(ErrorType == "Activation.Error"){
+            message = "Activation Code Invalid"
+        }else if(ErrorType == "GetListStaff.error"){
+            message = "User is Not Admin"
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){
             NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
             message = "Please login again !"
@@ -70,4 +77,61 @@ class Context {
         }
         return NSUserDefaults.standardUserDefaults().objectForKey(key)! as AnyObject
     }
+    
+    class func NowDate()->String{
+        let nowdate = NSDate()
+        var DateString:String = ""
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        DateString = dateFormatter.stringFromDate(nowdate)
+        return DateString
+    }
+    
+    class func isConnectedToNetwork() -> Bool {
+        
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
+            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        }
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        return (isReachable && !needsConnection)
+    }
+    
+    //Check date
+    class func compareDate(dateDOB:NSDate)->Bool {
+        let now = NSDate()
+        if now.compare(dateDOB) == NSComparisonResult.OrderedDescending
+        {
+            return true
+        } else
+        {
+            return false
+        }
+    }
+    
+    //check validate
+    class func validatePhoneNumber(value: String,regex:String) -> Bool {
+        
+        let PHONE_REGEX = regex
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        let result =  phoneTest.evaluateWithObject(value)
+        
+        return result
+        
+    }
+    class func checkMaxLength(textField:UITextField,length:Int)->Bool{
+        if textField.text?.characters.count > length {
+            return false
+        }else{
+            return true
+        }
+    }
+
 }

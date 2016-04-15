@@ -23,13 +23,26 @@ class UserService {
     }
     
     class func postRequestVerify(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
-        return RequestFactory.post(Constants.UserURL.URL_POST_REQUEST_VERIFY, model: model, completion: completion)
+        return RequestFactory.post(Constants.UserURL.URL_POST_CHECKACTIVATION, model: model, completion: completion)
     }
-    class func postLogout(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
-        return RequestFactory.post(Constants.UserURL.URL_POST_LOGOUT, model: model, completion: completion)
+    class func postRequestAppointment(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.postRequestAppoint(Constants.UserURL.URL_POST_REQUEST_APPOINTMENT, model: model, completion: completion)
+    }
+    class func postCheckActivation(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_CHECKACTIVATION, model: model, completion: completion)
+    }
+    class func getLogout(completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.get(Constants.UserURL.URL_GET_LOGOUT, completion: completion)
     }
     class func getListStaff(userID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.get(Constants.UserURL.URL_GET_LIST_STAFF + "/"+userID, completion: completion)
+    }
+    class func getListSite(companyID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.get(Constants.UserURL.URL_GET_LIST_SITE + "/"+companyID, completion: completion)
+    }
+    
+    class func getDetailUserAccount(userID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.get(Constants.UserURL.URL_GET_DETAIL_USER + "?UID="+userID, completion: completion)
     }
     
 }

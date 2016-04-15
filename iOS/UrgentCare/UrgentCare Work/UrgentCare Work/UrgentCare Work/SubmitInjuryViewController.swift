@@ -5,16 +5,13 @@
 //  Created by Giap Vo Duc on 11/3/15.
 //  Copyright © 2015 Giap Vo Duc. All rights reserved.
 //
-
 import UIKit
 import Alamofire
 import SwiftyJSON
 import ObjectMapper
-import SystemConfiguration
 
 class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDelegate,UITextViewDelegate {
-    let colorCustomRed = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
-    let  colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
+    
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var autoTableView: UITableView!
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -23,22 +20,26 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     @IBOutlet weak var suburbTextField: UITextField!
     @IBOutlet weak var birthDayTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var btnYes: SSRadioButton!
-    @IBOutlet weak var btnNo: SSRadioButton!
-    
-    @IBOutlet weak var btnPhysio: SSRadioButton!
-    @IBOutlet weak var btnExercise: SSRadioButton!
-    @IBOutlet weak var btnHandTherapy: SSRadioButton!
-    
-    @IBOutlet weak var Navigationbar: UINavigationBar!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var btnMakeAppointment: DesignableButton!
     @IBOutlet weak var companyName: UITextField!
     @IBOutlet weak var contactPersonTextField: UITextField!
     @IBOutlet weak var companyPhoneNumberTextField: UITextField!
+    @IBOutlet weak var typeRequest: UITextField!
     
+    @IBOutlet weak var btnYes: SSRadioButton!
+    @IBOutlet weak var btnNo: SSRadioButton!
+    @IBOutlet weak var btnPhysio: SSRadioButton!
+    @IBOutlet weak var btnExercise: SSRadioButton!
+    @IBOutlet weak var btnHandTherapy: SSRadioButton!
+    @IBOutlet weak var btnMakeAppointment: DesignableButton!
+    
+    @IBOutlet weak var Navigationbar: UINavigationBar!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var GPReferralLabel: UILabel!
     @IBOutlet weak var typeTreatment: UILabel!
+    @IBOutlet weak var selectStaff: UIBarButtonItem!
+    @IBOutlet weak var SelectContactPerson: UIButton!
+    
+    var pickerView = UIPickerView()
     var autocompleteUrls = [String]()
     var datePicker = UIDatePicker()
     var checkDOB = true
@@ -55,17 +56,58 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     var specialist:String = "N"
     var handTherapy:String = "N"
     var exerciseRehab:String = "N"
-    
-    
-    var urgentRequestType : String = "WorkInjury"
-    var Info : Information!
-    
-    //
     let userInfo = LoginResponse()
-    //
+    var companyInfo = DetailCompanyResponse()
+    var staff = Staff()
+    var detailCompanyData = DetailCompanyData()
+    var pickOption = ["","Telehealth", "Onsite"]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
+            companyInfo = Mapper().map(companyInfoDict)!
+            if(companyInfo.data.count > 0){
+                detailCompanyData = companyInfo.data[0]
+                companyName.text = detailCompanyData.CompanyName
+            }
+        }else{
+            selectStaff.enabled = false
+            selectStaff.title = nil
+            SelectContactPerson.hidden = true
+        }
+        Navigationbar.topItem?.title = NavigateBarTitle
+        SetHideShowButton()
+        SetDelegate()
+        PickerView()
+        DatepickerMode()
+    }
+    func PickerView(){
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .Default
+        toolBar.translucent = true
+        toolBar.tintColor = UIColor.blackColor()
+        toolBar.sizeToFit()
         
+        
+        
+        // Adds the buttons
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
+                                            target: view, action: #selector(UIView.endEditing(_:)))
+        //        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
+        toolBar.setItems([spaceButton,doneBarButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        
+        
+        // Adds the toolbar to the view
+        typeRequest.inputView = pickerView
+        typeRequest.inputAccessoryView = toolBar
+        
+    }
+
+    func SetHideShowButton(){
         if GP == "Y" {
             GPReferralLabel.hidden = true
             btnYes.hidden = true
@@ -80,9 +122,14 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             companyName.center.y += 30.0
             companyName.alpha = 1.0
         }
-        
-        
-        
+        radioButtonController = SSRadioButtonsController(buttons: btnYes, btnNo)
+        radioButtonController!.shouldLetDeSelect = false
+        btnYes.selected = true
+        //type of treatment
+        radioButtonTypeController = SSRadioButtonsController(buttons: btnPhysio, btnExercise,btnHandTherapy)
+        radioButtonTypeController!.shouldLetDeSelect = false
+    }
+    func SetDelegate(){
         suburbTextField.delegate = self
         firstNameTextField.delegate = self
         lastNameTextField.delegate = self
@@ -93,32 +140,46 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         companyName.delegate = self
         contactPersonTextField.delegate = self
         companyPhoneNumberTextField.delegate = self
-        
-        //set title navigation bar
-        Navigationbar.topItem?.title = NavigateBarTitle
-        
-        //set radio button
-        radioButtonController = SSRadioButtonsController(buttons: btnYes, btnNo)
         radioButtonController!.delegate = self
-        radioButtonController!.shouldLetDeSelect = false
-        btnYes.selected = true
-        
-        //type of treatment
-        radioButtonTypeController = SSRadioButtonsController(buttons: btnPhysio, btnExercise,btnHandTherapy)
         radioButtonTypeController!.delegate = self
-        radioButtonTypeController!.shouldLetDeSelect = false
-        
-        suburbTextField.delegate = self
-        
-        getPersonalData()
-        DatepickerMode()
+        pickerView.delegate = self
+        typeRequest.delegate = self
+        //scrollView.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
-        //        customTextField(colorCustomBrow)
     }
     override func viewDidAppear(animated: Bool) {
-        customTextField(colorCustomBrow)
+        getStaff()
+        customTextField(Constants.ColorCustom.colorCustomBrow)
+        radioButtonTypeController!.shouldLetDeSelect = false
+    }
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if textField == suburbTextField {
+            let scrollPoint: CGPoint  = CGPointMake(0.0, 100.0);
+            self.scrollView.setContentOffset(scrollPoint, animated: true)
+        }
+    }
+    func getStaff(){
+        if(Context.getDataDefasults(Define.keyNSDefaults.DetailStaffCheck) as! String == "YES"){
+            Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaffCheck)
+            let data : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.DetailStaff) as! NSDictionary
+            staff = Mapper().map(data)!
+            firstNameTextField.text = staff.FirstName
+            lastNameTextField.text = staff.LastName
+            contactPhoneTextField.text = staff.HomePhoneNumber
+            emailTextField.text = staff.Email1
+            birthDayTextField.text = staff.DOB
+            suburbTextField.text = staff.Suburb
+        }
+        if(Context.getDataDefasults(Define.keyNSDefaults.DetailSiteCheck) as! String == "YES"){
+            Context.deleteDatDefaults(Define.keyNSDefaults.DetailSiteCheck)
+            let data : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.DetailSite) as! NSDictionary
+            let site :Site = Mapper().map(data)!
+            print(site)
+            contactPersonTextField.text = site.ContactName
+            companyPhoneNumberTextField.text = site.HomePhoneNumber
+        }
     }
     //select radio button
     func didSelectButton(aButton: UIButton?) {
@@ -127,7 +188,6 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         }else if aButton?.titleLabel?.text == "No" {
             GPReferral = "N"
         }
-        
         if aButton?.titleLabel?.text == "Exercise Rehab"{
             exerciseRehab = "Y"
             physiotherapy = "N"
@@ -142,161 +202,161 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             physiotherapy = "N"
         }
     }
-    
-    //custom textFiled
     func customTextField(color:UIColor){
         var arrText : [UITextField] = [firstNameTextField,lastNameTextField,contactPhoneTextField,suburbTextField,birthDayTextField,emailTextField,companyName,contactPersonTextField,companyPhoneNumberTextField]
-        for var i = 0; i < arrText.count ; i += 1 {
+        for i in 0 ..< arrText.count  {
             borderTextFieldValid(arrText[i], color: color)
         }
     }
-    
-    //get localdata and set texfield
-    func getPersonalData(){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        firstNameTextField.text = defaults.stringForKey(model.firstName)
-        lastNameTextField.text = defaults.stringForKey(model.lastName)
-        contactPhoneTextField.text = defaults.stringForKey(model.phonenumber)
-        emailTextField.text = defaults.stringForKey(model.email)
-        birthDayTextField.text = defaults.stringForKey(model.DOB)
-        suburbTextField.text = defaults.stringForKey(model.suburb)
-        
-    }
-    
-    //check local data and textfield
-    func checkData() -> Bool{
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        
-        if firstNameTextField.text == defaults.stringForKey(model.firstName) &&
-            lastNameTextField.text == defaults.stringForKey(model.lastName) &&
-            contactPhoneTextField.text == defaults.stringForKey(model.phonenumber) &&
-            emailTextField.text == defaults.stringForKey(model.email) &&
-            birthDayTextField.text == defaults.stringForKey(model.DOB) &&
-            suburbTextField.text == defaults.stringForKey(model.suburb)
-            
-        {
-            return true
-        }else {
-            return false
-        }
-    }
-    
-    
     @IBAction func makeAppointmentButton(sender: AnyObject) {
-        
         //check netword
-        if SubmitInjuryViewController.isConnectedToNetwork() == false {
+        if Context.isConnectedToNetwork() == false {
             OpenWifi()
         }else {
             checkfield()
-            if firstNameTextField.text == "" || lastNameTextField.text == "" || contactPhoneTextField.text == "" || companyName.text == "" || contactPersonTextField.text == ""   {
-                alertMessage("Required", message: "Please Check your information!")
+            if firstNameTextField.text == "" || lastNameTextField.text == "" || contactPhoneTextField.text == "" || companyName.text == "" || contactPersonTextField.text == ""  || typeRequest.text == "" {
+                alertMessage(Define.MessageString.required, message: "Please check your information!")
             }else {
-                if checkMaxLength(firstNameTextField, length: 50) == false{
-                    alertMessage("Required", message: "FirstName is max 50 character!")
-                }else if checkMaxLength(lastNameTextField, length: 250) == false {
-                    alertMessage("Required", message: "LastName is max 250 character!")
-                }else if checkMaxLength(contactPhoneTextField, length: 100) == false{
-                    alertMessage("Required", message: "Contact Phone is max 250 character!")
-                }else if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false {
-                    borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
-                    alertMessage("Required", message: "Please Check your phonenumber!")
+                if Context.checkMaxLength(firstNameTextField, length: 50) == false{
+                    alertMessage(Define.MessageString.required, message: "First name is max 50 character!")
+                }else if Context.checkMaxLength(lastNameTextField, length: 250) == false {
+                    alertMessage(Define.MessageString.required, message: "Last name is max 250 character!")
+                }else if Context.checkMaxLength(contactPhoneTextField, length: 100) == false{
+                    alertMessage(Define.MessageString.required, message: "Contact phone is max 250 character!")
+                }else if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false {
+                    borderTextFieldValid(contactPhoneTextField, color: Constants.ColorCustom.colorCustomRed)
+                    alertMessage(Define.MessageString.required, message: "Please check your phonenumber!")
                 }
                 else if birthDayTextField.text != "" && checkDOB == false {
-                    alertMessage("Required", message: "Please Check your BirthDay!")
-                    borderTextFieldValid(birthDayTextField, color: colorCustomRed)
+                    alertMessage(Define.MessageString.required, message: "Please check your BirthDay!")
+                    borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomRed)
                 }
-                else if emailTextField.text != "" && validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
-                    alertMessage("Required", message: "Please Check your email!")
-                    borderTextFieldValid(emailTextField, color: colorCustomRed)
+                else if emailTextField.text != "" && Context.validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
+                    alertMessage(Define.MessageString.required, message: "Please check your email!")
+                    borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomRed)
                 }
-                else if companyPhoneNumberTextField.text != "" && validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
-                    borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomRed)
-                    alertMessage("Required", message: "Please Check your company phone number!")
+                else if companyPhoneNumberTextField.text != "" && Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
+                    borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomRed)
+                    alertMessage(Define.MessageString.required, message: "Please check your company phone number!")
                 }
                 else {
-                    
                     sendingData()
                 }
             }
         }
-        
-        
     }
-    
     func sendingData(){
-        self.view.showLoading()
         btnMakeAppointment.enabled = false
-        Info =  Information(firstName: (firstNameTextField.text?.capitalizeFirst)!, lastName: (lastNameTextField.text?.capitalizeFirst)!, phoneNumber: contactPhoneTextField.text!, email: emailTextField.text!, DOB: birthDayTextField.text!, suburb: suburbTextField.text!, GPReferral: GPReferral, description: descriptionTextView.text!, physiotherapy: physiotherapy, specialist: specialist, handTherapy: handTherapy, urgentRequestType: urgentRequestType, requestDate: NowDate(),GP:GP,rehab:treatment,companyName:companyName.text!,companyPhoneNumber:companyPhoneNumberTextField.text!,contactPerson:contactPersonTextField.text!,exerciseRehab:exerciseRehab)
-        submitDataToServe(Info)
-    }
-    
-    func NowDate()->String{
-        let nowdate = NSDate()
-        var DateString:String = ""
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        DateString = dateFormatter.stringFromDate(nowdate)
-        return DateString
-    }
-    
-    //post to server
-    func submitDataToServe(infor:Information) {
-        var phoneNumber = infor.phoneNumber
-        let getFourCharacterInPhone =  phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(0), end: phoneNumber.startIndex.advancedBy(4)))
-        if getFourCharacterInPhone == "0061"{
-            phoneNumber = "+61" + phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(4), end: phoneNumber.endIndex.advancedBy(-1)))
-        }else {
-            
-            infor.phoneNumber.removeAtIndex(phoneNumber.startIndex)
-            phoneNumber = "+61" + infor.phoneNumber
-        }
-        
-        
-        let parameters = [
-            "data": [
-                "firstName":infor.firstName,
-                "lastName":infor.lastName,
-                "phoneNumber":phoneNumber,
-                "email":infor.email,
-                "DOB":infor.DOB,
-                "suburb":infor.suburb,
-                "GPReferral":infor.GPReferral,
-                "description":infor.description,
-                "physiotherapy":infor.physiotherapy,
-                "specialist":infor.specialist,
-                "handTherapy":infor.handTherapy,
-                "GP": infor.GP,
-                "treatment":infor.rehab,
-                "urgentRequestType":infor.urgentRequestType,
-                "requestDate":infor.requestDate,
-                "companyName":infor.companyName,
-                "companyPhoneNumber":infor.companyPhoneNumber,
-                "contactPerson":infor.contactPerson,
-                "exerciseRehab": infor.exerciseRehab
-            ]
-        ]
-        
-        
-        Alamofire.request(.POST,api.submitInjury,headers:headers,parameters: parameters).responseJSON{ response  in
-            self.view.hideLoading()
-            self.btnMakeAppointment.enabled = true
-            print("---->",response)
-            if let _ = response.result.value {
-                let dataJson = JSON(response.result.value!)
-                if dataJson["data"].string == "success" {
-                    infor.phoneNumber = self.contactPhoneTextField.text
-                    self.successAlert(infor)
-                }else {
-                   self.alertMessage("Error", message: "Can't make appointment!")
+        self.showloading(Define.MessageString.PleaseWait)
+        var requestAppointPost = RequestAppointPost()
+        requestAppointPost = loadata()
+        UserService.postRequestAppointment(requestAppointPost) { [weak self] (response) in
+            print(response.result.value)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let requestAppointResponse = Mapper<RequestAppointResponse>().map(response.result.value) {
+                            self!.hideLoading()
+                            if(requestAppointResponse.status == "success"){
+                                self!.alertView.alertMessage("Success", message: "Request Telehealth Success!")
+                                let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self?.navigationController?.pushViewController(loginViewController, animated: true)
+                                })
+
+                            }else{
+                                self?.hideLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self!.hideLoading()
+                    self?.showMessageNoNetwork()
                 }
-            }else{
-                self.alertMessage("Error", message: "Can't make appointment!")
             }
         }
     }
-    
+    func loadata() -> RequestAppointPost {
+        let requestAppointPost = RequestAppointPost()
+        let requestAppointData = RequestAppointData()
+        let patientAppointment = PatientAppointment()
+        
+        requestAppointData.RequestDate = Context.NowDate()
+        requestAppointData.Type = typeRequest.text!
+        requestAppointData.Description = descriptionTextView.text!
+        
+        patientAppointment.FirstName = firstNameTextField.text!
+        patientAppointment.LastName = lastNameTextField.text!
+        patientAppointment.Email = emailTextField.text!
+        patientAppointment.PhoneNumber = contactPhoneTextField.text!
+        patientAppointment.DOB = birthDayTextField.text!
+        patientAppointment.Suburb = suburbTextField.text!
+        
+        
+        let appointmentDataGPReferral = AppointmentData()
+        appointmentDataGPReferral.Name = "GPReferral"
+        appointmentDataGPReferral.Value = GPReferral
+        requestAppointData.appointmentData.append(appointmentDataGPReferral)
+        
+        let appointmentDataPhysiotherapy = AppointmentData()
+        appointmentDataPhysiotherapy.Name = "physiotherapy"
+        appointmentDataPhysiotherapy.Value = physiotherapy
+        requestAppointData.appointmentData.append(appointmentDataPhysiotherapy)
+        
+        let appointmentDataSpecialist = AppointmentData()
+        appointmentDataSpecialist.Name = "specialist"
+        appointmentDataSpecialist.Value = specialist
+        requestAppointData.appointmentData.append(appointmentDataSpecialist)
+        
+        let appointmentDataHandTherapy = AppointmentData()
+        appointmentDataHandTherapy.Name = "handTherapy"
+        appointmentDataHandTherapy.Value = handTherapy
+        requestAppointData.appointmentData.append(appointmentDataHandTherapy)
+        
+//        let appointmentDataHandPhysiotherapy = AppointmentData()
+//        appointmentDataHandPhysiotherapy.Name = "physiotherapy"
+//        appointmentDataHandPhysiotherapy.Value = physiotherapy
+//        requestAppointData.appointmentData.append(appointmentDataHandPhysiotherapy)
+        
+        let appointmentDataGP = AppointmentData()
+        appointmentDataGP.Name = "GP"
+        appointmentDataGP.Value = GP
+        requestAppointData.appointmentData.append(appointmentDataGP)
+        
+        let appointmentDataTreatment = AppointmentData()
+        appointmentDataTreatment.Name = "treatment"
+        appointmentDataTreatment.Value = treatment
+        requestAppointData.appointmentData.append(appointmentDataTreatment)
+        
+        let appointmentDataCompanyName = AppointmentData()
+        appointmentDataCompanyName.Name = "companyName"
+        appointmentDataCompanyName.Value = companyName.text!
+        requestAppointData.appointmentData.append(appointmentDataCompanyName)
+        
+        let appointmentDataCompanyPhoneNumber = AppointmentData()
+        appointmentDataCompanyPhoneNumber.Name = "companyPhoneNumber"
+        appointmentDataCompanyPhoneNumber.Value = companyPhoneNumberTextField.text!
+        requestAppointData.appointmentData.append(appointmentDataCompanyPhoneNumber)
+        
+        let appointmentDataContactPerson = AppointmentData()
+        appointmentDataContactPerson.Name = "contactPerson"
+        appointmentDataContactPerson.Value = contactPersonTextField.text!
+        requestAppointData.appointmentData.append(appointmentDataContactPerson)
+        
+        let appointmentDataExerciseRehab = AppointmentData()
+        appointmentDataExerciseRehab.Name = "exerciseRehab"
+        appointmentDataExerciseRehab.Value = exerciseRehab
+        requestAppointData.appointmentData.append(appointmentDataExerciseRehab)
+        
+        requestAppointData.patientAppointment = patientAppointment
+        requestAppointPost.data = requestAppointData
+        
+        return requestAppointPost
+    }
     //change color border
     func borderTextFieldValid(textField:UITextField,color:UIColor){
         let border = CALayer()
@@ -311,38 +371,15 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     }
     //check textfile is reqired
     func checkfield() {
-        var arrText : [UITextField] = [firstNameTextField,lastNameTextField,contactPhoneTextField,companyName,contactPersonTextField]
-        for var i = 0; i < arrText.count ; i++ {
+        var arrText : [UITextField] = [firstNameTextField,lastNameTextField,contactPhoneTextField,companyName,contactPersonTextField,typeRequest]
+        for i in 0 ..< arrText.count  {
             if arrText[i].text == "" {
-                borderTextFieldValid(arrText[i], color: colorCustomRed)
+                borderTextFieldValid(arrText[i], color: Constants.ColorCustom.colorCustomRed)
             }else{
                 arrText[i].layer.borderWidth = 0
             }
         }
     }
-    
-    //check validate
-    func validatePhoneNumber(value: String,regex:String) -> Bool {
-        //EX: 04 245 544 45 || 4 564 242 45
-        let PHONE_REGEX = regex
-        
-        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
-        
-        let result =  phoneTest.evaluateWithObject(value)
-        
-        return result
-        
-    }
-    func checkMaxLength(textField:UITextField,length:Int)->Bool{
-        if textField.text?.characters.count > length {
-            return false
-        }else{
-            return true
-        }
-    }
-    
-    
-    
     //search suburb
     @IBAction func suburbChange(sender: AnyObject) {
         searchAutocompleteEntriesWithSubstring(suburbTextField.text!)
@@ -386,7 +423,6 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         birthDayTextField.inputView = datePicker
         birthDayTextField.inputAccessoryView = toolBar
     }
-    
     //Done button in datepicker
     func doneClick() {
         let dateFormatter = NSDateFormatter()
@@ -396,33 +432,18 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         dateofbirth = SaveDatetime.stringFromDate(datePicker.date)
         birthDayTextField.text = dateFormatter.stringFromDate(datePicker.date)
         birthDayTextField.resignFirstResponder()
-        if(compareDate(datePicker.date)){
+        if(Context.compareDate(datePicker.date)){
             checkDOB = true
             birthDayTextField.layer.borderWidth = 0
         }else{
             checkDOB = false
-            borderTextFieldValid(birthDayTextField, color: colorCustomRed)
+            borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomRed)
         }
-        
     }
-    
     //Cancel button in datepicker
     func cancelClick() {
         birthDayTextField.resignFirstResponder()
     }
-    
-    //Check date
-    func compareDate(dateDOB:NSDate)->Bool {
-        let now = NSDate()
-        if now.compare(dateDOB) == NSComparisonResult.OrderedDescending
-        {
-            return true
-        } else
-        {
-            return false
-        }
-    }
-    
     //Show alert message
     func alertMessage(title : String,message : String){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
@@ -430,145 +451,91 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             //Handle if click OK
         }
         alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
+        self.presentViewController(alertController, animated: true) {}
     }
-    //Alert action back to view
-    func successAlert(info:Information){
-        
-        let alertController = UIAlertController(title: "Success", message: messageString.SubmitInjurySuccess, preferredStyle: .Alert)
-        let SaveAction = UIAlertAction(title: "Save Information", style: .Destructive) { (action) in
-            self.setPersonalData(info)
-            self.performSegueWithIdentifier("unwindToContainerVC", sender: self)
-        }
-        if(checkData() == false){
-            alertController.addAction(SaveAction)
-        }
-        let OKAction = UIAlertAction(title: "Close", style: .Default) { (action) in
-            
-            self.performSegueWithIdentifier("unwindToContainerVC", sender: self)
-        }
-        alertController.addAction(OKAction)
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-    }
-    
     //open wifi
     func OpenWifi(){
         let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet ", preferredStyle: .Alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            // ...
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in}
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
             UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!);
         }
         alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-        
+        self.presentViewController(alertController, animated: true) {}
     }
-    
-    //check connection
-    class func isConnectedToNetwork() -> Bool {
-        
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-        let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
-        }
-        var flags = SCNetworkReachabilityFlags()
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-            return false
-        }
-        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
-        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
-        return (isReachable && !needsConnection)
-    }
-    
-    func setPersonalData(data:Information){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setValue(data.firstName, forKey: model.firstName)
-        defaults.setValue(data.lastName , forKey: model.lastName)
-        defaults.setValue(data.phoneNumber, forKey: model.phonenumber)
-        defaults.setValue(data.email, forKey: model.email)
-        defaults.setValue(data.DOB, forKey: model.DOB)
-        defaults.setValue(data.suburb, forKey: model.suburb)
-        defaults.synchronize()
-    }
-    
     
     //Check out focus textfield
     func textFieldDidEndEditing(textField: UITextField) {
-        
         switch textField {
         case firstNameTextField :
-            if firstNameTextField.text != "" &&  checkMaxLength(firstNameTextField, length: 50) == true {
-                borderTextFieldValid(firstNameTextField, color: colorCustomBrow)
+            if firstNameTextField.text != "" &&  Context.checkMaxLength(firstNameTextField, length: 50) == true {
+                borderTextFieldValid(firstNameTextField, color: Constants.ColorCustom.colorCustomBrow)
                 firstNameTextField.text = firstNameTextField.text?.capitalizeFirst
             }else{
-                borderTextFieldValid(firstNameTextField, color: colorCustomRed)
+                borderTextFieldValid(firstNameTextField, color: Constants.ColorCustom.colorCustomRed)
             }
         case lastNameTextField:
-            if lastNameTextField.text != "" &&  checkMaxLength(lastNameTextField, length: 250) == true {
-                borderTextFieldValid(lastNameTextField, color: colorCustomBrow)
+            if lastNameTextField.text != "" &&  Context.checkMaxLength(lastNameTextField, length: 250) == true {
+                borderTextFieldValid(lastNameTextField, color: Constants.ColorCustom.colorCustomBrow)
                 lastNameTextField.text = lastNameTextField.text?.capitalizeFirst
             }else{
-                borderTextFieldValid(lastNameTextField, color: colorCustomRed)
+                borderTextFieldValid(lastNameTextField, color: Constants.ColorCustom.colorCustomRed)
             }
         case contactPhoneTextField:
-            if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false || contactPhoneTextField.text == "" {
-                borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
+            if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false || contactPhoneTextField.text == "" {
+                borderTextFieldValid(contactPhoneTextField, color: Constants.ColorCustom.colorCustomRed)
             }else {
-                borderTextFieldValid(contactPhoneTextField, color: colorCustomBrow)
+                borderTextFieldValid(contactPhoneTextField, color: Constants.ColorCustom.colorCustomBrow)
+            }
+            
+        case typeRequest:
+            if Context.validatePhoneNumber(typeRequest.text!,regex:RegexString.MobileNumber) == false || typeRequest.text == "" {
+                borderTextFieldValid(typeRequest, color: Constants.ColorCustom.colorCustomRed)
+            }else {
+                borderTextFieldValid(typeRequest, color: Constants.ColorCustom.colorCustomBrow)
             }
         case emailTextField:
             if emailTextField.text != ""{
-                if validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
-                    borderTextFieldValid(emailTextField, color: colorCustomRed)
+                if Context.validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
+                    borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomRed)
                 }else {
-                    borderTextFieldValid(emailTextField, color: colorCustomBrow)
+                    borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomBrow)
                 }
             }else {
-                borderTextFieldValid(emailTextField, color: colorCustomBrow)
+                borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomBrow)
             }
         case companyName:
             if companyName.text != "" {
-                borderTextFieldValid(companyName, color: colorCustomBrow)
+                borderTextFieldValid(companyName, color: Constants.ColorCustom.colorCustomBrow)
                 companyName.text = companyName.text?.capitalizeFirst
             }else {
-                borderTextFieldValid(companyName, color: colorCustomRed)
+                borderTextFieldValid(companyName, color: Constants.ColorCustom.colorCustomRed)
             }
         case contactPersonTextField:
             if contactPersonTextField.text != "" {
-                borderTextFieldValid(contactPersonTextField, color: colorCustomBrow)
+                borderTextFieldValid(contactPersonTextField, color: Constants.ColorCustom.colorCustomBrow)
                 contactPersonTextField.text = contactPersonTextField.text?.capitalizeFirst
             }else {
-                borderTextFieldValid(contactPersonTextField, color: colorCustomRed)
+                borderTextFieldValid(contactPersonTextField, color: Constants.ColorCustom.colorCustomRed)
             }
         case companyPhoneNumberTextField:
             if companyPhoneNumberTextField.text != "" {
-                if validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
-                    borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomRed)
+                if Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
+                    borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomRed)
                 }else {
-                    borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomBrow)
+                    borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomBrow)
                 }
             }else {
-                borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomBrow)
+                borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomBrow)
             }
         case birthDayTextField:
-            if compareDate(datePicker.date) == false {
-                borderTextFieldValid(birthDayTextField, color: colorCustomRed)
+            if Context.compareDate(datePicker.date) == false {
+                borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomRed)
             }else {
-                borderTextFieldValid(birthDayTextField, color: colorCustomBrow)
+                borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomBrow)
             }
             
         case suburbTextField :
@@ -584,11 +551,18 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             }
         }
     }
-    @IBAction func actionSelectStaff(sender: AnyObject) {
+    func SelectStaf(){
         let listStaffViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListStaffViewControllerID") as! ListStaffViewController
         self.navigationController?.pushViewController(listStaffViewController, animated: true)
     }
+    @IBAction func actionSelectStaff(sender: AnyObject) {
+        SelectStaf()
+    }
     
+    @IBAction func actionSelectContactPerson(sender: AnyObject) {
+        let listContactPerson :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListContactPersonViewControllerID") as! ListContactPersonViewController
+        self.navigationController?.pushViewController(listContactPerson, animated: true)
+    }
     
 }
 
@@ -606,6 +580,24 @@ extension SubmitInjuryViewController: UITableViewDelegate,UITableViewDataSource 
         autoTableView.hidden = true
     }
     
-    
+    @IBAction func actionBack(sender: AnyObject) {
+        self.navigationController!.popToRootViewControllerAnimated(true)
+    }
+}
+
+extension SubmitInjuryViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickOption.count
+    }
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickOption[row]
+    }
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("row",row)
+        typeRequest.text = pickOption[row]
+    }
     
 }

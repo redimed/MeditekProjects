@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -65,6 +67,8 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     private String urgentType;
     private File f;
     private SweetAlertDialog dialog;
+    private SharedPreferences workinjury;
+    private boolean isAuthenticated;
 
     @Bind(R.id.txtFirstName) EditText txtFirstName;
     @Bind(R.id.txtLastName) EditText txtLastName;
@@ -74,7 +78,9 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.txtDescription) EditText txtDescription;
     @Bind(R.id.autoCompleteSuburb) AutoCompleteTextView autoCompleteSuburb;
     @Bind(R.id.btnWorkInjury) Button btnWorkInjury;
-    @Bind(R.id.btnBack) Button btnBack;
+    @Bind(R.id.btnBack) LinearLayout btnBack;
+    @Bind(R.id.btnSelectStaff) Button btnSelectStaff;
+    @Bind(R.id.btnSelectSite) Button btnSelectSite;
     @Bind(R.id.txtTitle) TextView txtTitle;
     @Bind(R.id.lblFNRequire) TextView lblFNRequire;
     @Bind(R.id.lblLNRequire) TextView lblLNRequire;
@@ -94,9 +100,14 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
-
         TypefaceUtil.applyFont(this, findViewById(R.id.workActivity), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
+        workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
+        isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
+        if (!isAuthenticated){
+            btnSelectStaff.setVisibility(View.GONE);
+            btnSelectSite.setVisibility(View.GONE);
+        }
         urgentRequestApi = RESTClient.getRegisterApi();
         f = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/InformationUrgent.xml");
         gson = new Gson();
@@ -117,6 +128,8 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         radioY.setChecked(true);
         btnWorkInjury.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+        btnSelectStaff.setOnClickListener(this);
+        btnSelectSite.setOnClickListener(this);
 
         LoadJsonData();
         GetDataURType();
@@ -236,6 +249,16 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnBack:
                 onBackPressed();
+                break;
+            case  R.id.btnSelectStaff:
+                Intent intent = new Intent(this, StaffListActivity.class);
+                intent.putExtra("work",true);
+                startActivity(intent);
+                break;
+            case R.id.btnSelectSite:
+                Intent intent1 = new Intent(this, SiteListActivity.class);
+                intent1.putExtra("work",true);
+                startActivity(intent1);
                 break;
         }
     }
@@ -495,5 +518,12 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        Log.d("intent",intent+"");
     }
 }

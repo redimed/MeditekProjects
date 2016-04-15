@@ -41,8 +41,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private int currentItem = 0;
     private boolean shouldFinish = false;
     private UrgentRequest urgentRequestApi;
-    private static SharedPreferences workInjury;
+    private static SharedPreferences workinjury;
     private boolean isAuthenticated;
+    private String UserUid;
 
     @Bind(R.id.slider) ViewPager slider;
     @Bind(R.id.circleIndicator) PageIndicator circleIndicator;
@@ -61,11 +62,28 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         TypefaceUtil.applyFont(this, findViewById(R.id.activityHome), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
-        workInjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
-        isAuthenticated = workInjury.getBoolean("isAuthenticated", false);
+        workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
+        isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
         if (isAuthenticated){
             btnLogin.setVisibility(View.GONE);
-            Log.d("aaaaaaaaaaaaaa","neeeeeeeeeeeeeeeeeeeeee");
+            UserUid = workinjury.getString("useruid","");
+            RESTClient.getCoreApi().getDetailCompany(UserUid, new Callback<JsonObject>() {
+                @Override
+                public void success(JsonObject jsonObject, Response response) {
+                    Log.d("aaaaaaaa",jsonObject.get("data").getAsJsonArray()+"");
+                    String companyUid = ((jsonObject.get("data").getAsJsonArray()).get(0).getAsJsonObject()).get("UID").getAsString();
+                    String companyName = ((jsonObject.get("data").getAsJsonArray()).get(0).getAsJsonObject()).get("CompanyName").getAsString();
+                    SharedPreferences.Editor editor = workinjury.edit();
+                    editor.putString("companyUid",companyUid);
+                    editor.putString("companyName",companyName);
+                    editor.apply();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
         }
         Log.d("huhuhuhuhu", String.valueOf(isAuthenticated));
         urgentRequestApi = RESTClient.getRegisterApi();

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="patient.telehealth.redimed.workinjury.StaffListActivity">
+    tools:context="patient.telehealth.redimed.workinjury.AccountActivity">
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
@@ -45,19 +45,47 @@
             android:textSize="21sp" />
 
     </android.support.v7.widget.Toolbar>
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightBackground"
         android:orientation="vertical"
-        android:layout_below="@+id/tool_bar">
-
-        <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/tool_bar"
+        android:background="@color/gray_btn_bg_pressed_color">
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/staffRecyclerView">
-
-        </android.support.v7.widget.RecyclerView>
-
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:text="@string/title_action_bar_company_information"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/siteName"
+            android:text="N/A"
+            android:background="@color/lightBackground"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/address"
+            android:text="N/A"
+            android:background="@color/lightBackground"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/suburb"
+            android:text="N/A"
+            android:background="@color/lightBackground"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/postcode"
+            android:text="N/A"
+            android:background="@color/lightBackground"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/state"
+            android:text="N/A"
+            android:background="@color/lightBackground"/>
+    </LinearLayout>
 </RelativeLayout>

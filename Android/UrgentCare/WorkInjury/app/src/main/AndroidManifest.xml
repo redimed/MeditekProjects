@@ -33,7 +33,10 @@
             android:label="@string/title_activity_faqs" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".StaffListActivity"></activity>
+        <activity android:name=".StaffListActivity" />
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".SiteListActivity" />
+        <activity android:name=".CompanyActivity"></activity>
     </application>
 
 </manifest>

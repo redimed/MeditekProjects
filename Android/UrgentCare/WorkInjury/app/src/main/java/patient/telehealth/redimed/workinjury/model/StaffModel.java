@@ -1,9 +1,12 @@
 package patient.telehealth.redimed.workinjury.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by phanq on 04/13/2016.
  */
-public class StaffModel {
+public class StaffModel implements Parcelable{
     private String ID;
     private String UID;
     private String UserAccountID;
@@ -328,4 +331,100 @@ public class StaffModel {
     public void setModifiedBy(String modifiedBy) {
         ModifiedBy = modifiedBy;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(ID);
+        dest.writeString(UID);
+        dest.writeString(UserAccountID);
+        dest.writeString(Title);
+        dest.writeString(MaritalStatus);
+        dest.writeString(FirstName);
+        dest.writeString(MiddleName);
+        dest.writeString(LastName);
+        dest.writeString(PreferredName);
+        dest.writeString(PreviousName);
+        dest.writeString(DOB);
+        dest.writeString(Gender);
+        dest.writeString(Indigenous);
+        dest.writeString(Occupation);
+        dest.writeString(Address1);
+        dest.writeString(Address2);
+        dest.writeString(Postcode);
+        dest.writeString(Suburb);
+        dest.writeString(State);
+        dest.writeString(CountryID1);
+        dest.writeString(CountryID2);
+        dest.writeString(Email1);
+        dest.writeString(Email2);
+        dest.writeString(HomePhoneNumber);
+        dest.writeString(FaxNumber);
+        dest.writeString(WorkPhoneNumber);
+        dest.writeString(InterpreterRequired);
+        dest.writeString(InterperterLanguage);
+        dest.writeString(OtherSpecialNeed);
+        dest.writeString(Enable);
+        dest.writeString(Education);
+        dest.writeString(Signature);
+        dest.writeString(CreatedDate);
+        dest.writeString(CreatedBy);
+        dest.writeString(ModifiedDate);
+        dest.writeString(ModifiedBy);
+    }
+
+    public StaffModel(Parcel in) {
+        ID = in.readString();
+        UID = in.readString();
+        UserAccountID = in.readString();
+        Title = in.readString();
+        MaritalStatus = in.readString();
+        FirstName = in.readString();
+        MiddleName = in.readString();
+        LastName = in.readString();
+        PreferredName = in.readString();
+        PreviousName = in.readString();
+        DOB = in.readString();
+        Gender = in.readString();
+        Indigenous = in.readString();
+        Occupation = in.readString();
+        Address1 = in.readString();
+        Address2 = in.readString();
+        Postcode = in.readString();
+        Suburb = in.readString();
+        State = in.readString();
+        CountryID1 = in.readString();
+        CountryID2 = in.readString();
+        Email1 = in.readString();
+        HomePhoneNumber = in.readString();
+        WorkPhoneNumber = in.readString();
+        FaxNumber = in.readString();
+        InterpreterRequired = in.readString();
+        InterperterLanguage = in.readString();
+        OtherSpecialNeed = in.readString();
+        Enable = in.readString();
+        Education = in.readString();
+        Signature = in.readString();
+        CreatedDate = in.readString();
+        CreatedBy = in.readString();
+        ModifiedDate = in.readString();
+        ModifiedBy = in.readString();
+    }
+
+    public static final Parcelable.Creator<StaffModel> CREATOR = new Creator<StaffModel>() {
+        @Override
+        public StaffModel createFromParcel(Parcel source) {
+            return new StaffModel(source);
+        }
+
+        @Override
+        public StaffModel[] newArray(int size) {
+            return new StaffModel[size];
+        }
+
+    };
 }

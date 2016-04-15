@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,13 +20,20 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
-    @Bind(R.id.btnSetting) Button btnSetting;
-    @Bind(R.id.btnStaffList) Button btnStaffList;
+
+    @Bind(R.id.btnBack) LinearLayout btnBack;
     @Bind(R.id.btnLogout) RelativeLayout btnLogout;
     @Bind(R.id.lblUserName) TextView lblUserName;
     @Bind(R.id.lblCompanyName) TextView lblCompanyName;
+    @Bind(R.id.layoutAccount) LinearLayout layoutAccount;
+    @Bind(R.id.layoutAccountCenter) LinearLayout layoutAccountCenter;
+    @Bind(R.id.layoutCompany) RelativeLayout layoutCompany;
+    @Bind(R.id.lblCompany) TextView lblCompany;
+    @Bind(R.id.lblAccount) TextView lblAccount;
+
     private SharedPreferences workinjury;
-    private String UserUid;
+    private boolean isAuthenticated;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,44 +41,25 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         ButterKnife.bind(this);
         workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
         lblUserName.setText(workinjury.getString("username","N/A"));
-        lblCompanyName.setText("N/A");
-        UserUid = workinjury.getString("useruid","null");
-        if (!UserUid.equals("null")){
-            Log.d(UserUid,UserUid);
-            RESTClient.getCoreApi().getDetailCompany(UserUid, new Callback<JsonObject>() {
-                @Override
-                public void success(JsonObject jsonObject, Response response) {
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-
-            RESTClient.getCoreApi().getDetailUser(UserUid, new Callback<JsonObject>() {
-                @Override
-                public void success(JsonObject jsonObject, Response response) {
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-
-        };
-        btnSetting.setOnClickListener(this);
+        lblCompanyName.setText(workinjury.getString("companyName","N/A"));
+        isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
+        if (!isAuthenticated){
+            btnLogout.setVisibility(View.GONE);
+            lblAccount.setVisibility(View.GONE);
+            lblCompany.setVisibility(View.GONE);
+            layoutCompany.setVisibility(View.GONE);
+            layoutAccountCenter.setVisibility(View.GONE);
+        }
+        btnBack.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
-        btnStaffList.setOnClickListener(this);
+        layoutAccount.setOnClickListener(this);
+        layoutCompany.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btnSetting:
+            case R.id.btnBack:
                 startActivity(new Intent(this, HomeActivity.class));
                 finish();
                 break;
@@ -93,8 +81,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 });
                 break;
-            case  R.id.btnStaffList:
-                startActivity(new Intent(this, StaffListActivity.class));
+            case  R.id.layoutAccount:
+                startActivity(new Intent(this,AccountActivity.class));
+                finish();
+                break;
+            case R.id.layoutCompany:
+                startActivity(new Intent(this, SiteListActivity.class));
                 finish();
                 break;
         }

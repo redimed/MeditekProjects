@@ -37,7 +37,12 @@
     <string name="title_action_bar">Work Injury Clinic Booking</string>
     <string name="title_action_bar_login">Login</string>
     <string name="title_action_bar_setting">Setting</string>
+    <string name="title_action_bar_account_information">ACCOUNT INFORMATION</string>
+    <string name="title_action_bar_company_information">COMPANY INFORMATION</string>
+    <string name="title_action_bar_account">Account</string>
+    <string name="title_action_bar_company">Company</string>
     <string name="title_action_bar_staff_list">Staff List</string>
+    <string name="title_action_bar_site_list">Site List</string>
     <string name="required_field">*</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
@@ -84,7 +89,10 @@
     <string name="setting_profile">PATIENT PROFILE</string>
     <string name="complete_profile">Incomplete Profile</string>
     <string name="add_new">Add New Account</string>
+    <string name="change_pass">Change Password</string>
     <string name="about">About Redimed</string>
+    <string name="site_list">Site List</string>
+    <string name="staff_list">Staff List</string>
     <string name="other">Other services</string>
     <string name="setting_logout">LOGOUT</string>
     <string name="logout">Log Out</string>

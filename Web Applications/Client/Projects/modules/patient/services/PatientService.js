@@ -322,32 +322,37 @@ PatientService.validate = function(info) {
 	PatientService.getDatatoDirective = function(){
 
 		var returnData = {};
-		var info = {
-			FirstName:postData.data.FirstName,
-			MiddleName:postData.data.MiddleName,
-			Title:postData.data.Title,
-			LastName:postData.data.LastName,
-			PhoneNumber:postData.data.PhoneNumber,
-			DOB:postData.data.DOB,
-			Address1:postData.data.Address1,
-			Address2:postData.data.Address2,
-			State:postData.data.State,
-			Email1:postData.data.Email1,
-			HomePhoneNumber:postData.data.HomePhoneNumber,
-			Gender:postData.data.Gender,
-			Suburb:postData.data.Suburb,
-			Postcode:postData.data.Postcode
-		};
+		if(_.isEmpty(postData) == false){
+			var info = {
+				FirstName:postData.data.FirstName,
+				MiddleName:postData.data.MiddleName,
+				Title:postData.data.Title,
+				LastName:postData.data.LastName,
+				PhoneNumber:postData.data.PhoneNumber,
+				DOB:postData.data.DOB,
+				Address1:postData.data.Address1,
+				Address2:postData.data.Address2,
+				State:postData.data.State,
+				Email1:postData.data.Email1,
+				HomePhoneNumber:postData.data.HomePhoneNumber,
+				Gender:postData.data.Gender,
+				Suburb:postData.data.Suburb,
+				Postcode:postData.data.Postcode
+			};
 
-		returnData.data = info;
-		if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
-		if(postData.otherData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
-		if(postData.otherData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;
-		if(postData.otherData.hasOwnProperty('PatientFund')== true) returnData.PatientFund = postData.PatientFund;
-		if(postData.otherData.hasOwnProperty('PatientKin')== true) returnData.PatientKin = postData.PatientKin;
-		if(postData.otherData.hasOwnProperty('PatientGP')== true) returnData.PatientGP = postData.PatientGP;
-		console.log('returnData',returnData);
-		return returnData;
+			returnData.data = info;
+			if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
+			if(postData.otherData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
+			if(postData.otherData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;
+			if(postData.otherData.hasOwnProperty('PatientFund')== true) returnData.PatientFund = postData.PatientFund;
+			if(postData.otherData.hasOwnProperty('PatientKin')== true) returnData.PatientKin = postData.PatientKin;
+			if(postData.otherData.hasOwnProperty('PatientGP')== true) returnData.PatientGP = postData.PatientGP;
+			console.log('returnData',returnData);
+			return returnData;
+		}
+		else {
+			return returnData;
+		}
 	}
 
 	PatientService.detailPatient = function(data){

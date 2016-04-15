@@ -24,12 +24,12 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDataJson()
-        LoadingAnimation.stopLoading()
         self.navigationController?.navigationBarHidden = true
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             buttonLogin.hidden = true
+            loadInformationData()
         }
-        //loadInformationData()
+        
     }
     override func viewDidAppear(animated: Bool) {
         pagingImage()
@@ -60,7 +60,6 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                                 let companyInfor = Mapper().toJSON(detailCompanyResponse)
                                 Context.setDataDefaults(companyInfor, key: Define.keyNSDefaults.companyInfor)
                             }else{
-                                LoadingAnimation.stopLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                     self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                 }
@@ -240,7 +239,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     }
     @IBAction func actionLogin(sender: AnyObject) {
         let setting :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("RegisterViewControllerID") as! RegisterViewController
-        self.navigationController?.pushViewController(setting, animated: true)
+        self.navigationController?.pushViewController(setting, animated: false)
     }
     // load data from JSON file
     func loadDataJson(){
@@ -249,7 +248,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                 let data = try NSData(contentsOfURL: NSURL(fileURLWithPath: path), options: NSDataReadingOptions.DataReadingMappedIfSafe)
                 let jsonObj = JSON(data: data)
                 if jsonObj != JSON.null {
-                    for var i = 0; i < jsonObj["suburb"].count; ++i {
+                    for i in 0 ..< jsonObj["suburb"].count {
                         let a = jsonObj["suburb"][i]["name"].string
                         pastUrls.append(a!)
                     }

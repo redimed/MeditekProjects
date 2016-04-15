@@ -36,36 +36,6 @@ struct api{
     static let submitInjury = "http://meditek.redimed.com.au:3001/api/urgent-care/urgent-request"
 }
 
-struct model{
-    static let firstName = "firstName"
-    static let lastName = "lastName"
-    static let phonenumber = "phonenumber"
-    static let email = "email"
-    static let DOB = "DOB"
-    static let suburb = "suburb"
-}
-
-struct messageString {
-    static let SubmitInjurySuccess = "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly."
-    static let invalidParams = "Invalid field please check your information!"
-    static let serverErr = "Server Error!"
-}
-
-struct MessageString  {
-    static let CallAnswer : String = "answer"
-    static let CallEndCall : String = "end"
-    static let Decline : String = "decline"
-    static let Call : String = "call"
-    static let Cancel : String = "cancel"
-    static let VersionAndBuild : String = "© REDIMED 2015 \(Define.versionBuild) – App Design by Meditek"
-    static let QuestionCallPhone : String = "You want to contact us?"
-    static let MessageLogout : String = "Do you want to logout the system?"
-    static let StringHealthCare:String = "Personalised + Customised, HEALTHCARE anywhere"
-    static let phoneNumberCallUs : String = "tel://0892300900"
-    static let savedPictureMessage : String = "Your picture was saved to Camera Roll"
-    static let placeHolderDescription : String = "Description of injury"
-}
-
 struct ConfigurationSystem {
     func validateInputOnlyNumber(value: Int) -> Bool {
         switch value {

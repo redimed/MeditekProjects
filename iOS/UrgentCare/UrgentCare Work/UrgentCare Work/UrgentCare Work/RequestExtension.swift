@@ -10,14 +10,14 @@ import Foundation
 import Alamofire
 
 extension Request {
-    private func handleErrorMessage(JSON: AnyObject?)
-    {
-        Utility.getTopViewController()?.handleApiError(JSON)
-    }
-    private func showMessageNoNetwork()
-    {
-        let base = Utility.getTopViewController()
-        
-        Alert.alert(base!, message: "No Network", title: "Notification", alertStyle: DTAlertErrorStyle.DTAlertStyleErrorNetwork)
-    }
+//    private func handleErrorMessage(JSON: AnyObject?)
+//    {
+//        Utility.getTopViewController()?.handleApiError(JSON)
+//    }
+//    private func showMessageNoNetwork()
+//    {
+//        let base = Utility.getTopViewController()
+//        
+//        Alert.alert(base!, message: "No Network", title: "Notification", alertStyle: DTAlertErrorStyle.DTAlertStyleErrorNetwork)
+//    }
 }

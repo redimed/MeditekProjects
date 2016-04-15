@@ -7,16 +7,34 @@
 //
 
 import UIKit
+import ObjectMapper
 
 class CompanyViewController: BaseViewController {
 
-
-    var arrayTitle = ["Company Information", "Accounts", "", "", ""]
-    var StringIncompleteProfile :String = "Incomplete Profile"
+    var companyInfo = DetailCompanyResponse()
+    
+    @IBOutlet weak var txtName: UITextField!
+    @IBOutlet weak var txtAddress: UITextField!
+    @IBOutlet weak var txtSuburb: UITextField!
+    @IBOutlet weak var txtPostCode: UITextField!
+    @IBOutlet weak var txtState: UITextField!
+    
+    var site = Site()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Company"
+        
+        let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
+        companyInfo = Mapper().map(companyInfoDict)!
+        if(companyInfo.data.count > 0){
+           txtName.text = companyInfo.data[0].CompanyName
+        }
+        
+        txtAddress.text = site.Address1
+        txtSuburb.text = site.Suburb
+        txtPostCode.text = site.Postcode
+        txtState.text = site.State
     }
 
     override func didReceiveMemoryWarning() {

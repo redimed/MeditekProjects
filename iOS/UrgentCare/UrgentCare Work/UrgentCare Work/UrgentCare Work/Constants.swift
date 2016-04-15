@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 struct Constants {
     struct Path {
@@ -16,14 +16,23 @@ struct Constants {
         static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
     }
     
+    
     struct UserURL {
         static let URL_POST_LOGIN                                = Path.SERVICE_URL_3006 + "/api/login";
-        static let URL_POST_REQUEST_VERIFY                       = Path.SERVICE_URL_3009 + "/api/telehealth/user/requestActivationCode";
+        static let URL_GET_LOGOUT                                = Path.SERVICE_URL_3006 + "/api/logout";
+        static let GET_NEW_TOKEN                                 = Path.SERVICE_URL_3006 + "/api/refresh-token/GetNewToken"
+       
         static let URL_GET_DETAIL_COMPANY_BY_USER                = Path.SERVICE_URL_3005 + "/api/company/detail-company-by-user";
+        static let URL_GET_LIST_STAFF                            = Path.SERVICE_URL_3005 + "/api/company/get-list-staff"
+        static let URL_GET_LIST_SITE                             = Path.SERVICE_URL_3005 + "/api/company/get-list-site"
+        static let URL_GET_DETAIL_USER                           = Path.SERVICE_URL_3005 + "/api/user-account/GetUserAccountDetails"
+        
+        static let URL_POST_REQUEST_VERIFY                       = Path.SERVICE_URL_3009 + "/api/telehealth/user/requestActivationCode";
         static let URL_POST_CHECKVERIFY_CODE                     = Path.SERVICE_URL_3009 + "/api/telehealth/user/verifyActivationCode"
         static let URL_GET_GETINFORMATION_PATIENT                = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
-        static let URL_POST_LOGOUT                               = Path.SERVICE_URL_3009 + "/api/telehealth/user/logout"
-        static let URL_GET_LIST_STAFF                            = Path.SERVICE_URL_3005 + "/api/company/get-list-staff"
+        static let URL_POST_REQUEST_APPOINTMENT                  = Path.SERVICE_URL_3009 + "/api/telehealth/appointment/request"
+        static let URL_POST_CHECKACTIVATION                      = Path.SERVICE_URL_3009 + "/api/telehealth/checkActivation"
+        
     }
     
     struct StringContant {
@@ -49,5 +58,10 @@ struct Constants {
         static let MobileNumber = "^(\\+61|0061|0)?4[0-9]{8}$"
         static let Email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
         static let PostCodeLength = "[0-9]{4,6}"
+    }
+    
+    struct ColorCustom{
+        static let colorCustomRed = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
+        static let  colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
     }
 }

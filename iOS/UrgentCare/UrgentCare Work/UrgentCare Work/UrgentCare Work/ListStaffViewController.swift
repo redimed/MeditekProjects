@@ -13,13 +13,9 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
     
     @IBOutlet weak var tableView: UITableView!
     
-    var nameComapny :String = "name"
-    var array = [[],["Harry Berry", "Add New Account"],["Other services", "About Redimed", "LOGOUT"]]
-    var arrayTitle = ["Company", "Accounts", "", "", ""]
-    var StringIncompleteProfile :String = "Incomplete Profile"
-    var companyInfo = DetailCompanyResponse()
-    var userInfor = LoginResponse()
-    
+    var refreshControl: UIRefreshControl!
+    var listStaff = ListStaff()
+    var staff = Staff()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -27,8 +23,6 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
         loadData()
     }
     func loadData(){
-        
-        showloading("Loading.....")
         
         let userInforDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.userInfor) as! NSDictionary
         let userInfor :LoginResponse = Mapper().map(userInforDict)!
@@ -41,9 +35,11 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
                     if let _ = response.result.value {
                         if let listStaff = Mapper<ListStaff>().map(response.result.value) {
                             if(listStaff.message == "success"){
-                                self!.hideLoading()
+                                //self!.hideLoading()
+                                self?.listStaff = listStaff
+                                self!.tableView.reloadData()
                             }else{
-                                self!.hideLoading()
+                                //self!.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                     self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                 }
@@ -51,7 +47,7 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
                         }
                     }
                 } else {
-                    self!.hideLoading()
+                   // self!.hideLoading()
                     self?.showMessageNoNetwork()
                 }
             }
@@ -62,60 +58,32 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
         super.didReceiveMemoryWarning()
     }
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = false
-        self.navigationController?.navigationBar.topItem?.title = "Setting"
+        
     }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return array.count
-    }
-    
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return array[section].count
+        return listStaff.data.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.section == 1 && indexPath.row == 0){
-            let cell = tableView.dequeueReusableCellWithIdentifier("CellInfor", forIndexPath: indexPath) as! CustomTableViewCell;
-            cell.lbName.text = userInfor.user?.UserName
-            cell.lbProfile.text = StringIncompleteProfile
-            return cell
-        }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell;
-            cell.textLabel?.text = array[indexPath.section][indexPath.row]
+            cell.textLabel?.text = listStaff.data[indexPath.row].FirstName + listStaff.data[indexPath.row].LastName
             return cell
-        }
-        
-    }
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-    {
-        return arrayTitle[section]
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row,indexPath.section)
-        if(indexPath.row == 0 && indexPath.section == 0){
-            let company :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("CompanyViewControllerID") as! CompanyViewController
-            self.navigationController?.pushViewController(company, animated: true)
-        }
-        if(indexPath.row == 0 && indexPath.section == 1){
-            let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("AccountViewControllerID") as! AccountViewController
-            self.navigationController?.pushViewController(account, animated: true)
-        }
-        if(indexPath.row == 0 && indexPath.section == 2){
-            let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
-            faqs.fileName = "FAQs"
-            faqs.navigationBarString = "FAQs"
-            self.navigationController?.pushViewController(faqs, animated: true)
-        }
-        if(indexPath.row == 1 && indexPath.section == 2){
-            let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
-            faqs.fileName = "UrgentCare"
-            faqs.navigationBarString = "ABOUT REDIMED"
-            self.navigationController?.pushViewController(faqs, animated: true)
-        }
-        if(indexPath.row == 2 && indexPath.section == 2){
-            LogoutWhenIsAuthenticated()
-        }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        
+        Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaff)
+        Context.setDataDefaults("YES", key: Define.keyNSDefaults.DetailStaffCheck)
+        let profile = Mapper().toJSON(listStaff.data[indexPath.row])
+        Context.setDataDefaults(profile, key: Define.keyNSDefaults.DetailStaff)
+        self.navigationController?.popViewControllerAnimated(true)
+
     }
-    
+    @IBAction func actionBack(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 }

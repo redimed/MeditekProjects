@@ -4,7 +4,7 @@ app.directive('onsiteAppointment', function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'modules/onsite/directives/templates/onsiteAppointmentDirective.html',
-		controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$timeout,$scope){
+		controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$timeout,$scope, $uibModal){
 
 			o.loadingPage(true);
             WAAppointmentService.getDetailWAAppointmentByUid($stateParams.UID).then(function(data) {
@@ -510,6 +510,33 @@ app.directive('onsiteAppointment', function(){
                 var value = $("#gp_referral_N").val();
                 $scope.setValue(value,'GPReferral');
             });
+
+            $scope.linkcompany = function() {
+                console.log($scope.wainformation.Patients[0]);
+                var patientuid = $scope.wainformation.Patients[0].UID;
+                var companyinfo = $scope.wainformation.Patients[0].Companies;
+                var returnData;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'LinkCompanyModal',
+                    controller: function($scope,$modalInstance){
+                        $scope.patientuid  = patientuid;
+                        $scope.info = companyinfo;
+                        $scope.cancel = function(data){
+                            console.log("link success ",data);
+                            returnData = data;
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    // size: 'lg',
+                    windowClass: 'app-modal-window'
+                }).result.finally(function(){
+                    if(returnData) {
+                        $scope.wainformation.Patients[0].Companies = returnData;
+                        console.log($scope.wainformation.Patients);
+                    }
+                });
+            };
+
 		},
 	};
 });

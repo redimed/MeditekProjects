@@ -821,14 +821,40 @@ module.exports = {
 			})
 			.then(function(created_association) {
 				if(created_association == null || created_association == ''){
-					t.rollback();
+					// t.rollback();
 					var err = new Error("CreateStaff.Error");
 					err.pushError("CreateAssociation.Queryerror");
 					throw err;
 				}
 				else {
+					// t.commit();
+					console.log(created_association);
+					console.log("Patinet ",created_association.PatientID);
+					// return created_association;
+					return RelCompanyPatient.update({
+						Active:'N'
+					},{
+						where:{
+							PatientID: patient.ID,
+							CompanyID :{$notIn: [company]}
+						},
+						transaction: t
+					});
+				}
+			},function(err) {
+				// t.rollback();
+				throw err;
+			})
+			.then(function(success) {
+				if(success == null || success == ''){
+					// t.rollback();
+					var err = new Error("CreateStaff.Error");
+					err.pushError("UpdateAssociation.Queryerror");
+					throw err;
+				}
+				else {
 					t.commit();
-					return created_association;
+					return success;
 				}
 			},function(err) {
 				t.rollback();

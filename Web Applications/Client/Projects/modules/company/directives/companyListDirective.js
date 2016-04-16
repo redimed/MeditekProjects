@@ -1,10 +1,17 @@
 var app = angular.module('app.authentication.company.list.directive',[]);
 
-app.directive('companyList', function($uibModal, $timeout, $state, companyService){
+app.directive('companyList', function($uibModal, $timeout, $state, companyService, toastr){
 	return {
 		restrict: 'E',
+		scope:{
+			patientuid:'=onPatientUid',
+			companyinfo:'=onCompanyInfo',
+			cancel:'=onCancel'
+		},
 		templateUrl: 'modules/company/directives/templates/companyListDirective.html',
 		link: function(scope, elem, attrs){
+			scope.patientuid = scope.patientuid?scope.patientuid:null;
+			console.log(scope.patientuid);
 			scope.search = {};
 			scope.toggle = true;
 			scope.count;
@@ -60,6 +67,7 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 				var modalInstance = $uibModal.open({
 					templateUrl: 'companyCreatemodal',
 					controller: function($scope,$modalInstance){
+						$scope.info = scope.companyinfo;
 						$scope.cancel = function(){
 							$modalInstance.dismiss('cancel');
 						};
@@ -89,6 +97,38 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 	            };
 	            scope.searchObjectMap = angular.copy(scope.searchObject);
 	            scope.loadlist(scope.searchObjectMap);
+			};
+
+			scope.linkpatient = function(company) {
+				swal({   
+					title: "Are you sure?", 
+					text: "Are you want to link this patient to the current company?" ,
+					type: "warning",   
+					showCancelButton: true,   
+					confirmButtonColor: "#DD6B55",   
+					confirmButtonText: "Ok",   
+					cancelButtonText: "Cancel",   
+					closeOnConfirm: true,   
+					closeOnCancel: true 
+				}, 
+				function(isConfirm){   
+					if (isConfirm) {  
+						companyService.createStaff({CompanyUID:company.UID,patientUID:scope.patientuid})
+						.then(function(success) {
+							console.log(success);
+							// toastr.success("success","success");
+							scope.cancel(company);
+						},function(err) {
+							console.log(err);
+							if(err.data.ErrorsList[0] == 'Patient.Company.HasAssociation') {
+								toastr.error("Patient has linked with Company","error");
+							}
+							else {
+								toastr.error("error","error");	
+							}
+						});
+					}
+				});
 			};
 
 			scope.init();

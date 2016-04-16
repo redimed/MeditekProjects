@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.create.directive', []);
-app.directive('patientCreate', function(toastr, PatientService, $state, $timeout, $rootScope, $cookies, AuthenticationService, UnauthenticatedService) {
+app.directive('patientCreate', function(toastr, PatientService, $state, $timeout, $rootScope, $cookies, AuthenticationService, UnauthenticatedService, $uibModal) {
     return {
         scope: {
             appointment: '=',
@@ -10,7 +10,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             compid:'=onCompid',
             RoleId:'=onRoleid',
             ishaveusername:'=isHaveUsername',
-            cancel:'=onCancel'
+            cancel:'=onCancel',
+            createtype:'=onCreateType'// 'nocompany':show create not link company, 'company': show create link company, null :show 2 create
         },
         restrict: "EA",
         controller: function($scope, FileUploader) {
@@ -80,6 +81,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
         },
         link: function(scope, elem, attrs) {
+            scope.createtype = scope.createtype?scope.createtype:null;
             scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
             scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
             scope.isChoseAvatar = false;
@@ -291,7 +293,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             //****create UserAccount to create Patient if validate data success 
             //and show notification success
             //****show notification error if validate data error 
-            scope.createPatient = function(data) {
+            scope.createPatient = function(data, company) {
                 scope.loadingCreate = true;
                 //service check data
                 return PatientService.validate(data)
@@ -316,16 +318,77 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                 //run function success transmission from appointment
                                 //****else show notification success and back state list patient
                                 if (scope.appointment) {
-                                    scope.appointment.runIfSuccess(success.data);
+
+                                    if(company == 'company'){
+                                        var modalInstance = $uibModal.open({
+                                            templateUrl: 'companyLinkmodal',
+                                            controller: function($scope,$modalInstance){
+                                                $scope.patientuid = success.data.UID;
+                                                $scope.cancel = function(){
+                                                    $modalInstance.dismiss('cancel');
+                                                    scope.appointment.runIfSuccess(success.data);
+                                                };
+                                            },
+                                            // windowClass: 'app-modal-window'
+                                            size: 'lg',
+
+                                        }); 
+                                    }
+                                    else {
+                                        scope.appointment.runIfSuccess(success.data);
+                                    }
+
                                 }else if(scope.staff){
-                                    scope.staff.runIfSuccess(success.data);
+
+                                    if(company == 'company'){
+                                        var modalInstance = $uibModal.open({
+                                            templateUrl: 'companyLinkmodal',
+                                            controller: function($scope,$modalInstance){
+                                                $scope.patientuid = success.data.UID;
+                                                $scope.cancel = function(){
+                                                    $modalInstance.dismiss('cancel');
+                                                    scope.staff.runIfSuccess(success.data);
+                                                };
+                                            },
+                                            // windowClass: 'app-modal-window'
+                                            size: 'lg',
+
+                                        }); 
+                                    }
+                                    else {
+                                        scope.staff.runIfSuccess(success.data);
+                                    }
+
                                 }else if(scope.rolecompany == true) {
+                                    
                                     scope.reset();
-                                } else {
-                                    toastr.success("Create Successful!!", "SUCCESS");
-                                    $state.go('authentication.patient.list', null, {
-                                        'reload': true
-                                    });
+
+                                }else {
+
+                                    if(company == 'company'){
+                                        var modalInstance = $uibModal.open({
+                                            templateUrl: 'companyLinkmodal',
+                                            controller: function($scope,$modalInstance){
+                                                $scope.patientuid = success.data.UID;
+                                                $scope.cancel = function(){
+                                                    $modalInstance.dismiss('cancel');
+                                                    toastr.success("Create Successful!!", "SUCCESS");
+                                                    $state.go('authentication.patient.list', null, {
+                                                        'reload': true
+                                                    });
+                                                };
+                                            },
+                                            // windowClass: 'app-modal-window'
+                                            size: 'lg',
+
+                                        }); 
+                                    }
+                                    else {
+                                        toastr.success("Create Successful!!", "SUCCESS");
+                                        $state.go('authentication.patient.list', null, {
+                                            'reload': true
+                                        });
+                                    }
                                 };
                             }, function(err) {
                                 scope.er = {};

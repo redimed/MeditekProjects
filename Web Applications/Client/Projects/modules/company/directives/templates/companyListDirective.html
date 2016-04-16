@@ -40,7 +40,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="c in companys" ng-click="detail(c.UID)">
+					<tr ng-repeat="c in companys" ng-click="detail(c.UID)" ng-if="patientuid==null">
+						<td>{{$index+1}}</td>
+						<td>{{c.CompanyName}}</td>
+						<td class="text-center">
+							<i class="glyphicon glyphicon-ok font-green" ng-if="c.Active=='Y'"></i>
+							<i class="glyphicon glyphicon-remove font-red" ng-if="c.Active=='N'"></i>
+						</td>
+					</tr>
+					<tr ng-repeat="c in companys" ng-click="linkpatient(c)" ng-if="patientuid!=null">
 						<td>{{$index+1}}</td>
 						<td>{{c.CompanyName}}</td>
 						<td class="text-center">
@@ -75,6 +83,6 @@
 	</div>
 </div>
 <script type="text/ng-template " id="companyCreatemodal">
-    <company-create></company-create>
+    <company-create on-company-info="info" on-cancel="cancel" on-load="load" ></company-create>
 </script>
 <!-- end content page -->

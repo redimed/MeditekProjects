@@ -346,8 +346,11 @@
 									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext" ng-click="isShowCreate=true">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>
-									<button class="btn green"ng-show="isShowCreate" ng-click="createPatient(data)" ng-disabled="loadingCreate">
-									Create <i class="m-icon-swapright m-icon-white"></i>
+									<button class="btn green"ng-show="isShowCreate" ng-click="createPatient(data,'nocompany')" ng-disabled="loadingCreate" ng-if="createtype!='company'">
+									Create With Non Link Company <i class="m-icon-swapright m-icon-white"></i>
+									</button>
+									<button class="btn green"ng-show="isShowCreate" ng-click="createPatient(data,'company')" ng-disabled="loadingCreate" ng-if="createtype!='nocompany'">
+									Create With Link Company <i class="m-icon-swapright m-icon-white"></i>
 									</button>
 								</div>
 							</div>
@@ -359,5 +362,7 @@
 	</div>
 </div>
 <!-- END PAGE CONTENT-->
-
+<script type="text/ng-template " id="companyLinkmodal">
+<company-list on-patient-uid="patientuid" on-cancel="cancel" ></company-list>
+</script>
 

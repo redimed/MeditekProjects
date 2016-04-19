@@ -76,8 +76,7 @@ module.exports = React.createClass({
             this.refs[field.fields[0].ref].addRowForDynamicTable(field);
     },
     _onRemoveRow: function(){
-        var self = this;
-        self.props.onRemoveRow(self.props.codeSection, self.props.code);
+        this.props.onRemoveRow(this.props.codeSection, this.props.code);
         /*swal({
             title: 'Are you sure?',
             text: 'You will delete this row',
@@ -297,13 +296,13 @@ module.exports = React.createClass({
         this.refs.modalOrderRow.hide();
         this.props.onOrderRow(this.props.codeSection, this.props.code, value);
     },
-    _onSaveRow: function(codeField, fieldValues){
+    _onSaveTableDynamicRow: function(codeField, fieldValues){
         this.props.onSaveTableDynamicRow(this.props.codeSection, this.props.code, codeField, fieldValues);
     },
-    _onEditRow: function(codeField, position, fieldValues){
+    _onEditTableDynamicRow: function(codeField, position, fieldValues){
         this.props.onEditTableDynamicRow(this.props.codeSection, this.props.code, codeField, position, fieldValues);
     },
-    _onRemoveRow: function(codeField, position){
+    _onRemoveTableDynamicRow: function(codeField, position){
         this.props.onRemoveTableDynamicRow(this.props.codeSection, this.props.code, codeField, position);
     },
     render: function(){
@@ -508,9 +507,6 @@ module.exports = React.createClass({
                                                                 code={index}
                                                                 size={field.get('size')}
                                                                 onDeleteColumn={this._onDeleteColumn}
-                                                                onSaveRow={this._onSaveRow}
-                                                                onEditRow={this._onEditRow}
-                                                                onRemoveRow={this._onRemoveRow}
                                                                 onUpdateColumn={this._onUpdateColumn}
                                                                 onRightClickItem={this._onRightClickTableItem}/>
                                                     else if(type === 'table')
@@ -681,9 +677,9 @@ module.exports = React.createClass({
                                         code={index}
                                         size={field.get('size')}
                                         onDeleteColumn={this._onDeleteColumn}
-                                        onSaveRow={this._onSaveRow}
-                                        onEditRow={this._onEditRow}
-                                        onRemoveRow={this._onRemoveRow}
+                                        onSaveRow={this._onSaveTableDynamicRow}
+                                        onEditRow={this._onEditTableDynamicRow}
+                                        onRemoveRow={this._onRemoveTableDynamicRow}
                                         onUpdateColumn={this._onUpdateColumn}
                                         onRightClickItem={this._onRightClickTableItem}/>
                                 else if(type === 'eform_input_signature')

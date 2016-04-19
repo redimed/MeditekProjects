@@ -45,7 +45,8 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        //value = Config.setDate(value);
+        if(value.indexOf('+') > -1)
+            value = moment(value).format('DD/YY/MMMM')
         $(this.refs.input).datepicker("update", value);
     },
     setDisplay: function(type){
@@ -108,6 +109,11 @@ module.exports = React.createClass({
                             </div>
                         </div>
                     </div>
+                )
+                break;
+            case 'd':
+                html = (
+                    <input type="text" className={this.props.className} name={this.props.name} ref="input" placeholder={this.props.placeholder}/>
                 )
                 break;
         }

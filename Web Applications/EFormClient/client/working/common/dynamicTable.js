@@ -90,8 +90,6 @@ module.exports = React.createClass({
             })
         })
 
-        console.log(results);
-
         return results;
     },
     getName: function(){

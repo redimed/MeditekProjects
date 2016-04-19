@@ -16,6 +16,7 @@ module.exports = React.createClass({
     },
     init: function(object){
         this.type = object.type;
+        this.forceUpdate();
         this.ref = object.ref;
         var self = this;
 
@@ -32,8 +33,9 @@ module.exports = React.createClass({
         }
 
         if(Config.getPrefixField(this.type, 'eform_input') > -1){
-            if(typeof object.name !== 'undefined')
+            if(typeof object.name !== 'undefined'){
                 this.refs.formName.setValue(object.name);
+            }
             this.refs.formPrecal.setValue(object.preCal);
             if(Config.getPrefixField(this.type, 'textarea') > -1){
                 this.refs.formRows.setValue(object.rows);
@@ -48,10 +50,8 @@ module.exports = React.createClass({
             if(Config.getPrefixField(this.type, 'signature') > -1){
                 this.refs.formHeight.setValue(object.height);
             }
-            this.forceUpdate();
         }else if(this.type === 'table'){
              this.refs.formName.setValue(object.name);
-             this.forceUpdate();
         }
         this.refs.formSize.setValue(object.size);
         this.refs.formRef.setValue(object.ref);
@@ -95,7 +95,8 @@ module.exports = React.createClass({
                 type: this.type,
                 size: size,
                 preCal: this.refs.formPrecal.getValue(),
-                roles: Permission
+                roles: Permission,
+                ref: this.refs.formRef.getValue()
             }
             if(Config.getPrefixField(this.type, 'textarea') > -1)
                 data.rows = this.refs.formRows.getValue();

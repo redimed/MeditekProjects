@@ -1,8 +1,23 @@
-module.exports.connections = {
+var connections = {
     disk: {
         module: 'sails-disk'
-    },
-    mysql: {
+    }
+};
+if (process.argv.indexOf("--dblocal") >= 0) {
+    console.log("connections", "database local");
+    connections.mysql = {
+        dialect: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        user: 'root',
+        password: 'root',
+        database: 'Redimed',
+        charset: 'utf8',
+        collation: 'utf8-general_ci'
+    }
+} else {
+    console.log("connections", "database meditek");
+    connections.mysql = {
         adapter: 'sails-mysql',
         port: 3306,
         user: 'meditek_db',
@@ -13,17 +28,7 @@ module.exports.connections = {
         options: {
             host: '192.168.1.2'
         }
-    },
+    }
+}
 
-    // mysql: {
-    //     dialect: 'mysql',
-    //     host: 'localhost',
-    //     port: 3306,
-    //     user: 'root',
-    //     password: 'root',
-    //     database: 'Redimed',
-    //     charset: 'utf8',
-    //     collation: 'utf8-general_ci'
-    // }
-
-};
+module.exports.connections = connections;

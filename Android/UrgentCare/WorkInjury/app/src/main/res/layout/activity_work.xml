@@ -10,15 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:elevation="4dp">
-
-        <Button
+        android:elevation="4dp"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:id="@+id/btnBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/back_icon" />
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/icon_back"
+                android:layout_marginRight="3dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:textColor="#FFFFFF"
+                android:textSize="19dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/txtTitle"
@@ -50,6 +63,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="15dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/staff_list"
+                android:id="@+id/btnSelectStaff"
+                android:layout_gravity="right" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -121,12 +141,12 @@
                     android:textColor="#F44336" />
             </RelativeLayout>
 
+            <!--ContactPhone-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_contact" />
 
-            <!--ContactPhone-->
             <RelativeLayout
                 android:id="@+id/relativeLayoutContactPhone"
                 android:layout_width="match_parent"
@@ -156,12 +176,45 @@
                     android:textColor="#F44336" />
             </RelativeLayout>
 
+            <!--Appointment-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/appt_type" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutAppointmentType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_edit_text">
+
+                <Spinner
+                    android:id="@+id/spinnerAppointmentType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:entries="@array/appointment_type"
+                    android:prompt="@string/select_type"
+                    android:background="@null"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:id="@+id/lblAppointmentRequire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="@string/required_field"
+                    android:textColor="#F44336" />
+            </RelativeLayout>
+
+            <!--Suburb-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_suburb" />
-
-            <!--Suburb-->
             <RelativeLayout
                 android:id="@+id/relativeLayoutSuburb"
                 android:layout_width="match_parent"
@@ -370,6 +423,14 @@
                     android:scrollHorizontally="false" />
 
             </RelativeLayout>
+
+            <!--site list-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/site_list"
+                android:layout_gravity="right"
+                android:id="@+id/btnSelectSite"/>
 
             <TextView
                 android:layout_width="wrap_content"

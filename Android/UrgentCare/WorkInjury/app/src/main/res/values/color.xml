@@ -6,10 +6,16 @@
     <color name="greyFont">#ff9e9e9e</color>
     <color name="redFont">#B51E46</color>
     <color name="blueFont">#0B4F66</color>
+    <color name="loginPhone">#768594</color>
+    <color name="settingBackground">#F0EFF4</color>
+    <color name="colorLine">#4d000000</color>
+    <color name="lightBackground">#FFFFFF</color>
+
+
 
     <!-- Status Bar Color-->
-    <color name="colorPrimaryDark">#16a085</color>
-    <color name="colorPrimary">#1abc9c</color>
+    <color name="colorPrimaryDark">#576170</color>
+    <color name="colorPrimary">#576170</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>

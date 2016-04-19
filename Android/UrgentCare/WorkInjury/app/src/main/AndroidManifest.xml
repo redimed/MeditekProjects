@@ -15,23 +15,28 @@
         android:label="@string/app_name"
         android:theme="@style/MyTheme"
         tools:replace="android:icon">
-        <activity
-            android:name=".LauncherActivity">
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".WorkActivity"
             android:label="@string/title_activity_work" />
         <activity
             android:name=".FAQsActivity"
             android:label="@string/title_activity_faqs" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".StaffListActivity" />
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".SiteListActivity" />
+        <activity android:name=".CompanyActivity"></activity>
     </application>
 
 </manifest>

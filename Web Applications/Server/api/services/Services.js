@@ -50,6 +50,10 @@ module.exports = {
     GetDetailWAAppointmentforEform: require('./Appointment/GetDetailWAAppointmentforEform'),
     CreateAppointmentData: require('./Appointment/CreateAppointmentData'),
     RelAppointmentDoctorGroup: require('./Appointment/RelAppointmentDoctorGroup'),
+    RequestWAAppointmentPatientOnlineBooking: require('./Appointment/RequestWAAppointmentPatientOnlineBooking'),
+    RequestAppointmentCompany: require('./Appointment/RequestAppointmentCompany'),
+    RelAppointmentDoctor: require('./Appointment/RelAppointmentDoctor'),
+    RelAppointmentPatient: require('./Appointment/RelAppointmentPatient'),
     //end Appointment
     Module: require('./Authorization/v0_1/Module'),
     Role: require('./Authorization/v0_1/Role'),

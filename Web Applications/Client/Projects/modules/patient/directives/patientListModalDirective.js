@@ -10,7 +10,7 @@
 // </patient-listmodal>
 
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $rootScope, $timeout, $cookies, CommonService, $http, $uibModal, $compile){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $rootScope, $timeout, $cookies, CommonService, $http, $uibModal, $compile, companyService){
 	return{
 		restrict: 'EA',
         scope: {
@@ -772,7 +772,43 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						toastr.error("Please check data again.","ERROR");
 					});
 				}
-			}
+			};
+
+			scope.getSite = function(companyuid) {
+				companyService.getDetailChild({UID:companyuid,model:'CompanySites'})
+				.then(function(data) {
+					scope.info.CompanySites = data.data;
+					console.log(data);
+				},function(err) {
+					console.log(err);
+				});
+			};
+
+			scope.linkcompany = function() {
+                var patientuid = scope.info.UID;
+                var companyinfo = scope.info.Companies[0];
+                var returnData;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'LinkCompanyModal',
+                    controller: function($scope,$modalInstance){
+                        $scope.patientuid  = patientuid;
+                        $scope.info = companyinfo;
+                        $scope.cancel = function(data){
+                            console.log("link success ",data);
+                            returnData = data;
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    // size: 'lg',
+                    windowClass: 'app-modal-window'
+                }).result.finally(function(){
+                    if(returnData) {
+                    	toastr.success('Link Success.');
+                        scope.info.Companies[0] = returnData;
+                        scope.getSite(returnData.UID);
+                    }
+                });
+            };
 
 			scope.insurers = [
 				{name: 'Insurer Company'},

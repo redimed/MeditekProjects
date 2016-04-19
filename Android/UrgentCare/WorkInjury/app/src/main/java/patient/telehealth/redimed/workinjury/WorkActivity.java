@@ -170,12 +170,12 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         i = getIntent();
         if (i != null) {
             switch (i.getStringExtra("URType")) {
-                case "tre":
+                case "rehab":
                     relativeLayoutTreatment.setVisibility(View.VISIBLE);
                     txtTitle.setText(getResources().getText(R.string.green_btn));
                     urgentType = "rehab";
                     break;
-                case "spec":
+                case "specialist":
                     txtTitle.setText(getResources().getText(R.string.blue_btn));
                     urgentType = "specialist";
                     break;
@@ -361,10 +361,6 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
             dataModels.add(setAppointmentData("GP", "Y"));
         }
 
-
-
-
-
         /*AppointmentModel*/
         AppointmentModel appointmentModel = new AppointmentModel();
         appointmentModel.setType(apptType);
@@ -374,57 +370,18 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         appointmentModel.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
         appointmentModel.setAppointmentData(gson.toJson(dataModels));
 
-
-        objectUrgentRequest = new UrgentRequestModel();
-        objectUrgentRequest.setFirstName(txtFirstName.getText().toString());
-        objectUrgentRequest.setLastName(txtLastName.getText().toString());
-        objectUrgentRequest.setContactPhone(CheckContactNo(txtContactPhone.getText().toString()));
-        objectUrgentRequest.setSuburb(autoCompleteSuburb.getText().toString());
-        objectUrgentRequest.setDOB(txtDOB.getText().toString());
-        objectUrgentRequest.setEmail(txtEmail.getText().toString());
-        objectUrgentRequest.setDescription(txtDescription.getText().toString());
-        objectUrgentRequest.setCompanyName(txtCompanyName.getText().toString());
-        objectUrgentRequest.setContactPerson(txtContactPerson.getText().toString());
-        objectUrgentRequest.setCompanyPhone(txtCompanyPhone.getText().toString());
-        objectUrgentRequest.setUrgentRequestType("WorkInjury");
-        objectUrgentRequest.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
-        objectUrgentRequest.setRehab(urgentType == "tre" ? "Y" : "N");
-        objectUrgentRequest.setSpecialList(urgentType == "spec" ? "Y" : "N");
-        objectUrgentRequest.setGeneralClinic(urgentType == "gp" ? "Y" : "N");
-
-        if (!urgentType.equalsIgnoreCase("gp")) {
-            objectUrgentRequest.setGPReferral((radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
-        }
-
-        if (urgentType.equalsIgnoreCase("rehab")) {
-            String typeTreatment = (radioGroupTypeTreatment.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupTypeTreatment.getCheckedRadioButtonId())).getHint().toString();
-            if (typeTreatment != null) {
-                switch (typeTreatment) {
-                    case "0":
-                        objectUrgentRequest.setPhysioTherapy("Y");
-                        break;
-                    case "1":
-                        objectUrgentRequest.setExerciseRehab("Y");
-                        break;
-                    case "2":
-                        objectUrgentRequest.setHandTherapy("Y");
-                        break;
-                }
-            }
-        }
-
-        JsonObject urgentJson = new JsonObject();
-        urgentJson.addProperty("data", gson.toJson(appointmentModel));
+        JsonObject appt = new JsonObject();
+        appt.addProperty("data", gson.toJson(appointmentModel));
         dialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         dialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         dialog.setTitleText(getResources().getString(R.string.progressMakeAppointmentContent));
         dialog.setCancelable(false);
         dialog.show();
 
-        RESTClient.getCoreApi().sendAppointment(urgentJson, new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().sendAppointment(appt, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                String data = jsonObject.get("data").getAsString();
+                String data = jsonObject.get("status").getAsString();
                 dialog.dismissWithAnimation();
                 if (data.equalsIgnoreCase("success")) {
                     SharedPreferences infoUrgent = getSharedPreferences("InformationUrgent", MODE_PRIVATE);
@@ -446,7 +403,6 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
                     dialog.show();
                 }
             }
-
             @Override
             public void failure(RetrofitError error) {
                 dialog.dismissWithAnimation();

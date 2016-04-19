@@ -43,7 +43,7 @@ public interface UrgentRequest {
     @GET("/api/user-account/GetUserAccountDetails?UID=")
     void getDetailUser(@Query("userUid") String userUid, Callback<JsonObject> callback);
 
-    @POST("api/telehealth/appointment")
+    @POST("/api/telehealth/appointment/request")
     void sendAppointment(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
 }

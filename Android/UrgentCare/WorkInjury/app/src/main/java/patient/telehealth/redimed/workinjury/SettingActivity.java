@@ -30,6 +30,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     @Bind(R.id.layoutCompany) RelativeLayout layoutCompany;
     @Bind(R.id.lblCompany) TextView lblCompany;
     @Bind(R.id.lblAccount) TextView lblAccount;
+    @Bind(R.id.layoutOther) LinearLayout layoutOther;
+    @Bind(R.id.layoutAbountRedimed) RelativeLayout layoutAbountRedimed;
 
     private SharedPreferences workinjury;
     private boolean isAuthenticated;
@@ -54,6 +56,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         btnLogout.setOnClickListener(this);
         layoutAccount.setOnClickListener(this);
         layoutCompany.setOnClickListener(this);
+        layoutOther.setOnClickListener(this);
+        layoutAbountRedimed.setOnClickListener(this);
     }
 
     @Override
@@ -88,6 +92,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.layoutCompany:
                 startActivity(new Intent(this, SiteListActivity.class));
                 finish();
+                break;
+            case R.id.layoutAbountRedimed:
+
+                break;
+            case R.id.layoutOther:
+
                 break;
         }
     }

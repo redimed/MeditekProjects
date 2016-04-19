@@ -28,6 +28,7 @@
  					</th>
  					<th>Enable</th>
  					<th ng-if="isShowSelectButton">&nbsp;</th>
+ 					<th>&nbsp;</th>
 				</tr>
 				<tr style="width:100%;" ng-hide="toggle">
 					<th>&nbsp;</th>
@@ -43,14 +44,16 @@
 					<th style="width:10%;">
 						<select class="form-control" ng-change="Search(search,flag)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
 					</th>
+					<th ng-if="isShowSelectButton">&nbsp;</th>
+					<th>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
 			<tbody>
 				<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn && p.UID!==undefined && p.UID!==null && p.UID!==''}" id="{{p.UID}}">
-					<td ng-click="clickOpen(p.UID,p.UserAccount.Enable)">{{p.stt}}</td>
-					<td ng-repeat="i in items" ng-click="clickOpen(p.UID,p.UserAccount.Enable)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='Male'?'Male':p[i.field]=='Female'?'Female':'Other'}}</td>
-					<td style="text-align:center">
+					<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{p.stt}}</td>
+					<td ng-repeat="i in items" ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='Male'?'Male':p[i.field]=='Female'?'Female':'Other'}}</td>
+					<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)" style="text-align:center">
 						<span ng-if="p.UserAccount.Enable != 'N'">
 							<i class="glyphicon glyphicon-ok font-green"></i>
 						</span>
@@ -58,6 +61,9 @@
 					<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
 						<i ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)"style="font-size:150%;" ng-class="{'fa fa-check-square-o':p.UID == uidReturn,'fa fa-square-o':p.UID != uidReturn}" id="{{p.stt}}"></i>
 						<!-- <input type="checkbox" class="form-control" ng-model="checked" style="width:30%;" ng-click="selectPatient(p.UID)"/> -->
+					</td>
+					<td style="width:10%; text-align:center;">
+						<button ng-click="clickOpen(p.UID,p.UserAccount.Enable)" class=" btn btn-info" >Detail</button>
 					</td>
 				</tr>
 			</tbody>

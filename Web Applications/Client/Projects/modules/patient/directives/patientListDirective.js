@@ -146,70 +146,72 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			};
 
 			scope.selectPatient = function(patientUID,stt,Enable,FirstName,LastName){
-				console.log(FirstName);
-				if(Enable=='Y'){
-					if(scope.appointment) {
+				if(scope.isShowSelectButton){
+					console.log(FirstName);
+					if(Enable=='Y'){
+						if(scope.appointment) {
 
-						scope.uidReturn=patientUID;
-						swal({   
-							title: "Are you sure?", 
-							text: "Are you want to link this patient to the current appointment?" ,
-							type: "warning",   
-							showCancelButton: true,   
-							confirmButtonColor: "#DD6B55",   
-							confirmButtonText: "Ok",   
-							cancelButtonText: "Cancel",   
-							closeOnConfirm: true,   
-							closeOnCancel: true 
-						}, 
-						function(isConfirm){   
-							if (isConfirm) {  
-								scope.uidReturn=patientUID;   
-								scope.appointment.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
-							}else{
+							scope.uidReturn=patientUID;
+							swal({   
+								title: "Are you sure?", 
+								text: "Are you want to link this patient to the current appointment?" ,
+								type: "warning",   
+								showCancelButton: true,   
+								confirmButtonColor: "#DD6B55",   
+								confirmButtonText: "Ok",   
+								cancelButtonText: "Cancel",   
+								closeOnConfirm: true,   
+								closeOnCancel: true 
+							}, 
+							function(isConfirm){   
+								if (isConfirm) {  
+									scope.uidReturn=patientUID;   
+									scope.appointment.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
+								}else{
+									scope.uidReturn='';
+									scope.checked = false;
+									scope.loadList(scope.searchObjectMap);
+								}
+							});
+						}
+						else if(scope.staff) {
+							scope.uidReturn=patientUID;
+							swal({   
+								title: "Are you sure?", 
+								text: "Are you want to link this patient to the current company?" ,
+								type: "warning",   
+								showCancelButton: true,   
+								confirmButtonColor: "#DD6B55",   
+								confirmButtonText: "Ok",   
+								cancelButtonText: "Cancel",   
+								closeOnConfirm: true,   
+								closeOnCancel: true 
+							}, 
+							function(isConfirm){   
+								if (isConfirm) {  
+									scope.uidReturn=patientUID;   
+									scope.staff.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
+								}else{
+									scope.uidReturn='';
+									scope.checked = false;
+									scope.loadList(scope.searchObjectMap);
+								}
+							});
+						}
+						else {
+							if(scope.uidReturn==patientUID){
 								scope.uidReturn='';
 								scope.checked = false;
-								scope.loadList(scope.searchObjectMap);
 							}
-						});
-					}
-					else if(scope.staff) {
-						scope.uidReturn=patientUID;
-						swal({   
-							title: "Are you sure?", 
-							text: "Are you want to link this patient to the current company?" ,
-							type: "warning",   
-							showCancelButton: true,   
-							confirmButtonColor: "#DD6B55",   
-							confirmButtonText: "Ok",   
-							cancelButtonText: "Cancel",   
-							closeOnConfirm: true,   
-							closeOnCancel: true 
-						}, 
-						function(isConfirm){   
-							if (isConfirm) {  
-								scope.uidReturn=patientUID;   
-								scope.staff.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
-							}else{
-								scope.uidReturn='';
-								scope.checked = false;
-								scope.loadList(scope.searchObjectMap);
+							else{
+								scope.checked = true;
+								scope.uidReturn=patientUID;
 							}
-						});
+						}
 					}
 					else {
-						if(scope.uidReturn==patientUID){
-							scope.uidReturn='';
-							scope.checked = false;
-						}
-						else{
-							scope.checked = true;
-							scope.uidReturn=patientUID;
-						}
+						sweetAlert("Error.", "Patient Disable!", "error");;
 					}
-				}
-				else {
-					sweetAlert("Error.", "Patient Disable!", "error");;
 				}
 
 			};

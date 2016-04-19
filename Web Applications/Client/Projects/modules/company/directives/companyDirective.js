@@ -5,6 +5,5 @@ angular.module('app.authentication.company.directive',[
 	'app.authentication.company.site.directive',
 	'app.authentication.company.user.directive',
 	'app.authentication.company.staff.directive',
-	'app.authentication.company.insurer.directive',
-	'app.authentication.company.link.directive'
+	'app.authentication.company.insurer.directive'
 ]);

@@ -1,5 +1,5 @@
 module.exports = React.createClass({
-    value: 'never',
+    value: '',
     componentDidMount: function(){
         var self = this;
         $(this.refs.yes).iCheck({
@@ -23,6 +23,9 @@ module.exports = React.createClass({
     getValue: function(){
         return this.props.value;
     },
+    getType: function(){
+        return this.props.type;
+    },
     setValue: function(checked){
         if(checked === 'yes')
             $(this.refs.yes).iCheck('check');
@@ -35,13 +38,13 @@ module.exports = React.createClass({
                 <div className="col-xs-12">
                     <div className="icheck-inline">
                         <label>
-                            <input type="radio" className="icheck" name="yes" ref="yes"
+                            <input type="radio" className="icheck" name={this.props.ref} ref="yes"
                                 value="yes"/>
                             &nbsp;
                             Yes
                         </label>
                         <label>
-                            <input type="radio" className="icheck" name="yes" ref="no"
+                            <input type="radio" className="icheck" name={this.props.ref} ref="no"
                                 value="no"/>
                             &nbsp;
                             No

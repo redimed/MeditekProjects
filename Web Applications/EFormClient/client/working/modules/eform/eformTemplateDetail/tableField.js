@@ -1,5 +1,6 @@
 var CommonModal = require('common/modal');
 var CommonInputText = require('common/inputText');
+var CommonInputDate = require('common/inputDate');
 var CommonCheckbox = require('common/checkbox');
 var CommonYesNo = require('common/yesno');
 var ComponentFormEditTableColumn = require('modules/eform/eformTemplateDetail/formUpdateTableColumn');
@@ -183,6 +184,18 @@ module.exports = React.createClass({
                                                                     <center>
                                                                         <span style={{verticalAlign: 'middle', display: 'inline-block', textAlign: 'center'}}>
                                                                             <CommonCheckbox key={indexCol} type={type}
+                                                                                ref={"field_"+indexRow+'_'+indexCol}
+                                                                                code={indexCol}/>
+                                                                        </span>
+                                                                    </center>
+                                                                </td>
+                                                            )
+                                                        else if(type === 'd')
+                                                            return (
+                                                                <td key={indexCol} style={{verticalAlign: 'middle'}}>
+                                                                    <center>
+                                                                        <span style={{verticalAlign: 'middle', display: 'inline-block', textAlign: 'center'}}>
+                                                                            <CommonInputDate key={indexCol} type={type}
                                                                                 ref={"field_"+indexRow+'_'+indexCol}
                                                                                 code={indexCol}/>
                                                                         </span>

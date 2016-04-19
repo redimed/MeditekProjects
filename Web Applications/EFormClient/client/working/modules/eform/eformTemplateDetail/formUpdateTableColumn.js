@@ -5,7 +5,8 @@ module.exports = React.createClass({
     types: [
         {code: 'it', name: 'Input Text'},
         {code: 'c', name: 'Checkbox'},
-        {code: 'radio_yes_no', name: 'Radio Yes No'}
+        {code: 'radio_yes_no', name: 'Radio Yes No'},
+        {code: 'd', name: 'Input Date'}
     ],
     code: '',
     propTypes: {

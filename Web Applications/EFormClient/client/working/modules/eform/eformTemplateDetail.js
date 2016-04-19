@@ -173,6 +173,7 @@ module.exports = React.createClass({
                             .set('size', dataField.size)
                             .set('rows', dataField.rows)
                             .set('preCal', dataField.preCal)
+                            .set('ref', dataField.ref)
                             .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
@@ -183,6 +184,7 @@ module.exports = React.createClass({
                             .set('size', dataField.size)
                             .set('label', dataField.label)
                             .set('value', dataField.value)
+                            .set('ref', dataField.ref)
                             .set('preCal', dataField.preCal)
                             .set('roles', Immutable.fromJS(dataField.roles))
                         )
@@ -193,6 +195,7 @@ module.exports = React.createClass({
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
                             .set('label', dataField.label)
+                            .set('ref', dataField.ref)
                             .set('value', dataField.value)
                             .set('preCal', dataField.preCal)
                             .set('roles', Immutable.fromJS(dataField.roles))
@@ -204,6 +207,7 @@ module.exports = React.createClass({
                             val.set('size', dataField.size)
                             .set('label', dataField.label)
                             .set('value', dataField.value)
+                            .set('ref', dataField.ref)
                             .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
@@ -212,6 +216,7 @@ module.exports = React.createClass({
                     sections = sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
+                            .set('ref', dataField.ref)
                             .set('preCal', dataField.preCal)
                             .set('height', dataField.height)
                             .set('roles', Immutable.fromJS(dataField.roles))
@@ -224,6 +229,7 @@ module.exports = React.createClass({
                         sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
+                            .set('ref', dataField.ref)
                             .set('preCal', dataField.preCal)
                             .set('roles', Immutable.fromJS(dataField.roles))
                         )
@@ -236,6 +242,7 @@ module.exports = React.createClass({
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                         val.set('name', dataField.name)
                         .set('size', dataField.size)
+                        .set('ref', dataField.ref)
                         .set('roles', Immutable.fromJS(dataField.roles))
                     )
                 }

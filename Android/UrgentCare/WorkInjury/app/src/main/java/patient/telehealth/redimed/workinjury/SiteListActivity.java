@@ -1,5 +1,6 @@
 package patient.telehealth.redimed.workinjury;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,20 +31,23 @@ public class SiteListActivity extends AppCompatActivity implements View.OnClickL
     private Gson gson;
     private SiteModel[] data;
     private ListSiteAdapter siteAdapter;
+    private boolean work;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stite_list);
+        setContentView(R.layout.activity_site_list);
         ButterKnife.bind(this);
         gson = new Gson();
         btnBack.setOnClickListener(this);
         workInjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
+        Intent intent = getIntent();
+        work = intent.getBooleanExtra("work",false);
         RESTClient.getCoreApi().getListSite(workInjury.getString("companyUid",""), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 data = gson.fromJson(jsonObject.get("data").toString(), SiteModel[].class);
-                siteAdapter = new ListSiteAdapter(SiteListActivity.this, data);
+                siteAdapter = new ListSiteAdapter(SiteListActivity.this, data, work);
                 siteRecyclerView.setAdapter(siteAdapter);
                 siteRecyclerView.setLayoutManager(new LinearLayoutManager(SiteListActivity.this));
             }

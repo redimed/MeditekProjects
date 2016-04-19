@@ -3,6 +3,7 @@ package patient.telehealth.redimed.workinjury.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,8 @@ public class ListStaffAdapter extends RecyclerView.Adapter<ListStaffAdapter.Staf
             if (work){
                 Intent intent = new Intent(context, WorkActivity.class);
                 intent.putExtra("staff", data[getAdapterPosition()]);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Log.d("getContactName",data[getAdapterPosition()].getFirstName());
                 context.startActivity(intent);
             }
         }

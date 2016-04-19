@@ -3,6 +3,7 @@ package patient.telehealth.redimed.workinjury.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import patient.telehealth.redimed.workinjury.CompanyActivity;
 import patient.telehealth.redimed.workinjury.R;
+import patient.telehealth.redimed.workinjury.WorkActivity;
 import patient.telehealth.redimed.workinjury.model.SiteModel;
 
 /**
@@ -19,11 +21,13 @@ public class ListSiteAdapter extends RecyclerView.Adapter<ListSiteAdapter.SiteVi
     private LayoutInflater inflater;
     private SiteModel[] data;
     private Context context;
+    private boolean work;
 
-    public ListSiteAdapter(Context context,SiteModel[] data) {
+    public ListSiteAdapter(Context context,SiteModel[] data, boolean work) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.data = data;
+        this.work = work;
     }
 
     @Override
@@ -55,9 +59,17 @@ public class ListSiteAdapter extends RecyclerView.Adapter<ListSiteAdapter.SiteVi
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, CompanyActivity.class);
-            intent.putExtra("site", data[getAdapterPosition()]);
-            context.startActivity(intent);
+            if (work){
+                Intent intent = new Intent(context, WorkActivity.class);
+                intent.putExtra("site", data[getAdapterPosition()]);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Log.d("getContactName",data[getAdapterPosition()].getContactName()+"");
+                context.startActivity(intent);
+            }else {
+                Intent intent = new Intent(context, CompanyActivity.class);
+                intent.putExtra("site", data[getAdapterPosition()]);
+                context.startActivity(intent);
+            }
         }
     }
 }

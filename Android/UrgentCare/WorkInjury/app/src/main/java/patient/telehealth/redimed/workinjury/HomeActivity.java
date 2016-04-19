@@ -200,13 +200,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnRehab:
                 i = new Intent(this, WorkActivity.class);
-                i.putExtra("URType", "tre");
+                i.putExtra("URType", "rehab");
                 startActivity(i);
                 finish();
                 break;
             case R.id.btnSpec:
                 i = new Intent(this, WorkActivity.class);
-                i.putExtra("URType", "spec");
+                i.putExtra("URType", "specialist");
                 startActivity(i);
                 finish();
                 break;

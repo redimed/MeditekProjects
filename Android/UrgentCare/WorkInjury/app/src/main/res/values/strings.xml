@@ -97,5 +97,11 @@
     <string name="setting_logout">LOGOUT</string>
     <string name="logout">Log Out</string>
     <string name="none">NONE</string>
+    <string name="select_type">Select Type</string>
+    <string name="appt_type">Appointment Type</string>
+    <string-array name="appointment_type">
+        <item>Telehealth</item>
+        <item>OnSite</item>
+    </string-array>
 
 </resources>

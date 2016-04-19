@@ -141,12 +141,12 @@
                     android:textColor="#F44336" />
             </RelativeLayout>
 
+            <!--ContactPhone-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_contact" />
 
-            <!--ContactPhone-->
             <RelativeLayout
                 android:id="@+id/relativeLayoutContactPhone"
                 android:layout_width="match_parent"
@@ -176,12 +176,45 @@
                     android:textColor="#F44336" />
             </RelativeLayout>
 
+            <!--Appointment-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/appt_type" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutAppointmentType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_edit_text">
+
+                <Spinner
+                    android:id="@+id/spinnerAppointmentType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:entries="@array/appointment_type"
+                    android:prompt="@string/select_type"
+                    android:background="@null"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:id="@+id/lblAppointmentRequire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="@string/required_field"
+                    android:textColor="#F44336" />
+            </RelativeLayout>
+
+            <!--Suburb-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_suburb" />
-
-            <!--Suburb-->
             <RelativeLayout
                 android:id="@+id/relativeLayoutSuburb"
                 android:layout_width="match_parent"

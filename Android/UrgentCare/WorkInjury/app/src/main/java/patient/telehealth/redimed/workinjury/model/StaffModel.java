@@ -400,9 +400,10 @@ public class StaffModel implements Parcelable{
         CountryID1 = in.readString();
         CountryID2 = in.readString();
         Email1 = in.readString();
+        Email2 = in.readString();
         HomePhoneNumber = in.readString();
-        WorkPhoneNumber = in.readString();
         FaxNumber = in.readString();
+        WorkPhoneNumber = in.readString();
         InterpreterRequired = in.readString();
         InterperterLanguage = in.readString();
         OtherSpecialNeed = in.readString();

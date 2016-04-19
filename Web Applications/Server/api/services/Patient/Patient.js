@@ -1473,6 +1473,12 @@ module.exports = {
                     attributes: ['ShortName'],
                     required: false
 
+                }, {
+                    model: Company,
+                    through:{
+                        where:{Active:'Y'}
+                    },
+                    required:false
                 }]
             })
             .then(function(result) {

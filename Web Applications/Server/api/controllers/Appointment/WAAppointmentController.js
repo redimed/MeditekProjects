@@ -231,5 +231,29 @@ module.exports = {
                     }
                 });
         }
+    },
+    RequestAppointmentCompany: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.RequestAppointmentCompany(data, req.user)
+                .then(function(success) {
+                    success.transaction.commit();
+                    res.ok({
+                        status: 'success',
+                        code: success.code
+                    });
+                }, function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
+                        err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
+                    }
+                });
+        }
     }
 };

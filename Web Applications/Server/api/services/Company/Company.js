@@ -439,9 +439,7 @@ module.exports = {
 		console.log(model)
 		return model.findOne({
 			include: include,
-			where: {
-				UID : data.UID
-			}
+			where: data.whereClause
 		})
 		.then(function(result) {
 			return result;

@@ -11,7 +11,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             RoleId:'=onRoleid',
             ishaveusername:'=isHaveUsername',
             cancel:'=onCancel',
-            createtype:'=onCreateType'// 'nocompany':show create not link company, 'company': show create link company, null :show 2 create
+            createtype:'=onCreateType',// 'nocompany':show create not link company, 'company': show create link company, null :show 2 create,
+            iscompanycreate:'=isCompanyCreate'
         },
         restrict: "EA",
         controller: function($scope, FileUploader) {
@@ -81,6 +82,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
         },
         link: function(scope, elem, attrs) {
+            console.log('iscompanycreate ',scope.iscompanycreate);
+            scope.iscompanycreate = scope.iscompanycreate?scope.iscompanycreate:false;
             scope.createtype = scope.createtype?scope.createtype:null;
             scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
             scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
@@ -286,6 +289,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 }
             };
 
+            console.log('rolecompany ',scope.rolecompany,' compid ',scope.compid,' RoleId ',scope.RoleId, ' ishaveusername ',scope.ishaveusername);
+
 
             //CreatePatient : create patient
             //input : data information
@@ -319,7 +324,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                 //****else show notification success and back state list patient
                                 if (scope.appointment) {
 
-                                    if(company == 'company'){
+                                    if(company == 'company' && scope.iscompanycreate == false){
                                         var modalInstance = $uibModal.open({
                                             templateUrl: 'companyLinkmodal',
                                             controller: function($scope,$modalInstance){
@@ -340,7 +345,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
                                 }else if(scope.staff){
 
-                                    if(company == 'company'){
+                                    if(company == 'company' && scope.iscompanycreate == false){
                                         var modalInstance = $uibModal.open({
                                             templateUrl: 'companyLinkmodal',
                                             controller: function($scope,$modalInstance){
@@ -364,8 +369,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                     scope.reset();
 
                                 }else {
-
-                                    if(company == 'company'){
+                                    console.log("here ", scope.iscompanycreate);
+                                    if(company == 'company' && scope.iscompanycreate == false){
                                         var modalInstance = $uibModal.open({
                                             templateUrl: 'companyLinkmodal',
                                             controller: function($scope,$modalInstance){

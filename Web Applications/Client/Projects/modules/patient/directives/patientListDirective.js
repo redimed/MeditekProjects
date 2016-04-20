@@ -11,12 +11,15 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			limit:'=onLimit',
 			compid:'=onCompid',
 			roleid:'=onRoleid',
-			ishaveusername:'=isHaveUsername'
+			ishaveusername:'=isHaveUsername',
+			iscompanycreate:'=isCompanyCreate',
+			company:'=onCompany',
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
-			console.log(scope.ishaveusername);
+			console.log(scope.iscompanycreate);
 			scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
+			scope.iscompanycreate = scope.iscompanycreate?scope.iscompanycreate:false;
 			scope.fieldSort={};
 			scope.search  = {};
 			scope.checked = {};
@@ -221,6 +224,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 					var modalInstance = $uibModal.open({
 						templateUrl: 'patientCreatemodal',
 						controller: function($scope,$modalInstance){
+							$scope.iscompanycreate = scope.iscompanycreate;
 							$scope.close = function() {
 								$modalInstance.close();
 							};
@@ -246,7 +250,9 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 					var modalInstance = $uibModal.open({
 						templateUrl: 'patientCreatemodal',
 						controller: function($scope,$modalInstance){
-							// $scope.rolecompany = true;
+							// $scope.rolecompany = true;.
+							$scope.iscompanycreate = scope.iscompanycreate;
+							$scope.company = scope.company;
 							$scope.check = scope.ishaveusername;
 							$scope.compid = scope.compid;
 							$scope.role = scope.roleid?true:false;

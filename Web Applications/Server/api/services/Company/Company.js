@@ -1526,6 +1526,160 @@ module.exports = {
 
 	},
 
+	CreateCompanyForOnlineBooking: function(data) {
+		if(!data) {
+			var err = new Error('CreateCompanyForOnlineBooking.error');
+			err.pushError('params.Invalid');
+			throw err;
+		}
+
+		if(!data.companyId) {
+			var err = new Error('CreateCompanyForOnlineBooking.error');
+			err.pushError('companyId.Invalid');
+			throw err;
+		}
+
+		if(!data.CompanyName) {
+			var err = new Error('CreateCompanyForOnlineBooking.error');
+			err.pushError('CompanyName.Invalid');
+			throw err;
+		}
+
+		return sequelize.transaction()
+		.then(function(t) {
+			var company;
+			if(data.FatherId) {
+				return Company.findOne({
+					where:{
+						IDRefer : data.FatherId,
+						Enable  : 'Y',
+						Active  : 'Y',
+					},
+					transaction : t
+				})
+				.then(function(got_company) {
+
+					if(!got_company) {
+						var err = new Error('CreateCompanyForOnlineBooking.error');
+						err.pushError('Company.notFound');
+						throw err;
+					}
+					else {
+						company = got_company;
+						return CompanySite.findOne({
+							where:{
+								SiteIDRefer : data.companyId,
+								CompanyID   : company.ID,
+								Enable      : 'Y'
+							},
+							transaction: t
+						});
+					}
+
+				},function(err) {
+					throw err;
+				})
+				.then(function(got_site) {
+					if(got_site) {
+						var err = new Error('CreateCompanyForOnlineBooking.error');
+						err.pushError('CompanySite.existed');
+						throw err;
+					}
+					else {
+						return CompanySite.create({
+							UID         : UUIDService.Create(),
+							CompanyID   : company.ID,
+							SiteIDRefer : data.companyId,
+							SiteName    : data.CompanyName,
+							Enable      : 'Y'
+						},{transaction:t});
+					}
+				},function(err) {
+					throw err;
+				})
+				.then(function(created_site) {
+					if(!created_site) {
+						t.rollback();
+						var err = new Error('CreateCompanyForOnlineBooking.error');
+						err.pushError('CreateSite.queryError');
+						throw err;
+					}
+					else {
+						t.commit();
+						return created_site;
+					}
+				},function(err) {
+					t.rollback();
+					throw err;
+				})
+			}
+			else {
+				return Company.findOne({
+					where:{
+						IDRefer : data.companyId,
+						Enable  : 'Y',
+						Active  : 'Y',
+					},
+					transaction : t
+				})
+				.then(function(got_company) {
+					if(got_company) {
+						var err = new Error('CreateCompanyForOnlineBooking.error');
+						err.pushError('Company.existed');
+						throw err;
+					}
+					else {
+						return Company.create({
+							CompanyName : data.CompanyName,
+							UID         : UUIDService.Create(),
+							IDRefer     : data.companyId,
+							Enable      : 'Y',
+							Active      : 'Y',
+						},{transaction:t});
+					}
+				},function(err) {
+					throw err;
+				})
+				.then(function(created_company) {
+					if(!created_company) {
+						var err = new Error('CreateCompanyForOnlineBooking.error');
+						err.pushError('CreateCompany.queryError');
+						throw err;
+					}
+					else {
+						return CompanySite.create({
+							UID         : UUIDService.Create(),
+							SiteIDRefer : data.companyId,
+							SiteName    : data.CompanyName,
+							CompanyID   : created_company.ID,
+							Enable      : 'Y',
+
+						},{transaction:t});
+					}
+				},function(err) {
+					throw err;
+				})
+				.then(function(created_site) {
+					if(!created_site) {
+						t.rollback();
+						var err = new Error('CreateCompanyForOnlineBooking.error');
+						err.pushError('CreateCompanySite.queryError');
+						throw err;
+					}
+					else {
+						t.commit();
+						return created_site;
+					}
+				},function(err) {
+					t.rollback();
+					throw err;
+				});
+			}
+		},function(err) {
+			throw err;
+		});
+	},
+
 	Test: function() {
 		// var model = sequelize.models[data.model];
 		console.log(sequelize.models['Company'].getAssociation());

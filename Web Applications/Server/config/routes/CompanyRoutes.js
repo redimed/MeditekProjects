@@ -78,5 +78,10 @@ module.exports = {
     'post /api/company/create-user' : {
         controller: 'Company/CompanyController',
         action: 'CreateUser'
-    }
+    },
+
+    'post /api/company/create-company-for-onlinebooking' : {
+        controller: 'Company/CompanyController',
+        action: 'CreateCompanyForOnlineBooking'
+    },
 };

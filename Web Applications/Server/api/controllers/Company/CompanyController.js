@@ -207,6 +207,16 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         });
     },
+
+    CreateCompanyForOnlineBooking : function(req, res) {
+        var data = req.body;
+        Services.Company.CreateCompanyForOnlineBooking(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
     
 
     Test: function(req, res) {

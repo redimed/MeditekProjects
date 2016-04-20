@@ -142,6 +142,15 @@ module.exports = function(appointmentUID, userInfo) {
                     attributes: Services.AttributesAppt.UserAccount(),
                     required: !_.isEmpty(filter.UserAccount),
                     where: filter.UserAccount
+                }, {
+                    model: Company,
+                    required: !_.isEmpty(filter.Company),
+                    through: {
+                        where: {
+                            Active: 'Y'
+                        }
+                    },
+                    where: filter.Company
                 }]
             }, {
                 model: FileUpload,

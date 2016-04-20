@@ -255,5 +255,100 @@ module.exports = {
                     }
                 });
         }
+    },
+
+    RequestAppointmentMedicalBooking: function(req, res) {
+        var rawdata = req.body;
+        var data = {};
+        data.Appointments=[];
+        for (var i = 0; i < rawData.BookingCandidates; i++)
+        {
+            var candidateInfo = rawData.BookingCandidates[i];
+            var appointment = {
+                FromTime: candidateInfo.AppointmentTime,
+                Type: 'PreEmployment',
+                PatientAppointment: {
+                    FirstName: candidateInfo.CandidateName,
+                    DOB: candidateInfo.DOB,
+                    Email1: candidateInfo.email,
+                    PhoneNumber: candidateInfo.mobile
+                },
+                AppointmentData: [
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingHeader',
+                        Name: 'headerId',
+                        Value: candidateInfo.headerId
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingHeader',
+                        Name: 'packageDescription',
+                        Value: candidateInfo.packageDescription
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingHeader',
+                        Name: 'Paperwork',
+                        Value: candidateInfo.Paperwork
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingHeader',
+                        Name: 'Notes',
+                        Value: candidateInfo.Notes
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingCandidate',
+                        Name: 'candidateId',
+                        Value: candidateInfo.candidateId
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingCandidate',
+                        Name: 'Position',
+                        Value: candidateInfo.Position
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingCandidate',
+                        Name: 'preferredFromDate',
+                        Value: candidateInfo.preferredFromDate
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingCandidate',
+                        Name: 'preferredToDate',
+                        Value: candidateInfo.preferredToDate
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingCandidate',
+                        Name: 'preferredToDate',
+                        Value: candidateInfo.preferredSiteId
+                    },
+                    {
+                        Category: 'Appointment',
+                        Section: 'MedicalBooking',
+                        Type: 'BookingCandidate',
+                        Name: 'Notes',
+                        Value: candidateInfo.Notes
+                    },
+                ]
+
+            }
+        }
+
+        res.ok({status:'success'});
     }
 };

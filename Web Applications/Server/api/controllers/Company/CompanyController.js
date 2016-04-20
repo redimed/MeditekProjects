@@ -59,7 +59,7 @@ module.exports = {
             err.pushError("UID.invalidParams");
             res.serverError(ErrorWrap(err));
         }
-        Services.Company.loadDetail(data)
+        Services.Company.loadDetail({model:data.model,whereClause:{UID:data.UID}})
         .then(function(result) {
             res.ok({message:"success",data:result});
         },function(err) {

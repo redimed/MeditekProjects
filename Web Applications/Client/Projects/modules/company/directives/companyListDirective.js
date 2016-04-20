@@ -4,6 +4,7 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 	return {
 		restrict: 'E',
 		scope:{
+			iscompanycreate:'=isCompanyCreate',
 			patientuid:'=onPatientUid',
 			companyinfo:'=onCompanyInfo',
 			cancel:'=onCancel'

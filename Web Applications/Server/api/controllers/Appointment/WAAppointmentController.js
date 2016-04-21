@@ -1,3 +1,4 @@
+var $q = require("q");
 module.exports = {
     /*
     RequestWAAppointment - Controller: request new Appointment for WA Appointment
@@ -258,97 +259,157 @@ module.exports = {
     },
 
     RequestAppointmentMedicalBooking: function(req, res) {
+        var error = new Error("RequestAppointmentMedicalBooking")
         var rawdata = req.body;
-        var data = {};
-        data.Appointments=[];
-        for (var i = 0; i < rawData.BookingCandidates; i++)
-        {
-            var candidateInfo = rawData.BookingCandidates[i];
-            var appointment = {
-                FromTime: candidateInfo.AppointmentTime,
-                Type: 'PreEmployment',
-                PatientAppointment: {
-                    FirstName: candidateInfo.CandidateName,
-                    DOB: candidateInfo.DOB,
-                    Email1: candidateInfo.email,
-                    PhoneNumber: candidateInfo.mobile
-                },
-                AppointmentData: [
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingHeader',
-                        Name: 'headerId',
-                        Value: candidateInfo.headerId
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingHeader',
-                        Name: 'packageDescription',
-                        Value: candidateInfo.packageDescription
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingHeader',
-                        Name: 'Paperwork',
-                        Value: candidateInfo.Paperwork
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingHeader',
-                        Name: 'Notes',
-                        Value: candidateInfo.Notes
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingCandidate',
-                        Name: 'candidateId',
-                        Value: candidateInfo.candidateId
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingCandidate',
-                        Name: 'Position',
-                        Value: candidateInfo.Position
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingCandidate',
-                        Name: 'preferredFromDate',
-                        Value: candidateInfo.preferredFromDate
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingCandidate',
-                        Name: 'preferredToDate',
-                        Value: candidateInfo.preferredToDate
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingCandidate',
-                        Name: 'preferredToDate',
-                        Value: candidateInfo.preferredSiteId
-                    },
-                    {
-                        Category: 'Appointment',
-                        Section: 'MedicalBooking',
-                        Type: 'BookingCandidate',
-                        Name: 'Notes',
-                        Value: candidateInfo.Notes
-                    },
-                ]
+        console.log("rawdata",rawdata);
 
-            }
+        if(!rawdata.BookingCandidates || rawdata.BookingCandidates.length<1) {
+            error.pushError("BookingCandidates.empty");
+            return res.serverError(ErrorWrap(error));
         }
 
-        res.ok({status:'success'});
+        var data = {};
+        function demo() {
+            var q = $q.defer();
+            setTimeout(function () {
+                q.resolve({ID: 123});
+            }, 1000);
+            return q.promise;
+        }
+
+        demo()
+        .then(function(companySite){
+            data.Appointments=[];
+
+            for (var i = 0; i < rawdata.BookingCandidates.length; i++)
+            {
+                var candidateInfo = rawdata.BookingCandidates[i];
+                var appointment = {
+                    FromTime: candidateInfo.AppointmentTime,
+                    Type: 'PreEmployment',
+                    PatientAppointment: {
+                        FirstName: candidateInfo.CandidateName,
+                        DOB: candidateInfo.DOB,
+                        Email1: candidateInfo.email,
+                        PhoneNumber: candidateInfo.mobile
+                    },
+                    AppointmentData: [
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingHeader',
+                            Name: 'headerId',
+                            Value: rawdata.headerId || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingHeader',
+                            Name: 'packageDescription',
+                            Value: rawdata.packageDescription || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingHeader',
+                            Name: 'Paperwork',
+                            Value: rawdata.Paperwork || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingHeader',
+                            Name: 'Notes',
+                            Value: rawdata.Notes || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingHeader',
+                            Name: 'companySiteId',
+                            Value: companySite.ID || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingHeader',
+                            Name: 'SiteIDRefer',
+                            Value: rawdata.companyId || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'candidateId',
+                            Value: candidateInfo.candidateId || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'Position',
+                            Value: candidateInfo.Position || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'preferredFromDate',
+                            Value: candidateInfo.preferredFromDate || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'preferredToDate',
+                            Value: candidateInfo.preferredToDate || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'preferredToDate',
+                            Value: candidateInfo.preferredSiteId || null
+                        },
+                        {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'Notes',
+                            Value: candidateInfo.Notes || null
+                        },
+                    ]
+
+                }
+                data.Appointments.push(appointment);
+            }
+            Services.RequestAppointmentCompany(data, req.user)
+            .then(function(success) {
+                success.transaction.commit();
+                res.ok({
+                    status: 'success',
+                    code: success.code
+                });
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
+                    err.transaction.rollback();
+                    res.serverError(ErrorWrap(err.error));
+                } else {
+                    res.serverError(ErrorWrap(err));
+                }
+            });
+            // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LLLLLLLLL");
+            // console.log(req.user);
+            // return res.ok(data);
+
+        },function(err){
+            return res.serverError(ErrorWrap(err));
+        })
+        
+
+
+
     }
 };

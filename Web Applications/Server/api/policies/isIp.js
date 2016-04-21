@@ -11,7 +11,7 @@ module.exports = function(req, res, next) {
   console.log(req.connection.remoteAddress);*/
 
   var clientIp = requestIp.getClientIp(req);
-  console.log("Client IP: "+clientIp);
+  console.log("|||||||||||||||||||||||||||||| Client IP: "+clientIp);
 
   if (sails.config.ip.allow.indexOf(clientIp)>=0)
   {
@@ -20,6 +20,7 @@ module.exports = function(req, res, next) {
   else
   {
     error.pushError("Policies.ipNotAllow");
+    error.pushError(clientIp+".notAllow");
     return res.unauthor(error);
   }
 }

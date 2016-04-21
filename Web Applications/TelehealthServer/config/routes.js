@@ -64,13 +64,9 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetListCountry'
     },
-    'POST /api/telehealth/requesPostServerCore': {
+    'POST /api/telehealth/sendCoreServer': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'RequestPostServerCore'
-    },
-    'GET /api/telehealth/requesGetServerCore': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'RequestGetServerCore'
+        action: 'SendCoreServer'
     },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {

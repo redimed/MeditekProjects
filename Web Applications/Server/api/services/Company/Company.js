@@ -1559,7 +1559,7 @@ module.exports = {
 
 					if(!got_company) {
 						var err = new Error('CreateCompanyForOnlineBooking.error');
-						err.pushError('Company.notFound');
+						err.pushError('Company.father.notFound');
 						throw err;
 					}
 					else {

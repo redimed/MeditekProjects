@@ -80,7 +80,7 @@ module.exports = {
         action: 'CreateUser'
     },
 
-    'post /api/company/create-company-for-onlinebooking' : {
+    'post /api/onlinebooking/create-company' : {
         controller: 'Company/CompanyController',
         action: 'CreateCompanyForOnlineBooking'
     },

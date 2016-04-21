@@ -445,7 +445,7 @@ module.exports = {
                 success.transaction.commit();
                 res.ok({
                     status: 'success',
-                    code: success.code
+                    data: success.data
                 });
             })
             .catch(function(err) {

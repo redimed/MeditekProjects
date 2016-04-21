@@ -167,6 +167,10 @@ module.exports = function(appointmentUID, userInfo) {
                 model: AppointmentData,
                 as: 'AppointmentData',
                 required: false
+            }, {
+                model: PatientAppointment,
+                attributes: Services.AttributesAppt.PatientAppointment(),
+                required: false,
             }],
             where: filter.Appointment
         })

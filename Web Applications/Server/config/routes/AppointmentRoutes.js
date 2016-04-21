@@ -67,7 +67,7 @@ module.exports = {
         controller: 'Appointment/WAAppointmentController',
         action: 'RequestAppointmentCompany'
     },
-    'post /api/appointment-wa-request/medicalbooking': {
+    'post /api/onlinebooking/appointment-request': {
         controller: 'Appointment/WAAppointmentController',
         action: 'RequestAppointmentMedicalBooking'
     },

@@ -1,21 +1,23 @@
 var $q = require("q");
+var moment = require("moment");
+var o=require("../../services/HelperService");
 module.exports = {
     /*
-    RequestWAAppointment - Controller: request new Appointment for WA Appointment
-    input: infomation new WA Appointment, infomation created
-    output: -success: transaction created new WA Appointment
-            -error: [transaction] created new WA Appointment, error message
-    */
-    RequestWAAppointment: function(req, res) {
+     RequestWAAppointment - Controller: request new Appointment for WA Appointment
+     input: infomation new WA Appointment, infomation created
+     output: -success: transaction created new WA Appointment
+     -error: [transaction] created new WA Appointment, error message
+     */
+    RequestWAAppointment: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
             Services.RequestWAAppointment(data, req.user)
-                .then(function(success) {
+                .then(function (success) {
                     success.transaction.commit();
                     res.ok('success');
-                }, function(err) {
+                }, function (err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -28,12 +30,12 @@ module.exports = {
         }
     },
     /*
-    GetListWAAppointment - Controller: get list WA Appointment with condition received
-    input: information filter list WA Appointment, information user filter
-    output: -success: list WA Appointment
-            -error: [transaction] load list WA Appointment, error message.
-    */
-    GetListWAAppointment: function(req, res) {
+     GetListWAAppointment - Controller: get list WA Appointment with condition received
+     input: information filter list WA Appointment, information user filter
+     output: -success: list WA Appointment
+     -error: [transaction] load list WA Appointment, error message.
+     */
+    GetListWAAppointment: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
@@ -48,9 +50,9 @@ module.exports = {
             //     }
             // });
             Services.GetListAppointment(data, req.user)
-                .then(function(success) {
+                .then(function (success) {
                     res.ok(success.data);
-                }, function(err) {
+                }, function (err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -63,17 +65,17 @@ module.exports = {
         }
     },
     /*
-       GetDetailWAAppointment - Controller: get information detail WA Appointment
-       input: UID WA Appointment
-       output: -success: information details WA Appointment
-               -error: [transaction] information details WA Appointment, error message
-       */
-    GetDetailWAAppointment: function(req, res) {
+     GetDetailWAAppointment - Controller: get information detail WA Appointment
+     input: UID WA Appointment
+     output: -success: information details WA Appointment
+     -error: [transaction] information details WA Appointment, error message
+     */
+    GetDetailWAAppointment: function (req, res) {
         var UID = req.params.UID;
         Services.GetDetailWAAppointment(UID, req.user)
-            .then(function(success) {
+            .then(function (success) {
                 res.ok(success);
-            }, function(err) {
+            }, function (err) {
                 if (HelperService.CheckExistData(err) &&
                     HelperService.CheckExistData(err.transaction) &&
                     HelperService.CheckExistData(err.error)) {
@@ -85,12 +87,12 @@ module.exports = {
             });
     },
     /*
-    UpdateRequestWAAppointment - Controller: Update information WA Appointment
-    input: new information WA Appointment
-    output: - success: transaction updated WA Appointment
-            - failed: [transaction] updated WA Appointment, error message
-    */
-    UpdateRequestWAAppointment: function(req, res) {
+     UpdateRequestWAAppointment - Controller: Update information WA Appointment
+     input: new information WA Appointment
+     output: - success: transaction updated WA Appointment
+     - failed: [transaction] updated WA Appointment, error message
+     */
+    UpdateRequestWAAppointment: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
@@ -100,10 +102,10 @@ module.exports = {
                 role.isAdmin ||
                 role.isAssistant) {
                 Services.UpdateRequestWAAppointment(data, req.user)
-                    .then(function(success) {
+                    .then(function (success) {
                         success.transaction.commit();
                         res.ok('success');
-                    }, function(err) {
+                    }, function (err) {
                         if (HelperService.CheckExistData(err) &&
                             HelperService.CheckExistData(err.transaction) &&
                             HelperService.CheckExistData(err.error)) {
@@ -120,21 +122,21 @@ module.exports = {
         }
     },
     /*
-    DisableWAAppointment - Controller: Delete  a WA Appointment
-    input: UID Appointment
-    output: - success: transaction updated Enable is 'N' WA Appointment
-            - error: [transaction] updated Enable is 'N' WA Appointment, error message
-    */
-    DisableWAAppointment: function(req, res) {
+     DisableWAAppointment - Controller: Delete  a WA Appointment
+     input: UID Appointment
+     output: - success: transaction updated Enable is 'N' WA Appointment
+     - error: [transaction] updated Enable is 'N' WA Appointment, error message
+     */
+    DisableWAAppointment: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
             Services.DisableAppointment(data)
-                .then(function(success) {
+                .then(function (success) {
                     success.transaction.commit();
                     res.ok('success');
-                }, function(err) {
+                }, function (err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -146,19 +148,19 @@ module.exports = {
                 });
         }
     },
-    RequestWAAppointmentPatient: function(req, res) {
+    RequestWAAppointmentPatient: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
             Services.RequestWAAppointmentPatient(data, req.user)
-                .then(function(success) {
+                .then(function (success) {
                     success.transaction.commit();
                     res.ok({
                         status: 'success',
                         code: success.code
                     });
-                }, function(err) {
+                }, function (err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -170,12 +172,12 @@ module.exports = {
                 });
         }
     },
-    GetDetailWAAppointmentforEform: function(req, res) {
+    GetDetailWAAppointmentforEform: function (req, res) {
         var UID = req.params.UID;
         Services.GetDetailWAAppointmentforEform(UID)
-            .then(function(success) {
+            .then(function (success) {
                 res.ok(success);
-            }, function(err) {
+            }, function (err) {
                 if (HelperService.CheckExistData(err) &&
                     HelperService.CheckExistData(err.transaction) &&
                     HelperService.CheckExistData(err.error)) {
@@ -186,7 +188,7 @@ module.exports = {
                 }
             });
     },
-    GetListWAAppointmentConsultation: function(req, res) {
+    GetListWAAppointmentConsultation: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         var objRequired = {
             Patient: true
@@ -195,9 +197,9 @@ module.exports = {
             res.serverError('data failed');
         } else {
             Services.GetListAppointment(data, req.user, objRequired)
-                .then(function(success) {
+                .then(function (success) {
                     res.ok(success.data);
-                }, function(err) {
+                }, function (err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -209,19 +211,19 @@ module.exports = {
                 });
         }
     },
-    RequestWAAppointmentPatientOnlineBooking: function(req, res) {
+    RequestWAAppointmentPatientOnlineBooking: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
             Services.RequestWAAppointmentPatient(data, req.user)
-                .then(function(success) {
+                .then(function (success) {
                     success.transaction.commit();
                     res.ok({
                         status: 'success',
                         code: success.code
                     });
-                }, function(err) {
+                }, function (err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -233,19 +235,19 @@ module.exports = {
                 });
         }
     },
-    RequestAppointmentCompany: function(req, res) {
+    RequestAppointmentCompany: function (req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
             Services.RequestAppointmentCompany(data, req.user)
-                .then(function(success) {
+                .then(function (success) {
                     success.transaction.commit();
                     res.ok({
                         status: 'success',
                         code: success.code
                     });
-                }, function(err) {
+                }, function (err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -258,31 +260,77 @@ module.exports = {
         }
     },
 
-    RequestAppointmentMedicalBooking: function(req, res) {
-        var error = new Error("RequestAppointmentMedicalBooking")
+
+    RequestAppointmentMedicalBooking: function (req, res) {
+        var error = new Error("RequestAppointmentMedicalBooking");
         var rawdata = req.body;
-        console.log("rawdata",rawdata);
-
-        if(!rawdata.BookingCandidates || rawdata.BookingCandidates.length<1) {
-            error.pushError("BookingCandidates.empty");
-            return res.serverError(ErrorWrap(error));
-        }
-
         var data = {};
-        function demo() {
+        function Preprocessing() {
             var q = $q.defer();
-            setTimeout(function () {
-                q.resolve({ID: 123});
-            }, 1000);
+            try {
+                if (!rawdata.headerId)
+                    error.pushError("headerId.null");
+                if (!rawdata.companyId)
+                    error.pushError("companyId.null");
+                if (!rawdata.BookingCandidates || rawdata.BookingCandidates.length < 1) {
+                    error.pushError("BookingCandidates.empty");
+                } else {
+                    for (var i = 0; i < rawdata.BookingCandidates.length; i++) {
+                        var item = rawdata.BookingCandidates[i];
+                        if(!item.candidateId)
+                        {
+                            error.pushError("candidateId.null."+i);
+                        }
+                        /*if(item.DOB && !moment(item.DOB, "DD/MM/YYYY").isValid()) {
+                            error.pushError("DOB.invalid."+i);
+                        }*/
+                        if(item.preferredFromDate && !moment(item.preferredFromDate,"YYYY-MM-DD Z", true).isValid()) {
+                            error.pushError("preferredFromDate.invalid." + i);
+                        }
+                        if(item.preferredToDate && !moment(item.preferredToDate,"YYYY-MM-DD Z", true).isValid()) {
+                            error.pushError("preferredToDate.invalid." + i);
+                        }
+                        if(item.AppointmentTime && !moment(item.AppointmentTime,"YYYY-MM-DD HH:mm:ss Z", true).isValid()) {
+                            error.pushError("AppointmentTime.invalid." + i);
+                        }
+                        if(item.email && !o.isValidEmail(item.email)) {
+                            error.pushError("email.invalid."+i);
+                        }
+                        if(item.mobile)
+                        {
+                            var m = o.parseAuMobilePhone(item.mobile);
+                            if (m)
+                                item.mobile =  m;
+                            else
+                                error.pushError("mobile.invalid."+i);
+                        }
+
+                    }
+                }
+
+
+                if (error.getErrors().length > 0)
+                    throw error;
+                else
+                    q.resolve("success");
+            }
+            catch (e) {
+                q.reject(e);
+            }
             return q.promise;
         }
 
-        demo()
+        Preprocessing()
+        .then(function (checked) {
+            return Services.Company.loadDetail({model: 'CompanySite', whereClause: {ID: rawdata.companyId}})
+        })
         .then(function(companySite){
-            data.Appointments=[];
-
-            for (var i = 0; i < rawdata.BookingCandidates.length; i++)
-            {
+            if (!companySite) {
+                error.pushError("company.notFound");
+                throw error;
+            }
+            data.Appointments = [];
+            for (var i = 0; i < rawdata.BookingCandidates.length; i++) {
                 var candidateInfo = rawdata.BookingCandidates[i];
                 var appointment = {
                     FromTime: candidateInfo.AppointmentTime,
@@ -383,33 +431,24 @@ module.exports = {
                 }
                 data.Appointments.push(appointment);
             }
-            Services.RequestAppointmentCompany(data, req.user)
-            .then(function(success) {
-                success.transaction.commit();
-                res.ok({
-                    status: 'success',
-                    code: success.code
-                });
-            }, function(err) {
-                if (HelperService.CheckExistData(err) &&
-                    HelperService.CheckExistData(err.transaction) &&
-                    HelperService.CheckExistData(err.error)) {
-                    err.transaction.rollback();
-                    res.serverError(ErrorWrap(err.error));
-                } else {
-                    res.serverError(ErrorWrap(err));
-                }
-            });
-            // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LLLLLLLLL");
-            // console.log(req.user);
-            // return res.ok(data);
-
-        },function(err){
-            return res.serverError(ErrorWrap(err));
+            return Services.RequestAppointmentCompany(data, req.user);
         })
-        
-
-
-
+        .then(function (success) {
+            success.transaction.commit();
+            res.ok({
+                status: 'success',
+                code: success.code
+            });
+        })
+        .catch(function(err){
+            if (HelperService.CheckExistData(err) &&
+                HelperService.CheckExistData(err.transaction) &&
+                HelperService.CheckExistData(err.error)) {
+                err.transaction.rollback();
+                res.serverError(ErrorWrap(err.error));
+            } else {
+                res.serverError(ErrorWrap(err));
+            }
+        })
     }
 };

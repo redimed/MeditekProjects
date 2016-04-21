@@ -14,6 +14,6 @@ module.exports = {
         'UpdateRequestWAAppointment': ['isAuthenticated'],
         'DisableWAAppointment': ['isAuthenticated'],
         'RequestWAAppointmentPatient': true,
-        'RequestAppointmentMedicalBooking': true
+        'RequestAppointmentMedicalBooking': ['isIp']
     }
 };

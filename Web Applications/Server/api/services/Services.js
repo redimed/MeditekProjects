@@ -54,6 +54,7 @@ module.exports = {
     RequestAppointmentCompany: require('./Appointment/RequestAppointmentCompany'),
     RelAppointmentDoctor: require('./Appointment/RelAppointmentDoctor'),
     RelAppointmentPatient: require('./Appointment/RelAppointmentPatient'),
+    RequestWAAppointmentPatientNew: require('./Appointment/RequestWAAppointmentPatientNew'),
     //end Appointment
     Module: require('./Authorization/v0_1/Module'),
     Role: require('./Authorization/v0_1/Role'),

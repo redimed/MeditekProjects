@@ -9,9 +9,11 @@ var CommonSignature = require('common/signature');
 var CommonTable = require('modules/eform/eformTemplateDetail/tableField');
 var CommonTableDynamic = require('common/dynamicTable');
 var CommonSignatureDoctor = require('common/signatureDoctor');
+var CommonLineChart = require('common/chart/line');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
 var ComponentListField = require('modules/eform/eformTemplateDetail/listField');
 var ComponentFieldDetail = require('modules/eform/eformTemplateDetail/fieldDetail');
+var ComponentFieldDetailChart = require('modules/eform/eformTemplateDetail/fieldDetailChart');
 var Config = require('config');
 
 module.exports = React.createClass({
@@ -71,26 +73,57 @@ module.exports = React.createClass({
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].setValue(fieldRefChild, value);
     },
+    setValueForChart: function(fieldRef, field, chartType){
+        if(typeof this.refs[fieldRef] !== 'undefined')
+            this.refs[fieldRef].setValue(field, chartType);
+    },
     addRowForDynamicTable: function(field){
         if(typeof this.refs[field.fields[0].ref].addRowForDynamicTable !== 'undefined')
             this.refs[field.fields[0].ref].addRowForDynamicTable(field);
     },
     _onRemoveRow: function(){
         this.props.onRemoveRow(this.props.codeSection, this.props.code);
-        /*swal({
-            title: 'Are you sure?',
-            text: 'You will delete this row',
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.props.onRemoveRow(self.props.codeSection, self.props.code);
-        })*/
     },
     _onComponentListFieldSelect: function(item){
         this.refs.modalCreateFieldSection.hide();
         this.props.onSelectField(this.props.codeSection, this.props.code, this.props.refTemp, item.get('code'));
+    },
+    _onRightClickChartItem: function(code, e, ref){
+        var id = $(e.target).attr('id')
+        if (typeof id === 'undefined')
+            id = $(e.target).parent().attr('id')
+        var type = this.refs[ref].getType();
+        var size = this.refs[ref].getSize();
+        var roles = this.refs[ref].getRoles();
+        var axisX = this.refs[ref].getAxisX().toJS();
+        var title = this.refs[ref].getTitle();
+        var subtitle = this.refs[ref].getSubtitle();
+        var name = (typeof(this.refs[ref].getName)!=='undefined')?this.refs[ref].getName():'';
+        var preCal = (typeof(this.refs[ref].getPreCal)!=='undefined')?this.refs[ref].getPreCal():'';
+        var series = this.refs[ref].getSeries().toJS();
+        var dataFieldDetail = null;
+        dataFieldDetail = {
+            size: size,
+            code: code,
+            type: type,
+            ref: ref,
+            name: name,
+            preCal: preCal,
+            roles: roles,
+            axisX: axisX,
+            title: title,
+            subtitle: subtitle,
+            series: series
+        }
+        switch(id){
+            case 'editChart':
+                this.refs.modalFieldDetailChart.show();
+                this.refs.fieldDetailChart.init(dataFieldDetail);
+                break;
+            case 'deleteChart':
+                this.props.onRemoveField(this.props.codeSection, this.props.code, code);
+                break;
+        }
     },
     _onRightClickItem: function(code, e, ref) {
         var id = $(e.target).attr('id')
@@ -134,34 +167,16 @@ module.exports = React.createClass({
             case 'deleteField':
                 var self = this;
                 self.props.onRemoveField(self.props.codeSection, self.props.code, code);
-                /*swal({
-                    title: 'Are you sure?',
-                    text: 'You will delete this field ?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    allowOutsideClick: true
-                }, function() {
-                    self.props.onRemoveField(self.props.codeSection, self.props.code, code);
-                })*/
                 break;
         }
     },
     _onComponentFieldDetailSave: function(data) {
-        var self = this;
-        self.props.onSaveFieldDetail(self.props.codeSection, self.props.code, data);
-        self.refs.modalFieldDetail.hide();
-        /*swal({
-            title: 'Are you sure?',
-            text: 'You will edit this field',
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.props.onSaveFieldDetail(self.props.codeSection, self.props.code, data);
-            self.refs.modalFieldDetail.hide()
-        })*/
+        this.props.onSaveFieldDetail(this.props.codeSection, this.props.code, data);
+        this.refs.modalFieldDetail.hide();
+    },
+    _onComponentFieldDetailChartSave: function(data) {
+        this.props.onSaveFieldDetail(this.props.codeSection, this.props.code, data);
+        this.refs.modalFieldDetailChart.hide();
     },
     _onDeleteColumn: function(codeField, codeColumn) {
         this.props.onRemoveTableColumn(this.props.codeSection, this.props.code, codeField, codeColumn);
@@ -178,55 +193,15 @@ module.exports = React.createClass({
         switch (id) {
             case 'deleteTable':
                 self.props.onRemoveField(self.props.codeSection, self.props.code, code);
-                /*swal({
-                    title: 'Are you sure?',
-                    text: 'You will delete this table.',
-                    type: 'warning',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    allowOutsideClick: true
-                }, function() {
-                    self.props.onRemoveField(self.props.codeSection, self.props.code, code);
-                })*/
                 break;
             case 'addRow':
                 self.props.onCreateTableRow(self.props.codeSection, self.props.code, code);
-                /*swal({
-                    title: 'Are you sure?',
-                    text: 'You will add a row into this table.',
-                    type: 'warning',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    allowOutsideClick: true
-                }, function() {
-                    self.props.onCreateTableRow(self.props.codeSection, self.props.code, code);
-                })*/
                 break;
             case 'deleteRow':
                 self.props.onRemoveTableRow(self.props.codeSection, self.props.code, code);
-                /*swal({
-                    title: 'Are you sure?',
-                    text: 'You will delete a row in this table.',
-                    type: 'warning',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    allowOutsideClick: true
-                }, function() {
-                    self.props.onRemoveTableRow(self.props.codeSection, self.props.code, code);
-                })*/
                 break;
             case 'addCol':
                 self.props.onCreateTableColumn(self.props.codeSection, self.props.code, code);
-                /*swal({
-                    title: 'Are you sure?',
-                    text: 'You will add a column into this table.',
-                    type: 'warning',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    allowOutsideClick: true
-                }, function() {
-                    self.props.onCreateTableColumn(self.props.codeSection, self.props.code, code);
-                })*/
                 break;
             case 'editTable':
                 var name = self.refs[refTemp].getName();
@@ -247,6 +222,7 @@ module.exports = React.createClass({
             if(typeof this.refs[fieldRef] !== 'undefined'){
                 var type = this.refs[fieldRef].getType();
                 if(type !== 'table' && type !== 'dynamic_table' &&
+                    type !== 'line_chart' &&
                     Config.getPrefixField(type, 'label') === -1 && 
                     Config.getPrefixField(type, 'check') === -1 && 
                     Config.getPrefixField(type, 'date') === -1 &&
@@ -286,6 +262,10 @@ module.exports = React.createClass({
                         tableField.refRow = self.props.refTemp;
                         results.push(tableField);
                     })      
+                }else if(type === 'line_chart'){
+                    var series = this.refs[fieldRef].getAllValue();
+                    series.refRow = this.props.refTemp;
+                    results.push(series);
                 }
             }
         }
@@ -307,6 +287,7 @@ module.exports = React.createClass({
     },
     render: function(){
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';
+        var displayContextChartMenu = (this.props.permission === 'eformDev')?'contextChartMenu':'none';
         var displayContextTableMenu = (this.props.permission === 'eformDev')?'contextTableMenu':'none';
         if(this.props.permission === 'eformDev'){
             var html = (
@@ -315,6 +296,12 @@ module.exports = React.createClass({
                         <ul className="dropdown-menu" role="menu">
                             <li><a id="editField"><i className="icon-pencil"/> Edit Field</a></li>
                             <li><a id="deleteField"><i className="icon-trash"/> Delete Field</a></li>
+                        </ul>
+                    </div>
+                    <div id="contextChartMenu">
+                        <ul className="dropdown-menu" role="menu">
+                            <li><a id="editChart"><i className="icon-pencil"/> Edit Chart</a></li>
+                            <li><a id="deleteChart"><i className="icon-trash"/> Delete Chart</a></li>
                         </ul>
                     </div>
                     <div id="contextTableMenu">
@@ -341,6 +328,15 @@ module.exports = React.createClass({
                         <div className="content">
                             <ComponentFieldDetail ref="fieldDetail" onSave={this._onComponentFieldDetailSave}
                                 onCloseModal={function(){this.refs.modalFieldDetail.hide()}.bind(this)}/>
+                        </div>
+                    </CommonModal>
+                    <CommonModal ref="modalFieldDetailChart">
+                        <div className="header">
+                            <h4>Modal Field Detail</h4>
+                        </div>
+                        <div className="content">
+                            <ComponentFieldDetailChart ref="fieldDetailChart" onSave={this._onComponentFieldDetailChartSave}
+                                onCloseModal={function(){this.refs.modalFieldDetailChart.hide()}.bind(this)}/>
                         </div>
                     </CommonModal>
                     <CommonModal ref="modalOrderRow">
@@ -551,6 +547,23 @@ module.exports = React.createClass({
                                                                 type={type}
                                                                 height={field.get('height')}
                                                                 onRightClickItem={this._onRightClickItem}/>
+                                                        else if(type === 'line_chart')
+                                                            return <CommonLineChart key={index} type={type}
+                                                                groupId={groupId}
+                                                                permission={this.props.permission}
+                                                                name={field.get('name')}
+                                                                size={field.get('size')}
+                                                                context={displayContextChartMenu}
+                                                                ref={field.get('ref')}
+                                                                refTemp={field.get('ref')}
+                                                                axisX={field.get('axisX')}
+                                                                series={field.get('series')}
+                                                                title={field.get('title')}
+                                                                subtitle={field.get('subtitle')}
+                                                                code={index}
+                                                                roles={field.get('roles')}
+                                                                height={field.get('height')}
+                                                                onRightClickItem={this._onRightClickChartItem}/>
                                                 }, this)
                                             }
                                         </div>
@@ -708,6 +721,23 @@ module.exports = React.createClass({
                                         type={type}
                                         height={field.get('height')}
                                         onRightClickItem={this._onRightClickItem}/>
+                                else if(type === 'line_chart')
+                                    return <CommonLineChart key={index} type={type}
+                                        groupId={groupId}
+                                        permission={this.props.permission}
+                                        name={field.get('name')}
+                                        size={field.get('size')}
+                                        context={displayContextChartMenu}
+                                        ref={field.get('ref')}
+                                        refTemp={field.get('ref')}
+                                        axisX={field.get('axisX')}
+                                        series={field.get('series')}
+                                        title={field.get('title')}
+                                        subtitle={field.get('subtitle')}
+                                        code={index}
+                                        roles={field.get('roles')}
+                                        height={field.get('height')}
+                                        onRightClickItem={this._onRightClickChartItem}/>
                             }, this)
                         }
                 </div>

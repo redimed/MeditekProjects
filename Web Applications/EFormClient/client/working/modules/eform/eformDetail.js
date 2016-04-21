@@ -167,7 +167,10 @@ module.exports = React.createClass({
                             if(Config.getPrefixField(field.type, 'radio') > -1 || Config.getPrefixField(field.type, 'checkbox') > -1){
                                 self.refs[section.ref].setValueForRadio(rowRef, fieldRef, field.checked);
                             }else{
-                                if(field.type !== 'eform_input_image_doctor'){
+                                if(field.type === 'line_chart'){
+                                    self.refs[section.ref].setValueForChart(rowRef, fieldRef, field, 'line');
+                                }
+                                else if(field.type !== 'eform_input_image_doctor'){
                                     self.refs[section.ref].setValue(rowRef, fieldRef, fieldData);
                                 }
                             }

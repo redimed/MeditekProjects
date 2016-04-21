@@ -139,6 +139,24 @@ module.exports = React.createClass({
                     ))
                 }
             })
+        }else if(typeField === 'line_chart'){
+            this.setState(function(prevState){
+                return {
+                    sections: prevState.sections.updateIn([codeSection,'rows',codeRow,'fields'], val => val.push(
+                        Immutable.fromJS({
+                            code: typeField,
+                            type: typeField,
+                            name: '',
+                            axisX: Immutable.fromJS({categories: []}),
+                            title: 'Line Chart',
+                            subtitle: 'Subtitle Line Chart',
+                            series: Immutable.List(),
+                            size: '12',
+                            ref: ref
+                        })
+                    ))
+                }
+            })
         }
         //swal("Success!", "Add field successfully.", "success")
     },
@@ -244,6 +262,20 @@ module.exports = React.createClass({
                         .set('size', dataField.size)
                         .set('ref', dataField.ref)
                         .set('roles', Immutable.fromJS(dataField.roles))
+                    )
+                }
+            })
+        }else if(dataField.type === 'line_chart'){
+            this.setState(function(prevState) {
+                return {
+                    sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                        val.set('name', dataField.name)
+                        .set('size', dataField.size)
+                        .set('ref', dataField.ref)
+                        .set('axisX', Immutable.fromJS(dataField.axisX))
+                        .set('title', dataField.title)
+                        .set('subtitle', dataField.subtitle)
+                        .set('series', Immutable.fromJS(dataField.series))
                     )
                 }
             })

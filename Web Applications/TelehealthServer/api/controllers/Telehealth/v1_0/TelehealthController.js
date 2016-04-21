@@ -285,22 +285,21 @@ module.exports = {
             return TelehealthService.FindByUID(uid).then(function(teleUser) {
                 return TelehealthDevice.update({
                     DeviceToken: null
-                },{
+                }, {
                     where: {
                         TelehealthUserID: teleUser.ID,
                         DeviceID: deviceId,
                         Type: deviceType
                     }
-                }).then(function(result)
-                {
-                    console.log("111111111111111111111111111111",result);
-                    console.log("=============================== Logout roomList",roomList);
-                    sails.sockets.leave(req.socket ,uid);
-                    console.log("=============================== Logout roomList",sails.sockets.rooms());
+                }).then(function(result) {
+                    console.log("111111111111111111111111111111", result);
+                    console.log("=============================== Logout roomList", roomList);
+                    sails.sockets.leave(req.socket, uid);
+                    console.log("=============================== Logout roomList", sails.sockets.rooms());
                     return res.ok({
-                        status:"success"
-                    }); 
-                },function(error){
+                        status: "success"
+                    });
+                }, function(error) {
                     err.pushError("Update Telehealth Device Error");
                     return res.serverError(ErrorWrap(error));
                 });
@@ -655,34 +654,44 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
-    RequestPostServerCore: function(req, res) {
+    SendCoreServer: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.RequestServerCore.Error");
+            var err = new Error("Telehealth.SendCoreServer.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
             return;
         }
         var info = HelperService.toJson(req.body.data);
-        var api = info.api;
-        var data = info.data;
+        var path = info.path;
+        var method = info.method;
+        var body = (info.body) ? info.body : null;
         var headers = req.headers;
-        if (api && data && headers) {
-            return TelehealthService.MakeRequest({
-                host: config.CoreAPI,
-                path: api,
-                method: "POST",
-                body: data,
-                headers: headers
-            }).then(function(response) {
-                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+        var deviceId = headers.deviceid;
+        var deviceType = headers.systemtype;
+        if (deviceId && deviceType && path && method) {
+            if (body != null) {
+                //post
+                TelehealthService.PostCoreServer(path, method, body, headers).then(function(response) {
+                    if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+
                     return res.ok(response.getBody());
-            }).catch(function(err) {
-                res.serverError(err.getBody());
-            });
+                }).catch(function(err) {
+                    res.json(err.getCode(), err.getBody());
+                })
+            }else{ 
+                //get
+                TelehealthService.GetCoreServer(path, method, headers).then(function(response) {
+                    if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+
+                    return res.ok(response.getBody());
+                }).catch(function(err) {
+                    res.json(err.getCode(), err.getBody());
+                })
+            }
         } else {
-            var err = new Error("Telehealth.Activation.Error");
+            var err = new Error("Telehealth.SendCoreServer.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
         }
-    },
+    }
 }

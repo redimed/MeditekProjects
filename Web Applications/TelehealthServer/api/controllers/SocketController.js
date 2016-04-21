@@ -172,7 +172,7 @@ module.exports = {
             if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
                 data.message = 'decline';
                 data.to = from;
-                sails.sockets.broadcast(from, 'receiveMessage', data, req.socket);
+                sails.sockets.emit(from, 'receiveMessage', data, req.socket);
             }
         }
     },

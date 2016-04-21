@@ -89,7 +89,9 @@ module.exports = React.createClass({
         switch(type){
             case 'default':
                 html = (
-                    <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
+                    <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}
+                        defaultValue={this.props.defaultValue} style={this.props.style}
+                        onBlur={this.props.onBlur} onChange={this.props.onChange}/>
                 )
                 break;
             case 'it':

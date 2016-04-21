@@ -121,7 +121,8 @@ module.exports = React.createClass({
                 code: this.code,
                 type: 'table',
                 size: size,
-                roles: Permission
+                roles: Permission,
+                ref: this.refs.formRef.getValue()
             }
         }
         this.props.onSave(data);

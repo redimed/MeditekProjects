@@ -15,7 +15,8 @@ module.exports = React.createClass({
                 {code: 'table', name: 'Table'},
                 {code: 'eform_input_signature', name: 'E-Signature'},
                 {code: 'eform_input_image_doctor', name: 'Image Doctor'},
-                {code: 'dynamic_table', name: 'Dynamic Table'}
+                {code: 'dynamic_table', name: 'Dynamic Table'},
+                {code: 'line_chart', name: 'Line Chart'}
             ])
         }
     },

@@ -252,6 +252,11 @@ module.exports = React.createClass({
         if(typeof this.refs[refRow] !== 'undefined')
             this.refs[refRow].setValueForTable(fieldRef, fieldRefChild, value);
     },
+    setValueForChart: function(refRow, fieldRef, field, chartType){
+        if(typeof this.refs[refRow] !== 'undefined'){
+                this.refs[refRow].setValueForChart(fieldRef, field, chartType);
+        }
+    },
     addRowForDynamicTable: function(field){
         if(typeof this.refs[field.fields[0].refRow] !== 'undefined')
             this.refs[field.fields[0].refRow].addRowForDynamicTable(field);

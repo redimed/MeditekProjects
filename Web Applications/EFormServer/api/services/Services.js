@@ -38,6 +38,7 @@ module.exports = {
     UpdatePatientAppointment: require('./Appointment/UpdatePatientAppointment'),
     RequestWAAppointment: require('./Appointment/RequestWAAppointment'),
     GetDetailWAAppointment: require('./Appointment/GetDetailWAAppointment'),
+    GetCompanyInfo: require('./Appointment/GetCompanyInfo'),
     CreateClinicalDetailWAAppointment: require('./Appointment/CreateClinicalDetailWAAppointment'),
     CreateWAAppointment: require('./Appointment/CreateWAAppointment'),
     RelClinicalDetailFileUpload: require('./Appointment/RelClinicalDetailFileUpload'),

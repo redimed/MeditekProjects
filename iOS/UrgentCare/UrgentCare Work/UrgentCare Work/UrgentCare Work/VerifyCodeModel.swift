@@ -38,19 +38,3 @@ class VerifyCodeRequest: BaseModel {
     }
     
 }
-//
-//class ResponseVerifyPost: BaseModel {
-//    dynamic var message = ""
-//    dynamic var status =  ""
-//    
-//    
-//    required convenience init?(_ map: Map) {
-//        self.init()
-//    }
-//    
-//    override func mapping(map: Map) {
-//        message    <- map["message"]
-//        status     <- map["status"]
-//    }
-//    
-//}

@@ -16,6 +16,16 @@ struct Constants {
         static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
     }
     
+//    struct Path {
+//        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
+//        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
+//        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
+//    }
+//    struct Path {
+//        static let SERVICE_URL_3006                              = "http://192.168.1.235:3006"
+//        static let SERVICE_URL_3005                              = "http://192.168.1.235:3005"
+//        static let SERVICE_URL_3009                              = "http://192.168.1.235:3009"
+//    }
     
     struct UserURL {
         static let URL_POST_LOGIN                                = Path.SERVICE_URL_3006 + "/api/login";
@@ -26,17 +36,19 @@ struct Constants {
         static let URL_GET_LIST_STAFF                            = Path.SERVICE_URL_3005 + "/api/company/get-list-staff"
         static let URL_GET_LIST_SITE                             = Path.SERVICE_URL_3005 + "/api/company/get-list-site"
         static let URL_GET_DETAIL_USER                           = Path.SERVICE_URL_3005 + "/api/user-account/GetUserAccountDetails"
+        static let URL_POST_REQUEST_APPOINTMENTCOMPANY           = Path.SERVICE_URL_3005 + "/api/appointment-wa-request/company"
+        static let URL_POST_REQUEST_APPOINTMENT                  = Path.SERVICE_URL_3005 + "/api/appointment-wa-request/patient-new"
         
         static let URL_POST_REQUEST_VERIFY                       = Path.SERVICE_URL_3009 + "/api/telehealth/user/requestActivationCode";
         static let URL_POST_CHECKVERIFY_CODE                     = Path.SERVICE_URL_3009 + "/api/telehealth/user/verifyActivationCode"
         static let URL_GET_GETINFORMATION_PATIENT                = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
-        static let URL_POST_REQUEST_APPOINTMENT                  = Path.SERVICE_URL_3009 + "/api/telehealth/appointment/request"
         static let URL_POST_CHECKACTIVATION                      = Path.SERVICE_URL_3009 + "/api/telehealth/checkActivation"
         
     }
     
     struct StringContant {
         static let prefixesPhoneNumber :String = "+61"
+        static let RolesCompanyID :Int = 6
     }
     struct numberHashValue  {
         static let number0 : Int = 915

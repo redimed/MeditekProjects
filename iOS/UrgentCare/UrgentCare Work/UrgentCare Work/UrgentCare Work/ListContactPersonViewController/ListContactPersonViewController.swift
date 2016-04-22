@@ -38,6 +38,7 @@ class ListContactPersonViewController:BaseViewController,UITableViewDelegate ,UI
                     if response.result.isSuccess {
                         if let _ = response.result.value {
                             if let listSite = Mapper<ListSite>().map(response.result.value) {
+                                print(response.result.value)
                                 if(listSite.message == "success"){
                                     //self!.hideLoading()
                                     self?.listSite = listSite
@@ -45,6 +46,7 @@ class ListContactPersonViewController:BaseViewController,UITableViewDelegate ,UI
                                 }else{
                                     //self!.hideLoading()
                                     if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                        print(errorModel)
                                         self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                     }
                                 }

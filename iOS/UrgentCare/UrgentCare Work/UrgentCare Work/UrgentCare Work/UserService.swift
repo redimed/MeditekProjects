@@ -25,7 +25,10 @@ class UserService {
     class func postRequestVerify(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_CHECKACTIVATION, model: model, completion: completion)
     }
-    class func postRequestAppointment(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+    class func postRequestAppointmentCompany(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_REQUEST_APPOINTMENTCOMPANY, model: model, completion: completion)
+    }
+    class func postRequestAppointmentPatient(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.postRequestAppoint(Constants.UserURL.URL_POST_REQUEST_APPOINTMENT, model: model, completion: completion)
     }
     class func postCheckActivation(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
@@ -44,5 +47,4 @@ class UserService {
     class func getDetailUserAccount(userID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.get(Constants.UserURL.URL_GET_DETAIL_USER + "?UID="+userID, completion: completion)
     }
-    
 }

@@ -51,7 +51,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     var SportTye: String!
     var pastUrls : [String] = []
     var GP:String = "N"
-    var treatment:String = "N"
+    var Rehab:String = "N"
     var physiotherapy:String = "N"
     var specialist:String = "N"
     var handTherapy:String = "N"
@@ -61,16 +61,25 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     var staff = Staff()
     var detailCompanyData = DetailCompanyData()
     var pickOption = ["","Telehealth", "Onsite"]
+    var site = Site()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
-            let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
-            companyInfo = Mapper().map(companyInfoDict)!
-            if(companyInfo.data.count > 0){
-                detailCompanyData = companyInfo.data[0]
-                companyName.text = detailCompanyData.CompanyName
+            if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
+                print(Context.getDataDefasults(Define.keyNSDefaults.companyInfor))
+                let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
+                companyInfo = Mapper().map(companyInfoDict)!
+                if(companyInfo.data.count > 0){
+                    detailCompanyData = companyInfo.data[0]
+                    companyName.text = detailCompanyData.CompanyName
+                }
+            }else{
+                selectStaff.enabled = false
+                selectStaff.title = nil
+                SelectContactPerson.hidden = true
+                
             }
         }else{
             selectStaff.enabled = false
@@ -90,23 +99,19 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         toolBar.tintColor = UIColor.blackColor()
         toolBar.sizeToFit()
         
-        
-        
         // Adds the buttons
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
-                                            target: view, action: #selector(UIView.endEditing(_:)))
-        //        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,target: view, action: #selector(UIView.endEditing(_:)))
+        
         toolBar.setItems([spaceButton,doneBarButton], animated: false)
         toolBar.userInteractionEnabled = true
-        
         
         // Adds the toolbar to the view
         typeRequest.inputView = pickerView
         typeRequest.inputAccessoryView = toolBar
         
     }
-
+    
     func SetHideShowButton(){
         if GP == "Y" {
             GPReferralLabel.hidden = true
@@ -114,7 +119,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             btnNo.hidden = true
             GPReferral = ""
         }
-        if treatment == "N"{
+        if Rehab == "N"{
             typeTreatment.hidden = true
             btnHandTherapy.hidden = true
             btnExercise.hidden = true
@@ -175,7 +180,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         if(Context.getDataDefasults(Define.keyNSDefaults.DetailSiteCheck) as! String == "YES"){
             Context.deleteDatDefaults(Define.keyNSDefaults.DetailSiteCheck)
             let data : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.DetailSite) as! NSDictionary
-            let site :Site = Mapper().map(data)!
+            site = Mapper().map(data)!
             print(site)
             contactPersonTextField.text = site.ContactName
             companyPhoneNumberTextField.text = site.HomePhoneNumber
@@ -203,7 +208,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         }
     }
     func customTextField(color:UIColor){
-        var arrText : [UITextField] = [firstNameTextField,lastNameTextField,contactPhoneTextField,suburbTextField,birthDayTextField,emailTextField,companyName,contactPersonTextField,companyPhoneNumberTextField]
+        var arrText : [UITextField] = [firstNameTextField,lastNameTextField,contactPhoneTextField,suburbTextField,birthDayTextField,emailTextField,companyName,contactPersonTextField,companyPhoneNumberTextField,typeRequest]
         for i in 0 ..< arrText.count  {
             borderTextFieldValid(arrText[i], color: color)
         }
@@ -245,12 +250,10 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             }
         }
     }
-    func sendingData(){
-        btnMakeAppointment.enabled = false
+    func postRequestAppointmentCompany(requestAppointPost:RequestAppointPostCompany){
         self.showloading(Define.MessageString.PleaseWait)
-        var requestAppointPost = RequestAppointPost()
-        requestAppointPost = loadata()
-        UserService.postRequestAppointment(requestAppointPost) { [weak self] (response) in
+        print(requestAppointPost)
+        UserService.postRequestAppointmentCompany(requestAppointPost) { [weak self] (response) in
             print(response.result.value)
             if let _ = self {
                 if response.result.isSuccess {
@@ -264,7 +267,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                                 dispatch_after(time, dispatch_get_main_queue(), {
                                     self?.navigationController?.pushViewController(loginViewController, animated: true)
                                 })
-
+                                
                             }else{
                                 self?.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
@@ -279,15 +282,73 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                 }
             }
         }
-    }
-    func loadata() -> RequestAppointPost {
-        let requestAppointPost = RequestAppointPost()
-        let requestAppointData = RequestAppointData()
-        let patientAppointment = PatientAppointment()
         
-        requestAppointData.RequestDate = Context.NowDate()
-        requestAppointData.Type = typeRequest.text!
-        requestAppointData.Description = descriptionTextView.text!
+    }
+    
+    func postRequestAppointment(requestAppointPost:RequestAppointPost){
+        self.showloading(Define.MessageString.PleaseWait)
+        UserService.postRequestAppointmentPatient(requestAppointPost) { [weak self] (response) in
+            print(response.result.value)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let requestAppointResponse = Mapper<RequestAppointResponse>().map(response.result.value) {
+                            self!.hideLoading()
+                            if(requestAppointResponse.status == "success"){
+                                self!.alertView.alertMessage("Success", message: "Request Telehealth Success!")
+                                let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self?.navigationController?.pushViewController(loginViewController, animated: true)
+                                })
+                                
+                            }else{
+                                self?.hideLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self!.hideLoading()
+                    self?.showMessageNoNetwork()
+                }
+            }
+        }
+        
+    }
+    
+    func sendingData(){
+        if(Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != ""){
+            var requestAppointPostCompany = RequestAppointPostCompany()
+            requestAppointPostCompany = loadataCompany()
+            postRequestAppointmentCompany(requestAppointPostCompany)
+        }else{
+            var requestAppointPost = RequestAppointPost()
+            requestAppointPost =  loaddata()
+            postRequestAppointment(requestAppointPost)
+        }
+        
+    }
+    
+    func AppendAppointData(name:String,value:String)-> AppointmentData{
+        let appointmentData = AppointmentData()
+        appointmentData.Name = name
+        appointmentData.Value = value
+        return appointmentData
+    }
+    func loadataCompany() -> RequestAppointPostCompany {
+        let requestAppointPostCompany = RequestAppointPostCompany()
+        let requestAppointDataCompany = RequestAppointDataCompany()
+        let patientAppointment = PatientAppointment()
+        let patients = PatientsCompany()
+        let dataCompany = DataCompany()
+        patients.UID = staff.UID
+        
+        requestAppointDataCompany.RequestDate = Context.NowDate()
+        requestAppointDataCompany.Type = typeRequest.text!
+        //requestAppointDataCompany.Description = descriptionTextView.text!
         
         patientAppointment.FirstName = firstNameTextField.text!
         patientAppointment.LastName = lastNameTextField.text!
@@ -296,68 +357,61 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         patientAppointment.DOB = birthDayTextField.text!
         patientAppointment.Suburb = suburbTextField.text!
         
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("GPReferral",value: GPReferral))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("physiotherapy",value: physiotherapy))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("specialist",value: specialist))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("handTherapy",value: handTherapy))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("GP",value: GP))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("Rehab",value: Rehab))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("CompanyName",value: companyName.text!))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("siteID",value:site.ID ))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("companyPhoneNumber",value: companyPhoneNumberTextField.text!))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("contactPerson",value: contactPersonTextField.text!))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("exerciseRehab",value: exerciseRehab))
+        requestAppointDataCompany.appointmentData.append(AppendAppointData("Description",value: descriptionTextView.text!))
         
-        let appointmentDataGPReferral = AppointmentData()
-        appointmentDataGPReferral.Name = "GPReferral"
-        appointmentDataGPReferral.Value = GPReferral
-        requestAppointData.appointmentData.append(appointmentDataGPReferral)
+        requestAppointDataCompany.patientAppointment = patientAppointment
+        if(patients.UID != ""){
+            requestAppointDataCompany.patientsCompany.append(patients)
+        }
+        dataCompany.appointmentsCompany.append(requestAppointDataCompany)
+        requestAppointPostCompany.dataCompany = dataCompany
+        return requestAppointPostCompany
+    }
+    func loaddata() -> RequestAppointPost {
+        let requestAppointPost = RequestAppointPost()
+        let requestAppointData = RequestAppointData()
+        let patientAppointment = PatientAppointment()
         
-        let appointmentDataPhysiotherapy = AppointmentData()
-        appointmentDataPhysiotherapy.Name = "physiotherapy"
-        appointmentDataPhysiotherapy.Value = physiotherapy
-        requestAppointData.appointmentData.append(appointmentDataPhysiotherapy)
+        requestAppointData.RequestDate = Context.NowDate()
+        requestAppointData.Type = typeRequest.text!
+        //requestAppointData.Description = descriptionTextView.text!
         
-        let appointmentDataSpecialist = AppointmentData()
-        appointmentDataSpecialist.Name = "specialist"
-        appointmentDataSpecialist.Value = specialist
-        requestAppointData.appointmentData.append(appointmentDataSpecialist)
+        patientAppointment.FirstName = firstNameTextField.text!
+        patientAppointment.LastName = lastNameTextField.text!
+        patientAppointment.Email = emailTextField.text!
+        patientAppointment.PhoneNumber = contactPhoneTextField.text!
+        patientAppointment.DOB = birthDayTextField.text!
+        patientAppointment.Suburb = suburbTextField.text!
         
-        let appointmentDataHandTherapy = AppointmentData()
-        appointmentDataHandTherapy.Name = "handTherapy"
-        appointmentDataHandTherapy.Value = handTherapy
-        requestAppointData.appointmentData.append(appointmentDataHandTherapy)
-        
-//        let appointmentDataHandPhysiotherapy = AppointmentData()
-//        appointmentDataHandPhysiotherapy.Name = "physiotherapy"
-//        appointmentDataHandPhysiotherapy.Value = physiotherapy
-//        requestAppointData.appointmentData.append(appointmentDataHandPhysiotherapy)
-        
-        let appointmentDataGP = AppointmentData()
-        appointmentDataGP.Name = "GP"
-        appointmentDataGP.Value = GP
-        requestAppointData.appointmentData.append(appointmentDataGP)
-        
-        let appointmentDataTreatment = AppointmentData()
-        appointmentDataTreatment.Name = "treatment"
-        appointmentDataTreatment.Value = treatment
-        requestAppointData.appointmentData.append(appointmentDataTreatment)
-        
-        let appointmentDataCompanyName = AppointmentData()
-        appointmentDataCompanyName.Name = "companyName"
-        appointmentDataCompanyName.Value = companyName.text!
-        requestAppointData.appointmentData.append(appointmentDataCompanyName)
-        
-        let appointmentDataCompanyPhoneNumber = AppointmentData()
-        appointmentDataCompanyPhoneNumber.Name = "companyPhoneNumber"
-        appointmentDataCompanyPhoneNumber.Value = companyPhoneNumberTextField.text!
-        requestAppointData.appointmentData.append(appointmentDataCompanyPhoneNumber)
-        
-        let appointmentDataContactPerson = AppointmentData()
-        appointmentDataContactPerson.Name = "contactPerson"
-        appointmentDataContactPerson.Value = contactPersonTextField.text!
-        requestAppointData.appointmentData.append(appointmentDataContactPerson)
-        
-        let appointmentDataExerciseRehab = AppointmentData()
-        appointmentDataExerciseRehab.Name = "exerciseRehab"
-        appointmentDataExerciseRehab.Value = exerciseRehab
-        requestAppointData.appointmentData.append(appointmentDataExerciseRehab)
+        requestAppointData.appointmentData.append(AppendAppointData("GPReferral",value: GPReferral))
+        requestAppointData.appointmentData.append(AppendAppointData("physiotherapy",value: physiotherapy))
+        requestAppointData.appointmentData.append(AppendAppointData("specialist",value: specialist))
+        requestAppointData.appointmentData.append(AppendAppointData("handTherapy",value: handTherapy))
+        requestAppointData.appointmentData.append(AppendAppointData("GP",value: GP))
+        requestAppointData.appointmentData.append(AppendAppointData("Rehab",value: Rehab))
+        requestAppointData.appointmentData.append(AppendAppointData("CompanyName",value: companyName.text!))
+        requestAppointData.appointmentData.append(AppendAppointData("companyPhoneNumber",value: companyPhoneNumberTextField.text!))
+        requestAppointData.appointmentData.append(AppendAppointData("contactPerson",value: contactPersonTextField.text!))
+        requestAppointData.appointmentData.append(AppendAppointData("exerciseRehab",value: exerciseRehab))
+        requestAppointData.appointmentData.append(AppendAppointData("Description",value: descriptionTextView.text))
         
         requestAppointData.patientAppointment = patientAppointment
         requestAppointPost.data = requestAppointData
         
         return requestAppointPost
     }
-    //change color border
+    
     func borderTextFieldValid(textField:UITextField,color:UIColor){
         let border = CALayer()
         let width = CGFloat(1.0)
@@ -492,7 +546,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             }
             
         case typeRequest:
-            if Context.validatePhoneNumber(typeRequest.text!,regex:RegexString.MobileNumber) == false || typeRequest.text == "" {
+            if typeRequest.text == "" {
                 borderTextFieldValid(typeRequest, color: Constants.ColorCustom.colorCustomRed)
             }else {
                 borderTextFieldValid(typeRequest, color: Constants.ColorCustom.colorCustomBrow)

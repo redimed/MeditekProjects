@@ -16,11 +16,20 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
     var refreshControl: UIRefreshControl!
     var listStaff = ListStaff()
     var staff = Staff()
+    var CheckStaffInfor = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "List Staff"
         tableView.delegate = self
         tableView.dataSource = self
         loadData()
+    }
+    override func viewWillAppear(animated: Bool) {
+        if(CheckStaffInfor == true){
+            self.navigationController?.navigationBarHidden = false
+            self.navigationController?.navigationBar.topItem?.title = "Back"
+            self.navigationItem.title = "List Staff"
+        }
     }
     func loadData(){
         
@@ -47,41 +56,43 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
                         }
                     }
                 } else {
-                   // self!.hideLoading()
+                    // self!.hideLoading()
                     self?.showMessageNoNetwork()
                 }
             }
         }
-
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    override func viewWillAppear(animated: Bool) {
-        
-    }
-
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listStaff.data.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell;
-            cell.textLabel?.text = listStaff.data[indexPath.row].FirstName + listStaff.data[indexPath.row].LastName
-            return cell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell;
+        cell.textLabel?.text = listStaff.data[indexPath.row].FirstName + listStaff.data[indexPath.row].LastName
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        if(CheckStaffInfor != true){
+            Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaff)
+            Context.setDataDefaults("YES", key: Define.keyNSDefaults.DetailStaffCheck)
+            let profile = Mapper().toJSON(listStaff.data[indexPath.row])
+            Context.setDataDefaults(profile, key: Define.keyNSDefaults.DetailStaff)
+            self.navigationController?.popViewControllerAnimated(true)
+        }else{
+            let company :CompanyViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("CompanyViewControllerID") as! CompanyViewController
+            //company.site = listSite.data[indexPath.row]
+            self.navigationController?.pushViewController(company, animated: true)
+        }
         
-        Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaff)
-        Context.setDataDefaults("YES", key: Define.keyNSDefaults.DetailStaffCheck)
-        let profile = Mapper().toJSON(listStaff.data[indexPath.row])
-        Context.setDataDefaults(profile, key: Define.keyNSDefaults.DetailStaff)
-        self.navigationController?.popViewControllerAnimated(true)
-
     }
     @IBAction func actionBack(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)

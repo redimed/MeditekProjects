@@ -23,15 +23,25 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     var pastUrls :[String] =   []
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDataJson()
+        
         self.navigationController?.navigationBarHidden = true
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             buttonLogin.hidden = true
-            loadInformationData()
+            if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
+                loadInformationData()
+            }
         }
         
     }
     override func viewDidAppear(animated: Bool) {
+        if let _ = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as? String {
+            loadDataJson()
+        } else {
+            pastUrls = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as! [String]
+        }
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            buttonLogin.hidden = true
+        }
         pagingImage()
         resetTimer()
     }
@@ -46,6 +56,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     }
     
     func loadInformationData(){
+        //showloading(Define.MessageString.PleaseWait)
         let data = Context.getDataDefasults(Define.keyNSDefaults.userInfor)
         let respone = Mapper<LoginResponse>().map(data)
         
@@ -55,11 +66,14 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                 if response.result.isSuccess {
                     if let _ = response.result.value {
                         if let detailCompanyResponse = Mapper<DetailCompanyResponse>().map(response.result.value) {
-                            
                             if detailCompanyResponse.message == "success"  {
+                               // self!.hideLoading()
                                 let companyInfor = Mapper().toJSON(detailCompanyResponse)
-                                Context.setDataDefaults(companyInfor, key: Define.keyNSDefaults.companyInfor)
+                                if(detailCompanyResponse.data.count > 0){
+                                    Context.setDataDefaults(companyInfor, key: Define.keyNSDefaults.companyInfor)
+                                }
                             }else{
+                                //self!.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                     self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                 }
@@ -67,6 +81,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                         }
                     }
                 } else {
+                    //self!.hideLoading()
                     self?.showMessageNoNetwork()
                 }
                 
@@ -204,8 +219,8 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
         if segue.identifier == "TreatmentSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "Treatment"
-            submitViewController.treatment = "Y"
+            submitViewController.NavigateBarTitle = "Rehab"
+            submitViewController.Rehab = "Y"
         }else if segue.identifier == "specialistSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
@@ -252,6 +267,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                         let a = jsonObj["suburb"][i]["name"].string
                         pastUrls.append(a!)
                     }
+                Context.setDataDefaults(pastUrls, key: Define.keyNSDefaults.pastUrls)
                 } else {
                     print("could not get json from file, make sure that file contains valid json.")
                 }

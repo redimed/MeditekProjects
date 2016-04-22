@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AdSupport
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,26 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         setDeviceID()
-//        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        if Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != ""  {
-//            let loginNavi = mainStoryboard.instantiateViewControllerWithIdentifier("userNavigation") as! UINavigationController
-//            let loginVC = mainStoryboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-//            loginNavi.viewControllers = [loginVC]
-//            self.window?.rootViewController = loginNavi
-//        }else{
-//            let homeNavi = mainStoryboard.instantiateViewControllerWithIdentifier("userNavigation") as! UINavigationController
-//            let homeVC = mainStoryboard.instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
-//            homeNavi.viewControllers = [homeVC]
-//            self.window?.rootViewController = homeNavi
-//        }
         return true
     }
     
     func setDeviceID(){
         let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        
         if  defaults.valueForKey("deviceID") as? String == nil {
             let deviceID = UIDevice.currentDevice().identifierForVendor!.UUIDString
             defaults.setValue(deviceID, forKey: "deviceID")

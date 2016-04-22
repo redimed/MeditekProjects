@@ -15,18 +15,12 @@ class Define: NSObject {
     static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     static let versionBuild = "UIApplication.sharedApplication().versionBuild()"
     
-    
-    static let storyboardHome = UIStoryboard(name: "Home", bundle: nil)
-    
-    // api Key google
-    static let kGoogleMapAPIiOSKey = "AIzaSyBwaTicbxV4hr1K49YDnHFPQZlf6Bolj48"
-    static let kGoogleMapAPIServerKey = "AIzaSyDxAGN7lH46zvPedRH9QrCOtvYAWq2Gfc4"
-    
     static let LogoutFunction = "LogoutFunction"
     
     struct keyNSDefaults {
-        static let deviceID = "deviceID"
-        static let appid = "appid"
+        static let DeviceID = "deviceID"
+        static let Appid = "appid"
+        static let pastUrls = "pastUrls"
         
         static let Authorization = "Authorization"
         static let userInfor = "userInfor"
@@ -35,11 +29,11 @@ class Define: NSObject {
         static let companyInfor = "companyInfor"
         static let UIDLogoutFail = "UIDLogoutFail"
         static let UID = "UID"
-        static let refreshCode = "refreshCode"
+        static let RefreshCode = "refreshCode"
+        static let IsCompanyAccount = "IsCompanyAccount"
         
         static let DetailStaff = "DetailStaff"
         static let DetailStaffCheck = "DetailStaffCheck"
-        
         static let DetailSite = "DetailSite"
         static let DetailSiteCheck = "DetailSiteCheck"
     }
@@ -47,7 +41,19 @@ class Define: NSObject {
     struct MessageString {
         static let required = "Required"
         static let PleaseWait = "Please wait..."
+        
+    }
     
+    struct  forHTTPHeaderField {
+        static let ContentType = "Content-type"
+        static let Authorization = "Authorization"
+        static let Cookie = "Cookie"
+        static let DeviceId = "deviceId"
+        static let Appid = "appid"
+        static let ApplicationJson = "application/json"
+        static let IOS = "IOS"
+        static let SystemType = "systemType"
+        static let Requireupdatetoken = "requireupdatetoken"
     }
     
     enum UIUserInterfaceIdiom : Int
@@ -83,5 +89,5 @@ class Define: NSObject {
         static let iOS8 = (Version.SYS_VERSION_FLOAT >= 8.0 && Version.SYS_VERSION_FLOAT < 9.0)
         static let iOS9 = (Version.SYS_VERSION_FLOAT >= 9.0 && Version.SYS_VERSION_FLOAT < 10.0)
     }
-
+    
 }

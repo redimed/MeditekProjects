@@ -1452,13 +1452,22 @@ module.exports = {
 						break;
 
 					case 'CompanySites' :
+						var whereClause = {
+							CompanyID : got_company.ID,
+							Enable:'Y'
+						};
+						if(data.Search){
+							for(var key in data.Search) {
+								whereClause[key]={
+				                    like:'%'+data.Search[key]+'%'
+				                }
+							}
+						}
 						return CompanySite.findAndCountAll({
-							where:{
-								CompanyID : got_company.ID,
-								Enable:'Y'
-							},
+							where:whereClause,
 							limit:data.limit,
 							offset:data.offset,
+							order: data.order
 						});
 						break;
 
@@ -1559,7 +1568,7 @@ module.exports = {
 
 					if(!got_company) {
 						var err = new Error('CreateCompanyForOnlineBooking.error');
-						err.pushError('Company.father.notFound');
+						err.pushError('Company.notFound');
 						throw err;
 					}
 					else {

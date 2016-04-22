@@ -41,5 +41,10 @@ angular.module("app.authentication.WAAppointment.services", [])
                 data: data
             });
         };
+        services.updateWaAppointmentwithCompany = function(data) {
+            return api.all('appointment-wa-update/company').post({
+                data:data
+            });
+        }
         return services;
     });

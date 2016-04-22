@@ -22,7 +22,7 @@
                         <a href="index.html#tab_2" data-toggle="tab"> Patient</a>
                     </li>
                     <li>
-                        <a href="index.html#tab_5" data-toggle="tab"> Company</a>
+                        <a href="index.html#tab_5" data-toggle="tab" ng-click="getSiteFromAppData()" > Company</a>
                     </li>
                     <li>
                         <a href="index.html#tab_3" data-toggle="tab"> Treating Practitioner</a>
@@ -484,25 +484,77 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_5">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-12 col-md-offset-1">
-                                <div class="form-group">
-                                    <label class="control-label">Company Name</label>
-                                    <input type="text" class="form-control" ng-model="wainformation.Patients[0].Companies.CompanyName" />
+                        <div class="row margin-top-20">
+                                <div class="col-lg-10 col-md-10  col-lg-offset-1 col-md-offset-1">
+                                    <div class="form-group">
+                                        <label class="control-label">Company Name</label>
+                                        <input type="text" class="form-control" ng-model="wainformation.Company.CompanyName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Description</label>
+                                        <textarea class="form-control" ng-model="wainformation.Company.Description" ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Site Name</label>
+                                        <input type="text" name="site_name" class="form-control" ng-model="wainformation.CompanySite.SiteName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Address1</label>
+                                        <input type="text" name="address1" class="form-control" ng-model="wainformation.CompanySite.Address1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">address2</label>
+                                        <input type="text" name="address2" class="form-control" ng-model="wainformation.CompanySite.Address2" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-8">
+                                            <div class="form-group">
+                                                <label class="control-label">suburb</label>
+                                                <input type="text" name="suburb" class="form-control" ng-model="wainformation.CompanySite.Suburb" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">postcode</label>
+                                                <input type="text" name="postcode" class="form-control" ng-model="wainformation.CompanySite.Postcode" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">State</label>
+                                                <input type="text" name="state" class="form-control" ng-model="wainformation.CompanySite.State" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Country</label>
+                                                <input type="text" name="country" class="form-control" ng-model="wainformation.CompanySite.Country" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-8">
+                                            <div class="form-group">
+                                                <label class="control-label">Contact Name</label>
+                                                <input type="text" name="contact_name" class="form-control" ng-model="wainformation.CompanySite.ContactName" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Contact Number</label>
+                                                <input type="text" name="contact_number" class="form-control" ng-model="wainformation.CompanySite.HomePhoneNumber" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-md-offset-10">
+                                            <button class="btn btn-danger" id="btnLinkComp" ng-click="linkcompany()" >Link Company</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-12 col-md-offset-1">
-                                <div class="form-group">
-                                    <label class="control-label">Description</label>
-                                    <textarea class="form-control" ng-model="wainformation.Patients[0].Companies.Description" ></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2 col-md-offset-10">
-                                <button ng-click="linkcompany()" ng-show="ShowData.patient.Companies==null||ShowData.patient.Companies==''" >Link Company</button>
-                            </div>
-                        </div>
                     </div>
                     <div class="tab-pane" id="tab_3">
                         <div class="row">

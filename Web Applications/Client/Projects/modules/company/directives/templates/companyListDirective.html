@@ -85,4 +85,150 @@
 <script type="text/ng-template " id="companyCreatemodal">
     <company-create on-company-info="info" on-cancel="cancel" on-load="load" ></company-create>
 </script>
+
+<script type="text/ng-template " id="LinkStaffModal">
+    <div class="portlet box green">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="icon-list"></i>
+			<span class="caption-subject bold uppercase">Site</span>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<div class="table-scrollable">
+			<table class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr style="width:100%;">
+						<th width="1">#</th>
+						<th>
+							Site Name
+							<i class="fa fa-sort-asc"  ng-click="sort('SiteName','ASC')" ng-show="fieldSort['SiteName']=='ASC'" ></i>
+                        	<i class="fa fa-sort-desc" ng-click="sort('SiteName','DESC')"ng-show="fieldSort['SiteName']=='DESC'"></i>
+						</th>
+	 					<th width="15%">
+	 						Status
+	 						<i class="fa fa-sort-asc"  ng-click="sort('Enable','ASC')" ng-show="fieldSort['Enable']=='ASC'" ></i>
+                        	<i class="fa fa-sort-desc" ng-click="sort('Enable','DESC')"ng-show="fieldSort['Enable']=='DESC'"></i>
+	 					</th>
+	 					<th width="1" >&nbsp;</th>
+					</tr>
+					<tr ng-if="toggle">
+						<td>&nbsp;</td>
+						<td><input ng-model="search['SiteName']" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="Site Name" /></td>
+						<td>
+							<select class="form-control" ng-change="Search(search,'13')" ng-model="search.Enable">
+								<option value="Y">Enable</option>
+								<option value="N">Disable</option>
+							</select>
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="s in sites" ng-click="selectSite(s.ID)">
+						<td ng-click="selectSite(s)" >{{s.stt}}</td>
+						<td ng-click="selectSite(s)" >{{s.SiteName}}</td>
+						<td class="text-center" ng-click="selectSite(s)">
+							<i class="glyphicon glyphicon-ok font-green" ng-if="s.Enable=='Y'"></i>
+							<i class="glyphicon glyphicon-remove font-red" ng-if="s.Enable=='N'"></i>
+						</td>
+						<td>
+							<button class="btn btn-info" ng-click="viewDetail(s)" >Detail</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div class="col-md-5 col-sm-12">
+				&nbsp;
+			</div>
+			<div class="col-md-7 col-sm-12" style="text-align:right">
+				<div class="dataTables_paginate paging_simple_numbers" id="sample_10_paginate">
+					<uib-pagination 
+					boundary-links="true" 
+					total-items="count" 
+					ng-model="searchObjectMap.currentPage" 
+					class="pagination-lg " 
+					previous-text="&lsaquo; " 
+					next-text="&rsaquo; " 
+					first-text="&laquo; " 
+					last-text="&raquo; " 
+					items-per-page="searchObjectMap.limit" 
+					max-size="searchObjectMap.maxSize"
+					ng-change="setPage()"></uib-pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</script>
+
+<script type="text/ng-template " id="viewDetailModal">
+	<div class="modal-header">
+        <h4 class="modal-type uppercase bold font-red-thunderbird">
+            <i class="icon-settings"></i> Site Detail </h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-body" ng-if="type != 'delete'">
+            <div class="form-group">
+                <label class="control-label">Site Name</label>
+                <input type="text" name="site_name" class="form-control" ng-model="data.SiteName" disabled="true" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Address1</label>
+                <input type="text" name="address1" class="form-control" ng-model="data.Address1" disabled="true" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">address2</label>
+                <input type="text" name="address2" class="form-control" ng-model="data.Address2" disabled="true" />
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group">
+                        <label class="control-label">suburb</label>
+                        <input type="text" name="suburb" class="form-control" ng-model="data.Suburb" disabled="true" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">postcode</label>
+                        <input type="text" name="postcode" class="form-control" ng-model="data.Postcode" disabled="true" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">State</label>
+                        <input type="text" name="state" class="form-control" ng-model="data.State" disabled="true" />
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Country</label>
+                        <input type="text" name="country" class="form-control" ng-model="data.Country" disabled="true" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group">
+                        <label class="control-label">Contact Name</label>
+                        <input type="text" name="contact_name" class="form-control" ng-model="data.ContactName" disabled="true" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">Contact Number</label>
+                        <input type="text" name="contact_number" class="form-control" ng-model="data.HomePhoneNumber" disabled="true" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="background: #f5f5f5">
+    </div>
+</script>
+
 <!-- end content page -->

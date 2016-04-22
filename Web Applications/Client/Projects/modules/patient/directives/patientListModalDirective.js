@@ -132,7 +132,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientKin = angular.copy(data);;
+						scope.info.PatientKin = angular.copy(data);
 						console.log(scope.info.PatientKin);
 					}
 					else if (scope.isHaveKins == data) {
@@ -172,7 +172,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
-						scope.info.PatientFund = angular.copy(data);;
+						scope.info.PatientFund = angular.copy(data);
 						console.log(scope.info.PatientFund);
 					}
 					else if (scope.isHaveFunds == data) {
@@ -193,7 +193,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientPension = angular.copy(data);;
+						scope.info.PatientPension = angular.copy(data);
 						console.log(scope.info.PatientPension);
 					}
 					else if (scope.isHavePensions == data) {
@@ -213,7 +213,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientDVA = angular.copy(data);;
+						scope.info.PatientDVA = angular.copy(data);
 						console.log(scope.info.PatientDVA);
 					}
 					else if (scope.isHaveDVAs == data) {
@@ -234,7 +234,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientMedicare = angular.copy(data);;
+						scope.info.PatientMedicare = angular.copy(data);
 						console.log(scope.info.PatientMedicare);
 					}
 					else if (scope.isHaveMedicares == data) {

@@ -465,26 +465,27 @@ module.exports = {
             res.serverError('data failed');
         } else {
             var role = HelperService.GetRole(req.user.roles);
-            // if (role.isInternalPractitioner ||
-            //     role.isAdmin ||
-            //     role.isAssistant) {
-            Services.UpdateRequestWAAppointmentCompany(data, req.user)
-                .then(function(success) {
-                    success.transaction.commit();
-                    res.ok('success');
-                }, function(err) {
-                    if (HelperService.CheckExistData(err) &&
-                        HelperService.CheckExistData(err.transaction) &&
-                        HelperService.CheckExistData(err.error)) {
-                        err.transaction.rollback();
-                        res.serverError(ErrorWrap(err.error));
-                    } else {
-                        res.serverError(ErrorWrap(err));
-                    }
-                });
-            // } else {
-            //     res.serverError('user.not(interalPractitioner,admin,assistant, company)');
-            // }
+            if (role.isInternalPractitioner ||
+                role.isAdmin ||
+                role.isAssistant ||
+                role.isOrganization) {
+                Services.UpdateRequestWAAppointmentCompany(data, req.user)
+                    .then(function(success) {
+                        success.transaction.commit();
+                        res.ok('success');
+                    }, function(err) {
+                        if (HelperService.CheckExistData(err) &&
+                            HelperService.CheckExistData(err.transaction) &&
+                            HelperService.CheckExistData(err.error)) {
+                            err.transaction.rollback();
+                            res.serverError(ErrorWrap(err.error));
+                        } else {
+                            res.serverError(ErrorWrap(err));
+                        }
+                    });
+            } else {
+                res.serverError('user.not(interalPractitioner,admin,assistant, isOrganization)');
+            }
         }
     }
 };

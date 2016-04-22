@@ -75,4 +75,8 @@ module.exports = {
         controller: 'Appointment/WAAppointmentController',
         action: 'RequestWAAppointmentPatientNew'
     },
+    'post /api/appointment-wa-update/company': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'UpdateRequestWAAppointmentCompany'
+    }
 };

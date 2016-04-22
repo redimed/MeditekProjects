@@ -3,7 +3,8 @@ module.exports = function(objRel) {
     var defer = $q.defer();
     var error = new Error('RelAppointmentDoctor');
     if (!_.isEmpty(objRel) &&
-        !_.isEmpty(objRel.where)) {
+        !_.isEmpty(objRel.where) &&
+        !_.isEmpty(objRel.appointmentObject)) {
         Doctor.findAll({
                 attributes: ['ID'],
                 where: {
@@ -20,12 +21,14 @@ module.exports = function(objRel) {
                     });
                 }
             }, function(err) {
+                console.log('err1',err)
                 error.pushError(error);
                 defer.reject(error);
             })
             .then(function(relapptDoctorCreated) {
                 defer.resolve(relapptDoctorCreated);
             }, function(err) {
+                console.log('err2', err)
                 error.pushError(error);
                 defer.reject(error);
             });

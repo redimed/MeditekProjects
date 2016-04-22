@@ -458,5 +458,33 @@ module.exports = {
                     res.serverError(ErrorWrap(err));
                 }
             })
+    },
+    UpdateRequestWAAppointmentCompany: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            var role = HelperService.GetRole(req.user.roles);
+            // if (role.isInternalPractitioner ||
+            //     role.isAdmin ||
+            //     role.isAssistant) {
+            Services.UpdateRequestWAAppointmentCompany(data, req.user)
+                .then(function(success) {
+                    success.transaction.commit();
+                    res.ok('success');
+                }, function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
+                        err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
+                    }
+                });
+            // } else {
+            //     res.serverError('user.not(interalPractitioner,admin,assistant, company)');
+            // }
+        }
     }
 };

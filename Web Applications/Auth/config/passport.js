@@ -79,6 +79,8 @@ passport.use(new LocalStrategy({
             where: whereClause,
             include: [{
                 model: RelUserRole,
+                where: {Enable:'Y'},
+                required: false,
                 attributes: ['ID', 'UserAccountId', 'RoleId', 'SiteId'],
                 include: {
                     model: Role,
@@ -118,7 +120,6 @@ passport.use(new LocalStrategy({
         })
         .then(function(user) {
             //Chuẩn bị thông tin trả về
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",user.RelUserRoles);
             var listRoles = [];
             _.each(user.RelUserRoles, function(item) {
                 if (HelperService.CheckExistData(item) &&

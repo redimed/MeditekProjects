@@ -4,7 +4,7 @@ app.directive('onsiteAppointment', function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'modules/onsite/directives/templates/onsiteAppointmentDirective.html',
-		controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$timeout,$scope, $uibModal){
+		controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$timeout,$scope, $uibModal, companyService){
 
 			o.loadingPage(true);
             WAAppointmentService.getDetailWAAppointmentByUid($stateParams.UID).then(function(data) {
@@ -88,7 +88,16 @@ app.directive('onsiteAppointment', function(){
                             $scope.ShowData.patient.PhoneNumber = $scope.ShowData.patient.UserAccount.PhoneNumber;
                         };
                     } else {
-                        $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment.PatientAppointment;
+                        // $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment?$scope.wainformation.TelehealthAppointment.PatientAppointment:null;
+                        if(_.isEmpty($scope.wainformation.TelehealthAppointment) == true) {
+                            if($scope.wainformation.PatientAppointments) {
+                                console.log("asdasdad");
+                                $scope.ShowData.patient = $scope.wainformation.PatientAppointments[0];
+                            }
+                        }
+                        else {
+                            $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment.PatientAppointment;
+                        }
                     }
                     if ($scope.wainformation.TelehealthAppointment != null || $scope.wainformation.TelehealthAppointment != undefined) {
                         $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
@@ -126,6 +135,22 @@ app.directive('onsiteAppointment', function(){
                             $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
                         }
                     }
+                }
+                else if ($scope.wainformation.PatientAppointments) {
+                    if($scope.wainformation.PatientAppointments.length > 0) {
+                        $scope.info = {
+                            apptStatus: WAConstant.apptStatus,
+                            listDoctorTreatingPractitioner: null,
+                            patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.PatientAppointments[0],
+                            appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('DD/MM/YYYY') : null,
+                            appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('HH:mm') : null,
+                            MedicareExpiryDate: ($scope.wainformation.PatientAppointments && $scope.wainformation.PatientAppointments[0].MedicareExpiryDate != null) ? moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate).format('DD/MM/YYYY') : null,
+                            listDoctorTreatingPractitioner: null,
+                            selectRadioGender: function() {
+                                $scope.wainformation.PatientAppointments[0].Gender = "";
+                            }
+                        }
+                    }
                 } else {
                     $scope.info = {
                         apptStatus: WAConstant.apptStatus,
@@ -153,13 +178,24 @@ app.directive('onsiteAppointment', function(){
                     })
                 }
                 $scope.ClinicalDetails = function() {
-                    for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
-                        var newkey = key.split("__").join(" ");
-                        var res = newkey.split(".");
-                        var keyOtherRequest = res[2] + res[3];
-                        keyOtherRequest = keyOtherRequest.split(" ").join("");
-                        if ($scope[keyOtherRequest] != undefined) {
-                            if ($scope[keyOtherRequest] == 'Yes') {
+                    if($scope.wainformation.TelehealthAppointment){
+                        for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
+                            var newkey = key.split("__").join(" ");
+                            var res = newkey.split(".");
+                            var keyOtherRequest = res[2] + res[3];
+                            keyOtherRequest = keyOtherRequest.split(" ").join("");
+                            if ($scope[keyOtherRequest] != undefined) {
+                                if ($scope[keyOtherRequest] == 'Yes') {
+                                    var object = {
+                                        Section: res[0],
+                                        Category: res[1],
+                                        Type: res[2],
+                                        Name: res[3],
+                                        Value: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].Value,
+                                        FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
+                                    }
+                                }
+                            } else {
                                 var object = {
                                     Section: res[0],
                                     Category: res[1],
@@ -169,109 +205,155 @@ app.directive('onsiteAppointment', function(){
                                     FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
                                 }
                             }
-                        } else {
-                            var object = {
-                                Section: res[0],
-                                Category: res[1],
-                                Type: res[2],
-                                Name: res[3],
-                                Value: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].Value,
-                                FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
-                            }
-                        }
-                        var isExist = false;
+                            var isExist = false;
 
-                        ClinicalDetailsTemp.forEach(function(valueTemp, keyTemp) {
-                            if (valueTemp !== undefined) {
-                                if (valueTemp.Section == object.Section &&
-                                    valueTemp.Category == object.Category &&
-                                    valueTemp.Type == object.Type &&
-                                    valueTemp.Name == object.Name) {
+                            ClinicalDetailsTemp.forEach(function(valueTemp, keyTemp) {
+                                if (valueTemp !== undefined) {
+                                    if (valueTemp.Section == object.Section &&
+                                        valueTemp.Category == object.Category &&
+                                        valueTemp.Type == object.Type &&
+                                        valueTemp.Name == object.Name) {
+                                        isExist = true;
+                                    }
+                                } else {
                                     isExist = true;
-                                }
-                            } else {
-                                isExist = true;
-                            };
+                                };
 
-                        })
-                        if (!isExist) {
-                            ClinicalDetailsTemp.push(object);
-                        };
-                    };
-                    var countCliniDetail = 0;
-                    ClinicalDetailsTemp.forEach(function(value, key) {
-                        if (value !== undefined) {
-                            if (value.Value != 'N' && value.Value != null) {
-                                countCliniDetail++;
+                            })
+                            if (!isExist) {
+                                ClinicalDetailsTemp.push(object);
                             };
                         };
-                    })
-                    if (countCliniDetail == 0) {
-                        ClinicalDetailsTemp = [];
+                        var countCliniDetail = 0;
+                        ClinicalDetailsTemp.forEach(function(value, key) {
+                            if (value !== undefined) {
+                                if (value.Value != 'N' && value.Value != null) {
+                                    countCliniDetail++;
+                                };
+                            };
+                        })
+                        if (countCliniDetail == 0) {
+                            ClinicalDetailsTemp = [];
+                        }
+                        $scope.wainformation.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
                     }
-                    $scope.wainformation.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
                 }
                 $scope.saveWaAppointment = function() {
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
                     console.log($scope.wainformation)
-                    WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
-                        console.log('saveWaAppointment', data);
-                        toastr.success("Update appointment successfully !");
-                        swal.close();
-                        $state.go("authentication.onsite.appointment", {}, {
-                            reload: true
-                        });
-                    }, function(err) {
-                        if (err.status == 401) {
+                    if($scope.wainformation.PatientAppointments) {
+                        $scope.wainformation.PatientAppointment = $scope.wainformation.PatientAppointments.length>0?$scope.wainformation.PatientAppointments[0]:{};
+                        delete $scope.wainformation['PatientAppointments'];
+                        WAAppointmentService.updateWaAppointmentwithCompany($scope.wainformation).then(function(data) {
+                            console.log('saveWaAppointment', data);
+                            toastr.success("Update appointment successfully !");
                             swal.close();
-                        } else {
-                            swal.close();
-                            toastr.error('Update Appointment Failed');
                             $state.go("authentication.onsite.appointment", {}, {
                                 reload: true
                             });
-                        }
-                    });
+                        }, function(err) {
+                            if (err.status == 401) {
+                                swal.close();
+                            } else {
+                                swal.close();
+                                toastr.error('Update Appointment Failed');
+                                $state.go("authentication.onsite.appointment", {}, {
+                                    reload: true
+                                });
+                            }
+                        });
+
+                    }
+                    else {
+                        WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
+                            console.log('saveWaAppointment', data);
+                            toastr.success("Update appointment successfully !");
+                            swal.close();
+                            $state.go("authentication.onsite.appointment", {}, {
+                                reload: true
+                            });
+                        }, function(err) {
+                            if (err.status == 401) {
+                                swal.close();
+                            } else {
+                                swal.close();
+                                toastr.error('Update Appointment Failed');
+                                $state.go("authentication.onsite.appointment", {}, {
+                                    reload: true
+                                });
+                            }
+                        })
+                    }
                 }
                 $scope.ValidateData = function() {
-                	console.log($scope.wainformation)
-                    if (!$scope.wainformation.TelehealthAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible) {
-                        if ($scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'N') {
-                            $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber = null;
-                            $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber = null;
-                            $scope.info.MedicareExpiryDate = null;
-                            $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber = null;
-                        };
-                    };
-                    if ($scope.wainformation.TelehealthAppointment.WAAppointment !== null && !$scope.wainformation.TelehealthAppointment) {
-                        if (!$scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP) {
-                            if ($scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'Y') {
-                                $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPName = null;
-                                $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPContactNumber = null;
-                                $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPFaxNumber = null;
+                	console.log($scope.wainformation);
+                    if($scope.wainformation.TelehealthAppointment != null && $scope.wainformation.TelehealthAppointment != ''){
+                        if (!$scope.wainformation.TelehealthAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible) {
+                            if ($scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'N') {
+                                $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber = null;
+                                $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber = null;
+                                $scope.info.MedicareExpiryDate = null;
+                                $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber = null;
                             };
                         };
-                    };
-                    if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
-                        var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
-                        var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time;
-                        $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").format('YYYY-MM-DD HH:mm:ss Z');
-                    } else {
-                        $scope.wainformation.FromTime = null;
-                    };
-                    console.log($scope.wainformation.TelehealthAppointment.PatientAppointment)
-                    if ($scope.info.MedicareExpiryDate != null && $scope.info.MedicareExpiryDate != '') {
-                        $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
-                    } else {
-                        if ($scope.wainformation.TelehealthAppointment.PatientAppointment == null) {
-                            $scope.wainformation.TelehealthAppointment.PatientAppointment = {}
+                        if ($scope.wainformation.TelehealthAppointment.WAAppointment !== null && !$scope.wainformation.TelehealthAppointment) {
+                            if (!$scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP) {
+                                if ($scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'Y') {
+                                    $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPName = null;
+                                    $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPContactNumber = null;
+                                    $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPFaxNumber = null;
+                                };
+                            };
                         };
-                        $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = null
-                    };
-                    if ($scope.wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'N') {
-                        $scope.wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage = null;
-                    };
+                        if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
+                            var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
+                            var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time;
+                            $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").format('YYYY-MM-DD HH:mm:ss Z');
+                        } else {
+                            $scope.wainformation.FromTime = null;
+                        };
+                        console.log($scope.wainformation.TelehealthAppointment.PatientAppointment)
+                        if ($scope.info.MedicareExpiryDate != null && $scope.info.MedicareExpiryDate != '') {
+                            $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
+                        } else {
+                            if ($scope.wainformation.TelehealthAppointment.PatientAppointment == null) {
+                                $scope.wainformation.TelehealthAppointment.PatientAppointment = {}
+                            };
+                            $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = null
+                        };
+                        if ($scope.wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'N') {
+                            $scope.wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage = null;
+                        };
+                    }
+                    else if($scope.wainformation.PatientAppointments != null && $scope.wainformation.PatientAppointments.length > 0) {
+                        if ($scope.wainformation.PatientAppointments[0].length > 0 && !$scope.wainformation.PatientAppointments[0].MedicareEligible) {
+                            if ($scope.wainformation.PatientAppointments[0].MedicareEligible == 'N') {
+                                $scope.wainformation.PatientAppointments[0].MedicareNumber = null;
+                                $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber = null;
+                                $scope.info.MedicareExpiryDate = null;
+                                $scope.wainformation.PatientAppointments[0].DVANumber = null;
+                            };
+                        };
+                        if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
+                            var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
+                            var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time;
+                            $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").format('YYYY-MM-DD HH:mm:ss Z');
+                        } else {
+                            $scope.wainformation.FromTime = null;
+                        };
+                        if ($scope.info.MedicareExpiryDate != null && $scope.info.MedicareExpiryDate != '') {
+                            $scope.wainformation.PatientAppointments[0].MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
+                        } else {
+                            if ($scope.wainformation.PatientAppointments == null) {
+                                $scope.wainformation.PatientAppointments[0] = {};
+                            };
+                            $scope.wainformation.PatientAppointments[0].MedicareExpiryDate = null
+                        };
+                        if ($scope.wainformation.PatientAppointments[0].InterpreterRequired == 'N') {
+                            $scope.wainformation.PatientAppointments[0].InterpreterLanguage = null;
+                        };
+                    }
                 }
                 $scope.CheckValidation = function() {
                     var stringAlert = null
@@ -315,7 +397,7 @@ app.directive('onsiteAppointment', function(){
                 };
 
                 $scope.selectPatient = function() {
-                    var PatientAppointment = angular.copy($scope.wainformation.TelehealthAppointment.PatientAppointment)
+                    var PatientAppointment = angular.copy($scope.ShowData.patient);
                     var postData = {
                         "data": {
                             "Title": PatientAppointment.Title,
@@ -401,6 +483,7 @@ app.directive('onsiteAppointment', function(){
                                     $scope.wainformation.Patients.push({
                                         UID: patientUid
                                     });
+                                    $scope.wainformation.Company = data.data[0].Companies[0];
                                     toastr.success("Select patient successfully!", "success");
                                 };
                             })
@@ -512,29 +595,131 @@ app.directive('onsiteAppointment', function(){
             });
 
             $scope.linkcompany = function() {
-                console.log($scope.wainformation.Patients[0]);
-                var patientuid = $scope.wainformation.Patients[0].UID;
-                var companyinfo = $scope.wainformation.Patients[0].Companies;
-                var returnData;
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'LinkCompanyModal',
-                    controller: function($scope,$modalInstance){
-                        $scope.patientuid  = patientuid;
-                        $scope.info = companyinfo;
-                        $scope.cancel = function(data){
-                            console.log("link success ",data);
-                            returnData = data;
-                            $modalInstance.dismiss('cancel');
-                        };
-                    },
-                    // size: 'lg',
-                    windowClass: 'app-modal-window'
-                }).result.finally(function(){
-                    if(returnData) {
-                        $scope.wainformation.Patients[0].Companies = returnData;
-                        console.log($scope.wainformation.Patients);
+                if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0){
+                    console.log($scope.wainformation.Patients[0]);
+                    var patientuid = $scope.wainformation.Patients[0].UID;
+                    console.log('$scope.wainformation ',$scope.wainformation);
+                    var companyinfo = {
+                        CompanyName: $scope.wainformation.Company?$scope.wainformation.Company.CompanyName:null,
+                        Description: $scope.wainformation.Company?$scope.wainformation.Company.Description:null,
+                        CompanySiteSiteName: $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.SiteName:null,
+                        CompanySiteAddress1: $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.Address1:null,
+                        CompanySiteAddress2: $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.Address2:null,
+                        CompanySiteSuburb  : $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.Suburb:null,
+                        CompanySitePostcode: $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.Postcode:null,
+                        CompanySiteCountry : $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.Country:null,
+                        CompanySiteState   : $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.State:null,
+                        CompanySiteContactName: $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.ContactName:null,
+                        CompanySiteHomePhoneNumber: $scope.wainformation.CompanySite?$scope.wainformation.CompanySite.HomePhoneNumber:null,
+                    };
+                    var returnData;
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'LinkCompanyModal',
+                        controller: function($scope,$modalInstance){
+                            $scope.patientuid  = patientuid;
+                            $scope.info = companyinfo;
+                            $scope.cancel = function(data){
+                                console.log("link success ",data);
+                                returnData = data;
+                                toastr.success('link company success');
+                                $modalInstance.dismiss('cancel');
+                            };
+                        },
+                        // size: 'lg',
+                        windowClass: 'app-modal-window'
+                    }).result.finally(function(){
+                        if(returnData) {
+                            companyService.getDetailSite({model: 'CompanySite',whereClause: {ID:returnData.site}, getCompany: false})
+                            .then(function(result) {
+                                console.log(result);
+                                $scope.wainformation.CompanySite = result.data;
+                                $scope.wainformation.Company = returnData.company;
+                                var Site = $scope.wainformation.AppointmentData.filter(function(el) {return el.Name == 'SiteID'});
+                                if(Site.length > 0) {
+                                    for(var i = 0; i < $scope.wainformation.AppointmentData.length; i++) {
+                                        if($scope.wainformation.AppointmentData[i].Name == 'SiteID') {
+                                            $scope.wainformation.AppointmentData[i].Value = returnData.site;
+                                        }
+                                    }
+                                }
+                                else {
+                                    $scope.wainformation.AppointmentData.push({
+                                        Name: 'SiteID',
+                                        Value: returnData.site,
+                                        Section: 'Telehealth',
+                                        Category: 'Appointment',
+                                        Type: 'RequestPatient',
+                                        Note:null,
+                                        Description:null,
+
+                                    });
+                                }
+                            },function(err) {
+                                console.log(err);
+                            });
+                            // console.log("returnData ",returnData);
+                            // $scope.wainformation.Company = returnData;
+                            // console.log($scope.wainformation.Patients);
+                        }
+                    });
+                }
+            };
+
+            $scope.getSiteFromAppData = function() {
+
+                var nocompany = false;
+                if(!$scope.wainformation.Patients || $scope.wainformation.Patients.length == 0)
+                    nocompany = true;
+                else {
+                    if(!$scope.wainformation.Patients[0].Companies || $scope.wainformation.Patients[0].Companies.length == 0)
+                        nocompany = true;
+                    else {
+                        $scope.wainformation.Company = $scope.wainformation.Patients[0].Companies[0];
                     }
-                });
+                }
+
+
+                function getDetailSite(whereClause , getCompany) {
+                    companyService.getDetailSite({model: 'CompanySite',whereClause: whereClause, getCompany: getCompany})
+                    .then(function(result) {
+                        console.log(result);
+                        $scope.wainformation.CompanySite = result.data;
+                        if(result.company) {
+                            $scope.wainformation.Company = result.company;
+                        }
+                    },function(err) {
+                        console.log(err);
+                    });
+                }
+
+                var iscomp = false;
+                if($scope.wainformation.AppointmentData) {
+
+                    for(var i = 0; i < $scope.wainformation.AppointmentData.length; i++) {
+                        if($scope.wainformation.AppointmentData[i].Name == 'SiteIDRefer') {
+                            $('#btnLinkComp').hide();
+                            getDetailSite({SiteIDRefer:$scope.wainformation.AppointmentData[i].Value}, nocompany);
+                        }
+                        else if($scope.wainformation.AppointmentData[i].Name == 'SiteID') {
+                            getDetailSite({ID:$scope.wainformation.AppointmentData[i].Value}, nocompany);
+                        }
+                        else {
+                            iscomp = true;
+                        }
+                    }
+                }
+
+                if(iscomp == true) {
+                    if($scope.wainformation.Company){
+                        companyService.getDetailChild({UID:$scope.wainformation.Company.UID,model:"CompanySites",limit:1,order:[['CreatedDate','ASC']]})
+                        .then(function(result) {
+                            console.log(result);
+                            $scope.wainformation.CompanySite = result.data[0];
+                        },function(err) {
+                            console.log(err);
+                        });
+                    }
+                }
             };
 
 		},

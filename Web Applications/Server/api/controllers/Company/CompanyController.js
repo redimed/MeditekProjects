@@ -217,6 +217,53 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         });
     },
+
+    GetDetailSiteBySiteIdRefer : function(req, res) {
+        var data = req.body.data;
+        if(!data) {
+            var err = new Error('GetDetailSiteBySiteIdRefer.error');
+            err.pushError('invalid.params');
+            res.serverError(ErrorWrap(err));
+        }
+
+        if(!data.model) {
+            var err = new Error('GetDetailSiteBySiteIdRefer.error');
+            err.pushError('invalid.model');
+            res.serverError(ErrorWrap(err));
+        }
+
+        if(!data.whereClause) {
+            var err = new Error('GetDetailSiteBySiteIdRefer.error');
+            err.pushError('invalid.whereClause');
+            res.serverError(ErrorWrap(err));
+        }
+
+        data.whereClause.Enable = 'Y';
+
+        Services.Company.loadDetail({model:data.model,whereClause:data.whereClause})
+        .then(function(result) {
+            if(!result) {
+                var err = new Error('GetDetailSiteBySiteIdRefer.error');
+                err.pushError('Site.notFound');
+                res.serverError(ErrorWrap(err));
+            }
+            else {
+                if(data.getCompany == false){
+                    res.ok({message:"success",data:result});
+                }
+                else {
+                    Services.Company.loadDetail({model: 'Company',whereClause:{ID:result.CompanyID,Enable:'Y',Active:'Y'}})
+                    .then(function(got_company) {
+                        res.ok({message:"success",data:result,company:got_company});
+                    },function(err) {
+                        res.serverError(ErrorWrap(err));
+                    });
+                }
+            }
+        },function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
     
 
     Test: function(req, res) {

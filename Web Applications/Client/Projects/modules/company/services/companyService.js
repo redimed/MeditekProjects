@@ -230,5 +230,10 @@ angular.module('app.authentication.company.service', [])
     	return createUser.post({data:data});
     };
 
+    services.getDetailSite = function(data) {
+    	var getDetailSite = api.all('company/get-detail-site');
+    	return getDetailSite.post({data:data});
+    };
+
 	return services;
 });

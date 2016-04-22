@@ -61,6 +61,7 @@ class VerifyViewController: BaseViewController {
             self.LogInPhoneNumber(UserUID, PinNumber: textFieldVerifyCode.text!)
         }
     }
+    
     func LogInPhoneNumber(UserUID:String,PinNumber:String){
         let login:Login = Login();
         login.UserUID = UserUID
@@ -75,8 +76,14 @@ class VerifyViewController: BaseViewController {
                             
                             
                             if loginResponse.status == "success"  {
+                                print(loginResponse.user?.roles)
+                                for var i = 0; i < loginResponse.user?.roles.count; i += 1 {
+                                    if(loginResponse.user?.roles[i].ID == Constants.StringContant.RolesCompanyID){
+                                        Context.setDataDefaults("true",key: Define.keyNSDefaults.IsCompanyAccount)
+                                    }
+                                }
                                 //Set hearder data
-                                Context.setDataDefaults(loginResponse.refreshCode, key: Define.keyNSDefaults.refreshCode)
+                                Context.setDataDefaults(loginResponse.refreshCode, key: Define.keyNSDefaults.RefreshCode)
                                 let token =  "Bearer \(loginResponse.token)"
                                 Context.setDataDefaults(token, key: Define.keyNSDefaults.Authorization)
                                 Context.setDataDefaults("login", key: Define.keyNSDefaults.userLogin)
@@ -87,8 +94,9 @@ class VerifyViewController: BaseViewController {
                                 let profile = Mapper().toJSON(loginResponse)
                                 Context.setDataDefaults(profile, key: Define.keyNSDefaults.userInfor)
                                 //end setHeader data
-                                self?.hideLoading()
+                                
                                 let loginViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
+                                self?.hideLoading()
                                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                 dispatch_after(time, dispatch_get_main_queue(), {
                                     self?.navigationController?.pushViewController(loginViewController, animated: true)

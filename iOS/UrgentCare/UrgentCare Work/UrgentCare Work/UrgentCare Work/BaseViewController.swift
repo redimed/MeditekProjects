@@ -58,7 +58,8 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         Context.deleteDatDefaults(Define.keyNSDefaults.Cookie)
         Context.deleteDatDefaults(Define.keyNSDefaults.companyInfor)
         Context.deleteDatDefaults(Define.keyNSDefaults.UIDLogoutFail)
-        Context.deleteDatDefaults(Define.keyNSDefaults.UID)  
+        Context.deleteDatDefaults(Define.keyNSDefaults.UID)
+        Context.deleteDatDefaults(Define.keyNSDefaults.IsCompanyAccount)
     }
     
     func CallAPILogout(uid:String){
@@ -69,14 +70,17 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
                 if response.result.isSuccess {
                     if let _ = response.result.value {
                         if let logoutResponse = Mapper<LogoutResponse>().map(response.result.value) {
-                            self!.hideLoading()
                             if(logoutResponse.status == "success"){
+                                
                                 let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
                                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                
+                                self!.hideLoading()
                                 dispatch_after(time, dispatch_get_main_queue(), {
                                     self?.navigationController?.pushViewController(loginViewController, animated: true)
                                 })
                             }else{
+                                self!.hideLoading()
                                 let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
                                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                 dispatch_after(time, dispatch_get_main_queue(), {
@@ -87,7 +91,12 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
                     }
                 } else {
                     self!.hideLoading()
-                    self?.showMessageNoNetwork()
+                    let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
+                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                    dispatch_after(time, dispatch_get_main_queue(), {
+                        self?.navigationController?.pushViewController(loginViewController, animated: true)
+                    })
+
                 }
             }
         }

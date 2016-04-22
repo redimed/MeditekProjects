@@ -1691,6 +1691,7 @@
                                 <color key="backgroundColor" red="0.94509803921568625" green="0.93725490196078431" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="jn7-UC-nzJ" secondAttribute="height" multiplier="160:47" id="8ck-VH-7zZ"/>
+                                    <constraint firstAttribute="width" secondItem="jn7-UC-nzJ" secondAttribute="height" multiplier="160:47" id="dgb-s5-6bO"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">

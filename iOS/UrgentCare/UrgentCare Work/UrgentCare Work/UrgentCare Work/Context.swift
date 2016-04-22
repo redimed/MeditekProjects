@@ -45,6 +45,10 @@ class Context {
             message = "User Is Not Exist"
         }else if(ErrorType == "Activation.Error"){
             message = "Activation Code Invalid"
+        }else if(ErrorType == "PinNumber.Invalid"){
+            message = "Pin Number Invalid"
+        }else if(ErrorType == "PinNumber.Expired"){
+            message = "Pin Number Expired"
         }else if(ErrorType == "GetListStaff.error"){
             message = "User is Not Admin"
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){

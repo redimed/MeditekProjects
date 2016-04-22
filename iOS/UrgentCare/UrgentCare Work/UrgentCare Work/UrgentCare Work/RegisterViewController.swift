@@ -58,20 +58,20 @@ class RegisterViewController : BaseViewController {
         requestRegisterPost.data = requestRegister
         
         UserService.postRequestVerify(requestRegisterPost) { [weak self] (response) in
-            print(response.result)
+            print(response)
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
                         if let responseRegister = Mapper<ResponseRegister>().map(response.result.value) {
                             
                             if(responseRegister.UserUID != ""){
-                                self!.hideLoading()
+                                
                                 Context.setDataDefaults(responseRegister.UserUID, key: Define.keyNSDefaults.UID)
                                 
                                 let VerifyPhone :VerifyViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("VerifyViewControllerID") as! VerifyViewController
                                 VerifyPhone.UserUID = responseRegister.UserUID
                                 VerifyPhone.Activated = responseRegister.Activated
-                                
+                                self!.hideLoading()
                                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                 dispatch_after(time, dispatch_get_main_queue(), {
                                     self?.navigationController?.pushViewController(VerifyPhone, animated: true)
@@ -96,12 +96,13 @@ class RegisterViewController : BaseViewController {
     //sending data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     }
-    //Giap:  Close keyboard if touch out textfield
+    // Close keyboard if touch out textfield
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("out test")
         view.endEditing(true)
     }
     
-    //Giap: Hide navigation bar
+    // Hide navigation bar
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
     }
@@ -110,7 +111,7 @@ class RegisterViewController : BaseViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    //Giap: Animation phone view
+    // Animation phone view
     func animationView(view:DesignableView){
         view.animation = "shake"
         view.curve = "easeIn"

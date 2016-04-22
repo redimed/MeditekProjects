@@ -319,13 +319,13 @@ module.exports = {
                         if (item.email && !o.isValidEmail(item.email)) {
                             error.pushError("email.invalid." + i);
                         }
-                        if (item.mobile) {
+                        /*if (item.mobile) {
                             var m = o.parseAuMobilePhone(item.mobile);
                             if (m)
                                 item.mobile = m;
                             else
                                 error.pushError("mobile.invalid." + i);
-                        }
+                        }*/
 
                     }
                 }

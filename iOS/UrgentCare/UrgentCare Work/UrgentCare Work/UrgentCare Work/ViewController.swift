@@ -69,6 +69,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                             if detailCompanyResponse.message == "success"  {
                                // self!.hideLoading()
                                 let companyInfor = Mapper().toJSON(detailCompanyResponse)
+                                
                                 if(detailCompanyResponse.data.count > 0){
                                     Context.setDataDefaults(companyInfor, key: Define.keyNSDefaults.companyInfor)
                                 }

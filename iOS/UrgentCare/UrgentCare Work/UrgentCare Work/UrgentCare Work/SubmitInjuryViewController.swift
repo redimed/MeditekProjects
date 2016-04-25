@@ -68,9 +68,9 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         super.viewDidLoad()
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
-                print(Context.getDataDefasults(Define.keyNSDefaults.companyInfor))
-                let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
-                companyInfo = Mapper().map(companyInfoDict)!
+                if let companyInfoDict:NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as? NSDictionary {
+                      companyInfo = Mapper().map(companyInfoDict)!
+                }
                 if(companyInfo.data.count > 0){
                     detailCompanyData = companyInfo.data[0]
                     companyName.text = detailCompanyData.CompanyName

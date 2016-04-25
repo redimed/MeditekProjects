@@ -24,6 +24,10 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.LogoutWhenIsAuthenticated), name: Define.LogoutFunction, object: nil)
     }
     
+    func gotEventNotification(noti: NSNotification) -> Void {
+        print(noti)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

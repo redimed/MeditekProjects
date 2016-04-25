@@ -1,3 +1,4 @@
+
 //
 //  RadioButtonsController.swift
 //  TestApp
@@ -36,7 +37,7 @@ class SSRadioButtonsController : NSObject
     init(buttons: UIButton...) {
         super.init()
         for aButton in buttons {
-            aButton.addTarget(self, action: "pressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            aButton.addTarget(self, action: #selector(SSRadioButtonsController.pressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         }
         self.buttonsArray = buttons
     }
@@ -47,7 +48,7 @@ class SSRadioButtonsController : NSObject
     */
     func addButton(aButton: UIButton) {
         buttonsArray.append(aButton)
-        aButton.addTarget(self, action: "pressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        aButton.addTarget(self, action: #selector(SSRadioButtonsController.pressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     }
     /** 
         Remove a UIButton from controller.
@@ -57,7 +58,7 @@ class SSRadioButtonsController : NSObject
     func removeButton(aButton: UIButton) {
         var iteration = 0
         var iteratingButton: UIButton? = nil
-        for( ; iteration<buttonsArray.count; iteration++) {
+        for( ; iteration<buttonsArray.count; iteration += 1) {
             iteratingButton = buttonsArray[iteration]
             if(iteratingButton == aButton) {
                 break
@@ -67,7 +68,7 @@ class SSRadioButtonsController : NSObject
         }
         if(iteratingButton != nil) {
             buttonsArray.removeAtIndex(iteration)
-            iteratingButton!.removeTarget(self, action: "pressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            iteratingButton!.removeTarget(self, action: #selector(SSRadioButtonsController.pressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             if currentSelectedButton == iteratingButton {
                 currentSelectedButton = nil
             }
@@ -80,7 +81,7 @@ class SSRadioButtonsController : NSObject
     */
     func setButtonsArray(aButtonsArray: [UIButton]) {
         for aButton in aButtonsArray {
-            aButton.addTarget(self, action: "pressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            aButton.addTarget(self, action: #selector(SSRadioButtonsController.pressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         }
         buttonsArray = aButtonsArray
     }

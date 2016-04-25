@@ -180,6 +180,9 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 					companyService.getDetailChild(data)
 					.then(function(result){
 						scope.info[model] = result.data;
+						for(var i = 0; i < scope.info[model].length;i++){
+							scope.info[model][i].stt = scope.searchObjectMap.offset*1 + i + 1;
+						}
 						scope.count = result.count?result.count:null;
 					},function(err) {
 						console.log(err);
@@ -250,7 +253,46 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 				if(scope.search[name] == '' || scope.search[name] == null) {
 					delete scope.search[name];
 				}
-			}
+			};
+
+			scope.updateCompany = function(info) {
+				var modalInstance = $uibModal.open({
+					templateUrl: 'UpdateCompanyModal',
+					controller: function($scope,$modalInstance){
+						$scope.info   = angular.copy(info);
+						$scope.cancel = function(){
+							$modalInstance.dismiss('cancel');
+						};
+						$scope.reset = function() {
+							toastr.success("Update Successfully");
+							scope.getDetailCompany();
+							$modalInstance.dismiss('cancel');
+						};
+						$scope.click = function() {
+							if( angular.equals($scope.info,info) == true ) {
+								toastr.error('Please change basic information before update');
+							}
+							else {
+								var data = {
+									CompanyName: $scope.info.CompanyName,
+									Description: $scope.info.Description,
+									UID: $scope.info.UID
+								};
+								console.log(data);
+								companyService.update({model:'Company',info:data})
+								.then(function(result) {
+									console.log(result);
+									$scope.reset();
+								},function(err) {
+									console.log(err);
+								});
+							}
+						};
+					},
+					// size: 'lg',
+					windowClass: 'app-modal-window'
+				});
+			};
 		},
 	};
 });

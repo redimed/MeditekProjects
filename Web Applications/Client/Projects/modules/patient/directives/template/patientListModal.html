@@ -98,7 +98,7 @@
                                                 <input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-hide="isShowFull==false">
                                             <div class="checkbox-list">
                                                 <label class="checkbox-inline">
                                                     <input type="checkbox" class="regular-checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)"/>Enable</label>
@@ -124,7 +124,7 @@
                                                     <label class="control-label">Work Phone</label>
                                                     <div class="input-icon">
                                                         <i class="glyphicon glyphicon-phone-alt"></i>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" ng-model="info.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"><span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
                                                     </div>
                                                 </div>
                                             </div>

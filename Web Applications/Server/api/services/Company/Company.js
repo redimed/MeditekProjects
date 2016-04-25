@@ -1454,7 +1454,6 @@ module.exports = {
 					case 'CompanySites' :
 						var whereClause = {
 							CompanyID : got_company.ID,
-							Enable:'Y'
 						};
 						if(data.Search){
 							for(var key in data.Search) {

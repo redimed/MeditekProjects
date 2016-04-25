@@ -101,7 +101,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		link: function(scope, elem, attrs){
 			scope.changeoption = false;
 			scope.typeShow;
-			console.log(scope.activeUser);
 			scope.isHaveKins;
 			scope.isHaveGPs;
 			scope.isHaveFunds;

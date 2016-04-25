@@ -25,8 +25,9 @@ class CompanyViewController: BaseViewController {
         super.viewDidLoad()
         self.navigationItem.title = "Company"
         
-        let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
-        companyInfo = Mapper().map(companyInfoDict)!
+        if let companyInfoDict:NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as? NSDictionary {
+            companyInfo = Mapper().map(companyInfoDict)!
+        }
         if(companyInfo.data.count > 0){
            txtName.text = companyInfo.data[0].CompanyName
         }

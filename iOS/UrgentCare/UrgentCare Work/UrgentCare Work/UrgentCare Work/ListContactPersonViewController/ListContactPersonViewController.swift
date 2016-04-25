@@ -27,9 +27,9 @@ class ListContactPersonViewController:BaseViewController,UITableViewDelegate ,UI
     }
     func loadData(){
         
-        let companyInfoDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as! NSDictionary
-        companyInfo = Mapper().map(companyInfoDict)!
-        
+        if let companyInfoDict:NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as? NSDictionary {
+            companyInfo = Mapper().map(companyInfoDict)!
+        }
         if(companyInfo.data.count > 0){
             let CompanyDetail : DetailCompanyData = companyInfo.data[0]
             UserService.getListSite(CompanyDetail.UID) { [weak self] (response) in

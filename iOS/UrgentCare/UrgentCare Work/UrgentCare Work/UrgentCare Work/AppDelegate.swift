@@ -17,6 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+       // notificationSettings(application)
+        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        application.registerUserNotificationSettings(pushNotificationSettings)
+        application.registerForRemoteNotifications()
+        
         setDeviceID()
         return true
     }
@@ -36,7 +43,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
-
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        //NSNotificationCenter.defaultCenter().postNotificationName(Define.Got_Request_Trip, object: userInfo)
+        
+        if(application.applicationState == .Active) {
+            
+        }else if(application.applicationState == .Background){
+            
+            //app is in background, if content-available key of your notification is set to 1, poll to your backend to retrieve data and update your interface here
+            
+        }else if(application.applicationState == .Inactive){
+            
+            //app is transitioning from background to foreground (user taps notification), do what you need when user taps here
+            
+        }
+        //Log.debug(userInfo)
+    }
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        var newToken = deviceToken.description;
+        newToken = newToken.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
+        newToken = newToken.stringByReplacingOccurrencesOfString(" ", withString: "")
+        print("Device token:" + newToken)
+    }
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+       print("didRegisterUserNotificationSettings")
+    }
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Error")
+    }
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.

@@ -365,6 +365,19 @@ module.exports = React.createClass({
         })
         //swal("Deleted!", "Your section has been deleted.", "success")
     },
+    _onReplaceRefModule: function(module){
+        var sectionSizes = this.state.sections.size;
+        module.ref = "section_"+sectionSizes;
+        module.rows.map(function(row, rindex){
+            var splitRow = row.ref.split('_');
+            module.rows[rindex].ref = "row_"+sectionSizes+'_'+splitRow[2];
+            row.fields.map(function(col, cindex){
+                var splitCol = col.ref.split('_');
+                module.rows[rindex].fields[cindex].ref = "field_"+sectionSizes+'_'+splitCol[2]+'_'+splitCol[3];
+            })
+        })
+        return module;
+    },
     _onSelectEFormTemplateModule: function(list){
         var page = 1;
         if(this.state.sections.size > 0){
@@ -375,21 +388,16 @@ module.exports = React.createClass({
 
         var listData = list.EFormTemplateModuleData;
         var module = JSON.parse(listData.TemplateModuleData);
-        var sections = this.state.sections;
         if(module.length > 0){
-            module.map(function(section, index){
-                var sectionRef = "section_"+sections.size;
-                section.ref = sectionRef;
-                section.moduleID = list.ID;
-                section.page = page;
-                sections = sections.push(Immutable.fromJS(section));
-            })
+            var section = this._onReplaceRefModule(module[0]);
+            section.moduleID = list.ID;
+            var sections = this.state.sections.toJS();
+            sections.push(section);
             this.setState(function(prevState) {
                 return {
-                    sections: sections
+                    sections: Immutable.fromJS(sections)
                 }
             })
-            //swal("Success!", "Your section has been created.", "success");
         }
         this.refs.modalListEFormTemplateModule.hide();
     },
@@ -399,7 +407,6 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection], val => val.set('page', value))
             }
         })
-        //swal("Success!", "Your section has change page to "+value, "success");
     },
     _onComponentSectionOrderSection: function(codeSection, value){
         var sections = this.state.sections.deleteIn([codeSection]);

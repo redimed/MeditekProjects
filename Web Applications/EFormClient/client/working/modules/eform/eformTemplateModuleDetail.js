@@ -34,8 +34,7 @@ module.exports = React.createClass({
     },
     _onComponentPageBarAddNewSection: function() {
         var page = 1;
-        var sectionRefSize = this.state.sections.size+100;
-        var sectionRef = "section_"+sectionRefSize;
+        var sectionRef = "section_"+this.state.sections.size;
         if(this.state.sections.size > 0){
             var prevSize = this.state.sections.size-1;
             var sectionRefPrev = "section_"+prevSize;
@@ -46,10 +45,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List(), page: page }))
             }
         })
-        swal("Success!", "Your section has been created.", "success");
-    },
-    _onComponentPageBarAddNewModule: function(){
-        alert('asasas');
+        //swal("Success!", "Your section has been created.", "success");
     },
     _onComponentSectionUpdate: function(code, name) {
         this.setState(function(prevState) {
@@ -65,7 +61,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.delete(code)
             }
         })
-        swal("Deleted!", "Your section has been deleted.", "success")
+        //swal("Deleted!", "Your section has been deleted.", "success")
     },
     _onComponentSectionDrag: function(fromObj, toObj) {
         var fromImmutable = this.state.sections.get(fromObj.codeSection);
@@ -78,7 +74,7 @@ module.exports = React.createClass({
                 sections: sections
             }
         })
-        swal("Success!", "Drag change section successfully.", "success");
+        //swal("Success!", "Drag change section successfully.", "success");
     },
     _onComponentSectionSelectField: function(codeSection, codeRow, refSection, refRow, typeField) {
         var fields = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields');
@@ -86,6 +82,7 @@ module.exports = React.createClass({
         var rowRefNumber = refRow.split('_')[2];
 
         var ref = "field_" + sectionRefNumber + '_' + rowRefNumber + '_' +fields.size;
+
         if(Config.getPrefixField(typeField, 'eform_input') > -1){
             var object = { type: typeField, name: '', size: '12', ref: ref, preCal: ''};
             if(Config.getPrefixField(typeField, 'textarea') > -1)
@@ -122,8 +119,44 @@ module.exports = React.createClass({
                     ))
                 }
             })
+        }else if(typeField === 'dynamic_table'){
+            this.setState(function(prevState){
+                return {
+                    sections: prevState.sections.updateIn([codeSection,'rows',codeRow,'fields'], val => val.push(
+                        Immutable.fromJS({
+                            code: typeField,
+                            type: typeField,
+                            name: '',
+                            size: '12',
+                            ref: ref,
+                            content: {
+                                cols: [{label: 'Label Table', type: 'it'}],
+                                rows: []
+                            }
+                        })
+                    ))
+                }
+            })
+        }else if(typeField === 'line_chart'){
+            this.setState(function(prevState){
+                return {
+                    sections: prevState.sections.updateIn([codeSection,'rows',codeRow,'fields'], val => val.push(
+                        Immutable.fromJS({
+                            code: typeField,
+                            type: typeField,
+                            name: '',
+                            axisX: Immutable.fromJS({categories: []}),
+                            title: 'Line Chart',
+                            subtitle: 'Subtitle Line Chart',
+                            series: Immutable.List(),
+                            size: '12',
+                            ref: ref
+                        })
+                    ))
+                }
+            })
         }
-        swal("Success!", "Add field successfully.", "success")
+        //swal("Success!", "Add field successfully.", "success")
     },
     _onComponentSectionDragRow: function(fromObj, toObj) {
         var fromImmutable = this.state.sections.get(fromObj.codeSection).get('rows').get(fromObj.codeRow);
@@ -136,7 +169,7 @@ module.exports = React.createClass({
                 sections: sections
             }
         })
-        swal("Success!", "Drag change field successfully.", "success");
+        //swal("Success!", "Drag change field successfully.", "success");
     },
     _onComponentSectionRemoveField: function(codeSection, codeRow, codeField) {
         this.setState(function(prevState) {
@@ -144,7 +177,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField])
             }
         })
-        swal("Deleted!", "Delete field successfully.", "success");
+        //swal("Deleted!", "Delete field successfully.", "success");
     },
     _onComponentSectionSaveFieldDetail: function(codeSection, codeRow, dataField) {
         if(Config.getPrefixField(dataField.type, 'eform_input') > -1){
@@ -156,6 +189,8 @@ module.exports = React.createClass({
                             .set('size', dataField.size)
                             .set('rows', dataField.rows)
                             .set('preCal', dataField.preCal)
+                            .set('ref', dataField.ref)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'checkbox') > -1){
@@ -165,7 +200,9 @@ module.exports = React.createClass({
                             .set('size', dataField.size)
                             .set('label', dataField.label)
                             .set('value', dataField.value)
+                            .set('ref', dataField.ref)
                             .set('preCal', dataField.preCal)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'radio') > -1){
@@ -174,8 +211,10 @@ module.exports = React.createClass({
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
                             .set('label', dataField.label)
+                            .set('ref', dataField.ref)
                             .set('value', dataField.value)
                             .set('preCal', dataField.preCal)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'label') > -1){
@@ -184,6 +223,8 @@ module.exports = React.createClass({
                             val.set('size', dataField.size)
                             .set('label', dataField.label)
                             .set('value', dataField.value)
+                            .set('ref', dataField.ref)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }else if(Config.getPrefixField(dataField.type, 'signature') > -1){
@@ -191,8 +232,11 @@ module.exports = React.createClass({
                     sections = sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
+                            .set('ref', dataField.ref)
                             .set('preCal', dataField.preCal)
-                            .set('height', dataField.height))
+                            .set('height', dataField.height)
+                            .set('roles', Immutable.fromJS(dataField.roles))
+                    )
                     return {
                         sections: sections
                    }
@@ -201,7 +245,9 @@ module.exports = React.createClass({
                         sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                             val.set('name', dataField.name)
                             .set('size', dataField.size)
+                            .set('ref', dataField.ref)
                             .set('preCal', dataField.preCal)
+                            .set('roles', Immutable.fromJS(dataField.roles))
                         )
                     }
                 }
@@ -212,11 +258,27 @@ module.exports = React.createClass({
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                         val.set('name', dataField.name)
                         .set('size', dataField.size)
+                        .set('ref', dataField.ref)
+                        .set('roles', Immutable.fromJS(dataField.roles))
+                    )
+                }
+            })
+        }else if(dataField.type === 'line_chart'){
+            this.setState(function(prevState) {
+                return {
+                    sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                        val.set('name', dataField.name)
+                        .set('size', dataField.size)
+                        .set('ref', dataField.ref)
+                        .set('axisX', Immutable.fromJS(dataField.axisX))
+                        .set('title', dataField.title)
+                        .set('subtitle', dataField.subtitle)
+                        .set('series', Immutable.fromJS(dataField.series))
                     )
                 }
             })
         }
-        swal("Success!", "Edit field successfully.", "success");
+        //swal("Success!", "Edit field successfully.", "success");
     },
     _onComponentSectionCreateTableRow: function(codeSection, codeRow, codeField) {
         this.setState(function(prevState) {
@@ -224,7 +286,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], val => val + 1)
             }
         })
-        swal("Success!", "Add row table successfully.", "success")
+        //swal("Success!", "Add row table successfully.", "success")
     },
     _onComponentSectionCreateTableColumn: function(codeSection, codeRow, codeField) {
         this.setState(function(prevState) {
@@ -234,7 +296,7 @@ module.exports = React.createClass({
                 ))
             }
         })
-        swal("Success!", "Add column table successfully.", "success");
+        //swal("Success!", "Add column table successfully.", "success");
     },
     _onComponentSectionRemoveTableRow: function(codeSection, codeRow, codeField) {
         var row = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields').get(codeField).get('content').get('rows');
@@ -244,9 +306,9 @@ module.exports = React.createClass({
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], val => val - 1)
                 }
             })
-            swal("Success!", "Delete row table successfully.", "success")
-        } else
-            swal("Warning!", "Must contain 1 row.", "warning")
+            //swal("Success!", "Delete row table successfully.", "success")
+        }
+            //swal("Warning!", "Must contain 1 row.", "warning")
     },
     _onComponentSectionRemoveTableColumn: function(codeSection, codeRow, codeField, codeColumn) {
         var columns = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields').get(codeField).get('content').get('cols')
@@ -256,9 +318,9 @@ module.exports = React.createClass({
                     sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'cols', codeColumn])
                 }
             })
-            swal("Success!", "Delete column table successfully.", "success")
-        } else
-            swal("Warning!", "Must contain 1 column.", "warning")
+            //swal("Success!", "Delete column table successfully.", "success")
+        }
+            //swal("Warning!", "Must contain 1 column.", "warning")
     },
     _onComponentSectionUpdateTableColumn: function(codeSection, codeRow, codeField, data) {
         this.setState(function(prevState) {
@@ -269,7 +331,7 @@ module.exports = React.createClass({
                 )
             }
         })
-        swal("Success!", "Update column table successfully.", "success")
+        //swal("Success!", "Update column table successfully.", "success")
     },
     _onComponentPageBarSaveForm: function() {
         var templateModuleUID = this.props.params.templateModuleUID;
@@ -278,6 +340,9 @@ module.exports = React.createClass({
             .then(function(response) {
                 swal("Success!", "Your form has been saved.", "success");
             }.bind(this))
+    },
+    _onComponentPageBarAddNewModule: function(){
+        this.refs.modalListEFormTemplateModule.show();
     },
     _onComponentSectionCreateRow: function(codeSection, refSection){
         var sectionRefNumber = refSection.split('_')[1];
@@ -288,7 +353,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection, 'rows'], val => val.push(Immutable.Map({ref: rowRef, type: 'row', fields: Immutable.List(), size: 12})))
             }
         })
-        swal("Success!", "Your row has been created.", "success");
+        //swal("Success!", "Your row has been created.", "success");
     },
     _onComponentSectionRemoveRow: function(codeSection, codeRow){
         this.setState(function(prevState) {
@@ -296,7 +361,43 @@ module.exports = React.createClass({
                 sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow])
             }
         })
-        swal("Deleted!", "Your section has been deleted.", "success")
+        //swal("Deleted!", "Your section has been deleted.", "success")
+    },
+    _onSelectEFormTemplateModule: function(list){
+        var page = 1;
+        if(this.state.sections.size > 0){
+            var prevSize = this.state.sections.size-1;
+            var sectionRefPrev = "section_"+prevSize;
+            page = this.refs[sectionRefPrev].getPage();
+        }
+
+        var listData = list.EFormTemplateModuleData;
+        var module = JSON.parse(listData.TemplateModuleData);
+        var sections = this.state.sections;
+        if(module.length > 0){
+            module.map(function(section, index){
+                var sectionRef = "section_"+sections.size;
+                section.ref = sectionRef;
+                section.moduleID = list.ID;
+                section.page = page;
+                sections = sections.push(Immutable.fromJS(section));
+            })
+            this.setState(function(prevState) {
+                return {
+                    sections: sections
+                }
+            })
+            //swal("Success!", "Your section has been created.", "success");
+        }
+        this.refs.modalListEFormTemplateModule.hide();
+    },
+    _onComponentSectionChangePage: function(codeSection, value){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection], val => val.set('page', value))
+            }
+        })
+        //swal("Success!", "Your section has change page to "+value, "success");
     },
     _onComponentSectionOrderSection: function(codeSection, value){
         var sections = this.state.sections.deleteIn([codeSection]);
@@ -314,7 +415,7 @@ module.exports = React.createClass({
                 sections: finalSections
             }
         })
-        swal("Success!", "Your section has order to "+value, "success");
+        //swal("Success!", "Your section has order to "+value, "success");
     },
     _onComponentSectionOrderRow: function(codeSection, codeRow, value){
         var rows = this.state.sections.deleteIn([codeSection, 'rows', codeRow]);
@@ -333,7 +434,31 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection, 'rows'], val => finalRows)
             }
         })
-        swal("Success!", "Your row has change order", "success"); 
+        //swal("Success!", "Your row has change order", "success"); 
+    },
+    _onComponentSectionSaveTableDynamicRow: function(codeSection, codeRow, codeField, row){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], 
+                    val => val.push(Immutable.fromJS(row)))
+            }
+        })
+    },
+    _onComponentSectionEditTableDynamicRow: function(codeSection, codeRow, codeField, position, row){        
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position], 
+                    val => Immutable.fromJS(row))
+            }
+        })
+    },
+    _onComponentSectionRemoveTableDynamicRow: function(codeSection, codeRow, codeField, position){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position])
+            }
+        })
+        swal("Success!", "Deleted", "success");
     },
     render: function(){
         return (
@@ -346,33 +471,36 @@ module.exports = React.createClass({
                                 {
                                         this.state.sections.map(function(section, index){
                                             return <ComponentSection key={index}
-                                                ref={section.get('ref')}
-                                                refTemp={section.get('ref')}
-                                                key={index}
-                                                code={index}
-                                                type="section"
-                                                 page={section.get('page')}
-                                                 permission="eformDev"
-                                                 rows={section.get('rows')}
-                                                name={section.get('name')}
-                                                onUpdateSection={this._onComponentSectionUpdate}
-                                                onRemoveSection={this._onComponentSectionRemove}
-                                                onDragSection={this._onComponentSectionDrag}
-                                                 onCreateRow={this._onComponentSectionCreateRow}
-                                                 onRemoveRow={this._onComponentSectionRemoveRow}
-                                                onSelectField={this._onComponentSectionSelectField}
-                                                onDragField={this._onComponentSectionDragField}
-                                                onRemoveField={this._onComponentSectionRemoveField}
-                                                onSaveFieldDetail={this._onComponentSectionSaveFieldDetail}
-                                                onCreateTableRow={this._onComponentSectionCreateTableRow}
-                                                onRemoveTableRow={this._onComponentSectionRemoveTableRow}
-                                                onCreateTableColumn={this._onComponentSectionCreateTableColumn}
-                                                onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
-                                                onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
-                                                 onDragRow={this._onComponentSectionDragRow}
-                                                 onChangePage={this._onComponentSectionChangePage}
-                                                 onOrderSection={this._onComponentSectionOrderSection}
-                                                 onOrderRow={this._onComponentSectionOrderRow}/>
+                                                            ref={section.get('ref')}
+                                                            refTemp={section.get('ref')}
+                                                            key={index}
+                                                            code={index}
+                                                            type="section"
+                                                            page={section.get('page')}
+                                                            permission="eformDev"
+                                                            rows={section.get('rows')}
+                                                            name={section.get('name')}
+                                                            onUpdateSection={this._onComponentSectionUpdate}
+                                                            onRemoveSection={this._onComponentSectionRemove}
+                                                            onDragSection={this._onComponentSectionDrag}
+                                                            onCreateRow={this._onComponentSectionCreateRow}
+                                                            onRemoveRow={this._onComponentSectionRemoveRow}
+                                                            onSelectField={this._onComponentSectionSelectField}
+                                                            onDragField={this._onComponentSectionDragField}
+                                                            onRemoveField={this._onComponentSectionRemoveField}
+                                                            onSaveFieldDetail={this._onComponentSectionSaveFieldDetail}
+                                                            onCreateTableRow={this._onComponentSectionCreateTableRow}
+                                                            onRemoveTableRow={this._onComponentSectionRemoveTableRow}
+                                                            onCreateTableColumn={this._onComponentSectionCreateTableColumn}
+                                                            onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
+                                                            onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
+                                                            onDragRow={this._onComponentSectionDragRow}
+                                                            onChangePage={this._onComponentSectionChangePage}
+                                                            onOrderSection={this._onComponentSectionOrderSection}
+                                                            onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
+                                                            onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
+                                                            onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
+                                                            onOrderRow={this._onComponentSectionOrderRow}/>
                                         }, this)
                                 }
                                 <ComponentPageBar ref="pageBarBottom"

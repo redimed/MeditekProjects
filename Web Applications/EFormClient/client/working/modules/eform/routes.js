@@ -7,12 +7,11 @@ var EFormGroup = require('modules/eform/eformGroup');
 var EFormConsultation = require('modules/eform/eformConsultation');
 
 module.exports = [
-	{path: '/eformTemplate', component: EFormTemplate},
-             {path: '/eformTemplateModule', component: EFormTemplateModule},
-             {path: '/eformTemplateModule/detail/:templateModuleUID/:userUID', component: EFormTemplateModuleDetail},
-	{path: '/eformTemplate/detail/:templateUID/:userUID', component: EFormTemplateDetail},
-             {path: '/eform/detail', component: EFormDetail},
-             {path: '/eformGroup', component: EFormGroup},
-    		 {path: '/eform/consultation', component: EFormConsultation}
-
+            {path: '/eformTemplate', component: EFormTemplate},
+            {path: '/eformTemplateModule', component: EFormTemplateModule},
+            {path: '/eformTemplateModule/detail/:templateModuleUID/:userUID', component: EFormTemplateModuleDetail},
+            {path: '/eformTemplate/detail/:templateUID/:userUID', component: EFormTemplateDetail},
+            {path: '/eform/detail', component: EFormDetail},
+            {path: '/eformGroup', component: EFormGroup},
+            {path: '/eform/consultation', component: EFormConsultation}
 ]

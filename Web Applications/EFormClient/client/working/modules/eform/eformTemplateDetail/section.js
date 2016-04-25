@@ -335,7 +335,7 @@ module.exports = React.createClass({
                                                 </li>
                                                 <li>
                                                     <a>
-                                                        <input type="text" ref="page"/>
+                                                        <input type="text" ref="tempRef" defaultValue={this.props.refTemp}/>
                                                     </a>
                                                 </li>
                                                 <li className="divider"/>

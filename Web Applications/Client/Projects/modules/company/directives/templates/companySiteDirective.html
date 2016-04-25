@@ -8,27 +8,32 @@
         <div class="form-body" ng-if="type != 'delete'">
             <div class="form-group">
                 <label class="control-label">Site Name</label>
-                <input type="text" name="site_name" class="form-control" ng-model="data.SiteName" />
+                <input type="text" name="site_name" class="form-control" ng-model="data.SiteName" ng-style="erlist.SiteName.style" ng-change="erlist.SiteName = ''" />
+                <span style="color:red;">{{erlist.SiteName.msg}}</span>
             </div>
             <div class="form-group">
                 <label class="control-label">Address1</label>
-                <input type="text" name="address1" class="form-control" ng-model="data.Address1" />
+                <input type="text" name="address1" class="form-control" ng-model="data.Address1" ng-style="erlist.Address1.style" ng-change="erlist.Address1 = ''" />
+                <span style="color:red;">{{erlist.Address1.msg}}</span>
             </div>
             <div class="form-group">
-                <label class="control-label">address2</label>
-                <input type="text" name="address2" class="form-control" ng-model="data.Address2" />
+                <label class="control-label">Address2</label>
+                <input type="text" name="address2" class="form-control" ng-model="data.Address2" ng-style="erlist.Address2.style" ng-change="erlist.Address2 = ''" />
+                <span style="color:red;">{{erlist.Address2.msg}}</span>
             </div>
             <div class="row">
                 <div class="col-md-8 col-sm-8">
                     <div class="form-group">
-                        <label class="control-label">suburb</label>
-                        <input type="text" name="suburb" class="form-control" ng-model="data.Suburb" />
+                        <label class="control-label">Suburb</label>
+                        <input type="text" name="suburb" class="form-control" ng-model="data.Suburb" ng-style="erlist.Suburb.style" ng-change="erlist.Suburb = ''" />
+                        <span style="color:red;">{{erlist.Suburb.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
-                        <label class="control-label">postcode</label>
-                        <input type="text" name="postcode" class="form-control" ng-model="data.Postcode" />
+                        <label class="control-label">Postcode</label>
+                        <input type="text" name="postcode" class="form-control" ng-model="data.Postcode" ng-style="erlist.Postcode.style" ng-change="erlist.Postcode = ''" />
+                        <span style="color:red;">{{erlist.Postcode.msg}}</span>
                     </div>
                 </div>
             </div>
@@ -36,13 +41,21 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group">
                         <label class="control-label">State</label>
-                        <input type="text" name="state" class="form-control" ng-model="data.State" />
+                        <!-- <input type="text" name="state" class="form-control" ng-model="data.State" /> -->
+                        <select class="form-control" ng-model="data.State"ng-options="s.code as s.name for s in state" ng-style="erlist.State.style" ng-change="erlist.State = ''" >
+                            <option value="">Select State</option>
+                        </select>
+                        <span style="color:red;">{{erlist.State.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group">
                         <label class="control-label">Country</label>
-                        <input type="text" name="country" class="form-control" ng-model="data.Country" />
+                        <!-- <input type="text" name="country" class="form-control" ng-model="data.Country" /> -->
+                        <select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="data.Country" ng-style="erlist.Country.style" ng-change="erlist.Country = ''" >
+                            <option value="">Select Country</option>
+                        </select>
+                        <span style="color:red;">{{erlist.Country.msg}}</span>
                     </div>
                 </div>
             </div>
@@ -50,13 +63,15 @@
                 <div class="col-md-8 col-sm-8">
                     <div class="form-group">
                         <label class="control-label">Contact Name</label>
-                        <input type="text" name="contact_name" class="form-control" ng-model="data.ContactName" />
+                        <input type="text" name="contact_name" class="form-control" ng-model="data.ContactName" ng-style="erlist.ContactName.style" ng-change="erlist.ContactName = ''" />
+                        <span style="color:red;">{{erlist.ContactName.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label class="control-label">Contact Number</label>
-                        <input type="text" name="contact_number" class="form-control" ng-model="data.HomePhoneNumber" />
+                        <input type="text" name="contact_number" class="form-control" ng-model="data.HomePhoneNumber" ng-style="erlist.HomePhoneNumber.style" ng-change="erlist.HomePhoneNumber = ''" />
+                        <span style="color:red;">{{erlist.HomePhoneNumber.msg}}</span>
                     </div>
                 </div>
             </div>

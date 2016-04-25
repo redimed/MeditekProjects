@@ -58,14 +58,20 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Country</label>
-                                <input type="text" class="form-control" ng-model="info.CompanySiteCountry" ng-change="erlist.CompanySiteCountry ='';checkDataNull('CompanySiteCountry')" ng-style="erlist.CompanySiteCountry.style" />
+                                <!-- <input type="text" class="form-control" ng-model="info.CompanySiteCountry" ng-change="erlist.CompanySiteCountry ='';checkDataNull('CompanySiteCountry')" ng-style="erlist.CompanySiteCountry.style" /> -->
+                                <select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="info.CompanySiteCountry" ng-change="erlist.CompanySiteCountry ='';checkDataNull('CompanySiteCountry')" ng-style="erlist.CompanySiteCountry.style" >
+                                    <option value="">Select Country</option>
+                                </select>
                                 <span style="color:red;">{{erlist.CompanySiteCountry.msg}}</span>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">State</label>
-                                <input type="text" class="form-control" ng-model="info.CompanySiteState" ng-change="erlist.CompanySiteState ='';checkDataNull('CompanySiteState')" ng-style="erlist.CompanySiteState.style" />
+                                <!-- <input type="text" class="form-control" ng-model="info.CompanySiteState" ng-change="erlist.CompanySiteState ='';checkDataNull('CompanySiteState')" ng-style="erlist.CompanySiteState.style" /> -->
+                                <select class="form-control" ng-model="info.CompanySiteState"ng-options="s.code as s.name for s in state" ng-change="erlist.CompanySiteState ='';checkDataNull('CompanySiteState')" ng-style="erlist.CompanySiteState.style" >
+                                    <option value="">Select State</option>
+                                </select>
                                 <span style="color:red;">{{erlist.CompanySiteState.msg}}</span>
                             </div>
                         </div>

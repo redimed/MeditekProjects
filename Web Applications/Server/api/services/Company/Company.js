@@ -918,7 +918,6 @@ module.exports = {
 				throw err;
 			})
 			.then(function(checked_association){
-				console.log(checked_association);
 				if(checked_association == null || checked_association == ''){
 					return RelCompanyPatient.create({
 						CompanyID : company,
@@ -927,7 +926,19 @@ module.exports = {
 					},{transaction:t});
 				}
 				else {
-					return checked_association;
+					if(checked_association.Active == 'N') {
+						return RelCompanyPatient.update({
+							Active    : 'Y'
+						},{
+							where:{
+								CompanyID : company,
+								PatientID : patient.ID,
+							},
+							transaction:t
+						}); 
+					}
+					else
+						return checked_association;
 				}
 			},function(err) {
 				t.rollback();

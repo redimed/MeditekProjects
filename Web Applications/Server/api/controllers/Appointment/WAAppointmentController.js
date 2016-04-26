@@ -343,7 +343,7 @@ module.exports = {
 
         Preprocessing()
             .then(function(checked) {
-                return Services.Company.loadDetail({ model: 'CompanySite', whereClause: { ID: rawdata.companyId } })
+                return Services.Company.loadDetail({ model: 'CompanySite', whereClause: { SiteIDRefer: rawdata.companyId } })
             })
             .then(function(companySite) {
                 if (!companySite) {

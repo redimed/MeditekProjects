@@ -10,6 +10,8 @@ app.directive('telehealthDetail', function() {
             o.loadingPage(true);
             WAAppointmentService.getDetailWAAppointmentByUid($stateParams.UID).then(function(data) {
                 $scope.wainformation = data.data;
+                $scope.wainformation.Company = {};
+                $scope.wainformation.CompanySite = {};
                 runAll()
                 o.loadingPage(false);
             }, function(error) {});
@@ -34,6 +36,11 @@ app.directive('telehealthDetail', function() {
                         if($scope.wainformation.AppointmentData[i].Name == "exerciseRehab") {
                             if($scope.wainformation.AppointmentData[i].Value == "Y")
                                 $('#Exercuse_Rehab').attr('checked', 'checked');
+                        }
+                        if($scope.wainformation.AppointmentData[i].Name == 'Description') {
+                            if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
+                                $scope.wainformation.TelehealthAppointment.Description = $scope.wainformation.AppointmentData[i].Value;
+                            }
                         }
                     }
                 },0);
@@ -92,7 +99,6 @@ app.directive('telehealthDetail', function() {
                             $scope.ShowData.patient.PhoneNumber = $scope.ShowData.patient.UserAccount.PhoneNumber;
                         };
                     } else {
-                        // $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment?$scope.wainformation.TelehealthAppointment.PatientAppointment:null;
                         if(_.isEmpty($scope.wainformation.TelehealthAppointment) == true) {
                             if($scope.wainformation.PatientAppointments) {
                                 console.log("asdasdad");
@@ -484,7 +490,23 @@ app.directive('telehealthDetail', function() {
                                     $scope.wainformation.Patients.push({
                                         UID: patientUid
                                     });
-                                    $scope.wainformation.Company = data.data[0].Companies[0];
+                                    function loopArray(arr, callback) {
+                                        var ishaveCompany = false;
+                                        for(var i = 0; i < arr.length; i++) {
+                                            if(arr[i].Name == 'CompanyName') {
+                                                if(arr[i].Value != null && arr[i].Value != ''){
+                                                    ishaveCompany = true;
+                                                }
+                                            }
+                                        }
+                                        callback(ishaveCompany);  
+                                    }
+                                    loopArray($scope.wainformation.AppointmentData,function(isExist) {
+                                        console.log(isExist);
+                                        if(isExist == false) {
+                                            $scope.wainformation.Company = data.data[0].Companies[0];
+                                        }
+                                    });
                                     toastr.success("Select patient successfully!", "success");
                                 };
                             })
@@ -665,6 +687,7 @@ app.directive('telehealthDetail', function() {
 
             $scope.getSiteFromAppData = function() {
 
+                var iscomp = false;
                 var nocompany = false;
                 if(!$scope.wainformation.Patients || $scope.wainformation.Patients.length == 0)
                     nocompany = true;
@@ -672,7 +695,21 @@ app.directive('telehealthDetail', function() {
                     if(!$scope.wainformation.Patients[0].Companies || $scope.wainformation.Patients[0].Companies.length == 0)
                         nocompany = true;
                     else {
-                        $scope.wainformation.Company = $scope.wainformation.Patients[0].Companies[0];
+                        function loopArray(arr, callback) {
+                            var ishaveCompany = false;
+                            for(var i = 0; i < arr.length; i++) {
+                                if(arr[i].Name == 'CompanyName') {
+                                    if(arr[i].Value != null && arr[i].Value != ''){
+                                        ishaveCompany = true;
+                                    }
+                                }
+                            }
+                            callback(ishaveCompany);  
+                        }
+                        loopArray($scope.wainformation.AppointmentData, function(isExist) {
+                            if(isExist == false) 
+                                $scope.wainformation.Company = $scope.wainformation.Patients[0].Companies[0];
+                        });
                     }
                 }
 
@@ -690,32 +727,58 @@ app.directive('telehealthDetail', function() {
                     });
                 }
 
-                var iscomp = false;
-                if($scope.wainformation.AppointmentData) {
+                function getDetailChild(compuid) {
+                    companyService.getDetailChild({UID:compuid,model:"CompanySites",limit:1,order:[['CreatedDate','ASC']]})
+                    .then(function(result) {
+                        console.log(result);
+                        $scope.wainformation.CompanySite = result.data[0];
+                    },function(err) {
+                        console.log(err);
+                    });
+                }
 
+                if($scope.wainformation.AppointmentData && $scope.wainformation.AppointmentData.length > 0) {
                     for(var i = 0; i < $scope.wainformation.AppointmentData.length; i++) {
                         if($scope.wainformation.AppointmentData[i].Name == 'SiteIDRefer') {
-                            $('#btnLinkComp').hide();
-                            getDetailSite({SiteIDRefer:$scope.wainformation.AppointmentData[i].Value}, nocompany);
+                            if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
+                                $('#btnLinkComp').hide();
+                                getDetailSite({SiteIDRefer:$scope.wainformation.AppointmentData[i].Value}, nocompany);
+                            }
                         }
                         else if($scope.wainformation.AppointmentData[i].Name == 'SiteID') {
-                            getDetailSite({ID:$scope.wainformation.AppointmentData[i].Value}, nocompany);
+                            if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
+                                getDetailSite({ID:$scope.wainformation.AppointmentData[i].Value}, nocompany);
+                            }
+                        }
+                        else if($scope.wainformation.AppointmentData[i].Name == 'CompanyName') {
+                            if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
+                                $scope.wainformation.Company.CompanyName = $scope.wainformation.AppointmentData[i].Value;
+                            }
+                        }
+                        else if($scope.wainformation.AppointmentData[i].Name == 'companyPhoneNumber') {
+                            if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
+                                $scope.wainformation.CompanySite.HomePhoneNumber = $scope.wainformation.AppointmentData[i].Value;
+                            }
+                        }
+                        else if($scope.wainformation.AppointmentData[i].Name == 'contactPerson') {
+                            if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
+                                $scope.wainformation.CompanySite.ContactName = $scope.wainformation.AppointmentData[i].Value;
+                            }
                         }
                         else {
                             iscomp = true;
                         }
                     }
                 }
-
+                else {
+                    if(_.isEmpty($scope.wainformation.Company) == false) {
+                        getDetailChild($scope.wainformation.Company.UID);
+                    }
+                }
                 if(iscomp == true) {
-                    if($scope.wainformation.Company){
-                        companyService.getDetailChild({UID:$scope.wainformation.Company.UID,model:"CompanySites",limit:1,order:[['CreatedDate','ASC']]})
-                        .then(function(result) {
-                            console.log(result);
-                            $scope.wainformation.CompanySite = result.data[0];
-                        },function(err) {
-                            console.log(err);
-                        });
+                    
+                    if(_.isEmpty($scope.wainformation.Company) == false){
+                        getDetailChild($scope.wainformation.Company.UID);
                     }
                 }
             };

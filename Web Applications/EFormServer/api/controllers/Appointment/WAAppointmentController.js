@@ -90,8 +90,8 @@ module.exports = {
         })
         .then(function(data){
             if(data) {
-                result.dataValues.company = data.company;
-                result.dataValues.companySite = data.companySite;
+                result.dataValues.Company = data.company;
+                result.dataValues.CompanySite = data.companySite;
             }
             res.ok({data:result});
         }, function(err) {

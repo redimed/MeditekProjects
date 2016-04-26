@@ -43,60 +43,62 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 			}
 			console.log(scope);
 			scope.click = function() {
-				companyService.validate(scope.data,true)
-				.then(function(result) {
+				if(scope.type != 'delete'){
+					companyService.validate(scope.data,true)
+					.then(function(result) {
 
-					if (scope.type == 'create') {
-						scope.data.Enable = 'Y';
-						companyService.create({info:scope.data, CompanyUID:scope.compuid, model:'CompanySite'})
-						.then(function(response) {
-							console.log(response);
-							toastr.success("Create Successfully","success");
-							scope.cancel();
-							scope.loadagain();
-						},function(err) {
-							console.log(err);
-							toastr.error("Please check information","error");
-						});
-					}
-					else if (scope.type == 'update') {
-						companyService.update({info:scope.data, model:'CompanySite'})
-						.then(function(response) {
-							console.log(response);
-							toastr.success("Update Successfully","success");
-							scope.cancel();
-							scope.loadagain();
-						},function(err) {
-							console.log(err);
-							toastr.error("Please check information","error");
-						});
-					}
-					else if (scope.type == 'delete') {
-						scope.data.Enable = scope.uid.Enable=='Y'?'N':'Y';
-						scope.data.UID = scope.uid.UID;
-						companyService.changestatus({whereClauses:{UID:scope.data.UID},info:{Enable:scope.data.Enable}, model:'CompanySite'})
-						.then(function(response) {
-							console.log(response);
-							toastr.success("Delete Successfully","success");
-							scope.cancel();
-							scope.loadagain();
-						},function(err) {
-							console.log(err);
-							toastr.error("Delete Error","error");
-						});
-					}
-					else {
-						console.log("type error");
-					}
+						if (scope.type == 'create') {
+							scope.data.Enable = 'Y';
+							companyService.create({info:scope.data, CompanyUID:scope.compuid, model:'CompanySite'})
+							.then(function(response) {
+								console.log(response);
+								toastr.success("Create Successfully","success");
+								scope.cancel();
+								scope.loadagain();
+							},function(err) {
+								console.log(err);
+								toastr.error("Please check information","error");
+							});
+						}
+						else if (scope.type == 'update') {
+							companyService.update({info:scope.data, model:'CompanySite'})
+							.then(function(response) {
+								console.log(response);
+								toastr.success("Update Successfully","success");
+								scope.cancel();
+								scope.loadagain();
+							},function(err) {
+								console.log(err);
+								toastr.error("Please check information","error");
+							});
+						}
+						else {
+							console.log("type error");
+						}
 
-				},function(err) {
-					console.log(err);
-					for(var i = 0; i < err.length; i++) {
-						scope.erlist[err[i].field] = {};
-						scope.erlist[err[i].field].style = { 'border': '2px solid #DCA7B0' };
-						scope.erlist[err[i].field].msg = err[i].message;
-					}
-				});
+					},function(err) {
+						console.log(err);
+						for(var i = 0; i < err.length; i++) {
+							scope.erlist[err[i].field] = {};
+							scope.erlist[err[i].field].style = { 'border': '2px solid #DCA7B0' };
+							scope.erlist[err[i].field].msg = err[i].message;
+						}
+					});
+				}
+				else {
+					scope.data.Enable = scope.uid.Enable=='Y'?'N':'Y';
+					scope.data.UID = scope.uid.UID;
+					companyService.changestatus({whereClauses:{UID:scope.data.UID},info:{Enable:scope.data.Enable}, model:'CompanySite'})
+					.then(function(response) {
+						console.log(response);
+						toastr.success("Delete Successfully","success");
+						scope.cancel();
+						scope.loadagain();
+					},function(err) {
+						console.log(err);
+						toastr.error("Delete Error","error");
+					});
+				}
 			};
 
 		},

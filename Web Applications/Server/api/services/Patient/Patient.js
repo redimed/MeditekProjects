@@ -246,7 +246,7 @@ module.exports = {
                 }
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
-                if (data.HomePhoneNumber != undefined && data.HomePhoneNumber) {
+                if (data.HomePhoneNumber != undefined && data.HomePhoneNumber.length > 0) {
                     var auHomePhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                     var HomePhone = data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                     if (!auHomePhoneNumberPattern.test(HomePhone)) {
@@ -257,7 +257,7 @@ module.exports = {
                 }
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
-                if (data.WorkPhoneNumber != undefined && data.WorkPhoneNumber) {
+                if (data.WorkPhoneNumber != undefined && data.WorkPhoneNumber.length > 0) {
                     var auWorkPhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                     var WorkPhoneNumber = data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                     if (!auWorkPhoneNumberPattern.test(WorkPhoneNumber)) {
@@ -458,7 +458,7 @@ module.exports = {
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
                 if ('HomePhoneNumber' in data) {
-                    if (data.HomePhoneNumber) {
+                    if (data.HomePhoneNumber.length > 0) {
                         var auHomePhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                         var HomePhone = data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                         if (!auHomePhoneNumberPattern.test(HomePhone)) {
@@ -471,7 +471,7 @@ module.exports = {
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
                 if ('WorkPhoneNumber' in data) {
-                    if (data.WorkPhoneNumber) {
+                    if (data.WorkPhoneNumber.length > 0) {
                         var auWorkPhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                         var WorkPhoneNumber = data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                         if (!auWorkPhoneNumberPattern.test(WorkPhoneNumber)) {

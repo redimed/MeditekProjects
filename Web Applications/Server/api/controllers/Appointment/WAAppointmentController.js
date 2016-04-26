@@ -357,7 +357,9 @@ module.exports = {
                         FromTime: candidateInfo.AppointmentTime,
                         Type: 'PreEmployment',
                         PatientAppointment: {
-                            FirstName: candidateInfo.CandidateName,
+                            FirstName: candidateInfo.CandidateFirstName,
+                            MiddleName: candidateInfo.CandidateMiddleName,
+                            LastName: candidateInfo.CandidateLastName,
                             DOB: candidateInfo.DOB,
                             Email1: candidateInfo.email,
                             PhoneNumber: candidateInfo.mobile

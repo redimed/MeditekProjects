@@ -14,14 +14,14 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     $scope.info = {};
     $scope.logout = function() {
         AuthenticationService.logout().then(function() {
-            socketJoinRoom(socketTelehealth, '/api/telehealth/logout', { 
+            socketJoinRoom(socketTelehealth, '/api/telehealth/logout', {
                 uid: $cookies.getObject('userInfo').TelehealthUser.UID,
-                deviceid:"30f56b7cb6a4abbc0a1ca359deb",
-                systemtype:"ARD" 
+                deviceid: "30f56b7cb6a4abbc0a1ca359deb",
+                systemtype: "ARD"
             });
             var cookies = $cookies.getAll();
             angular.forEach(cookies, function(v, k) {
-                if(k != 'remember')
+                if (k != 'remember')
                     $cookies.remove(k);
             });
             $state.go("unAuthentication.login", null, {
@@ -163,7 +163,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     console.log("xoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", ioSocket.telehealthMesageCall);
                 }
                 if (ioSocket.telehealthMesageMisscall) {
-                    alert("miss call");
                     delete ioSocket.telehealthMesageMisscall;
                 }
                 console.log("telehealthOpentok", data.data);
@@ -177,7 +176,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     ioSocket.getRoomOpentok = getRoomOpentok();
 
     ioSocket.telehealthCall = function(msg) {
-        console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal({
             title: msg.fromName,
             imageUrl: "theme/assets/global/images/E-call_33.png",
@@ -239,7 +237,17 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }
 
     ioSocket.telehealthMisscall = function(msg) {
-        alert("Miss Call");
+        swal({
+            title: "Miss Call From " + msg.fromName,
+            imageUrl: "theme/assets/global/images/E-call_18.png",
+            timer: 30000,
+            html: "<img src='theme/assets/global/img/loading.gif' />",
+            showCancelButton: false,
+            confirmButtonColor: "#26C281",
+            confirmButtonText: "OK",
+            cancelButtonColor: "#D91E18",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
     }
-    // end chien
 });

@@ -239,7 +239,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
             fromName: userInfo.UserName
         }, function(data) {
             console.log("send call", data);
-            window.close();
+            // window.close();
         });
     };
 });

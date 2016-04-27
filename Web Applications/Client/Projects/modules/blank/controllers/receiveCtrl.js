@@ -185,7 +185,7 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
             fromName: userInfo.UserName
         }, function(data) {
             console.log("send call", data);
-            window.close();
+            // window.close();
         });
     };
 

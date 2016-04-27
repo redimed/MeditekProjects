@@ -15,18 +15,18 @@ module.exports = function(objRel) {
             .then(function(patientIDs) {
                 if (!_.isEmpty(patientIDs)) {
                     patientIDs = _.map(_.uniq(patientIDs, 'ID'), 'ID');
-                    return objRel.appointmentObject.addPatients(patientIDs, {
+                    return objRel.appointmentObject.setPatients(patientIDs, {
                         transaction: objRel.transaction
                     });
                 }
             }, function(err) {
-                error.pushError(error);
+                error.pushError(err);
                 defer.reject(error);
             })
             .then(function(relapptPatientCreated) {
                 defer.resolve(relapptPatientCreated);
             }, function(err) {
-                error.pushError(error);
+                error.pushError(err);
                 defer.reject(error);
             });
     } else {

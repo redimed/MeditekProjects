@@ -246,12 +246,24 @@ app.directive('onsiteAppointment', function(){
                     }
                 }
                 $scope.saveWaAppointment = function() {
+					var patientuid;
+					var doctoruid;
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
                     console.log($scope.wainformation)
                     if($scope.wainformation.PatientAppointments) {
                         $scope.wainformation.PatientAppointment = $scope.wainformation.PatientAppointments.length>0?$scope.wainformation.PatientAppointments[0]:{};
                         delete $scope.wainformation['PatientAppointments'];
+						if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                            patientuid = $scope.wainformation.Patients[0].UID;
+                            $scope.wainformation.Patients.splice(0,1);
+                            $scope.wainformation.Patients.push({UID:patientuid});
+                        }
+                        if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
+                            doctoruid = $scope.wainformation.Doctors[0].UID;
+                            $scope.wainformation.Doctors.splice(0,1);
+                            $scope.wainformation.Doctors.push({UID:patientuid});
+                        }
                         WAAppointmentService.updateWaAppointmentwithCompany($scope.wainformation).then(function(data) {
                             console.log('saveWaAppointment', data);
                             toastr.success("Update appointment successfully !");
@@ -273,6 +285,16 @@ app.directive('onsiteAppointment', function(){
 
                     }
                     else {
+						if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                            patientuid = $scope.wainformation.Patients[0].UID;
+                            $scope.wainformation.Patients.splice(0,1);
+                            $scope.wainformation.Patients.push({UID:patientuid});
+                        }
+                        if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
+                            doctoruid = $scope.wainformation.Doctors[0].UID;
+                            $scope.wainformation.Doctors.splice(0,1);
+                            $scope.wainformation.Doctors.push({UID:patientuid});
+                        }
                         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                             console.log('saveWaAppointment', data);
                             toastr.success("Update appointment successfully !");
@@ -499,7 +521,7 @@ app.directive('onsiteAppointment', function(){
                                                 }
                                             }
                                         }
-                                        callback(ishaveCompany);  
+                                        callback(ishaveCompany);
                                     }
                                     loopArray($scope.wainformation.AppointmentData,function(isExist) {
                                         console.log(isExist);
@@ -707,10 +729,10 @@ app.directive('onsiteAppointment', function(){
                                     }
                                 }
                             }
-                            callback(ishaveCompany);  
+                            callback(ishaveCompany);
                         }
                         loopArray($scope.wainformation.AppointmentData, function(isExist) {
-                            if(isExist == false) 
+                            if(isExist == false)
                                 $scope.wainformation.Company = $scope.wainformation.Patients[0].Companies[0];
                         });
                     }
@@ -779,7 +801,7 @@ app.directive('onsiteAppointment', function(){
                     }
                 }
                 if(iscomp == true) {
-                    
+
                     if(_.isEmpty($scope.wainformation.Company) == false){
                         getDetailChild($scope.wainformation.Company.UID);
                     }

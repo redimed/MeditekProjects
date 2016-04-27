@@ -263,9 +263,15 @@ module.exports = React.createClass({
                         results.push(tableField);
                     })      
                 }else if(type === 'line_chart'){
-                    var series = this.refs[fieldRef].getAllValue();
-                    series.refRow = this.props.refTemp;
-                    results.push(series);
+                    if(stringType !== 'print'){
+                        var series = this.refs[fieldRef].getAllValue();
+                        series.refRow = this.props.refTemp;
+                        results.push(series);
+                    }else{
+                        var series = this.refs[fieldRef].getBase64Value();
+                        series.refRow = this.props.refTemp;
+                        results.push(series);
+                    }
                 }
             }
         }

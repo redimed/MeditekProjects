@@ -39,7 +39,7 @@ app.directive('telehealthDetail', function() {
                         }
                         if($scope.wainformation.AppointmentData[i].Name == 'Description') {
                             if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
-                                $scope.wainformation.TelehealthAppointment.Description = $scope.wainformation.AppointmentData[i].Value;
+                                $scope.wainformation.Description = $scope.wainformation.AppointmentData[i].Value;
                             }
                         }
                     }
@@ -84,7 +84,7 @@ app.directive('telehealthDetail', function() {
                 $scope.tab_body_part = 'all';
                 $scope.checkRoleUpdate = true;
                 for(var i = 0; i < $cookies.getObject('userInfo').roles.length; i++){
-                    if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' 
+                    if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER'
                         || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
                         $scope.checkRoleUpdate = false;
                     };
@@ -160,7 +160,7 @@ app.directive('telehealthDetail', function() {
                             }
                         }
                     }
-                } 
+                }
                 else {
                     $scope.info = {
                         apptStatus: WAConstant.apptStatus,
@@ -249,12 +249,24 @@ app.directive('telehealthDetail', function() {
                     }
                 }
                 $scope.saveWaAppointment = function() {
+                    var patientuid;
+                    var doctoruid;
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
                     console.log("saveWaAppointment",$scope.wainformation);
                     if($scope.wainformation.PatientAppointments) {
                         $scope.wainformation.PatientAppointment = $scope.wainformation.PatientAppointments.length>0?$scope.wainformation.PatientAppointments[0]:{};
                         delete $scope.wainformation['PatientAppointments'];
+                        if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                            patientuid = $scope.wainformation.Patients[0].UID;
+                            $scope.wainformation.Patients.splice(0,1);
+                            $scope.wainformation.Patients.push({UID:patientuid});
+                        }
+                        if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
+                            doctoruid = $scope.wainformation.Doctors[0].UID;
+                            $scope.wainformation.Doctors.splice(0,1);
+                            $scope.wainformation.Doctors.push({UID:patientuid});
+                        }
                         WAAppointmentService.updateWaAppointmentwithCompany($scope.wainformation).then(function(data) {
                             toastr.success("Update appointment successfully !");
                             swal.close();
@@ -274,6 +286,16 @@ app.directive('telehealthDetail', function() {
                         });
                     }
                     else {
+                        if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                            patientuid = $scope.wainformation.Patients[0].UID;
+                            $scope.wainformation.Patients.splice(0,1);
+                            $scope.wainformation.Patients.push({UID:patientuid});
+                        }
+                        if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
+                            doctoruid = $scope.wainformation.Doctors[0].UID;
+                            $scope.wainformation.Doctors.splice(0,1);
+                            $scope.wainformation.Doctors.push({UID:patientuid});
+                        }
                         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                             toastr.success("Update appointment successfully !");
                             swal.close();
@@ -499,7 +521,7 @@ app.directive('telehealthDetail', function() {
                                                 }
                                             }
                                         }
-                                        callback(ishaveCompany);  
+                                        callback(ishaveCompany);
                                     }
                                     loopArray($scope.wainformation.AppointmentData,function(isExist) {
                                         console.log(isExist);
@@ -685,6 +707,14 @@ app.directive('telehealthDetail', function() {
                 }
             };
 
+            $scope.changeValue = function(Name) {
+                for(var i = 0;i < $scope.wainformation.AppointmentData.length; i++) {
+                    if($scope.wainformation.AppointmentData[i].Name == Name) {
+                        $scope.wainformation.AppointmentData[i].Value = $scope.wainformation[Name];
+                    }
+                }
+            };
+
             $scope.getSiteFromAppData = function() {
 
                 var iscomp = false;
@@ -704,10 +734,10 @@ app.directive('telehealthDetail', function() {
                                     }
                                 }
                             }
-                            callback(ishaveCompany);  
+                            callback(ishaveCompany);
                         }
                         loopArray($scope.wainformation.AppointmentData, function(isExist) {
-                            if(isExist == false) 
+                            if(isExist == false)
                                 $scope.wainformation.Company = $scope.wainformation.Patients[0].Companies[0];
                         });
                     }
@@ -776,7 +806,7 @@ app.directive('telehealthDetail', function() {
                     }
                 }
                 if(iscomp == true) {
-                    
+
                     if(_.isEmpty($scope.wainformation.Company) == false){
                         getDetailChild($scope.wainformation.Company.UID);
                     }

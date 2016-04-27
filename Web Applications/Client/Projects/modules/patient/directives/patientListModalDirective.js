@@ -1,11 +1,11 @@
 //DIRECTIVE PATIENT LIST MODAL : show patient info
-// <patient-listmodal 
+// <patient-listmodal
 // 		on-uid="patientUID"       : patient UID was added in this to get data patient from this UID
 // 		on-showfull="false"       : this attribute allow you to show full template of this directive
 //									(true or false), if this attribute not require default is true
-// 		on-listshow="list"        : array list to show some columms in this directive 
+// 		on-listshow="list"        : array list to show some columms in this directive
 //                            		list={columm1 : true,columm2 : false,columm3 : true};
-//									if list not require, this directive will show 3 columm default 
+//									if list not require, this directive will show 3 columm default
 // 		ng-if="patientUID!=null"> : this attribute allow you to show this directive when patientUID exists
 // </patient-listmodal>
 
@@ -108,6 +108,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			scope.isHavePensions;
 			scope.isHaveMedicares;
 			scope.isChoseAvatar = false;
+			scope.historyData = [];
 			var data = {};
 			scope.er ={};
 			scope.ermsg ={};
@@ -139,7 +140,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						scope.isHaveKins = null;
 						delete scope.info['PatientKin'];
 					}
-				} 
+				}
 				else if(model == 'GP'){
 					scope.callData(scope.typeShow,scope.chooseItem,true);
 					console.log(scope.isHaveGPs);
@@ -264,7 +265,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				PatientService.detailChildPatient({ UID: scope.info.UID , model: [model], where:{Enable:'Y'} })
 				.then(function(response) {
 					scope.info[model+'s'] = response.data[model];
-					console.log(scope.chooseItem);
 					if(scope.chooseItem == true && ischangeview == false) {
 						scope.typeShow = model;
 						scope.info[scope.typeShow] = scope.info[model+'s'][scope.info[model+'s'].length-1];
@@ -343,7 +343,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 			scope.imgDelete;
 			var oriInfo,clearInfo;
-			
+
 			scope.infoChanged = function() {
 		        return angular.equals(oriInfo, scope.info);
 		    };
@@ -428,7 +428,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				var flag ="";
 				obj = scope.addProperty(array,obj,flag, value);
 				return obj;
-				
+
 			};
 
 			//func parse string A.B.C to array ['A','B','C']
@@ -487,7 +487,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						}
 						else {
 							break;
-						}	
+						}
 					}
 					else {
 						break;
@@ -621,7 +621,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 	                        }
 							// scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
 					    }, false);
-					
+
 				}
 			};
 
@@ -639,7 +639,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				}
 			}
 
-			
+
 
 			AuthenticationService.getListCountry().then(function(result){
 				scope.countries = result.data;
@@ -682,7 +682,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 								else{
 									if(model == null || model == ''){
 										toastr.error("Please choose tab","error");
-									} 
+									}
 									else{
 										console.log(data);
 										data[model] = $scope.insertData[model];
@@ -753,7 +753,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				// var parseData = JSON.parse(data);
 				if(data == null || data == ''){
 					toastr.error("Please input information","error");
-				} 
+				}
 				else{
 					var postData = {
 						ID     : data,
@@ -776,9 +776,28 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			scope.getSite = function(companyuid) {
 				companyService.getDetailChild({UID:companyuid,model:'CompanySites'})
 				.then(function(data) {
-					scope.info.CompanySites = data.data;
-					console.log(data);
+					// scope.info.CompanySites = data.data;
+					// console.log(data);
+					companyService.getHistoryCompanyList({patientUID:scope.info.UID})
+					.then(function(response) {
+						// console.log(response);
+						scope.info.CompanySites = data.data;
+						scope.historyData = response.data;
+					}, function(err) {
+						console.log(err);
+					});
 				},function(err) {
+					console.log(err);
+				});
+			};
+
+			scope.linkOldCompany = function(company) {
+				companyService.createStaff({CompanyUID:company.UID,patientUID:scope.info.UID})
+				.then(function(response) {
+					toastr.success('Link Company success');
+					scope.info.Companies[0] = company;
+					scope.getSite(company.UID);
+				}, function(err) {
 					console.log(err);
 				});
 			};

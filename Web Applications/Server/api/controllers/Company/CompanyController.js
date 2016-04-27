@@ -264,7 +264,24 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         });
     },
-    
+
+    GetHistoryCompanyList: function(req, res) {
+        var data = req.body.data;
+        Services.Company.GetHistoryCompanyList(data)
+        .then(function(result) {
+            if(!result) {
+                var err = new Error('GetHistoryCompanyList.error');
+                err.pushError('noData');
+                res.serverError(ErrorWrap(err));
+            }
+            else {
+                res.ok({message:"success",data:result});
+            }
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
 
     Test: function(req, res) {
         return UserAccount.findAll({

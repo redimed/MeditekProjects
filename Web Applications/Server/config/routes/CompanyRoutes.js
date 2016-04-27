@@ -84,4 +84,9 @@ module.exports = {
         controller: 'Company/CompanyController',
         action: 'CreateCompanyForOnlineBooking'
     },
+
+    'post /api/company/get-history' : {
+        controller: 'Company/CompanyController',
+        action: 'GetHistoryCompanyList'
+    },
 };

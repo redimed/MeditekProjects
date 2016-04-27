@@ -4,7 +4,7 @@
 		<div class="portlet light bordered" id="form_wizard_1">
 			<div class="portlet-title">
 				<div class="caption font-green">
-					<i class="icon-user-follow font-green"></i> 
+					<i class="icon-user-follow font-green"></i>
 					<span class="caption-subject bold uppercase"> Create New Patient - </span><span class="step-title">Step 1 of 2 </span>
 				</div>
 				<div class="tools hidden-xs">
@@ -76,7 +76,7 @@
 									<!-- End UserName -->
 									<!-- begin Email -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Email <span class="required">* </span>
+										<label class="control-label col-md-4">Email
 										</label>
 										<div class="col-md-4">
 											<div class="input-icon">
@@ -90,7 +90,7 @@
 									<!-- end Email -->
 									<!-- begin phone -->
 									<div class="form-group">
-										<label class="control-label col-md-4">MobilePhone <span class="required">* </span>
+										<label class="control-label col-md-4">MobilePhone
 										</label>
 										<div class="col-md-4">
 											<div class="input-icon">
@@ -116,13 +116,13 @@
 															<img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show=" isChoseAvatar==false" style="width:350px; height:350px; ">
 														</div>
 														<div class="container">
-															<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+															<label for="imageAvatar" style="float:left; padding-right: 1%;">
 																<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
 																<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
 																<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
-															</label> 
+															</label>
 															<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
-															
+
 														</div>
 													</div>
 												</div>
@@ -365,4 +365,3 @@
 <script type="text/ng-template " id="companyLinkmodal">
 <company-list on-patient-uid="patientuid" on-cancel="cancel" ></company-list>
 </script>
-

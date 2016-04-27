@@ -504,7 +504,7 @@ module.exports = {
                             "FirstName":"asvasv",.....
                         }
                     }
-        output : if porperty has existed in table Patient, it will defined 
+        output : if porperty has existed in table Patient, it will defined
     */
     whereClause: function(data) {
         // define whereClause's data
@@ -636,7 +636,7 @@ module.exports = {
     /*
         CreatePatient : service create patient
         input: Patient's information
-        output: insert Patient's information into table Patient 
+        output: insert Patient's information into table Patient
     */
     CreatePatient: function(data, other, transaction) {
         var PatientDetail = {};
@@ -677,17 +677,17 @@ module.exports = {
                             userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
                             userInfo.PhoneNumber = data.PhoneNumber;
                             userInfo.Email = data.Email;
-                            return Services.UserAccount.GetUserAccountDetails(data, null, t);
+                            return success;
                         } else if (data.Email) {
                             isCreateByEmail = true;
                             userInfo.UserName = data.UserName?data.UserName:data.Email;
                             userInfo.Email = data.Email;
-                            return Services.UserAccount.GetUserAccountDetails(data, null, t);
+                            return success;
                         } else if (data.PhoneNumber) {
                             isCreateByPhoneNumber = true;
                             userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
                             userInfo.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
-                            return Services.UserAccount.GetUserAccountDetails(data, null, t);
+                            return success;
                         } else {
                             isCreateByName = true;
                             userInfo.UserName = data.UserName?data.UserName:data.FirstName + "." + data.LastName + "." + generatePassword(4, false);
@@ -697,13 +697,13 @@ module.exports = {
                         // t.rollback();
                         throw err;
                     })
-                    .then(function(got_user) {
-                        if (got_user == '' || got_user == null) {
+                    .then(function(validated) {
+                        if (validated && validated.status == 'success') {
                             userInfo.Password = generatePassword(12, false);
                             userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
                             return Services.UserAccount.CreateUserAccount(userInfo, t);
                         } else {
-                            return got_user;
+                            return validated;
                         }
                     }, function(err) {
                         throw err;
@@ -1391,7 +1391,7 @@ module.exports = {
                     //                     attributes: ['ID','UID','FileType'],
                     //                     required: false,
                     //                     where:{
-                    //                         FileType:{$in: ['ProfileImage', 'Signature']},  
+                    //                         FileType:{$in: ['ProfileImage', 'Signature']},
                     //                         Enable:'Y'
                     //                     },
                     //                     // order:['CreatedDate ASC']
@@ -1578,7 +1578,7 @@ module.exports = {
     /*
         CheckPatient : service check patient has created ?
         input  : patient's PhoneNumber
-        output : return object that contain information patient 
+        output : return object that contain information patient
                  is created or not created
     */
     CheckPatient: function(data, transaction) {
@@ -1751,7 +1751,7 @@ module.exports = {
 
     /*
         getfileUID : service get patient's fileUID
-        input  : data like 
+        input  : data like
                     "data": {
                         "UserAccountID":"000",
                         "FileType":"aaa"

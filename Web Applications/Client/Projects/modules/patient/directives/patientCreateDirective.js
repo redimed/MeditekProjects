@@ -121,7 +121,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             scope.ermsg = {};
             scope.isShowNext = false;
             scope.isBlockStep1 = false;
-            //if appointment add this directive to their template 
+            //if appointment add this directive to their template
             //this directive will receive data from appointment
             //when this code run
             if (scope.appointment) {
@@ -142,17 +142,77 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             };
             //event timeout will call after this template's directive rendered
             $timeout(function() {
-                App.setAssetsPath('theme/assets/'); // Set the assets folder path	
+                App.setAssetsPath('theme/assets/'); // Set the assets folder path
                 FormWizard.init(); // form step
                 ComponentsDateTimePickers.init();
             }, 0);
             //checkPhone : validate data to correct and check PhoneNumber can be used to create patient
             //input : data(FirstName,MiddleName,LastName,PhoneNumber)
-            //output: 
+            //output:
             //****show Continue button and show notification check success if check success
-            //****show notification check error if data doesn't match validate or 
+            //****show notification check error if data doesn't match validate or
             //PhoneNumber used to create patient
             scope.checkPhone = function(data) {
+
+                function checkPhone(verifyData) {
+                    PatientService.checkPatient(verifyData)
+                        .then(function(result) {
+                            if (result != undefined && result != null && result != '' && result.length != 0) {
+                                if (result.data.isCreated == false) {
+                                    scope.er = '';
+                                    scope.ermsg = '';
+                                    scope.loadingCheck = false;
+                                    toastr.success("Information can be choose to create patient", "SUCCESS");
+                                    scope.isShowEmail1 = verifyData.Email;
+                                    scope.data.Email1 = verifyData.Email;
+                                    scope.isShowNext = true;
+                                    scope.data.CountryID1 = 14;
+                                    scope.data.Title = verifyData.Title;
+                                    scope.data.Gender = verifyData.Gender;
+                                    scope.data.Address1 = verifyData.Address1;
+                                    scope.data.Address2 = verifyData.Address2;
+                                    scope.data.Suburb = verifyData.Suburb;
+                                    scope.data.Postcode = verifyData.Postcode;
+                                    scope.data.State = verifyData.State;
+                                    scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
+                                    // scope.data.DOB = new Date('1/1/1990');
+                                } else {
+                                    // toastr.error("Information was used to create patient", "ERROR");
+                                    scope.isBlockStep1 = false;
+                                    scope.loadingCheck = false;
+                                    var existedField = '';
+                                    for(var key in result.data.field) {
+                                        if(key == 'PhoneNumber') {
+                                            existedField+=' Mobile Phone Number and';
+                                        }
+                                        else {
+                                            existedField+=' '+key+' and';
+                                        }
+                                    }
+                                    if(existedField.substr(existedField.length - 3) == 'and') {
+                                        existedField = existedField.slice(0, -3);
+                                        existedField+=' existed';
+                                        toastr.error(existedField);
+                                    }
+
+
+                                }
+                            }
+                        }, function(err) {
+                            //if receive error push error message into array ermsg,
+                            //push error css into array er
+                            //and show in template
+                            scope.loadingCheck = false;
+                            scope.er = {};
+                            scope.ermsg = {};
+                            toastr.error("Please input correct information", "ERROR");
+                            for (var i = 0; i < err.data.message.ErrorsList.length; i++) {
+                                scope.er[err.data.message.ErrorsList[i].field] = { 'border': '2px solid #DCA7B0' };
+                                scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+                            }
+                        });
+                }
+
                 scope.loadingCheck = true;
                 //service validate data
                 var verifyData = {
@@ -173,8 +233,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     Gender: data?data.Gender:null,
                     UserName:data?data.UserName:null
                 };
-                if((verifyData.Email == null || verifyData.Email == '') &&
-                   (verifyData.PhoneNumber == null || verifyData.PhoneNumber == '')){
+                if((verifyData.FirstName == null || verifyData.FirstName == '') &&
+                   (verifyData.LastName == null || verifyData.LastName == '')){
                     if(verifyData.FirstName == null || verifyData.FirstName == ''){
                         scope.er['FirstName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['FirstName'] = 'required';
@@ -189,10 +249,10 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                     }
                     toastr.error("Please check data again.", "ERROR");
                     scope.loadingCheck = false;
-                    scope.er['Email'] = { 'border': '2px solid #DCA7B0' };
-                    scope.ermsg['Email'] = 'required';
-                    scope.er['PhoneNumber'] = { 'border': '2px solid #DCA7B0' };
-                    scope.ermsg['PhoneNumber'] = 'required';
+                    // scope.er['Email'] = { 'border': '2px solid #DCA7B0' };
+                    // scope.ermsg['Email'] = 'required';
+                    // scope.er['PhoneNumber'] = { 'border': '2px solid #DCA7B0' };
+                    // scope.ermsg['PhoneNumber'] = 'required';
                 }
                 else{
 
@@ -202,62 +262,27 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                         scope.ermsg = '';
                         scope.isBlockStep1 = true;
                         //service call API check PhoneNumber can be used to create Patient
-                        PatientService.checkPatient(verifyData)
-                            .then(function(result) {
-                                if (result != undefined && result != null && result != '' && result.length != 0) {
-                                    if (result.data.isCreated == false) {
-                                        scope.er = '';
-                                        scope.ermsg = '';
-                                        scope.loadingCheck = false;
-                                        toastr.success("Information can be choose to create patient", "SUCCESS");
-                                        scope.isShowEmail1 = verifyData.Email;
-                                        scope.data.Email1 = verifyData.Email;
-                                        scope.isShowNext = true;
-                                        scope.data.CountryID1 = 14;
-                                        scope.data.Title = verifyData.Title;
-                                        scope.data.Gender = verifyData.Gender;
-                                        scope.data.Address1 = verifyData.Address1;
-                                        scope.data.Address2 = verifyData.Address2;
-                                        scope.data.Suburb = verifyData.Suburb;
-                                        scope.data.Postcode = verifyData.Postcode;
-                                        scope.data.State = verifyData.State;
-                                        scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
-                                        // scope.data.DOB = new Date('1/1/1990');
-                                    } else {
-                                        // toastr.error("Information was used to create patient", "ERROR");
-                                        scope.isBlockStep1 = false;
-                                        scope.loadingCheck = false;
-                                        var existedField = '';
-                                        for(var key in result.data.field) {
-                                            if(key == 'PhoneNumber') {
-                                                existedField+=' Mobile Phone Number and';
-                                            }
-                                            else {
-                                                existedField+=' '+key+' and';
-                                            }
-                                        }
-                                        if(existedField.substr(existedField.length - 3) == 'and') {
-                                            existedField = existedField.slice(0, -3);
-                                            existedField+=' existed';
-                                            toastr.error(existedField);
-                                        }
-                                        
-                
-                                    }
-                                }
-                            }, function(err) {
-                                //if receive error push error message into array ermsg, 
-                                //push error css into array er
-                                //and show in template
-                                scope.loadingCheck = false;
-                                scope.er = {};
-                                scope.ermsg = {};
-                                toastr.error("Please input correct information", "ERROR");
-                                for (var i = 0; i < err.data.message.ErrorsList.length; i++) {
-                                    scope.er[err.data.message.ErrorsList[i].field] = { 'border': '2px solid #DCA7B0' };
-                                    scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
-                                }
-                            });
+                        if( _.isEmpty(scope.data.Email) && _.isEmpty(scope.data.PhoneNumber) ) {
+                            scope.er = '';
+                            scope.ermsg = '';
+                            scope.loadingCheck = false;
+                            toastr.success("Information can be choose to create patient", "SUCCESS");
+                            scope.isShowEmail1 = verifyData.Email;
+                            scope.data.Email1 = verifyData.Email;
+                            scope.isShowNext = true;
+                            scope.data.CountryID1 = 14;
+                            scope.data.Title = verifyData.Title;
+                            scope.data.Gender = verifyData.Gender;
+                            scope.data.Address1 = verifyData.Address1;
+                            scope.data.Address2 = verifyData.Address2;
+                            scope.data.Suburb = verifyData.Suburb;
+                            scope.data.Postcode = verifyData.Postcode;
+                            scope.data.State = verifyData.State;
+                            scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
+                        }
+                        else {
+                            checkPhone(verifyData);
+                        }
                     }, function(err) {
                         console.log(err);
                         scope.loadingCheck = false;
@@ -278,7 +303,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 }
                 else if(scope.staff){
                     scope.staff.runIfClose();
-                } 
+                }
                 else if(scope.cancel) {
                     scope.cancel();
                 }
@@ -294,10 +319,10 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
             //CreatePatient : create patient
             //input : data information
-            //output: 
-            //****create UserAccount to create Patient if validate data success 
+            //output:
+            //****create UserAccount to create Patient if validate data success
             //and show notification success
-            //****show notification error if validate data error 
+            //****show notification error if validate data error
             scope.createPatient = function(data, company) {
                 scope.loadingCreate = true;
                 //service check data
@@ -337,7 +362,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                             // windowClass: 'app-modal-window'
                                             size: 'lg',
 
-                                        }); 
+                                        });
                                     }
                                     else {
                                         scope.appointment.runIfSuccess(success.data);
@@ -358,14 +383,14 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                             // windowClass: 'app-modal-window'
                                             size: 'lg',
 
-                                        }); 
+                                        });
                                     }
                                     else {
                                         scope.staff.runIfSuccess(success.data);
                                     }
 
                                 }else if(scope.rolecompany == true) {
-                                    
+
                                     scope.reset();
 
                                 }else {
@@ -386,7 +411,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                             // windowClass: 'app-modal-window'
                                             size: 'lg',
 
-                                        }); 
+                                        });
                                     }
                                     else {
                                         toastr.success("Create Successful!!", "SUCCESS");

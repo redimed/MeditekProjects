@@ -10,9 +10,9 @@ socketJoinRoom = function(server, api, obj) {
         method: 'get',
         url: api,
         headers: {
-            systemtype:"WEB"
+            systemtype: "WEB"
         },
-        data:obj
+        data: obj
     }, function(data, jwres) {
         console.log('=============Socket===============', api);
         console.log(data);
@@ -79,6 +79,7 @@ function connectedTelehealth() {
         console.log(JSON.stringify("d" + msg));
     });
 
+
     socketTelehealth.on('receiveMessage', function(msg) {
         switch (msg.message) {
             case "decline":
@@ -100,11 +101,14 @@ function connectedTelehealth() {
                     ioSocket.telehealthMesageCancel = msg;
                 break;
             case "misscall":
-
                 if (ioSocket.telehealthMisscall)
                     ioSocket.telehealthMisscall(msg);
                 else
                     ioSocket.telehealthMesageMisscall = msg;
+                break;
+            case "addDoctor":
+                if (ioSocket.telehealthCall)
+                    ioSocket.telehealthCall(msg);
                 break;
         };
     });

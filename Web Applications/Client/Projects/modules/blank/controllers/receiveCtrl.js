@@ -1,6 +1,6 @@
 var app = angular.module('app.blank.receive.controller', []);
 
-app.controller('receiveCtrl', function($scope, $stateParams, $timeout) {
+app.controller('receiveCtrl', function($scope, $stateParams, $timeout, AuthenticationService, $cookies, OTSession) {
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
@@ -11,55 +11,69 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout) {
     console.log(apiKey);
     console.log(sessionId);
     console.log(token);
+    var userInfo = $cookies.getObject('userInfo');
     console.log("$stateParams", $stateParams);
     o.loadingPage(true);
-    session.connect(token, function(error) {
-        // If the connection is successful, initialize a publisher and publish to the session
-        if (!error) {
-            var publisherOptions = { insertMode: 'append', publishAudio: true, publishVideo: true, audioVolume: 100 };
-            $scope.publisher = OT.initPublisher('publisher', publisherOptions);
-            session.publish($scope.publisher);
-        } else {
-            console.log('There was an error connecting to the session: ', error.code, error.message);
+
+    OTSession.init(apiKey, sessionId, token, function(err) {
+        if (!err) {
+            var mytimeout = $timeout($scope.onTimeout, 1000);
         }
     });
+    $scope.streams = OTSession.streams;
 
-    // Subscribe to a newly created stream
-    session.on('streamCreated', function(event) {
-        var stream = event.stream;
-        displayStream(stream);
-    });
+    // session.connect(token, function(error) {
+    //     // If the connection is successful, initialize a publisher and publish to the session
+    //     if (!error) {
+    //         var publisherOptions = { insertMode: 'append', publishAudio: true, publishVideo: true, audioVolume: 100 };
+    //         $scope.publisher = OT.initPublisher('publisher', publisherOptions);
+    //         session.publish($scope.publisher);
+    //     } else {
+    //         console.log('There was an error connecting to the session: ', error.code, error.message);
+    //     }
+    // });
 
-    function displayStream(stream) {
-        o.loadingPage(false);
-        var subscriberOptions = { insertMode: 'append', width: '100%', height: '100%', subscribeToAudio: true, subscribeToVideo: true, audioVolume: 100 };
-        $scope.subscriber = session.subscribe(stream, 'subscriber', subscriberOptions);
-        var mytimeout = $timeout($scope.onTimeout, 1000);
-    }
+    // // Subscribe to a newly created stream
+    // session.on('streamCreated', function(event) {
+    //     var stream = event.stream;
+    //     displayStream(stream);
+    // });
 
+    // function displayStream(stream) {
+    //     o.loadingPage(false);
+    //     var subscriberOptions = { insertMode: 'append', width: '100%', height: '100%', subscribeToAudio: true, subscribeToVideo: true, audioVolume: 100 };
+    //     $scope.subscriber = session.subscribe(stream, 'subscriber', subscriberOptions);
+    //     var mytimeout = $timeout($scope.onTimeout, 1000);
+    // }
 
     //disconect
     session.on('sessionDisconnected', function(event) {
         console.log('You were disconnected from the session.', event.reason);
-        window.close();
+        if ($scope.streams.length < 1) {
+            window.close();
+        }
     });
 
     session.on('connectionDestroyed', function() {
-        console.log("connectionDestroyed");
-        window.close();
-    })
+        console.log("connectionDestroyed ", $scope.streams.length);
+        if ($scope.streams.length < 1) {
+            window.close();
+        }
+    });
 
     session.on('streamDestroyed', function() {
-        console.log("streamDestroyed");
-        window.close();
-    })
+        console.log("streamDestroyed ", $scope.streams.length);
+        if ($scope.streams.length < 1) {
+            window.close();
+        }
+    });
 
     session.on("signal:endCall", function(event) {
         console.log("Signal sent from connection ", event);
-        window.close();
+        if ($scope.streams.length < 1) {
+            window.close();
+        }
     });
-
-
 
     $scope.counter = 0;
 
@@ -68,24 +82,28 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout) {
         mytimeout = $timeout($scope.onTimeout, 1000);
     };
 
-    $scope.aaa = function() {
+    $scope.EnAudio = function() {
         $scope.subscriber.subscribeToAudio(false)
     };
 
-    $scope.bbb = function() {
-        session.signal({
-                data: "end",
-                type: "endCall"
-            },
-            function(error) {
-                if (error) {
-                    console.log("signal error (" + error.code + "): " + error.message);
-                } else {
-                    console.log("signal sent.");
+    $scope.EndCall = function() {
+        if ($scope.streams.length <= 1) {
+            session.signal({
+                    data: "end",
+                    type: "endCall"
+                },
+                function(error) {
+                    if (error) {
+                        console.log("signal error (" + error.code + "): " + error.message);
+                    } else {
+                        console.log("signal sent.");
+                    }
                 }
-            }
-        );
-        session.disconnect();
+            );
+            session.disconnect();
+        } else {
+            window.close();
+        }
     };
 
     $scope.cancel = function() {
@@ -99,7 +117,81 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout) {
             window.close();
         });
         window.close();
-    }
+    };
+
+    $scope.loadListDoctor = function(fullname) {
+        //INTERNAL
+        AuthenticationService.getListDoctor({
+            Search: {
+                FullName: (fullname) ? fullname : null
+            },
+            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+            isAvatar: true,
+            RoleID: [4]
+        }).then(function(data) {
+            $scope.listDoctorInternal = data.data;
+        });
+
+        //EXTERNAL 
+        AuthenticationService.getListDoctor({
+            Search: {
+                FullName: (fullname) ? fullname : null
+            },
+            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+            isAvatar: true,
+            RoleID: [5]
+        }).then(function(data) {
+            $scope.listDoctorExternal = data.data;
+        });
+    };
+    $scope.loadListDoctor();
+
+    $scope.$on("changeSize", function(event, stream) {
+        // var large = stream.oth_large;
+        if (stream.oth_large === undefined) {
+            stream.oth_large = stream.name !== "screen";
+        } else {
+            if (stream.oth_large === false) {
+                // var lsStreams = $scope.streams;
+                for (var i = 0; i < $scope.streams.length; i++) {
+                    if ($scope.streams[i] == stream) {
+                        $scope.streams[i].oth_large = !stream.oth_large;
+                        console.log("========== ", $scope.streams[i].oth_large);
+                    }
+                }
+                $scope.streams.reverse();
+            } else {
+                for (var i = 0; i < $scope.streams.length; i++) {
+                    if ($scope.streams[i] != stream) {
+                        $scope.streams[i].oth_large = !stream.oth_large;
+                        console.log("========== ", $scope.streams[i].oth_large);
+                    }
+                }
+            }
+        }
+        setTimeout(function() {
+            event.targetScope.$emit("otLayout");
+        }, 10);
+    });
+
+    $scope.addDoctor = function(doctor) {
+        console.log('add doctor', doctor);
+        socketTelehealth.get('/api/telehealth/socket/addDoctor', {
+            from: uidUser,
+            to: doctor.UserAccount.TelehealthUser.UID,
+            message: "add",
+            sessionId: sessionId,
+            apiKey: apiKey,
+            fromName: userInfo.UserName
+        }, function(data) {
+            console.log("send call", data);
+            window.close();
+        });
+    };
+
+    ioSocket.telehealthOffline = function() {
+        swal("Call fail", "Call Offline?");
+    };
 
     $scope.toggle = false;
     $scope.zoom = false;

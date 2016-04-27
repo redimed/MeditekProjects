@@ -1,6 +1,7 @@
 var config = sails.config.myconf;
 //======== Initialize Opentok module ==========
 var $q = require('q');
+var _ = require('lodash');
 var moment = require('moment');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
@@ -58,7 +59,7 @@ module.exports = {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     console.log("roomList", sails.sockets.rooms());
-                    sails.sockets.leave(req.socket ,req.socket.id);
+                    sails.sockets.leave(req.socket, req.socket.id);
                     console.log("JoinConferenceRoom Successfully", uid);
                     console.log("roomList", sails.sockets.rooms());
                     RedisWrap.hget(redisKey, uid).then(function(data) {
@@ -80,7 +81,6 @@ module.exports = {
         if (error) emitError(req.socket, error);
     },
     MessageTransfer: function(req, res) {
-
         if (!req.isSocket) {
             var err = new Error("Socket.MessageTransfer.Error");
             err.pushError("Socket Request Only!");
@@ -201,15 +201,15 @@ module.exports = {
     },
     ListRoomSocket: function(req, res) {
         var roomList = sails.sockets.rooms();
-        console.log("roomList",roomList);
-        res.ok({roomList:roomList});
+        console.log("roomList", roomList);
+        res.ok({ roomList: roomList });
     },
-    TotalUserInRoom: function(req,res) {
+    TotalUserInRoom: function(req, res) {
         var roomId = req.body.UID;
         var userInRoom = sails.sockets.subscribers(roomId);
         var toal = sails.sockets.subscribers(roomId).length;
-        console.log("userInRoom",userInRoom);
-        res.ok({userInRoom:userInRoom,toal:toal});
+        console.log("userInRoom", userInRoom);
+        res.ok({ userInRoom: userInRoom, toal: toal });
     },
     Logout: function(req, res) {
         console.log("aaaaaaa", req.param('uid'), req.isSocket);
@@ -222,17 +222,17 @@ module.exports = {
 
         var uid = req.param('uid');
         if (req.headers.systemtype === "WEB") {
-            sails.sockets.leave(req.socket ,uid);
+            sails.sockets.leave(req.socket, uid);
             console.log("roomList", sails.sockets.rooms());
             return res.ok({
-                status:"success"
+                status: "success"
             });
         }
 
         /*request header*/
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
-        
+
         /*push param */
         // var deviceId = req.param('deviceid');
         // var deviceType = req.param('systemtype');
@@ -241,19 +241,18 @@ module.exports = {
             return TelehealthService.FindByUID(uid).then(function(teleUser) {
                 return TelehealthDevice.update({
                     DeviceToken: null
-                },{
+                }, {
                     where: {
                         TelehealthUserID: teleUser.ID,
                         DeviceID: deviceId,
                         Type: deviceType
                     }
-                }).then(function(result)
-                {
-                    sails.sockets.leave(req.socket ,uid);
+                }).then(function(result) {
+                    sails.sockets.leave(req.socket, uid);
                     return res.ok({
-                        status:"success"
-                    }); 
-                },function(error){
+                        status: "success"
+                    });
+                }, function(error) {
                     err.pushError("Update Telehealth Device Error");
                     return res.serverError(ErrorWrap(error));
                 });
@@ -263,4 +262,37 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
+    AddDoctor: function(req, res) {
+        if (!req.isSocket) {
+            var err = new Error("Socket.AddDoctor.Error");
+            err.pushError("Socket Request Only!");
+            return res.serverError(ErrorWrap(err));
+        };
+
+        var data = {};
+        var sessionId = req.body.sessionId;
+        var tokenOptions = {
+            role: 'moderator'
+        };
+        var token;
+        var fromName = req.body.fromName;
+        var from = req.body.from;
+        token = opentok.generateToken(sessionId, tokenOptions);
+        data.apiKey = req.body.apiKey;
+        data.sessionId = sessionId;
+        data.token = token;
+        data.fromName = !fromName ? 'Unknown' : fromName;
+        
+        var to = req.body.to;
+        if (_.indexOf(sails.sockets.rooms(), to) != -1) {
+            data.message = 'addDoctor';
+            console.log(">>>>>>>>>>>>>>>>> Online <<<<<<<<<<<<<<");
+            sails.sockets.broadcast(to, 'receiveMessage', data);
+        } 
+        else {
+            data.message = 'offline';
+            console.log(">>>>>>>>>>>>>>>>> Offline <<<<<<<<<<<<<<");
+            sails.sockets.broadcast(from, 'receiveMessage', data);
+        }
+    }
 }

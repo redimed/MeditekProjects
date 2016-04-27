@@ -1,4 +1,20 @@
-<div class="my-skype" id="subscriber">
+<style type="text/css" media="screen">
+ot-publisher,
+ot-subscriber,
+ot-layout {
+    display: block;
+    overflow: hidden;
+}
+
+ot-layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+</style>
+<div class="my-skype">
     <div class="my-header">
         <div class="row margin-left-right-0 padding-10">
             <div class="col-md-3 col-sm-3 col-xs-3 pull-left">
@@ -13,83 +29,66 @@
                 </div>
                 <div class="row margin-left-right-0 padding-10">
                     <div class="pull-right">
-                        <div id="publisher">
-                        </div>
+                        <ot-publisher id="publisher" props="{style: {nameDisplayMode: 'off'}, resolution: '1280x720', frameRate: 30}">
+                        </ot-publisher>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="actions">
+    <div class="actions" ng-if="streams">
         <div class="row">
             <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
                 <img src="theme/assets/global/images/E-call_17.png" class="my-button">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <img src="theme/assets/global/images/E-call_13.png" class="my-button">
+                <img src="theme/assets/global/images/E-call_13.png" class="my-button" ng-click="toggleWhiteboard()">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <img src="theme/assets/global/images/E-call_06.png" class="my-button" ng-click="aaa()">
+                <img src="theme/assets/global/images/E-call_06.png" class="my-button" ng-click="EnAudio()">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 call-plus">
                 <img src="theme/assets/global/images/E-call_22.png" class="my-button" ng-click="listUser()">
-                <div class="skype-listUser" ng-if="toggle">
-                    <div class="header">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <form class="horizontal">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-6 col-sm-6 font-green-haze">Address Book</label>
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="input-icon">
-                                                <i class="glyphicon glyphicon-search"></i>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                <div class="list-call-wrapper" ng-show="toggle">
+                    <div class="list-call-header">
+                        <h4 class="bold font-green">Contact list</h4>
                     </div>
-                    <div class="content scroller" style="height: 450px;">
-                        <h4 class="title">Redimed</h4>
-                        <div class="row">
-                            <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-                                <img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
-                                <img src="theme/assets/global/images/online1.png" class="icon">
-                            </div>
-                            <div class="col-md-8 col-sm-8 col-xs-8">
-                                <a href="javascript:;" class="name">Marcus Doe</a>
-                            </div>
+                    <div class="list-call-body">
+                        <div class="input-icon right search">
+                            <input type="text" placeholder="Search.." class="form-control input-sm" ng-model="fullname" ng-enter="loadListDoctor(fullname)" />
+                            <i class="glyphicon glyphicon-search"></i>
                         </div>
-                        <div class="row">
-                            <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-                                <img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
-                                <img src="theme/assets/global/images/online2.png" class="icon">
-                            </div>
-                            <div class="col-md-8 col-sm-8 col-xs-8">
-                                <span class="name">Yashiro Shermie</span>
-                            </div>
-                        </div>
-                        <h4 class="title">Reception</h4>
-                        <div class="row">
-                            <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-                                <img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
-                                <img src="theme/assets/global/images/online3.png" class="icon">
-                            </div>
-                            <div class="col-md-8 col-sm-8 col-xs-8">
-                                <span class="name">Marcus Doe</span>
-                            </div>
-                        </div>
+                        <h3 class="list-heading">Staff</h3>
+                        <ul class="media-list list-items">
+                            <li class="media" ng-repeat="doctor in listDoctorInternal">
+                                <div class="media-status">
+                                    <a class="badge badge-primary" ng-disabled="doctor.UserAccount.TelehealthUser === null" ng-click="addDoctor(doctor)">call</a>
+                                </div>
+                                <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" width="50" class="media-image" alt="" ng-if="doctor.UserAccount.FileUploads[0].UID">
+                                <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
+                                    <div class="media-heading-sub font-green">Offline</div>
+                                </div>
+                            </li>
+                            <li class="media" ng-repeat="doctor in listDoctorExternal">
+                                <div class="media-status">
+                                    <a class="badge badge-primary" ng-disabled="doctor.UserAccount.TelehealthUser === null" ng-click="addDoctor(doctor)">call</a>
+                                </div>
+                                <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" width="50" class="media-image" alt="" ng-if="doctor.UserAccount.FileUploads[0].UID">
+                                <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
+                                    <div class="media-heading-sub font-green">Offline</div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="footer">
-                        <a href="javascript:;" class="btn btn-lg btn-circle blue-dark">
-                            <i class="fa fa-phone"></i> More to call</a>
-                    </div>
+                    <div class="list-call-footer"></div>
                 </div>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <img src="theme/assets/global/images/E-call_18.png" class="my-button" ng-click="bbb()">
+                <img src="theme/assets/global/images/E-call_18.png" class="my-button" ng-click="EndCall()">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
                 <img src="theme/assets/global/images/E-call_23.png" class="my-button">
@@ -99,6 +98,10 @@
             </div>
         </div>
     </div>
+    <ot-layout props="{animate:true,maxRatio: 2/3,bigFixedRatio:true}" style="background-color: white;">
+        <ot-subscriber ng-repeat="stream in streams" stream="stream" props="{style: {nameDisplayMode: 'off'} ,width:'100%', height:'100%'}" ng-dblclick="$emit('changeSize',stream)" ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}" style="margin-top: 0;">
+        </ot-subscriber>
+    </ot-layout>
 </div>
 <style>
 #draggable {

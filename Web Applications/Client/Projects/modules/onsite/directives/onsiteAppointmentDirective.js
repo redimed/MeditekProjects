@@ -254,15 +254,19 @@ app.directive('onsiteAppointment', function(){
                     if($scope.wainformation.PatientAppointments) {
                         $scope.wainformation.PatientAppointment = $scope.wainformation.PatientAppointments.length>0?$scope.wainformation.PatientAppointments[0]:{};
                         delete $scope.wainformation['PatientAppointments'];
-						if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
-                            patientuid = $scope.wainformation.Patients[0].UID;
-                            $scope.wainformation.Patients.splice(0,1);
-                            $scope.wainformation.Patients.push({UID:patientuid});
+                        if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                            for(var i = 0;i < $scope.wainformation.Patients.length; i++) {
+                                patientuid = $scope.wainformation.Patients[0].UID;
+                                $scope.wainformation.Patients.splice(0,1);
+                                $scope.wainformation.Patients.push({UID:patientuid});
+                            }
                         }
                         if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
-                            doctoruid = $scope.wainformation.Doctors[0].UID;
-                            $scope.wainformation.Doctors.splice(0,1);
-                            $scope.wainformation.Doctors.push({UID:patientuid});
+                            for(var i = 0; i < $scope.wainformation.Doctors.length; i++) {
+                                doctoruid = $scope.wainformation.Doctors[i].UID;
+                                $scope.wainformation.Doctors.splice(0,1);
+                                $scope.wainformation.Doctors.push({UID:doctoruid});
+                            }
                         }
                         WAAppointmentService.updateWaAppointmentwithCompany($scope.wainformation).then(function(data) {
                             console.log('saveWaAppointment', data);
@@ -285,15 +289,19 @@ app.directive('onsiteAppointment', function(){
 
                     }
                     else {
-						if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
-                            patientuid = $scope.wainformation.Patients[0].UID;
-                            $scope.wainformation.Patients.splice(0,1);
-                            $scope.wainformation.Patients.push({UID:patientuid});
+                        if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                            for(var i = 0;i < $scope.wainformation.Patients.length; i++) {
+                                patientuid = $scope.wainformation.Patients[0].UID;
+                                $scope.wainformation.Patients.splice(0,1);
+                                $scope.wainformation.Patients.push({UID:patientuid});
+                            }
                         }
                         if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
-                            doctoruid = $scope.wainformation.Doctors[0].UID;
-                            $scope.wainformation.Doctors.splice(0,1);
-                            $scope.wainformation.Doctors.push({UID:patientuid});
+                            for(var i = 0; i < $scope.wainformation.Doctors.length; i++) {
+                                doctoruid = $scope.wainformation.Doctors[i].UID;
+                                $scope.wainformation.Doctors.splice(0,1);
+                                $scope.wainformation.Doctors.push({UID:doctoruid});
+                            }
                         }
                         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                             console.log('saveWaAppointment', data);

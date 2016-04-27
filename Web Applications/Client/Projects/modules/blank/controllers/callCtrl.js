@@ -39,11 +39,15 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
                     sendCall();
                 }
             }
-            var mytimeout = $timeout($scope.onTimeout, 1000);
+            
         }
     });
 
     $scope.streams = OTSession.streams;
+
+    $scope.$on("runtime",function(argument) {
+        var mytimeout = $timeout($scope.onTimeout, 1000);
+    })
 
     $scope.$on("changeSize", function(event, stream) {
         if (stream.oth_large === undefined) {
@@ -229,18 +233,21 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     $scope.loadListDoctor();
 
     $scope.addDoctor = function(doctor) {
-        console.log("sessionId " + sessionId);
-        socketTelehealth.get('/api/telehealth/socket/addDoctor', {
-            from: uidUser,
-            to: doctor.UserAccount.TelehealthUser.UID,
-            message: "add",
-            sessionId: sessionId,
-            apiKey: apiKey,
-            fromName: userInfo.UserName
-        }, function(data) {
-            console.log("send call", data);
-            // window.close();
-        });
+        if ($scope.streams.length < 2) {
+            socketTelehealth.get('/api/telehealth/socket/addDoctor', {
+                from: uidUser,
+                to: doctor.UserAccount.TelehealthUser.UID,
+                message: "add",
+                sessionId: sessionId,
+                apiKey: apiKey,
+                fromName: userInfo.UserName
+            }, function(data) {
+                console.log("send call", data);
+                window.close();
+            });
+        } else {
+            swal("Cann't Call", "You can not call more than 3 people!");
+        }
     };
 });
 

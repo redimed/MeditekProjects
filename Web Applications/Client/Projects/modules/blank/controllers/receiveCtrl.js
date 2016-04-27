@@ -175,18 +175,21 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     });
 
     $scope.addDoctor = function(doctor) {
-        console.log('add doctor', doctor);
-        socketTelehealth.get('/api/telehealth/socket/addDoctor', {
-            from: uidUser,
-            to: doctor.UserAccount.TelehealthUser.UID,
-            message: "add",
-            sessionId: sessionId,
-            apiKey: apiKey,
-            fromName: userInfo.UserName
-        }, function(data) {
-            console.log("send call", data);
-            // window.close();
-        });
+        if ($scope.streams.length < 2) {
+            socketTelehealth.get('/api/telehealth/socket/addDoctor', {
+                from: uidUser,
+                to: doctor.UserAccount.TelehealthUser.UID,
+                message: "add",
+                sessionId: sessionId,
+                apiKey: apiKey,
+                fromName: userInfo.UserName
+            }, function(data) {
+                console.log("send call", data);
+                window.close();
+            });
+        } else {
+            swal("Cann't Call", "You can not call more than 3 people!");
+        }
     };
 
     ioSocket.telehealthOffline = function() {

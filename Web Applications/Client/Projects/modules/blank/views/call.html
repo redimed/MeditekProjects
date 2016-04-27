@@ -23,20 +23,20 @@ ot-layout {
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 pull-right padding-0">
                 <div class="row margin-left-right-0">
-                    <div class="pull-right">
+                    <div class="pull-right" style="pointer-events: all;">
                         <img src="theme/assets/global/images/{{src}}" width="100%" class="my-button" ng-click="ZoomScreen(size,zoom)">
                     </div>
                 </div>
                 <div class="row margin-left-right-0 padding-10">
                     <div class="pull-right">
-                        <ot-publisher id="publisher" props="{style: {nameDisplayMode: 'off'}, resolution: '1280x720', frameRate: 30}">
+                        <ot-publisher id="publisher" style="pointer-events: all;" props="{style: {nameDisplayMode: 'off'}, resolution: '1280x720', frameRate: 30}">
                         </ot-publisher>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="actions" ng-if="streams">
+    <div class="actions" ng-if="streams.length > 0">
         <div class="row">
             <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
                 <img src="theme/assets/global/images/E-call_17.png" class="my-button">
@@ -95,6 +95,13 @@ ot-layout {
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
                 <img src="theme/assets/global/images/E-call_14.png" class="my-button">
+            </div>
+        </div>
+    </div>
+    <div class="actions" ng-if="!(streams.length > 0)">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                <img src="theme/assets/global/images/E-call_18.png" class="my-button" ng-click="cancel()">
             </div>
         </div>
     </div>

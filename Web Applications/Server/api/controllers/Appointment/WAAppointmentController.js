@@ -445,6 +445,10 @@ module.exports = {
             })
             .then(function(success) {
                 success.transaction.commit();
+                for(var i = 0; i < success.data.length; i++) {
+                    success.data[i].appointment.candidateId = rawdata.BookingCandidates[i].candidateId;
+                    success.data[i].appointment.headerId = rawdata.headerId;
+                }
                 res.ok({
                     status: 'success',
                     data: success.data

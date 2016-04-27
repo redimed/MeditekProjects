@@ -1,6 +1,7 @@
 var InputAxisX = require('modules/eform/eformTemplateDetail/chart/inputAxisX');
 
 module.exports = React.createClass({
+    image: null,
     componentDidMount: function(){
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
@@ -48,8 +49,24 @@ module.exports = React.createClass({
             series: this.props.series.toJS()
         })
 
+        var self = this;
         if(this.props.permission !== 'eformDev'){
             this.refs.inputAxisX.init(this.props.axisX.toJS(), this.props.series.toJS());
+            setInterval(function(){
+                var value = null;
+                var chart = $(self.refs.line_chart).highcharts();
+                var svg = chart.getSVG();
+                var image = new Image;
+                var canvas = document.createElement('canvas');
+                canvas.width = 600;
+                canvas.height = 600;
+                image.onload = function(){
+                    canvas.getContext('2d').drawImage(this, 0, 0, 600, 600);
+                    self.image = canvas.toDataURL();
+                    self.image = self.image.replace('data:image/png;base64,','');
+                }
+                image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+            }, 2000)
         }
     },
     getName: function(){
@@ -92,6 +109,13 @@ module.exports = React.createClass({
         var name = this.props.name;
         var ref = this.props.refTemp;
         return {series: series, type: type, ref: ref, name: name};
+    },
+    getBase64Value: function(){
+        var type = 'line_chart';
+        var name = this.props.name;
+        var ref = this.props.refTemp;
+        var value = this.image;
+        return {value: value, type: type, ref: ref, name: name};
     },
     setValue: function(field, chartType){
         var chart = $(this.refs.line_chart).highcharts();

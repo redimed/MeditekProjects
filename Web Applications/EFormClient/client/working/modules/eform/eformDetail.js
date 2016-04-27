@@ -288,7 +288,6 @@ module.exports = React.createClass({
             data: fields,
             templateUID: self.templateUID
         }
-
         EFormService.createPDFForm(data)
         .then(function(response){
             var fileName = 'report_'+moment().format('X');
@@ -296,7 +295,6 @@ module.exports = React.createClass({
                 type: 'application/pdf'
             });
             saveAs(blob, fileName);
-            //swal("Success!", "Your form has been printed to PDF.", "success");
         }, function(error){
 
         })

@@ -367,5 +367,10 @@ angular.module('app.authentication.company.service', [])
     	return getDetailSite.post({data:data});
     };
 
+	services.getHistoryCompanyList = function(data) {
+		var getHistoryCompanyList = api.all('company/get-history');
+		return getHistoryCompanyList.post({data:data});
+	};
+
 	return services;
 });

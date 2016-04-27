@@ -193,7 +193,7 @@ module.exports = {
 					}
 				}
 			}
-			
+
 			//end validate SiteInfo
 
 			if(error.length > 0){
@@ -218,54 +218,54 @@ module.exports = {
             if(data.Search.ID){
                 whereClause.Company.ID={
                     like:'%'+data.Search.ID+'%'
-                } 
+                }
             }
             if(data.Search.UID){
                 whereClause.Company.UID={
                     like:'%'+data.Search.UID+'%'
-                } 
+                }
             }
             if(data.Search.CompanyName){
                 whereClause.Company.CompanyName={
                     like:'%'+data.Search.CompanyName+'%'
-                } 
+                }
             }
             if(data.Search.Enable){
                 whereClause.Company.Enable={
                     like:'%'+data.Search.Enable+'%'
-                } 
+                }
             }
             if(data.Search.Active){
                 whereClause.Company.Active={
                     like:'%'+data.Search.Active+'%'
-                } 
+                }
             }
             if(data.Search.Description){
                 whereClause.Company.Description={
                     like:'%'+data.Search.Description+'%'
-                } 
+                }
             }
             if(data.Search.CreatedDate){
                 whereClause.Company.CreatedDate={
                     like:'%'+data.Search.CreatedDate+'%'
-                } 
+                }
             }
             if(data.Search.CreatedBy){
                 whereClause.Company.CreatedBy={
                     like:'%'+data.Search.CreatedBy+'%'
-                } 
+                }
             }
             if(data.Search.ModifiedDate){
                 whereClause.Company.ModifiedDate={
                     like:'%'+data.Search.ModifiedDate+'%'
-                } 
+                }
             }
             if(data.Search.ModifiedBy){
                 whereClause.Company.ModifiedBy={
                     like:'%'+data.Search.ModifiedBy+'%'
-                } 
+                }
             }
-          
+
         }
         return whereClause;
     },
@@ -277,13 +277,13 @@ module.exports = {
 			// return validated;
 			var info = {};
 			info.CompanySite = {};
-			info.Company     = {}; 
+			info.Company     = {};
 			for(var key in data) {
 				if(key.indexOf('CompanySite') != -1) {
 					var temp = key.replace('CompanySite','');
 					info.CompanySite[temp] = data[key];
 				}
-				else 
+				else
 					info.Company[key] = data[key];
 			}
 			console.log(info);
@@ -360,13 +360,13 @@ module.exports = {
                 $or: [
                     whereClause.Company
                 ]
-                
+
             },
             transaction:transaction
         })
         .then(function(result){
             return result;
-            
+
         },function(err){
             throw err;
         });
@@ -537,7 +537,7 @@ module.exports = {
 												console.log("luc nay ne  ",data.info);
 												if(data.info.PhoneNumber) {
 													return Services.Patient.sendSMS(data.info, t,function(err) {
-                        							if(err) 
+                        							if(err)
                             							throw err;
                             						else
                             							byPhone = true;
@@ -935,7 +935,7 @@ module.exports = {
 								PatientID : patient.ID,
 							},
 							transaction:t
-						}); 
+						});
 					}
 					else
 						return checked_association;
@@ -1519,7 +1519,7 @@ module.exports = {
 						break;
 
 					default :
-						break;	
+						break;
 				}
 
 			}
@@ -1696,6 +1696,49 @@ module.exports = {
 			throw err;
 		});
 	},
+
+    GetHistoryCompanyList: function(data) {
+        if(!data) {
+            var err = new Error('GetHistoryCompanyList.error');
+            err.pushError('invalid.params');
+            throw err;
+        }
+        if(!data.patientUID) {
+            var err = new Error('GetHistoryCompanyList.error');
+            err.pushError('patientUID.invalid');
+        }
+        return Patient.findOne({
+            where: {
+                UID : data.patientUID,
+                Enable : 'Y'
+            }
+        })
+        .then(function(got_patient) {
+            if(_.isEmpty(got_patient)) {
+                var err = new Error('GetHistoryCompanyList.error');
+                err.pushError('Patient.notFound');
+                throw err;
+            }
+            else {
+                return got_patient.getCompanies()
+            }
+        }, function(err) {
+            throw err;
+        })
+        .then(function(got_company) {
+            // console.log(got_company);
+            if(_.isEmpty(got_company)) {
+                var err = new Error('GetHistoryCompanyList.error');
+                err.pushError('Company.notFound');
+                throw err;
+            }
+            else {
+                return got_company;
+            }
+        }, function(err) {
+            throw err;
+        });
+    },
 
 	Test: function() {
 		// var model = sequelize.models[data.model];

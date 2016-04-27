@@ -49,14 +49,14 @@
                                         <!-- col 1 -->
                                         <div class="col-lg-6 col-md-12 col-lg-offset-1">
                                             <h4 class="form-section bold">
-                                                <a href="javascript:;" 
+                                                <a href="javascript:;"
                                                     class="btn yellow-gold pull-right"
-                                                    style="position: relative; bottom:13px" 
+                                                    style="position: relative; bottom:13px"
                                                     ng-click="openCalendar()">
                                                     Booking
                                                 </a>
                                                 Appointment:
-                                                {{(wainformation.Code===null || wainformation.Code==='' || wainformation.Code===undefined)?"N/A":wainformation.Code}} 
+                                                {{(wainformation.Code===null || wainformation.Code==='' || wainformation.Code===undefined)?"N/A":wainformation.Code}}
                                             </h4>
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-12">
@@ -228,7 +228,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Decription</label>
-                                                <textarea class="form-control" rows="5" ng-model="wainformation.TelehealthAppointment.Description"></textarea>
+                                                <textarea class="form-control" rows="5" ng-model="wainformation.Description" ng-change="changeValue('Description')"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -716,7 +716,7 @@
                                                                 <input type="radio" class="regular-radio" name="referrer_radio" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP"> No
                                                             </label>
                                                         </div>
-                                                    </div>    
+                                                    </div>
                                                     <div class="row" ng-if="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
@@ -932,10 +932,10 @@
                                                                 History of Previous skin cancers and treatmens
                                                             </label>
                                                             <label class="radio-inline">
-                                                                <input type="radio" class="regular-radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes 
+                                                                <input type="radio" class="regular-radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes
                                                             </label>
                                                             <label class="radio-inline">
-                                                                <input type="radio" class="regular-radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No 
+                                                                <input type="radio" class="regular-radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No
                                                             </label>
                                                         </div>
                                                     </div>
@@ -978,10 +978,10 @@
                                                                 History of Previous hand surgery
                                                             </label>
                                                             <label class="radio-inline">
-                                                                <input type="radio" class="regular-radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes 
+                                                                <input type="radio" class="regular-radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes
                                                             </label>
                                                             <label class="radio-inline">
-                                                                <input type="radio" class="regular-radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No 
+                                                                <input type="radio" class="regular-radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No
                                                             </label>
                                                         </div>
                                                     </div>

@@ -576,50 +576,78 @@
                             </div>
                             <div class="tab-pane" id="tab_company">
                                 <h3 class="form-section bold">
-                                    <a href="javascript:;" 
+                                    <a href="javascript:;"
                                         class="btn btn-danger pull-right"
-                                        style="position: relative; bottom:8px" 
+                                        style="position: relative; bottom:8px"
                                         ng-click="linkcompany()">
                                         Link Company
                                     </a>
                                     Basic info
                                 </h3>
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Company Name</label>
-                                            <input type="text" class="form-control" ng-model="info.Companies[0].CompanyName" />
+                                    <div class="col-md-12">
+                                        <div class="col-md-3 col-sm-3">
+                                            <div class="table-scrollable margin-top-30">
+                                                <table class="table table-bordered table-hover table-striped">
+                                                    <thead>
+                                                        <tr style="width:100%;">
+                                                            <th width="1">#</th>
+                                                            <th>Company Name</th>
+                                                            <th>Active</th>
+                                                            <th>&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="t in historyData">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{t.CompanyName}}</td>
+                                                            <td><i ng-class="{'glyphicon glyphicon-ok turquoisetype':t.RelCompanyPatient.Active==='Y','glyphicon glyphicon-remove redtype':t.RelCompanyPatient.Active==='N'}"></i></td>
+                                                            <td><button class="btn btn-info" ng-show="t.Active=='Y'&&t.Enable=='Y'&&t.RelCompanyPatient.Active=='N'" ng-click="linkOldCompany(t)"> set </button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Description</label>
-                                            <textarea class="form-control" ng-model="info.Companies[0].Description" ></textarea>
+                                        <div class="col-md-9 col-sm-9">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Company Name</label>
+                                                        <input type="text" class="form-control" ng-model="info.Companies[0].CompanyName" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label">Description</label>
+                                                        <textarea class="form-control" ng-model="info.Companies[0].Description" ></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h3 class="form-section bold">Site info</h3>
+                                            <div class="table-scrollable margin-top-30">
+                                                <table class="table table-bordered table-hover table-striped">
+                                                    <thead>
+                                                        <tr style="width:100%;">
+                                                            <th width="1">#</th>
+                                                            <th>Site Name</th>
+                                                            <th>Address</th>
+                                                            <th>Contact Name</th>
+                                                            <th>Contact Number</th>
+                                                            <th width="1">Enable</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="s in info.CompanySites">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{s.SiteName}}</td>
+                                                            <td>{{s.Address1}}</td>
+                                                            <td>{{s.ContactName}}</td>
+                                                            <td>{{s.HomePhoneNumber}}</td>
+                                                            <td><i ng-class="{'glyphicon glyphicon-ok turquoisetype':s.Enable==='Y','glyphicon glyphicon-remove redtype':s.Enable==='N'}"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <h3 class="form-section bold">Site info</h3>
-                                <div class="table-scrollable margin-top-30">
-                                    <table class="table table-bordered table-hover table-striped">
-                                        <thead>
-                                            <tr style="width:100%;">
-                                                <th width="1">#</th>
-                                                <th>Site Name</th>
-                                                <th>Address</th>
-                                                <th>Contact Name</th>
-                                                <th>Contact Number</th>
-                                                <th width="1">Enable</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="s in info.CompanySites">
-                                                <td>{{$index+1}}</td>
-                                                <td>{{s.SiteName}}</td>
-                                                <td>{{s.Address1}}</td>
-                                                <td>{{s.ContactName}}</td>
-                                                <td>{{s.HomePhoneNumber}}</td>
-                                                <td><i ng-class="{'glyphicon glyphicon-ok turquoisetype':s.Enable==='Y','glyphicon glyphicon-remove redtype':s.Enable==='N'}"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -900,3 +928,12 @@ ComponentsDateTimePickers.init();
 <script type="text/ng-template " id="LinkCompanyModal">
     <company-list on-patient-uid="patientuid" on-cancel="cancel" ></company-list>
 </script>
+<style type="text/css">
+    .redtype {
+        color : red !important;
+    }
+
+    .turquoisetype {
+        color: turquoise !important;
+    }
+</style>

@@ -77,14 +77,14 @@ module.exports = function(data, userInfo, objRequired) {
                 }, {
                     model: Patient,
                     attributes: Services.AttributesAppt.Patient(),
-                    required: !_.isEmpty(pagination.Patient) ||
-                        (!_.isEmpty(objRequired) ? objRequired.Patient : false),
+                    required: (!_.isEmpty(pagination.Patient) ||
+                        (!_.isEmpty(objRequired)) ? objRequired.Patient : false),
                     where: pagination.Patient,
                     include: [{
                         model: UserAccount,
                         attributes: Services.AttributesAppt.UserAccount(),
                         required: false
-                    },{
+                    }, {
                         model: Company,
                         exclude: ['CreatedDate', 'CreatedBy', 'ModifiedDate', 'ModifiedBy'],
                         where: pagination.Company,
@@ -95,6 +95,11 @@ module.exports = function(data, userInfo, objRequired) {
                         },
                         required: !_.isEmpty(pagination.Company)
                     }]
+                }, {
+                    model: PatientAppointment,
+                    attributes: Services.AttributesAppt.PatientAppointment(),
+                    required: !_.isEmpty(pagination.PatientAppointment),
+                    where: pagination.PatientAppointment
                 }],
                 where: pagination.Appointment,
                 order: pagination.order,

@@ -16,19 +16,17 @@ module.exports = function(objRel) {
             .then(function(doctorIDs) {
                 if (!_.isEmpty(doctorIDs)) {
                     doctorIDs = _.map(_.uniq(doctorIDs, 'ID'), 'ID');
-                    return objRel.appointmentObject.addDoctors(doctorIDs, {
+                    return objRel.appointmentObject.setDoctors(doctorIDs, {
                         transaction: objRel.transaction
                     });
                 }
             }, function(err) {
-                console.log('err1',err)
                 error.pushError(error);
                 defer.reject(error);
             })
             .then(function(relapptDoctorCreated) {
                 defer.resolve(relapptDoctorCreated);
             }, function(err) {
-                console.log('err2', err)
                 error.pushError(error);
                 defer.reject(error);
             });

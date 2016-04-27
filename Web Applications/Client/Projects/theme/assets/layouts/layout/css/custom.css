@@ -599,7 +599,7 @@ img.profile-imge {
         position: absolute;
         bottom: 120px;
         max-height: 500px;
-        overflow: auto;
+        /*overflow: auto;*/
     }
 
     .list-call-wrapper .list-call-header {

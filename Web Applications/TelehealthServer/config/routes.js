@@ -81,6 +81,10 @@ module.exports.routes = {
         controller: 'SocketController',
         action: 'Logout'
     },
+    '/api/telehealth/socket/addDoctor': {
+        controller: 'SocketController',
+        action: 'AddDoctor'
+    },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',
         action: 'GenerateConferenceSession'

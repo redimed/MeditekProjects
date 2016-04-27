@@ -187,6 +187,7 @@ app.factory('OT', function() {
                         }
                     });
                     subscriber.on('loaded', function() {
+                        scope.$emit('runtime');
                         scope.$emit('otLayout');
                     });
                     // Make transcluding work manually by putting the children back in there

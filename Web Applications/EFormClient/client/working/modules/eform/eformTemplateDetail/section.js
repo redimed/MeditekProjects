@@ -317,17 +317,27 @@ module.exports = React.createClass({
                                         <a className="collapse"></a>
                                     </div>
                                     <div className="actions" style={{display: displayPermission}}>
+
+                                        <a className="btn green btn-sm" onClick={this._onCreateRow}>
+                                            <i className="fa fa-plus"></i> Add Row
+                                        </a>&nbsp;
+                                        
                                         <div className="btn-group">
+
                                             <a className="btn btn-default btn-sm" data-toggle="dropdown">
                                                 Action&nbsp;
                                                 <i className="fa fa-angle-down"></i>
-                                            </a>                                            
+                                            </a>
+
                                             <ul className="dropdown-menu pull-right">
+                                                {/*
                                                 <li>
                                                     <a onClick={this._onCreateRow}>
                                                         <i className="fa fa-plus"></i> Add Row
                                                     </a>
                                                 </li>
+                                                 */}
+
                                                 <li>
                                                     <a onClick={this._onOrderSection}>
                                                         <i className="fa fa-sort"></i> Order Section

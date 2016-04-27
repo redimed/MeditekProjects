@@ -88,13 +88,19 @@ module.exports = function(data, userInfo, objRequired) {
                         model: Company,
                         exclude: ['CreatedDate', 'CreatedBy', 'ModifiedDate', 'ModifiedBy'],
                         where: pagination.Company,
+                        through: {
+                            where: {
+                                Active: 'Y'
+                            }
+                        },
                         required: !_.isEmpty(pagination.Company)
                     }]
                 }],
                 where: pagination.Appointment,
                 order: pagination.order,
                 limit: pagination.limit,
-                offset: pagination.offset
+                offset: pagination.offset,
+                subQuery: false
             });
         }, function(err) {
             defer.reject(err);

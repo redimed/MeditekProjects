@@ -59,6 +59,29 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.LoadData = function() {
                 o.loadingPage(true);
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
+                    console.log("data ne ",data);
+                    for(var i = 0; i < data.rows.length; i++) {
+                        console.log("code ",data.rows[i].Code);
+                        if(_.isEmpty(data.rows[i].TelehealthAppointment) == false) {
+                            console.log("truong hop 1");
+                            if(_.isEmpty(data.rows[i].TelehealthAppointment.PatientAppointment) == false) {
+                                console.log(data.rows[i].Patients);
+                                if(data.rows[i].Patients.length == 0){
+                                    data.rows[i].ishavePatientAppointment = true;
+                                    data.rows[i].Patients.push(data.rows[i].TelehealthAppointment.PatientAppointment);
+                                }
+                            }
+                        }
+                        else if(_.isEmpty(data.rows[i].PatientAppointments) == false) {
+                            console.log("truong hop 2");
+                            if(data.rows[i].Patients.length == 0){
+                                data.rows[i].ishavePatientAppointment = true;
+                                console.log("PatientAppointments ",data.rows[i].PatientAppointments);
+                                data.rows[i].Patients.push(data.rows[i].PatientAppointments[0]);
+                                console.log("Patients ",data.rows[i].Patients);
+                            }
+                        }
+                    }
                     scope.info.listWaapointment = data;
                     o.loadingPage(false);
                 });

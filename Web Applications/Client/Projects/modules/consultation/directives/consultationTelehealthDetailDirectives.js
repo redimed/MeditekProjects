@@ -810,13 +810,17 @@ app.directive('telehealthDetail', function() {
                 }
                 else {
                     if(_.isEmpty($scope.wainformation.Company) == false) {
-                        getDetailChild($scope.wainformation.Company.UID);
+                        if($scope.wainformation.Company.UID) {
+                            getDetailChild($scope.wainformation.Company.UID);
+                        }
                     }
                 }
                 if(iscomp == true) {
 
                     if(_.isEmpty($scope.wainformation.Company) == false){
-                        getDetailChild($scope.wainformation.Company.UID);
+                        if($scope.wainformation.Company.UID) {
+                            getDetailChild($scope.wainformation.Company.UID);
+                        }
                     }
                 }
             };

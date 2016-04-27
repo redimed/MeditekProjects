@@ -92,12 +92,10 @@
                             <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
                             <td>{{appt.Code}}</td>
                             <td>
-                                <span ng-if="appt.Patients.length === 0">{{(appt.TelehealthAppointment.PatientAppointment.FirstName !== null)?appt.TelehealthAppointment.PatientAppointment.FirstName:""}} 
-                            {{(appt.TelehealthAppointment.PatientAppointment.LastName !== null)?appt.TelehealthAppointment.PatientAppointment.LastName:""}}
-                            </span>
-                                <span ng-if="appt.Patients.length !== 0">
+
+                                <span>
                                 {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
-                            </span>
+                                </span><span ng-if="appt.ishavePatientAppointment === true" style="color:red;">*</span>
                             </td>
                             <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
                             <td>{{appt.CreatedDate | date: 'dd/MM/yyyy'}}</td>

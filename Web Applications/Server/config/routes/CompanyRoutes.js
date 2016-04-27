@@ -85,6 +85,11 @@ module.exports = {
         action: 'CreateCompanyForOnlineBooking'
     },
 
+    'post /api/company/get-detail-site' :{
+        controller:'Company/CompanyController',
+        action: 'GetDetailSiteBySiteIdRefer'
+    },
+
     'post /api/company/get-history' : {
         controller: 'Company/CompanyController',
         action: 'GetHistoryCompanyList'

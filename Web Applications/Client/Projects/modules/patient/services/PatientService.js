@@ -8,7 +8,7 @@ angular.module('app.authentication.patient.services',[])
 	var postcodeRegex = /^[0-9]{4}$/;
 	var postData ={};
 
-	
+
 PatientService.validate = function(info) {
 		var error = [];
 		var q = $q.defer();
@@ -296,6 +296,24 @@ PatientService.validate = function(info) {
 				}
 			}
 
+			//validate HomePhone
+			if(info.HomePhoneNumber){
+				var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
+				var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
+				if(!auHomePhoneNumberPattern.test(HomePhone)){
+					error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
+				}
+			}
+
+			//validate WorkPhone
+			if(info.WorkPhoneNumber){
+				var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
+				var WorkPhone=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
+				if(!auWorkPhoneNumberPattern.test(WorkPhone)){
+					error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
+				}
+			}
+
 			if(error.length>0){
 				throw error;
 			}
@@ -334,7 +352,9 @@ PatientService.validate = function(info) {
 				Address2:postData.data.Address2,
 				State:postData.data.State,
 				Email1:postData.data.Email1,
+				Email:postData.data.Email1,
 				HomePhoneNumber:postData.data.HomePhoneNumber,
+				WorkPhoneNumber:postData.data.WorkPhoneNumber,
 				Gender:postData.data.Gender,
 				Suburb:postData.data.Suburb,
 				Postcode:postData.data.Postcode

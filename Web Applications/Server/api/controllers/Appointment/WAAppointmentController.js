@@ -363,8 +363,8 @@ module.exports = {
                             DOB: candidateInfo.DOB,
                             Email1: candidateInfo.email,
                             PhoneNumber: candidateInfo.mobile,
-                            HomePhoneNumber: candidateInfo.HomePhoneNumber,
-                            WorkPhoneNumber: candidateInfo.WorkPhoneNumber
+                            HomePhoneNumber: candidateInfo.homePhoneNumber,
+                            WorkPhoneNumber: candidateInfo.workPhoneNumber
                         },
                         AppointmentData: [{
                             Category: 'Appointment',

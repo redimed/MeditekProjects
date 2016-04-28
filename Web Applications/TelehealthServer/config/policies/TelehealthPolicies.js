@@ -5,6 +5,7 @@ module.exports = {
 		'TestPushAPN':true,
 		'TestPushGCM':true,
 		'CheckActivation':true,
-		'GetListCountry':true
+		'GetListCountry':true,
+		'ForgetPIN':true
 	}
 }

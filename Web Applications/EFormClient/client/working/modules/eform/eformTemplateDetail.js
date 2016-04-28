@@ -96,6 +96,24 @@ module.exports = React.createClass({
             if(Config.getPrefixField(typeField, 'label') > -1){
                 delete object.name;
             }
+            //set field default size
+            switch (typeField) {
+                case 'eform_input_check_label':
+                case 'eform_input_check_label_html':
+                case 'eform_input_date':
+                    object.size = 2;
+                    break;
+                case 'eform_input_check_radio':
+                case 'eform_input_check_checkbox':
+                    object.size = 1;
+                    break;
+                case 'eform_input_signature':
+                case 'eform_input_image_doctor':
+                    object.size = 4;
+                    break;
+                default:
+                    object.size = 12;
+            }
             this.setState(function(prevState) {
                 return {
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields'], val => val.push(

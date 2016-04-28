@@ -254,7 +254,6 @@ app.directive('onsiteAppointment', function(){
                     }
                 }
                 $scope.saveWaAppointment = function() {
-					var patientuid;
 					var doctoruid;
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
@@ -263,11 +262,7 @@ app.directive('onsiteAppointment', function(){
                         $scope.wainformation.PatientAppointment = $scope.wainformation.PatientAppointments.length>0?$scope.wainformation.PatientAppointments[0]:{};
                         delete $scope.wainformation['PatientAppointments'];
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
-                            for(var i = 0;i < $scope.wainformation.Patients.length; i++) {
-                                patientuid = $scope.wainformation.Patients[0].UID;
-                                $scope.wainformation.Patients.splice(0,1);
-                                $scope.wainformation.Patients.push({UID:patientuid});
-                            }
+                            delete $scope.wainformation['Patients'];
                         }
                         if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
                             for(var i = 0; i < $scope.wainformation.Doctors.length; i++) {
@@ -298,11 +293,7 @@ app.directive('onsiteAppointment', function(){
                     }
                     else {
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
-                            for(var i = 0;i < $scope.wainformation.Patients.length; i++) {
-                                patientuid = $scope.wainformation.Patients[0].UID;
-                                $scope.wainformation.Patients.splice(0,1);
-                                $scope.wainformation.Patients.push({UID:patientuid});
-                            }
+                            delete $scope.wainformation['Patients'];
                         }
                         if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
                             for(var i = 0; i < $scope.wainformation.Doctors.length; i++) {
@@ -525,9 +516,6 @@ app.directive('onsiteAppointment', function(){
                                     $scope.ShowData.patient = data.data[0];
                                     $scope.ShowData.patient.PhoneNumber = data.data[0].UserAccount.PhoneNumber;
                                     $scope.wainformation.Patients = [];
-                                    $scope.wainformation.Patients.push({
-                                        UID: patientUid
-                                    });
 									function loopArray(arr, callback) {
 			                            var ishaveCompany = false;
 			                            for(var i = 0; i < arr.length; i++) {
@@ -542,13 +530,29 @@ app.directive('onsiteAppointment', function(){
 			                            }
 			                            callback(ishaveCompany);
 			                        }
-                                    loopArray($scope.wainformation.AppointmentData,function(isExist) {
-                                        console.log(isExist);
-                                        if(isExist == false) {
-                                            $scope.wainformation.Company = data.data[0].Companies[0];
+									WAAppointmentService.linkPatient({
+                                        Appointment: {
+                                           UID: $scope.wainformation.UID
+                                       },
+                                       Patient: {
+                                           UID: patientUid
+                                       }
+
+                                    })
+                                    .then(function(result) {
+                                        if(result == 'success') {
+                                            $scope.wainformation.Patients.push({UID:patientUid});
+                                            loopArray($scope.wainformation.AppointmentData,function(isExist) {
+                                                console.log(isExist);
+                                                if(isExist == false) {
+                                                    $scope.wainformation.Company = data.data[0].Companies[0];
+                                                }
+                                            });
+                                            toastr.success("Select patient successfully!", "success");
                                         }
+                                    },function(err) {
+                                        console.log(err);
                                     });
-                                    toastr.success("Select patient successfully!", "success");
                                 };
                             })
                         };

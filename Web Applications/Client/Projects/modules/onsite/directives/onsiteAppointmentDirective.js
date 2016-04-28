@@ -5,7 +5,15 @@ app.directive('onsiteAppointment', function(){
 		restrict: 'E',
 		templateUrl: 'modules/onsite/directives/templates/onsiteAppointmentDirective.html',
 		controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$timeout,$scope, $uibModal, companyService){
-
+			$scope.state = [
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australian Capital Territory'}
+			];
 			o.loadingPage(true);
             WAAppointmentService.getDetailWAAppointmentByUid($stateParams.UID).then(function(data) {
                 $scope.wainformation = data.data;
@@ -520,17 +528,20 @@ app.directive('onsiteAppointment', function(){
                                     $scope.wainformation.Patients.push({
                                         UID: patientUid
                                     });
-                                    function loopArray(arr, callback) {
-                                        var ishaveCompany = false;
-                                        for(var i = 0; i < arr.length; i++) {
-                                            if(arr[i].Name == 'CompanyName') {
-                                                if(arr[i].Value != null && arr[i].Value != ''){
-                                                    ishaveCompany = true;
-                                                }
-                                            }
-                                        }
-                                        callback(ishaveCompany);
-                                    }
+									function loopArray(arr, callback) {
+			                            var ishaveCompany = false;
+			                            for(var i = 0; i < arr.length; i++) {
+			                                if(arr[i].Name == 'CompanyName') {
+			                                    if(arr[i].Value != null && arr[i].Value != ''){
+			                                        ishaveCompany = true;
+			                                    }
+			                                }
+			                                if(arr[i].Name == 'SiteID') {
+			                                    nocompany = true;
+			                                }
+			                            }
+			                            callback(ishaveCompany);
+			                        }
                                     loopArray($scope.wainformation.AppointmentData,function(isExist) {
                                         console.log(isExist);
                                         if(isExist == false) {
@@ -764,6 +775,7 @@ app.directive('onsiteAppointment', function(){
                     companyService.getDetailChild({UID:compuid,model:"CompanySites",limit:1,order:[['CreatedDate','ASC']]})
                     .then(function(result) {
                         console.log(result);
+						result.data[0].Country = parseInt(result.data[0].Country);
                         $scope.wainformation.CompanySite = result.data[0];
                     },function(err) {
                         console.log(err);

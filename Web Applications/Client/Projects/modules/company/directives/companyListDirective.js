@@ -204,8 +204,13 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 						};
 
 						$scope.selectSite = function(site) {
-							siteId = site;
-							$modalInstance.dismiss('cancel');
+							if(site.Enable == 'Y'){
+								siteId = site.ID;
+								$modalInstance.dismiss('cancel');
+							}
+							else {
+								toastr.error('Please choose another site.');
+							}
 
 						};
 
@@ -216,19 +221,19 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
                     windowClass: 'app-modal-window'
                 }).result.finally(function(){
                     if(siteId) {
-                        swal({   
-							title: "Are you sure?", 
+                        swal({
+							title: "Are you sure?",
 							text: "Are you want to link this patient to the current company?" ,
-							type: "warning",   
-							showCancelButton: true,   
-							confirmButtonColor: "#DD6B55",   
-							confirmButtonText: "Ok",   
-							cancelButtonText: "Cancel",   
-							closeOnConfirm: true,   
-							closeOnCancel: true 
-						}, 
-						function(isConfirm){   
-							if (isConfirm) {  
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "Ok",
+							cancelButtonText: "Cancel",
+							closeOnConfirm: true,
+							closeOnCancel: true
+						},
+						function(isConfirm){
+							if (isConfirm) {
 								companyService.createStaff({CompanyUID:company.UID,patientUID:scope.patientuid})
 								.then(function(success) {
 									console.log(success);
@@ -241,7 +246,7 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 										scope.cancel({company:company,site:siteId});
 									}
 									else {
-										toastr.error("error","error");	
+										toastr.error("error","error");
 									}
 								});
 							}

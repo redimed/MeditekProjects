@@ -9,7 +9,7 @@
             <a href="javascript:;" class="collapse"></a>
             <a href="javascript:;" class="fullscreen"> </a>
         </div> -->
-        
+
     </div>
     <div class="portlet-body form">
         <form name="userForm" novalidate>
@@ -36,9 +36,9 @@
                         <div class="row">
                             <div class="col-lg-10 col-md-12 col-lg-offset-1">
                                 <h3 class="form-section bold">
-                                    <a href="javascript:;" 
+                                    <a href="javascript:;"
                                         class="btn yellow-gold pull-right"
-                                        style="position: relative; bottom:6px" 
+                                        style="position: relative; bottom:6px"
                                         ng-click="openCalendar()">
                                         Booking
                                     </a>
@@ -367,7 +367,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Address2</label>
                                             <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.Address2" ng-disabled="ShowData.isLinkPatient">
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -384,7 +384,7 @@
                                             <label class="control-label">Postcode</label>
                                             <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Postcode" name="Postcode" required ng-disabled="ShowData.isLinkPatient">
                                             <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -401,7 +401,7 @@
                                                 <option value="NSW">New South Wales</option>
                                                 <option value="NT">Northern Territory</option>
                                                 <option value="ACT">Australian Capital Territory</option>
-                                               
+
                                             </select>
                                              <p ng-show="userForm.State.$invalid && submited" class="help-block">State name is required</p>
                                         </div>
@@ -503,20 +503,20 @@
                                         <input type="text" name="address1" class="form-control" ng-model="wainformation.CompanySite.Address1" />
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">address2</label>
-                                        <input type="text" name="address2" class="form-control" ng-model="wainformation.CompanySite.Address2" />
+                                        <label class="control-label">Address2</label>
+                                        <input type="text" name="Address2" class="form-control" ng-model="wainformation.CompanySite.Address2" />
                                     </div>
                                     <div class="row">
                                         <div class="col-md-8 col-sm-8">
                                             <div class="form-group">
-                                                <label class="control-label">suburb</label>
-                                                <input type="text" name="suburb" class="form-control" ng-model="wainformation.CompanySite.Suburb" />
+                                                <label class="control-label">Suburb</label>
+                                                <input type="text" name="Suburb" class="form-control" ng-model="wainformation.CompanySite.Suburb" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-4">
                                             <div class="form-group">
-                                                <label class="control-label">postcode</label>
-                                                <input type="text" name="postcode" class="form-control" ng-model="wainformation.CompanySite.Postcode" />
+                                                <label class="control-label">Postcode</label>
+                                                <input type="text" name="Postcode" class="form-control" ng-model="wainformation.CompanySite.Postcode" />
                                             </div>
                                         </div>
                                     </div>
@@ -524,13 +524,17 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">State</label>
-                                                <input type="text" name="state" class="form-control" ng-model="wainformation.CompanySite.State" />
+                                                <select class="form-control" ng-options="s.code as s.name for s in state" ng-model="wainformation.CompanySite.State">
+                                                    <option value="">Select State</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
                                                 <label class="control-label">Country</label>
-                                                <input type="text" name="country" class="form-control" ng-model="wainformation.CompanySite.Country" />
+                                                <select class="form-control" ng-options="c.ID as c.ShortName for c in ListContry" ng-model="wainformation.CompanySite.Country" >
+                                                    <option value="">Select Country</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

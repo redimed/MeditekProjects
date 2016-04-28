@@ -8,6 +8,15 @@ app.directive('telehealthDetail', function() {
         templateUrl: "modules/consultation/directives/templates/consultationTelehealthDetailDirectives.html",
         controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService) {
             o.loadingPage(true);
+            $scope.state = [
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australian Capital Territory'}
+			];
             WAAppointmentService.getDetailWAAppointmentByUid($stateParams.UID).then(function(data) {
                 $scope.wainformation = data.data;
                 $scope.wainformation.Company = {};
@@ -741,6 +750,9 @@ app.directive('telehealthDetail', function() {
                                         ishaveCompany = true;
                                     }
                                 }
+                                if(arr[i].Name == 'SiteID') {
+                                    nocompany = true;
+                                }
                             }
                             callback(ishaveCompany);
                         }
@@ -756,6 +768,7 @@ app.directive('telehealthDetail', function() {
                     companyService.getDetailSite({model: 'CompanySite',whereClause: whereClause, getCompany: getCompany})
                     .then(function(result) {
                         console.log(result);
+                        result.data.Country = parseInt(result.data.Country);
                         $scope.wainformation.CompanySite = result.data;
                         if(result.company) {
                             $scope.wainformation.Company = result.company;

@@ -338,6 +338,13 @@
                                             <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$invalid}">
+                                            <label class="control-label">Contact Number (W)</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.WorkPhoneNumber" name="TelehealthAppointment_PatientAppointment_WorkPhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
+                                            <p ng-show="userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$error.pattern" class="help-block">Work phone is a 4-10 digits number</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8 col-sm-8">

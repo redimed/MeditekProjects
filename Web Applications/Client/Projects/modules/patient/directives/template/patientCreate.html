@@ -102,6 +102,35 @@
 										</div>
 									</div>
 									<!-- end phone -->
+									<!-- begin HomePhoneNumber -->
+									<div class="form-group">
+										<label class="control-label col-md-4">HomePhone
+										</label>
+										<div class="col-md-4">
+											<div class="input-icon">
+												<i class="glyphicon glyphicon-phone"></i>
+												<input type="text" class="form-control" placeholder="Homephone" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')" />
+
+												<span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
+												<span class="help-block">Provide your HomePhone </span>
+											</div>
+										</div>
+									</div>
+									<!-- end HomePhoneNumber -->
+									<!-- begin WorkPhoneNumber -->
+									<div class="form-group">
+										<label class="control-label col-md-4">WorkPhone
+										</label>
+										<div class="col-md-4">
+											<div class="input-icon">
+												<i class="glyphicon glyphicon-phone"></i>
+												<input type="text" class="form-control" placeholder="Workphone" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')" />
+												<span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
+												<span class="help-block">Provide your WorkPhone </span>
+											</div>
+										</div>
+									</div>
+									<!-- end WorkPhoneNumber -->
 								</div>
 								<div class="tab-pane" id="tab2">
 									<div style="margin:3em;">

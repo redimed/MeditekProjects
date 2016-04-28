@@ -60,14 +60,7 @@ module.exports = React.createClass({
         for (var i = 1; i <= 12; i++)
         {
             var size =(
-                <label key={i} className="radio-inline">
-                    <input key={i} type="radio"
-                           name="formSize"
-                           value={i}
-                           defaultChecked={this.formSize==i}
-                           onChange={this._onClickSetFormSize}
-                    /> {i}
-                </label>
+                <input type="button" className={"btn btn-default " + (this.formSize==i?'active':'')} value={i}  onClick={this._onClickSetFormSize}/>
             )
             /*<input type="radio" className="btn btn-default" value={i}  onClick={this._onClickSetFormSize}/>*/
             this.formSizeSelection.push(size);
@@ -164,6 +157,7 @@ module.exports = React.createClass({
 
     _onClickSetFormSize: function(item){
         this.formSize = item.target.value;
+        $(item.target).addClass("active").siblings().removeClass("active");
     },
 
     render: function(){
@@ -232,8 +226,13 @@ module.exports = React.createClass({
                             <div className="form-group">
                                 <label>Size</label>
                                 {/*<CommonInputText placeholder="Type size" ref="formSize"/>*/}
-                                <div className="form-inline">
+                                {/*<div className="form-inline">
                                     {this.formSizeSelection}
+                                </div>*/}
+                                <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div className="btn-group" role="group" aria-label="First group">
+                                        {this.formSizeSelection}
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-group" style={{display: display_height}}>

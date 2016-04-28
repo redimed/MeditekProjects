@@ -1,4 +1,5 @@
 module.exports = React.createClass({
+    countObj: {},
     propTypes: {
         onSelectItem: React.PropTypes.func
     },
@@ -20,8 +21,18 @@ module.exports = React.createClass({
             ])
         }
     },
+    init: function(fields){
+        var fields_js = fields.toJS();
+        this.countObj = {};
+        for(var i = 0; i< fields_js.length; i++)
+        {
+            this.countObj[fields_js[i].type] = (this.countObj[fields_js[i].type] || 0) + 1;
+        }
+        this.forceUpdate();
+    },
     _onSelectItem: function(item){
         var self = this;
+        this.countObj[item.get('code')] = (this.countObj[item.get('code')]||0) + 1;
         self.props.onSelectItem(item);
         /*swal({
             title: 'Are you sure?',
@@ -41,10 +52,12 @@ module.exports = React.createClass({
                         {
                             this.state.list.map(function(item, index){
                                 return (
-                                    <li className="list-group-item bg-blue bg-font-blue" key={index} style={{cursor:'pointer'}}
+                                    <li className="list-group-item bg-blue bg-hover-blue bg-font-blue" key={index} style={{cursor:'pointer'}}
                                         onClick={this._onSelectItem.bind(this,item)}>
                                         {item.get('name')}
+                                        <span className="badge">{this.countObj[item.get('code')]?this.countObj[item.get('code')]:0}</span>
                                     </li>
+
                                 )
                             }, this)
                         }

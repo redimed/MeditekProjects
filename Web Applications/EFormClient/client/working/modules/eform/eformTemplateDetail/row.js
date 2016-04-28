@@ -85,7 +85,7 @@ module.exports = React.createClass({
         this.props.onRemoveRow(this.props.codeSection, this.props.code);
     },
     _onComponentListFieldSelect: function(item){
-        this.refs.modalCreateFieldSection.hide();
+        // this.refs.modalCreateFieldSection.hide();
         this.props.onSelectField(this.props.codeSection, this.props.code, this.props.refTemp, item.get('code'));
     },
     _onRightClickChartItem: function(code, e, ref){
@@ -291,6 +291,10 @@ module.exports = React.createClass({
     _onRemoveTableDynamicRow: function(codeField, position){
         this.props.onRemoveTableDynamicRow(this.props.codeSection, this.props.code, codeField, position);
     },
+    _onOpenModalAddField: function(){
+        this.refs.modalCreateFieldSection.show();
+        this.refs.listField.init(this.props.fields);
+    },
     render: function(){
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';
         var displayContextChartMenu = (this.props.permission === 'eformDev')?'contextChartMenu':'none';
@@ -369,17 +373,24 @@ module.exports = React.createClass({
                                             <a className="collapse"></a>
                                         </div>
                                         <div className="actions">
+                                            <a className="btn btn-default btn-sm" onClick={this._onOpenModalAddField}>
+                                                <i className="fa fa-plus"></i> Add Field
+                                            </a>&nbsp;
                                             <div className="btn-group">
+
                                                 <a className="btn btn-default btn-sm" data-toggle="dropdown">
                                                     Action&nbsp;
                                                     <i className="fa fa-angle-down"></i>
                                                 </a>
                                                 <ul className="dropdown-menu pull-right">
+                                                    {/*
                                                     <li>
                                                         <a onClick={function(){this.refs.modalCreateFieldSection.show()}.bind(this)}>
                                                             <i className="fa fa-plus"></i> Add Field
                                                         </a>
                                                     </li>
+                                                     */}
+
                                                     <li>
                                                         <a onClick={function(){this.refs.modalOrderRow.show()}.bind(this)}>
                                                             <i className="fa fa-plus"></i> Order Row

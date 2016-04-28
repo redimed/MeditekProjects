@@ -10,13 +10,14 @@ module.exports = React.createClass({
     roles: [],
     ref: '',
     type: '',
+    formSize:null,
+    formSizeSelection:null,
     propTypes: {
         onSave: React.PropTypes.func,
         onCloseModal: React.PropTypes.func
     },
     init: function(object){
         this.type = object.type;
-        this.forceUpdate();
         this.ref = object.ref;
         var self = this;
 
@@ -53,9 +54,28 @@ module.exports = React.createClass({
         }else if(this.type === 'table'){
              this.refs.formName.setValue(object.name);
         }
-        this.refs.formSize.setValue(object.size);
+        // this.refs.formSize.setValue(object.size);
+        this.formSize=object.size;
+        this.formSizeSelection=[];
+        for (var i = 1; i <= 12; i++)
+        {
+            var size =(
+                <label key={i} className="radio-inline">
+                    <input key={i} type="radio"
+                           name="formSize"
+                           value={i}
+                           defaultChecked={this.formSize==i}
+                           onChange={this._onClickSetFormSize}
+                    /> {i}
+                </label>
+            )
+            /*<input type="radio" className="btn btn-default" value={i}  onClick={this._onClickSetFormSize}/>*/
+            this.formSizeSelection.push(size);
+        }
+
         this.refs.formRef.setValue(object.ref);
         this.code = object.code;
+        this.forceUpdate();
     },
     componentDidMount: function(){
         var self = this;
@@ -66,7 +86,7 @@ module.exports = React.createClass({
         })
     },
     _onSave: function(){
-        var size = this.refs.formSize.getValue();
+        var size = this.formSize;
         var data = null;
         var self = this;
 
@@ -141,6 +161,11 @@ module.exports = React.createClass({
             self.refs['edit_'+role.RoleCode].setChecked(checked);
         })
     },
+
+    _onClickSetFormSize: function(item){
+        this.formSize = item.target.value;
+    },
+
     render: function(){
         var display_name = 'none';
         var display_labelh = 'none';
@@ -206,7 +231,10 @@ module.exports = React.createClass({
                             </div>
                             <div className="form-group">
                                 <label>Size</label>
-                                <CommonInputText placeholder="Type size" ref="formSize"/>
+                                {/*<CommonInputText placeholder="Type size" ref="formSize"/>*/}
+                                <div className="form-inline">
+                                    {this.formSizeSelection}
+                                </div>
                             </div>
                             <div className="form-group" style={{display: display_height}}>
                                 <label>Height</label>

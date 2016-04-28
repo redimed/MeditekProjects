@@ -445,7 +445,7 @@ module.exports = {
             })
             .then(function(success) {
                 success.transaction.commit();
-                for(var i = 0; i < success.data.length; i++) {
+                for (var i = 0; i < success.data.length; i++) {
                     success.data[i].appointment.candidateId = rawdata.BookingCandidates[i].candidateId;
                     success.data[i].appointment.headerId = rawdata.headerId;
                 }
@@ -478,6 +478,34 @@ module.exports = {
                 Services.UpdateRequestWAAppointmentCompany(data, req.user)
                     .then(function(success) {
                         success.transaction.commit();
+                        res.ok('success');
+                    }, function(err) {
+                        if (HelperService.CheckExistData(err) &&
+                            HelperService.CheckExistData(err.transaction) &&
+                            HelperService.CheckExistData(err.error)) {
+                            err.transaction.rollback();
+                            res.serverError(ErrorWrap(err.error));
+                        } else {
+                            res.serverError(ErrorWrap(err));
+                        }
+                    });
+            } else {
+                res.serverError('user.not(interalPractitioner,admin,assistant, isOrganization)');
+            }
+        }
+    },
+    LinkAppointmentPatient: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isInternalPractitioner ||
+                role.isAdmin ||
+                role.isAssistant ||
+                role.isOrganization) {
+                Services.LinkAppointmentPatient(data, req.user)
+                    .then(function(success) {
                         res.ok('success');
                     }, function(err) {
                         if (HelperService.CheckExistData(err) &&

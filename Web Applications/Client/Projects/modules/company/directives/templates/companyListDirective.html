@@ -65,16 +65,16 @@
 			</div>
 			<div class="col-md-7 col-sm-12" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-					<uib-pagination 
-					boundary-links="true" 
-					total-items="count" 
-					ng-model="searchObjectMap.currentPage" 
-					class="pagination-lg " 
-					previous-text="&lsaquo; " 
-					next-text="&rsaquo; " 
-					first-text="&laquo; " 
-					last-text="&raquo; " 
-					items-per-page="searchObjectMap.limit" 
+					<uib-pagination
+					boundary-links="true"
+					total-items="count"
+					ng-model="searchObjectMap.currentPage"
+					class="pagination-lg "
+					previous-text="&lsaquo; "
+					next-text="&rsaquo; "
+					first-text="&laquo; "
+					last-text="&raquo; "
+					items-per-page="searchObjectMap.limit"
 					max-size="searchObjectMap.maxSize"
 					ng-change="setPage()"></uib-pagination>
 				</div>
@@ -125,7 +125,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="s in sites" ng-click="selectSite(s.ID)">
+					<tr ng-repeat="s in sites">
 						<td ng-click="selectSite(s)" >{{s.stt}}</td>
 						<td ng-click="selectSite(s)" >{{s.SiteName}}</td>
 						<td class="text-center" ng-click="selectSite(s)">
@@ -145,16 +145,16 @@
 			</div>
 			<div class="col-md-7 col-sm-12" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_10_paginate">
-					<uib-pagination 
-					boundary-links="true" 
-					total-items="count" 
-					ng-model="searchObjectMap.currentPage" 
-					class="pagination-lg " 
-					previous-text="&lsaquo; " 
-					next-text="&rsaquo; " 
-					first-text="&laquo; " 
-					last-text="&raquo; " 
-					items-per-page="searchObjectMap.limit" 
+					<uib-pagination
+					boundary-links="true"
+					total-items="count"
+					ng-model="searchObjectMap.currentPage"
+					class="pagination-lg "
+					previous-text="&lsaquo; "
+					next-text="&rsaquo; "
+					first-text="&laquo; "
+					last-text="&raquo; "
+					items-per-page="searchObjectMap.limit"
 					max-size="searchObjectMap.maxSize"
 					ng-change="setPage()"></uib-pagination>
 				</div>

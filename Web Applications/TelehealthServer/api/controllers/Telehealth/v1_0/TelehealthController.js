@@ -734,7 +734,6 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body.data);
         var phoneNumber = info.phone;
-        var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         var  data= {};

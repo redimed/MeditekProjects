@@ -28,6 +28,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetTelehealthUser'
     },
+    'POST /api/telehealth/user': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'GetTelehealthUserNew'
+    },
     'GET /api/telehealth/user/details/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetPatientDetails'
@@ -55,6 +59,10 @@ module.exports.routes = {
     'POST /api/telehealth/user/pushNotification': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'PushNotification'
+    },
+    'POST /api/telehealth/user/forgetPin': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'ForgetPIN'
     },
     'POST /api/telehealth/listDoctor': {
         controller: 'Telehealth/v1_0/TelehealthController',

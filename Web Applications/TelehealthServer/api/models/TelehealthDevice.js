@@ -99,6 +99,16 @@ module.exports = {
                     msg: 'Must be an integer!'
                 }
             }
+        },
+        DeviceType: {
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         }
     },
     associations: function() {},

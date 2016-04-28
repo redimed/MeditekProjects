@@ -12,6 +12,37 @@ function sendSMS(toNumber, content) {
         from: config.twilioPhone
     });
 };
+
+function pushGCMNotification(info, devices) {
+    var androidMess = {
+        collapseKey: 'REDiMED',
+        priority: 'high',
+        contentAvailable: true,
+        delayWhileIdle: true,
+        timeToLive: 3,
+        data: info.data ? info.data : {},
+        notification: {
+            title: "REDiMED",
+            icon: "ic_launcher",
+            body: info.content ? info.content : 'Push Notification From REDiMED'
+        }
+    };
+    TelehealthService.SendGCMPush(androidMess, devices).then(function(result) {
+        console.log(result);
+    }).catch(function(err) {
+        console.log(err);
+    })
+};
+
+function pushAPNNotification(info, devices) {
+    var iosMess = {
+        badge: 1,
+        alert: info.content ? info.content : 'Push Notification From REDiMED',
+        payload: info.data ? info.data : {},
+        category: info.category ? info.category : null
+    };
+    TelehealthService.SendAPNPush(iosMess, devices);
+};
 module.exports = {
     GetPatientDetails: function(req, res) {
         var params = req.params.all();
@@ -138,6 +169,88 @@ module.exports = {
                     else {
                         var err = new Error("Telehealth.GetTelehealthUser.Error");
                         err.pushError("User Is Not Exist");
+                        return res.serverError(ErrorWrap(err));
+                    }
+                }).catch(function(err) {
+                    return res.serverError(ErrorWrap(err));
+                })
+            } else {
+                var err = new Error("Telehealth.GetTelehealthUser.Error");
+                err.pushError("User Is Not Exist");
+                return res.serverError(ErrorWrap(err));
+            }
+        })
+    },
+    GetTelehealthUserNew: function(req, res) {
+        if (typeof req.body == 'undefined' || !HelperService.toJson(req.body)) {
+            var err = new Error("Telehealth.PushNotification.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body);
+        var uid = info.uid;
+        var headers = req.headers;
+        var systemtype = headers.systemtype;
+        var deviceType = headers.deviceid;
+        var deviceToken = info.token || null;
+        if (!uid || !deviceType) {
+            var err = new Error("Telehealth.GetTelehealthUser.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        UserAccount.find({
+            where: {
+                UID: uid
+            }
+        }).then(function(user) {
+            if (user) {
+                return TelehealthUser.findOrCreate({
+                    where: {
+                        UserAccountID: user.ID
+                    },
+                    defaults: {
+                        UID: UUIDService.Create()
+                    }
+                }).spread(function(teleUser, created) {
+                    if (teleUser) {
+                        return TelehealthDevice.findOrCreate({
+                            where: {
+                                TelehealthUserID: teleUser.ID,
+                                Type: systemtype,
+                                DeviceType: deviceType
+                            },
+                            defaults: {
+                                TelehealthUserID: teleUser.ID,
+                                UID: UUIDService.Create(),
+                                Type: systemtype,
+                                DeviceType: deviceType,
+                                DeviceID: UUIDService.Create()
+                            }
+                        }).spread(function(teleDevice, created) {
+                            if (teleDevice) {
+                                return teleDevice.update({
+                                    DeviceToken: deviceToken
+                                }).then(function() {
+                                    res.ok({
+                                        message: "success",
+                                        data: {
+                                            TelehealthUser: teleUser,
+                                            TelehealthDevice: teleDevice
+                                        }
+                                    });
+                                }).catch(function(err) {
+                                    res.serverError(ErrorWrap(err));
+                                })
+                            } else {
+                                var err = new Error("Telehealth.GetTelehealthUser.Error");
+                                err.pushError("Telehealth Device Is Not Exist");
+                                return res.serverError(ErrorWrap(err));
+                            }
+                        });
+                    } else {
+                        var err = new Error("Telehealth.GetTelehealthUser.Error");
+                        err.pushError("Telehealth User Is Not Exist");
                         return res.serverError(ErrorWrap(err));
                     }
                 }).catch(function(err) {
@@ -279,7 +392,8 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var uid = info.uid;
         var deviceId = req.headers.deviceid;
-        var deviceType = req.headers.systemtype;
+        var systemtype = req.headers.systemtype;
+        var deviceType = headers.devicetype;
         var roomList = sails.sockets.rooms();
         if (uid && deviceType && deviceId) {
             return TelehealthService.FindByUID(uid).then(function(teleUser) {
@@ -288,8 +402,8 @@ module.exports = {
                 }, {
                     where: {
                         TelehealthUserID: teleUser.ID,
-                        DeviceID: deviceId,
-                        Type: deviceType
+                        Type: systemtype,
+                        DeviceModel: deviceType
                     }
                 }).then(function(result) {
                     console.log("111111111111111111111111111111", result);
@@ -692,7 +806,7 @@ module.exports = {
                 }).catch(function(err) {
                     res.json(err.getCode(), err.getBody());
                 })
-            }else{
+            } else {
                 //get
                 TelehealthService.GetCoreServer(path, method, headers).then(function(response) {
                     if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
@@ -706,6 +820,92 @@ module.exports = {
             var err = new Error("Telehealth.SendCoreServer.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
+        }
+    },
+    ForgetPIN: function(req, res) {
+        if (typeof req.body == 'undefined' || !HelperService.toJson(req.body)) {
+            var err = new Error("Telehealth.ForgetPIN.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body);
+        var phoneNumber = info.phone;
+        var phoneRegex = /^\+[0-9]{9,15}$/;
+        if (phoneNumber && phoneNumber.match(phoneRegex)) {
+            UserAccount.find({
+                where: {
+                    PhoneNumber: phoneNumber
+                }
+            }).then(function(user) {
+                if (user) {
+                    return TelehealthUser.find({
+                        where: {
+                            UserAccountID: user.ID
+                        }
+                    }).then(function(teleUser) {
+                        if (teleUser) {
+                            TelehealthDevice.findAll({
+                                where: {
+                                    TelehealthUserID: teleUser.ID
+                                }
+                            }).then(function(devices) {
+                                var androidMess = {
+                                    collapseKey: 'REDiMED',
+                                    priority: 'high',
+                                    contentAvailable: true,
+                                    delayWhileIdle: true,
+                                    timeToLive: 3,
+                                    data: {
+                                       "apiKey": "AIzaSyAg1tnh5akORy2ZhgJR2qZByHjS3F4G4fw",
+                                        "message": "PIN :11111111",
+                                    },
+                                    notification: {
+                                        title: "REDiMED",
+                                        icon: "ic_launcher",
+                                        body: 'Notification From REDiMED'
+                                    }
+                                };
+                                var iosDevices = [];
+                                var androidDevices = [];
+                                if (devices) {
+                                    for (var i = 0; i < devices.length; i++) {
+                                        if (devices[i].Type == 'IOS' && devices[i].DeviceToken != null) {
+                                            iosDevices.push(devices[i].DeviceToken);
+                                        }
+                                        if (devices[i].Type == 'ARD' && devices[i].DeviceToken != null) {
+                                            androidDevices.push(devices[i].DeviceToken);
+                                        }
+                                    }
+                                    if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
+                                    if (androidDevices.length > 0) {
+                                        TelehealthService.SendGCMPush(androidMess, androidDevices).then(function(result) {
+                                            console.log(result);
+                                        }).catch(function(err) {
+                                            console.log(err);
+                                        })
+                                    }
+                                    return res.ok({
+                                        status: 'success'
+                                    });
+                                } else {
+                                    var err = new Error("Telehealth.PushNotification.Error");
+                                    err.pushError("No Devices Was Found");
+                                    return res.serverError(ErrorWrap(err));
+                                }
+                            })
+                        } else {
+                            var err = new Error("Telehealth.GetTelehealthUser.Error");
+                            err.pushError("ForgetPIN.TelehealthUserIsNotExist");
+                            return res.serverError(ErrorWrap(err));
+                        }
+                    })
+                } else {
+                    var err = new Error("Telehealth.ForgetPIN.Error");
+                    err.pushError("ForgetPIN.UserIsNotExist");
+                    return res.serverError(ErrorWrap(err));
+                }
+            })
         }
     }
 }

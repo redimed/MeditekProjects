@@ -9,6 +9,7 @@ module.exports.myconf = {
     OpentokAPISecret: 'eaacb0aba8fa68400314cb9b3316ca12a3dcbd86',
     //============ GCM Push Notification =============
     GCMApiKey: 'AIzaSyDz2pMblr_p6HwWqCeBNUoxuat1rcOQwdk',
+    GCMInjuryApiKey: 'AIzaSyAg1tnh5akORy2ZhgJR2qZByHjS3F4G4fw',
     //============ APN Push Notification DEV=============
     APNCert: rootPath + '/config/push_key/TelePushCert.pem',
     APNKey: rootPath + '/config/push_key/TelePushKey.pem',

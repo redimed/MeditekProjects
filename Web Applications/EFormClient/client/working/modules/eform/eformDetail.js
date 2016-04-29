@@ -35,8 +35,10 @@ module.exports = React.createClass({
             EFormService.preFormDetail({UID: self.appointmentUID})
             .then(function(response){
                 console.log(response)
-                if(typeof response.data.Doctor !== 'undefined')
+                if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null)
                     self.signatureDoctor = response.data.Doctor.FileUpload;
+                else
+                    self.signatureDoctor = '';
                 for(var section_index = 0; section_index < content.length; section_index++){
                     var section = content[section_index];
                     for(var row_index = 0; row_index < section.rows.length; row_index++){

@@ -794,45 +794,31 @@ module.exports = {
         var phoneNumber = info.phone;
         var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
-        var  data= {};
-        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType) {
-          return TelehealthService.MakeRequest({
-            host: config.AuthAPI,
-            path: '/api/check-activated',
-            method: 'POST',
-            body: {
-              PhoneNumber: phoneNumber
-            },
-            headers: {
-              'DeviceID': deviceId,
-              'SystemType': deviceType
-            }
-          })
-          .then(function(response){
-            data = response.getBody();
-            return TelehealthService.GetPatientDetails(data.UserUID, req.headers)
-          })
-          .then(function(patientResponse){
-            if(patientResponse && patientResponse.getBody() && patientResponse.getBody().data.length>0) {
-              var patientInfo = patientResponse.getBody().data[0];
-              data.PatientUID = patientInfo.UID;
-            }
-            if(data.Activated === "N")
-              return sendSMS(phoneNumber, "Your REDiMED account pin number is " + data.PinNumber)
-            else
-              return null;
-          })
-          .then(function(mess){
-            return res.ok(data);
-          })
-          .catch(function(error){
-            if(error.getCode) {
-              console.log("Get code ne");
-              res.json(error.getCode(), error.getBody());
-            } else {
-              res.serverError(ErrorWrap(error));
-            }
-          })
+        var data = {};
+        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceType) {
+            return TelehealthService.MakeRequest({
+                host: config.AuthAPI,
+                path: '/api/check-activated',
+                method: 'POST',
+                body: {
+                    PhoneNumber: phoneNumber
+                },
+                headers: {
+                    'SystemType': deviceType
+                }
+            }).then(function(response) {
+                var data = response.getBody();
+                if (data.Activated === "N") {
+                    sendSMS(phoneNumber, "Your REDiMED account pin number is " + data.PinNumber).then(function(mess) {
+                        return res.ok(data);
+                    }, function(error) {
+                        return res.serverError(ErrorWrap(error));
+                    });
+                }
+                res.ok(data);
+            }).catch(function(err) {
+                res.serverError(err.getBody());
+            });
         } else {
             var err = new Error("Telehealth.Activation.Error");
             err.pushError("Invalid Params");
@@ -914,7 +900,7 @@ module.exports = {
                                     delayWhileIdle: true,
                                     timeToLive: 3,
                                     data: {
-                                       "apiKey": "AIzaSyAg1tnh5akORy2ZhgJR2qZByHjS3F4G4fw",
+                                        "apiKey": "AIzaSyAg1tnh5akORy2ZhgJR2qZByHjS3F4G4fw",
                                         "message": "PIN :11111111",
                                     },
                                     notification: {

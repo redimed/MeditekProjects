@@ -50,6 +50,7 @@ public class DataProcess {
                         parsedData.put(d.getName().toLowerCase(), imageRes);
                     }
                     catch (Exception ex){
+			System.out.println(ex);
                         imageRes=null;
                     } 
                 }
@@ -59,6 +60,7 @@ public class DataProcess {
                         parsedData.put(d.getName().toLowerCase(), imageRes);
                     }
                     catch (Exception ex){
+			System.out.println(ex);
                         imageRes=null;
                     }                    
                 }                
@@ -138,6 +140,7 @@ public class DataProcess {
                         parsedData.put(d.getName().toLowerCase(), image);
                     }
                     catch(Exception e){
+			System.out.println(e);
                         // Do nothing
                     }
                 }

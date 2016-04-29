@@ -116,6 +116,16 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 (scope.fromCreateDate && scope.fromCreateDate !== null) ? scope.info.data.Filter[0].Appointment.CreatedDate = moment(scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): scope.info.data.Filter[0].Appointment.CreatedDate = null;
                 console.log('scope.info.data', scope.info.data);
                 scope.LoadData();
+            };
+            scope.ClearSearch = function(){
+                scope.info.data.Filter[0].Appointment.Code = null;
+                scope.info.data.Search[0].Patient.FullName = null;
+                scope.info.data.Search[1].Doctor.FullName = null;
+                scope.info.data.Filter[0].Appointment.Type = null;
+                scope.info.data.Filter[0].Appointment.CreatedDate = null
+                scope.fromCreateDate=null;
+                scope.info.data.Filter[0].Appointment.Status = null;
+                scope.LoadData();
             }
         }
     };

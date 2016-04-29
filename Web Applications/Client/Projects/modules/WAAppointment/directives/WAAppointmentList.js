@@ -89,6 +89,22 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                 (scope.starFromTime && scope.starFromTime !== null) ? scope.info.data.Range[0].Appointment.FromTime[0] = moment(scope.starFromTime, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): scope.info.data.Range[0].Appointment.FromTime[1] = null;
                 (scope.endFromTime && scope.endFromTime !== null) ? scope.info.data.Range[0].Appointment.FromTime[1] = moment(scope.endFromTime, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): scope.info.data.Range[0].Appointment.FromTime[1] = null;
                 scope.LoadData();
+            };
+            scope.Clear = function(){
+                scope.info.data.Filter[0].Appointment.Code=null;
+                scope.info.data.Search[0].PatientAppointment.FullName=null;
+                scope.info.data.Search[1].Doctor.FullName = null;
+                scope.fromCreateDate=null;
+                scope.toCreateDate=null;
+                scope.info.data.Range[0].Appointment.CreatedDate[0]=null;
+                scope.info.data.Range[0].Appointment.CreatedDate[1]=null;
+                scope.info.data.Filter[0].Appointment.Status=null;
+                scope.info.data.Filter[0].Appointment.Type=null;
+                scope.starFromTime=null;
+                scope.endFromTime=null;
+                scope.info.data.Range[0].Appointment.FromTime[0]=null;
+                scope.info.data.Range[0].Appointment.FromTime[1]=null;
+                scope.LoadData();
             }
         }
     };

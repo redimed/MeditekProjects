@@ -100,7 +100,7 @@ struct colorStatusAppointment{
 struct Regex{
      //EX: 04 245 544 45 || 4 564 242 45
    static let PHONE_REGEX = "^0?4[0-9]{8}$"
-    static let PhoneNumber = "[0-9]{6,10}$"
+    static let PhoneNumber = "[0-9]{8,10}$"
     static let MobileNumber = "^(\\+61|0061|0)?4[0-9]{8}$"
     static let Email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
     static let PostCodeLength = "[0-9]{4,6}"

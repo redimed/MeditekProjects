@@ -8,7 +8,11 @@
 
 import UIKit
 
-class BaseViewController: UIViewController,UITextFieldDelegate {
+class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelegate {
+    
+    var alertView = UIAlertView()
+    var alertDTAlertView: DTAlertView!
+    let delay = 0.5 * Double(NSEC_PER_SEC)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +30,7 @@ class BaseViewController: UIViewController,UITextFieldDelegate {
         let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
             target: nil, action: nil)
         let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
-            target: view, action: Selector("endEditing:"))
+            target: view, action: #selector(UIView.endEditing(_:)))
         keyboardToolbar.items = [flexBarButton, doneBarButton]
         textView.inputAccessoryView = keyboardToolbar
     }
@@ -37,9 +41,27 @@ class BaseViewController: UIViewController,UITextFieldDelegate {
         let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
             target: nil, action: nil)
         let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
-            target: view, action: Selector("endEditing:"))
+            target: view, action: #selector(UIView.endEditing(_:)))
         keyboardToolbar.items = [flexBarButton, doneBarButton]
         textField.inputAccessoryView = keyboardToolbar
     }
+    //MARK: - deletate DT ALERT
+    func willPresentDTAlertView(alertView: DTAlertView) {
+        NSLog("%@", "will present")
+    }
+    func didPresentDTAlertView(alertView: DTAlertView) {
+        NSLog("%@", "Did present")
+    }
+    func DTAlertViewWillDismiss(alertView: DTAlertView) {
+        NSLog("%@", "Will Dismiss")
+    }
+    func DTAlertViewDidDismiss(alertView: DTAlertView) {
+        NSLog("%@", "did Dismiss")
+    }
+    func showAlertWithMessageTitle(message: String, title: String, alertStyle: DTAlertStyle){
+        self.alertDTAlertView = DTAlertView(alertStyle: alertStyle, message: message, title: title, object: self)
+        self.alertDTAlertView.show()
+    }
+
 
 }

@@ -13,11 +13,11 @@ class PatientAPI:TokenAPI {
     //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
         config.setHeader()
-        
+        print(config.headers)
         if(UIApplication.sharedApplication().isConnectedToNetwork()){
             Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:config.headers).responseJSON{
                 response in
-                
+                print(response)
                 switch response.result {
                 case .Success(let JSONData):
                     if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {

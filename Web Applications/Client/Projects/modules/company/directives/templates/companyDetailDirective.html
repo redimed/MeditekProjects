@@ -9,29 +9,32 @@
             <a href="javascript:;" class="collapse"></a>
             <a href="javascript:;" class="fullscreen"> </a>
         </div> -->
-        <ul class="nav nav-tabs">
-            <li>
-                <a href="index.html#tab_4" data-toggle="tab" ng-click="viewmodel('UserAccounts')"> User Account </a>
-            </li>
-            <li>
-                <a href="index.html#tab_3" data-toggle="tab" ng-click="viewmodel('Patients')" > Staff List </a>
-            </li>
-            <li>
-                <a href="index.html#tab_2" data-toggle="tab" ng-click="viewmodel('Funds')" > Insurer List </a>
-            </li>
-            <li class="active">
-                <a href="index.html#tab_1" data-toggle="tab" ng-click="viewmodel('CompanySites')" > Basic Information </a>
-            </li>
-        </ul>
     </div>
     <div class="portlet-body form">
             <div class="form-body" style="margin-left:1em; margin-right:1em;">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="index.html#tab_1" data-toggle="tab" ng-click="viewmodel('CompanySites')" > Basic Information </a>
+                    </li>
+                     <li>
+                        <a href="index.html#tab_2" data-toggle="tab" ng-click="viewmodel('Funds')" > Insurer List </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_3" data-toggle="tab" ng-click="viewmodel('Patients')" > Staff List </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_4" data-toggle="tab" ng-click="viewmodel('UserAccounts')"> User Account </a>
+                    </li>
+                </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
-                        <h3 class="form-section bold">Basic info
-                            <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="updateCompany(info)">
-                                <i class="glyphicon glyphicon-plus"></i> Update</a>
-                        </h3>
+                        <h4 class="form-section bold">Basic info
+                            <a href="javascript:;" 
+                                class="btn btn-md yellow-lemon pull-right" 
+                                style="position:relative; margin-top:-12px" 
+                                ng-click="updateCompany(info)">
+                                <i class="glyphicon glyphicon-pencil"></i> Update</a>
+                        </h4>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group">
@@ -44,10 +47,13 @@
                                 </div>
                             </div>
                         </div>
-                        <h3 class="form-section bold">Site info
-                            <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="openmodal('CompanySite','create',null)">
+                        <h4 class="form-section bold">Site info
+                            <a href="javascript:;" 
+                                class="btn btn-md green pull-right" 
+                                style="position:relative; margin-top:-12px" 
+                                ng-click="openmodal('CompanySite','create',null)">
                                 <i class="glyphicon glyphicon-plus"></i> Add</a>
-                        </h3>
+                        </h4>
                         <div class="table-scrollable margin-top-30">
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>
@@ -84,7 +90,9 @@
                     <div class="tab-pane" id="tab_2">
                         <h3 class="form-section bold">
                             Insurer List
-                            <a class="btn btn-lg green pull-right" ng-click="openmodal('Insurer','create',-1)">
+                            <a class="btn btn-md green pull-right" 
+                                style="position:relative; margin-top:-5px;" 
+                                ng-click="openmodal('Insurer','create',-1)">
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </h3>
@@ -112,13 +120,18 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_3">
-                        <h3 class="form-section bold">
+                        <h4 class="form-section bold">
                             Staff List
-                            <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="openCreateStaff()">
+                            <a href="javascript:;" 
+                                class="btn btn-md green pull-right" 
+                                style="position:relative; margin-top:-12px;" 
+                                ng-click="openCreateStaff()">
                                 <i class="glyphicon glyphicon-plus"></i> Add</a>
-                            <a class="btn btn-lg green pull-right" ng-click="openmodal('Staff','create',-1)">
-                                <i class="glyphicon glyphicon-plus"></i> Link</a>
-                        </h3>
+                            <a class="btn btn-md yellow-lemon pull-right" 
+                                style="position:relative; margin-top:-12px; margin-right:2px;" 
+                                ng-click="openmodal('Staff','create',-1)">
+                                <i class="glyphicon glyphicon-paperclip"></i> Link</a>
+                        </h4>
                         <div class="table-scrollable margin-top-30">
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>
@@ -194,15 +207,19 @@
                         <!-- end pagination -->
                     </div>
                     <div class="tab-pane" id="tab_4">
-                        <h3 class="form-section bold">
+                        <h4 class="form-section bold">
                             User Account
-                            <a class="btn btn-lg green pull-right" ng-click="openmodal('UserAccounts','create',null)">
+                            <a class="btn btn-md green pull-right" 
+                                style="position:relative; margin-top:-12px" 
+                                ng-click="openmodal('UserAccounts','create',null)">
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
-                            <a class="btn btn-lg green pull-right" ng-click="openLinkPatient()">
-                                <i class="glyphicon glyphicon-plus"></i> Link
+                            <a class="btn btn-md yellow-lemon pull-right" 
+                                style="position:relative; margin-top:-12px; margin-right:2px;" 
+                                ng-click="openLinkPatient()">
+                                <i class="glyphicon glyphicon-paperclip"></i> Link
                             </a>
-                        </h3>
+                        </h4>
                         <div class="table-scrollable margin-top-30">
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>

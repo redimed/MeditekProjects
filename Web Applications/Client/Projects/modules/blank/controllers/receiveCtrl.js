@@ -4,6 +4,7 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
+    var reverse = true;
     var uidCall = ($stateParams.uidCall) ? $stateParams.uidCall : null;
     var uidUser = ($stateParams.uidUser) ? $stateParams.uidUser : null;
     $scope.userName = $stateParams.userName;
@@ -146,6 +147,8 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     };
     $scope.loadListDoctor();
 
+
+
     $scope.$on("changeSize", function(event, stream) {
         // var large = stream.oth_large;
         if (stream.oth_large === undefined) {
@@ -159,13 +162,20 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
                         console.log("========== ", $scope.streams[i].oth_large);
                     }
                 }
-                $scope.streams.reverse();
+                if (reverse) {
+                    $scope.streams.reverse();
+                } else {
+                    reverse = true;
+                }
             } else {
                 for (var i = 0; i < $scope.streams.length; i++) {
                     if ($scope.streams[i] != stream) {
                         $scope.streams[i].oth_large = !stream.oth_large;
                         console.log("========== ", $scope.streams[i].oth_large);
                     }
+                }
+                if ($scope.streams[0] == stream) {
+                    reverse = false;
                 }
             }
         }

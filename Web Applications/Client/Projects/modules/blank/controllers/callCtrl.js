@@ -6,6 +6,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     var token = $stateParams.token;
     var uidCall = $stateParams.uidCall;
     var uidUser = $stateParams.uidUser;
+    var reverse = true;
     $scope.userName = $stateParams.userName;
     session = OT.initSession(apiKey, sessionId);
     var userInfo = $cookies.getObject('userInfo');
@@ -39,35 +40,41 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
                     sendCall();
                 }
             }
-            
+
         }
     });
 
     $scope.streams = OTSession.streams;
 
-    $scope.$on("runtime",function(argument) {
+    $scope.$on("runtime", function(argument) {
         var mytimeout = $timeout($scope.onTimeout, 1000);
-    })
+    });
 
     $scope.$on("changeSize", function(event, stream) {
         if (stream.oth_large === undefined) {
             stream.oth_large = stream.name !== "screen";
         } else {
             if (stream.oth_large === false) {
-                // var lsStreams = $scope.streams;
                 for (var i = 0; i < $scope.streams.length; i++) {
-                    if ($scope.streams[i] == stream) {
+                    if ($scope.streams[i] === stream) {
                         $scope.streams[i].oth_large = !stream.oth_large;
                         console.log("========== ", $scope.streams[i].oth_large);
                     }
                 }
-                $scope.streams.reverse();
+                if (reverse) {
+                    $scope.streams.slice().reverse();
+                } else {
+                    reverse = true;
+                }
             } else {
                 for (var i = 0; i < $scope.streams.length; i++) {
                     if ($scope.streams[i] != stream) {
                         $scope.streams[i].oth_large = !stream.oth_large;
                         console.log("========== ", $scope.streams[i].oth_large);
                     }
+                }
+                if ($scope.streams[0] === stream) {
+                    reverse = false;
                 }
             }
         }

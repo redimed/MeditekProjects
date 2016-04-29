@@ -98,15 +98,16 @@ ot-layout {
             </div>
         </div>
     </div>
-    <div class="actions" ng-if="!(streams.length > 0)">
+    <div class="actions" ng-if="!(streams.length > 0)" style="z-index: 999999;">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                 <img src="theme/assets/global/images/E-call_18.png" class="my-button" ng-click="cancel()">
             </div>
         </div>
     </div>
-    <ot-layout props="{animate:true,maxRatio: 2/3,bigFixedRatio:true}" id="layout" style="background-color: white;">
-        <ot-subscriber ng-repeat="stream in streams" stream="stream" props="{style: {nameDisplayMode: 'off'},width:'100%', height:'100%'}" ng-dblclick="$emit('changeSize',stream)" ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}">
+    <ot-layout props="{animate:true,maxRatio: 2/3,bigFixedRatio:true}" style="background-color: white;">
+        <ot-subscriber ng-repeat="stream in streams" stream="stream" props="{style: {nameDisplayMode: 'off'} ,width:'100%', height:'100%'}" 
+         ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}" ng-dblclick="$emit('changeSize',stream)">
         </ot-subscriber>
     </ot-layout>
 </div>

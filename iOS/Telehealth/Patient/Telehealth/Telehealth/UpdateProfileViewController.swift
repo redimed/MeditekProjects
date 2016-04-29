@@ -27,7 +27,6 @@ class UpdateProfileViewController: BaseViewController {
     let appointmentService = AppointmentService()
     let colorCustomRed = UIColor.colorRBGValue(redValue: 232, greenValue: 145, blueValue: 147, alphaValue: 1.0)
     let colorAthenGray = UIColor.colorRBGValue(redValue: 202, greenValue: 202, blueValue: 208, alphaValue: 1.0)
-    let alertView = UIAlertView()
     
     var patientInformation : PatientContainer!
     var datePicker = UIDatePicker()

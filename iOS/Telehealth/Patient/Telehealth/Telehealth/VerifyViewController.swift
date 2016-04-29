@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ObjectMapper
 
 enum MyError: ErrorType {
     case UserError
@@ -14,91 +15,97 @@ enum MyError: ErrorType {
     case DiscoverydError
 }
 
-class VerifyViewController: UIViewController,UITextFieldDelegate {
+class VerifyViewController: BaseViewController {
     
     @IBOutlet weak var textFieldVerifyCode: DesignableTextField!
-    //Color red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
-    var phoneNumber = String()
+    var UserUID = String()
+    var Activated = ""
     
-    let verifyService = VerifyService()
-    let alertView = UIAlertView()
-    let verifyPhoneAPI = VerifyPhoneAPI()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.navigationBarHidden = false
         textFieldVerifyCode.delegate = self
-        
-        
+        if(Activated == "N"){
+            self.showAlertWithMessageTitle("Please check your mobile device now", title: "Notification", alertStyle: DTAlertStyle.DTAlertStyleSuccess)
+        }
     }
-    //Giap: Close keyboard if out touch text field
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
-        
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
     }
     
-    //Giap: Handle verify code and check field is valid
     @IBAction func VerifyButtonAction(sender: UIButton)  {
         view.endEditing(true)
         if textFieldVerifyCode.text == "" || textFieldVerifyCode.text?.length < 6 {
-            //Start animation
+            
             textFieldVerifyCode.animation = "shake"
             textFieldVerifyCode.curve = "easeIn"
             textFieldVerifyCode.force = 2.0
             textFieldVerifyCode.duration = 0.5
             textFieldVerifyCode.animate()
-            //End Animation
-            
-            //Change border textfield is red
             config.borderTextFieldValid(textFieldVerifyCode, color: colorCustom)
             
         } else {
-           self.view.showLoading()
-            verifyService.verifyPhoneNumber(textFieldVerifyCode.text!, phoneNumber: phoneNumber, compailer: {
-                response in
-                if response["message"] == "success"{
-                    //Change to home view by segue
-                    if(defaults.valueForKey("logoutFail") as? String != nil){
-                        self.verifyPhoneAPI.logOut((defaults.valueForKey("UIDLogoutFail") as? String)!,completionHandler: {
-                            response in
-                            print(response)
-                            if response["status"] == "success"{
-                                print("logout when internet connect")
-                                let defaults = NSUserDefaults.standardUserDefaults()
-                                defaults.removeObjectForKey("logoutFail")
-                                defaults.removeObjectForKey("UIDLogoutFail")
-                                defaults.synchronize()
-                            }else{
-                                print("logout fail when internet connect") 
-                            }
-                        })
-                    }
-
-                    let VerifyPhone = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
-                    self.navigationController?.pushViewController(VerifyPhone, animated: true)
-                    
-                }else {
-                    self.view.hideLoading()
-                    print(response)
-                    self.textFieldVerifyCode.text = ""
-                    if(response["internetConnection"].string == ErrorMessage.internetConnection){
-                        self.alertView.alertMessage("Error", message: ErrorMessage.internetConnection)
-                    }else if(response["ErrorType"] == "Activation.codeInvalid"){
-                        self.alertView.alertMessage("Error", message: "Verify Code Invalid")
-                    }
-                }
-            })
+            showloading(Define.MessageString.PleaseWait)
+            self.LogInPhoneNumber(UserUID, PinNumber: textFieldVerifyCode.text!)
         }
     }
     
-    //Giap: Check textfield maxlength == 6
+    func LogInPhoneNumber(UserUID:String,PinNumber:String){
+        let login:Login = Login();
+        login.UserUID = UserUID
+        login.PinNumber = PinNumber
+        
+        UserService.postLogin(login) { [weak self] (response) in
+            print(response)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let loginResponse = Mapper<LoginResponse>().map(response.result.value) {
+                            print(response.result.value)
+                            if loginResponse.status == "success"  {
+                                Context.setDataDefaults((loginResponse.user?.telehealthUser.UID)!, key: "uid")
+                                Context.setDataDefaults(loginResponse.token, key: Define.keyNSDefaults.Authorization)
+                                Context.setDataDefaults(loginResponse.token, key: "token")
+                                Context.setDataDefaults(loginResponse.refreshCode, key: "refreshCodes")
+                                
+                                if let cookie : String = response.response!.allHeaderFields["Set-Cookie"] as? String  {
+                                    Context.setDataDefaults(cookie, key: Define.keyNSDefaults.Cookie)
+                                }
+                                
+                                let loginViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("HomeViewControllerID") as! HomeViewController
+                                self?.hideLoading()
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self?.navigationController?.pushViewController(loginViewController, animated: true)
+                                })
+                            }else{
+                                self?.hideLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self?.hideLoading()
+                    self?.showMessageNoNetwork()
+                }
+                
+            }
+        }
+        
+        
+    }
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         let length = ((textField.text?.length)! + string.length)
@@ -107,5 +114,5 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
         }else{
             return true
         }
-    }  
+    }
 }

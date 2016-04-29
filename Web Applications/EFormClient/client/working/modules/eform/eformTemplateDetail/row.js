@@ -270,6 +270,8 @@ module.exports = React.createClass({
                     }else{
                         var series = this.refs[fieldRef].getBase64Value();
                         series.refRow = this.props.refTemp;
+                        series.base64Data = series.value;
+                        series.value = '';
                         results.push(series);
                     }
                 }

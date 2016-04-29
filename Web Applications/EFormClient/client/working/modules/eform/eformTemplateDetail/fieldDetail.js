@@ -16,11 +16,8 @@ module.exports = React.createClass({
         onSave: React.PropTypes.func,
         onCloseModal: React.PropTypes.func
     },
-    init: function(object){
-        this.type = object.type;
-        this.ref = object.ref;
+    _initExtend: function(object){
         var self = this;
-
         if(typeof object.roles !== 'undefined'){
             var roles = object.roles.toJS();
             roles.view.list.map(function(role, index){
@@ -52,31 +49,37 @@ module.exports = React.createClass({
                 this.refs.formHeight.setValue(object.height);
             }
         }else if(this.type === 'table'){
-             this.refs.formName.setValue(object.name);
-        }
-        // this.refs.formSize.setValue(object.size);
-        this.formSize=object.size;
-        this.formSizeSelection=[];
-        for (var i = 1; i <= 12; i++)
-        {
-            var size =(
-                <input type="button" className={"btn btn-default " + (this.formSize==i?'active':'')} value={i}  onClick={this._onClickSetFormSize}/>
-            )
-            /*<input type="radio" className="btn btn-default" value={i}  onClick={this._onClickSetFormSize}/>*/
-            this.formSizeSelection.push(size);
+            this.refs.formName.setValue(object.name);
         }
 
         this.refs.formRef.setValue(object.ref);
         this.code = object.code;
-        this.forceUpdate();
+
     },
-    componentDidMount: function(){
-        var self = this;
+    init: function(object){
         EFormService.getAllUserRoles()
         .then(function(response){
-            self.roles = response.data;
-            self.forceUpdate();
-        })
+            this.roles = response.data;
+            this.type = object.type;
+            this.formSize=object.size;
+            this.formSizeSelection=[];
+            for (var i = 1; i <= 12; i++)
+            {
+                var size =(
+                    <input key={i} type="button" className={"btn btn-default " + (this.formSize==i?'active':'')} value={i}  onClick={this._onClickSetFormSize}/>
+                )
+                /*<input type="radio" className="btn btn-default" value={i}  onClick={this._onClickSetFormSize}/>*/
+                this.formSizeSelection.push(size);
+            }
+
+            this.ref = object.ref;
+            this.forceUpdate();
+            this._initExtend(object);
+
+        }.bind(this))
+    },
+    componentDidMount: function(){
+
     },
     _onSave: function(){
         var size = this.formSize;

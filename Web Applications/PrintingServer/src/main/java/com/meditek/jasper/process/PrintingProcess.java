@@ -65,6 +65,7 @@ public class PrintingProcess {
                      System.out.println("This is imgfield: " + imgField);
                     imgField.setLayout(PushbuttonField.LAYOUT_ICON_ONLY);
                     imgField.setProportionalIcon(true);
+                    imgField.setScaleIcon(PushbuttonField.SCALE_ICON_ALWAYS);
                     imgField.setImage(Image.getInstance((Image)data.get(key)));
                     form.replacePushbuttonField(key, imgField.getField());
                 }

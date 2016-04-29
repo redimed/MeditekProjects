@@ -1,0 +1,86 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.doctor.list">Doctor</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.doctor.group">Doctor Group</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Doctor Group Detail</b>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<h3 class="page-title bold">Doctor Group Detail</h3>
+
+<!-- content page -->
+<div class="portlet box green">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="icon-list"></i>
+			<span class="caption-subject bold uppercase">Doctor Group Detail</span>
+		</div>
+		<div class="actions">
+			
+		</div>
+	</div>
+	<div class="portlet-body form">
+		<form>
+            <div class="form-body" style="margin: 0 1em;">
+                <h4 class="form-section">Basic information</h4>
+                <div class="form-group">
+                    <label class="control-label">Group Name</label>
+                    <input type="text" class="form-control" value="Giai phau tham my" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <textarea class="form-control" readonly></textarea>
+                </div>
+                <h4 class="form-section">
+                    Doctor List
+                    <a href="javascript:;" 
+                        class="btn btn-md green pull-right" 
+                        style="position: relative; bottom:13px" 
+                        ng-click="openModalAdd()">
+                            <i class="glyphicon glyphicon-plus"></i> Add
+                    </a>
+                </h4>
+                <div class="table-scrollable margin-top-30">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr style="width:100%;">
+                                <th width="1">#</th>
+                                <th>Site Name</th>
+                                <th>Address</th>
+                                <th>Contact Name</th>
+                                <th>Contact Number</th>
+                                <th width="1">Enable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>{{$index+1}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td ng-click="openmodal('CompanySite','delete',s)" ><i ng-class="{'glyphicon glyphicon-ok turquoisetype':s.Enable==='Y','glyphicon glyphicon-remove redtype':s.Enable==='N'}"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>      
+        </form>
+	</div>
+</div>

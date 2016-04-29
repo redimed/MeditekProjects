@@ -34,11 +34,12 @@
                         <div class="tab-content" id="tabContent2">
                             <div class="tab-pane active" id="Personal_info">
                                 <div class="row margin-top-30">
-                                    <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12" id="columm1" ng-if="listShow.columm1">
+                                    <div class="col-lg-3 col-md-12" id="columm1" ng-if="listShow.columm1">
                                         <div ng-form name="checkInForm" novalidate>
                                             <div class="form-group">
                                                 <div id="viewIMG">
-                                                    <canvas id="imageAvatarCanvas" ng-show="isChoseAvatar==true" style="width:100% !important"></canvas>
+                                                    <canvas id="imageAvatarCanvas" ng-show="isChoseAvatar==true" 
+                                                        style="min-width:200px !important; max-width:350px !important"></canvas>
                                                     <img dimage dimage-uid="info.ProfileImage" dimage-size="'350'" ng-show="info.ProfileImage!=null && info.ProfileImage!=undefined && isChoseAvatar==false" width="100%">
                                                     <img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.ProfileImage==null || info.ProfileImage==undefined) && isChoseAvatar==false" width="100%">
                                                 </div>
@@ -55,7 +56,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-12" id="columm2" ng-if="listShow.columm2">
                                         <h4 class="form-section bold">Person Information</h4>
-                                         <div class="form-group">
+                                        <div class="form-group">
                                             <label class="control-label">Title</label>
                                             <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
                                             <span style="color:red;">{{ermsg.Title}}</span>

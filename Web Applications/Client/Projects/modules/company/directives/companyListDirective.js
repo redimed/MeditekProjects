@@ -58,6 +58,9 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 				.then(function(response) {
 					console.log(response.data);
 					scope.count = response.data.count;
+					for(var i = 0; i < response.data.rows.length;i++){
+						response.data.rows[i].stt = scope.searchObjectMap.offset*1 + i + 1;
+					}
 					scope.companys = response.data.rows;
 				},function(err) {
 					console.log(err);
@@ -88,10 +91,10 @@ app.directive('companyList', function($uibModal, $timeout, $state, companyServic
 
 			scope.init = function() {
 				scope.searchObject = {
-	                limit: 5,
+	                limit: 15,
 	                offset: 0,
 	                currentPage: 1,
-	                maxSize: 1,
+	                maxSize: 5,
 	                // attrs:scope.items,
 	                Search:null,
 	                order: null

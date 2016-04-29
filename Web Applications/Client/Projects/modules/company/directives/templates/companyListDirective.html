@@ -41,7 +41,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="c in companys" ng-click="detail(c.UID)" ng-if="patientuid==null">
-						<td>{{$index+1}}</td>
+						<td>{{c.stt}}</td>
 						<td>{{c.CompanyName}}</td>
 						<td class="text-center">
 							<i class="glyphicon glyphicon-ok font-green" ng-if="c.Active=='Y'"></i>

@@ -7,9 +7,13 @@ angular.module('app.authentication.doctor.directive.list', [])
 		templateUrl: 'modules/doctor/directives/templates/list.html',
 		options: {
 			scope: '=',
-			reload: '='
+			reload: '=',
+			uidReturn:'=',
+			islinkDoctorGroup:'=linkDoctorGroup',
+			runSuccess:'=onLinkGroup',
 		},
 		link: function(scope, ele, attr) {
+			scope.islinkDoctorGroup = scope.islinkDoctorGroup?scope.islinkDoctorGroup:false;
 			scope.search = {};
 			scope.EnableChoose = [
 				{id:null,name:"All"},
@@ -138,7 +142,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 			            },
 						windowClass: 'app-modal-window'
 					});
-					
+
 				},function(err){
 					console.log(err);
 				});
@@ -151,6 +155,46 @@ angular.module('app.authentication.doctor.directive.list', [])
 			}
 
 			scope.init();
+
+			scope.linkDoctorGroup = function(doctor) {
+				function openLinkDoctorGroup(doctorObject) {
+					swal({
+						title: "Are you sure?",
+						text: "Are you want to link this doctor to the current doctor group?" ,
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Ok",
+						cancelButtonText: "Cancel",
+						closeOnConfirm: true,
+						closeOnCancel: true
+					},
+					function(isConfirm){
+						if (isConfirm) {
+							scope.runSuccess(doctorObject);
+						}else{
+							scope.uidReturn=null;
+							$('#tr'+doctorObject.stt).removeClass('is-Choose');
+							$('#check'+doctorObject.stt).removeClass('fa fa-check-square-o').addClass('fa fa-square-o');
+						}
+					});
+				};
+				if(scope.runSuccess) {
+					if(_.isEmpty(scope.uidReturn)) {
+						scope.uidReturn = doctor.UID;
+						openLinkDoctorGroup(doctor);
+					}
+					else {
+						if(scope.uidReturn == doctor.UID) {
+							scope.uidReturn = null;
+						}
+						else {
+							scope.uidReturn = doctor.UID;
+							openLinkDoctorGroup(doctor);
+						}
+					}
+				}
+			}
 
 		} // end link
 

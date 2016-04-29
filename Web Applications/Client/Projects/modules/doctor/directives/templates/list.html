@@ -32,7 +32,7 @@
 			<!-- <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
 		</div>
 	</div>
-	<div class="portlet-body">		
+	<div class="portlet-body">
 		<!-- begin table -->
 		<div class="table-scrollable">
 			<table class="table table-bordered table-hover table-striped">
@@ -52,6 +52,7 @@
 					<th>
 						Enable
 					</th>
+                    <th ng-if="islinkDoctorGroup == true">&nbsp;</th>
 				</tr>
 				<tr ng-hide="toggle">
 					<td>#</td>
@@ -66,11 +67,11 @@
 					</td>
 					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.RoleName" ng-options="r.id as r.name for r in typeDoctor"></select></td>
 					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select></td>
-				</tr>
+                    <td ng-if="islinkDoctorGroup == true" >&nbsp;</td>
+                </tr>
 			</thead>
 			<tbody>
-			<tbody>
-				<tr ng-repeat="d in doctors" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)">
+				<tr ng-repeat="d in doctors" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)" ng-show="islinkDoctorGroup == false">
 					<td>{{d.stt}}</td>
 					<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
 					<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
@@ -78,6 +79,19 @@
 						<span ng-if="d.UserAccount.Enable != 'N'">
 							<i class="fa fa-check"></i>
 						</span>
+					</td>
+				</tr>
+                <tr ng-repeat="d in doctors" ng-click="linkDoctorGroup(d)" ng-show="islinkDoctorGroup == true" id="{{'tr'+d.stt}}" ng-class="{'is-Choose': d.UID === uidReturn && d.UID!==undefined && d.UID!==null && d.UID!==''}">
+					<td>{{d.stt}}</td>
+					<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
+					<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
+					<td>
+						<span ng-if="d.UserAccount.Enable != 'N'">
+							<i class="fa fa-check"></i>
+						</span>
+					</td>
+                    <td style="width:10%; text-align:center;" >
+						<i style="font-size:150%;" ng-class="{'fa fa-check-square-o':d.UID == uidReturn,'fa fa-square-o':d.UID != uidReturn}" id="{{'check'+d.stt}}"></i>
 					</td>
 				</tr>
 			</tbody>
@@ -89,16 +103,16 @@
 			</div>
 			<div class="col-md-7 col-sm-7" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-					<uib-pagination 
-					boundary-links="true" 
-					total-items="count" 
-					ng-model="searchObjectMap.currentPage" 
-					class="pagination-lg " 
-					previous-text="&lsaquo; " 
-					next-text="&rsaquo; " 
-					first-text="&laquo; " 
-					last-text="&raquo; " 
-					items-per-page="searchObjectMap.limit" 
+					<uib-pagination
+					boundary-links="true"
+					total-items="count"
+					ng-model="searchObjectMap.currentPage"
+					class="pagination-lg "
+					previous-text="&lsaquo; "
+					next-text="&rsaquo; "
+					first-text="&laquo; "
+					last-text="&raquo; "
+					items-per-page="searchObjectMap.limit"
 					max-size="searchObjectMap.maxSize"
 					ng-change="setPage()"></uib-pagination>
 				</div>

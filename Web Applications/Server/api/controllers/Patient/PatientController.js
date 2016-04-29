@@ -362,7 +362,7 @@ module.exports = {
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.ok({
+                    res.serverError({
                         message: ErrorWrap(err)
                     });
                 }

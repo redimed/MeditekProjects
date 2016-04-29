@@ -401,7 +401,7 @@ module.exports = React.createClass({
         if(this.state.sections.size > 0){
             var prevSize = this.state.sections.size-1;
             var sectionRefPrev = "section_"+prevSize;
-            page = this.refs[sectionRefPrev].getPage();
+            //page = this.refs[sectionRefPrev].getPage();
         }
 
         var listData = list.EFormTemplateModuleData;

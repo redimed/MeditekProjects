@@ -734,6 +734,64 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body.data);
         var phoneNumber = info.phone;
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.systemtype;
+        var phoneRegex = /^\+[0-9]{9,15}$/;
+        var data = {};
+        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType) {
+            return TelehealthService.MakeRequest({
+                    host: config.AuthAPI,
+                    path: '/api/check-activated',
+                    method: 'POST',
+                    body: {
+                        PhoneNumber: phoneNumber
+                    },
+                    headers: {
+                        'DeviceID': deviceId,
+                        'SystemType': deviceType
+                    }
+                })
+                .then(function(response) {
+                    data = response.getBody();
+                    return TelehealthService.GetPatientDetails(data.UserUID, req.headers)
+                })
+                .then(function(patientResponse) {
+                    if (patientResponse && patientResponse.getBody() && patientResponse.getBody().data.length > 0) {
+                        var patientInfo = patientResponse.getBody().data[0];
+                        data.PatientUID = patientInfo.UID;
+                    }
+                    if (data.Activated === "N")
+                        return sendSMS(phoneNumber, "Your REDiMED account pin number is " + data.PinNumber)
+                    else
+                        return null;
+                })
+                .then(function(mess) {
+                    return res.ok(data);
+                })
+                .catch(function(error) {
+                    if (error.getCode) {
+                        console.log("Get code ne");
+                        res.json(error.getCode(), error.getBody());
+                    } else {
+                        res.serverError(ErrorWrap(error));
+                    }
+                })
+        } else {
+            var err = new Error("Telehealth.Activation.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
+    },
+    CheckActivationNew: function(req, res) {
+        console.log("Activation", JSON.stringify(req.body));
+        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
+            var err = new Error("Telehealth.Activation.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body.data);
+        var phoneNumber = info.phone;
         var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         var  data= {};

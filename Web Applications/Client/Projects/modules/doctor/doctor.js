@@ -38,5 +38,18 @@ angular.module('app.authentication.doctor',[
 			data: {title: 'Doctor Profile', pageTitle: 'Doctor Profile'},
 			templateUrl: 'modules/doctor/views/doctorProfile.html',
 			controller: 'doctorProfileCtrl'
-		});
+		})
+		.state('authentication.doctor.group', {
+			url:'/group',
+			data: {title: 'Doctor Group', pageTitle: 'Doctor Group'},
+			templateUrl: 'modules/doctor/views/doctorGroup.html',
+			controller: 'doctorGroupCtrl'
+		})
+		.state('authentication.doctor.groupDetail', {
+			url:'/group/detail',
+			data: {title: 'Doctor Group Detail', pageTitle: 'Doctor Group Detail'},
+			templateUrl: 'modules/doctor/views/doctorGroupDetail.html',
+			controller: 'doctorGroupDetailCtrl'
+		})
+		;
 })

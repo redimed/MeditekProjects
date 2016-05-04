@@ -290,6 +290,7 @@ module.exports = React.createClass({
             data: fields,
             templateUID: self.templateUID
         }
+
         EFormService.createPDFForm(data)
         .then(function(response){
             var fileName = 'report_'+moment().format('X');
@@ -344,6 +345,7 @@ module.exports = React.createClass({
                                 return <ComponentSection key={index}
                                     ref={section.get('ref')}
                                     refTemp={section.get('ref')}
+                                    moduleID={section.get('moduleID') | ''}
                                     key={index}
                                     code={index}
                                     type="section"

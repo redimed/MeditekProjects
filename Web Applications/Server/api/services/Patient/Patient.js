@@ -1712,7 +1712,7 @@ module.exports = {
                         info.PhoneNumber = user.PhoneNumber;
                         return Patient.findAll({
                             where: {
-                                UserAccountID: user[0].ID
+                                UserAccountID: user.ID
                             },
                             transaction: transaction
                         });

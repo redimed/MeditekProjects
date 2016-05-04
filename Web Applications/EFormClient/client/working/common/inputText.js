@@ -10,7 +10,9 @@ module.exports = React.createClass({
         refTemp: React.PropTypes.string,
         onRightClickItem: React.PropTypes.func,
         permission: React.PropTypes.string,
-        preCal: React.PropTypes.string
+        preCal: React.PropTypes.string,
+        labelPrefix: React.PropTypes.string,
+        labelSuffix: React.PropTypes.string
     },
     getDefaultProps: function(){
         return {
@@ -75,6 +77,12 @@ module.exports = React.createClass({
     getRoles: function(){
         return this.props.roles;
     },
+    getLabelPrefix: function() {
+        return this.props.labelPrefix;
+    },
+    getLabelSuffix: function() {
+        return this.props.labelSuffix;
+    },
     render: function(){
         var type = this.props.type;
         var html = null;
@@ -85,6 +93,10 @@ module.exports = React.createClass({
                     {this.props.name}
                 </div>
             )
+        }
+        var labelStyle = {
+            border: 'none',
+            color: '#666'
         }
         switch(type){
             case 'default':
@@ -99,13 +111,28 @@ module.exports = React.createClass({
                     <input type="text" className="form-control" ref="input"/>
                 )
                 break;
-            case 'eform_input_text':
+            {/*case 'eform_input_text':
                 html = (
                     <div className={"dragField col-xs-"+this.props.size} ref="group">
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
+                            </div>
+                        </div>
+                    </div>
+                )*/}
+            case 'eform_input_text':
+                html = (
+                    <div className={"dragField col-xs-"+this.props.size} ref="group">
+                        {display_name}
+                        <div className="form-group" id={this.props.groupId}>
+                            <div className="col-xs-12">
+                                <div className="input-group">
+                                    <span className="input-group-addon" style={labelStyle}>{this.props.labelPrefix}</span>
+                                    <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
+                                    <span className="input-group-addon" style={labelStyle}>{this.props.labelSuffix}</span>
+                                </div>
                             </div>
                         </div>
                     </div>

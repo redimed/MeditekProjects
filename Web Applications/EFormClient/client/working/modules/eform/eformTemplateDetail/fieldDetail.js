@@ -35,18 +35,25 @@ module.exports = React.createClass({
                 this.refs.formName.setValue(object.name);
             }
             this.refs.formPrecal.setValue(object.preCal);
-            if(Config.getPrefixField(this.type, 'textarea') > -1){
-                this.refs.formRows.setValue(object.rows);
-            }
-            if(Config.getPrefixField(this.type, 'check') > -1){
-                this.refs.formLabel.setValue(object.label);
-                this.refs.formValue.setValue(object.value);
-            }
-            if(Config.getPrefixField(this.type, 'html') > -1){
-                this.refs.formEditorLabel.setValue(object.value);
-            }
-            if(Config.getPrefixField(this.type, 'signature') > -1){
-                this.refs.formHeight.setValue(object.height);
+            switch (this.type) {
+                case 'eform_input_text':
+                    this.refs.formLabelPrefix.setValue(object.labelPrefix);
+                    this.refs.formLabelSuffix.setValue(object.labelSuffix);
+                    break;
+                case 'eform_input_textarea':
+                    this.refs.formRows.setValue(object.rows);
+                    break;
+                case 'eform_input_check_checkbox':
+                case 'eform_input_check_radio':
+                    this.refs.formLabel.setValue(object.label);
+                    this.refs.formValue.setValue(object.value);
+                    break;
+                case 'eform_input_check_label_html':
+                    this.refs.formEditorLabel.setValue(object.value);
+                    break;
+                case 'eform_input_signature':
+                    this.refs.formHeight.setValue(object.height);
+                    break;
             }
         }else if(this.type === 'table'){
             this.refs.formName.setValue(object.name);
@@ -114,23 +121,36 @@ module.exports = React.createClass({
                 roles: Permission,
                 ref: this.refs.formRef.getValue()
             }
-            if(Config.getPrefixField(this.type, 'textarea') > -1)
-                data.rows = this.refs.formRows.getValue();
-            if(Config.getPrefixField(this.type, 'check') > -1){
-                data.label = this.refs.formLabel.getValue();
-                data.value = this.refs.formValue.getValue();
+            switch (this.type) {
+                case 'eform_input_text':
+                    data.labelPrefix = this.refs.formLabelPrefix.getValue();
+                    data.labelSuffix = this.refs.formLabelSuffix.getValue();
+                    break;
+                case 'eform_input_textarea':
+                    data.rows = this.refs.formRows.getValue();
+                    break;
+                case 'eform_input_check_checkbox':
+                case 'eform_input_check_radio':
+                    data.label = this.refs.formLabel.getValue();
+                    data.value = this.refs.formValue.getValue();
+                    break;
+                case 'eform_input_check_label':
+                    data.label = this.refs.formLabel.getValue();
+                    data.value = this.refs.formValue.getValue();
+                    delete data.name;
+                    delete data.preCal;
+                    break;
+                case 'eform_input_check_label_html':
+                    data.label = this.refs.formLabel.getValue();
+                    data.value = this.refs.formValue.getValue();
+                    delete data.name;
+                    delete data.preCal;
+                    data.label = this.refs.formEditorLabel.getValue();
+                    break;
+                case 'eform_input_signature':
+                    data.height = this.refs.formHeight.getValue();
+                    break;
             }
-            if(Config.getPrefixField(this.type, 'label') > -1){
-                delete data.name;
-                delete data.preCal;
-            }
-            if(Config.getPrefixField(this.type, 'html') > -1){
-                data.label = this.refs.formEditorLabel.getValue();
-            }
-            if(Config.getPrefixField(this.type, 'signature') > -1){
-                data.height = this.refs.formHeight.getValue();
-            }
-
         }else if(this.type === 'table'){
             data = {
                 name: this.refs.formName.getValue(),
@@ -169,29 +189,45 @@ module.exports = React.createClass({
         var display_value = 'none';
         var display_label = 'none';
         var display_rows = 'none';
-        var display_precal = 'block';
+        var display_label_prefix = 'none';
+        var display_label_suffix = 'none';
         var display_height = 'none';
+        var display_precal = 'block';
         var display_role = 'block';
 
         if(Config.getPrefixField(this.type, 'eform_input') > -1){
             display_name = 'block';
-            if(Config.getPrefixField(this.type, 'textarea') > -1)
-                display_rows = 'block';
-            if(Config.getPrefixField(this.type, 'check') > -1){
-                display_label = 'block';
-                display_value = 'block';
-            }
-            if(Config.getPrefixField(this.type, 'label') > -1){
-                display_name = 'none';
-                display_precal = 'none';
-                display_role = 'none';
-            }
-            if(Config.getPrefixField(this.type, 'html') > -1){
-                display_label = 'none';
-                display_labelh = 'block';
-            }
-            if(Config.getPrefixField(this.type, 'signature') > -1){
-                display_height = 'block';
+            switch (this.type) {
+                case 'eform_input_text':
+                    display_label_prefix = 'block';
+                    display_label_suffix = 'block';
+                    break;
+                case 'eform_input_textarea':
+                    display_rows = 'block';
+                    break;
+                case 'eform_input_check_checkbox':
+                case 'eform_input_check_radio':
+                    display_label = 'block';
+                    display_value = 'block';
+                    break;
+                case 'eform_input_check_label':
+                    display_label = 'block';
+                    display_value = 'block';
+                    display_name = 'none';
+                    display_precal = 'none';
+                    display_role = 'none';
+                    break;
+                case 'eform_input_check_label_html':
+                    display_labelh = 'block';
+                    display_value = 'block';
+                    display_label = 'none';
+                    display_name = 'none';
+                    display_precal = 'none';
+                    display_role = 'none';
+                    break;
+                case 'eform_input_signature':
+                    display_height = 'block';
+                    break;
             }
         }else if(this.type === 'table'){
             display_name = 'block';
@@ -213,6 +249,14 @@ module.exports = React.createClass({
                             <div className="form-group" style={{display: display_label}}>
                                 <label>Label</label>
                                 <CommonInputText placeholder="Type label" ref="formLabel"/>
+                            </div>
+                            <div className="form-group" style={{display: display_label_prefix}}>
+                                <label>Label Prefix</label>
+                                <CommonInputText placeholder="Type label" ref="formLabelPrefix"/>
+                            </div>
+                            <div className="form-group" style={{display: display_label_suffix}}>
+                                <label>Label Suffix</label>
+                                <CommonInputText placeholder="Type label" ref="formLabelSuffix"/>
                             </div>
                             <div className="form-group" style={{display: display_name}}>
                                 <label>Name</label>

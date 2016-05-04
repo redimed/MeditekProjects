@@ -2,6 +2,79 @@ var InputAxisX = require('modules/eform/eformTemplateDetail/chart/inputAxisX');
 
 module.exports = React.createClass({
     image: null,
+    _theme: function(){
+        /**
+         * Grid-light theme for Highcharts JS
+         * @author Torstein Honsi
+         */
+
+        // Load the fonts
+        Highcharts.createElement('link', {
+           href: 'https://fonts.googleapis.com/css?family=Dosis:400,600',
+           rel: 'stylesheet',
+           type: 'text/css'
+        }, null, document.getElementsByTagName('head')[0]);
+
+        Highcharts.theme = {
+           colors: ["#7cb5ec", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+              "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+           chart: {
+              backgroundColor: null,
+           },
+           title: {
+              style: {
+                 fontSize: '16px',
+                 fontWeight: 'bold',
+                 textTransform: 'uppercase'
+              }
+           },
+           tooltip: {
+              borderWidth: 0,
+              backgroundColor: 'rgba(219,219,216,0.8)',
+              shadow: false
+           },
+           legend: {
+              itemStyle: {
+                 fontWeight: 'bold',
+                 fontSize: '13px'
+              }
+           },
+           xAxis: {
+              gridLineWidth: 1,
+              labels: {
+                 style: {
+                    fontSize: '12px'
+                 }
+              }
+           },
+           yAxis: {
+              minorTickInterval: 'auto',
+              title: {
+                 style: {
+                    textTransform: 'uppercase'
+                 }
+              },
+              labels: {
+                 style: {
+                    fontSize: '12px'
+                 }
+              }
+           },
+           plotOptions: {
+              candlestick: {
+                 lineColor: '#404048'
+              }
+           },
+
+
+           // General
+           background2: '#F0F0EA'
+
+        };
+
+        // Apply the theme
+        Highcharts.setOptions(Highcharts.theme);
+    },
     componentDidMount: function(){
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
@@ -31,6 +104,7 @@ module.exports = React.createClass({
                 title: {
                     text: 'Temperature'
                 },
+                reversed: true,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -48,7 +122,7 @@ module.exports = React.createClass({
             },
             series: this.props.series.toJS()
         })
-
+        this._theme()
         var self = this;
         if(this.props.permission !== 'eformDev'){
             this.refs.inputAxisX.init(this.props.axisX.toJS(), this.props.series.toJS());
@@ -58,10 +132,10 @@ module.exports = React.createClass({
                 var svg = chart.getSVG();
                 var image = new Image;
                 var canvas = document.createElement('canvas');
-                canvas.width = 600;
-                canvas.height = 600;
+                canvas.width = chart.chartWidth;
+                canvas.height = chart.chartHeight;
                 image.onload = function(){
-                    canvas.getContext('2d').drawImage(this, 0, 0, 600, 600);
+                    canvas.getContext('2d').drawImage(this, 0, 0, chart.chartWidth, chart.chartHeight);
                     self.image = canvas.toDataURL();
                     self.image = self.image.replace('data:image/png;base64,','');
                 }

@@ -17,7 +17,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
-			console.log(scope.iscompanycreate);
+			console.log("company ",scope.company);
 			scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
 			scope.iscompanycreate = scope.iscompanycreate?scope.iscompanycreate:false;
 			scope.fieldSort={};
@@ -155,20 +155,20 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						if(scope.appointment) {
 
 							scope.uidReturn=patientUID;
-							swal({   
-								title: "Are you sure?", 
+							swal({
+								title: "Are you sure?",
 								text: "Are you want to link this patient to the current appointment?" ,
-								type: "warning",   
-								showCancelButton: true,   
-								confirmButtonColor: "#DD6B55",   
-								confirmButtonText: "Ok",   
-								cancelButtonText: "Cancel",   
-								closeOnConfirm: true,   
-								closeOnCancel: true 
-							}, 
-							function(isConfirm){   
-								if (isConfirm) {  
-									scope.uidReturn=patientUID;   
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonColor: "#DD6B55",
+								confirmButtonText: "Ok",
+								cancelButtonText: "Cancel",
+								closeOnConfirm: true,
+								closeOnCancel: true
+							},
+							function(isConfirm){
+								if (isConfirm) {
+									scope.uidReturn=patientUID;
 									scope.appointment.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
 								}else{
 									scope.uidReturn='';
@@ -179,20 +179,20 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						}
 						else if(scope.staff) {
 							scope.uidReturn=patientUID;
-							swal({   
-								title: "Are you sure?", 
+							swal({
+								title: "Are you sure?",
 								text: "Are you want to link this patient to the current company?" ,
-								type: "warning",   
-								showCancelButton: true,   
-								confirmButtonColor: "#DD6B55",   
-								confirmButtonText: "Ok",   
-								cancelButtonText: "Cancel",   
-								closeOnConfirm: true,   
-								closeOnCancel: true 
-							}, 
-							function(isConfirm){   
-								if (isConfirm) {  
-									scope.uidReturn=patientUID;   
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonColor: "#DD6B55",
+								confirmButtonText: "Ok",
+								cancelButtonText: "Cancel",
+								closeOnConfirm: true,
+								closeOnCancel: true
+							},
+							function(isConfirm){
+								if (isConfirm) {
+									scope.uidReturn=patientUID;
 									scope.staff.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
 								}else{
 									scope.uidReturn='';
@@ -225,6 +225,11 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						templateUrl: 'patientCreatemodal',
 						controller: function($scope,$modalInstance){
 							$scope.iscompanycreate = scope.iscompanycreate;
+							$scope.company = scope.company;
+							$scope.check = scope.ishaveusername;
+							$scope.compid = scope.compid;
+							$scope.role = scope.roleid?true:false;
+							$scope.roleid = scope.roleid?scope.roleid:null;
 							$scope.close = function() {
 								$modalInstance.close();
 							};

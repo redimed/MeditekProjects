@@ -499,7 +499,20 @@ app.directive('telehealthDetail', function() {
                         windowClass: 'app-modal-window',
                         resolve: {
                             patientInfo: function() {
-                                PatientService.postDatatoDirective(postData);
+                                function postDatatoService(postData, callback) {
+                                    for(var i = 0;i < $scope.wainformation.AppointmentData.length; i++) {
+                                        if($scope.wainformation.AppointmentData[i].Name == "SiteIDRefer") {
+                                            postData.data.SiteIDRefer = $scope.wainformation.AppointmentData[i].Value;
+                                        }
+                                        if($scope.wainformation.AppointmentData[i].Name == "SiteID") {
+                                            postData.data.SiteID = $scope.wainformation.AppointmentData[i].Value;
+                                        }
+                                    }
+                                    callback();
+                                };
+                                postDatatoService(postData,function() {
+                                    PatientService.postDatatoDirective(postData);
+                                });
                             }
                         }
                     });

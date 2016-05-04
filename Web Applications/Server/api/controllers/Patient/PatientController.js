@@ -1,3 +1,4 @@
+var _ = require('lodash');
 module.exports = {
     /*
         CreatePatient : create a new patient
@@ -7,14 +8,10 @@ module.exports = {
     CreatePatient: function(req, res) {
         var data = req.body.data;
         var otherData = req.body.otherData ? req.body.otherData : null;
-        // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
-        // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
-        // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
-        // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
         Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
-                    if (data.rolecompany == false) {
+                    if (data.rolecompany == false && data.hasOwnProperty('SiteID') == false && data.hasOwnProperty('SiteIDRefer') == false ) {
                         patient.transaction.commit();
                         var info = {
                             UID: patient.UID,
@@ -29,6 +26,112 @@ module.exports = {
                             status: 200,
                             message: "success",
                             data: info
+                        });
+                    } else if(data.SiteID) {
+                        return CompanySite.findOne({
+                            where:{
+                                ID : data.SiteID
+                            },
+                            transaction: patient.transaction
+                        })
+                        .then(function(got_site) {
+                            if(_.isEmpty(got_site)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('Site.notFound');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                return RelCompanyPatient.create({
+                                    CompanyID : got_site.CompanyID,
+                                    PatientID : patient.ID,
+                                    Active    : 'Y',
+                                },{transaction:patient.transaction});
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
+                        })
+                        .then(function(created_relcompanypatient) {
+                            if(_.isEmpty(created_relcompanypatient)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('AddCompany.queryerror');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                patient.transaction.commit();
+                                var info = {
+                                    UID: patient.UID,
+                                    FirstName: patient.FirstName,
+                                    LastName: patient.LastName,
+                                    DOB: patient.DOB,
+                                    Address1: patient.Address1,
+                                    Address2: patient.Address2,
+                                    UserAccountUID: patient.UserAccountUID
+                                };
+                                return res.ok({
+                                    status: 200,
+                                    message: "success",
+                                    data: info
+                                });
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
+                        });
+                    } else if(data.SiteIDRefer) {
+                        return CompanySite.findOne({
+                            where:{
+                                SiteIDRefer : data.SiteIDRefer
+                            },
+                            transaction: patient.transaction
+                        })
+                        .then(function(got_site) {
+                            if(_.isEmpty(got_site)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('Site.notFound');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                return RelCompanyPatient.create({
+                                    CompanyID : got_site.CompanyID,
+                                    PatientID : patient.ID,
+                                    Active    : 'Y',
+                                },{transaction:patient.transaction});
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
+                        })
+                        .then(function(created_relcompanypatient) {
+                            if(_.isEmpty(created_relcompanypatient)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('AddCompany.queryerror');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                patient.transaction.commit();
+                                var info = {
+                                    UID: patient.UID,
+                                    FirstName: patient.FirstName,
+                                    LastName: patient.LastName,
+                                    DOB: patient.DOB,
+                                    Address1: patient.Address1,
+                                    Address2: patient.Address2,
+                                    UserAccountUID: patient.UserAccountUID
+                                };
+                                return res.ok({
+                                    status: 200,
+                                    message: "success",
+                                    data: info
+                                });
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
                         });
                     } else {
                         if(data.RoleId){

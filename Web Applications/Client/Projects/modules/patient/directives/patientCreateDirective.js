@@ -82,7 +82,8 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
         },
         link: function(scope, elem, attrs) {
-            console.log('iscompanycreate ',scope.iscompanycreate);
+            console.log('createtype ',scope.createtype);
+            scope.createtype = scope.createtype?scope.createtype:null;
             scope.iscompanycreate = scope.iscompanycreate?scope.iscompanycreate:false;
             scope.createtype = scope.createtype?scope.createtype:null;
             scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;

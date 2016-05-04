@@ -391,7 +391,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid}">
                                                                 <label class="control-label">Contact number (M)</label>
-                                                                <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="ShowData.patient.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required ng-disabled="ShowData.isLinkPatient">
+                                                                <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="ShowData.patient.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" ng-disabled="ShowData.isLinkPatient">
                                                                 <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
                                                                 <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
                                                             </div>

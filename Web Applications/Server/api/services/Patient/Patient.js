@@ -1708,9 +1708,8 @@ module.exports = {
             return Services.UserAccount.GetUserAccountDetails(data, null, transaction)
                 .then(function(user) {
                     if (check.checkData(user)) {
-                        console.log(user);
-                        info.Email = user[0].Email;
-                        info.PhoneNumber = user[0].PhoneNumber;
+                        info.Email = user.Email;
+                        info.PhoneNumber = user.PhoneNumber;
                         return Patient.findAll({
                             where: {
                                 UserAccountID: user[0].ID

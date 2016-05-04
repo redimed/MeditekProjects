@@ -229,22 +229,23 @@ module.exports = React.createClass({
                     Config.getPrefixField(field.type, 'signature') === -1){
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
-                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
+                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(type === 'table'){
                     var tableFields = this.refs[fieldRef].getAllValue();
                     tableFields.map(function(tableField, index){
                         tableField.refRow = self.props.refTemp;
+                        tableField.moduleID = self.props.moduleID
                         results.push(tableField);
                     })
                 }else if(Config.getPrefixField(type, 'checkbox') > -1 || Config.getPrefixField(type, 'radio') > -1){
                     var isChecked = this.refs[fieldRef].isChecked();
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
-                    results.push({value: value, name: name, ref: fieldRef, type: type, checked: isChecked, refRow: this.props.refTemp});
+                    results.push({value: value, name: name, ref: fieldRef, type: type, checked: isChecked, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(Config.getPrefixField(type, 'date') > -1){
                     var value = this.refs[fieldRef].getText();
                     var name = this.refs[fieldRef].getName();
-                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
+                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(Config.getPrefixField(field.type, 'signature') > -1){
                     if(stringType !== 'print'){
                         var value = this.refs[fieldRef].getValue();
@@ -254,7 +255,7 @@ module.exports = React.createClass({
                     else{
                         var value = this.refs[fieldRef].getBase64Value();
                         var name = this.refs[fieldRef].getName();
-                        results.push({base64Data: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, value: ''});
+                        results.push({base64Data: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, value: '', moduleID: this.props.moduleID});
                     }
                 }else if(type === 'dynamic_table'){
                     var tableFields = this.refs[fieldRef].getAllValue();
@@ -272,6 +273,7 @@ module.exports = React.createClass({
                         series.refRow = this.props.refTemp;
                         series.base64Data = series.value;
                         series.value = '';
+                        series.moduleID = this.props.moduleID;
                         results.push(series);
                     }
                 }

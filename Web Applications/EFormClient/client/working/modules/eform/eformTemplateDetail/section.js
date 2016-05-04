@@ -6,6 +6,7 @@ var CommonInput = require('common/inputText');
 module.exports = React.createClass({
     propTypes: {
         code: React.PropTypes.number,
+        moduleID: React.PropTypes.any,
         type: React.PropTypes.string,
         page: React.PropTypes.number,
         rows: React.PropTypes.object,
@@ -26,6 +27,7 @@ module.exports = React.createClass({
         onRemoveTableRow: React.PropTypes.func,
         onUpdateTableColumn: React.PropTypes.func,
         onChangePage: React.PropTypes.func,
+        onChangeRef: React.PropTypes.func,
         onOrderSection: React.PropTypes.func,
         onOrderRow: React.PropTypes.func
     },
@@ -46,25 +48,19 @@ module.exports = React.createClass({
     },
     componentDidMount: function() {
         if (this.props.permission === 'eformDev') {
-            this.refs.inputOrder.setValue(this.props.code);
             var self = this;
-            //this._dragAndDropSections();
-            //this._dragAndDropRows();
-
-            $(this.refs.page).val(this.props.page);
-            $(this.refs.page).keypress(function(event){
+            this.refs.inputOrder.setValue(this.props.code);
+            $(this.refs.tempRef).on('keypress', function(event){
                 if(event.which == 13){
-                    self.props.onChangePage(self.props.code, event.target.value);
+                    console.log(event.target.value);
+                    self.props.onChangeRef(self.props.code, event.target.value);
+                    return false;
                 }
-            });
+            })
         }
     },
     componentDidUpdate: function(prevProps, prevState) {
         if (this.props.permission === 'eformDev') {
-            //this.drakeSection.destroy();
-            //this.drakeRow.destroy();
-            //this._dragAndDropSections();
-            //this._dragAndDropRows();
         }
     },
     _dragAndDropSections: function() {
@@ -93,32 +89,6 @@ module.exports = React.createClass({
                     return false;
                 }
             })
-            /*swal({
-                title: 'Are you sure?',
-                text: 'You will change this section',
-                type: 'warning',
-                showCancelButton: true,
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-                    var fromEl = el.id
-                    var targetArray = $(target).find('.portlet')
-                    $.each(targetArray, function(index, value) {
-                        var tempId = $(value).attr('id')
-                        if (tempId !== fromEl) {
-                            var fromArr = fromEl.split('_')
-                            var toArr = tempId.split('_')
-                            var fromObj = { codeSection: fromArr[1] }
-                            var toObj = { codeSection: toArr[1] };
-                            self.props.onDragSection(fromObj, toObj);
-                            return false;
-                        }
-                    })
-                } else {
-                    swal("No change", "Form will refresh.", "success")
-                }
-            })*/
             var fromEl = el.id
             var targetArray = $(target).find('.portlet')
             $.each(targetArray, function(index, value) {
@@ -138,7 +108,7 @@ module.exports = React.createClass({
         var self = this;
         this.drakeRow = dragula([].slice.apply(document.querySelectorAll('.dragRow')), {
             copy: true,
-            revertOnSpill: true, // spilling will put the element back where it was dragged from, if this is true
+            revertOnSpill: true,
             removeOnSpill: true,
             moves: function(el, container, handle) {
                 return handle.className.indexOf('dragRowHandler') > -1;
@@ -177,53 +147,18 @@ module.exports = React.createClass({
         })
     },
     _onCreateRow: function(){
-        var self = this;
-        self.props.onCreateRow(self.props.code, self.props.refTemp);
-        /*self.props.onCreateRow(self.props.code, self.props.refTemp);
-        swal({
-            title: 'Are you sure?',
-            text: 'You will create new row',
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.props.onCreateRow(self.props.code, self.props.refTemp);
-        })*/
+        this.props.onCreateRow(this.props.code, this.props.refTemp);
     },
     _onUpdateSection: function() {
         this.refs.modalUpdateSection.show();
     },
     _onRemoveSection: function() {
-        var self = this;
-        self.props.onRemoveSection(self.props.code);
-        /*swal({
-            title: 'Are you sure?',
-            text: 'You will delete section ' + this.props.name,
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.props.onRemoveSection(self.props.code);
-        })*/
+        this.props.onRemoveSection(this.props.code);
     },
     _onSaveUpdateSection: function() {
         var name = this.refs.formUpdateSection.getName();
-        var self = this;
-        self.refs.modalUpdateSection.hide();
-        self.props.onUpdateSection(self.props.code, name);
-        /*swal({
-            title: 'Are you sure?',
-            text: 'You will update section ' + this.props.name,
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.refs.modalUpdateSection.hide();
-            self.props.onUpdateSection(self.props.code, name);
-        })*/
+        this.refs.modalUpdateSection.hide();
+        this.props.onUpdateSection(this.props.code, name);
     },
     _onOrderSection: function(){
         this.refs.modalOrderSection.show();
@@ -372,6 +307,7 @@ module.exports = React.createClass({
                                                             key={index}
                                                             code={index}
                                                             codeSection={this.props.code}
+                                                            moduleID={this.props.moduleID}
                                                             ref={row.get('ref')}
                                                             size={row.get('size')}
                                                             refTemp={row.get('ref')}

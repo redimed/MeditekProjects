@@ -2,7 +2,7 @@ module.exports = {
     /*
         CreatePatient : create a new patient
         input: Patient's information
-        output: insert Patient's information into table Patient 
+        output: insert Patient's information into table Patient
     */
     CreatePatient: function(req, res) {
         var data = req.body.data;
@@ -142,7 +142,7 @@ module.exports = {
                 err.transaction.rollback();
                 res.serverError({
                     status: 500,
-                    message: ErrorWrap(err)
+                    message: ErrorWrap(err.err)
                 });
             });
     },
@@ -225,7 +225,7 @@ module.exports = {
     /*
         SearchPatient : find patient with condition
         input: Patient's name or PhoneNumber
-        output: get patient's list which was found in client 
+        output: get patient's list which was found in client
     */
     SearchPatient: function(req, res) {
         var data = req.body.data;
@@ -286,7 +286,7 @@ module.exports = {
     /*
         UpdatePatient : update patient's information
         input: patient's information updated
-        output: update patient'infomation into table Patient 
+        output: update patient'infomation into table Patient
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
@@ -398,9 +398,9 @@ module.exports = {
                         .then(function(success) {
                             if (success !== undefined && success !== null && success !== '' && success.length !== 0) {
                                 for (var i = 0; i < success.length; i++) {
-                                    // if(info[0].dataValuesFileType == "ProfileImage") 
+                                    // if(info[0].dataValuesFileType == "ProfileImage")
                                     info[0].dataValues.ProfileImage = success[i].FileType == 'ProfileImage' ? success[i].UID : null;
-                                    // if(info[0].dataValuesFileType == "Signature") 
+                                    // if(info[0].dataValuesFileType == "Signature")
                                     info[0].dataValues.Signature = success[i].FileType == 'Signature' ? success[i].UID : null;
                                 }
                                 info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
@@ -449,7 +449,7 @@ module.exports = {
     /*
         DeletePatient : disable patient who was deleted.
         input: Patient's ID
-        output: attribute Enable of Patient will receive value "N" in table Patient 
+        output: attribute Enable of Patient will receive value "N" in table Patient
     */
     DeletePatient: function(req, res) {
         var ID = req.body.data;

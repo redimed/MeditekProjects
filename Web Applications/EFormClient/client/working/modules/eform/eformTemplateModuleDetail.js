@@ -182,74 +182,89 @@ module.exports = React.createClass({
     _onComponentSectionSaveFieldDetail: function(codeSection, codeRow, dataField) {
         if(Config.getPrefixField(dataField.type, 'eform_input') > -1){
             this.setState(function(prevState) {
-                if(Config.getPrefixField(dataField.type, 'textarea') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                switch (dataField.type) {
+                    case 'eform_input_textarea':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('rows', dataField.rows)
+                                    .set('preCal', dataField.preCal)
+                                    .set('ref', dataField.ref)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_check_checkbox':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('label', dataField.label)
+                                    .set('value', dataField.value)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_check_radio':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('label', dataField.label)
+                                    .set('ref', dataField.ref)
+                                    .set('value', dataField.value)
+                                    .set('preCal', dataField.preCal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_check_label':
+                    case 'eform_input_check_label_html':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('size', dataField.size)
+                                    .set('label', dataField.label)
+                                    .set('value', dataField.value)
+                                    .set('ref', dataField.ref)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_signature':
+                        var sections = prevState.sections;
+                        sections = sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                             val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('rows', dataField.rows)
-                            .set('preCal', dataField.preCal)
-                            .set('ref', dataField.ref)
-                            .set('roles', Immutable.fromJS(dataField.roles))
+                                .set('size', dataField.size)
+                                .set('ref', dataField.ref)
+                                .set('preCal', dataField.preCal)
+                                .set('height', dataField.height)
+                                .set('roles', Immutable.fromJS(dataField.roles))
                         )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'checkbox') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('label', dataField.label)
-                            .set('value', dataField.value)
-                            .set('ref', dataField.ref)
-                            .set('preCal', dataField.preCal)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'radio') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('label', dataField.label)
-                            .set('ref', dataField.ref)
-                            .set('value', dataField.value)
-                            .set('preCal', dataField.preCal)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'label') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('size', dataField.size)
-                            .set('label', dataField.label)
-                            .set('value', dataField.value)
-                            .set('ref', dataField.ref)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'signature') > -1){
-                    var sections = prevState.sections;
-                    sections = sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('ref', dataField.ref)
-                            .set('preCal', dataField.preCal)
-                            .set('height', dataField.height)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                    )
-                    return {
-                        sections: sections
-                   }
-                }else{
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('ref', dataField.ref)
-                            .set('preCal', dataField.preCal)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
+                        return {
+                            sections: sections
+                        }
+                    case 'eform_input_text':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('labelPrefix', dataField.labelPrefix)
+                                    .set('labelSuffix', dataField.labelSuffix)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    default:
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+
                 }
             })
         }else if(dataField.type === 'table'){

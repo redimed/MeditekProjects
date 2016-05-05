@@ -145,6 +145,30 @@ module.exports = React.createClass({
                 preCal: preCal,
                 roles: roles
             }
+            switch (type) {
+                case 'eform_input_text':
+                    var fields = this.props.fields.toJS();
+                    dataFieldDetail.labelPrefix = this.refs[ref].getLabelPrefix();
+                    dataFieldDetail.labelSuffix = this.refs[ref].getLabelSuffix();
+                    break;
+                case 'eform_input_textarea':
+                    dataFieldDetail.rows = this.refs[ref].getRows();
+                    break;
+                case 'eform_input_check_checkbox':
+                case 'eform_input_check_radio':
+                    dataFieldDetail.label = this.refs[ref].getLabel();
+                    dataFieldDetail.value = this.refs[ref].getValue();
+                    break;
+                case 'eform_input_check_label':
+                case 'eform_input_check_label_html':
+                    dataFieldDetail.label = this.refs[ref].getLabel();
+                    dataFieldDetail.value = this.refs[ref].getValue();
+                    delete dataFieldDetail.name;
+                    break;
+                case 'eform_input_signature':
+                    dataFieldDetail.height = this.refs[ref].getHeight();
+                    break;
+            }
             if(Config.getPrefixField(type, 'textarea') > -1){
                 dataFieldDetail.rows = this.refs[ref].getRows();
             }
@@ -423,6 +447,8 @@ module.exports = React.createClass({
                                                                 groupId={groupId}
                                                                 name={field.get('name')}
                                                                 size={field.get('size')}
+                                                                labelPrefix={field.get('labelPrefix')}
+                                                                labelSuffix={field.get('labelSuffix')}
                                                                 permission={this.props.permission}
                                                                 context={displayContextMenu}
                                                                 ref={field.get('ref')}
@@ -607,6 +633,8 @@ module.exports = React.createClass({
                                             groupId={groupId}
                                             name={field.get('name')}
                                             size={field.get('size')}
+                                            labelPrefix={field.get('labelPrefix')}
+                                            labelSuffix={field.get('labelSuffix')}
                                             permission={this.props.permission}
                                             context={displayContextMenu}
                                             ref={field.get('ref')}

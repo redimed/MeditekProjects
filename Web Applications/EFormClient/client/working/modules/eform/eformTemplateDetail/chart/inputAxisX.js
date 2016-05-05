@@ -42,8 +42,8 @@ module.exports = React.createClass({
     },
     render: function(){
         return (
-            <div style={{float: 'right'}}>
-                <center><h3>Hearing Level dB (decibels)</h3></center>
+            <div style={{width: '1000px'}}>
+                <center><h4><b>Hearing Level dB (decibels)</b></h4></center>
                 <table className="table-bordered table-condensed table">
                     <thead>
                         <tr>
@@ -67,7 +67,7 @@ module.exports = React.createClass({
                                                     <td key={inputIndex}>
                                                         <CommonInputText ref={"serie_"+index+"_"+inputIndex}
                                                             onChange={this._onChangeInput.bind(this, index, inputIndex)}
-                                                            defaultValue={input} className="default" style={{width: '60px'}}/>
+                                                            defaultValue={input} className="default" style={{width: '60px', fontSize: '14px', paddingLeft: '3px'}}/>
                                                     </td>
                                                 )
                                             }, this)
@@ -78,9 +78,6 @@ module.exports = React.createClass({
                         }
                     </tbody>
                 </table>
-                <button className="btn btn-primary btn-small" onClick={this.props.clickUpdateChart}>
-                    Update Chart
-                </button>
             </div>
         )
     }

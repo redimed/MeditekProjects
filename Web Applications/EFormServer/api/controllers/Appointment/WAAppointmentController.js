@@ -73,6 +73,17 @@ module.exports = {
         Services.GetDetailWAAppointment(UID)
         .then(function(success) {
             result = success;
+            result.dataValues.Appointment = {
+                Code: success.dataValues.Code,
+                SiteID: success.dataValues.SiteID,
+                FromTime: success.dataValues.FromTime,
+                ToTime: success.dataValues.ToTime,
+                RequestDate: success.dataValues.RequestDate,
+                ApprovalDate: success.dataValues.ApprovalDate,
+                Status: success.dataValues.Status,
+                CreatedDate: success.dataValues.CreatedDate,
+                Type: success.dataValues.Type
+            }
             result.dataValues.Patient = result.dataValues.Patients[0] || null;
             result.dataValues.UserAccount = result.dataValues.Patients[0]
                                             && result.dataValues.Patients[0].UserAccount?

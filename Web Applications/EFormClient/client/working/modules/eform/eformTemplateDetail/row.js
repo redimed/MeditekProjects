@@ -299,6 +299,10 @@ module.exports = React.createClass({
                         series.value = '';
                         series.moduleID = this.props.moduleID;
                         results.push(series);
+                        var series_1 = $.extend({}, series);
+                        series_1.base64Data = series_1.base64DataHeader;
+                        series_1.name = series_1.name+'_1';
+                        results.push(series_1);
                     }
                 }
             }

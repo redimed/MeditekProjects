@@ -51,7 +51,6 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
     var pickOption = ["","Telehealth", "Onsite"]
     var userUID : String!
     var AppointmentSignatureUID : String = ""
-    let alertView = UIAlertView()
     override func viewDidLoad() {
         super.viewDidLoad()
         if let uid = defaults.valueForKey("userUID") as? String {

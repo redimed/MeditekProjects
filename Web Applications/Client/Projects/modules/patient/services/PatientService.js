@@ -341,24 +341,27 @@ PatientService.validate = function(info) {
 
 		var returnData = {};
 		if(_.isEmpty(postData) == false){
-			var info = {
-				FirstName:postData.data.FirstName,
-				MiddleName:postData.data.MiddleName,
-				Title:postData.data.Title,
-				LastName:postData.data.LastName,
-				PhoneNumber:postData.data.PhoneNumber,
-				DOB:postData.data.DOB,
-				Address1:postData.data.Address1,
-				Address2:postData.data.Address2,
-				State:postData.data.State,
-				Email1:postData.data.Email1,
-				Email:postData.data.Email1,
-				HomePhoneNumber:postData.data.HomePhoneNumber,
-				WorkPhoneNumber:postData.data.WorkPhoneNumber,
-				Gender:postData.data.Gender,
-				Suburb:postData.data.Suburb,
-				Postcode:postData.data.Postcode
-			};
+			// var info = {
+			// 	FirstName:postData.data.FirstName,
+			// 	MiddleName:postData.data.MiddleName,
+			// 	Title:postData.data.Title,
+			// 	LastName:postData.data.LastName,
+			// 	PhoneNumber:postData.data.PhoneNumber,
+			// 	DOB:postData.data.DOB,
+			// 	Address1:postData.data.Address1,
+			// 	Address2:postData.data.Address2,
+			// 	State:postData.data.State,
+			// 	Email1:postData.data.Email1,
+			// 	Email:postData.data.Email1,
+			// 	HomePhoneNumber:postData.data.HomePhoneNumber,
+			// 	WorkPhoneNumber:postData.data.WorkPhoneNumber,
+			// 	Gender:postData.data.Gender,
+			// 	Suburb:postData.data.Suburb,
+			// 	Postcode:postData.data.Postcode,
+			// 	SiteID:postData.data.Postcode,
+			// 	SiteIDRefer:postData.data.SiteIDRefer,
+			// };
+			var info = postData.data;
 
 			returnData.data = info;
 			if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;

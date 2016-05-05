@@ -62,10 +62,12 @@ public class PrintingProcess {
                
                 if(key.contains("base64") || key.contains("image") || key.contains("signature")){
                     PushbuttonField imgField = form.getNewPushbuttonFromField(key);
-                     System.out.println("This is imgfield: " + imgField);
                     imgField.setLayout(PushbuttonField.LAYOUT_ICON_ONLY);
-                    imgField.setProportionalIcon(true);
-                    imgField.setImage(Image.getInstance((Image)data.get(key)));
+                    imgField.setScaleIcon(PushbuttonField.SCALE_ICON_ALWAYS);
+                    imgField.setIconFitToBounds(true);
+                    imgField.setProportionalIcon(false);
+                    Image image = Image.getInstance((Image)data.get(key));
+                    imgField.setImage(image);
                     form.replacePushbuttonField(key, imgField.getField());
                 }
                 else stamper.getAcroFields().setField(key, data.get(key).toString());

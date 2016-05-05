@@ -145,6 +145,30 @@ module.exports = React.createClass({
                 preCal: preCal,
                 roles: roles
             }
+            switch (type) {
+                case 'eform_input_text':
+                    var fields = this.props.fields.toJS();
+                    dataFieldDetail.labelPrefix = this.refs[ref].getLabelPrefix();
+                    dataFieldDetail.labelSuffix = this.refs[ref].getLabelSuffix();
+                    break;
+                case 'eform_input_textarea':
+                    dataFieldDetail.rows = this.refs[ref].getRows();
+                    break;
+                case 'eform_input_check_checkbox':
+                case 'eform_input_check_radio':
+                    dataFieldDetail.label = this.refs[ref].getLabel();
+                    dataFieldDetail.value = this.refs[ref].getValue();
+                    break;
+                case 'eform_input_check_label':
+                case 'eform_input_check_label_html':
+                    dataFieldDetail.label = this.refs[ref].getLabel();
+                    dataFieldDetail.value = this.refs[ref].getValue();
+                    delete dataFieldDetail.name;
+                    break;
+                case 'eform_input_signature':
+                    dataFieldDetail.height = this.refs[ref].getHeight();
+                    break;
+            }
             if(Config.getPrefixField(type, 'textarea') > -1){
                 dataFieldDetail.rows = this.refs[ref].getRows();
             }
@@ -229,22 +253,23 @@ module.exports = React.createClass({
                     Config.getPrefixField(field.type, 'signature') === -1){
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
-                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
+                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(type === 'table'){
                     var tableFields = this.refs[fieldRef].getAllValue();
                     tableFields.map(function(tableField, index){
                         tableField.refRow = self.props.refTemp;
+                        tableField.moduleID = self.props.moduleID
                         results.push(tableField);
                     })
                 }else if(Config.getPrefixField(type, 'checkbox') > -1 || Config.getPrefixField(type, 'radio') > -1){
                     var isChecked = this.refs[fieldRef].isChecked();
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
-                    results.push({value: value, name: name, ref: fieldRef, type: type, checked: isChecked, refRow: this.props.refTemp});
+                    results.push({value: value, name: name, ref: fieldRef, type: type, checked: isChecked, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(Config.getPrefixField(type, 'date') > -1){
                     var value = this.refs[fieldRef].getText();
                     var name = this.refs[fieldRef].getName();
-                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
+                    results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(Config.getPrefixField(field.type, 'signature') > -1){
                     if(stringType !== 'print'){
                         var value = this.refs[fieldRef].getValue();
@@ -254,7 +279,7 @@ module.exports = React.createClass({
                     else{
                         var value = this.refs[fieldRef].getBase64Value();
                         var name = this.refs[fieldRef].getName();
-                        results.push({base64Data: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, value: ''});
+                        results.push({base64Data: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, value: '', moduleID: this.props.moduleID});
                     }
                 }else if(type === 'dynamic_table'){
                     var tableFields = this.refs[fieldRef].getAllValue();
@@ -272,6 +297,7 @@ module.exports = React.createClass({
                         series.refRow = this.props.refTemp;
                         series.base64Data = series.value;
                         series.value = '';
+                        series.moduleID = this.props.moduleID;
                         results.push(series);
                     }
                 }
@@ -421,6 +447,8 @@ module.exports = React.createClass({
                                                                 groupId={groupId}
                                                                 name={field.get('name')}
                                                                 size={field.get('size')}
+                                                                labelPrefix={field.get('labelPrefix')}
+                                                                labelSuffix={field.get('labelSuffix')}
                                                                 permission={this.props.permission}
                                                                 context={displayContextMenu}
                                                                 ref={field.get('ref')}
@@ -605,6 +633,8 @@ module.exports = React.createClass({
                                             groupId={groupId}
                                             name={field.get('name')}
                                             size={field.get('size')}
+                                            labelPrefix={field.get('labelPrefix')}
+                                            labelSuffix={field.get('labelSuffix')}
                                             permission={this.props.permission}
                                             context={displayContextMenu}
                                             ref={field.get('ref')}

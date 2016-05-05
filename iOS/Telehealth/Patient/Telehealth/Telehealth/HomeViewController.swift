@@ -377,6 +377,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             patientService.getInformationPatientByUUID(uuid){
                 message , data in
                 if message["message"] == "success" {
+                    print(data)
                     self.view.hideLoading()
                     self.patientInformation = data!
                     

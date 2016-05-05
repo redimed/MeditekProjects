@@ -202,74 +202,89 @@ module.exports = React.createClass({
     _onComponentSectionSaveFieldDetail: function(codeSection, codeRow, dataField) {
         if(Config.getPrefixField(dataField.type, 'eform_input') > -1){
             this.setState(function(prevState) {
-                if(Config.getPrefixField(dataField.type, 'textarea') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                switch (dataField.type) {
+                    case 'eform_input_textarea':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('rows', dataField.rows)
+                                    .set('preCal', dataField.preCal)
+                                    .set('ref', dataField.ref)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_check_checkbox':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('label', dataField.label)
+                                    .set('value', dataField.value)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_check_radio':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('label', dataField.label)
+                                    .set('ref', dataField.ref)
+                                    .set('value', dataField.value)
+                                    .set('preCal', dataField.preCal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_check_label':
+                    case 'eform_input_check_label_html':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('size', dataField.size)
+                                    .set('label', dataField.label)
+                                    .set('value', dataField.value)
+                                    .set('ref', dataField.ref)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                    case 'eform_input_signature':
+                        var sections = prevState.sections;
+                        sections = sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
                             val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('rows', dataField.rows)
-                            .set('preCal', dataField.preCal)
-                            .set('ref', dataField.ref)
-                            .set('roles', Immutable.fromJS(dataField.roles))
+                                .set('size', dataField.size)
+                                .set('ref', dataField.ref)
+                                .set('preCal', dataField.preCal)
+                                .set('height', dataField.height)
+                                .set('roles', Immutable.fromJS(dataField.roles))
                         )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'checkbox') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('label', dataField.label)
-                            .set('value', dataField.value)
-                            .set('ref', dataField.ref)
-                            .set('preCal', dataField.preCal)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'radio') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('label', dataField.label)
-                            .set('ref', dataField.ref)
-                            .set('value', dataField.value)
-                            .set('preCal', dataField.preCal)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'label') > -1){
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('size', dataField.size)
-                            .set('label', dataField.label)
-                            .set('value', dataField.value)
-                            .set('ref', dataField.ref)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
-                }else if(Config.getPrefixField(dataField.type, 'signature') > -1){
-                    var sections = prevState.sections;
-                    sections = sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('ref', dataField.ref)
-                            .set('preCal', dataField.preCal)
-                            .set('height', dataField.height)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                    )
-                    return {
-                        sections: sections
-                   }
-                }else{
-                    return {
-                        sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
-                            val.set('name', dataField.name)
-                            .set('size', dataField.size)
-                            .set('ref', dataField.ref)
-                            .set('preCal', dataField.preCal)
-                            .set('roles', Immutable.fromJS(dataField.roles))
-                        )
-                    }
+                        return {
+                            sections: sections
+                        }
+                    case 'eform_input_text':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('labelPrefix', dataField.labelPrefix)
+                                    .set('labelSuffix', dataField.labelSuffix)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+
+                            )
+                        }
+                    default:
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
                 }
             })
         }else if(dataField.type === 'table'){
@@ -487,6 +502,30 @@ module.exports = React.createClass({
         })
         swal("Success!", "Deleted", "success");
     },
+    _onComponentSectionChangeRef: function(codeSection, newRef){
+        var sections = this.state.sections.toJS();
+        var section = this.state.sections.get(codeSection).toJS();
+        if(section.ref === newRef)
+            return;
+        var self = this;
+        section.ref = newRef;
+        var splitSection = newRef.split('_');
+        section.rows.map(function(row, rowIndex){
+            var splitRow = row.ref.split('_');
+            section.rows[rowIndex].ref = splitRow[0]+'_'+splitSection[1]+'_'+splitRow[2];
+            row.fields.map(function(field, fieldIndex){
+                var splitField = field.ref.split('_');
+                section.rows[rowIndex].fields[fieldIndex].ref = splitField[0]+'_'+splitSection[1]+'_'+splitField[2]+'_'+splitField[3];
+            })
+        })
+        sections[codeSection] = section;
+        this.setState(function(prevState) {
+            return {
+                sections: Immutable.fromJS(sections)
+            }
+        })
+        swal("Success!", "Change Ref", "success");
+    },
     render: function(){
 	return (
 		<div className="page-content">
@@ -508,19 +547,20 @@ module.exports = React.createClass({
                                     	this.state.sections.map(function(section, index){
                         		      return <ComponentSection key={index}
                         			ref={section.get('ref')}
-                                                     refTemp={section.get('ref')}
+                                                    refTemp={section.get('ref')}
+                                                    moduleID={section.get('moduleID') | ''}
                         			key={index}
                         			code={index}
-                                                     type="section"
-                                                     page={section.get('page')}
-                                                     permission="eformDev"
-                                                     rows={section.get('rows')}
+                                                    type="section"
+                                                    page={section.get('page')}
+                                                    permission="eformDev"
+                                                    rows={section.get('rows')}
                         			name={section.get('name')}
                         			onUpdateSection={this._onComponentSectionUpdate}
                         			onRemoveSection={this._onComponentSectionRemove}
                         			onDragSection={this._onComponentSectionDrag}
-                                                     onCreateRow={this._onComponentSectionCreateRow}
-                                                     onRemoveRow={this._onComponentSectionRemoveRow}
+                                                    onCreateRow={this._onComponentSectionCreateRow}
+                                                    onRemoveRow={this._onComponentSectionRemoveRow}
                         			onSelectField={this._onComponentSectionSelectField}
                         			onDragField={this._onComponentSectionDragField}
                         			onRemoveField={this._onComponentSectionRemoveField}
@@ -530,13 +570,14 @@ module.exports = React.createClass({
                         			onCreateTableColumn={this._onComponentSectionCreateTableColumn}
                         			onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
                         			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
-                                                     onDragRow={this._onComponentSectionDragRow}
-                                                     onChangePage={this._onComponentSectionChangePage}
-                                                     onOrderSection={this._onComponentSectionOrderSection}
-                                                     onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
-                                                     onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
-                                                     onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
-                                                     onOrderRow={this._onComponentSectionOrderRow}/>
+                                                    onDragRow={this._onComponentSectionDragRow}
+                                                    onChangePage={this._onComponentSectionChangePage}
+                                                    onChangeRef={this._onComponentSectionChangeRef}
+                                                    onOrderSection={this._onComponentSectionOrderSection}
+                                                    onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
+                                                    onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
+                                                    onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
+                                                    onOrderRow={this._onComponentSectionOrderRow}/>
                                     	}, this)
                                 }
                                 <ComponentPageBar ref="pageBarBottom"

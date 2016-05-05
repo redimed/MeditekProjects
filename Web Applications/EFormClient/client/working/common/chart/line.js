@@ -2,79 +2,7 @@ var InputAxisX = require('modules/eform/eformTemplateDetail/chart/inputAxisX');
 
 module.exports = React.createClass({
     image: null,
-    _theme: function(){
-        /**
-         * Grid-light theme for Highcharts JS
-         * @author Torstein Honsi
-         */
-
-        // Load the fonts
-        Highcharts.createElement('link', {
-           href: 'https://fonts.googleapis.com/css?family=Dosis:400,600',
-           rel: 'stylesheet',
-           type: 'text/css'
-        }, null, document.getElementsByTagName('head')[0]);
-
-        Highcharts.theme = {
-           colors: ["#7cb5ec", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
-              "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
-           chart: {
-              backgroundColor: null,
-           },
-           title: {
-              style: {
-                 fontSize: '16px',
-                 fontWeight: 'bold',
-                 textTransform: 'uppercase'
-              }
-           },
-           tooltip: {
-              borderWidth: 0,
-              backgroundColor: 'rgba(219,219,216,0.8)',
-              shadow: false
-           },
-           legend: {
-              itemStyle: {
-                 fontWeight: 'bold',
-                 fontSize: '13px'
-              }
-           },
-           xAxis: {
-              gridLineWidth: 1,
-              labels: {
-                 style: {
-                    fontSize: '12px'
-                 }
-              }
-           },
-           yAxis: {
-              minorTickInterval: 'auto',
-              title: {
-                 style: {
-                    textTransform: 'uppercase'
-                 }
-              },
-              labels: {
-                 style: {
-                    fontSize: '12px'
-                 }
-              }
-           },
-           plotOptions: {
-              candlestick: {
-                 lineColor: '#404048'
-              }
-           },
-
-
-           // General
-           background2: '#F0F0EA'
-
-        };
-
-        // Apply the theme
-        Highcharts.setOptions(Highcharts.theme);
-    },
+    image_header: null,
     componentDidMount: function(){
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
@@ -88,23 +16,39 @@ module.exports = React.createClass({
                 }.bind(this)
             })
         }
+        var series = this.props.series.toJS();
+        series[1].color = 'blue';
+        series[0].color = 'red';
         $(this.refs.line_chart).highcharts({
-            title: {
-                text: this.props.title,
-                x: -20
+            chart: {
+                height: 700,
+                width: 1200,
+                backgroundColor: '#FFFFFF',
+                marginTop: 90
             },
-            subtitle: {
-                text: this.props.subtitle,
-                x: -20
+            title: {
+                text: ''
             },
             xAxis: {
-                categories: this.props.axisX.toJS().categories
+                categories: this.props.axisX.toJS().categories,
+                tickmarkPlacement: 'on',
+                type: 'datetime',
+                labels: {
+                  y: -600,
+                  x: -10,
+                  align: 'left'
+                },
+                gridLineWidth: 1
             },
             yAxis: {
                 title: {
-                    text: 'Temperature'
+                    text: 'Hearing Level in Decibels (dB)'
                 },
                 reversed: true,
+                max: 120,
+                min: -10,
+                minRange: 5,
+                tickInterval: 10,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -120,28 +64,34 @@ module.exports = React.createClass({
                 verticalAlign: 'bottom',
                 borderWidth: 0
             },
-            series: this.props.series.toJS()
+            series: series
         })
-        this._theme()
-        var self = this;
         if(this.props.permission !== 'eformDev'){
             this.refs.inputAxisX.init(this.props.axisX.toJS(), this.props.series.toJS());
-            setInterval(function(){
-                var value = null;
-                var chart = $(self.refs.line_chart).highcharts();
-                var svg = chart.getSVG();
-                var image = new Image;
-                var canvas = document.createElement('canvas');
-                canvas.width = chart.chartWidth;
-                canvas.height = chart.chartHeight;
-                image.onload = function(){
-                    canvas.getContext('2d').drawImage(this, 0, 0, chart.chartWidth, chart.chartHeight);
-                    self.image = canvas.toDataURL();
-                    self.image = self.image.replace('data:image/png;base64,','');
-                }
-                image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
-            }, 2000)
+            this._onUpdateBase64();
         }
+    },
+    _onUpdateBase64: function(){
+        var self = this;
+        var value = null;
+        var chart = $(self.refs.line_chart).highcharts();
+        var svg = chart.getSVG();
+        var image = new Image;
+        var canvas = document.createElement('canvas');
+        canvas.width = chart.chartWidth;
+        canvas.height = chart.chartHeight;
+        image.onload = function(){
+            canvas.getContext('2d').drawImage(this, 0, 0, chart.chartWidth, chart.chartHeight);
+            self.image = canvas.toDataURL();
+            self.image = self.image.replace('data:image/png;base64,','');
+        }
+        image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+        html2canvas($(self.refs.header), {
+            onrendered: function(canvas){
+                self.image_header = canvas.toDataURL();
+                self.image_header = self.image.replace('data:image/png;base64,','');
+            }
+        })
     },
     getName: function(){
         return this.props.name;
@@ -174,6 +124,7 @@ module.exports = React.createClass({
         }, false);
     },
     _clickUpdateChart: function(){
+        this._onUpdateBase64();
         var chart = $(this.refs.line_chart).highcharts();
         chart.redraw();
     },
@@ -189,7 +140,8 @@ module.exports = React.createClass({
         var name = this.props.name;
         var ref = this.props.refTemp;
         var value = this.image;
-        return {value: value, type: type, ref: ref, name: name};
+        var value_header = this.image_header;
+        return {value: value, type: type, ref: ref, name: name, base64DataHeader: value_header};
     },
     setValue: function(field, chartType){
         var chart = $(this.refs.line_chart).highcharts();
@@ -216,8 +168,13 @@ module.exports = React.createClass({
                 <div className={"col-xs-"+this.props.size} ref="group">
                     <div className="form-group" id={this.props.groupId}>
                         <div className="col-xs-12">
-                            <InputAxisX ref="inputAxisX" onChangeInput={this._onChangeInput}
-                                clickUpdateChart={this._clickUpdateChart}/>
+                            <div ref="header">
+                                <InputAxisX ref="inputAxisX" onChangeInput={this._onChangeInput}
+                                    clickUpdateChart={this._clickUpdateChart}/>
+                                <div style={{clear: 'both'}}/>
+                                <center><h2>{this.props.title}</h2></center>
+                                <center>{this.props.subtitle}</center>
+                            </div>
                             <div ref="line_chart"/>
                         </div>
                     </div>

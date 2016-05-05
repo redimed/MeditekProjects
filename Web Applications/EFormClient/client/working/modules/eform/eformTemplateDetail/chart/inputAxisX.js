@@ -43,10 +43,11 @@ module.exports = React.createClass({
     render: function(){
         return (
             <div style={{float: 'right'}}>
+                <center><h3>Hearing Level dB (decibels)</h3></center>
                 <table className="table-bordered table-condensed table">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Frequency (Hz)</th>
                             {
                                 this.axisX.categories.map(function(x, index){
                                     return <th key={index}>{x}</th>
@@ -59,7 +60,7 @@ module.exports = React.createClass({
                             this.series.map(function(serie, index){
                                 return (
                                     <tr key={index}>
-                                        <td>{serie.name}</td>
+                                        <td><b>{serie.name} (db)</b></td>
                                         {
                                             serie.data.map(function(input, inputIndex){
                                                 return (

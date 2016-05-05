@@ -89,7 +89,7 @@ module.exports = React.createClass({
         html2canvas($(self.refs.header), {
             onrendered: function(canvas){
                 self.image_header = canvas.toDataURL();
-                self.image_header = self.image.replace('data:image/png;base64,','');
+                self.image_header = self.image_header.replace('data:image/png;base64,','');
             }
         })
     },
@@ -168,10 +168,11 @@ module.exports = React.createClass({
                 <div className={"col-xs-"+this.props.size} ref="group">
                     <div className="form-group" id={this.props.groupId}>
                         <div className="col-xs-12">
+                            <button className="btn btn-primary btn-small" onClick={this._clickUpdateChart}>
+                                Update Chart
+                            </button>
                             <div ref="header">
-                                <InputAxisX ref="inputAxisX" onChangeInput={this._onChangeInput}
-                                    clickUpdateChart={this._clickUpdateChart}/>
-                                <div style={{clear: 'both'}}/>
+                                <InputAxisX ref="inputAxisX" onChangeInput={this._onChangeInput}/>
                                 <center><h2>{this.props.title}</h2></center>
                                 <center>{this.props.subtitle}</center>
                             </div>

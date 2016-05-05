@@ -291,8 +291,6 @@ module.exports = React.createClass({
             templateUID: self.templateUID
         }
 
-        console.log(data);
-
         EFormService.createPDFForm(data)
         .then(function(response){
             var fileName = 'report_'+moment().format('X');

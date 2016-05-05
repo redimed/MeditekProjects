@@ -128,11 +128,24 @@ module.exports = React.createClass({
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <div className="input-group">
-                                    <span className="input-group-addon" style={labelStyle}>{this.props.labelPrefix}</span>
-                                    <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
-                                    <span className="input-group-addon" style={labelStyle}>{this.props.labelSuffix}</span>
-                                </div>
+                                {
+                                    this.props.labelPrefix || this.props.labelSuffix?
+                                    <div className="input-group">
+                                        {this.props.labelPrefix?
+                                            <span className="input-group-addon" style={labelStyle}>{this.props.labelPrefix}</span>
+                                            :null
+                                        }
+
+                                        <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
+                                        {this.props.labelSuffix?
+                                            <span className="input-group-addon" style={labelStyle}>{this.props.labelSuffix}</span>
+                                            :null
+                                        }
+
+                                    </div>
+                                    :<input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
+                                }
+
                             </div>
                         </div>
                     </div>

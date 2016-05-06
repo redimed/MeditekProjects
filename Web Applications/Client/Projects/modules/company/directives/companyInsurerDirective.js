@@ -36,6 +36,9 @@ app.directive('companyInsurer', function($uibModal, $timeout, $state, companySer
 
 	        scope.loadList = function(info){
 				companyService.getlistFund(info).then(function(response){
+					for(var i = 0; i < response.data.length; i++) {
+						response.data[i].stt = scope.searchObjectMap.offset*1 + i +1;
+					}
 					scope.data = response.data;
 					scope.count= response.count;
 				});
@@ -57,7 +60,7 @@ app.directive('companyInsurer', function($uibModal, $timeout, $state, companySer
 					$('#'+uid).addClass('choose');
 				}
 			};
-			
+
 
 
 			scope.whereClauses.FundID = scope.uid.ID;
@@ -91,7 +94,7 @@ app.directive('companyInsurer', function($uibModal, $timeout, $state, companySer
 							// scope.cancel();
 							// scope.loadagain();
 						});
-						
+
 					}
 				}
 				else if(scope.type == 'delete') {
@@ -100,8 +103,8 @@ app.directive('companyInsurer', function($uibModal, $timeout, $state, companySer
 					console.log("where ?????");
 					console.log(scope.whereClauses);
 					companyService.changestatus({
-						whereClauses:scope.whereClauses, 
-						info:scope.postData, 
+						whereClauses:scope.whereClauses,
+						info:scope.postData,
 						model:'RelFundCompany'
 					})
 					.then(function(response) {

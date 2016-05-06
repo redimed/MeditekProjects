@@ -20,8 +20,19 @@ public class FormDataModel {
     String refChild;
     String refRow;
     String base64Data;
+    String moduleID;
     int columns;
     int rows;
+    int pageID;
+
+    public String getModuleID() {
+        return (moduleID==null)?"":moduleID;
+    }
+
+    public void setModuleID(String moduleID) {
+        this.moduleID = (moduleID==null)?"":moduleID;
+    }
+    
     
     public String getBase64Data() {
         return (base64Data==null)?"":base64Data;

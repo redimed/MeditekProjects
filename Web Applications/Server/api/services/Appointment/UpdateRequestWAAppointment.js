@@ -57,7 +57,20 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(appointmentUpdated) {
-                        if (HelperService.CheckExistData(data.Doctors) &&
+                        //Tan copy from UpdateRequestWAAppointmentCompany
+                        if (!_.isEmpty(data.Doctors) &&
+                            _.isArray(data.Doctors) &&
+                            !_.isEmpty(appointmentObject)) {
+                            var objRelApptDoctor = {
+                                where: data.Doctors,
+                                appointmentObject: appointmentObject,
+                                transaction: t
+                            };
+                            return Services.RelAppointmentDoctor(objRelApptDoctor);
+                        }
+
+                        //Tan comment
+                        /*if (HelperService.CheckExistData(data.Doctors) &&
                             HelperService.CheckExistData(data.Doctors[0]) &&
                             HelperService.CheckExistData(appointmentObject)) {
                             var objectRelDoctorAppointment = {
@@ -67,14 +80,14 @@ module.exports = function(data, userInfo) {
                             };
                             //update relDoctorAppointment
                             return Services.RelDoctorAppointment(objectRelDoctorAppointment);
-                        }
+                        }*/
                     }, function(err) {
                         defer.reject({
                             transaction: t,
                             error: err
                         });
                     })
-                    .then(function(relAppointmentDoctorUpdated) {
+                    .then(function(relApptDoctorCreated) {
                         if (!_.isEmpty(data.DoctorGroups) &&
                             !_.isEmpty(appointmentObject)) {
                             var objectRelAppointmentDoctorGroup = {

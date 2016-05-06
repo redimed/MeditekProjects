@@ -971,6 +971,7 @@ module.exports = {
 			};
 			attributes.push("UID");
 			attributes.push("Enable");
+			attributes.push("DepartmentID");
 		}
 		else{
 			attributes = defaultAtrributes;
@@ -1001,7 +1002,7 @@ module.exports = {
 					model: Role,
 				    attributes: ['RoleName','RoleCode'],
 				    where:{
-				       	$or: whereClause.Role
+				       	$or: check.sqlParam(whereClause.Role)
 				   	},
 				    required: true,
 				}
@@ -1035,11 +1036,16 @@ module.exports = {
 		       		model: UserAccount,
 		      		attributes: ['PhoneNumber','Enable', 'UID'],
 			  		where:{
-			   			$or: whereClause.UserAccount,
+			   			$or: check.sqlParam(whereClause.UserAccount),
 			   			Enable:'Y'
 			   		},
 			   		required: true,
 		    	},
+				{
+					model: Department,
+					attributes:['ID', 'UID', 'SiteID', 'DepartmentCode', 'DepartmentName'],
+					required: false
+				}
 			],
 			attributes : attributes,
 			limit      : data.limit,
@@ -1049,7 +1055,7 @@ module.exports = {
 			where: {
 				Enable:'Y',
 				$and: [
-					whereClause.Doctor,
+					check.sqlParam(whereClause.Doctor),
 					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
 		    	   	like: '%'+FirstName+' '+LastName+'%'}):null,
 		    	   	FullName?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {

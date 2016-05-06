@@ -19,7 +19,7 @@ public class DynamicFormModuleDefinitionModel {
     public Hashtable getModulesDef() {
         if(this.modulesDef==null) {
             this.modulesDef = new Hashtable();
-            this.modulesDef.put("19", new FormModuleModel("Functional Assessment Header", "FunctionalAssessment_Header", true, false));
+            this.modulesDef.put("3", new FormModuleModel("Functional Assessment Header", "FunctionalAssessment_Header", true, false));
             this.modulesDef.put("ModuleUID_2", new FormModuleModel("Functional Assessment Footer", "FunctionalAssessment_Footer", false, true));
             this.modulesDef.put("6", new FormModuleModel("Functional Assessment Participate Ability", "FunctionalAssessment_ParticipateAbility", false, false));
             this.modulesDef.put("5", new FormModuleModel("Functional Assessment - Range Of Motion Assessment", "FunctionalAssessment_RangeOfMotionAssessment", false, false));

@@ -201,9 +201,13 @@ public class PrintingProcess {
             subparam.setName("data");
             expression = new JRDesignExpression();
             expression.setText("$P{data}.get(\""+moduleUID+"\")");
-            
             subparam.setExpression(expression);
-            
+            sub.addParameter(subparam);
+            subparam = new JRDesignSubreportParameter();
+            subparam.setName("real_path");
+            expression = new JRDesignExpression();
+            expression.setText("$P{data}.get(\"real_path\")");
+            subparam.setExpression(expression);
             sub.addParameter(subparam);
             expression = new JRDesignExpression();
             expression.setText("new net.sf.jasperreports.engine.JREmptyDataSource()");
@@ -239,7 +243,9 @@ public class PrintingProcess {
         
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
         HashMap params = new HashMap();
+        String realPath = "com/meditek/dynamicjaspertemplate/";
         params.put("data", parsedData);
+        params.put("real_path", realPath);
         System.out.println("this is parsed data: " + parsedData.toString());
         JasperPrint print = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

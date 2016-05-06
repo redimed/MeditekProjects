@@ -9,6 +9,7 @@ import com.lowagie.text.Image;
 import com.meditek.jasper.model.FormDataModel;
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -154,6 +155,57 @@ public class DataProcess {
                     }
                 }
                 else parsedData.put(d.getName().toLowerCase(), d.getValue());
+            }
+        }
+        return parsedData;
+    }
+    
+    public Hashtable dynamicJasperDataParse(List<FormDataModel> data, String baseUrl) throws Exception{
+        Hashtable parsedData= new Hashtable();
+        //init params
+        List<String> tableRefs = new ArrayList<String>();
+        List<FormDataModel> tableIdentity = new ArrayList<FormDataModel>();
+        // find all table in data and put all the ref into tableRefs list
+        for(FormDataModel d : data){
+            if (d.getType().equals("table")){
+                tableRefs.add(d.getRef());
+                tableIdentity.add(d);
+            }
+        }
+        //add tables populate here later if needed
+        //HERE!
+        //add tables populate here later if needed
+        //populate remaining data (non-table)
+        Object dataObj=null;
+        for (FormDataModel d : data){
+            //Get data object
+            if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
+                if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("_image") || d.getType().equals("eform_input_signature")){
+                    try{
+                        
+                        BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
+                        dataObj=image;
+                    }
+                    catch(Exception e){
+                    }
+                }
+                else if(d.getType().equals("eform_input_check_radio")) {
+                    if(d.getChecked()==Boolean.TRUE){
+                        System.out.println("run true");
+                        dataObj=d.getValue();
+                    }
+                    else{
+                        System.out.println("run false");
+                    }
+                }
+                else dataObj=d.getValue();
+            }
+            if(parsedData.get(d.getModuleID())==null){
+                parsedData.put(d.getModuleID(), new Hashtable());
+            }
+            if(dataObj!=null){
+                System.out.println("crash here: " + d.getName());
+                ((Hashtable)parsedData.get(d.getModuleID())).put(d.getName().toLowerCase(),dataObj);
             }
         }
         return parsedData;

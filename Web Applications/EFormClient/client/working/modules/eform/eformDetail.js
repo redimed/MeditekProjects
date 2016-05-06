@@ -344,19 +344,24 @@ module.exports = React.createClass({
                     <div className="col-md-9">
                         {
                             this.state.sections.map(function(section, index){
-                                return <ComponentSection key={index}
-                                    ref={section.get('ref')}
-                                    refTemp={section.get('ref')}
-                                    moduleID={section.get('moduleID') | ''}
-                                    key={index}
-                                    code={index}
-                                    type="section"
-                                    permission="normal"
-                                    onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
-                                    onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
-                                    onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
-                                    rows={section.get('rows')}
-                                    name={section.get('name')}/>
+                                var viewType = section.get('viewType');
+                                if(viewType !== 'hide')
+                                    return <ComponentSection key={index}
+                                        ref={section.get('ref')}
+                                        refTemp={section.get('ref')}
+                                        viewType={section.get('viewType')}
+                                        moduleID={section.get('moduleID') | ''}
+                                        key={index}
+                                        code={index}
+                                        type="section"
+                                        permission="normal"
+                                        onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
+                                        onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
+                                        onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
+                                        rows={section.get('rows')}
+                                        name={section.get('name')}/>
+                                else
+                                    return null;
                             }, this)
                         }
                     </div>

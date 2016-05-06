@@ -1,5 +1,6 @@
 var CommonModal = require('common/modal');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
+var ComponentFormUpdateViewType = require('modules/eform/eformTemplateDetail/formUpdateViewType');
 var ComponentRow = require('modules/eform/eformTemplateDetail/row');
 var CommonInput = require('common/inputText');
 
@@ -160,6 +161,11 @@ module.exports = React.createClass({
         this.refs.modalUpdateSection.hide();
         this.props.onUpdateSection(this.props.code, name);
     },
+    _onSaveUpdateViewType: function(){
+        var viewType = this.refs.formUpdateViewType.getViewType();
+        this.refs.modalUpdateViewType.hide();
+        this.props.onUpdateViewType(this.props.code, viewType);
+    },
     _onOrderSection: function(){
         this.refs.modalOrderSection.show();
     },
@@ -170,6 +176,9 @@ module.exports = React.createClass({
     },
     _onSelectField: function(codeSection, codeRow, refRow, type){
         this.props.onSelectField(codeSection, codeRow, this.props.refTemp, refRow, type);
+    },
+    _onUpdateViewType: function(){
+        this.refs.modalUpdateViewType.show();
     },
     setValue: function(refRow, fieldRef, value){
         if(typeof this.refs[refRow] !== 'undefined')
@@ -223,6 +232,18 @@ module.exports = React.createClass({
                         <div className="modal-footer">
                             <button type="button" onClick={function(){this.refs.modalUpdateSection.hide()}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateSection}>Save</button>
+                        </div>
+                    </CommonModal>
+                    <CommonModal ref="modalUpdateViewType">
+                        <div className="header">
+                            <h4>Update View Type</h4>
+                        </div>
+                        <div className="content">
+                            <ComponentFormUpdateViewType ref="formUpdateViewType" viewType={this.props.viewType}/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){this.refs.modalUpdateViewType.hide()}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateViewType}>Save</button>
                         </div>
                     </CommonModal>
                     <CommonModal ref="modalOrderSection">
@@ -287,6 +308,11 @@ module.exports = React.createClass({
                                                 <li>
                                                     <a onClick={this._onUpdateSection}>
                                                         <i className="fa fa-pencil"></i> Update Section
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a onClick={this._onUpdateViewType}>
+                                                        <i className="fa fa-pencil"></i>Change View Type
                                                     </a>
                                                 </li>
                                                 <li>

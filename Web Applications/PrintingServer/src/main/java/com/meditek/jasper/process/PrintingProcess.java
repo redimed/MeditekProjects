@@ -210,7 +210,7 @@ public class PrintingProcess {
             subparam = new JRDesignSubreportParameter();
             subparam.setName("real_path");
             expression = new JRDesignExpression();
-            expression.setText("$P{data}.get(\"real_path\")");
+            expression.setText("$P{real_path}");
             subparam.setExpression(expression);
             sub.addParameter(subparam);
             expression = new JRDesignExpression();

@@ -94,9 +94,21 @@ module.exports = React.createClass({
                 </div>
             )
         }
-        var labelStyle = {
+        var labelPrefixStyle = {
             border: 'none',
-            color: '#666'
+            color: '#666',
+            paddingLeft: '1px',
+            paddingRight:'5px'
+        }
+        var labelSuffixStyle = {
+            border: 'none',
+            color: '#666',
+            paddingLeft: '5px',
+            paddingRight:'1px'
+        }
+        var inputStyle = {
+            paddingLeft: '1px',
+            paddingRight:'1px'
         }
         switch(type){
             case 'default':
@@ -132,18 +144,18 @@ module.exports = React.createClass({
                                     this.props.labelPrefix || this.props.labelSuffix?
                                     <div className="input-group">
                                         {this.props.labelPrefix?
-                                            <span className="input-group-addon" style={labelStyle}>{this.props.labelPrefix}</span>
+                                            <span className="input-group-addon" style={labelPrefixStyle}>{this.props.labelPrefix}</span>
                                             :null
                                         }
 
-                                        <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
+                                        <input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder}/>
                                         {this.props.labelSuffix?
-                                            <span className="input-group-addon" style={labelStyle}>{this.props.labelSuffix}</span>
+                                            <span className="input-group-addon" style={labelSuffixStyle}>{this.props.labelSuffix}</span>
                                             :null
                                         }
 
                                     </div>
-                                    :<input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}/>
+                                    :<input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder}/>
                                 }
 
                             </div>

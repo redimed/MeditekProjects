@@ -145,10 +145,12 @@ module.exports = React.createClass({
     },
     setValue: function(field, chartType){
         var chart = $(this.refs.line_chart).highcharts();
+        var self = this;
         field.series.map(function(serie, index){
             chart.series[index].update({
                 data: serie.data
-            }, true);     
+            }, true);
+            self._onUpdateBase64();
         })
         this.refs.inputAxisX.setSeries(field);
     },

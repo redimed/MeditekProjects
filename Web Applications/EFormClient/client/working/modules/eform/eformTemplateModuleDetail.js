@@ -57,6 +57,14 @@ module.exports = React.createClass({
         })
         swal("Updated!", "Your section " + name + " has been updated.", "success")
     },
+    _onComponentSectionUpdateViewType: function(code, viewType){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([code, 'viewType'], val => viewType)
+            }
+        })
+        swal("Updated!", "Your section " + name + " has been updated.", "success")
+    },
     _onComponentSectionRemove: function(code) {
         this.setState(function(prevState) {
             return {
@@ -543,11 +551,13 @@ module.exports = React.createClass({
                                                     key={index}
                                                     code={index}
                                                     type="section"
+                                                    viewType={section.get('viewType')}
                                                     page={section.get('page')}
                                                     permission="eformDev"
                                                     rows={section.get('rows')}
                                                     name={section.get('name')}
                                                     onUpdateSection={this._onComponentSectionUpdate}
+                                                    onUpdateViewType={this._onComponentSectionUpdateViewType}
                                                     onRemoveSection={this._onComponentSectionRemove}
                                                     onDragSection={this._onComponentSectionDrag}
                                                     onCreateRow={this._onComponentSectionCreateRow}

@@ -526,6 +526,15 @@ module.exports = React.createClass({
         })
         swal("Success!", "Change Ref", "success");
     },
+    _onComponentSectionUpdateViewType: function(code, viewType){
+        console.log(viewType);
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([code, 'viewType'], val => viewType)
+            }
+        })
+        swal("Updated!", "Your section " + name + " has been updated.", "success")
+    },
     render: function(){
 	return (
 		<div className="page-content">
@@ -548,6 +557,7 @@ module.exports = React.createClass({
                         		      return <ComponentSection key={index}
                         			ref={section.get('ref')}
                                                     refTemp={section.get('ref')}
+                                                    viewType={section.get('viewType')}
                                                     moduleID={section.get('moduleID') | ''}
                         			key={index}
                         			code={index}
@@ -557,6 +567,7 @@ module.exports = React.createClass({
                                                     rows={section.get('rows')}
                         			name={section.get('name')}
                         			onUpdateSection={this._onComponentSectionUpdate}
+                                                    onUpdateViewType={this._onComponentSectionUpdateViewType}
                         			onRemoveSection={this._onComponentSectionRemove}
                         			onDragSection={this._onComponentSectionDrag}
                                                     onCreateRow={this._onComponentSectionCreateRow}

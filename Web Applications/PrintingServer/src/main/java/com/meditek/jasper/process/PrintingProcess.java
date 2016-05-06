@@ -239,7 +239,9 @@ public class PrintingProcess {
         
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
         HashMap params = new HashMap();
+        String realPath = "com/meditek/dynamicjaspertemplate/";
         params.put("data", parsedData);
+        params.put("real_path", realPath);
         System.out.println("this is parsed data: " + parsedData.toString());
         JasperPrint print = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

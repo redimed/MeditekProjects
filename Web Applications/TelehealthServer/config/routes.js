@@ -126,5 +126,9 @@ module.exports.routes = {
     'GET /api/testPushGCM': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'TestPushGCM'
+    },
+    'GET /api/testGCM/:device': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'TestGCM'
     }
 };

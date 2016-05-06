@@ -46,4 +46,16 @@ public interface UrgentRequest {
     @POST("/api/telehealth/appointment/request")
     void sendAppointment(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
+    @POST("/api/appointment-wa-request/patient-new")
+    void sendAppointmentNew(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/sendCoreServer")
+    void sendCoreServer(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/user")
+    void getTelehealthUser(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/user/forgetPin")
+    void forgetPin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
 }

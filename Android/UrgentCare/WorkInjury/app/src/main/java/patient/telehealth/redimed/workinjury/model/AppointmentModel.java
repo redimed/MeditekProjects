@@ -1,5 +1,7 @@
 package patient.telehealth.redimed.workinjury.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by phanq on 04/15/2016.
  */
@@ -10,6 +12,7 @@ public class AppointmentModel {
     private String AppointmentData;
     private String RequestDate;
     private String FileUploads;
+    private String Patients;
 
     public String getRequestDate() {
         return RequestDate;
@@ -49,6 +52,14 @@ public class AppointmentModel {
 
     public void setPatientAppointment(String patientAppointment) {
         PatientAppointment = patientAppointment;
+    }
+
+    public String getPatients() {
+        return Patients;
+    }
+
+    public void setPatients(String patients) {
+        Patients = patients;
     }
 
     public String getAppointmentData() {

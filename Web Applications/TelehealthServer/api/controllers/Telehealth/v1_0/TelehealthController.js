@@ -724,6 +724,44 @@ module.exports = {
             });
         })
     },
+    TestGCM: function(req, res) {
+        var params = req.params.all();
+        if (!params.device) {
+            var err = new Error("Telehealth.TestGCM.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        var device = params.device;
+        var tokens = [];
+        if (device) {
+            tokens.push(device);
+            var opts = {
+                collapseKey: 'demo',
+                priority: 'high',
+                contentAvailable: true,
+                delayWhileIdle: true,
+                timeToLive: 3,
+                dryRun: false,
+                data: {
+                    key1: 'message1',
+                    key2: 'message2'
+                },
+                notification: {
+                    title: "Redimed",
+                    icon: "ic_launcher",
+                    body: "Test Push Notification",
+                    sound: "default"
+                }
+            };
+            TelehealthService.SendGCMWorkInjuryPush(opts, tokens).then(function(result) {
+                res.ok(result);
+            }).catch(function(err) {
+                return res.serverError(ErrorWrap(err));
+            })
+        } else return res.ok({
+            msg: 'No Device Found!'
+        });
+    },
     CheckActivation: function(req, res) {
         console.log("Activation", JSON.stringify(req.body));
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
@@ -888,48 +926,45 @@ module.exports = {
                         }
                     }).then(function(teleUser) {
                         if (teleUser) {
-                            TelehealthDevice.findAll({
+                            return TelehealthDevice.findAll({
                                 where: {
                                     TelehealthUserID: teleUser.ID
                                 }
                             }).then(function(devices) {
-                                var androidMess = {
-                                    collapseKey: 'REDiMED',
+                                var opts = {
+                                    collapseKey: 'demo',
                                     priority: 'high',
                                     contentAvailable: true,
                                     delayWhileIdle: true,
                                     timeToLive: 3,
+                                    dryRun: false,
                                     data: {
-                                        "apiKey": "AIzaSyAg1tnh5akORy2ZhgJR2qZByHjS3F4G4fw",
-                                        "message": "PIN :11111111",
+                                        message: "Pinumber is "+user.PinNumber
                                     },
                                     notification: {
-                                        title: "REDiMED",
+                                        title: "Redimed",
                                         icon: "ic_launcher",
-                                        body: 'Notification From REDiMED'
+                                        body: "Push Notification From REDiMED",
+                                        sound: "default"
                                     }
                                 };
-                                var iosDevices = [];
-                                var androidDevices = [];
+                                var tokens = [];
                                 if (devices) {
                                     for (var i = 0; i < devices.length; i++) {
-                                        if (devices[i].Type == 'IOS' && devices[i].DeviceToken != null) {
-                                            iosDevices.push(devices[i].DeviceToken);
-                                        }
-                                        if (devices[i].Type == 'ARD' && devices[i].DeviceToken != null) {
-                                            androidDevices.push(devices[i].DeviceToken);
+                                        if (devices[i].DeviceToken != null) {
+                                            tokens.push(devices[i].DeviceToken);
                                         }
                                     }
-                                    if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
-                                    if (androidDevices.length > 0) {
-                                        TelehealthService.SendGCMPush(androidMess, androidDevices).then(function(result) {
-                                            console.log(result);
+                                    if (tokens.length > 0) {
+                                        return TelehealthService.SendGCMWorkInjuryPush(opts, tokens).then(function(result) {
+                                            console.log("push success");
+                                            res.ok(result);
                                         }).catch(function(err) {
-                                            console.log(err);
+                                            res.serverError(ErrorWrap(err));
                                         })
                                     }
                                     return res.ok({
-                                        status: 'success'
+                                        status: 'Devices Not Found'
                                     });
                                 } else {
                                     var err = new Error("Telehealth.PushNotification.Error");

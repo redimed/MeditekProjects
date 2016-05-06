@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private UrgentRequest urgentRequestApi;
     private static SharedPreferences workinjury;
     private boolean isAuthenticated;
+    private boolean isTypeCompany;
     private String UserUid;
 
     @Bind(R.id.slider) ViewPager slider;
@@ -63,8 +64,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         TypefaceUtil.applyFont(this, findViewById(R.id.activityHome), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
         workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
-        isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
-        if (isAuthenticated){
+        isTypeCompany = workinjury.getBoolean("isTypeCompany", false);
+        if (isTypeCompany){
             btnLogin.setVisibility(View.GONE);
             UserUid = workinjury.getString("useruid","");
             RESTClient.getCoreApi().getDetailCompany(UserUid, new Callback<JsonObject>() {

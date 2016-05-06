@@ -74,6 +74,7 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     private SweetAlertDialog dialog;
     private SharedPreferences workinjury;
     private boolean isAuthenticated;
+    private boolean isTypeCompany;
     private String apptType;
 
     @Bind(R.id.txtFirstName) EditText txtFirstName;
@@ -111,8 +112,9 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
         isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
-        txtCompanyName.setText(workinjury.getString("companyName",""));
-        if (!isAuthenticated){
+        isTypeCompany = workinjury.getBoolean("isTypeCompany", false);
+        if (!isTypeCompany){
+            txtCompanyName.setText(workinjury.getString("companyName",""));
             btnSelectStaff.setVisibility(View.GONE);
             btnSelectSite.setVisibility(View.GONE);
         }
@@ -263,7 +265,11 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
                 arrEditText.add(txtContactPhone);
                 arrEditText.add(txtCompanyName);
                 arrEditText.add(txtContactPerson);
-                MakeAppointment(arrEditText);
+                if (isAuthenticated){
+
+                }else {
+                    MakeAppointment(arrEditText);
+                }
                 break;
             case R.id.btnBack:
                 onBackPressed();
@@ -318,6 +324,7 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         dataModels.add(setAppointmentData("companyPhoneNumber", txtCompanyPhone.getText().toString()));
         dataModels.add(setAppointmentData("contactPerson", txtContactPerson.getText().toString()));
 
+
         /*rehab*/
         if (urgentType.equalsIgnoreCase("rehab")){
             dataModels.add(setAppointmentData("rehab", "Y"));
@@ -364,14 +371,14 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         /*AppointmentModel*/
         AppointmentModel appointmentModel = new AppointmentModel();
         appointmentModel.setType(apptType);
-        appointmentModel.setDescription(txtDescription.getText().toString());
         appointmentModel.setPatientAppointment(gson.toJson(patientAppointmentModel));
         appointmentModel.setFileUploads("[]");
         appointmentModel.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
+        appointmentModel.setDescription(txtDescription.getText().toString());
         appointmentModel.setAppointmentData(gson.toJson(dataModels));
 
         JsonObject appt = new JsonObject();
-        appt.addProperty("data", gson.toJson(appointmentModel));
+        appt.addProperty("data",gson.toJson(appointmentModel));
         dialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         dialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         dialog.setTitleText(getResources().getString(R.string.progressMakeAppointmentContent));

@@ -183,6 +183,10 @@ public class PrintingProcess {
          parameter.setName("data");
          parameter.setValueClass(Hashtable.class);
          jasperDesign.addParameter(parameter);
+         parameter = new JRDesignParameter();
+         parameter.setName("real_path");
+         parameter.setValueClass(String.class);
+         jasperDesign.addParameter(parameter);
 
          //Add sub reports
         for(String moduleUID:moduleUIDList){

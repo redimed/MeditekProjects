@@ -87,9 +87,13 @@ public class JasperReportController {
                 String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
                 baos = pdfPrinting.iTextPrinting(requestData.getData(), requestData.getTemplateUID(), baseUrl);
             }
-            else{
+            else if(requestData.getPrintMethod().equals("jasper")){
                 String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
                 baos = pdfPrinting.jasperPrinting(requestData.getData(), requestData.getTemplateUID(), baseUrl);
+            }
+            else{
+                String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
+                baos = pdfPrinting.dynamicJasperPrinting(requestData.getData(), baseUrl);
             }
             //Return the filled pdf file.
             res.setContentType("application/pdf");

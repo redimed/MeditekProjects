@@ -201,9 +201,13 @@ public class PrintingProcess {
             subparam.setName("data");
             expression = new JRDesignExpression();
             expression.setText("$P{data}.get(\""+moduleUID+"\")");
-            
             subparam.setExpression(expression);
-            
+            sub.addParameter(subparam);
+            subparam = new JRDesignSubreportParameter();
+            subparam.setName("real_path");
+            expression = new JRDesignExpression();
+            expression.setText("$P{data}.get(\"real_path\")");
+            subparam.setExpression(expression);
             sub.addParameter(subparam);
             expression = new JRDesignExpression();
             expression.setText("new net.sf.jasperreports.engine.JREmptyDataSource()");

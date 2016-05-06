@@ -9,11 +9,9 @@ angular.module('app.authentication.doctor.directive.list', [])
 			scope: '=',
 			reload: '=',
 			uidReturn:'=',
-			islinkDoctorGroup:'=linkDoctorGroup',
-			runSuccess:'=onLinkGroup',
 		},
 		link: function(scope, ele, attr) {
-			scope.islinkDoctorGroup = scope.islinkDoctorGroup?scope.islinkDoctorGroup:false;
+			scope.islinkDoctorGroup = scope.isLink?scope.isLink:false;
 			scope.search = {};
 			scope.EnableChoose = [
 				{id:null,name:"All"},
@@ -160,7 +158,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 				function openLinkDoctorGroup(doctorObject) {
 					swal({
 						title: "Are you sure?",
-						text: "Are you want to link this doctor to the current doctor group?" ,
+						text: "Are you want to link this doctor ?" ,
 						type: "warning",
 						showCancelButton: true,
 						confirmButtonColor: "#DD6B55",

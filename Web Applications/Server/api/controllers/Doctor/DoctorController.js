@@ -4,7 +4,7 @@ var S = require('string');
 var generatePassword = require('password-generator');
 
 module.exports = {
-	
+
 	/*  LoadlistDoctor : Get all data from specific table
 		input          : object which has multi properties
 						data:{
@@ -14,7 +14,7 @@ module.exports = {
 							Search : {} object condition of querys
 							order  : [] array order
 						}
-		Ouput:  
+		Ouput:
 			* if result has value, server return doctor's data
 			* else if result doesn't have value, server return message "No data result"
 			* if server query error, server return an array error.
@@ -42,7 +42,7 @@ module.exports = {
 		input        : doctor's UID
 		output       :
 			* if server return info has value, server will query in table FileUpLoad - get all image
-				of this doctor. If server return success has value, add success's value into 
+				of this doctor. If server return success has value, add success's value into
 				info's imgage attributes, else add null into info's image attributes.
 			* if server return info doesn't have value, server return a message 'No data result'.
 			* if server query error, server return an array error.
@@ -94,7 +94,7 @@ module.exports = {
 		input        : an object contain information
 							data :{
 								info {}    : doctor's information will be updated,
-								UID string : doctor'UID 
+								UID string : doctor'UID
 							}
 		output       :
 						*	if server return result has value = 1, server'll return message
@@ -127,7 +127,7 @@ module.exports = {
 						}
 		output       :
 			* if server return info has value, server will query in table FileUpLoad - get all image
-				of this doctor. If server return success has value, add success's value into 
+				of this doctor. If server return success has value, add success's value into
 				info's imgage attributes, else add null into info's image attributes.
 			* if server return info doesn't have value, server return a message 'No data result'.
 			* if server query error, server return an array error.
@@ -202,7 +202,7 @@ module.exports = {
 		var data = req.body.data;
 		Services.Doctor.CreateDoctorByNewAccount(data)
 		.then(function(success){
-			if(success!=null && success!=""){	
+			if(success!=null && success!=""){
 				res.ok(success);
 			}
 			else {
@@ -316,7 +316,7 @@ module.exports = {
 		Ouput: success or error
 	*/
 	CreateDoctor: function(req, res) {
-		
+
 		var data = req.body.data;
 
 		var userInfo={
@@ -326,13 +326,13 @@ module.exports = {
 			PhoneNumber: data.PhoneNumber,
 			Password: generatePassword(12, false)
 		};
-		
+
 		// Create Account
 		sequelize.transaction().then(function(t){
-					
+
 			return Services.UserAccount.CreateUserAccount(userInfo, t)
 			.then(function(result) {
-				
+
 				// Create Role
 				var info_id = {
 					ID: result.ID
@@ -372,7 +372,7 @@ module.exports = {
 					t.rollback();
 					res.serverError(ErrorWrap(err));
 				});
-				
+
 			})
 			.catch(function(err) {
 				t.rollback();
@@ -380,7 +380,7 @@ module.exports = {
 			});
 
 		});
-		
+
 	},
 	/*
 		GetBy: Get info's doctor
@@ -413,7 +413,7 @@ module.exports = {
 
 	// 	Services.Doctor.UpdateDoctor(data)
 	// 	.then(function(result) {
-		
+
 	// 		var info = {
 	// 			Enable: data.Enable,
 	// 			UserAccountID: data.UserAccountID
@@ -463,7 +463,7 @@ module.exports = {
 		Ouput: success or error
 	*/
 	RemoveImage: function(req, res) {
-		
+
 		var data = req.body.data;
 
 		Services.UserAccount.RemoveIdentifierImage(data)
@@ -481,7 +481,7 @@ module.exports = {
 		Output: RoleName
 	*/
 	GetRoleDoctor: function(req, res) {
-	
+
 		var data = req.body.data;
 
 		Services.Doctor.GetRoleDoctor(data)
@@ -499,7 +499,7 @@ module.exports = {
 		Ouput: Data's Department
 	*/
 	GetOneDepartment: function(req, res) {
-	
+
 		var data = req.body.data;
 
 		Services.Doctor.GetDepartment(data)
@@ -509,6 +509,86 @@ module.exports = {
 		.catch(function(err) {
 			res.serverError(ErrorWrap(err));
 		});
-	
-	}
+
+	},
+
+	CreateGroup: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.CreateGroup(data)
+		.then(function(result) {
+			res.ok(result);
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	LoadListGroup: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.LoadListGroup(data)
+		.then(function(result) {
+			res.ok(result);
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	GetDetailGroup: function(req, res) {
+		var data = req.query;
+		Services.Doctor.GetDetailGroup(data)
+		.then(function(result) {
+			res.ok({message:"success",data:result});
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	AddDoctorGroup: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.AddDoctorGroup(data)
+		.then(function(result) {
+			res.ok({message:"success",data:result});
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	LoadListDoctorfromGroup: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.LoadListDoctorfromGroup(data)
+		.then(function(result) {
+			res.ok({message:"success",data:result});
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	DeleteDoctorfromGroup: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.DeleteDoctorfromGroup(data)
+		.then(function(result) {
+			res.ok({message:"success",data:result});
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	UpdateGroup: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.UpdateGroup(data)
+		.then(function(result) {
+			res.ok({message:"success",data:result});
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	ChangeStatusGroup: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.ChangeStatusGroup(data)
+		.then(function(result) {
+			res.ok({message:"success",data:result});
+		},function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	},
 };

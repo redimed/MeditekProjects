@@ -45,6 +45,46 @@ module.exports = {
 		action:'UpdateSignature'
 	},
 
+	'post /api/doctor/create-group': {
+		controller:'Doctor/DoctorController',
+		action:'CreateGroup'
+	},
+
+	'post /api/doctor/load-list-group': {
+		controller:'Doctor/DoctorController',
+		action:'LoadListGroup'
+	},
+
+	'get /api/doctor/get-detail-group': {
+		controller:'Doctor/DoctorController',
+		action:'GetDetailGroup'
+	},
+
+	'post /api/doctor/add-doctor-to-group': {
+		controller:'Doctor/DoctorController',
+		action:'AddDoctorGroup'
+	},
+
+	'post /api/doctor/load-list-doctor-from-group': {
+		controller:'Doctor/DoctorController',
+		action:'LoadListDoctorfromGroup'
+	},
+
+	'post /api/doctor/delete-doctor-from-group': {
+		controller:'Doctor/DoctorController',
+		action:'DeleteDoctorfromGroup'
+	},
+
+	'post /api/doctor/update-group': {
+		controller:'Doctor/DoctorController',
+		action:'UpdateGroup'
+	},
+
+	'post /api/doctor/change-status-group': {
+		controller:'Doctor/DoctorController',
+		action:'ChangeStatusGroup'
+	},
+
 	'get /api/doctorappointment': {
 		controller:'Doctor/DoctorController',
     	action:'DoctorAppointment'
@@ -89,6 +129,6 @@ module.exports = {
 		controller:'Doctor/DoctorController',
 		action:'GetOneDepartment'
 	}
-	
+
 
 };

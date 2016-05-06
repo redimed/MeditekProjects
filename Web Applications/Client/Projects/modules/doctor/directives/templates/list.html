@@ -1,26 +1,9 @@
-<!-- BEGIN PAGE HEADER-->
-<div class="page-bar ">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a href="javascript:;" ui-sref="authentication.home.list">Home</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <b>Doctor</b>
-        </li>
-    </ul>
-</div>
-<h3 class="page-title bold">Doctor </h3>
-
-<!-- END PAGE HEADER-->
-
 <!-- content page -->
 <div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption">
 			<i class="icon-list"></i>
-			<span class="caption-subject bold uppercase"> {{$state.current.data.pageTitle}}</span>
+			<span class="caption-subject bold uppercase"> Doctor List </span>
 		</div>
 		<div class="actions">
 			<a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()">
@@ -53,6 +36,7 @@
 						Enable
 					</th>
                     <th ng-if="islinkDoctorGroup == true">&nbsp;</th>
+                    <th ng-if="islinkDoctorGroup == true">&nbsp;</th>
 				</tr>
 				<tr ng-hide="toggle">
 					<td>#</td>
@@ -67,6 +51,7 @@
 					</td>
 					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.RoleName" ng-options="r.id as r.name for r in typeDoctor"></select></td>
 					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select></td>
+                    <td ng-if="islinkDoctorGroup == true" >&nbsp;</td>
                     <td ng-if="islinkDoctorGroup == true" >&nbsp;</td>
                 </tr>
 			</thead>
@@ -93,6 +78,7 @@
                     <td style="width:10%; text-align:center;" >
 						<i style="font-size:150%;" ng-class="{'fa fa-check-square-o':d.UID == uidReturn,'fa fa-square-o':d.UID != uidReturn}" id="{{'check'+d.stt}}"></i>
 					</td>
+                    <td> <button class="btn btn-info" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)"> View Detail </button> </td>
 				</tr>
 			</tbody>
 			</table>

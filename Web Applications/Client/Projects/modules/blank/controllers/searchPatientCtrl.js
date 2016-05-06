@@ -42,6 +42,7 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
     };
     $scope.Back = function() {
         if ($scope.step1.$valid || $scope.step2.$valid) {
+            delete $scope.postData.data['PinNumber'];
             $scope.submitted = false;
             $scope.number--;
         }

@@ -1,5 +1,5 @@
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" 
+        <button type="button" class="close" data-dismiss="modal"
             aria-hidden="true" ng-click="cancel()"></button>
         <h4 class="modal-type uppercase bold font-red-thunderbird">
             <i class="icon-settings"></i> {{type=='delete'?'Change':'Add'}}</h4>
@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="d in data" ng-click="selectFund(d.UID)" id="{{d.UID}}">
-                            <td>{{$index+1}}</td>
+                            <td>{{d.stt}}</td>
                             <td>{{d.FundName}}</td>
                             <td>{{d.ATO}}</td>
                             <td>{{d.Type}}</td>
@@ -34,20 +34,20 @@
         </div>
     </div>
     <div class="modal-footer" style="background: #f5f5f5">
-    <uib-pagination 
-					boundary-links="true" 
-					total-items="count" 
-					ng-model="searchObjectMap.currentPage" 
-					class="pagination-lg " 
-					previous-text="&lsaquo; " 
-					next-text="&rsaquo; " 
-					first-text="&laquo; " 
-					last-text="&raquo; " 
-					items-per-page="searchObjectMap.limit" 
+    <uib-pagination
+					boundary-links="true"
+					total-items="count"
+					ng-model="searchObjectMap.currentPage"
+					class="pagination-lg "
+					previous-text="&lsaquo; "
+					next-text="&rsaquo; "
+					first-text="&laquo; "
+					last-text="&raquo; "
+					items-per-page="searchObjectMap.limit"
 					max-size="searchObjectMap.maxSize"
 					ng-change="setPage()" ng-if="type=='create'"></uib-pagination>
         <div class="form-actions right">
-            <button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+            <button type="button" class="btn btn-lg dark" data-dismiss="modal"
                 ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
             <button class="btn btn-lg red-thunderbird" ng-click="click()" ng-disable="isLoading==true">
                 {{type=='create'?'Add':'Change'}} <i class="glyphicon glyphicon-save"></i></button>

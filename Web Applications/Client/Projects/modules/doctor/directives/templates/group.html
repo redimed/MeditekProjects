@@ -1,0 +1,114 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.doctor.list">Doctor</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Doctor Group</b>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<h3 class="page-title bold">Doctor Group</h3>
+
+<!-- content page -->
+<div class="portlet box green">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="icon-list"></i>
+			<span class="caption-subject bold uppercase">Doctor Group</span>
+		</div>
+		<div class="actions">
+			<a  href="javascript:;" class="btn blue" ng-click="create()">
+			<i class="glyphicon glyphicon-plus"></i> Create</a>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<div class="table-scrollable">
+			<table class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr style="width:100%;">
+						<th width="1">#</th>
+                        <th>
+							Group Code
+							<i class="fa fa-sort-asc"  ng-click="sort('GroupCode','ASC')" ng-show="fieldSort['GroupCode']=='ASC'" ></i>
+                        	<i class="fa fa-sort-desc" ng-click="sort('GroupCode','DESC')"ng-show="fieldSort['GroupCode']=='DESC'"></i>
+						</th>
+						<th>
+							Group Name
+							<i class="fa fa-sort-asc"  ng-click="sort('GroupName','ASC')" ng-show="fieldSort['GroupName']=='ASC'" ></i>
+                        	<i class="fa fa-sort-desc" ng-click="sort('GroupName','DESC')"ng-show="fieldSort['GroupName']=='DESC'"></i>
+						</th>
+	 					<th width="15%">
+	 						Status
+	 						<i class="fa fa-sort-asc"  ng-click="sort('Enable','ASC')" ng-show="fieldSort['Enable']=='ASC'" ></i>
+                        	<i class="fa fa-sort-desc" ng-click="sort('Enable','DESC')"ng-show="fieldSort['Enable']=='DESC'"></i>
+	 					</th>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+                        <td><input ng-model="search['GroupCode']" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="GroupCode" ng-change="setData('GroupCode')" /></td>
+						<td><input ng-model="search['GroupName']" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="GroupName" ng-change="setData('GroupName')" /></td>
+						<td>
+							<select class="form-control" ng-change="Search(search,'13');setData('Enable')" ng-model="search.Enable">
+                                <option value="">All</option>
+								<option value="Y">Enable</option>
+								<option value="N">Disable</option>
+							</select>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- <tr ng-click="viewDetail(d)">
+						<td>1</td>
+						<td>asas</td>
+						<td class="text-center">
+						</td>
+					</tr> -->
+                    <tr ng-repeat="d in doctorgroups">
+                        <td ng-click="viewDetail(d)" >{{d.stt}}</td>
+                        <td ng-click="viewDetail(d)">{{d.GroupCode}}</td>
+                        <td ng-click="viewDetail(d)">{{d.GroupName}}</td>
+                        <td class="text-center">
+							<i class="glyphicon glyphicon-ok font-green" ng-if="d.Enable=='Y'"   ng-click="changeStatus(d.UID,'N')" ></i>
+							<i class="glyphicon glyphicon-remove font-red" ng-if="d.Enable=='N'" ng-click="changeStatus(d.UID,'Y')"></i>
+						</td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div class="col-md-5 col-sm-12">
+				&nbsp;
+			</div>
+			<div class="col-md-7 col-sm-12" style="text-align:right">
+				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+					<uib-pagination
+					boundary-links="true"
+					total-items="count"
+					ng-model="searchObjectMap.currentPage"
+					class="pagination-md "
+					previous-text="&lsaquo; "
+					next-text="&rsaquo; "
+					first-text="&laquo; "
+					last-text="&raquo; "
+					items-per-page="searchObjectMap.limit"
+					max-size="searchObjectMap.maxSize"
+					ng-change="setPage()"></uib-pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/ng-template" id="createGroupModal">
+	<doctor-group-create on-success="success" on-cancel="close" ></doctor-group-create>
+</script>

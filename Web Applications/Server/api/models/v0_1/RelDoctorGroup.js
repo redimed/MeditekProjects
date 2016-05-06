@@ -37,6 +37,25 @@ module.exports = {
                 key: 'ID'
             }
         },
+        StepName: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        StepOrder: {
+            type: Sequelize.INTEGER(11),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
+        },
         Active: {
             type: Sequelize.STRING(1),
             allowNull: true,

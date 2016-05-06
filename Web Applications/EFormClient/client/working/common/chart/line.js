@@ -34,15 +34,28 @@ module.exports = React.createClass({
                 tickmarkPlacement: 'on',
                 type: 'datetime',
                 labels: {
-                  y: -600,
-                  x: -10,
-                  align: 'left'
+                  y: -580,
+                  x: -20,
+                  align: 'left',
+                  style: {
+                        color: 'black',
+                        fontSize: '16px'
+                    }
                 },
-                gridLineWidth: 1
+                gridLineWidth: 2,
+                gridLineColor: 'black',
+                lineColor: 'black',
+                lineWidth: 2
             },
             yAxis: {
                 title: {
                     text: 'Hearing Level in Decibels (dB)'
+                },
+                labels: {
+                    style: {
+                        color: 'black',
+                        fontSize: '16px'
+                    }
                 },
                 reversed: true,
                 max: 120,
@@ -52,17 +65,25 @@ module.exports = React.createClass({
                 plotLines: [{
                     value: 0,
                     width: 1,
-                    color: '#808080'
-                }]
+                    color: 'black'
+                }],
+                gridLineWidth: 2,
+                gridLineColor: 'black',
+                lineColor: 'black',
+                lineWidth: 2
             },
             tooltip: {
                 valueSuffix: ''
             },
             legend: {
-                layout: 'vertical',
-                align: 'right',
+                layout: 'horizontal',
+                align: 'center',
                 verticalAlign: 'bottom',
-                borderWidth: 0
+                borderWidth: 0,
+                style: {
+                    color: 'black',
+                    fontSize: '16px'
+                }
             },
             series: series
         })

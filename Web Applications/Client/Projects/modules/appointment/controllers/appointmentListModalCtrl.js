@@ -192,11 +192,11 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         return true;
     };
     var checkOtherInput = function() {
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other']) 
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'])
             && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value) {
             $scope.Other.LacerationsOther = 'Y';
         };
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) 
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'])
             && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
             $scope.Other.SkincancerOther = 'Y';
         };
@@ -259,7 +259,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
                 stringAlert = $scope.CheckValidation();
             };
-            if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || 
+            if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  ||
                 $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
                 stringAlert = $scope.CheckValidation();
             };

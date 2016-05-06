@@ -361,8 +361,8 @@ PatientService.validate = function(info) {
 			// 	SiteID:postData.data.Postcode,
 			// 	SiteIDRefer:postData.data.SiteIDRefer,
 			// };
+			postData.data.Email = postData.data.Email1;
 			var info = postData.data;
-
 			returnData.data = info;
 			if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
 			if(postData.otherData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;

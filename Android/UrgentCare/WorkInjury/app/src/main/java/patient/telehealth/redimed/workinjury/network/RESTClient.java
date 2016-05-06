@@ -91,7 +91,7 @@ public class RESTClient {
     private static class SessionRequestInterceptor implements RequestInterceptor {
         public void intercept(RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("systemtype", "ARD");
-            paramRequestFacade.addHeader("deviceid", "66666666666666666666666666");
+            paramRequestFacade.addHeader("deviceid", android.os.Build.MANUFACTURER+android.os.Build.MODEL);
             paramRequestFacade.addHeader("appid", "com.redimed.telehealth.workinjury");
             paramRequestFacade.addHeader("Authorization", "Bearer " + workInjury.getString("token", ""));
             paramRequestFacade.addHeader("Cookie", workInjury.getString("cookie", ""));

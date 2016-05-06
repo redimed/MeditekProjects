@@ -15,10 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import patient.telehealth.redimed.workinjury.model.RolesModel;
+import patient.telehealth.redimed.workinjury.model.UserModel;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -36,17 +39,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //======Layout 2==========
     @Bind(R.id.btnSubmitPinNumber) Button btnSubmitPinNumber;
+    @Bind(R.id.btnForgetPin) Button btnForgetPin;
     @Bind(R.id.txtVerifyCode) EditText txtVerifyCode;
 
     @Bind(R.id.layoutContainer) ViewFlipper layoutContainer;
     @Bind(R.id.layoutRegisterFone) LinearLayout layoutRegisterFone;
+
     private String UserUID;
+    private Gson gson;
+    private SharedPreferences workInjury;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        gson = new Gson();
+        workInjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
         layoutContainer.setAnimateFirstView(true);
         layoutContainer.setAlpha(0.0f);
         layoutContainer.setDisplayedChild(layoutContainer.indexOfChild(layoutRegisterFone));
@@ -59,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSubmitPinNumber.setOnClickListener(this);
         btnCheckActivation.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+        btnForgetPin.setOnClickListener(this);
     }
 
     public void animationLogo() {
@@ -91,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.d("Login", String.valueOf(txtPhone.getText()));
                 JsonObject objData = new JsonObject();
                 objData.addProperty("phone", String.valueOf(txtPhone.getText()));
-                JsonObject obj = new JsonObject();
+                final JsonObject obj = new JsonObject();
                 obj.add("data",objData);
                 Log.d("aaaaaaaaaaaaaaaaa", String.valueOf(obj));
                 RESTClient.getTelehealthApi().checkActivation(obj, new Callback<JsonObject>() {
@@ -121,21 +131,56 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void success(JsonObject jsonObject, Response response) {
                         Log.d("jsonObject", String.valueOf(jsonObject));
                         Log.d("response", String.valueOf(response));
-                        SharedPreferences.Editor editor = getSharedPreferences("WorkInjury", MODE_PRIVATE).edit();
+                        SharedPreferences.Editor editor = workInjury.edit();
                         String token = jsonObject.get("token").getAsString();
                         String refreshCode = jsonObject.get("refreshCode").getAsString();
-                        String ueriud = (jsonObject.get("user").getAsJsonObject()).get("UID").getAsString();
+                        UserModel userModel = gson.fromJson(jsonObject.get("user").getAsJsonObject(), UserModel.class);
+                        String useruid = (jsonObject.get("user").getAsJsonObject()).get("UID").getAsString();
                         String username = (jsonObject.get("user").getAsJsonObject()).get("UserName").getAsString();
-                        Log.d("ueriud", ueriud);
-                        Log.d("username", username);
+                        for (RolesModel rolesModel : userModel.getRoles()) {
+                            if (rolesModel.getRoleCode().equals("ORGANIZATION")){
+                                Log.d("chiennnnnn",rolesModel.getID());
+                                editor.putBoolean("isTypeCompany",true);
+                            }
+                        }
                         editor.putString("token", token);
                         editor.putString("refreshCode", refreshCode);
-                        editor.putString("useruid", ueriud);
+                        editor.putString("useruid", useruid);
                         editor.putString("username", username);
                         editor.putBoolean("isAuthenticated",true);
                         editor.commit();
+                        JsonObject objData = new JsonObject();
+                        objData.addProperty("uid",useruid);
+                        objData.addProperty("token",workInjury.getString("deviceToken", ""));
+                        RESTClient.getTelehealthApi().getTelehealthUser(objData, new Callback<JsonObject>() {
+                            @Override
+                            public void success(JsonObject jsonObject, Response response) {
+                                Log.d("jsonObject", String.valueOf(jsonObject));
+                                Log.d("response", String.valueOf(response));
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         finish();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+                break;
+            case R.id.btnForgetPin:
+                JsonObject objForgetPin = new JsonObject();
+                objForgetPin.addProperty("phone", String.valueOf(txtPhone.getText()));
+                RESTClient.getTelehealthApi().forgetPin(objForgetPin, new Callback<JsonObject>() {
+                    @Override
+                    public void success(JsonObject jsonObject, Response response) {
+
                     }
 
                     @Override

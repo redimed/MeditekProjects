@@ -196,7 +196,42 @@
                     android:textColor="@android:color/white"
                     android:textSize="17sp"
                     android:textStyle="bold" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <!--<RelativeLayout-->
+                <!--android:id="@+id/btnBack"-->
+                <!--android:layout_width="?android:actionBarSize"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:background="#6fff0003"-->
+                <!--android:clickable="true">-->
+
+                <!--<com.redimed.telehealth.patient.font.MaterialDesignIconsTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:text="@string/material_icon_back"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textSize="30sp" />-->
+
+                <!--</RelativeLayout>-->
+
+                <Button
+                    android:id="@+id/btnForgetPin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/btn_ForgetPin"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>

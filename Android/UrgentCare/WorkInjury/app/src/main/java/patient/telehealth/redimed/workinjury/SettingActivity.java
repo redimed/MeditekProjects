@@ -35,6 +35,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     private SharedPreferences workinjury;
     private boolean isAuthenticated;
+    private boolean isTypeCompany;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +46,16 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         lblUserName.setText(workinjury.getString("username","N/A"));
         lblCompanyName.setText(workinjury.getString("companyName","N/A"));
         isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
+        isTypeCompany = workinjury.getBoolean("isTypeCompany", false);
         if (!isAuthenticated){
             btnLogout.setVisibility(View.GONE);
             lblAccount.setVisibility(View.GONE);
+            layoutAccountCenter.setVisibility(View.GONE);
+        }
+        Log.d("isTypeCompany",isTypeCompany+"");
+        if (!isTypeCompany){
             lblCompany.setVisibility(View.GONE);
             layoutCompany.setVisibility(View.GONE);
-            layoutAccountCenter.setVisibility(View.GONE);
         }
         btnBack.setOnClickListener(this);
         btnLogout.setOnClickListener(this);

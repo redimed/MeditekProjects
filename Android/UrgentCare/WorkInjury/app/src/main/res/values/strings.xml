@@ -78,6 +78,7 @@
     <string name="hint_phone">Phone Number</string>
     <string name="btn_requestCode">Continue</string>
     <string name="btn_VerifyCode">Verify</string>
+    <string name="btn_ForgetPin">Forget Pin</string>
     <string name="hint_code">Verify Code</string>
     <string name="title_bottom_activation">© REDIMED 2015 - App Design by Meditek</string>
     <string name="text_contains">Enter your phone number and click continue</string>

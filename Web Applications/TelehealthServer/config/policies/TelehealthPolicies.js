@@ -6,6 +6,7 @@ module.exports = {
 		'TestPushGCM':true,
 		'CheckActivation':true,
 		'GetListCountry':true,
-		'ForgetPIN':true
+		'ForgetPIN':true,
+		'TestGCM':true
 	}
 }

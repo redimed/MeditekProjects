@@ -77,8 +77,7 @@ module.exports = function(data, userInfo, objRequired) {
                 }, {
                     model: Patient,
                     attributes: Services.AttributesAppt.Patient(),
-                    required: (!_.isEmpty(pagination.Patient) ||
-                        (!_.isEmpty(objRequired)) ? objRequired.Patient : false),
+                    required: ((!_.isEmpty(objRequired)) ? objRequired.Patient : false || !_.isEmpty(pagination.Patient)),
                     where: pagination.Patient,
                     include: [{
                         model: UserAccount,

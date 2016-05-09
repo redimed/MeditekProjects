@@ -62,12 +62,6 @@ module.exports = function(data, userInfo, objRequired) {
                     model: TelehealthAppointment,
                     attributes: Services.AttributesAppt.TelehealthAppointment(),
                     required: !_.isEmpty(pagination.TelehealthAppointment),
-                    include: [{
-                        model: PatientAppointment,
-                        attributes: Services.AttributesAppt.PatientAppointment(),
-                        required: !_.isEmpty(pagination.PatientAppointment),
-                        where: pagination.PatientAppointment
-                    }],
                     where: pagination.TelehealthAppointment
                 }, {
                     model: Doctor,

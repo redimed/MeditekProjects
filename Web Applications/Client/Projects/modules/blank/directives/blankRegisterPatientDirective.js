@@ -135,7 +135,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 var NowDate = moment().format('YYYY-MM-DD HH:mm:ss Z');
                 $scope.dataCreateAppointment = {
                     "FromTime": NowDate,
-                    "Type": "Telehealth",
+                    "Type": "Campaign",
                     "RequestDate": NowDate,
                     "PatientAppointment": {
                         "Address1": $scope.postData.data.Address1,
@@ -186,7 +186,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                     consultationServices.getDoctorCampaign('Campaign01').then(function(response) {
                         console.log('Campaign01',response)
                         $scope.dataCreateAppointment.Doctor.UID = response.data.Value;
-                        blankServices.PatientRequestAppointment($scope.dataCreateAppointment).then(function(response) {
+                        blankServices.PatientRequestAppointmentNew($scope.dataCreateAppointment).then(function(response) {
                             o.loadingPage(false);
                             $state.go("authentication.home.list")
                         }, function(err) {
@@ -202,7 +202,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 }else{
                     $scope.dataCreateAppointment.Doctor = null;
                     console.log("$scope.dataCreateAppointment",$scope.dataCreateAppointment);
-                    blankServices.PatientRequestAppointment($scope.dataCreateAppointment).then(function(response) {
+                    blankServices.PatientRequestAppointmentNew($scope.dataCreateAppointment).then(function(response) {
                         o.loadingPage(false);
                         $state.go("authentication.home.list")
                     }, function(err) {

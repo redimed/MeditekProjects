@@ -30,5 +30,10 @@ angular.module("app.blank.services", [])
                     data: data
                 });
         }
+         services.PatientRequestAppointmentNew = function(data) {
+           return api.all('appointment-wa-request/patient-new').post({
+                    data: data
+                });
+        }
         return services;
     });

@@ -196,6 +196,7 @@ public class DataProcess {
                     }
                     else{
                         System.out.println("run false");
+                        dataObj=null;
                     }
                 }
                 else dataObj=d.getValue();

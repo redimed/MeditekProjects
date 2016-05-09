@@ -34,15 +34,6 @@ module.exports = React.createClass({
         var self = this;
         this.countObj[item.get('code')] = (this.countObj[item.get('code')]||0) + 1;
         self.props.onSelectItem(item);
-        /*swal({
-            title: 'Are you sure?',
-            text: 'You will select field: '+item.get('name'),
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function(){
-        })*/
     },
     render: function(){
         return (

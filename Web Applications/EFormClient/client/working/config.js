@@ -31,9 +31,9 @@ module.exports = {
 	getPrefixField: function(typeString, findString){
 		return typeString.indexOf(findString);
 	},
-	getArrayConcat: function(concatString){
+	getArrayPrecal: function(position, concatString){
 		var res = [];
-		var substring = concatString.substring(7, concatString.length-1);
+		var substring = concatString.substring(position, concatString.length-1);
 		var substringRes = substring.split(',');
 		for(var i = 0; i < substringRes.length; i++){
 			res.push(substringRes[i]);

@@ -33,7 +33,7 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
             var today = new Date();
             $scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD 00:00:00 Z');
             console.log("requesr data", $scope.info.data);
-            WAAppointmentService.loadListWAAppointment($scope.info.data).then(function(response) {
+            WAAppointmentService.loadListWAAppointmentConsultation($scope.info.data).then(function(response) {
                 console.log("response data", response);
                 if (response.rows.length != 0) {
                     var dataPost = {

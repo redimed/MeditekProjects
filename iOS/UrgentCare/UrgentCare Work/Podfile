@@ -4,7 +4,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'UrgentCare Work' do
-#    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 #    pod 'FDTake', '~> 0.2.4'
 #    pod 'SVProgressHUD'
 #    pod 'Reachability', '~> 3.1.1'

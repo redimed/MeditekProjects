@@ -1010,6 +1010,31 @@ module.exports = {
                             t.rollback();
                             throw err;
                         })
+                        .then(function(updated_user) {
+                            if(data.PinNumber && data.PinNumber != null && data.PinNumber != '') {
+                                var PinNumberRegExp = /^[0-9]{4,6}$/;
+                                if (!PinNumberRegExp.test(data.PinNumber)) {
+                                    var err = new Error("UpdatePatient.Error");
+                                    err.pushError("invalid.PinNumber");
+                                    throw err;
+                                } else {
+                                    return UserAccount.update({
+                                        PinNumber: data.PinNumber
+                                    }, {
+                                        where: {
+                                            ID: data.UserAccountID
+                                        },
+                                        transaction: t
+                                    });
+                                }
+
+                            }
+                            else {
+                                return updated_user;
+                            }
+                        }, function(err) {
+                            throw err;
+                        })
                         //update 4 bang patient tai day
                         .then(function(result) {
                             console.log("1");

@@ -9,7 +9,8 @@ import com.lowagie.text.Image;
 import com.meditek.jasper.model.FormDataModel;
 
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -181,12 +182,45 @@ public class DataProcess {
             //Get data object
             if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
                 if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("_image") || d.getType().equals("eform_input_signature")){
-                    try{
-                        
-                        BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
-                        dataObj=image;
+//                    if(d.getValue().equals("") || d.getValue()==null){
+//                    byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
+//                    try {
+//                        imageRes=com.itextpdf.text.Image.getInstance(imgBytes);
+//                        parsedData.put(d.getName().toLowerCase(), imageRes);
+//                    }
+//                    catch (Exception ex){
+//			System.out.println(ex);
+//                        imageRes=null;
+//                    } 
+//                }
+//                else {
+//                    try{
+//                        imageRes=com.itextpdf.text.Image.getInstance(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()));
+//                        parsedData.put(d.getName().toLowerCase(), imageRes);
+//                    }
+//                    catch (Exception ex){
+//			System.out.println(ex);
+//                        imageRes=null;
+//                    }                    
+//                }     
+                    if(d.getValue().equals("") || d.getValue()==null){
+                        try{
+                            byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
+                            InputStream is = new ByteArrayInputStream(imgBytes);
+                            dataObj=is;
+                        }
+                        catch (Exception e){
+                            dataObj=null;
+                        }
                     }
-                    catch(Exception e){
+                    else{
+                         try{
+                            BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
+                            dataObj=image;
+                        }
+                        catch(Exception e){
+                            dataObj=null;
+                        }
                     }
                 }
                 else if(d.getType().equals("eform_input_check_radio")) {

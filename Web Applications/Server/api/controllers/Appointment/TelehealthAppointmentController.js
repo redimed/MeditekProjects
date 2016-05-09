@@ -51,6 +51,7 @@ module.exports = {
             // });
             Services.GetListAppointment(data, req.user)
                 .then(function(success) {
+                    console.log("=================",success.data);
                     res.ok(success.data);
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&

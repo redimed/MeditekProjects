@@ -29,6 +29,10 @@ module.exports = React.createClass({
             cursor: true,
             radioClass: 'iradio_square-green'
         })
+        $(this.refs.input).on('ifChecked', function(event){
+            if(typeof self.props.onChange !== 'undefined')
+                self.props.onChange(self.value);
+        })
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
@@ -100,7 +104,7 @@ module.exports = React.createClass({
         switch(type){
             case 'default':
                 html = (
-                    <input type="radio" className="icheck" name={this.props.name} id={this.props.id} ref="input"/>
+                    <input type="radio" className="icheck" name={this.props.name} id={this.props.id} ref="input" value={this.props.value}/>
                 )
                 break;
             case 'eform_input_check_radio':

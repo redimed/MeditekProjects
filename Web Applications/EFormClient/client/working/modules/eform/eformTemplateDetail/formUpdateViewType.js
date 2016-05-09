@@ -2,8 +2,8 @@ var CommonDropdown = require('common/dropdown');
 
 module.exports = React.createClass({
     list: [
-        {code: 'show', name: 'Show'},
-        {code: 'hide', name: 'Hide'}
+        {code: 'dynamic', name: 'Dynamic'},
+        {code: 'static', name: 'Static'}
     ],
     propTypes: {
         viewType: React.PropTypes.any

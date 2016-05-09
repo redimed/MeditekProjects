@@ -3,8 +3,10 @@ var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/form
 var ComponentFormUpdateViewType = require('modules/eform/eformTemplateDetail/formUpdateViewType');
 var ComponentRow = require('modules/eform/eformTemplateDetail/row');
 var CommonInput = require('common/inputText');
+var CommonRadio = require('common/radio');
 
 module.exports = React.createClass({
+    viewTypeDynamic: undefined,
     propTypes: {
         code: React.PropTypes.number,
         moduleID: React.PropTypes.any,
@@ -53,99 +55,25 @@ module.exports = React.createClass({
             this.refs.inputOrder.setValue(this.props.code);
             $(this.refs.tempRef).on('keypress', function(event){
                 if(event.which == 13){
-                    console.log(event.target.value);
                     self.props.onChangeRef(self.props.code, event.target.value);
                     return false;
                 }
             })
+        }else{
+            if(this.props.viewType === 'dynamic'){
+                if(typeof this.viewTypeDynamic !== 'undefined' && this.viewTypeDynamic !== 'show'){
+                    this.refs.radio_show.setChecked(false);
+                    this.refs.radio_hide.setChecked(true);
+                }else{
+                    this.refs.radio_show.setChecked(true);
+                    this.refs.radio_hide.setChecked(false);
+                }
+            }
         }
     },
     componentDidUpdate: function(prevProps, prevState) {
         if (this.props.permission === 'eformDev') {
         }
-    },
-    _dragAndDropSections: function() {
-        var self = this;
-        this.drakeSection = dragula([].slice.apply(document.querySelectorAll('.dragSection')), {
-            copy: false,
-            revertOnSpill: true,
-            moves: function(el, container, handle) {
-                return handle.className.indexOf('dragSectionHandler') > -1;
-            }
-        });
-        this.drakeSection.on('drop', function(el, target, source, sibling) {
-            if (el.parentNode == target) {
-                target.removeChild(el)
-            }
-            var fromEl = el.id
-            var targetArray = $(target).find('.portlet')
-            $.each(targetArray, function(index, value) {
-                var tempId = $(value).attr('id')
-                if (tempId !== fromEl) {
-                    var fromArr = fromEl.split('_')
-                    var toArr = tempId.split('_')
-                    var fromObj = { codeSection: fromArr[1] }
-                    var toObj = { codeSection: toArr[1] };
-                    self.props.onDragSection(fromObj, toObj);
-                    return false;
-                }
-            })
-            var fromEl = el.id
-            var targetArray = $(target).find('.portlet')
-            $.each(targetArray, function(index, value) {
-                var tempId = $(value).attr('id')
-                if (tempId !== fromEl) {
-                    var fromArr = fromEl.split('_')
-                    var toArr = tempId.split('_')
-                    var fromObj = { codeSection: fromArr[1] }
-                    var toObj = { codeSection: toArr[1] };
-                    self.props.onDragSection(fromObj, toObj);
-                    return false;
-                }
-            })//end each
-        })
-    },
-    _dragAndDropRows: function() {        
-        var self = this;
-        this.drakeRow = dragula([].slice.apply(document.querySelectorAll('.dragRow')), {
-            copy: true,
-            revertOnSpill: true,
-            removeOnSpill: true,
-            moves: function(el, container, handle) {
-                return handle.className.indexOf('dragRowHandler') > -1;
-            }
-        });
-        this.drakeRow.on('drop', function(el, target, source, sibling) {
-            if (el.parentNode == target) {
-                target.removeChild(el)
-            }
-            swal({
-                title: 'Are you sure?',
-                text: 'You will change this row',
-                type: 'warning',
-                showCancelButton: true,
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-                    var fromEl = el.id;
-                    var targetArray = $(target).find('.form-group')
-                    $.each(targetArray, function(index, value) {
-                        var tempId = $(value).attr('id')
-                        if (tempId !== fromEl) {
-                            var fromArr = fromEl.split('_')
-                            var toArr = tempId.split('_')
-                            var fromObj = { codeSection: fromArr[1], codeRow: fromArr[2] }
-                            var toObj = { codeSection: toArr[1], codeRow: toArr[2] }
-                            self.props.onDragRow(fromObj, toObj);
-                            return false;
-                        }
-                    })
-                } else {
-                    swal("No change", "Form will refresh.", "success")
-                }
-            })
-        })
     },
     _onCreateRow: function(){
         this.props.onCreateRow(this.props.code, this.props.refTemp);
@@ -208,18 +136,32 @@ module.exports = React.createClass({
     getAllFieldValueWithValidation: function(stringType){
         var rows = this.props.rows.toJS();
         var fields = [];
-        for(var i = 0; i < rows.length; i++){
-            var row = rows[i];
-            var rowRef = row.ref;
-            var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
-            tempFields.map(function(field, index){
-                fields.push(field);
-            })
+        if(this.viewTypeDynamic !== 'hide'){
+            for(var i = 0; i < rows.length; i++){
+                var row = rows[i];
+                var rowRef = row.ref;
+                var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
+                tempFields.map(function(field, index){
+                    fields.push(field);
+                })
+            }
         }
         return fields;
     },
+    _onChangeViewType: function(value){
+        if(this.props.viewType !== 'static'){
+            if(value === 'yes'){
+                this.viewTypeDynamic = 'show';
+                $(this.refs.section).css({display: 'block'});
+            }else{
+                this.viewTypeDynamic = 'hide';
+                $(this.refs.section).css({display: 'none'});
+            }
+        }
+    },
     render: function(){
         var displayPermission = (this.props.permission === 'eformDev')?'inline-block':'none';
+        var displayViewType = (this.props.viewType !== 'static' && this.props.permission !== 'eformDev')?'inline-block':'none';
         return (
                 <div className="row">
                     <CommonModal ref="modalUpdateSection">
@@ -258,8 +200,16 @@ module.exports = React.createClass({
                             <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrder}>Save</button>
                         </div>
                     </CommonModal>
-                    <div className="col-md-12 dragSection">
-                        <div className="portlet box green" id={"dragSection_"+this.props.code}>
+                    <div className="col-md-12">
+                        <div style={{display: displayViewType, marginBottom: '10px'}}>
+                           <CommonRadio ref="radio_show" name={this.props.refTemp+'_viewType'} value="yes"
+                                onChange={this._onChangeViewType}/> Show
+                            &nbsp;
+                           <CommonRadio ref="radio_hide" name={this.props.refTemp+'_viewType'} value="no"
+                                onChange={this._onChangeViewType}/> Hide
+                            &nbsp; <b>{this.props.name}</b>
+                        </div>
+                        <div className="portlet box green" ref="section">
                             <div className="portlet-title">
                                 <div className="caption">
                                         {this.props.name}

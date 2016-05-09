@@ -957,8 +957,8 @@ module.exports = {
                                     }
                                     if (tokens.length > 0) {
                                         return TelehealthService.SendGCMWorkInjuryPush(opts, tokens).then(function(result) {
-                                            console.log("push success");
-                                            res.ok(result);
+                                            console.log("push success", result);
+                                            res.ok({message:"success", data:result});
                                         }).catch(function(err) {
                                             res.serverError(ErrorWrap(err));
                                         })

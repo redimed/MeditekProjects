@@ -34,7 +34,6 @@ module.exports = React.createClass({
         .then(function(responseRoles){
             EFormService.preFormDetail({UID: self.appointmentUID})
             .then(function(response){
-                console.log(response)
                 if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null)
                     self.signatureDoctor = response.data.Doctor.FileUpload;
                 else
@@ -89,10 +88,22 @@ module.exports = React.createClass({
                                 preCalArray = field.preCal.split('|');
                             }
                             preCalArray.map(function(preCal){
+                                /* SUM PREFIX */
+                                if(Config.getPrefixField(preCal, 'SUM') > -1){
+                                    if(preCal !== ''){
+                                        var preCalRes = Config.getArrayPrecal(4, preCal);
+                                        preCalRes.map(function(minorRef){
+                                            var splitMinorRef = minorRef.split('_');
+                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
+                                            self.refs[section.ref].preCalSum(rowRefField, minorRef, field.ref);
+                                        })
+                                    }
+                                }
+                                /* END SUM PREFIX */
                                 /* CONCAT PREFIX */
                                 if(Config.getPrefixField(preCal,'CONCAT') > -1){
                                     if(preCal !== ''){
-                                        var preCalRes = Config.getArrayConcat(preCal);
+                                        var preCalRes = Config.getArrayPrecal(7, preCal);
                                         var value = '';
                                         preCalRes.map(function(preCalResItem){
                                             var preCalResItemArr = preCalResItem.split('.');

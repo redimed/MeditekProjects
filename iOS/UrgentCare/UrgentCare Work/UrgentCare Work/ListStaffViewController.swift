@@ -88,9 +88,9 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
             Context.setDataDefaults(profile, key: Define.keyNSDefaults.DetailStaff)
             self.navigationController?.popViewControllerAnimated(true)
         }else{
-            let company :CompanyViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("CompanyViewControllerID") as! CompanyViewController
-            //company.site = listSite.data[indexPath.row]
-            self.navigationController?.pushViewController(company, animated: true)
+            let staffViewController :StaffDetailViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("StaffDetailViewControllerID") as! StaffDetailViewController
+            staffViewController.staff = listStaff.data[indexPath.row]
+            self.navigationController?.pushViewController(staffViewController, animated: true)
         }
         
     }

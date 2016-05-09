@@ -14,7 +14,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
     @IBOutlet weak var tableView: UITableView!
     
     var nameComapny :String = "name"
-    var array = [["List Staff"],["Harry Berry"],["Other services", "About Redimed", "LOGOUT"]]
+    var array = [["List Staff"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
     var arrayTitle = ["Company", "Accounts", "", "", ""]
     var StringIncompleteProfile :String = "Incomplete Profile"
     var companyInfo = DetailCompanyResponse()
@@ -107,14 +107,18 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
         if(Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != ""){
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
                 if(indexPath.row == 0 && indexPath.section == 0){
-//                    let listStaff :ListStaffViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListStaffViewControllerID") as! ListStaffViewController
-//                     listStaff.CheckStaffInfor = true
-//                    self.navigationController?.pushViewController(listStaff, animated: true)
+                    let listStaff :ListStaffViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListStaffViewControllerID") as! ListStaffViewController
+                     listStaff.CheckStaffInfor = true
+                    self.navigationController?.pushViewController(listStaff, animated: true)
                 }
                 if(indexPath.row == 1 && indexPath.section == 0){
                     let listSite :ListContactPersonViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListContactPersonViewControllerID") as! ListContactPersonViewController
                     listSite.CheckCompanyInfor = true
                     self.navigationController?.pushViewController(listSite, animated: true)
+                }
+                if(indexPath.row == 1 && indexPath.section == 1){
+                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
+                    self.navigationController?.pushViewController(changPinNumber, animated: true)
                 }
                 if(indexPath.row == 0 && indexPath.section == 1){
                     

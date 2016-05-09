@@ -9,15 +9,17 @@
 import Foundation
 import Alamofire
 
-extension Request {
-//    private func handleErrorMessage(JSON: AnyObject?)
-//    {
-//        Utility.getTopViewController()?.handleApiError(JSON)
-//    }
-//    private func showMessageNoNetwork()
-//    {
-//        let base = Utility.getTopViewController()
-//        
-//        Alert.alert(base!, message: "No Network", title: "Notification", alertStyle: DTAlertErrorStyle.DTAlertStyleErrorNetwork)
-//    }
+public extension UIDevice {
+    
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8 where value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
+    }
+    
 }

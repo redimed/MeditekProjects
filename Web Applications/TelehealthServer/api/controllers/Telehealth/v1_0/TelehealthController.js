@@ -848,7 +848,7 @@ module.exports = {
                 var data = response.getBody();
                 if (data.Activated === "N") {
                     sendSMS(phoneNumber, "Your REDiMED account pin number is " + data.PinNumber).then(function(mess) {
-                        return res.ok(data);
+                        return res.ok(mess);
                     }, function(error) {
                         return res.serverError(ErrorWrap(error));
                     });
@@ -911,9 +911,12 @@ module.exports = {
             return;
         }
         var info = HelperService.toJson(req.body);
+        var headers = req.headers;
+        var deviceType = headers.deviceid;
         var phoneNumber = info.phone;
+        var deviceToken = info.token;
         var phoneRegex = /^\+[0-9]{9,15}$/;
-        if (phoneNumber && phoneNumber.match(phoneRegex)) {
+        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceToken && deviceType) {
             UserAccount.find({
                 where: {
                     PhoneNumber: phoneNumber
@@ -926,11 +929,13 @@ module.exports = {
                         }
                     }).then(function(teleUser) {
                         if (teleUser) {
-                            return TelehealthDevice.findAll({
+                            return TelehealthDevice.find({
                                 where: {
-                                    TelehealthUserID: teleUser.ID
+                                    TelehealthUserID: teleUser.ID,
+                                    DeviceToken: deviceToken,
+                                    DeviceType: deviceType
                                 }
-                            }).then(function(devices) {
+                            }).then(function(device) {
                                 var opts = {
                                     collapseKey: 'demo',
                                     priority: 'high',
@@ -939,7 +944,7 @@ module.exports = {
                                     timeToLive: 3,
                                     dryRun: false,
                                     data: {
-                                        message: "Pinumber is "+user.PinNumber
+                                        message: "Pinumber is " + user.PinNumber
                                     },
                                     notification: {
                                         title: "Redimed",
@@ -949,27 +954,23 @@ module.exports = {
                                     }
                                 };
                                 var tokens = [];
-                                if (devices) {
-                                    for (var i = 0; i < devices.length; i++) {
-                                        if (devices[i].DeviceToken != null) {
-                                            tokens.push(devices[i].DeviceToken);
-                                        }
-                                    }
-                                    if (tokens.length > 0) {
-                                        return TelehealthService.SendGCMWorkInjuryPush(opts, tokens).then(function(result) {
-                                            console.log("push success", result);
-                                            res.ok({message:"success", data:result});
-                                        }).catch(function(err) {
-                                            res.serverError(ErrorWrap(err));
-                                        })
-                                    }
-                                    return res.ok({
-                                        status: 'Devices Not Found'
-                                    });
+                                console.log("device",device);
+                                if (device) {
+                                    console.log("pushhhhhhhhhhhhhhh");
+                                    tokens.push(device.DeviceToken);
+                                    return TelehealthService.SendGCMWorkInjuryPush(opts, tokens).then(function(result) {
+                                        console.log("push success", result);
+                                        res.ok({ message: "success", data: result });
+                                    }).catch(function(err) {
+                                        res.serverError(ErrorWrap(err));
+                                    })
                                 } else {
-                                    var err = new Error("Telehealth.PushNotification.Error");
-                                    err.pushError("No Devices Was Found");
-                                    return res.serverError(ErrorWrap(err));
+                                    console.log("senddddddddd");
+                                    return sendSMS(phoneNumber, "Your REDiMED account pin number is " + user.PinNumber).then(function(mess) {
+                                        res.ok({status:"Send sms success", data:mess});                                    
+                                    }, function(error) {
+                                        res.serverError(ErrorWrap(error));
+                                    });
                                 }
                             })
                         } else {

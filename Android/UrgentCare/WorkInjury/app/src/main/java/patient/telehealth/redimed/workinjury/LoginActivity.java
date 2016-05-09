@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
@@ -177,10 +178,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnForgetPin:
                 JsonObject objForgetPin = new JsonObject();
                 objForgetPin.addProperty("phone", String.valueOf(txtPhone.getText()));
+                objForgetPin.addProperty("token", workInjury.getString("deviceToken", ""));
                 RESTClient.getTelehealthApi().forgetPin(objForgetPin, new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
-
+                        Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

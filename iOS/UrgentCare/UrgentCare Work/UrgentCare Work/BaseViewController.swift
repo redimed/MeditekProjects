@@ -22,15 +22,6 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.LogoutWhenIsAuthenticated), name: Define.LogoutFunction, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.gotEventNotification), name: Define.PushNotification.PushChangePassword, object: nil)
-    }
-    
-    func gotEventNotification(noti: NSNotification) -> Void {
-        
-        let requestVC = self.storyboard?.instantiateViewControllerWithIdentifier("ScreenCallingViewControllerID") as! ScreenCallingViewController
-        requestVC.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
-        self.presentViewController(requestVC, animated: true, completion: nil)
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,6 +61,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         Context.deleteDatDefaults(Define.keyNSDefaults.UID)
         Context.deleteDatDefaults(Define.keyNSDefaults.IsCompanyAccount)
         Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
+        Context.deleteDatDefaults(Define.keyNSDefaults.TeleheathUserDetail)
     }
     func CallAPILogout(uid:String){
        self.showloading(Define.MessageString.PleaseWait)

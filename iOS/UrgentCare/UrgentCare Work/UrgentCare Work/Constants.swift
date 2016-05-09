@@ -14,20 +14,25 @@ struct Constants {
 //    struct Path {
 //        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
 //        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
- //       static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+//        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
 //    }
     
-    struct Path {
-        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
-        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
-        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
-    }
 //    struct Path {
-//        static let SERVICE_URL_3006                              = "http://192.168.1.215:3006"
-//        static let SERVICE_URL_3005                              = "http://192.168.1.215:3005"
-//        static let SERVICE_URL_3009                              = "http://192.168.1.215:3009"
+//        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
+//        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
+//        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
 //    }
-    
+    struct Path {
+        static let SERVICE_URL_3006                              = "http://192.168.1.225:3006"
+        static let SERVICE_URL_3005                              = "http://192.168.1.225:3005"
+        static let SERVICE_URL_3009                              = "http://192.168.1.225:3009"
+    }
+    struct KeyPushNotification {
+        static let SandboxOption = true
+        //True: using key develoment
+        //False: using key product
+
+    }
     struct UserURL {
         static let URL_POST_LOGIN                                = Path.SERVICE_URL_3006 + "/api/login";
         static let URL_GET_LOGOUT                                = Path.SERVICE_URL_3006 + "/api/logout";
@@ -44,6 +49,9 @@ struct Constants {
         static let URL_POST_CHECKVERIFY_CODE                     = Path.SERVICE_URL_3009 + "/api/telehealth/user/verifyActivationCode"
         static let URL_POST_CHECKACTIVATION                      = Path.SERVICE_URL_3009 + "/api/telehealth/checkActivation"
         static let URL_GET_PATIENTINFORMATION                    = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
+        static let URL_POST_UPDATEPROFILE                        = Path.SERVICE_URL_3009 + "/api/telehealth/user/update"
+        static let URL_POST_FORGETPIN                            = Path.SERVICE_URL_3009 + "/api/telehealth/user/forgetPin"
+        static let URL_POST_TELEHEATHUSER                        = Path.SERVICE_URL_3009 + "/api/telehealth/user"
 
         
     }
@@ -79,5 +87,10 @@ struct Constants {
     struct ColorCustom{
         static let colorCustomRed = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
         static let  colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
+    }
+    
+    struct UrlAPISocket  {
+        static let joinRoom : String = "/api/telehealth/socket/joinRoom?uid=%@"
+        static let emitAnswer : String = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
     }
 }

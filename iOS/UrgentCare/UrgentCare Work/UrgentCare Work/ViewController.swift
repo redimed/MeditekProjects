@@ -11,7 +11,7 @@ import SwiftyJSON
 import ObjectMapper
 
 class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentViewDelegate{
-    
+    let socketService = SocketService()
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var viewPaging: UIView!
     var pageViewController: UIPageViewController!
@@ -21,15 +21,21 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     var page = 0
     @IBOutlet weak var buttonLogin: UIButton!
     var pastUrls :[String] =   []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationController?.navigationBarHidden = true
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             GetPatientInfomation()
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
-                //loadInformationData()
+                loadInformationData()
             }
+            
+            self.socketService.openSocket(Context.getDataDefasults(Define.keyNSDefaults.UID) as! String,complete: {
+                complete in
+            })
+
         }
         
     }
@@ -42,13 +48,10 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let detailCompanyResponse = Mapper<DetailCompanyResponse>().map(response.result.value) {
-                            if detailCompanyResponse.message == "success"  {
-                                let companyInfor = Mapper().toJSON(detailCompanyResponse)
-                                
-                                if(detailCompanyResponse.data.count > 0){
-                                    Context.setDataDefaults(companyInfor, key: Define.keyNSDefaults.companyInfor)
-                                }
+                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                            if dataTeleheathUserDetail.message == "Success"  {
+                                let teleheathUserDetail = Mapper().toJSON(dataTeleheathUserDetail.data[0])
+                                Context.setDataDefaults(teleheathUserDetail, key: Define.keyNSDefaults.TeleheathUserDetail)
                             }else{
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                     self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))

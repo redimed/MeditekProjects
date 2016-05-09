@@ -28,7 +28,7 @@ class ListSite: Mappable {
 class Site: BaseModel {
     dynamic var Address1 = ""
     dynamic var Address2 = ""
-    dynamic var CompanyID = ""
+    dynamic var CompanyID = 0
     dynamic var ContactName = ""
     dynamic var Country = ""
     dynamic var CreatedBy = ""

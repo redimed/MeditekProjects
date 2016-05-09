@@ -32,7 +32,11 @@ class Define: NSObject {
         static let RefreshCode = "refreshCode"
         static let IsCompanyAccount = "IsCompanyAccount"
         static let PatientUID = "PatientUID"
+        static let TeleheathUserDetail = "TeleheathUserDetail"
+        static let PhoneLogin = "PhoneLogin"
         
+        
+        static let DeviceToken = "DeviceToken"
         static let DetailStaff = "DetailStaff"
         static let DetailStaffCheck = "DetailStaffCheck"
         static let DetailSite = "DetailSite"
@@ -40,8 +44,21 @@ class Define: NSObject {
     }
     
     struct MessageString {
+        
         static let required = "Required"
         static let PleaseWait = "Please wait..."
+        static let CallAnswer : String = "answer"
+        static let CallEndCall : String = "end"
+        static let Decline : String = "decline"
+        static let Call : String = "call"
+        static let Cancel : String = "cancel"
+        static let VersionAndBuild : String = "© REDIMED 2015 \(UIApplication.sharedApplication().versionBuild()) – App Design by Meditek"
+        static let QuestionCallPhone : String = "You want to contact us?"
+        static let MessageLogout : String = "Do you want to logout the system?"
+        static let StringHealthCare:String = "Personalised + Customised, HEALTHCARE anywhere"
+        static let phoneNumberCallUs : String = "tel://0892300900"
+        static let savedPictureMessage : String = "Your picture was saved to Camera Roll"
+        static let placeHolderDescription : String = "Description of injury"
         
     }
     struct PushNotification{

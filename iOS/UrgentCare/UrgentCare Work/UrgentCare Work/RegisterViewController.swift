@@ -55,6 +55,7 @@ class RegisterViewController : BaseViewController {
         phoneString.removeAtIndex(phoneString.startIndex)
         
         requestRegister.phone = Constants.StringContant.prefixesPhoneNumber + String(phoneString)
+        Context.setDataDefaults(requestRegister.phone, key: Define.keyNSDefaults.PhoneLogin)
         requestRegisterPost.data = requestRegister
         
         UserService.postRequestVerify(requestRegisterPost) { [weak self] (response) in

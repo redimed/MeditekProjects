@@ -10,12 +10,13 @@ import UIKit
 import Alamofire
 
 class UserService {
+    
+    //Post API
     class func postLogin(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_LOGIN, model: model, completion: completion)
     }
-    
-    class func getDetailCompanyByUser(userID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
-        return RequestFactory.get(Constants.UserURL.URL_GET_DETAIL_COMPANY_BY_USER+"/"+userID, completion: completion)
+    class func postUpdateProfile(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_UPDATEPROFILE, model: model, completion: completion)
     }
     
     class func postCheckVerifyCode(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
@@ -34,6 +35,14 @@ class UserService {
     class func postCheckActivation(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_CHECKACTIVATION, model: model, completion: completion)
     }
+    class func postForgetPin(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_FORGETPIN, model: model, completion: completion)
+    }
+    class func postTelehealthUser(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_TELEHEATHUSER, model: model, completion: completion)
+    }
+    
+    //Get API
     class func getLogout(completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.get(Constants.UserURL.URL_GET_LOGOUT, completion: completion)
     }
@@ -50,4 +59,8 @@ class UserService {
     class func getPatientInfomation(patientIUD:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.get(Constants.UserURL.URL_GET_PATIENTINFORMATION + "/"+patientIUD, completion: completion)
     }
+    class func getDetailCompanyByUser(userID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.get(Constants.UserURL.URL_GET_DETAIL_COMPANY_BY_USER+"/"+userID, completion: completion)
+    }
+ 
 }

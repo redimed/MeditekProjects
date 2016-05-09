@@ -59,6 +59,8 @@ class Context {
             message = "Pin Number Invalid"
         }else if(ErrorType == "PinNumber.Expired"){
             message = "Pin Number Expired"
+        }else if(ErrorType == "NotRegistered"){
+            message = "Not Registered "
         }else if(ErrorType == "GetListStaff.error"){
             message = "User is Not Admin"
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){

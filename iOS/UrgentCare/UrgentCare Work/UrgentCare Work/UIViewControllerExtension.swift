@@ -29,7 +29,7 @@ extension UIViewController {
     {
         let alert = UIAlertView()
         alert.title = "Warning"
-        alert.message = "Not connect to server"
+        alert.message = "Could not connect to the server"
         alert.addButtonWithTitle("OK")
         alert.show()
     }

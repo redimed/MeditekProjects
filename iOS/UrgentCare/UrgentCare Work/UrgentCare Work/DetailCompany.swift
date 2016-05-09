@@ -33,7 +33,7 @@ class DetailCompanyData: Mappable {
     dynamic var CreatedDate = ""
     dynamic var Description = ""
     dynamic var Enable = ""
-    dynamic var ID = ""
+    dynamic var ID = 0
     dynamic var ModifiedBy = ""
     dynamic var ModifiedDate = ""
     var relCompanyPatient : RelCompanyPatient!
@@ -64,7 +64,7 @@ class RelCompanyPatient: Mappable {
     dynamic var CompanyID = ""
     dynamic var CreatedBy = ""
     dynamic var CreatedDate = ""
-    dynamic var ID = ""
+    dynamic var ID = 0
     dynamic var ModifiedBy = ""
     dynamic var ModifiedDate = ""
     dynamic var PatientID = ""

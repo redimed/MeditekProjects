@@ -57,7 +57,7 @@ class User: Mappable {
     
     dynamic var roles =  [Roles]()
     dynamic var Activated = ""
-    dynamic var ID = ""
+    dynamic var ID = 0
     var telehealthUser : TelehealthUser!
     dynamic var UID = ""
     dynamic var UserName = ""

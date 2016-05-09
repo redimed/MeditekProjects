@@ -34,9 +34,8 @@ class RequestFactory {
     }
     
     class func post(url:String, model:BaseModel, completion: Response <AnyObject, NSError> -> Void)-> Request {
-        
+        print(model)
         let jsonString = Mapper().toJSONString(model, prettyPrint: true)
-        print("url",url)
         print("jsonString",jsonString)
         let request = NSMutableURLRequest(URL: NSURL(string: url)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 5)
         

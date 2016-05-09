@@ -28,8 +28,8 @@ class ListStaff: Mappable {
 class Staff: BaseModel {
     dynamic var Address1 = ""
     dynamic var Address2 = ""
-    dynamic var CountryID1 = ""
-    dynamic var CountryID2 = ""
+    dynamic var CountryID1 = 0
+    dynamic var CountryID2 = 0
     dynamic var CreatedBy = ""
     dynamic var CreatedDate = ""
     dynamic var DOB = ""
@@ -41,7 +41,7 @@ class Staff: BaseModel {
     dynamic var FirstName = ""
     dynamic var Gender = ""
     dynamic var HomePhoneNumber = ""
-    dynamic var ID = ""
+    dynamic var ID = 0
     dynamic var Indigenous = ""
     dynamic var InterperterLanguage = ""
     dynamic var InterpreterRequired = ""
@@ -59,7 +59,7 @@ class Staff: BaseModel {
     dynamic var Suburb = ""
     dynamic var Title = ""
     dynamic var UID = ""
-    dynamic var UserAccountID = ""
+    dynamic var UserAccountID = 0
     dynamic var WorkPhoneNumber = ""
     
     required convenience init?(_ map: Map) {

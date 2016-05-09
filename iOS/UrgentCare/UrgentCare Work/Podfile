@@ -24,6 +24,7 @@ target 'UrgentCare Work' do
 #    pod 'TTTAttributedLabel'
 #    pod 'Socket.IO-Client-Swift', '~> 5.2.3' # Or latest version
 #    pod 'OpenTok'
+#    pod 'Google/CloudMessaging'
 end
 
 target 'UrgentCare WorkTests' do

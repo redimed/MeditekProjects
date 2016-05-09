@@ -35,8 +35,18 @@ struct RegexString  {
 struct api{
     static let submitInjury = "http://meditek.redimed.com.au:3001/api/urgent-care/urgent-request"
 }
-
+struct httpUrl{
+    static let httpTestApp :String = "https://testapp.redimed.com.au"
+    static let httpMeditek :String = "https://meditek.redimed.com.au"
+    static let httpChien : String = "http://192.168.1.238"
+}
 struct ConfigurationSystem {
+    static let http :String = httpUrl.httpChien
+    static let Http_3009 :String = "\(http):3009"
+    static let Http_3005 :String =  "\(http):3005"
+    static let Http_3006 :String =  "\(http):3006"
+
+    
     func validateInputOnlyNumber(value: Int) -> Bool {
         switch value {
         case Constants.numberHashValue.number0 :

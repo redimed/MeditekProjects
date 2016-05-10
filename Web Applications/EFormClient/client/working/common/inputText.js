@@ -1,4 +1,5 @@
 module.exports = React.createClass({
+    value: '',
     propTypes: {
         name: React.PropTypes.string,
         size: React.PropTypes.any,
@@ -24,6 +25,7 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
+        var self = this;
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
@@ -42,9 +44,32 @@ module.exports = React.createClass({
         if(typeof this.props.defaultValue !== 'undefined'){
             $(this.refs.input).val(this.props.defaultValue);
         }
+        $(this.refs.input).on('change', function(event){
+            if(typeof self.props.onChange !== 'undefined'){
+                self.props.onChange();
+            }
+        })
+        $(this.refs.input).on('focus', function(event){
+            self.value = event.target.value;
+            if(typeof self.props.onFocus !== 'undefined'){
+                self.props.onFocus();
+            }
+        })
     },
     componentWillReceiveProps: function(nextProps){
         $(this.refs.input).val(nextProps.defaultValue);
+    },
+    onSum: function(sumRef){
+        var self = this;
+        $(this.refs.input).on('blur', function(event){
+            if($.isNumeric(event.target.value)){
+                var sumValue = $('#'+sumRef).val() || 0;
+                self.value = $.isNumeric(self.value)?self.value:0;
+                if(parseFloat(sumValue) >= parseFloat(self.value))
+                    sumValue = parseFloat(sumValue)-parseFloat(self.value)+parseFloat(event.target.value);
+                $('#'+sumRef).val(sumValue);
+            }
+        })
     },
     setValue: function(value){
         $(this.refs.input).val(value)
@@ -114,8 +139,7 @@ module.exports = React.createClass({
             case 'default':
                 html = (
                     <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}
-                        defaultValue={this.props.defaultValue} style={this.props.style}
-                        onBlur={this.props.onBlur} onChange={this.props.onChange}/>
+                        defaultValue={this.props.defaultValue} style={this.props.style}/>
                 )
                 break;
             case 'it':
@@ -148,14 +172,14 @@ module.exports = React.createClass({
                                             :null
                                         }
 
-                                        <input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder}/>
+                                        <input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp}/>
                                         {this.props.labelSuffix?
                                             <span className="input-group-addon" style={labelSuffixStyle}>{this.props.labelSuffix}</span>
                                             :null
                                         }
 
                                     </div>
-                                    :<input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder}/>
+                                    :<input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp}/>
                                 }
 
                             </div>

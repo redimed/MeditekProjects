@@ -329,7 +329,10 @@ module.exports = React.createClass({
         this.refs.modalCreateFieldSection.show();
         this.refs.listField.init(this.props.fields);
     },
-    render: function(){
+    preCalSum: function(fieldRef, sumRef){
+        this.refs[fieldRef].onSum(sumRef);
+    },
+    render: function(){        
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';
         var displayContextChartMenu = (this.props.permission === 'eformDev')?'contextChartMenu':'none';
         var displayContextTableMenu = (this.props.permission === 'eformDev')?'contextTableMenu':'none';

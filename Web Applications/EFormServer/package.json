@@ -78,5 +78,8 @@
     "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
   },
   "author": "anonymous node/sails user",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "skipper": "^0.5.9"
+  }
 }

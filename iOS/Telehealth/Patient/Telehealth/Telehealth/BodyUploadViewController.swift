@@ -27,7 +27,7 @@ class BodyUploadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         image.image = imageSelect
-        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "didTapImage:"))
+        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(BodyUploadViewController.didTapImage(_:))))
         image.userInteractionEnabled = true
     }
     

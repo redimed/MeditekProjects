@@ -174,7 +174,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     //setup timer slide
     func resetTimer() {
         timer?.invalidate()
-        let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "handleIdleEventAutoSlide:", userInfo: nil, repeats: true)
+        let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(HomeViewController.handleIdleEventAutoSlide(_:)), userInfo: nil, repeats: true)
         timer = nextTimer
     }
     // handle slide image

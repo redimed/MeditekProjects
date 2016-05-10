@@ -38,11 +38,11 @@ struct UrlTelehealth {
     static let requestTelehealth : String = "/api/telehealth/appointment/request"
 }
 
-struct httpUrl{
-    static let httpTestApp :String = "https://testapp.redimed.com.au"
-    static let httpMeditek :String = "https://meditek.redimed.com.au"
-    static let httpChien : String = "http://192.168.1.235"
-}
+//struct httpUrl{
+//    static let httpTestApp :String = "https://testapp.redimed.com.au"
+//    static let httpMeditek :String = "https://meditek.redimed.com.au"
+//    static let httpChien : String = "http://192.168.1.235"
+//}
 
 //Giap: API Socket
 struct UrlAPISocket  {

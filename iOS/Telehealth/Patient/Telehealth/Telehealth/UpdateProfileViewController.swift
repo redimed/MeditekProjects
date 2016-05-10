@@ -47,7 +47,7 @@ class UpdateProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         config.radiusAvatar(imageView)
-        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(UpdateProfileViewController.imageTapped(_:)))
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(tapGestureRecognizer)
         if patientInformation != nil {

@@ -37,7 +37,7 @@ class SocketService {
             Socket.on("connect") {data, ack in
                 
                 print("socket connected")
-                let modifieldURLString = NSString(format: Constants.UrlAPISocket.joinRoom, uid) as String
+                let modifieldURLString = NSString(format: Define.UrlAPISocket.joinRoom, uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]
                 Socket.emit("get", dictionNary)
             }
@@ -55,7 +55,7 @@ class SocketService {
     }
 
     func emitDataToServer(message:String,uidFrom:String,uuidTo:String){
-        let modifieldURLString = NSString(format: Constants.UrlAPISocket.emitAnswer,uidFrom,uuidTo,message) as String
+        let modifieldURLString = NSString(format: Define.UrlAPISocket.emitAnswer,uidFrom,uuidTo,message) as String
         let dictionNary : NSDictionary = ["url": modifieldURLString]
         Socket.emit("get", dictionNary)
     }

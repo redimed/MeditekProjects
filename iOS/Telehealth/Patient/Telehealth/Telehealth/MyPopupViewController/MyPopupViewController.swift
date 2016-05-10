@@ -59,7 +59,7 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
         
         userCallingLabel.text = savedData.fromName
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "cancelCall", name: "cancelCall", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPopupViewController.cancelCall), name: "cancelCall", object: nil)
         // Do any additional setup after loading the view.
     }
 

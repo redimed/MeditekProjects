@@ -113,7 +113,6 @@
 		AF26B2BB1BEC8787006F37A4 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF26B2861BEC8787006F37A4 /* FontAwesome.otf */; };
 		AF26B2BC1BEC8787006F37A4 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF26B2871BEC8787006F37A4 /* FAQsViewController.swift */; };
 		AF26B2BD1BEC8787006F37A4 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF26B2881BEC8787006F37A4 /* FAQs.html */; };
-		AF26B2C01BEC8787006F37A4 /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF26B28B1BEC8787006F37A4 /* config.swift */; };
 		AF26B2C31BEC8787006F37A4 /* AutocompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF26B2911BEC8787006F37A4 /* AutocompleteTableViewCell.swift */; };
 		AF26B2C41BEC8787006F37A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF26B2921BEC8787006F37A4 /* Assets.xcassets */; };
 		AF57CAA41BEC9C79007BEF06 /* OtherServices.html in Resources */ = {isa = PBXBuildFile; fileRef = AF57CAA31BEC9C79007BEF06 /* OtherServices.html */; };
@@ -259,7 +258,6 @@
 		AF26B2861BEC8787006F37A4 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		AF26B2871BEC8787006F37A4 /* FAQsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQsViewController.swift; sourceTree = "<group>"; };
 		AF26B2881BEC8787006F37A4 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
-		AF26B28B1BEC8787006F37A4 /* config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
 		AF26B2911BEC8787006F37A4 /* AutocompleteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTableViewCell.swift; sourceTree = "<group>"; };
 		AF26B2921BEC8787006F37A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF57CAA31BEC9C79007BEF06 /* OtherServices.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = OtherServices.html; sourceTree = "<group>"; };
@@ -501,7 +499,6 @@
 		54EEAEA81C83F0B00096CA1F /* Commons */ = {
 			isa = PBXGroup;
 			children = (
-				AF26B28B1BEC8787006F37A4 /* config.swift */,
 				54EEAEDA1C83F3960096CA1F /* Alert.swift */,
 				54EEAEDB1C83F3960096CA1F /* Constants.swift */,
 				54EEAEDC1C83F3960096CA1F /* Define.swift */,
@@ -1004,7 +1001,6 @@
 				3FF4F4121CBDEE7100ACCECA /* RequestAppointCompany.swift in Sources */,
 				54EEAEDF1C83F3960096CA1F /* Alert.swift in Sources */,
 				AF26B2271BEC869C006F37A4 /* ViewController.swift in Sources */,
-				AF26B2C01BEC8787006F37A4 /* config.swift in Sources */,
 				3FA53DA51CA8C9EB000B8BE5 /* UserService.swift in Sources */,
 				AF26B2961BEC8787006F37A4 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				54EEAEC01C83F2DD0096CA1F /* DTAlertView.swift in Sources */,
@@ -1134,10 +1130,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DISABLE_PUSH_NOTIFICATIONS=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1181,6 +1174,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "DISABLE_PUSH_NOTIFICATIONS=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

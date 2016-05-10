@@ -28,7 +28,7 @@ class ChangePinNumberViewController: BaseViewController {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         let length = ((textField.text?.length)! + string.length)
-        if config.validateInputOnlyNumber(hashValue) == false || length > 6 {
+        if Context.validateInputOnlyNumber(hashValue) == false || length > 6 {
             return false
         }else{
             return true

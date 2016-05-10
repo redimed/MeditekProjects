@@ -30,10 +30,10 @@ module.exports = function(objCheck) {
                 }],
                 where: {
                     FromTime: {
-                        $lte: objCheck.data.FromTime
+                        $lte: fromTime
                     },
                     ToTime: {
-                        $gte: objCheck.data.ToTime
+                        $gte: toTime
                     }
                 },
                 transaction: objCheck.transaction

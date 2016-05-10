@@ -7,6 +7,9 @@ package com.meditek.jasper.process;
 
 import com.lowagie.text.Image;
 import com.meditek.jasper.model.FormDataModel;
+import com.meditek.jasper.model.DynamicFormModuleDefinitionModel;
+
+
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -14,6 +17,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 
 import java.util.Hashtable;
@@ -166,6 +170,7 @@ public class DataProcess {
         //init params
         List<String> tableRefs = new ArrayList<String>();
         List<FormDataModel> tableIdentity = new ArrayList<FormDataModel>();
+        String[] needNameResolve = new DynamicFormModuleDefinitionModel().getModulesNeedsRadioResolve();
         // find all table in data and put all the ref into tableRefs list
         for(FormDataModel d : data){
             if (d.getType().equals("table")){
@@ -239,8 +244,14 @@ public class DataProcess {
                 parsedData.put(d.getModuleID(), new Hashtable());
             }
             if(dataObj!=null){
-                System.out.println("crash here: " + d.getName());
-                ((Hashtable)parsedData.get(d.getModuleID())).put(d.getName().toLowerCase(),dataObj);
+                System.out.println("crash here: " + d.getName() + "---" + d.getValue());
+                if(d.getType().equals("eform_input_check_radio") && Arrays.asList(needNameResolve).contains(d.getModuleID())){
+                    ((Hashtable)parsedData.get(d.getModuleID())).put((d.getName().split("_"))[1].toLowerCase(),dataObj);
+                }
+                else{
+                    ((Hashtable)parsedData.get(d.getModuleID())).put(d.getName().toLowerCase(),dataObj);
+                }
+                
             }
         }
         return parsedData;

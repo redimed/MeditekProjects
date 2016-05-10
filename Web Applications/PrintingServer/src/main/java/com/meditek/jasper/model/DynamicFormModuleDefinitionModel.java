@@ -14,6 +14,7 @@ import com.meditek.jasper.model.FormModuleModel;
  */
 public class DynamicFormModuleDefinitionModel {
     Hashtable modulesDef;
+    String[] modulesNeedsRadioResolve;
 
     //module definition
     public Hashtable getModulesDef() {
@@ -52,4 +53,12 @@ public class DynamicFormModuleDefinitionModel {
         }
         return modulesDef;
     }
+
+    public String[] getModulesNeedsRadioResolve() {
+        if (this.modulesNeedsRadioResolve==null || this.modulesNeedsRadioResolve.length==0){
+            this.modulesNeedsRadioResolve = new String[]{"19","20","21","22","23","24","25","26","27","28","29","30","31","32","33"};
+        }
+        return modulesNeedsRadioResolve;
+    }
+    
 }

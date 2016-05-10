@@ -30,7 +30,7 @@ class AppointmentListsViewController: UIViewController {
         refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.blackColor()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: "getAppointmentLists", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(AppointmentListsViewController.getAppointmentLists), forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
         
     }

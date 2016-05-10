@@ -63,7 +63,7 @@ class VerifyViewController: BaseViewController {
             textFieldVerifyCode.force = 2.0
             textFieldVerifyCode.duration = 0.5
             textFieldVerifyCode.animate()
-            config.borderTextFieldValid(textFieldVerifyCode, color: colorCustom)
+            Context.borderTextFieldValid(textFieldVerifyCode, color: colorCustom)
             
         } else {
             showloading(Define.MessageString.PleaseWait)
@@ -90,7 +90,7 @@ class VerifyViewController: BaseViewController {
                             if loginTelehealthReponse.message == "success"  {
                                 
                                 for var i = 0; i < loginResponse.user?.roles.count; i += 1 {
-                                    if(loginResponse.user?.roles[i].ID == Constants.StringContant.RolesCompanyID){
+                                    if(loginResponse.user?.roles[i].ID == Define.StringContant.RolesCompanyID){
                                         Context.setDataDefaults("true",key: Define.keyNSDefaults.IsCompanyAccount)
                                     }
                                 }
@@ -199,7 +199,7 @@ class VerifyViewController: BaseViewController {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         let length = ((textField.text?.length)! + string.length)
-        if config.validateInputOnlyNumber(hashValue) == false || length > 6 {
+        if Context.validateInputOnlyNumber(hashValue) == false || length > 6 {
             return false
         }else{
             return true

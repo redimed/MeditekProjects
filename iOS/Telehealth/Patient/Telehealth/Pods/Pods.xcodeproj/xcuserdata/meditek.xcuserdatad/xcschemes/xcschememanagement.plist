@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ObjectMapper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Telehealth.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,12 +32,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>16BD320C1B1DB71AFB09954984DAF80F</key>
+		<key>05F531EB4B06D3256D9E99185890FBE1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>295BF3E8CDAF794B4EA886396AF53385</key>
+		<key>3C76F9D1EF794E5450C418D85C9D8115</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3FE080F95C8B8C5AED2F100B4126718A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -42,7 +52,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD59EB536B84C71C102B98B0042AAABB</key>
+		<key>E82421CBEE4F9A6C8D5D9FEC459CE24A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

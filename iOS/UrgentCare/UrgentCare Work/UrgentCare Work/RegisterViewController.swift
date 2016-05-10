@@ -36,9 +36,9 @@ class RegisterViewController : BaseViewController {
     @IBAction func btnCheckPhoneAction(sender: DesignableButton)  {
         view.endEditing(true)
         //Check email if email is valid return message
-        if (phoneTextField.text == "" || config.validateRegex(phoneTextField.text!,regex: Constants.Regex.MobileNumber) == false){
+        if (phoneTextField.text == "" || Context.validateRegex(phoneTextField.text!,regex: Define.Regex.MobileNumber) == false){
             animationView(viewPhoneNumber)
-            config.borderTextFieldValid(phoneTextField, color: colorCustom)
+            Context.borderTextFieldValid(phoneTextField, color: colorCustom)
         }
         else{
             phoneTextField.layer.borderWidth = 0
@@ -54,7 +54,7 @@ class RegisterViewController : BaseViewController {
         var phoneString : String = phoneTextField.text!
         phoneString.removeAtIndex(phoneString.startIndex)
         
-        requestRegister.phone = Constants.StringContant.prefixesPhoneNumber + String(phoneString)
+        requestRegister.phone = Define.StringContant.prefixesPhoneNumber + String(phoneString)
         Context.setDataDefaults(requestRegister.phone, key: Define.keyNSDefaults.PhoneLogin)
         requestRegisterPost.data = requestRegister
         
@@ -125,7 +125,7 @@ class RegisterViewController : BaseViewController {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         let length = ((textField.text?.length)! + string.length)
-        if config.validateInputOnlyNumber(hashValue) == false || length > 10 {
+        if Context.validateInputOnlyNumber(hashValue) == false || length > 10 {
             return false
         }else{
             return true

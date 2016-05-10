@@ -110,4 +110,42 @@ class Define: NSObject {
         static let iOS9 = (Version.SYS_VERSION_FLOAT >= 9.0 && Version.SYS_VERSION_FLOAT < 10.0)
     }
     
+    struct StringContant {
+        static let prefixesPhoneNumber :String = "+61"
+        static let RolesCompanyID :Int = 6
+    }
+    
+    struct numberHashValue  {
+        static let number0 : Int = 915
+        static let number1 : Int = 918
+        static let number2 : Int = 921
+        static let number3 : Int = 924
+        static let number4 : Int = 927
+        static let number5 : Int = 930
+        static let number6 : Int = 933
+        static let number7 : Int = 936
+        static let number8 : Int = 939
+        static let number9 : Int = 942
+        static let delete : Int = 0
+    }
+    
+    struct Regex{
+        //EX: 04 245 544 45 || 4 564 242 45
+        static let PHONE_REGEX = "^0?4[0-9]{8}$"
+        static let PhoneNumber = "[0-9]{6,10}$"
+        static let MobileNumber = "^(\\+61|0061|0)?4[0-9]{8}$"
+        static let Email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        static let PostCodeLength = "[0-9]{4,6}"
+    }
+    
+    struct ColorCustom{
+        static let colorCustomRed = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
+        static let  colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
+    }
+    struct UrlAPISocket  {
+        static let joinRoom : String = "/api/telehealth/socket/joinRoom?uid=%@"
+        static let emitAnswer : String = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
+    }
+    
 }
+

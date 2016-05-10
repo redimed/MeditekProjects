@@ -41,17 +41,18 @@ class AppointmentAPI:TokenAPI {
                 ]
             ]
         ]
-        
+        print(parameter)
         if(UIApplication.sharedApplication().isConnectedToNetwork()){
             Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList,headers:config.headers, parameters:parameter,encoding: .JSON).responseJSON{
                 response in
+                print(response)
                 switch response.result {
                 case .Success(let JSONData):
                     if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
                         print("\(requireupdatetoken as! String)")
                         if requireupdatetoken as! String == "true" {
                             print("Update token",requireupdatetoken)
-                            self.getNewToken()
+                           // self.getNewToken()
                         }
                     }
                     let data = JSON(JSONData)

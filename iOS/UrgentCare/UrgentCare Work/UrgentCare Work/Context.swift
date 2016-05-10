@@ -149,5 +149,48 @@ class Context {
             return true
         }
     }
-
+   class func validateRegex(value: String,regex:String) -> Bool {
+        
+        let REGEX = regex
+        
+        let checkRegex = NSPredicate(format: "SELF MATCHES %@", REGEX)
+        
+        let result =  checkRegex.evaluateWithObject(value)
+        
+        return result
+    }
+    class func borderTextFieldValid(textField:DesignableTextField,color:UIColor){
+        textField.layer.borderColor = color.CGColor
+        textField.layer.borderWidth = 1
+        textField.cornerRadius = 4
+    }
+    
+    class func validateInputOnlyNumber(value: Int) -> Bool {
+        switch value {
+        case Define.numberHashValue.number0 :
+            return true
+        case Define.numberHashValue.number1 :
+            return true
+        case Define.numberHashValue.number2 :
+            return true
+        case Define.numberHashValue.number3 :
+            return true
+        case Define.numberHashValue.number4 :
+            return true
+        case Define.numberHashValue.number5 :
+            return true
+        case Define.numberHashValue.number6 :
+            return true
+        case Define.numberHashValue.number7 :
+            return true
+        case Define.numberHashValue.number8 :
+            return true
+        case Define.numberHashValue.number9 :
+            return true
+        case Define.numberHashValue.delete :
+            return true
+        default:
+            return false
+        }
+    }
 }

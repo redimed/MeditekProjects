@@ -26,23 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Telehealth/AppointmentAPI.swift"
-            timestampString = "481787388.064481"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "uploadImageNotLogin(_:userUID:fileType:completionHandler:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Telehealth/AppointmentAPI.swift"
-            timestampString = "481787456.871865"
+            timestampString = "484544558.866366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
@@ -58,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Telehealth/AppointmentAPI.swift"
-            timestampString = "481787530.205086"
+            timestampString = "484544558.866366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "uploadImage(_:userUID:fileType:completionHandler:)"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "uploadImageNotLogin(_:userUID:fileType:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

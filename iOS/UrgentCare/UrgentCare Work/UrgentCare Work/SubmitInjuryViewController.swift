@@ -76,6 +76,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                     companyName.text = detailCompanyData.CompanyName
                 }
             }else{
+                GetPatientInfomation()
                 selectStaff.enabled = false
                 selectStaff.title = nil
                 SelectContactPerson.hidden = true
@@ -157,7 +158,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     }
     override func viewDidAppear(animated: Bool) {
         getStaff()
-        customTextField(Constants.ColorCustom.colorCustomBrow)
+        customTextField(Define.ColorCustom.colorCustomBrow)
         radioButtonTypeController!.shouldLetDeSelect = false
     }
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -229,20 +230,20 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                     alertMessage(Define.MessageString.required, message: "Last name is max 250 character!")
                 }else if Context.checkMaxLength(contactPhoneTextField, length: 100) == false{
                     alertMessage(Define.MessageString.required, message: "Contact phone is max 250 character!")
-                }else if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false {
-                    borderTextFieldValid(contactPhoneTextField, color: Constants.ColorCustom.colorCustomRed)
+                }else if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:Define.Regex.MobileNumber) == false {
+                    borderTextFieldValid(contactPhoneTextField, color: Define.ColorCustom.colorCustomRed)
                     alertMessage(Define.MessageString.required, message: "Please check your phonenumber!")
                 }
                 else if birthDayTextField.text != "" && checkDOB == false {
                     alertMessage(Define.MessageString.required, message: "Please check your BirthDay!")
-                    borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomRed)
+                    borderTextFieldValid(birthDayTextField, color: Define.ColorCustom.colorCustomRed)
                 }
-                else if emailTextField.text != "" && Context.validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
+                else if emailTextField.text != "" && Context.validatePhoneNumber(emailTextField.text!,regex:Define.Regex.Email) == false {
                     alertMessage(Define.MessageString.required, message: "Please check your email!")
-                    borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomRed)
+                    borderTextFieldValid(emailTextField, color: Define.ColorCustom.colorCustomRed)
                 }
-                else if companyPhoneNumberTextField.text != "" && Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
-                    borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomRed)
+                else if companyPhoneNumberTextField.text != "" && Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:Define.Regex.PhoneNumber) == false {
+                    borderTextFieldValid(companyPhoneNumberTextField, color: Define.ColorCustom.colorCustomRed)
                     alertMessage(Define.MessageString.required, message: "Please check your company phone number!")
                 }
                 else {
@@ -262,7 +263,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                         if let requestAppointResponse = Mapper<RequestAppointResponse>().map(response.result.value) {
                             self!.hideLoading()
                             if(requestAppointResponse.status == "success"){
-                                self!.alertView.alertMessage("Success", message: "Request Telehealth Success!")
+                                self!.alertView.alertMessage("Success", message: "Request Appointment Success!")
                                 let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
                                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                 dispatch_after(time, dispatch_get_main_queue(), {
@@ -296,7 +297,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                         if let requestAppointResponse = Mapper<RequestAppointResponse>().map(response.result.value) {
                             self!.hideLoading()
                             if(requestAppointResponse.status == "success"){
-                                self!.alertView.alertMessage("Success", message: "Request Telehealth Success!")
+                                self!.alertView.alertMessage("Success", message: "Request Appointment Success!")
                                 let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
                                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                 dispatch_after(time, dispatch_get_main_queue(), {
@@ -429,7 +430,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         var arrText : [UITextField] = [firstNameTextField,lastNameTextField,contactPhoneTextField,companyName,contactPersonTextField,typeRequest]
         for i in 0 ..< arrText.count  {
             if arrText[i].text == "" {
-                borderTextFieldValid(arrText[i], color: Constants.ColorCustom.colorCustomRed)
+                borderTextFieldValid(arrText[i], color: Define.ColorCustom.colorCustomRed)
             }else{
                 arrText[i].layer.borderWidth = 0
             }
@@ -492,7 +493,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             birthDayTextField.layer.borderWidth = 0
         }else{
             checkDOB = false
-            borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomRed)
+            borderTextFieldValid(birthDayTextField, color: Define.ColorCustom.colorCustomRed)
         }
     }
     //Cancel button in datepicker
@@ -527,70 +528,70 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         switch textField {
         case firstNameTextField :
             if firstNameTextField.text != "" &&  Context.checkMaxLength(firstNameTextField, length: 50) == true {
-                borderTextFieldValid(firstNameTextField, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(firstNameTextField, color: Define.ColorCustom.colorCustomBrow)
                 firstNameTextField.text = firstNameTextField.text?.capitalizeFirst
             }else{
-                borderTextFieldValid(firstNameTextField, color: Constants.ColorCustom.colorCustomRed)
+                borderTextFieldValid(firstNameTextField, color: Define.ColorCustom.colorCustomRed)
             }
         case lastNameTextField:
             if lastNameTextField.text != "" &&  Context.checkMaxLength(lastNameTextField, length: 250) == true {
-                borderTextFieldValid(lastNameTextField, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(lastNameTextField, color: Define.ColorCustom.colorCustomBrow)
                 lastNameTextField.text = lastNameTextField.text?.capitalizeFirst
             }else{
-                borderTextFieldValid(lastNameTextField, color: Constants.ColorCustom.colorCustomRed)
+                borderTextFieldValid(lastNameTextField, color: Define.ColorCustom.colorCustomRed)
             }
         case contactPhoneTextField:
-            if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false || contactPhoneTextField.text == "" {
-                borderTextFieldValid(contactPhoneTextField, color: Constants.ColorCustom.colorCustomRed)
+            if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:Define.Regex.MobileNumber) == false || contactPhoneTextField.text == "" {
+                borderTextFieldValid(contactPhoneTextField, color: Define.ColorCustom.colorCustomRed)
             }else {
-                borderTextFieldValid(contactPhoneTextField, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(contactPhoneTextField, color: Define.ColorCustom.colorCustomBrow)
             }
             
         case typeRequest:
             if typeRequest.text == "" {
-                borderTextFieldValid(typeRequest, color: Constants.ColorCustom.colorCustomRed)
+                borderTextFieldValid(typeRequest, color: Define.ColorCustom.colorCustomRed)
             }else {
-                borderTextFieldValid(typeRequest, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(typeRequest, color: Define.ColorCustom.colorCustomBrow)
             }
         case emailTextField:
             if emailTextField.text != ""{
-                if Context.validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
-                    borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomRed)
+                if Context.validatePhoneNumber(emailTextField.text!,regex:Define.Regex.Email) == false {
+                    borderTextFieldValid(emailTextField, color: Define.ColorCustom.colorCustomRed)
                 }else {
-                    borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomBrow)
+                    borderTextFieldValid(emailTextField, color: Define.ColorCustom.colorCustomBrow)
                 }
             }else {
-                borderTextFieldValid(emailTextField, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(emailTextField, color: Define.ColorCustom.colorCustomBrow)
             }
         case companyName:
             if companyName.text != "" {
-                borderTextFieldValid(companyName, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(companyName, color: Define.ColorCustom.colorCustomBrow)
                 companyName.text = companyName.text?.capitalizeFirst
             }else {
-                borderTextFieldValid(companyName, color: Constants.ColorCustom.colorCustomRed)
+                borderTextFieldValid(companyName, color: Define.ColorCustom.colorCustomRed)
             }
         case contactPersonTextField:
             if contactPersonTextField.text != "" {
-                borderTextFieldValid(contactPersonTextField, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(contactPersonTextField, color: Define.ColorCustom.colorCustomBrow)
                 contactPersonTextField.text = contactPersonTextField.text?.capitalizeFirst
             }else {
-                borderTextFieldValid(contactPersonTextField, color: Constants.ColorCustom.colorCustomRed)
+                borderTextFieldValid(contactPersonTextField, color: Define.ColorCustom.colorCustomRed)
             }
         case companyPhoneNumberTextField:
             if companyPhoneNumberTextField.text != "" {
-                if Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
-                    borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomRed)
+                if Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:Define.Regex.PhoneNumber) == false {
+                    borderTextFieldValid(companyPhoneNumberTextField, color: Define.ColorCustom.colorCustomRed)
                 }else {
-                    borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomBrow)
+                    borderTextFieldValid(companyPhoneNumberTextField, color: Define.ColorCustom.colorCustomBrow)
                 }
             }else {
-                borderTextFieldValid(companyPhoneNumberTextField, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(companyPhoneNumberTextField, color: Define.ColorCustom.colorCustomBrow)
             }
         case birthDayTextField:
             if Context.compareDate(datePicker.date) == false {
-                borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomRed)
+                borderTextFieldValid(birthDayTextField, color: Define.ColorCustom.colorCustomRed)
             }else {
-                borderTextFieldValid(birthDayTextField, color: Constants.ColorCustom.colorCustomBrow)
+                borderTextFieldValid(birthDayTextField, color: Define.ColorCustom.colorCustomBrow)
             }
             
         case suburbTextField :
@@ -617,6 +618,38 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     @IBAction func actionSelectContactPerson(sender: AnyObject) {
         let listContactPerson :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListContactPersonViewControllerID") as! ListContactPersonViewController
         self.navigationController?.pushViewController(listContactPerson, animated: true)
+    }
+    func GetPatientInfomation(){
+        let data = Context.getDataDefasults(Define.keyNSDefaults.userInfor)
+        let respone = Mapper<LoginResponse>().map(data)
+        UserService.getPatientInfomation((respone?.user!.telehealthUser.UID)!) { [weak self] (response) in
+            print(response.result.value)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                            if dataTeleheathUserDetail.message == "Success"  {
+                                let teleheathUserDetail = Mapper().toJSON(dataTeleheathUserDetail.data[0])
+                                Context.setDataDefaults(teleheathUserDetail, key: Define.keyNSDefaults.TeleheathUserDetail)
+                                self!.firstNameTextField.text = dataTeleheathUserDetail.data[0].FirstName
+                                self!.lastNameTextField.text = dataTeleheathUserDetail.data[0].LastName
+                                self!.contactPhoneTextField.text = dataTeleheathUserDetail.data[0].PhoneNumber
+                                self!.suburbTextField.text = dataTeleheathUserDetail.data[0].Suburb
+                                self!.birthDayTextField.text = dataTeleheathUserDetail.data[0].DOB
+                                self!.emailTextField.text = dataTeleheathUserDetail.data[0].Email
+                            }else{
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self?.showMessageNoNetwork()
+                }
+                
+            }
+        }
     }
     
 }

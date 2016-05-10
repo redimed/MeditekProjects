@@ -66,14 +66,14 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         socketService.emitDataToServer(MessageString.CallAnswer, uidFrom: uuidFrom, uuidTo: uuidTo)
         
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "endCallAnswer", name: "endCallAnswer", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ScreenCallingViewController.endCallAnswer), name: "endCallAnswer", object: nil)
         //Remove data in savedData 
         savedData = CallContainer()
     }
     //start count timer call
     func start() {
         if (!timer.valid) {
-            let aSelector : Selector = "updateTime"
+            let aSelector : Selector = #selector(ScreenCallingViewController.updateTime)
             timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
             startTime = NSDate.timeIntervalSinceReferenceDate()
         }
@@ -228,7 +228,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         view.addSubview(buttonMuteCall)
         view.addSubview(buttonOffMic)
        
-        panRec.addTarget(self, action: "draggedView:")
+        panRec.addTarget(self, action: #selector(ScreenCallingViewController.draggedView(_:)))
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
         publisher?.view.userInteractionEnabled = true
         publisher?.view.addGestureRecognizer(panRec)

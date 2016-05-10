@@ -14,25 +14,28 @@ struct Constants {
 //    struct Path {
 //        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
 //        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
- //       static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+//        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+//        static let SERVICE_URL                                   = "https://testapp.redimed.com.au"
 //    }
     
-    struct Path {
-        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
-        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
-        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
-    }
-//    struct Path {
-//        static let SERVICE_URL_3006                              = "http://192.168.1.215:3006"
-//        static let SERVICE_URL_3005                              = "http://192.168.1.215:3005"
-//        static let SERVICE_URL_3009                              = "http://192.168.1.215:3009"
-//    }
+        struct Path {
+            static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
+            static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
+            static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
+            static let SERVICE_URL                                   = "https://meditek.redimed.com.au"
+        }
+    //    struct Path {
+    //        static let SERVICE_URL_3006                              = "http://192.168.1.215:3006"
+    //        static let SERVICE_URL_3005                              = "http://192.168.1.215:3005"
+    //        static let SERVICE_URL_3009                              = "http://192.168.1.215:3009"
+    //        static let SERVICE_URL                                   = "http://192.168.1.215"
+    //    }
     
     struct UserURL {
         static let URL_POST_LOGIN                                = Path.SERVICE_URL_3006 + "/api/login";
         static let URL_GET_LOGOUT                                = Path.SERVICE_URL_3006 + "/api/logout";
         static let GET_NEW_TOKEN                                 = Path.SERVICE_URL_3006 + "/api/refresh-token/GetNewToken"
-       
+        
         static let URL_GET_DETAIL_COMPANY_BY_USER                = Path.SERVICE_URL_3005 + "/api/company/detail-company-by-user";
         static let URL_GET_LIST_STAFF                            = Path.SERVICE_URL_3005 + "/api/company/get-list-staff"
         static let URL_GET_LIST_SITE                             = Path.SERVICE_URL_3005 + "/api/company/get-list-site"
@@ -44,8 +47,8 @@ struct Constants {
         static let URL_POST_CHECKVERIFY_CODE                     = Path.SERVICE_URL_3009 + "/api/telehealth/user/verifyActivationCode"
         static let URL_GET_GETINFORMATION_PATIENT                = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
         static let URL_POST_CHECKACTIVATION                      = Path.SERVICE_URL_3009 + "/api/telehealth/checkActivation"
-        static let URL_GET_PATIENTINFORMATION                   = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
-
+        static let URL_GET_PATIENTINFORMATION                    = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
+        
         
     }
     

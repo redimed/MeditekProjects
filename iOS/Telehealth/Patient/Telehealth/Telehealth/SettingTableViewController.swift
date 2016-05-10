@@ -22,7 +22,7 @@ class SettingTableViewController: UITableViewController ,DTAlertViewDelegate {
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        let leftButton =  UIBarButtonItem(title: "Back", style:  UIBarButtonItemStyle.Plain, target: self, action: "backButtonAction")
+        let leftButton =  UIBarButtonItem(title: "Back", style:  UIBarButtonItemStyle.Plain, target: self, action: #selector(SettingTableViewController.backButtonAction))
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = leftButton

@@ -20,7 +20,7 @@ class VerifyPhoneAPI:TokenAPI {
         //Split number 0
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         var phoneConfig : String!
-        if ConfigurationSystem.http == httpUrl.httpTestApp {
+        if ConfigurationSystem.http == Constants.Path.SERVICE_URL {
             phoneConfig = "+61"+phoneNumber
         }else {
             phoneConfig = "+61412345678"
@@ -62,7 +62,7 @@ class VerifyPhoneAPI:TokenAPI {
         config.setHeader()
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         var phoneConfig : String!
-        if ConfigurationSystem.http == httpUrl.httpTestApp {
+        if ConfigurationSystem.http == Constants.Path.SERVICE_URL {
             phoneConfig = "+61"+phoneNumber
         }else {
             phoneConfig = "+61412345678"

@@ -205,7 +205,7 @@
                                                     <p class="help-block required-text" ng-if="submitted && step2.FirstName.$error.required">This field is required.</p>
                                                     <p class="help-block required-text" ng-if="step2.FirstName.$error.pattern">Please enter a valid First Name.</p>
                                                 </div>
-                                            </div>    
+                                            </div>
                                             <div class="col-lg-4 col-md-4">
                                                 <div class="form-group" ng-class="{true: 'has-error', false: ''}[step2.MiddleName.$error.pattern]">
                                                     <label class="control-label">
@@ -310,7 +310,7 @@
                                                     <p class="help-block required-text" ng-if="submitted && step2.CountryID.$error.required">This field is required.</p>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                     </div>
                                 </fieldset>
                             </div>
@@ -482,10 +482,11 @@
                     <div class="form-body my-form-body-padding">
                         <div class="form-group margin-top-20" ng-class="{true: 'has-error', false: ''}[submitted && step3.PinNumber.$invalid]">
                             <label class="control-label col-md-3 col-sm-3">
-                                PIN number <span class="required">*</span>
+                                PIN Number / Password <span class="required">*</span>
                             </label>
                             <div class="col-md-5 col-sm-5">
                                 <input type="text" class="form-control" name="PinNumber" ng-model="postData.data.PinNumber" ng-pattern="/^[0-9]{4,6}$/" required>
+                                <span class="help-block">This Pin code is your password to access your online health information through REDIMED, at your convenience. </span>
                                 <p class="help-block required-text" ng-if="submitted && step3.PinNumber.$error.required">This field is required.</p>
                                 <p ng-show="submitted && step3.PinNumber.$error.pattern" class="help-block required-text">PIN Number must be at least 4 no more than 6 character</p>
                             </div>

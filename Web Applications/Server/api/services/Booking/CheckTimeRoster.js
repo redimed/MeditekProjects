@@ -7,7 +7,7 @@ module.exports = function(objCheck) {
         HelperService.CheckExistData(objCheck.data.FromTime) &&
         HelperService.CheckExistData(objCheck.data.ToTime)) {
         var fromTime = moment(objCheck.data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-        var toTime = moment(objCheck.data.toTime, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+        var toTime = moment(objCheck.data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').toDate();
         var whereClauseDoctor = {};
         _.forEach(objCheck.where, function(valueKey, indexKey) {
             if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||

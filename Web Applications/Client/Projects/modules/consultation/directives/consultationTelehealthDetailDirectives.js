@@ -263,8 +263,6 @@ app.directive('telehealthDetail', function() {
                     $scope.ClinicalDetails();
                     console.log("saveWaAppointment",$scope.wainformation);
                     if($scope.wainformation.PatientAppointments) {
-                        $scope.wainformation.PatientAppointment = $scope.wainformation.PatientAppointments.length>0?$scope.wainformation.PatientAppointments[0]:{};
-                        delete $scope.wainformation['PatientAppointments'];
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
                             delete $scope.wainformation['Patients'];
                         }

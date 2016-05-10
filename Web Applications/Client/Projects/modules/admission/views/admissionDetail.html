@@ -847,6 +847,48 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <h4 class="form-section bold margin-top-40">Sun exposure</h4>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">What is your usual daily exposure to the sun?</label>
+                                            <input type="text" class="form-control" ng-model="admissionDetail.sun_daily_exposure" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">What is your usual choice for sun protection? (eg- Hat, Sun Screen, Sunglasses)</label>
+                                            <input type="text" class="form-control" ng-model="admissionDetail.sun_choice_protection" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">What is your job role?</label>
+                                            <input type="text" class="form-control" ng-model="admissionDetail.sun_job_role" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="radio-list">
+                                            <label class="radio-inline">Does your job role require you to be in the sun for greater than 6 hours per day?</label>
+                                            <label class="radio-inline">
+                                                <input type="radio" class="regular-radio" name="sun_job_required" value="Y" ng-model="admissionDetail.sun_job_required" /> Yes
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" class="regular-radio" name="sun_job_required" value="N" ng-model="admissionDetail.sun_job_required" /> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <h4 class="form-section bold margin-top-40">Doctor use only</h4>
                             <fieldset ng-disabled="doctorUseOnly()">
                                 <div class="form-group">

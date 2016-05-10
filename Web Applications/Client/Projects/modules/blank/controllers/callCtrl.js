@@ -47,6 +47,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     $scope.streams = OTSession.streams;
 
     $scope.$on("runtime", function(argument) {
+        o.audio.pause();
         var mytimeout = $timeout($scope.onTimeout, 1000);
     });
 

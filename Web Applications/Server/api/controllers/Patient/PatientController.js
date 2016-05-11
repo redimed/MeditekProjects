@@ -27,7 +27,7 @@ module.exports = {
                             message: "success",
                             data: info
                         });
-                    } else if(data.SiteID) {
+                    } else if(data.SiteID && data.SiteID != 0 && data.SiteID != "0") {
                         return CompanySite.findOne({
                             where:{
                                 ID : data.SiteID

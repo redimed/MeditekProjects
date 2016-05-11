@@ -803,6 +803,7 @@ module.exports = {
 		whereClause.Doctor = {};
 		whereClause.UserAccount ={};
 		whereClause.Role = {};
+		whereClause.Department = {};
 		if(check.checkData(data.Search)){
 			if(data.Search.FirstName){
 				whereClause.Doctor.FirstName={
@@ -850,6 +851,12 @@ module.exports = {
 			if(data.Search.RoleName){
 				whereClause.Role.RoleName = {
 					like:'%'+data.Search.RoleName+'%'
+				}
+			}
+			if(data.Search.DepartmentName)
+			{
+				whereClause.Department.DepartmentName = {
+					like: '%'+data.Search.DepartmentName+'%'
 				}
 			}
 		}
@@ -939,12 +946,12 @@ module.exports = {
 	},
 
 	/*
-		LoadlistDoctor: Get all data
+		LoadlistDoctor: Get all data comment
 	*/
 	LoadlistDoctor: function(data, transaction) {
 		var isAvatar = data.isAvatar?data.isAvatar:false;
 		var include_data = [];
-		var Role_Arr = [4,5];
+		var Role_Arr = [check.const.rolesID.externalPractitioner, check.const.rolesID.internalPractitioner];
 		if(data.RoleID) {
 			Role_Arr = data.RoleID;
 		}
@@ -952,6 +959,8 @@ module.exports = {
 		var attributes = [];
 		var isConcat = false;
 		var whereClause = Services.Doctor.whereClause(data);
+		console.log(data);
+		console.log(whereClause);
 		var FullName;
 		if(data.Search){
 			FullName = data.Search.FullName?data.Search.FullName:null;
@@ -971,6 +980,7 @@ module.exports = {
 			};
 			attributes.push("UID");
 			attributes.push("Enable");
+			attributes.push("DepartmentID");
 		}
 		else{
 			attributes = defaultAtrributes;
@@ -1001,7 +1011,7 @@ module.exports = {
 					model: Role,
 				    attributes: ['RoleName','RoleCode'],
 				    where:{
-				       	$or: whereClause.Role
+				       	$or: check.sqlParam(whereClause.Role)
 				   	},
 				    required: true,
 				}
@@ -1022,12 +1032,17 @@ module.exports = {
 		var order = [];
 		// order.push(['CreatedDate', 'ASC']);
 		if(data.order) {
-			order.push(data.order);
+			if(data.order.length==3)
+			{
+				order.push([sequelize.models[data.order[0]], data.order[1], data.order[2] ])
+			}
+			else {
+				order.push(data.order);
+			}
 		}
 		else {
 			order.push(['CreatedDate', 'ASC']);
 		}
-
 		return Doctor.findAndCountAll({
 			include:[
 				{
@@ -1035,21 +1050,29 @@ module.exports = {
 		       		model: UserAccount,
 		      		attributes: ['PhoneNumber','Enable', 'UID'],
 			  		where:{
-			   			$or: whereClause.UserAccount,
+			   			$or: check.sqlParam(whereClause.UserAccount),
 			   			Enable:'Y'
 			   		},
 			   		required: true,
 		    	},
+				{
+					model: Department,
+					attributes:['ID', 'UID', 'SiteID', 'DepartmentCode', 'DepartmentName'],
+					where:{
+						$or: check.sqlParam(whereClause.Department)
+					},
+					required: check.sqlParam(whereClause.Department)?true:false
+				}
 			],
 			attributes : attributes,
 			limit      : data.limit,
 			offset     : data.offset,
 			order      : order,
-			// subQuery   : false,
+			subQuery   : false,
 			where: {
 				Enable:'Y',
 				$and: [
-					whereClause.Doctor,
+					check.sqlParam(whereClause.Doctor),
 					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
 		    	   	like: '%'+FirstName+' '+LastName+'%'}):null,
 		    	   	FullName?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
@@ -1797,11 +1820,38 @@ module.exports = {
 				};
 			}
 		}
+		var include = null;
+		if(data.include) {
+			if(data.include.Doctor) {
+				include = {
+					model: Doctor,
+					through: {
+						attributes: []
+					},
+					attributes: data.include.Doctor.attributes,
+					required:true,
+					include: data.include.Department?
+							{
+								model: Department,
+								attribute: ['DepartmentName'],
+								required: false
+							}:null
+				}
+			}
+		}
 		return DoctorGroup.findAndCountAll({
 			where : whereClause,
 			limit : data.limit,
 			offset: data.offset,
 			order : data.order,
+			include: include,
+			// include: {
+			// 	model: Doctor,
+			// 	through: {
+			// 		attributes:[]
+			// 	},
+			// 	attributes: ['FirstName', 'LastName']
+			// },
 		})
 		.then(function(got_list) {
 			if(_.isEmpty(got_list)) {

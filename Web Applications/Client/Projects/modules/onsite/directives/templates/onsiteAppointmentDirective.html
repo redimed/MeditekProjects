@@ -568,7 +568,8 @@
                             </div>
                     </div>
                     <div class="tab-pane" id="tab_3">
-                        <div class="row">
+                        <div class="margin-top-30 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Treating.html'"></div>
+                        <!--<div class="row">
                             <div class="col-lg-10 col-md-12 col-lg-offset-1">
                                 <h3 class="form-section bold">Treating Practitioner</h3>
                             </div>
@@ -612,7 +613,7 @@
                                     <div class="form-control">{{wainformation.Doctors[0].Department.DepartmentName}}</div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="tab-pane" id="tab_4">
                         <div class="row margin-top-40">
@@ -650,9 +651,9 @@
                 <a class="btn red" ng-click="selectPatient()" ng-hide="checkRoleUpdate">
                     <i class="glyphicon glyphicon-plus"></i> Link Patient
                 </a>
-                <button type="submit" class="btn green" ng-click="submitUpdate()">
+                <a type="submit" class="btn green" ng-click="submitUpdate()">
                     <i class="glyphicon glyphicon-save"></i> Save change
-                </button>
+                </a>
             </div>
         </form>
     </div>

@@ -25,7 +25,7 @@ module.exports = {
                     res.serverError(ErrorWrap(err));
                 }
             });
-        
+
     },
     PostSaveRolesEFormTemplate: function(req, res){
         RelEFormTemplateRole.findOne({
@@ -195,7 +195,7 @@ module.exports = {
         })
     },
     PostDetailEFormTemplate: function(req, res){
-        EFormTemplate.find({ where: {UID: req.body.uid}, 
+        EFormTemplate.find({ where: {UID: req.body.uid},
             include: [{
                 model: EFormTemplateData,
                 required: false,
@@ -236,7 +236,7 @@ module.exports = {
                                 TemplateData: req.body.content
                             })
                             .then(function(){
-                                res.json({data: EFormTemplateData});    
+                                res.json({data: EFormTemplateData});
                             })
                         })
                     }
@@ -319,7 +319,7 @@ module.exports = {
                         })
                     }, function(err){
                        res.status(400).json({err: err});
-                        return t.rollback(); 
+                        return t.rollback();
                     })
                     .then(function(){
                         return Appointment.find(
@@ -331,7 +331,7 @@ module.exports = {
                         )
                     }, function(err){
                         res.status(400).json({err: err});
-                        return t.rollback(); 
+                        return t.rollback();
                     })
                     .then(function(appointment){
                         return eform.addAppointment(appointment.ID,{
@@ -339,13 +339,13 @@ module.exports = {
                         })
                     }, function(err){
                         res.status(400).json({err: err});
-                        return t.rollback(); 
+                        return t.rollback();
                     })
                     .then(function(data){
                         return res.json({data: data});
                     }, function(err){
                         res.status(400).json({err: err});
-                        return t.rollback(); 
+                        return t.rollback();
                     })
                 })
             }
@@ -401,7 +401,7 @@ module.exports = {
                             required: true,
                             through: {
                                 where: {AppointmentID: appointment.ID}
-                            } 
+                            }
                         }
                     ]
                 })
@@ -510,7 +510,7 @@ module.exports = {
         })
     },
     PostDetailEFormTemplateModule: function(req, res){
-        EFormTemplateModule.find({ where: {UID: req.body.uid}, 
+        EFormTemplateModule.find({ where: {UID: req.body.uid},
             include: [{
                 model: EFormTemplateModuleData,
                 required: false,
@@ -537,7 +537,7 @@ module.exports = {
                                 TemplateModuleData: req.body.content
                             })
                             .then(function(){
-                                res.json({data: EFormTemplateModuleData});    
+                                res.json({data: EFormTemplateModuleData});
                             })
                         })
                     }
@@ -585,6 +585,18 @@ module.exports = {
                     res.serverError(ErrorWrap(err));
                 }
             });
-        
+
     },
+    GetListEFormTemplateByPatient: function(req, res) {
+        var data = req.body;
+        if (typeof(data) == 'string') {
+            data = JSON.parse(data);
+        }
+        Services.GetListEFormTemplateByPatient(data)
+        .then(function(result) {
+            res.ok(result);
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    }
 }

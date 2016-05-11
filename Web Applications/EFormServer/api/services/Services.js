@@ -117,5 +117,6 @@ module.exports = {
     CreateCompany: require('./Company/CreateCompany'),
     //End Company
     GetListEFormGroup: require('./EForm/GetListEFormGroup'),
-    GetListEFormTemplateFilter: require('./EForm/GetListEFormTemplateFilter')
+    GetListEFormTemplateFilter: require('./EForm/GetListEFormTemplateFilter'),
+    GetListEFormTemplateByPatient: require('./EForm/GetListEFormTemplateByPatient'),
 };

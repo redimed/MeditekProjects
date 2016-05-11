@@ -77,7 +77,6 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
         name: 'Telehealth'
     }];
     $scope.formData = {
-        aaa:'asdasdadasdasada',
         service: event.Services[0],
         site: event.Sites[0],
         fromTime: moment(start).format('HH:mm'),

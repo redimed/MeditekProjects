@@ -76,6 +76,7 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                         }
                     }
                     scope.info.listWaapointment = data;
+                    console.log('dddddddd', data);
                     o.loadingPage(false);
                 });
             };
@@ -105,7 +106,7 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                 scope.info.data.Range[0].Appointment.FromTime[0]=null;
                 scope.info.data.Range[0].Appointment.FromTime[1]=null;
                 scope.LoadData();
-            }
+            };
         }
     };
 })

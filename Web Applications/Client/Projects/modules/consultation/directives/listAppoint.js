@@ -105,6 +105,33 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 //console.log(scope.info.data);
                 WAAppointmentService.loadListWAAppointmentConsultation(scope.info.data).then(function(data) {
                     console.log('aaaaaaaa', data);
+                    for (var i = 0; i < data.rows.length; i++) {
+                        if(!_.isEmpty(data.rows[i].Doctors))
+                        {
+                            var name='';
+                            for (var j = 0; j < data.rows[i].Doctors.length; j++) {
+                                var doctor = data.rows[i].Doctors[j];
+                                if(doctor.Title)
+                                {
+                                    name = name + doctor.Title + ' ';
+                                }
+                                if(doctor.FirstName)
+                                {
+                                    name = name + doctor.FirstName + ' ';
+                                }
+                                if(doctor.LastName)
+                                {
+                                    name = name + doctor.LastName;
+                                }
+                                if(j < data.rows[i].Doctors.length-1)
+                                {
+                                    name = name + '; '
+                                }
+
+                            }
+                            data.rows[i].DoctorsName = name;
+                        }
+                    }
                     scope.info.listWaapointment = data;
                 });
             };

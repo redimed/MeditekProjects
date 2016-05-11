@@ -106,7 +106,15 @@
                                 {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
                                 </span><span ng-if="appt.ishavePatientAppointment === true" style="color:red;">*</span>
                             </td>
-                            <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
+                            <td>
+                                <!--{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}-->
+                                <span
+                                    data-toggle="tooltip"
+                                    data-placement="left"
+                                    title="{{appt.DoctorsName}}">
+                                    {{appt.Doctors.length>1?'Group':appt.DoctorsName}}
+                                </span>
+                            </td>
                             <td>{{appt.CreatedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>
                                 <span ng-if="appt.Status === info.apptStatus[3].value"><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>

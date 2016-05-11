@@ -234,10 +234,10 @@ app.directive('onsiteAppointment', function(){
                 $scope.initListDoctor = function() {
 
                     $scope.searchObject.doctor = {
-                        limit: 2,
+                        limit: 10,
                         offset: 0,
                         currentPage: 1,
-                        maxSize: 5,
+                        maxSize: 10,
                         attributes:$scope.items,
                         Search:{
                             RoleAlias: 'Internal'
@@ -321,10 +321,10 @@ app.directive('onsiteAppointment', function(){
 
                 $scope.initDoctorGroup = function() {
                     $scope.searchObject.doctorGroup = {
-                        limit: 1,
+                        limit: 10,
                         offset: 0,
                         currentPage: 1,
-                        maxSize: 5,
+                        maxSize: 10,
                         search: {},
                         order: null,
                         include: {

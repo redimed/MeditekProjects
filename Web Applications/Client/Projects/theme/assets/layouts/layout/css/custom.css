@@ -962,3 +962,16 @@ span.glyphicon:hover {
 .sort {
     color: #00BFFF !important;
 }
+
+/*tannv.dts@gmail.com =====================================================>>*/
+.red_treating_table {
+    font-size: 10px!important;
+}
+.red_treating_table .table td,.red_treating_table .table th, .red_treating_table .table td input   {
+    font-size:12px!important;
+}
+
+.red_treating_border_left {
+    border-left: 1px solid #d9d9d9;
+}
+/*======================================================<<tannv.dts@gmail.com*/

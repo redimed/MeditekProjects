@@ -85,6 +85,13 @@ module.exports.http = {
   * since that's the only time Express will cache flat-files.                *
   *                                                                          *
   ***************************************************************************/
+  /*bodyParser: (function () {
+      var opts = {limit: '50mb'};
+      var fn;
 
+      // Default to built-in bodyParser:
+      fn = require('skipper');
+      return fn(opts);
+  }),*/
   // cache: 31557600000
 };

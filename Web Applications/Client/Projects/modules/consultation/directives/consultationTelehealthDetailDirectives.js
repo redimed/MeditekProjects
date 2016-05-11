@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.TelehealthDetail.directives', []);
-app.directive('telehealthDetail', function() {
+app.directive('telehealthDetail', function(doctorService) {
     return {
         scope:{
             runWhenFinish:"="
@@ -180,22 +180,304 @@ app.directive('telehealthDetail', function() {
                     }
                 };
 
-                $scope.loadAllDoctor = function() {
+                /*$scope.loadAllDoctor = function() {
                     WAAppointmentService.ListDoctor().then(function(data) {
                         $scope.info.listDoctorTreatingPractitioner = data;
                     });
                 }
 
                 $scope.loadAllDoctor();
+*/
+                //Tannv.dts@gmail.com------------------------------------------------------------------
+                $scope.paging = {
+                    doctor:{}
+                };
+                $scope.display = {
+                    doctor:{}
+                }
+                $scope.display.doctor.item = [
+                    {field:"FirstName",name:"First Name"},
+                    {field:"LastName",name:"Last Name"},
+                    {field:"DepartmentName",name:"Department"},
+                    {field:"UserAccount",name:"Contact Number"}
+                ];
+                $scope.display.doctor.fieldSort = {
+                    'FirstName': 'ASC',
+                    'LastName': 'ASC',
+                    'DepartmentName': 'ASC',
+                    'UserAccount': 'ASC'
+                };
 
-                $scope.selectTreatingPractitioner = function(data) {
+                $scope.loadListDoctor = function(info){
+                    doctorService.loadlistDoctor(info).then(function(response){
+                        if(response.message=="success"){
+                            $scope.info.listDoctorTreatingPractitioner = response.data;
+                            for(var i = 0; i < response.data.length;i++){
+                                $scope.info.listDoctorTreatingPractitioner[i].stt = $scope.searchObjectMap.doctor.offset*1 + i + 1;
+                                //Dong bo hien thi voi listDoctorSelected
+                                if($scope.info.listDoctorSelected)
+                                {
+                                    for (var j = 0; j < $scope.info.listDoctorSelected.length; j++) {
+                                        if($scope.info.listDoctorSelected[j].UID == $scope.info.listDoctorTreatingPractitioner[i].UID)
+                                        $scope.info.listDoctorTreatingPractitioner[i].Selected = 'Y';
+                                    }
+                                }
+                            }
+                            $scope.paging.doctor.count= response.count;
+                        }
+                        else{
+                            console.log(response.message);
+                        }
+                    });
+                };
+
+                $scope.searchObject = {};
+                $scope.searchObjectMap = {};
+                $scope.initListDoctor = function() {
+
+                    $scope.searchObject.doctor = {
+                        limit: 2,
+                        offset: 0,
+                        currentPage: 1,
+                        maxSize: 5,
+                        attributes:$scope.items,
+                        Search:{
+                            RoleAlias: 'Internal'
+                        },
+                        order: null,
+                        RoleID: [5]
+                    };
+                    // scope.search.Enable = null;
+                    $scope.searchObjectMap.doctor = angular.copy($scope.searchObject.doctor);
+                    $scope.loadListDoctor($scope.searchObjectMap.doctor);
+                };
+
+                $scope.paging.doctor.setPage = function() {
+                    $scope.searchObjectMap.doctor.offset = ($scope.searchObjectMap.doctor.currentPage - 1) * $scope.searchObjectMap.doctor.limit;
+                    $scope.loadListDoctor($scope.searchObjectMap.doctor);
+                };
+
+                $scope.initListDoctor();
+
+                $scope.Search = function(e){
+                    console.log(">>>>>>>>search");
+                    if(e==13){
+                        // scope.searchObjectMap.Search = data;
+                        console.log("searchObjectMap.doctor", $scope.searchObjectMap.doctor);
+                        $scope.loadListDoctor($scope.searchObjectMap.doctor);
+                    }
+                };
+
+                $scope.display.doctor.sort = function (field, sort) {
+                    // alert(field+sort);
+                    if(sort === 'ASC') {
+                        $scope.display.doctor.fieldSort[field] = 'DESC';
+                        sort = 'DESC';
+                    } else {
+                        $scope.display.doctor.fieldSort[field] = 'ASC';
+                        sort = 'ASC';
+                    }
+                    if(field =='UserAccount')
+                        field = 'PhoneNumber';
+                    if(field=='Role'){
+                        field = 'RoleName';
+                    }
+                    var data = [];
+                    if(field == 'DepartmentName') data.push('Department');
+                    if(field == 'PhoneNumber') data.push('UserAccount');
+                    data.push(field);
+                    data.push(sort);
+                    $scope.searchObjectMap.doctor.order = data;
+                    $scope.loadListDoctor($scope.searchObjectMap.doctor);
+                }
+                
+                //-----------------------group doctor
+                $scope.info.listDoctorGroup = [];
+                $scope.paging.doctorGroup = {
+                    count: null
+                }
+                $scope.display.doctorGroup = {
+                    fieldSort: {
+                        'GroupName': 'ASC',
+                        'Enable':' ASC'
+                    }
+                }
+                function loadlistDoctorGroup(data) {
+                    doctorService.loadlistGroup(data)
+                    .then(function(response){
+                        for (var i = 0; i < response.rows.length; i++) {
+                            response.rows[i].stt = $scope.searchObjectMap.doctorGroup.offset*1 + i +1;
+                            response.rows[i].DoctorsName = '';
+                            for(var j = 0; j < response.rows[i].Doctors.length; j ++) {
+                                var d = response.rows[i].Doctors[j];
+                                response.rows[i].DoctorsName = response.rows[i].DoctorsName + d.FirstName + ' ' + d.LastName + (j<response.rows[i].Doctors.length-1?', ':'');
+                            }
+                        }
+                        $scope.info.listDoctorGroup = response.rows;
+                        console.log("List Doctor Group",$scope.info.listDoctorGroup);
+                        $scope.paging.doctorGroup.count =  response.count;
+                    },function(err){
+                        console.log('err ', err);
+                    })
+                }
+
+                $scope.initDoctorGroup = function() {
+                    $scope.searchObject.doctorGroup = {
+                        limit: 2,
+                        offset: 0,
+                        currentPage: 1,
+                        maxSize: 5,
+                        search: {},
+                        order: null,
+                        include: {
+                            Doctor: ['UID', 'FirstName', 'LastName'],
+                            Department: ['DepartmentName']
+                        }
+                    }
+                    $scope.searchObjectMap.doctorGroup = angular.copy($scope.searchObject.doctorGroup);
+                    loadlistDoctorGroup($scope.searchObjectMap.doctorGroup);
+                }
+                $scope.initDoctorGroup();
+
+                $scope.paging.doctorGroup.setPage = function() {
+                    $scope.searchObjectMap.doctorGroup.offset = ($scope.searchObjectMap.doctorGroup.currentPage -1) * $scope.searchObjectMap.doctorGroup.limit;
+                    loadlistDoctorGroup($scope.searchObjectMap.doctorGroup);
+                }
+
+                $scope.display.doctorGroup.sort = function(field, sort) {
+                    if(sort==='ASC') {
+                        $scope.display.doctorGroup.fieldSort[field] = 'DESC';
+                    } else {
+                        $scope.display.doctorGroup.fieldSort[field] = 'ASC';
+                    }
+                    var data = field + ' ' + sort;
+                    $scope.searchObjectMap.doctorGroup.order = data;
+                    loadlistDoctorGroup($scope.searchObjectMap.doctorGroup);
+                }
+                $scope.paging.doctorGroup.Search = function(e) {
+                    if(e==13) {
+                        loadlistDoctorGroup($scope.searchObjectMap.doctorGroup);
+                    }
+                }
+
+                //selected doctor --------------------------------------------------------------
+                $scope.info.listDoctorSelected = [
+                    // {UID:'aa13', Name:'Nguyen Van Minh', DepartmentName:'Business Department'},
+                    // {UID:'bb24', Name:'Tran Van Khuong', DepartmentName:'Information Technology'}
+                ]
+                $scope.action = {};
+                $scope.action.doctor={
+                    selectedDoctor: function(doctor){
+                        if(doctor.Selected=='Y')
+                        {
+                            //Push vao listDoctorSelected
+                            var d = {
+                                UID: doctor.UID,
+                                Name: doctor.FirstName + ' ' + doctor.LastName,
+                                DepartmentName: doctor.Department?doctor.Department.DepartmentName:null,
+                            }
+                            $scope.info.listDoctorSelected.push(d);
+                        } else {
+                            //Remove tu listDoctorSelected
+                            for(var i = 0; i < $scope.info.listDoctorSelected.length; i++) {
+                                if($scope.info.listDoctorSelected[i].UID == doctor.UID) {
+                                    $scope.info.listDoctorSelected.splice(i, 1);
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                $scope.action.doctorsSelected = {
+                    removeDoctor: function (doctor, index) {
+                        for (var i = 0; i < $scope.info.listDoctorTreatingPractitioner.length; i++) {
+                            if($scope.info.listDoctorTreatingPractitioner[i].UID == doctor.UID) {
+                                $scope.info.listDoctorTreatingPractitioner[i].Selected = 'N';
+                                break;
+                            }
+                        }
+                        $scope.info.listDoctorSelected.splice(index, 1);
+
+                    }
+                }
+
+                $scope.action.doctorGroup = {
+                    selectDoctorFromGroup: function (doctorGroup) {
+                        //Loop cac doctor trong group
+                        for(var i = 0; i < doctorGroup.Doctors.length; i++) {
+                            var d = {
+                                UID: doctorGroup.Doctors[i].UID,
+                                Name: doctorGroup.Doctors[i].FirstName  + ' ' + doctorGroup.Doctors[i].LastName,
+                                DepartmentName: doctorGroup.Doctors[i].Department?doctorGroup.Doctors[i].Department.DepartmentName:null,
+                                GroupID: doctorGroup.ID,
+                                GroupName: doctorGroup.GroupName
+                            }
+                            //Kiem tra xem doctor co ton tai trong listDoctorSelected  hay khong
+                            var exist = false;
+                            for (var j = 0; j< $scope.info.listDoctorSelected.length; j++) {
+                                if(d.UID == $scope.info.listDoctorSelected[j].UID)
+                                {
+                                    exist = true;
+                                    $scope.info.listDoctorSelected[j].GroupID = doctorGroup.ID;
+                                    $scope.info.listDoctorSelected[j].GroupName = doctorGroup.GroupName;
+                                    break;
+                                }
+                            }
+                            if(!exist)
+                            {
+                                $scope.info.listDoctorSelected.push(d);
+                            }
+                            //Dong bo hoa hien thi voi listDoctorTreatingPractitioner
+                            for( var j = 0; j < $scope.info.listDoctorTreatingPractitioner.length; j++) {
+                                if (d.UID == $scope.info.listDoctorTreatingPractitioner[j].UID)
+                                {
+                                    $scope.info.listDoctorTreatingPractitioner[j].Selected = 'Y';
+                                }
+                            }
+                        }
+                        toastr.success("Selected list doctors!", "success");
+                    }
+                }
+
+                $scope.initListDoctorSelected = function ()
+                {
+                    if ($scope.wainformation.Doctors) {
+                        for (var i = 0; i < $scope.wainformation.Doctors.length; i++) {
+                            var d = {
+                                UID: $scope.wainformation.Doctors[i].UID,
+                                Name: $scope.wainformation.Doctors[i].FirstName + ' ' + $scope.wainformation.Doctors[i].LastName,
+                                DepartmentName: $scope.wainformation.Doctors[i].Department?
+                                                $scope.wainformation.Doctors[i].Department.DepartmentName:null
+                            }
+                            $scope.info.listDoctorSelected.push(d);
+                            if($scope.info.listDoctorTreatingPractitioner)
+                            {
+                                for(var j = 0; j < $scope.info.listDoctorTreatingPractitioner.length; j++) {
+                                    if (d.UID == $scope.info.listDoctorTreatingPractitioner[j].UID) {
+                                        $scope.info.listDoctorTreatingPractitioner[j].Selected = 'Y';
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+                $scope.initListDoctorSelected();
+                //tannv.dts@gmail.com comment
+                /*$scope.selectTreatingPractitioner = function(data) {
                     WAAppointmentService.getDoctorById({
                         UID: data
                     }).then(function(data) {
                         $scope.wainformation.Doctors[0] = data[0];
                         toastr.success("Select doctor successfully", "Success");
                     })
-                }
+                }*/
+                //--------------------------------------------------------------------------------------------------------------------------------
+
+
+                
+                
                 $scope.ClinicalDetails = function() {
                     if($scope.wainformation.TelehealthAppointment){
                         for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
@@ -262,17 +544,24 @@ app.directive('telehealthDetail', function() {
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
                     console.log("saveWaAppointment",$scope.wainformation);
+                    $scope.wainformation.Doctors = [];
+                    for (var i = 0; i < $scope.info.listDoctorSelected.length; i ++)
+                    {
+                        $scope.wainformation.Doctors.push({UID: $scope.info.listDoctorSelected[i].UID});
+                    }
                     if($scope.wainformation.PatientAppointments) {
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
                             delete $scope.wainformation['Patients'];
                         }
-                        if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
+
+                        //Tanv.dts@gmail.com comment
+                        /*if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
                             for(var i = 0; i < $scope.wainformation.Doctors.length; i++) {
                                 doctoruid = $scope.wainformation.Doctors[i].UID;
                                 $scope.wainformation.Doctors.splice(0,1);
                                 $scope.wainformation.Doctors.push({UID:doctoruid});
                             }
-                        }
+                        }*/
                         WAAppointmentService.updateWaAppointmentwithCompany($scope.wainformation).then(function(data) {
                             toastr.success("Update appointment successfully !");
                             swal.close();
@@ -295,13 +584,14 @@ app.directive('telehealthDetail', function() {
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
                             delete $scope.wainformation['Patients'];
                         }
-                        if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
+                        //tannv.dts@gmail.com comment
+                        /*if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
                             for(var i = 0; i < $scope.wainformation.Doctors.length; i++) {
                                 doctoruid = $scope.wainformation.Doctors[i].UID;
                                 $scope.wainformation.Doctors.splice(0,1);
                                 $scope.wainformation.Doctors.push({UID:doctoruid});
                             }
-                        }
+                        }*/
                         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                             toastr.success("Update appointment successfully !");
                             swal.close();

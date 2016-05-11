@@ -74,7 +74,33 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                                 data.rows[i].Patients.push(data.rows[i].PatientAppointments[0]);
                             }
                         }
+                        if(!_.isEmpty(data.rows[i].Doctors))
+                        {
+                            var name='';
+                            for (var j = 0; j < data.rows[i].Doctors.length; j++) {
+                                var doctor = data.rows[i].Doctors[j];
+                                if(doctor.Title)
+                                {
+                                    name = name + doctor.Title + ' ';
+                                }
+                                if(doctor.FirstName)
+                                {
+                                    name = name + doctor.FirstName + ' ';
+                                }
+                                if(doctor.LastName)
+                                {
+                                    name = name + doctor.LastName;
+                                }
+                                if(j < data.rows[i].Doctors.length-1)
+                                {
+                                    name = name + '; '
+                                }
+
+                            }
+                            data.rows[i].DoctorsName = name;
+                        }
                     }
+
                     scope.info.listWaapointment = data;
                     console.log('dddddddd', data);
                     o.loadingPage(false);

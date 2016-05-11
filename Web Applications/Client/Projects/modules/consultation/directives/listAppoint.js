@@ -102,9 +102,9 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
 
             scope.LoadData = function() {
-                console.log(scope.info.data);
+                //console.log(scope.info.data);
                 WAAppointmentService.loadListWAAppointmentConsultation(scope.info.data).then(function(data) {
-                    console.log(data);
+                    console.log('aaaaaaaa', data);
                     scope.info.listWaapointment = data;
                 });
             };
@@ -126,7 +126,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 scope.fromCreateDate=null;
                 scope.info.data.Filter[0].Appointment.Status = null;
                 scope.LoadData();
-            }
+            };
         }
     };
 })

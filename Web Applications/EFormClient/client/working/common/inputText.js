@@ -29,7 +29,7 @@ module.exports = React.createClass({
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
-                before: function(e, element, target) { 
+                before: function(e, element, target) {
                     e.preventDefault();
                     return true;
                 },
@@ -47,6 +47,11 @@ module.exports = React.createClass({
         $(this.refs.input).on('change', function(event){
             if(typeof self.props.onChange !== 'undefined'){
                 self.props.onChange();
+            }
+        })
+		$(this.refs.input).on('keypress',function(event){
+            if(typeof self.props.onKeyPress !== 'undefined'){
+                self.props.onKeyPress(event);
             }
         })
     },
@@ -151,7 +156,8 @@ module.exports = React.createClass({
             case 'default':
                 html = (
                     <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}
-                        defaultValue={this.props.defaultValue} style={this.props.style}/>
+                        defaultValue={this.props.defaultValue} style={this.props.style}
+                        onBlur={this.props.onBlur} onChange={this.props.onChange}/>
                 )
                 break;
             case 'it':

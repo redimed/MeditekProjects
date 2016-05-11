@@ -107,4 +107,8 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'GetListEFormTemplateFilter'
     },
+    'post /eform/get-list-eform-by-patient':{
+        controller: 'EForm/EFormController',
+        action: 'GetListEFormTemplateByPatient',
+    },
 };

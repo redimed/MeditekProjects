@@ -24,14 +24,20 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
+        var self = this;
         $(this.refs.input).datepicker({
-            autoclose: false,
+            autoclose: true,
             format: 'dd/mm/yyyy',
+            clearBtn:true,
+        }).on('changeDate',function() {
+            if(typeof self.props.onChange !== 'undefined'){
+                self.props.onChange();
+            }
         });
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
-                before: function(e, element, target) {                    
+                before: function(e, element, target) {
                     e.preventDefault();
                     return true;
                 },
@@ -46,7 +52,7 @@ module.exports = React.createClass({
     },
     setValue: function(value){
         if(value.indexOf('+') > -1)
-            value = moment(value).format('DD/YY/MMMM')
+            value = moment(value).format('DD/MM/YYYY');
         $(this.refs.input).datepicker("update", value);
     },
     setDisplay: function(type){

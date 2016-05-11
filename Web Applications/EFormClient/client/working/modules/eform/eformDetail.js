@@ -83,23 +83,52 @@ module.exports = React.createClass({
                             if(field.type === 'eform_input_image_doctor'){
                                 self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
                             }
+                            var calArray = [];
+                            if(typeof field.cal !== 'undefined')
+                                calArray = field.cal.split('|');
+                            calArray.map(function(cal){
+                                /* SUM PREFIX */
+                                if(Config.getPrefixField(cal, 'SUM') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(4, cal);
+                                        calRes.map(function(minorRef){
+                                            var splitMinorRef = minorRef.split('_');
+                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
+                                            var sectionRefField = 'section_'+splitMinorRef[1];
+                                            self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
+                                        })
+                                    }
+                                }
+                                /* END SUM PREFIX */
+                                /* COUNT PREFIX */
+                                if(Config.getPrefixField(cal, 'COUNT') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(6, cal);
+                                        calRes.map(function(minorRef){
+                                            var splitMinorRef = minorRef.split('_');
+                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
+                                            var sectionRefField = 'section_'+splitMinorRef[1];
+                                            self.refs[sectionRefField].preCalCount(rowRefField, minorRef, field.ref);
+                                        })
+                                    }
+                                }
+                                /* END COUNT PREFIX */
+                            })
+
                             var preCalArray = [];
                             if(typeof field.preCal !== 'undefined'){
                                 preCalArray = field.preCal.split('|');
                             }
                             preCalArray.map(function(preCal){
-                                /* SUM PREFIX */
-                                if(Config.getPrefixField(preCal, 'SUM') > -1){
+                                /* BELONGS GROUP PREFIX */
+                                if(Config.getPrefixField(preCal,'EQUAL') > -1){
                                     if(preCal !== ''){
-                                        var preCalRes = Config.getArrayPrecal(4, preCal);
-                                        preCalRes.map(function(minorRef){
-                                            var splitMinorRef = minorRef.split('_');
-                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
-                                            self.refs[section.ref].preCalSum(rowRefField, minorRef, field.ref);
-                                        })
+                                       var preCalRes = Config.getArrayPrecal(6, preCal);
+                                       preCalRes = preCalRes[0];
+                                       self.refs[section.ref].preCalBelongsGroup(row.ref, field.ref, preCalRes);
                                     }
                                 }
-                                /* END SUM PREFIX */
+                                /* END BELONGS GROUP PREFIX */
                                 /* CONCAT PREFIX */
                                 if(Config.getPrefixField(preCal,'CONCAT') > -1){
                                     if(preCal !== ''){

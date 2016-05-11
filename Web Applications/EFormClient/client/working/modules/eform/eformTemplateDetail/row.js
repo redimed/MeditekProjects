@@ -136,6 +136,7 @@ module.exports = React.createClass({
         if(Config.getPrefixField(type, 'eform_input') > -1){
             var name = (typeof(this.refs[ref].getName)!=='undefined')?this.refs[ref].getName():'';
             var preCal = (typeof(this.refs[ref].getPreCal)!=='undefined')?this.refs[ref].getPreCal():'';
+            var cal = (typeof(this.refs[ref].getCal)!=='undefined')?this.refs[ref].getCal():'';
             dataFieldDetail = {
                 size: size,
                 code: code,
@@ -143,6 +144,7 @@ module.exports = React.createClass({
                 ref: ref,
                 name: name,
                 preCal: preCal,
+                cal: cal,
                 roles: roles
             }
             switch (type) {
@@ -332,6 +334,12 @@ module.exports = React.createClass({
     preCalSum: function(fieldRef, sumRef){
         this.refs[fieldRef].onSum(sumRef);
     },
+    preCalCount: function(fieldRef, sumRef){
+        this.refs[fieldRef].onCount(sumRef);
+    },
+    preCalBelongsGroup(fieldRef, group){
+        this.refs[fieldRef].onBelongsGroup(group);
+    },
     render: function(){        
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';
         var displayContextChartMenu = (this.props.permission === 'eformDev')?'contextChartMenu':'none';
@@ -465,6 +473,7 @@ module.exports = React.createClass({
                                                                 code={index}
                                                                 roles={field.get('roles')}
                                                                 preCal={field.get('preCal')}
+                                                                cal={field.get('cal')}
                                                                 onRightClickItem={this._onRightClickItem}/>
                                                     else if(type === 'eform_input_date'){
                                                             return <CommonInputDate key={index} type={type}
@@ -477,6 +486,7 @@ module.exports = React.createClass({
                                                                 roles={field.get('roles')}
                                                                 refTemp={field.get('ref')}
                                                                 preCal={field.get('preCal')}
+                                                                cal={field.get('cal')}
                                                                 code={index}
                                                                 onRightClickItem={this._onRightClickItem}/>
                                                     }else if(type === 'eform_input_textarea')
@@ -492,6 +502,7 @@ module.exports = React.createClass({
                                                                 roles={field.get('roles')}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 preCal={field.get('preCal')}
+                                                                cal={field.get('cal')}
                                                                 rows={field.get('rows')}/>
                                                     else if(type === 'eform_input_check_checkbox')
                                                             return <CommonCheckbox key={index} type={type}
@@ -506,6 +517,7 @@ module.exports = React.createClass({
                                                                 roles={field.get('roles')}
                                                                 value={field.get('value')}
                                                                 preCal={field.get('preCal')}
+                                                                cal={field.get('cal')}
                                                                 onRightClickItem={this._onRightClickItem}
                                                                 label={field.get('label')}/>
                                                     else if(type === 'eform_input_check_radio')
@@ -522,6 +534,7 @@ module.exports = React.createClass({
                                                                 label={field.get('label')}
                                                                 roles={field.get('roles')}
                                                                 preCal={field.get('preCal')}
+                                                                cal={field.get('cal')}
                                                                 value={field.get('value')}/>
                                                     else if(type === 'eform_input_check_label')
                                                             return <CommonLabel key={index} type={type}

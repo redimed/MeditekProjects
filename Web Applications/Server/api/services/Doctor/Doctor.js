@@ -946,7 +946,7 @@ module.exports = {
 	},
 
 	/*
-		LoadlistDoctor: Get all data
+		LoadlistDoctor: Get all data comment
 	*/
 	LoadlistDoctor: function(data, transaction) {
 		var isAvatar = data.isAvatar?data.isAvatar:false;

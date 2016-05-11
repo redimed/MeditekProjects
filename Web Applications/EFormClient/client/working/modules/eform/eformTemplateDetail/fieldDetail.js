@@ -35,6 +35,7 @@ module.exports = React.createClass({
                 this.refs.formName.setValue(object.name);
             }
             this.refs.formPrecal.setValue(object.preCal);
+            this.refs.formCal.setValue(object.cal);
             switch (this.type) {
                 case 'eform_input_text':
                     this.refs.formLabelPrefix.setValue(object.labelPrefix);
@@ -118,6 +119,7 @@ module.exports = React.createClass({
                 type: this.type,
                 size: size,
                 preCal: this.refs.formPrecal.getValue(),
+                cal: this.refs.formCal.getValue(),
                 roles: Permission,
                 ref: this.refs.formRef.getValue()
             }
@@ -245,6 +247,10 @@ module.exports = React.createClass({
                             <div className="form-group" style={{display: display_precal}}>
                                 <label>Pre Cal</label>
                                 <CommonInputText placeholder="Type Pre Cal" ref="formPrecal"/>
+                            </div>
+                            <div className="form-group" style={{display: display_precal}}>
+                                <label>Calculation</label>
+                                <CommonInputText placeholder="Type Calculation" ref="formCal"/>
                             </div>
                             <div className="form-group" style={{display: display_label}}>
                                 <label>Label</label>

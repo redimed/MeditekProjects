@@ -69,6 +69,19 @@ module.exports = React.createClass({
     isChecked: function(){
         return $(this.refs.input).prop('checked');
     },
+    onCount: function(countRef){
+        var self = this;
+        $('input[name='+this.props.name+']').on('ifClicked', function(){
+            var count = $('#'+countRef).val() || 0;
+            if(self.value !== this.value){
+                if(count > 0)
+                    count--; 
+            }else{
+                count++;
+            }
+            $('#'+countRef).val(count);
+        })
+    },
     getValue: function(){
         return this.props.value;
     },
@@ -86,6 +99,9 @@ module.exports = React.createClass({
     },
     getPreCal: function(){
         return this.props.preCal;
+    },
+    getCal: function(){
+        return this.props.cal;
     },
     getRoles: function(){
         return this.props.roles;

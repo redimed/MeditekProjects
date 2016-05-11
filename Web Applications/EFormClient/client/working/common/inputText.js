@@ -49,30 +49,39 @@ module.exports = React.createClass({
                 self.props.onChange();
             }
         })
-        $(this.refs.input).on('focus', function(event){
-            self.value = event.target.value;
-            if(typeof self.props.onFocus !== 'undefined'){
-                self.props.onFocus();
-            }
-        })
     },
     componentWillReceiveProps: function(nextProps){
         $(this.refs.input).val(nextProps.defaultValue);
     },
     onSum: function(sumRef){
         var self = this;
-        $(this.refs.input).on('blur', function(event){
+        $(this.refs.input).on('change', function(event){
+            var sumValue = $('#'+sumRef).val() || 0;
+            self.value = $.isNumeric(self.value)?self.value:0;
+            console.log(self.value);
             if($.isNumeric(event.target.value)){
-                var sumValue = $('#'+sumRef).val() || 0;
-                self.value = $.isNumeric(self.value)?self.value:0;
                 if(parseFloat(sumValue) >= parseFloat(self.value))
                     sumValue = parseFloat(sumValue)-parseFloat(self.value)+parseFloat(event.target.value);
-                $('#'+sumRef).val(sumValue);
+            }else{
+                sumValue = parseFloat(sumValue)-parseFloat(self.value);
             }
+            $('#'+sumRef).val(sumValue).change();
+            if(typeof self.props.onChange !== 'undefined'){
+                self.props.onChange();
+            }
+            self.value = event.target.value;
+        })
+    },
+    onBelongsGroup: function(group){
+        var self = this;
+        $('input[name='+group+']').on('ifClicked', function(event){
+            var value = event.target.value;
+            $(self.refs.input).val(parseInt(value)).change();
         })
     },
     setValue: function(value){
-        $(this.refs.input).val(value)
+        self.value = value;
+        $(this.refs.input).val(value).change();
     },
     setDisplay: function(type){
         if(type === 'disable'){
@@ -98,6 +107,9 @@ module.exports = React.createClass({
     },
     getPreCal: function(){
         return this.props.preCal;
+    },
+    getCal: function(){
+        return this.props.cal;
     },
     getRoles: function(){
         return this.props.roles;

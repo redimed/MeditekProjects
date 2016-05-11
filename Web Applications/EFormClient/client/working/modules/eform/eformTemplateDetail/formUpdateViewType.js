@@ -9,7 +9,6 @@ module.exports = React.createClass({
         viewType: React.PropTypes.any
     },
     componentDidMount: function(){
-        console.log(this.props.viewType);
         this.refs.viewType.setValue(this.props.viewType);
     },
     getViewType: function(){

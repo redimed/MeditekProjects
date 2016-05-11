@@ -210,6 +210,7 @@ module.exports = React.createClass({
                                     .set('size', dataField.size)
                                     .set('rows', dataField.rows)
                                     .set('preCal', dataField.preCal)
+                                    .set('cal', dataField.cal)
                                     .set('ref', dataField.ref)
                                     .set('roles', Immutable.fromJS(dataField.roles))
                             )
@@ -223,6 +224,7 @@ module.exports = React.createClass({
                                     .set('value', dataField.value)
                                     .set('ref', dataField.ref)
                                     .set('preCal', dataField.preCal)
+                                    .set('cal', dataField.cal)
                                     .set('roles', Immutable.fromJS(dataField.roles))
                             )
                         }
@@ -235,6 +237,7 @@ module.exports = React.createClass({
                                     .set('ref', dataField.ref)
                                     .set('value', dataField.value)
                                     .set('preCal', dataField.preCal)
+                                    .set('cal', dataField.cal)
                                     .set('roles', Immutable.fromJS(dataField.roles))
                             )
                         }
@@ -256,6 +259,7 @@ module.exports = React.createClass({
                                 .set('size', dataField.size)
                                 .set('ref', dataField.ref)
                                 .set('preCal', dataField.preCal)
+                                .set('cal', dataField.cal)
                                 .set('height', dataField.height)
                                 .set('roles', Immutable.fromJS(dataField.roles))
                         )
@@ -269,6 +273,7 @@ module.exports = React.createClass({
                                     .set('size', dataField.size)
                                     .set('ref', dataField.ref)
                                     .set('preCal', dataField.preCal)
+                                    .set('cal', dataField.cal)
                                     .set('labelPrefix', dataField.labelPrefix)
                                     .set('labelSuffix', dataField.labelSuffix)
                                     .set('roles', Immutable.fromJS(dataField.roles))
@@ -282,6 +287,7 @@ module.exports = React.createClass({
                                     .set('size', dataField.size)
                                     .set('ref', dataField.ref)
                                     .set('preCal', dataField.preCal)
+                                    .set('cal', dataField.cal)
                                     .set('roles', Immutable.fromJS(dataField.roles))
                             )
                         }

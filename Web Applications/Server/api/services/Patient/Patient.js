@@ -1012,10 +1012,10 @@ module.exports = {
                         })
                         .then(function(updated_user) {
                             if(data.PinNumber && data.PinNumber != null && data.PinNumber != '') {
-                                var PinNumberRegExp = /^[0-9]{4,6}$/;
+                                var PinNumberRegExp = /^[0-9]{6}$/;
                                 if (!PinNumberRegExp.test(data.PinNumber)) {
                                     var err = new Error("UpdatePatient.Error");
-                                    err.pushError("invalid.PinNumber");
+                                    err.pushError("PinNumber must 6 digits.");
                                     throw err;
                                 } else {
                                     return UserAccount.update({

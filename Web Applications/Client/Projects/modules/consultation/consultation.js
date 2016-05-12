@@ -44,6 +44,14 @@ app.config(function($stateProvider) {
             templateUrl: 'modules/consultation/views/consultationDetail.html',
             controller: 'consultationDetailCtrl'
         })
+        .state('authentication.consultation.detail.Onsite', {
+            url: '/Onsite',
+            data: {
+                pageTitle: 'Onsite Detail'
+            },
+            templateUrl: 'modules/onsite/views/onsiteAppointment.html',
+            controller: 'onsiteAppointmentCtrl',
+        })
         .state('authentication.consultation.detail.patientAdmission', {
             url: '/patientAdmission',
             data: {

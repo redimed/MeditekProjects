@@ -212,7 +212,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
     $scope.telehealthDetail = function() {
         if ($scope.wainformation.Type == 'Onsite') {
-            $state.go("authentication.onsite.appointment", { UID: $scope.wainformation.UID })
+            $state.go("authentication.consultation.detail.Onsite", { UID: $scope.wainformation.UID })
         } else {
             $state.go("authentication.consultation.detail.telehealth", { UID: $scope.wainformation.UID });
         }

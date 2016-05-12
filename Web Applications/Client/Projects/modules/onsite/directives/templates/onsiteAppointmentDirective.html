@@ -491,7 +491,7 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_5">
-                        <div class="row margin-top-20">
+                        <div class="row margin-top-40">
                                 <div class="col-lg-10 col-md-10  col-lg-offset-1 col-md-offset-1">
                                     <div class="form-group">
                                         <label class="control-label">Company Name</label>
@@ -662,4 +662,16 @@
 
 <script type="text/ng-template " id="LinkCompanyModal">
     <company-list on-patient-uid="patientuid" on-cancel="cancel" on-company-info="info" ></company-list>
+</script>
+<script type="text/ng-template" id="showImageTemplate">
+
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body" style="align:center">
+        <img class="img-responsive" dimage dimage-uid="LinkUID">
+    </div>
+    <div class="modal-footer">
+        <button class="btn green" ng-click="Vieww(LinkUID)">View Full</button>
+    </div>
 </script>

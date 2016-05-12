@@ -12,7 +12,6 @@ import ObjectMapper
 class ChangePinNumberViewController: BaseViewController {
     
     
-    @IBOutlet weak var txtOldPinNumber: DesignableTextField!
     @IBOutlet weak var txtPinNumber: DesignableTextField!
     @IBOutlet weak var txtConfirmPinNumber: DesignableTextField!
     
@@ -29,18 +28,18 @@ class ChangePinNumberViewController: BaseViewController {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         let length = ((textField.text?.length)! + string.length)
-        if Context.validateInputOnlyNumber(hashValue) == false || length > 6 {
+        if config.validateInputOnlyNumber(hashValue) == false || length > 6 {
             return false
         }else{
             return true
         }
     }
     @IBAction func ActionChangePinNumber(sender: AnyObject) {
-        if(txtPinNumber.text == txtConfirmPinNumber.text && txtPinNumber.text != "" && txtPinNumber.text?.length <= 6 && txtConfirmPinNumber.text != "" && txtOldPinNumber.text != "" && txtOldPinNumber.text?.length <= 6 && txtConfirmPinNumber.text?.length <= 6){
+        if(txtPinNumber.text == txtConfirmPinNumber.text && txtPinNumber.text != "" && txtPinNumber.text?.length <= 6 && txtConfirmPinNumber.text != ""){
             
             let updatePinNumber : UpdatePinNumber = UpdatePinNumber()
-            updatePinNumber.oldPin = txtOldPinNumber.text!
-            updatePinNumber.newPin = txtPinNumber.text!
+            updatePinNumber.oldPin = txtPinNumber.text!
+            updatePinNumber.newPin = txtConfirmPinNumber.text!
             
             UserService.postUpdatePinNumber(updatePinNumber) { [weak self] (response) in
                 print(response)

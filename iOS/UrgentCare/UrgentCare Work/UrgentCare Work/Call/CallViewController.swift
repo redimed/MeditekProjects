@@ -47,15 +47,13 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
     
     @IBOutlet weak var timeEffect: UIVisualEffectView!
     
-    let socketService = SocketService()
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        let apiKey = savedData.apiKey != nil ? savedData.apiKey : ""
-        let sessionId = savedData.sessionId != nil ? savedData.sessionId : ""
-        let token = savedData.token != nil ? savedData.token : ""
+        let apiKey = receiveMessageData.apiKey
+        let sessionId = receiveMessageData.sessionId
+        let token = receiveMessageData.token
         
         ApiKey = String(apiKey)
         // Replace with your generated session ID
@@ -63,7 +61,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         // Replace with your generated token
         Token = String(token)
         //get UUID to
-        uuidTo = String(savedData.from)
+        uuidTo = String(receiveMessageData.from)
         //Get uuid from in localstorage
         if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
@@ -72,8 +70,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ScreenCallingViewController.endCallAnswer), name: "endCallAnswer", object: nil)
-        //Remove data in savedData
-        savedData = CallContainer()
+        //Remove data in receiveMessageData
     }
     //start count timer call
     func start() {

@@ -95,8 +95,11 @@ class VerifyViewController: BaseViewController {
                                     }
                                 }
                                 //Set hearder data
-                                Context.setDataDefaults("login", key: Define.keyNSDefaults.userLogin)
                                 
+                                Context.setDataDefaults((loginResponse.user?.UID)!, key: Define.keyNSDefaults.UserUID)
+                                Context.setDataDefaults((loginResponse.user?.telehealthUser.UID)!, key: Define.keyNSDefaults.TelehealthUserUID)
+                                
+                                 Context.setDataDefaults("login", key: Define.keyNSDefaults.userLogin)
                                 
                                 let profile = Mapper().toJSON(loginResponse)
                                 Context.setDataDefaults(profile, key: Define.keyNSDefaults.userInfor)

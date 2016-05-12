@@ -43,6 +43,7 @@ class Define: NSObject {
         static let PatientUID = "patientUID"
         
         static let DetailStaff = "DetailStaff"
+        static let DeviceToken = "DeviceToken"
         static let DetailStaffCheck = "DetailStaffCheck"
         static let DetailSite = "DetailSite"
         static let DetailSiteCheck = "DetailSiteCheck"

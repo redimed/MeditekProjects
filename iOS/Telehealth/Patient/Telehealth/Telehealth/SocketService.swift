@@ -44,7 +44,7 @@ class SocketService {
                 
                 let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]
-                
+                print("dictionNary",dictionNary)
                 sharedSocket.socket.emit("get", dictionNary)
                 
                 if(defaults.valueForKey("loading") != nil){

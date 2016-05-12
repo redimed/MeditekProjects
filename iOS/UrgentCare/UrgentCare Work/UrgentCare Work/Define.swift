@@ -21,6 +21,7 @@ class Define: NSObject {
         static let DeviceID = "deviceID"
         static let Appid = "appid"
         static let pastUrls = "pastUrls"
+        static let UserUID = "UserUID"
         
         static let Authorization = "Authorization"
         static let userInfor = "userInfor"
@@ -34,6 +35,7 @@ class Define: NSObject {
         static let PatientUID = "PatientUID"
         static let TeleheathUserDetail = "TeleheathUserDetail"
         static let PhoneLogin = "PhoneLogin"
+        static let TelehealthUserUID = "TelehealthUserUID"
         
         
         static let DeviceToken = "DeviceToken"
@@ -69,6 +71,7 @@ class Define: NSObject {
         static let Authorization = "Authorization"
         static let Cookie = "Cookie"
         static let DeviceId = "deviceId"
+        static let UserUID = "UserUID"
         static let Appid = "appid"
         static let ApplicationJson = "application/json"
         static let IOS = "IOS"

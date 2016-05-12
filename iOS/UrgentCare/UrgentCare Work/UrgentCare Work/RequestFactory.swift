@@ -21,6 +21,7 @@ class RequestFactory {
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Authorization) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.Authorization)
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Cookie) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.Cookie)
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.DeviceID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.DeviceId)
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.UserUID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.UserUID)
         request.setValue(Context.getAppID(), forHTTPHeaderField: Define.forHTTPHeaderField.Appid)
         
         let alamofireRequest = Alamofire.request(request)
@@ -45,6 +46,7 @@ class RequestFactory {
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Authorization) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.Authorization)
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Cookie) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.Cookie)
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.DeviceID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.DeviceId)
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.UserUID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.UserUID)
         request.setValue(Context.getAppID(), forHTTPHeaderField: Define.forHTTPHeaderField.Appid)
         request.HTTPBody = jsonString?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         

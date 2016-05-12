@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '8A9A6E09B69B5E3613B7BA6D'
+               BlueprintIdentifier = '0A41D0EFD3DC29F6C1815337'
                BlueprintName = 'Pods-Telehealth'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_Telehealth.framework'>

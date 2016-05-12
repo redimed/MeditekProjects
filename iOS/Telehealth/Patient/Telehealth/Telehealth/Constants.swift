@@ -11,25 +11,32 @@ import UIKit
 
 struct Constants {
     
-//    struct Path {
-//        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
-//        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
-//        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
-//        static let SERVICE_URL                                   = "https://testapp.redimed.com.au"
-//    }
+    //        struct Path {
+    //            static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
+    //            static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
+    //            static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+    //            static let SERVICE_URL                                   = "https://testapp.redimed.com.au"
+    //        }
     
         struct Path {
             static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
             static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
             static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
             static let SERVICE_URL                                   = "https://meditek.redimed.com.au"
+            static let SandboxOption                                 = true
         }
-    //    struct Path {
-    //        static let SERVICE_URL_3006                              = "http://192.168.1.215:3006"
-    //        static let SERVICE_URL_3005                              = "http://192.168.1.215:3005"
-    //        static let SERVICE_URL_3009                              = "http://192.168.1.215:3009"
-    //        static let SERVICE_URL                                   = "http://192.168.1.215"
-    //    }
+//    struct Path {
+//        static let SERVICE_URL_3006                              = "http://192.168.1.230:3006"
+//        static let SERVICE_URL_3005                              = "http://192.168.1.230:3005"
+//        static let SERVICE_URL_3009                              = "http://192.168.1.230:3009"
+//        static let SERVICE_URL                                   = "http://192.168.1.230"
+//        static let SandboxOption                                 = true
+//    }
+    struct KeyPushNotification {
+        static let SandboxOption = Path.SandboxOption
+        //True: using key develoment
+        //False: using key product
+    }
     
     struct UserURL {
         static let URL_POST_LOGIN                                = Path.SERVICE_URL_3006 + "/api/login";
@@ -48,6 +55,7 @@ struct Constants {
         static let URL_GET_GETINFORMATION_PATIENT                = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
         static let URL_POST_CHECKACTIVATION                      = Path.SERVICE_URL_3009 + "/api/telehealth/checkActivation"
         static let URL_GET_PATIENTINFORMATION                    = Path.SERVICE_URL_3009 + "/api/telehealth/user/details"
+        static let URL_POST_UPDATE_PINNUMBER                     = Path.SERVICE_URL_3009 + "/api/telehealth/updatePinNumber"
         
         
     }

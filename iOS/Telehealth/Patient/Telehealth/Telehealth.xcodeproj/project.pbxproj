@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3F2EEDD91CB75C2500516422 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2EEDD81CB75C2500516422 /* Context.swift */; };
+		3FB8BFDF1CE377D500A6E500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */; };
+		3FD192101CE479FF00379364 /* ChangePinNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */; };
+		3FD192121CE47A5E00379364 /* UpdatePinNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */; };
 		3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */; };
 		3FF87B4C1CA390E60068866C /* Country.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FF87B4B1CA390E60068866C /* Country.json */; };
 		3FF87B4E1CA3C50E0068866C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */; };
@@ -172,6 +175,9 @@
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
 		3F2EEDD81CB75C2500516422 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePinNumberViewController.swift; sourceTree = "<group>"; };
+		3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatePinNumber.swift; sourceTree = "<group>"; };
 		3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		3FF87B4B1CA390E60068866C /* Country.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Country.json; sourceTree = "<group>"; };
 		3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -388,6 +394,8 @@
 		3FFAAE671CD2F6B20045D2CD /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				3F2EEDD81CB75C2500516422 /* Context.swift */,
+				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
 				3FFAAE681CD2F6BE0045D2CD /* Constants.swift */,
 			);
 			name = Commons;
@@ -396,6 +404,7 @@
 		3FFAAE6C1CD2F7F20045D2CD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */,
 				3FFAAE6F1CD2F97E0045D2CD /* ErrorModel.swift */,
 				3FFAAE6D1CD2F93A0045D2CD /* LoginModel.swift */,
 				3FFAAE5F1CD2F64F0045D2CD /* BaseModel.swift */,
@@ -461,15 +470,6 @@
 				AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */,
 			);
 			name = API;
-			sourceTree = "<group>";
-		};
-		AF4498A71BDF1141005A905E /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				3F2EEDD81CB75C2500516422 /* Context.swift */,
-				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
-			);
-			name = Other;
 			sourceTree = "<group>";
 		};
 		AF4498A81BDF115B005A905E /* Layout */ = {
@@ -560,6 +560,7 @@
 		AF9440181BBA79AF003F3B07 /* Supporting File */ = {
 			isa = PBXGroup;
 			children = (
+				3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */,
 				AFEE34E51BB0413600471592 /* Info.plist */,
 				AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */,
 			);
@@ -615,7 +616,6 @@
 			children = (
 				3FFAAE711CD2FA6F0045D2CD /* Extensions */,
 				3FFAAE671CD2F6B20045D2CD /* Commons */,
-				AF4498A71BDF1141005A905E /* Other */,
 				AF78A2F61BC36807003E4E98 /* Resources */,
 				AFF27DFA1BB39C6600B325E8 /* Utilities */,
 				AFF27DF91BB39C5500B325E8 /* Library */,
@@ -733,6 +733,7 @@
 				AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */,
 				AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */,
 				AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */,
+				3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */,
 				AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */,
 				AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */,
 				AF3391721C841EBC00483F36 /* UpdateProfileViewController.swift */,
@@ -905,6 +906,7 @@
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
 				AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */,
+				3FB8BFDF1CE377D500A6E500 /* GoogleService-Info.plist in Resources */,
 				AF73C84D1C7BF9030015A625 /* DKImagePickerController.bundle in Resources */,
 				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
@@ -1066,10 +1068,12 @@
 				AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */,
 				3FFAAE661CD2F69B0045D2CD /* UserService.swift in Sources */,
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
+				3FD192121CE47A5E00379364 /* UpdatePinNumber.swift in Sources */,
 				AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */,
 				AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */,
 				AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */,
 				AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */,
+				3FD192101CE479FF00379364 /* ChangePinNumberViewController.swift in Sources */,
 				AF4498AC1BDF11FE005A905E /* AppointmentService.swift in Sources */,
 				AFE6422F1C4650EC001F0524 /* VerifyPhoneAPI.swift in Sources */,
 				AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */,

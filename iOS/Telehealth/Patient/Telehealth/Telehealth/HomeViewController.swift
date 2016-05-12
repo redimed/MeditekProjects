@@ -98,6 +98,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func checkLogin(){
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
+            print(defaults.valueForKey("deviceToken") as? String)
             if let deviceToken = defaults.valueForKey("deviceToken") as? String{
                 api.updateTokenPush(uid,deviceToken:deviceToken)
             }

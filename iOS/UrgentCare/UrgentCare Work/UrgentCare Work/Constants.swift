@@ -11,24 +11,27 @@ import UIKit
 
 struct Constants {
     
-    struct Path {
-        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
-        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
-        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
-    }
-    
+//    struct Path {
+//        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
+//        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
+//        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+//        static let SandboxOption                                 = false
+//    }
+//    
 //    struct Path {
 //        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
 //        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
 //        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
+//          static let SandboxOption                                 = true
 //    }
-//    struct Path {
-//        static let SERVICE_URL_3006                              = "http://192.168.1.225:3006"
-//        static let SERVICE_URL_3005                              = "http://192.168.1.225:3005"
-//        static let SERVICE_URL_3009                              = "http://192.168.1.225:3009"
-//    }
+    struct Path {
+        static let SERVICE_URL_3006                              = "http://192.168.1.230:3006"
+        static let SERVICE_URL_3005                              = "http://192.168.1.230:3005"
+        static let SERVICE_URL_3009                              = "http://192.168.1.230:3009"
+        static let SandboxOption                                 = true
+    }
     struct KeyPushNotification {
-        static let SandboxOption = true
+        static let SandboxOption = Path.SandboxOption
         //True: using key develoment
         //False: using key product
     }
@@ -51,6 +54,7 @@ struct Constants {
         static let URL_POST_UPDATEPROFILE                        = Path.SERVICE_URL_3009 + "/api/telehealth/user/update"
         static let URL_POST_FORGETPIN                            = Path.SERVICE_URL_3009 + "/api/telehealth/user/forgetPin"
         static let URL_POST_TELEHEATHUSER                        = Path.SERVICE_URL_3009 + "/api/telehealth/user"
+        static let URL_POST_UPDATE_PINNUMBER                     = Path.SERVICE_URL_3009 + "/api/telehealth/updatePinNumber"
     }
     
 }

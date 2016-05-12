@@ -1460,7 +1460,7 @@ module.exports = {
 			.then(function(got_checkuser) {
 				if (got_checkuser == '' || got_checkuser == null) {
                     userInfo.Password = generatePassword(12, false);
-                    userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false);
+                    userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
                     return Services.UserAccount.CreateUserAccount(userInfo, t);
                 } else {
                     return got_checkuser;

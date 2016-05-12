@@ -65,7 +65,7 @@
                         </div>
                         <!-- END TELEHEALTH -->
                         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat yellow-crusta">
+                            <div class="dashboard-stat yellow-crusta" ng-click="getEFormByPatient()">
                                 <div class="visual">
                                     <i class="icon-docs"></i>
                                 </div>
@@ -114,7 +114,7 @@
                                     </a>
                                 </div>
                             </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="eformTemplate in eformTemplates" style="margin-bottom: 10px;">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="eformTemplate in eformTemplates track by $index" style="margin-bottom: 10px;">
                             <div class="dashboard-stat"
                                 ng-class="styleFunction(eformTemplate.EForms)"
                                 ng-click="eFormTemplate(eformTemplate)">

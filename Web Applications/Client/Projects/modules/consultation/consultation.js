@@ -97,4 +97,13 @@ app.config(function($stateProvider) {
             templateUrl: 'modules/consultation/views/drawing.html',
             controller: 'drawingCtrl',
         })
+        .state('authentication.consultation.eformbypatient', {
+            url: '/eform/patient/:UID/:patientUID/:userUID',
+            data: {
+                title: 'EForm Patient',
+                pageTitle: 'EForm Patient'
+            },
+            templateUrl: 'modules/consultation/views/patient.html',
+            controller: 'EFormPatientCtrl',
+        })
 });

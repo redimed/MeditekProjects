@@ -160,12 +160,12 @@ class AppointmentAPI:TokenAPI {
                     switch encodingResult {
                     case .Success(let upload, _, _):
                         upload.responseJSON { response in
-                            if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
-                                if requireupdatetoken as! String == "true" {
-                                    print("Update token",requireupdatetoken)
-                                    self.getNewToken()
-                                }
-                            }
+//                            if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
+//                                if requireupdatetoken as! String == "true" {
+//                                    print("Update token",requireupdatetoken)
+//                                    self.getNewToken()
+//                                }
+//                            }
                             if (response.response?.statusCode)!  == 200 {
                                 completionHandler(JSON(response.result.value!))
                                 print("result:",response.result.value)

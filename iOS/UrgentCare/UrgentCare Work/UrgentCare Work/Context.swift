@@ -66,6 +66,10 @@ class Context {
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){
             NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
             message = "Please login again !"
+        }else if (ErrorType == "Authentication Error - invalid username"){
+            message = "Authentication Error - invalid username"
+        }else if (ErrorType == "Telehealth.UpdatePinNumber.Error"){
+            message = "Invalid Params"
         }
         return message
     }

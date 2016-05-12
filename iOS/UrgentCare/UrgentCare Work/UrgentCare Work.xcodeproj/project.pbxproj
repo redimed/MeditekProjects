@@ -39,6 +39,14 @@
 		3FC8D5B21CB620830008B3DC /* VerifyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B11CB620830008B3DC /* VerifyCode.swift */; };
 		3FC8D5B41CB620AD0008B3DC /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B31CB620AD0008B3DC /* VerifyViewController.swift */; };
 		3FC8D5B61CB620B50008B3DC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B51CB620B50008B3DC /* RegisterViewController.swift */; };
+		3FD191FF1CE422DB00379364 /* CallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD191FE1CE422DB00379364 /* CallService.swift */; };
+		3FD192051CE4256200379364 /* UIVViewController-SLPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192011CE4256200379364 /* UIVViewController-SLPopup.swift */; };
+		3FD192061CE4256200379364 /* MAActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192021CE4256200379364 /* MAActivityIndicatorView.swift */; };
+		3FD192071CE4256200379364 /* MyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192031CE4256200379364 /* MyPopupViewController.swift */; };
+		3FD192081CE4256200379364 /* MyPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FD192041CE4256200379364 /* MyPopupViewController.xib */; };
+		3FD1920A1CE42A7000379364 /* ReceiveMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192091CE42A7000379364 /* ReceiveMessageData.swift */; };
+		3FD1920C1CE4449700379364 /* ringtone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3FD1920B1CE4449700379364 /* ringtone.wav */; };
+		3FD1920E1CE4733200379364 /* UpdatePinNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1920D1CE4733200379364 /* UpdatePinNumber.swift */; };
 		3FD68C0D1CBE5270008ACEF4 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD68C0C1CBE5270008ACEF4 /* ContentViewController.swift */; };
 		3FE0F52E1CD83DB10077D1F6 /* PatientInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE0F52D1CD83DB10077D1F6 /* PatientInformation.swift */; };
 		3FE3D4D91CBD055A00BF3E0A /* UserAccountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE3D4D81CBD055A00BF3E0A /* UserAccountDetail.swift */; };
@@ -171,6 +179,14 @@
 		3FC8D5B11CB620830008B3DC /* VerifyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyCode.swift; sourceTree = "<group>"; };
 		3FC8D5B31CB620AD0008B3DC /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		3FC8D5B51CB620B50008B3DC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		3FD191FE1CE422DB00379364 /* CallService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallService.swift; sourceTree = "<group>"; };
+		3FD192011CE4256200379364 /* UIVViewController-SLPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIVViewController-SLPopup.swift"; sourceTree = "<group>"; };
+		3FD192021CE4256200379364 /* MAActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAActivityIndicatorView.swift; sourceTree = "<group>"; };
+		3FD192031CE4256200379364 /* MyPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPopupViewController.swift; sourceTree = "<group>"; };
+		3FD192041CE4256200379364 /* MyPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPopupViewController.xib; sourceTree = "<group>"; };
+		3FD192091CE42A7000379364 /* ReceiveMessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMessageData.swift; sourceTree = "<group>"; };
+		3FD1920B1CE4449700379364 /* ringtone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone.wav; sourceTree = "<group>"; };
+		3FD1920D1CE4733200379364 /* UpdatePinNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatePinNumber.swift; sourceTree = "<group>"; };
 		3FD68C0C1CBE5270008ACEF4 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		3FE0F52D1CD83DB10077D1F6 /* PatientInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientInformation.swift; sourceTree = "<group>"; };
 		3FE3D4D81CBD055A00BF3E0A /* UserAccountDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountDetail.swift; sourceTree = "<group>"; };
@@ -294,6 +310,7 @@
 		3F04FE571CD9A109006B95B7 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				3FD1920B1CE4449700379364 /* ringtone.wav */,
 				3F99635A1CD9A2F40085FF71 /* CallContainer.swift */,
 				3F04FE5A1CD9A143006B95B7 /* Singleton_SocketManager.swift */,
 				3F04FE581CD9A117006B95B7 /* SocketService.swift */,
@@ -367,6 +384,8 @@
 				3FE0F52D1CD83DB10077D1F6 /* PatientInformation.swift */,
 				3F475AC21CDB2C4900967104 /* ForgetPin.swift */,
 				3F3136861CDC307B0094BB4B /* Notification.swift */,
+				3FD192091CE42A7000379364 /* ReceiveMessageData.swift */,
+				3FD1920D1CE4733200379364 /* UpdatePinNumber.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -393,6 +412,17 @@
 				3FC565D91CA8C67200706908 /* Context.swift */,
 			);
 			name = Context;
+			sourceTree = "<group>";
+		};
+		3FD192001CE4255000379364 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				3FD192011CE4256200379364 /* UIVViewController-SLPopup.swift */,
+				3FD192021CE4256200379364 /* MAActivityIndicatorView.swift */,
+				3FD192031CE4256200379364 /* MyPopupViewController.swift */,
+				3FD192041CE4256200379364 /* MyPopupViewController.xib */,
+			);
+			name = Popup;
 			sourceTree = "<group>";
 		};
 		3FD68C091CBE4FDC008ACEF4 /* Register */ = {
@@ -499,6 +529,7 @@
 		54EEAEA81C83F0B00096CA1F /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				3FD191FE1CE422DB00379364 /* CallService.swift */,
 				54EEAEDA1C83F3960096CA1F /* Alert.swift */,
 				54EEAEDB1C83F3960096CA1F /* Constants.swift */,
 				54EEAEDC1C83F3960096CA1F /* Define.swift */,
@@ -531,6 +562,7 @@
 		54EEAEAB1C83F1130096CA1F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3FD192001CE4255000379364 /* Popup */,
 				3F764AED1CCE1C420006CBBA /* Call */,
 				54EEAECB1C83F2EE0096CA1F /* Base */,
 				3FD68C0A1CBE4FED008ACEF4 /* Verify */,
@@ -883,12 +915,14 @@
 				AF26B2A91BEC8787006F37A4 /* Info.plist in Resources */,
 				AF57CAA41BEC9C79007BEF06 /* OtherServices.html in Resources */,
 				AF26B2931BEC8787006F37A4 /* UrgentCare.html in Resources */,
+				3FD1920C1CE4449700379364 /* ringtone.wav in Resources */,
 				AF26B2AC1BEC8787006F37A4 /* LoadingView.xib in Resources */,
 				AF26B2991BEC8787006F37A4 /* Suburb.json in Resources */,
 				AF26B2BB1BEC8787006F37A4 /* FontAwesome.otf in Resources */,
 				3F9F49301CDF91D600C53523 /* GoogleService-Info.plist in Resources */,
 				AF26B2C41BEC8787006F37A4 /* Assets.xcassets in Resources */,
 				AF26B2BD1BEC8787006F37A4 /* FAQs.html in Resources */,
+				3FD192081CE4256200379364 /* MyPopupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -972,9 +1006,11 @@
 				3FC8D5B01CB6207E0008B3DC /* RequestVerify.swift in Sources */,
 				54EEAECA1C83F2DD0096CA1F /* SWRevealViewController.m in Sources */,
 				AF26B2A61BEC8787006F37A4 /* DesignableTextView.swift in Sources */,
+				3FD192051CE4256200379364 /* UIVViewController-SLPopup.swift in Sources */,
 				AF26B2A01BEC8787006F37A4 /* BlurView.swift in Sources */,
 				AF26B2AD1BEC8787006F37A4 /* Misc.swift in Sources */,
 				AF26B2AF1BEC8787006F37A4 /* Spring.swift in Sources */,
+				3FD192071CE4256200379364 /* MyPopupViewController.swift in Sources */,
 				3F04FE591CD9A117006B95B7 /* SocketService.swift in Sources */,
 				54EEAEC81C83F2DD0096CA1F /* SpininngDot.swift in Sources */,
 				3FD68C0D1CBE5270008ACEF4 /* ContentViewController.swift in Sources */,
@@ -994,12 +1030,14 @@
 				54EEAEC61C83F2DD0096CA1F /* RPLoadingAnimationDelegate.swift in Sources */,
 				3F8F6CB31CC8BDE600557056 /* StaffDetailViewController.swift in Sources */,
 				3FC565DC1CA8C6E800706908 /* Base.swift in Sources */,
+				3FD1920E1CE4733200379364 /* UpdatePinNumber.swift in Sources */,
 				AF26B2BC1BEC8787006F37A4 /* FAQsViewController.swift in Sources */,
 				AF26B2971BEC8787006F37A4 /* TPKeyboardAvoidingTableView.m in Sources */,
 				AF26B2A51BEC8787006F37A4 /* DesignableTextField.swift in Sources */,
 				3F6C461F1CA53586002A936B /* AccountViewController.swift in Sources */,
 				3FF4F4121CBDEE7100ACCECA /* RequestAppointCompany.swift in Sources */,
 				54EEAEDF1C83F3960096CA1F /* Alert.swift in Sources */,
+				3FD1920A1CE42A7000379364 /* ReceiveMessageData.swift in Sources */,
 				AF26B2271BEC869C006F37A4 /* ViewController.swift in Sources */,
 				3FA53DA51CA8C9EB000B8BE5 /* UserService.swift in Sources */,
 				AF26B2961BEC8787006F37A4 /* TPKeyboardAvoidingScrollView.m in Sources */,
@@ -1015,6 +1053,7 @@
 				3F764AEF1CCE1C5A0006CBBA /* CallViewController.swift in Sources */,
 				AF26B29C1BEC8787006F37A4 /* SSRadioButtonsController.swift in Sources */,
 				3F2EEDE01CB7AB3400516422 /* ListStaffViewController.swift in Sources */,
+				3FD191FF1CE422DB00379364 /* CallService.swift in Sources */,
 				3FC8D5B21CB620830008B3DC /* VerifyCode.swift in Sources */,
 				AF26B2A71BEC8787006F37A4 /* DesignableView.swift in Sources */,
 				AF26B2B81BEC8787006F37A4 /* TransitionZoom.swift in Sources */,
@@ -1057,6 +1096,7 @@
 				AF26B2B41BEC8787006F37A4 /* SpringTextField.swift in Sources */,
 				AF26B29B1BEC8787006F37A4 /* SSRadioButton.swift in Sources */,
 				AF26B2B31BEC8787006F37A4 /* SpringLabel.swift in Sources */,
+				3FD192061CE4256200379364 /* MAActivityIndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

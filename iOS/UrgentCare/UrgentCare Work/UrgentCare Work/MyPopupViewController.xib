@@ -14,7 +14,7 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyPopupViewController" customModule="Telehealth" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyPopupViewController" customModule="UrgentCare_Work" customModuleProvider="target">
             <connections>
                 <outlet property="answerBtn" destination="Wdr-tl-1mk" id="O4H-k8-5mQ"/>
                 <outlet property="declineBtn" destination="8CJ-TD-ajd" id="O53-pj-0l3"/>
@@ -28,13 +28,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon 8" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-ef-ma3">
-                    <rect key="frame" x="60" y="126" width="200" height="200"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="200" id="gl0-GQ-o0c"/>
-                        <constraint firstAttribute="height" constant="200" id="hD9-Dv-SsF"/>
-                    </constraints>
-                </imageView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oiX-Du-8jU">
                     <rect key="frame" x="0.0" y="133" width="320" height="76"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -59,7 +52,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calling..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sG-d2-0WQ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Calling..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sG-d2-0WQ">
                                 <rect key="frame" x="124" y="4" width="72" height="23"/>
                                 <fontDescription key="fontDescription" name="UTM-Avo" family="UTM Avo" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -138,6 +131,13 @@
                         <action selector="btnCancel:" destination="-1" eventType="touchUpInside" id="ewY-qq-O05"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon 8" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-ef-ma3">
+                    <rect key="frame" x="60" y="126" width="200" height="200"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="gl0-GQ-o0c"/>
+                        <constraint firstAttribute="height" constant="200" id="hD9-Dv-SsF"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.78431372549019607" green="0.8784313725490196" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>

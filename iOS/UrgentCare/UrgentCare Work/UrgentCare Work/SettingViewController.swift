@@ -39,7 +39,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     array[0].append("")
                 }
             }else{
-                array = [["Harry Berry"],["Other services", "About Redimed", "LOGOUT"]]
+                array = [["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
                 arrayTitle = ["Accounts", "", "", ""]
                 
             }
@@ -148,6 +148,11 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     self.navigationController?.pushViewController(account, animated: true)
                     
                 }
+                if(indexPath.row == 1 && indexPath.section == 0){
+                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
+                    self.navigationController?.pushViewController(changPinNumber, animated: true)
+                }
+
                 if(indexPath.row == 0 && indexPath.section == 1){
                     let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
                     faqs.fileName = "FAQs"

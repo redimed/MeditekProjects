@@ -29,6 +29,7 @@
             <string>UTM-Avo</string>
             <string>UTM-Avo</string>
             <string>UTM-Avo</string>
+            <string>UTM-Avo</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1867,10 +1868,10 @@
                                         <rect key="frame" x="10" y="81" width="300" height="190"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bNu-AY-mVO" customClass="DesignableButton" customModule="UrgentCare_Work" customModuleProvider="target">
-                                                <rect key="frame" x="25" y="139" width="250" height="40"/>
+                                                <rect key="frame" x="25" y="150" width="250" height="40"/>
                                                 <color key="backgroundColor" red="0.086274509799999996" green="0.12549019610000001" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="eBJ-w1-Slb"/>
+                                                    <constraint firstAttribute="height" constant="40" id="fEm-Ax-a3D"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="UTM-Avo" family="UTM Avo" pointSize="15"/>
                                                 <state key="normal" title="Change Pin Number">
@@ -1885,12 +1886,12 @@
                                                     <action selector="ActionChangePinNumber:" destination="n0u-tJ-LIJ" eventType="touchUpInside" id="3bM-Qk-my3"/>
                                                 </connections>
                                             </button>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jEe-T2-OlY" customClass="DesignableTextField" customModule="UrgentCare_Work" customModuleProvider="target">
-                                                <rect key="frame" x="25" y="30" width="250" height="40"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Comfirm New Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lPB-t6-IDM" customClass="DesignableTextField" customModule="UrgentCare_Work" customModuleProvider="target">
+                                                <rect key="frame" x="25" y="103" width="250" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="cFa-QA-B2O"/>
+                                                    <constraint firstAttribute="height" constant="40" id="5Sb-a7-M2p"/>
                                                 </constraints>
                                                 <color key="textColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="UTM-Avo" family="UTM Avo" pointSize="13"/>
@@ -1915,13 +1916,43 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Comfirm Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lPB-t6-IDM" customClass="DesignableTextField" customModule="UrgentCare_Work" customModuleProvider="target">
-                                                <rect key="frame" x="25" y="83" width="250" height="40"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Nce-1p-AC0" customClass="DesignableTextField" customModule="UrgentCare_Work" customModuleProvider="target">
+                                                <rect key="frame" x="25" y="4" width="250" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="7x4-th-Wf1"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="TmJ-u6-CUb"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="6BY-AN-PL3"/>
+                                                    <constraint firstAttribute="height" constant="40" id="6T7-Fp-zVW"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="UTM-Avo" family="UTM Avo" pointSize="13"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="shake"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeIn"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                        <color key="value" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                        <real key="value" value="12"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jEe-T2-OlY" customClass="DesignableTextField" customModule="UrgentCare_Work" customModuleProvider="target">
+                                                <rect key="frame" x="25" y="54" width="250" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="tintColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="f7E-2H-Wl2"/>
                                                 </constraints>
                                                 <color key="textColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="UTM-Avo" family="UTM Avo" pointSize="13"/>
@@ -1948,22 +1979,25 @@
                                             </textField>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="jEe-T2-OlY" firstAttribute="top" secondItem="vHO-ov-SPh" secondAttribute="top" constant="30" id="2dl-lY-Wli"/>
+                                            <constraint firstItem="Nce-1p-AC0" firstAttribute="top" secondItem="vHO-ov-SPh" secondAttribute="top" constant="4" id="00j-x8-tar"/>
                                             <constraint firstAttribute="height" constant="190" id="2l4-Ad-AaU"/>
-                                            <constraint firstItem="lPB-t6-IDM" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="25" id="6wv-ok-DY4"/>
-                                            <constraint firstItem="jEe-T2-OlY" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="25" id="9Cm-rd-6kw"/>
-                                            <constraint firstAttribute="trailing" secondItem="jEe-T2-OlY" secondAttribute="trailing" constant="25" id="C7h-Kz-WWh"/>
-                                            <constraint firstItem="bNu-AY-mVO" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="25" id="Ghy-2d-UDV"/>
+                                            <constraint firstItem="lPB-t6-IDM" firstAttribute="top" secondItem="jEe-T2-OlY" secondAttribute="bottom" constant="9" id="7Bh-Sg-G0W"/>
                                             <constraint firstItem="bNu-AY-mVO" firstAttribute="centerX" secondItem="vHO-ov-SPh" secondAttribute="centerX" id="HdN-FV-wyJ"/>
-                                            <constraint firstItem="lPB-t6-IDM" firstAttribute="top" secondItem="jEe-T2-OlY" secondAttribute="bottom" constant="13" id="ULF-JY-KVj"/>
+                                            <constraint firstItem="jEe-T2-OlY" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="25" id="Jfj-eP-IGg"/>
+                                            <constraint firstAttribute="trailing" secondItem="bNu-AY-mVO" secondAttribute="trailing" constant="25" id="WCW-fQ-kug"/>
                                             <constraint firstItem="jEe-T2-OlY" firstAttribute="leading" secondItem="bNu-AY-mVO" secondAttribute="leading" id="Ycq-K4-813"/>
                                             <constraint firstAttribute="height" constant="190" id="Yd1-fZ-DZY"/>
+                                            <constraint firstItem="bNu-AY-mVO" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="25" id="ZGU-6g-WKr"/>
+                                            <constraint firstAttribute="trailing" secondItem="jEe-T2-OlY" secondAttribute="trailing" constant="25" id="Zwp-fH-U5L"/>
+                                            <constraint firstAttribute="trailing" secondItem="lPB-t6-IDM" secondAttribute="trailing" constant="25" id="aGt-pT-Tnj"/>
                                             <constraint firstItem="jEe-T2-OlY" firstAttribute="top" secondItem="vHO-ov-SPh" secondAttribute="top" constant="55" id="e1d-B0-g9F"/>
-                                            <constraint firstItem="bNu-AY-mVO" firstAttribute="top" secondItem="lPB-t6-IDM" secondAttribute="bottom" constant="16" id="jgV-5D-RLs"/>
-                                            <constraint firstAttribute="trailing" secondItem="bNu-AY-mVO" secondAttribute="trailing" constant="25" id="ma2-FV-abJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="lPB-t6-IDM" secondAttribute="trailing" constant="25" id="n48-tk-lbh"/>
+                                            <constraint firstItem="lPB-t6-IDM" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="25" id="gQA-7f-PmR"/>
+                                            <constraint firstItem="bNu-AY-mVO" firstAttribute="top" secondItem="lPB-t6-IDM" secondAttribute="bottom" constant="7" id="pb6-d3-NV6"/>
+                                            <constraint firstAttribute="trailing" secondItem="Nce-1p-AC0" secondAttribute="trailing" constant="25" id="qRY-GS-32H"/>
                                             <constraint firstItem="jEe-T2-OlY" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="48" id="u9h-gW-gWe"/>
+                                            <constraint firstItem="jEe-T2-OlY" firstAttribute="top" secondItem="Nce-1p-AC0" secondAttribute="bottom" constant="10" id="wsj-iv-QTe"/>
                                             <constraint firstItem="jEe-T2-OlY" firstAttribute="trailing" secondItem="bNu-AY-mVO" secondAttribute="trailing" id="wzB-ZM-52y"/>
+                                            <constraint firstItem="Nce-1p-AC0" firstAttribute="leading" secondItem="vHO-ov-SPh" secondAttribute="leading" constant="25" id="xNk-vv-MVf"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -2031,6 +2065,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="txtConfirmPinNumber" destination="lPB-t6-IDM" id="8Va-SV-zqg"/>
+                        <outlet property="txtOldPinNumber" destination="Nce-1p-AC0" id="pdD-5Z-fgM"/>
                         <outlet property="txtPinNumber" destination="jEe-T2-OlY" id="Mud-Zt-OGJ"/>
                     </connections>
                 </viewController>
@@ -2133,7 +2168,7 @@
                                                 </constraints>
                                                 <color key="textColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="UTM-Avo" family="UTM Avo" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="animation" value="shake"/>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeIn"/>

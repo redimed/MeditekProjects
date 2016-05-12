@@ -11,7 +11,6 @@ import SwiftyJSON
 import ObjectMapper
 
 class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentViewDelegate{
-    let socketService = SocketService()
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var viewPaging: UIView!
     var pageViewController: UIPageViewController!
@@ -32,7 +31,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                 loadInformationData()
             }
             
-            self.socketService.openSocket(Context.getDataDefasults(Define.keyNSDefaults.UID) as! String,complete: {
+            self.socketService.openSocket(Context.getDataDefasults(Define.keyNSDefaults.TelehealthUserUID) as! String,complete: {
                 complete in
             })
 

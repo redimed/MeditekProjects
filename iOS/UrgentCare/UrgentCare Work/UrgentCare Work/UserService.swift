@@ -18,7 +18,9 @@ class UserService {
     class func postUpdateProfile(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_UPDATEPROFILE, model: model, completion: completion)
     }
-    
+    class func postUpdatePinNumber(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_UPDATE_PINNUMBER, model: model, completion: completion)
+    }
     class func postCheckVerifyCode(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_CHECKVERIFY_CODE, model: model, completion: completion)
     }

@@ -1048,7 +1048,7 @@ module.exports = {
 				{
 					include:include_data,
 		       		model: UserAccount,
-		      		attributes: ['PhoneNumber','Enable', 'UID'],
+		      		attributes: ['ID','PhoneNumber','Enable', 'UID'],
 			  		where:{
 			   			$or: check.sqlParam(whereClause.UserAccount),
 			   			Enable:'Y'

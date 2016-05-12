@@ -28,6 +28,9 @@
                             <li>
                                 <a href="index.html#tab_company" data-toggle="tab" aria-expanded="true" ng-click="getSite(info.Companies[0].UID)" >Company</a>
                             </li>
+                            <li>
+                                <a href="index.html#tab_EForm" data-toggle="tab" aria-expanded="true" ng-click="getEForm()" >EForm</a>
+                            </li>
                         </ul>
                         <!-- end header tab -->
                         <!-- content tab -->
@@ -650,6 +653,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="tab-pane" id="tab_EForm">
+                                <a ng-click="getEForm()" class="btn btn-info" ng-if="isIframe==true" >Back</a>
+                                <iframe width="100%" height="760" frameBorder="0" scrolling="yes" id="EForm"></iframe>
                             </div>
                         </div>
                         <!-- end content tab -->

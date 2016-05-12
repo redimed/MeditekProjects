@@ -32,18 +32,28 @@ module.exports = React.createClass({
             this._onFilter(refs);
         }
     },
+    _clearSearch: function(callback) {
+        this.search.FromTime = '';
+        this.search.Code = null;
+        this.search.Name = null;
+        this.search.CreatedDate = '';
+        this.setValue();
+        callback();
+    },
     setValue:function() {
-        if(!_.isEmpty(this.search.FromTime)) {
-            this.refs.apt_date.setValue(this.search.FromTime);
-        }
-        if(!_.isEmpty(this.search.Code)) {
-            this.refs.apt_code.setValue(this.search.Code);
-        }
-        if(!_.isEmpty(this.search.Name)) {
-            this.refs.name.setValue(this.search.Name);
-        }
-        if(!_.isEmpty(this.search.CreatedDate)) {
-            this.refs.created_date.setValue(this.search.CreatedDate);
+        for(var key in this.search) {
+            if(key == 'FromTime') {
+                this.refs.apt_date.setValue(this.search.FromTime);
+            }
+            if(key == 'Code') {
+                this.refs.apt_code.setValue(this.search.Code);
+            }
+            if(key == 'Name') {
+                this.refs.name.setValue(this.search.Name);
+            }
+            if(key == 'CreatedDate') {
+                this.refs.created_date.setValue(this.search.CreatedDate);
+            }
         }
     },
 	render: function(){

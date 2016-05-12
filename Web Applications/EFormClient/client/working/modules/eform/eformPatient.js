@@ -1,5 +1,4 @@
 var Config = require('config');
-var DropDown2 = require('common/dropDown2');
 var InputText = require('common/inputText');
 var InputDate = require('common/inputDate');
 var Paginator = require('common/paginator');
@@ -7,7 +6,7 @@ var Filter    = require('modules/eform/eformPatient/filter');
 var EFormService = require('modules/eform/services');
 module.exports = React.createClass({
     searchObjectMap : {
-        limit:1,
+        limit:20,
         offset:0,
         maxButtons:5,
         item:null,
@@ -19,7 +18,6 @@ module.exports = React.createClass({
     },
     getInitialState: function() {
         return {
-            data: [{value:1,name:"a"},{value:2,name:"b"}],
             sort:{FromTime:"ASC",Code:"ASC",Name:"ASC",CreatedDate:"ASC"},
             list:[],
         }
@@ -31,6 +29,7 @@ module.exports = React.createClass({
             self.setState({ list: response.rows });
             if(response.count%self.searchObjectMap.limit != 0){
                 self.searchObjectMap.item = (response.count%self.searchObjectMap.limit) + 1;
+                if(self.searchObjectMap.item == 1) self.searchObjectMap.maxButtons = 1;
                 self.refs.pagination.init(self.searchObjectMap);
             }
             else{
@@ -79,6 +78,15 @@ module.exports = React.createClass({
         this.searchObjectMap.offset = (this.searchObjectMap.activePage - 1) * this.searchObjectMap.limit;
         this._loadListEform(this.searchObjectMap);
     },
+    _clearSearch: function(value) {
+        var self = this;
+        if(value == true) {
+            this.refs.filter._clearSearch(function() {
+                self.searchObjectMap.search = {};
+                self._loadListEform(self.searchObjectMap);
+            });
+        }
+    },
     componentDidMount: function() {
         this._init();
         $(this.paginations).twbsPagination({
@@ -101,7 +109,9 @@ module.exports = React.createClass({
                                     <i className="icon-list font-blue-sharp"></i>
                                     <span className="caption-subject bold uppercase"> E-Forms</span>
                                 </div>
-                                <div className="tools"></div>
+                                <div className="actions">
+                                    <a className="btn btn-warning" onClick={this._clearSearch.bind(this,true)}>Clear Search</a>
+                                </div>
                             </div>
                             <div className="portlet-body">
                                 <div className="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">

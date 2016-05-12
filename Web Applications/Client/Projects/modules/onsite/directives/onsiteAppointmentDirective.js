@@ -2,6 +2,9 @@ var app = angular.module('app.authentication.onsite.appointment.directive',[]);
 
 app.directive('onsiteAppointment', function(){
 	return {
+        scope:{
+            runWhenFinish:"="
+        },
 		restrict: 'E',
 		templateUrl: 'modules/onsite/directives/templates/onsiteAppointmentDirective.html',
 		controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$timeout,$scope, $uibModal, companyService, doctorService){

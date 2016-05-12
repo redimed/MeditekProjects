@@ -216,6 +216,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                                 Service: service,
                                 SiteID: SiteID
                             };
+                            console.log('ppppppp', event.id);
                             bookingEvents.push(event);
                         });
                         $('#calendar').fullCalendar('addEventSource', bookingEvents);
@@ -353,6 +354,41 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                                 return 'context-menu-icon-updated';
                             }
                         },
+                        /*thao*/
+                        // create: {
+                        //     name: 'Create',
+                        //     callback: function(key, opt, start, end, event) {
+                        //         var UID = opt.selector.split('_')[2];
+                        //         console.log('eeeee', UID);
+                        //         BookingService.GetDetailBooking({ UID: UID })
+                        //             .then(function(response) {
+                        //                 var modalInstance = $uibModal.open({
+                        //                     animation: true,
+                        //                     size: 'lg',
+                        //                     templateUrl: 'modules/booking/views/schedulerCreate.html',
+                        //                     controller: function($scope) {
+                                                
+                        //                     },
+                        //                     resolve: {
+                        //                         event: function() {
+                        //                             return currentEvent;
+                        //                         },
+                        //                         start: function() {
+                        //                             return start;
+                        //                         },
+                        //                         end: function() {
+                        //                             return end;
+                        //                         },
+                        //                     }
+                        //                 });
+                        //             }, function(error) {})
+                        //     },
+                        //     icon: function(opt, $itemElement, itemKey, item) {
+                        //         $itemElement.html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create');
+                        //         return 'context-menu-icon-updated';
+                        //     }
+                        // },
+                        /*end thao*/
                         edit: {
                             name: 'Edit',
                             callback: function(key, opt) {

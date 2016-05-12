@@ -7,49 +7,20 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
     });
 
     $scope.items = [
-        {field:"FirstName",name:"First Name"},
-        {field:"LastName",name:"Last Name"},
-        {field:"UserAccount",name:"Mobile"},
+        { field: "FirstName", name: "First Name" },
+        { field: "LastName", name: "Last Name" },
+        { field: "UserAccount", name: "Mobile" },
     ];
     $scope.patient = {
         runIfSuccess: function(data) {
-           $timeout(function(){
+            $timeout(function() {
                 $scope.formData.Patient = data;
-            },0);
+            }, 0);
         },
         runIfClose: function() {
             $modalInstance.close();
         }
     };
-
-    // $scope.choosePatientDialog = function() {
-    //     var modalInstance = $modal.open({
-    //         animation: true,
-    //         templateUrl: '../../modules/appointment/views/appointmentSelectPatientModal.html',
-    //         controller: function($scope, $modalInstance) {
-    //             $scope.patient = {
-    //                 runIfSuccess: function(data) {
-    //                     $modalInstance.close({
-    //                         status: 'success',
-    //                         data: data
-    //                     });
-    //                 },
-    //                 runIfClose: function() {
-    //                     $modalInstance.close();
-    //                 }
-    //             };
-    //         },
-    //         windowClass: 'app-modal-window',
-    //         resolve: {
-    //             patientInfo: function() {
-    //                 return true;
-    //             }
-    //         }
-    //     });
-    //     modalInstance.result.then(function(data) {
-    //         $scope.formData.Patient = data.data;
-    //     });
-    // }
 
     /*function getListService() {
         RosterService.GetListService()
@@ -182,7 +153,7 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
 });
 
 /*Thao*/
-app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr, type, date, time, $stateParams,$state) {
+app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr, type, date, time, $stateParams, $state) {
     $scope.item = item;
     $scope.type = type;
     $scope.date = date;
@@ -194,54 +165,25 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
     });
 
     $scope.items = [
-        {field:"FirstName",name:"First Name"},
-        {field:"LastName",name:"Last Name"},
-        {field:"UserAccount",name:"Mobile"},
+        { field: "FirstName", name: "First Name" },
+        { field: "LastName", name: "Last Name" },
+        { field: "UserAccount", name: "Mobile" },
     ];
     $scope.formData = {};
     $scope.patient = {
-    runIfSuccess: function(data) {
-        console.log(data);
-        // $scope.formData.Patient = data;
-        $timeout(function(){
-            $scope.formData.Patient = data;
-        },0);
-        console.log($scope.formData);
-    },
-    runIfClose: function() {
-        $modalInstance.close();
-    }
-};
+        runIfSuccess: function(data) {
+            console.log(data);
+            // $scope.formData.Patient = data;
+            $timeout(function() {
+                $scope.formData.Patient = data;
+            }, 0);
+            console.log($scope.formData);
+        },
+        runIfClose: function() {
+            $modalInstance.close();
+        }
+    };
 
-
-    // $scope.choosePatientDialog = function() {
-    //     var modalInstance = $modal.open({
-    //         animation: true,
-    //         templateUrl: '../../modules/appointment/views/appointmentSelectPatientModal.html',
-    //         controller: function($scope, $modalInstance) {
-    //             $scope.patient = {
-    //                 runIfSuccess: function(data) {
-    //                     $modalInstance.close({
-    //                         status: 'success',
-    //                         data: data
-    //                     });
-    //                 },
-    //                 runIfClose: function() {
-    //                     $modalInstance.close();
-    //                 }
-    //             };
-    //         },
-    //         windowClass: 'app-modal-window',
-    //         resolve: {
-    //             patientInfo: function() {
-    //                 return true;
-    //             }
-    //         }
-    //     });
-    //     modalInstance.result.then(function(data) {
-    //         $scope.formData.Patient = data.data;
-    //     });
-    // }
 
     /*function getListService() {
         RosterService.GetListService()
@@ -269,14 +211,14 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
         name: 'Telehealth'
     }];
     // $scope.formData = {
-        $scope.formData.service= event.Services[0];
-        $scope.formData.site= event.Sites[0];
-        $scope.formData.fromTime= moment(start).format('HH:mm'),
-        $scope.formData.toTime= moment(end).format('HH:mm');
-        $scope.formData.date= date; //moment(start).format('DD/MM/YYYY'),
-        $scope.formData.Doctor= event.UserAccounts[0].Doctor;
-        $scope.formData.Patient= item;
-        $scope.formData.type= type;
+    $scope.formData.service = event.Services[0];
+    $scope.formData.site = event.Sites[0];
+    $scope.formData.fromTime = moment(start).format('HH:mm'),
+        $scope.formData.toTime = moment(end).format('HH:mm');
+    $scope.formData.date = date; //moment(start).format('DD/MM/YYYY'),
+    $scope.formData.Doctor = event.UserAccounts[0].Doctor;
+    $scope.formData.Patient = item;
+    $scope.formData.type = type;
     // };
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
@@ -326,7 +268,7 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
             var DoctorUID = event.UserAccounts[0].Doctor.UID;
             var PatientUID = $scope.formData.Patient.UID;
             //var UID = data.UID;
- 
+
             if (PatientUID === '')
                 toastr.error('You must choose Patient');
             else {
@@ -358,9 +300,9 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
                         window.location.reload();
                         //$state.go('authentication.onsite.appointment',{UID:$stateParams.UID},{reload:true});
                     }, function(error) {
-                        if(typeof error.data !== 'undefined'){
+                        if (typeof error.data !== 'undefined') {
                             var type = error.data.status;
-                            switch(type){
+                            switch (type) {
                                 case 'withoutRoster':
                                     toastr.error('Booking Appointment Time Wrong !!!');
                                     break;

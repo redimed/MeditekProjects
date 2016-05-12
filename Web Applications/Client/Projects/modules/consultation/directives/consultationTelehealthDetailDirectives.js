@@ -544,11 +544,6 @@ app.directive('telehealthDetail', function(doctorService) {
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
                     console.log("saveWaAppointment",$scope.wainformation);
-                    $scope.wainformation.Doctors = [];
-                    for (var i = 0; i < $scope.info.listDoctorSelected.length; i ++)
-                    {
-                        $scope.wainformation.Doctors.push({UID: $scope.info.listDoctorSelected[i].UID});
-                    }
                     if($scope.wainformation.PatientAppointments) {
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
                             delete $scope.wainformation['Patients'];
@@ -858,7 +853,12 @@ app.directive('telehealthDetail', function(doctorService) {
                     });
                 };
                 $scope.submitUpdate = function() {
-                    $scope.submited = true
+                    $scope.wainformation.Doctors = [];
+                    for (var i = 0; i < $scope.info.listDoctorSelected.length; i ++)
+                    {
+                        $scope.wainformation.Doctors.push({UID: $scope.info.listDoctorSelected[i].UID});
+                    }
+                    $scope.submited = true;
                     if ($scope.userForm.$valid) {
                         var stringAlert = null;
                         if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {

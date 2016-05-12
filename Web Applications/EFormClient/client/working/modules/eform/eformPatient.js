@@ -22,19 +22,20 @@ module.exports = React.createClass({
             list:[],
         }
     },
-    _loadListEform: function(data) {
+    _loadListEform: function(data,isInit) {
         var self = this;
         EFormService.eformGetListByPatient(data)
         .then(function(response) {
             self.setState({ list: response.rows });
-            if(response.count%self.searchObjectMap.limit != 0){
-                self.searchObjectMap.item = (response.count%self.searchObjectMap.limit) + 1;
-                if(self.searchObjectMap.item == 1) self.searchObjectMap.maxButtons = 1;
-                self.refs.pagination.init(self.searchObjectMap);
-            }
-            else{
-                self.searchObjectMap.item = (response.count/self.searchObjectMap.limit);
-                self.refs.pagination.init(self.searchObjectMap);
+            if(isInit == true) {
+                if(response.count%self.searchObjectMap.limit != 0){
+                    self.searchObjectMap.item = (response.count/self.searchObjectMap.limit) + 1;
+                    self.refs.pagination.init(self.searchObjectMap);
+                }
+                else{
+                    self.searchObjectMap.item = (response.count/self.searchObjectMap.limit);
+                    self.refs.pagination.init(self.searchObjectMap);
+                }
             }
             self.refs.filter.setValue();
         },function(err) {
@@ -47,7 +48,7 @@ module.exports = React.createClass({
         var locationParams = Config.parseQueryString(window.location.href);
         this.searchObjectMap.patientUID = locationParams.patientUID;
         this.searchObjectMap.userUID = locationParams.userUID;
-        this._loadListEform(this.searchObjectMap);
+        this._loadListEform(this.searchObjectMap,true);
     },
     _filter: function(data) {
         this.searchObjectMap.search = data;

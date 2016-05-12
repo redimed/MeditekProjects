@@ -1002,7 +1002,7 @@ module.exports = {
 		include_data.push({
 			model: TelehealthUser,
 		    required: false,
-		    attributes:['UID']
+		    attributes:['ID','UID']
 		});
 
 		include_data.push({

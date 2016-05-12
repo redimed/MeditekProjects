@@ -54,8 +54,8 @@ module.exports = function(data, userInfo) {
                                 var arrayWhereClauseRoster = [];
                                 rangTime.by('days', function(day) {
                                     var objWhereClauseRoster = {
-                                        FromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom).toDate(),
-                                        ToTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo).toDate()
+                                        FromTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeFrom + ' ' + zoneFrom, 'YYYY-MM-DD HH:mm:ss Z').toDate(),
+                                        ToTime: moment(moment(day).format('YYYY-MM-DD') + ' ' + timeTo + ' ' + zoneTo, 'YYYY-MM-DD HH:mm:ss Z').toDate()
                                     };
                                     arrayWhereClauseRoster.push(objWhereClauseRoster);
                                 });

@@ -228,4 +228,22 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         angular.element("#col9").attr("class", col9);
         angular.element("#col3").attr("class", col3);
     };
+
+    $scope.getEFormByPatient = function() {
+        if(!_.isEmpty($scope.wainformation)) {
+            if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                var patientUID = $scope.wainformation.Patients[0].UID;
+                var userUID    = $scope.wainformation.Patients[0].UserAccount.UID;
+                var UID        = $stateParams.UID;
+                $state.go("authentication.consultation.eformbypatient", { UID: UID, patientUID: patientUID, userUID: userUID });
+            }
+            else {
+                toastr.error("Patient not found.");
+            }
+        }
+        else {
+            toastr.error("Patient not found.");
+        }
+        
+    }
 });

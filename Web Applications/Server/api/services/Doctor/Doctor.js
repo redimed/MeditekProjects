@@ -1461,6 +1461,9 @@ module.exports = {
 				if (got_checkuser == '' || got_checkuser == null) {
                     userInfo.Password = generatePassword(12, false);
                     userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
+					userInfo.Activated = 'Y';
+					userInfo.Enable    = 'Y';
+					userInfo.ExpiryPin = 5;
                     return Services.UserAccount.CreateUserAccount(userInfo, t);
                 } else {
                     return got_checkuser;

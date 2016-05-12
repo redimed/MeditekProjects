@@ -109,6 +109,10 @@ module.exports.routes = {
         controller: 'SocketController',
         action: 'TotalUserInRoom'
     },
+    'POST /api/telehealth/socket/callToReceiver': {
+        controller: 'SocketController',
+        action: 'CallToReceiver'
+    },
     //=================Telehealth Appointment============================
     'POST /api/telehealth/appointment/updateFile': {
         controller: 'Telehealth/v1_0/AppointmentController',

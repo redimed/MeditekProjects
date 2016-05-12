@@ -82,8 +82,8 @@ module.exports = {
     UpdatePatientDetails: function(headers, body) {
         headers['content-type'] = 'application/json';
         body.UserAccountUID = headers.useruid;
-        console.log("headers . . . ",headers.useruid);
-        console.log("body ..... ",body);
+        console.log("headers . . . ", headers.useruid);
+        console.log("body ..... ", body);
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/patient/update-patient',
@@ -249,5 +249,65 @@ module.exports = {
         note.payload = opts.payload ? opts.payload : {};
         note['content-available'] = 1;
         apnConnection.pushNotification(note, regTokens);
+    },
+    // Kiet
+    UpdateStatusTelehealthUser: function(TeleUID, status) {
+        var $q = require('q');
+        var defer = $q.defer();
+        console.log("UpdateStatusTelehealthUser ", TeleUID, status);
+        if (!TeleUID || !status) {
+            defer.reject({
+                message: 'Deficient'
+            });
+        } else {
+            console.log("UpdateStatusTelehealthUser ", TelehealthUser);
+            TelehealthUser.find({ where: { UID: TeleUID } }).then(function(teleUser) {
+                if (teleUser) { // if the record exists in the db
+                    teleUser.updateAttributes({
+                        Status1: status
+                    }).then(function(success) {
+                        defer.resolve({
+                            message: 'Success'
+                        });
+                    }, function(err) {
+                        defer.reject({
+                            message: err
+                        });
+                    });
+                } else {
+                    defer.reject({
+                        message: 'No Exists'
+                    });
+                }
+            });
+        }
+        return defer.promise;
+    },
+    CreateTelehealthCall: function(InfoCall) {
+        var $q = require('q');
+        var defer = $q.defer();
+        TelehealthCall.create({
+            UID: UUIDService.Create(),
+            FromUserAccountID: InfoCall.FromUserAccountID,
+            ToUserAccountID: InfoCall.ToUserAccountID,
+            StartTime: new Date(),
+            Status: InfoCall.Status,
+            CreatedBy: InfoCall.FromUserAccountID
+        }).then(function(teleCall) {
+            if (teleCall) {
+                defer.resolve({
+                    message: "success",
+                    data: teleCall.dataValues
+                });
+            } else {
+                defer.reject({
+                    message: "No success"
+                });
+            }
+        }, function(err) {
+            defer.reject({
+                message: err
+            });
+        });
     }
 }

@@ -5,25 +5,19 @@ module.exports = {
             primaryKey: true,
             autoIncrement: true
         },
-        UID: {
-            type: Sequelize.STRING
-        },
-        UserAccountID: {
+        TelehealthCallID: {
             type: Sequelize.INTEGER
         },
-        FirstName: {
+        TelehealthUserID: {
+            type: Sequelize.INTEGER
+        },
+        Latitude: {
             type: Sequelize.STRING
         },
-        LastName: {
+        Longitude: {
             type: Sequelize.STRING
         },
-        DOB: {
-            type: Sequelize.DATE
-        },
-        Address1: {
-            type: Sequelize.STRING
-        },
-        Address2: {
+        Address: {
             type: Sequelize.STRING
         },
         CreatedDate: {
@@ -37,26 +31,26 @@ module.exports = {
         },
         ModifiedBy: {
             type: Sequelize.INTEGER
-        },
-        Status1: {
-            type: Sequelize.STRING
         }
     },
     associations: function() {
-        TelehealthUser.belongsTo(UserAccount, {
-            foreignKey: 'UserAccountID'
+        TelehealthCallUser.belongsTo(TelehealthCall, {
+            foreignKey: 'TelehealthCallID'
+        });
+        TelehealthCallUser.belongsTo(TelehealthUser, {
+            foreignKey: 'TelehealthUserID'
         });
     },
     options: {
-        tableName: 'TelehealthUser',
+        tableName: 'TelehealthCallUser',
         timestamps: false,
         hooks: {
-            beforeCreate: function(telehealthuser, options, callback) {
-                telehealthuser.CreatedDate = new Date();
+            beforeCreate: function(telehealthcalluser, options, callback) {
+                telehealthcalluser.CreatedDate = new Date();
                 callback();
             },
-            beforeUpdate: function(telehealthuser, options, callback) {
-                telehealthuser.ModifiedDate = new Date();
+            beforeUpdate: function(telehealthcalluser, options, callback) {
+                telehealthcalluser.ModifiedDate = new Date();
                 callback();
             }
         }

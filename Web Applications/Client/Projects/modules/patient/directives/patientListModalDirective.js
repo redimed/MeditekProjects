@@ -828,6 +828,16 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
                 });
             };
 
+            scope.isIframe = false;
+            scope.getEForm = function() {
+            	scope.isIframe = true;
+            	var userUID = scope.info.UserAccount.UID;
+		        var eFormBaseUrl = o.const.eFormBaseUrl;
+		        var patientUID = scope.info.UID;
+		        var contentHeight = $('.page-content').height()-80;
+		        $('#EForm').attr('src', eFormBaseUrl+'/#/eform/patient?patientUID='+patientUID+'&userUID='+userUID);
+            };
+
 			scope.insurers = [
 				{name: 'Insurer Company'},
 				{name: 'Mineral Resources'},

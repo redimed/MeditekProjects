@@ -26,7 +26,7 @@ module.exports = React.createClass({
     componentDidMount: function(){
         var self = this;
         $(this.refs.input).datepicker({
-            autoclose: true,
+            autoclose: !0,
             format: 'dd/mm/yyyy',
             clearBtn:true,
         }).on('changeDate',function() {

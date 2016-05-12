@@ -16,9 +16,6 @@ module.exports = function(data, userInfo) {
             pagination.Patient = [];
         }
         pagination.Patient.push(filterRoleTemp);
-    } else if (!role.isAdmin &&
-        !role.isAssistant) {
-        pagination.limit = 0;
     }
     Appointment.findAll({
             attributes: ['ID'],

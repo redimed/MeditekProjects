@@ -15,6 +15,7 @@ module.exports = React.createClass({
         patientUID : null,
         userUID    : null,
         order:{},
+        count:0,
     },
     getInitialState: function() {
         return {
@@ -28,6 +29,7 @@ module.exports = React.createClass({
         .then(function(response) {
             self.setState({ list: response.rows });
             if(isInit == true) {
+                self.searchObjectMap.count = response.count;
                 if(response.count%self.searchObjectMap.limit != 0){
                     self.searchObjectMap.item = (response.count/self.searchObjectMap.limit) + 1;
                     self.refs.pagination.init(self.searchObjectMap);
@@ -172,6 +174,7 @@ module.exports = React.createClass({
                                         </tbody>
                                     </table>
                                     <Paginator ref="pagination" onChange={this._setPage} maxButtons={this.searchObjectMap.maxButtons} item={this.searchObjectMap.item} activePage={this.searchObjectMap.activePage} />
+                                    <div><label>Total : { this.searchObjectMap.count } </label></div>
                                 </div>
                             </div>
                         </div>

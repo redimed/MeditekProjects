@@ -1061,7 +1061,7 @@ module.exports = {
 					where:{
 						$or: check.sqlParam(whereClause.Department)
 					},
-					required: check.sqlParam(whereClause.Department)?true:false
+					required:!_.isEmpty(whereClause.Department)?true:false
 				}
 			],
 			attributes : attributes,

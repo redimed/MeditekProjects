@@ -4,21 +4,31 @@ input: UID Appointment
 output: - success: information details Telehealth Appointment
         -failed: [transaction] get details Telehealth Appointment, error message
  */
-module.exports = function(appointmentUID, userInfo) {
+var o = require("../HelperService");
+module.exports = function(appointmentUID, userUID) {
     var $q = require('q');
     var defer = $q.defer();
     //add roles
     var filter = {
-        InternalPractitioner: [],
+        InternalPractitioner: {},
         Appointment: [{
             '$and': {
                 UID: appointmentUID
             }
         }],
-        UserAccount: []
+        UserAccount: [],
+        RelUserRole: {RoleId: o.const.rolesID.internalPractitioner}
     };
-    
-    Appointment.findOne({
+
+    UserAccount.findOne({
+        attributes: ['ID'],
+        where: {UID: userUID}
+    })
+    .then(function(userLogin){
+        if(userLogin) {
+            filter.InternalPractitioner.UserAccountID = userLogin.ID
+        }
+        Appointment.findOne({
             attributes: Services.AttributesAppt.Appointment(),
             include: [{
                 model: TelehealthAppointment,
@@ -74,7 +84,8 @@ module.exports = function(appointmentUID, userInfo) {
             }, {
                 model: Doctor,
                 attributes: Services.AttributesAppt.Doctor(),
-                required: !_.isEmpty(filter.InternalPractitioner),
+                // required: !_.isEmpty(filter.InternalPractitioner),
+                required: false,
                 include: [{
                     model: Department,
                     attributes: Services.AttributesAppt.Department(),
@@ -86,8 +97,20 @@ module.exports = function(appointmentUID, userInfo) {
                         Enable: 'Y'
                     },
                     attributes: Services.AttributesAppt.FileUpload()
+                } , {
+                    model: UserAccount,
+                    attributes: ['ID'],
+                    required:false,
+                    include: [
+                        {
+                            model: RelUserRole,
+                            attributes: ['RoleId'],
+                            where : o.sqlParam(filter.RelUserRole),
+                            required:false
+                        }
+                    ],
                 }],
-                where: filter.InternalPractitioner
+                where: o.sqlParam(filter.InternalPractitioner),
             }, {
                 model: Patient,
                 attributes: Services.AttributesAppt.Patient(),
@@ -105,7 +128,7 @@ module.exports = function(appointmentUID, userInfo) {
                     }],
                     attributes: Services.AttributesAppt.UserAccount(),
                     required: !_.isEmpty(filter.UserAccount),
-                    where: filter.UserAccount
+                    where: o.sqlParam(filter.UserAccount)
                 }]
             }, {
                 model: FileUpload,
@@ -114,7 +137,7 @@ module.exports = function(appointmentUID, userInfo) {
                     Enable: 'Y'
                 }
             }],
-            where: filter.Appointment
+            where: o.sqlParam(filter.Appointment)
         })
         .then(function(detailApptTelehealth) {
             defer.resolve(
@@ -123,5 +146,8 @@ module.exports = function(appointmentUID, userInfo) {
         }, function(err) {
             defer.reject(err);
         });
+    },function(err){
+        defer.reject(err);
+    })
     return defer.promise;
 };

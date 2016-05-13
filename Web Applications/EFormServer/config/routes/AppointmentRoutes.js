@@ -31,7 +31,7 @@ module.exports = {
         action: 'GetListWAAppointment'
     },
 
-    'get /api/appointment-wa-detail/:UID': {
+    'get /api/appointment-wa-detail/:UID/:UserUID': {
         controller: 'Appointment/WAAppointmentController',
         action: 'GetDetailWAAppointment'
     },

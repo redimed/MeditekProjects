@@ -63,7 +63,6 @@ module.exports = React.createClass({
         $(this.refs.input).on('change', function(event){
             var sumValue = $('#'+sumRef).val() || 0;
             self.value = $.isNumeric(self.value)?self.value:0;
-            console.log(self.value);
             if($.isNumeric(event.target.value)){
                 if(parseFloat(sumValue) >= parseFloat(self.value))
                     sumValue = parseFloat(sumValue)-parseFloat(self.value)+parseFloat(event.target.value);

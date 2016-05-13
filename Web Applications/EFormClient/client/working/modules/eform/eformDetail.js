@@ -200,6 +200,11 @@ module.exports = React.createClass({
                 var countFieldDynamicTable = 0;
                 var currentRefDynamicTable = '';
                 EFormDataContent.map(function(field, indexField){
+                    if(field.moduleID > 0){
+                        var section = field.refRow.split('_');
+                        section = "section_"+section[1];
+                        self.refs[section].checkShowHide(field.value);
+                    }
                     var fieldRef = field.ref;
                     var fieldData = field.value;
                     var rowRef = field.refRow;

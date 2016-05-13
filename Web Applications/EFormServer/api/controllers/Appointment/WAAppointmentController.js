@@ -69,8 +69,9 @@ module.exports = {
        */
     GetDetailWAAppointment: function(req, res) {
         var UID = req.params.UID;
+        var UserUID = req.params.UserUID;
         var result = {};
-        Services.GetDetailWAAppointment(UID)
+        Services.GetDetailWAAppointment(UID, UserUID)
         .then(function(success) {
             result = success;
             result.dataValues.Appointment = {
@@ -88,7 +89,13 @@ module.exports = {
             result.dataValues.UserAccount = result.dataValues.Patients[0]
                                             && result.dataValues.Patients[0].UserAccount?
                                             result.dataValues.Patients[0].UserAccount:null;
-            result.dataValues.Doctor = result.dataValues.Doctors[0] || null;
+            // result.dataValues.Doctor = result.dataValues.Doctors[0] || null;
+            result.dataValues.Doctor = null;
+            if(result.dataValues.Doctors[0]
+                && result.dataValues.Doctors[0].UserAccount
+                && result.dataValues.Doctors[0].UserAccount.RelUserRoles
+                && result.dataValues.Doctors[0].UserAccount.RelUserRoles.length>0)
+                result.dataValues.Doctor = result.dataValues.Doctors[0];
             delete result.dataValues.Patients;
             delete result.dataValues.Doctors;
             if(result.dataValues.ID && result.dataValues.Patient && result.dataValues.Patient.ID)

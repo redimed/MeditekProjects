@@ -1,41 +1,36 @@
 var env = 'meditekServer'; //local,meditekServer,testApp,app
 
 var configRestBaseUrl = {
-    'local':'https://192.168.1.216:3005',
-    // 'local': 'https://localhost:3005',
+    'local': 'https://localhost:3005',
     'meditekServer': 'https://meditek.redimed.com.au:3005',
     'testApp': 'https://testapp.redimed.com.au:3005',
     'app': 'https://apps.redimed.com.au:3005'
 };
 
 var configAuthBaseUrl = {
-    'local':'https://192.168.1.216:3006',
-    // 'local': 'https://localhost:3006',
+    'local': 'https://localhost:3006',
     'meditekServer': 'https://meditek.redimed.com.au:3006',
     'testApp': 'https://testapp.redimed.com.au:3006',
     'app': 'https://apps.redimed.com.au:3006',
 };
 
 var configTelehealthBaseUrl = {
-    'local':'https://192.168.1.216:3009',
-    // 'local': 'https://localhost:3009',
+    'local': 'https://localhost:3009',
     'meditekServer': 'https://meditek.redimed.com.au:3009',
     'testApp': 'https://testapp.redimed.com.au:3009',
     'app': 'https://apps.redimed.com.au:3009',
 };
 
 var configNcBaseUrl = {
-    'local':'https://192.168.1.216:3016',
-    // 'local': 'https://localhost:3016',
+    'local': 'https://localhost:3016',
     'meditekServer': 'https://meditek.redimed.com.au:3016',
     'testApp': 'https://testapp.redimed.com.au:3016',
     'app': 'https://apps.redimed.com.au:3016',
 };
 
 var configEFormUrl = {
-    'local':'https://192.168.1.106:3014',
+    'local':'https://localhost:3014',
     'meditekServer': 'https://meditek.redimed.com.au:3014',
-    //'meditekServer': 'https://localhost:3014',
     'testApp': 'https://testapp.redimed.com.au:3014',
     'app': 'https://apps.redimed.com.au:3014'
 };

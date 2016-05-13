@@ -201,7 +201,7 @@ module.exports = {
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'GET',
-				url: Config.apiUrl+'api/appointment-wa-detail/'+data.UID,
+				url: Config.apiUrl+'api/appointment-wa-detail/'+data.UID+'/'+data.UserUID,
 				success: resolve
 			})
 		})

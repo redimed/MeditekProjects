@@ -32,7 +32,7 @@ module.exports = React.createClass({
         var self = this;
         EFormService.getUserRoles({UID: this.userUID})
         .then(function(responseRoles){
-            EFormService.preFormDetail({UID: self.appointmentUID})
+            EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
             .then(function(response){
                 if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null)
                     self.signatureDoctor = response.data.Doctor.FileUpload;

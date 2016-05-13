@@ -187,7 +187,7 @@ module.exports = React.createClass({
         }
         switch (id) {
             case 'editField':
-                this.refs.modalFieldDetail.show();
+                $(this.refs.modalFieldDetail).css({display: 'block'});
                 this.refs.fieldDetail.init(dataFieldDetail);
                 break;
             case 'deleteField':
@@ -198,7 +198,10 @@ module.exports = React.createClass({
     },
     _onComponentFieldDetailSave: function(data) {
         this.props.onSaveFieldDetail(this.props.codeSection, this.props.code, data);
-        this.refs.modalFieldDetail.hide();
+        $(this.refs.modalFieldDetail).css({display: 'none'});
+    },
+    _onComponentFieldDetailClose: function(){
+         $(this.refs.modalFieldDetail).css({display: 'none'});
     },
     _onComponentFieldDetailChartSave: function(data) {
         this.props.onSaveFieldDetail(this.props.codeSection, this.props.code, data);
@@ -376,15 +379,15 @@ module.exports = React.createClass({
                             <ComponentListField ref="listField" onSelectItem={this._onComponentListFieldSelect}/>
                         </div>
                     </CommonModal>
-                    <CommonModal ref="modalFieldDetail">
+                    <div ref="modalFieldDetail" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', bottom: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
                         <div className="header">
                             <h4>Modal Field Detail</h4>
                         </div>
                         <div className="content">
                             <ComponentFieldDetail ref="fieldDetail" onSave={this._onComponentFieldDetailSave}
-                                onCloseModal={function(){this.refs.modalFieldDetail.hide()}.bind(this)}/>
+                                onCloseModal={this._onComponentFieldDetailClose}/>
                         </div>
-                    </CommonModal>
+                    </div>
                     <CommonModal ref="modalFieldDetailChart">
                         <div className="header">
                             <h4>Modal Field Detail</h4>

@@ -49,6 +49,13 @@ module.exports = React.createClass({
     getPage: function(){
         return this.props.page;
     },
+    checkShowHide: function(value){
+        if(this.viewTypeDynamic === 'hide'){
+            this.refs.radio_show.setChecked(true);
+            this.refs.radio_hide.setChecked(false);
+        }
+
+    },
     componentDidMount: function() {
         if (this.props.permission === 'eformDev') {
             var self = this;
@@ -61,12 +68,16 @@ module.exports = React.createClass({
             })
         }else{
             if(this.props.viewType === 'dynamic'){
+                $(this.refs.section).css('display', 'none');
                 if(typeof this.viewTypeDynamic !== 'undefined' && this.viewTypeDynamic !== 'show'){
                     this.refs.radio_show.setChecked(false);
                     this.refs.radio_hide.setChecked(true);
-                }else{
+                }else if(this.viewTypeDynamic === 'show'){
                     this.refs.radio_show.setChecked(true);
                     this.refs.radio_hide.setChecked(false);
+                }else{
+                    this.refs.radio_show.setChecked(false);
+                    this.refs.radio_hide.setChecked(true);
                 }
             }
         }
@@ -171,6 +182,7 @@ module.exports = React.createClass({
     render: function(){
         var displayPermission = (this.props.permission === 'eformDev')?'inline-block':'none';
         var displayViewType = (this.props.viewType !== 'static' && this.props.permission !== 'eformDev')?'inline-block':'none';
+        if(typeof this.props.viewType === 'undefined') displayViewType = 'none';
         return (
                 <div className="row">
                     <CommonModal ref="modalUpdateSection">

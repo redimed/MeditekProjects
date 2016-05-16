@@ -320,7 +320,7 @@ module.exports = {
                 err.transaction.rollback();
                 res.serverError({
                     status: 500,
-                    message: ErrorWrap(err)
+                    message: ErrorWrap(err.err)
                 });
 
             });

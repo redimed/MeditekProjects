@@ -58,6 +58,10 @@ module.exports = {
     UpdateRequestWAAppointmentCompany: require('./Appointment/UpdateRequestWAAppointmentCompany'),
     UpdateAppointmentData: require('./Appointment/UpdateAppointmentData'),
     LinkAppointmentPatient: require('./Appointment/LinkAppointmentPatient'),
+    GetListAppointmentAdmin: require('./Appointment/GetListAppointmentAdmin'),
+    GetListAppointmentDoctor: require('./Appointment/GetListAppointmentDoctor'),
+    GetListAppointmentOrganization: require('./Appointment/GetListAppointmentOrganization'),
+    GetListAppointmentPatient: require('./Appointment/GetListAppointmentPatient'),
     //end Appointment
     Module: require('./Authorization/v0_1/Module'),
     Role: require('./Authorization/v0_1/Role'),

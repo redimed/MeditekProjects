@@ -7,6 +7,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
         },
         templateUrl: "modules/blank/directives/templates/registerPatientBlank.html",
         controller: function($scope, blankServices, AuthenticationService, toastr, $state, $cookies, $rootScope, CommonService, $timeout) {
+            $('#dpMonths').fdatepicker();
             $timeout(function() {
                 App.initAjax();
                 ComponentsDateTimePickers.init();

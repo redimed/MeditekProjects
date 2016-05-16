@@ -822,8 +822,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
                 }).result.finally(function(){
                     if(returnData) {
                     	toastr.success('Link Success.');
-                        scope.info.Companies[0] = returnData;
-                        scope.getSite(returnData.UID);
+                        scope.info.Companies[0] = returnData.company;
+                        scope.getSite(returnData.company.UID);
                     }
                 });
             };

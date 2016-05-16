@@ -21,7 +21,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             ]
     };
 
-    $scope.isRolePatient = false;
+    $scope.isRolePatient = true;
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
             var checkedUser = false;
@@ -51,15 +51,14 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
 
     var userInfo = JSON.parse($cookies.get('userInfo'));
-    $scope.checkPatient = 'Y';
+    $scope.checkPatient = 'N';
     for (var i = 0; i < userInfo.roles.length; i++) {
         var role = userInfo.roles[i];
         if (role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN') {
             $scope.checkPatient = 'Y';
+            $scope.isRolePatient = false;
         }
-        if(role.RoleCode === 'PATIENT') {
-            $scope.isRolePatient = true;
-        }
+        
     }
 
     $scope.styleFunction = function(EForms) {
@@ -80,6 +79,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         /* END EFORM */
         //
     $scope.checkRoleUpdate = true;
+
     for (var i = 0; i < $cookies.getObject('userInfo').roles.length; i++) {
         if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
             $scope.checkRoleUpdate = false;

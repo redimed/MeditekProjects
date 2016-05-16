@@ -3,7 +3,7 @@
 //  UrgentCare Work
 //
 //  Created by Meditek on 3/28/16.
-//  Copyright © 2016 Giap Vo Duc. All rights reserved.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit
@@ -42,6 +42,10 @@ class UserService {
     }
     class func postTelehealthUser(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_TELEHEATHUSER, model: model, completion: completion)
+    }
+    
+    class func postAppointmentList(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_APPOINTMENTLIST, model: model, completion: completion)
     }
     
     //Get API

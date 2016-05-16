@@ -3,7 +3,7 @@
 //  Telehealth
 //
 //  Created by Meditek on 4/6/16.
-//  Copyright © 2016 Giap Vo Duc. All rights reserved.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 import UIKit
 import ObjectMapper

@@ -3,7 +3,7 @@
 //  UrgentCare Work
 //
 //  Created by Meditek on 5/6/16.
-//  Copyright © 2016 Giap Vo Duc. All rights reserved.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit

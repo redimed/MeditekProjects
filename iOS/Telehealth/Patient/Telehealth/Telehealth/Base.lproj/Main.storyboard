@@ -641,7 +641,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfS-oV-ps6">
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfS-oV-ps6">
                                             <rect key="frame" x="0.0" y="0.0" width="48" height="27"/>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
                                             <state key="normal" title=" Back"/>
@@ -649,7 +649,7 @@
                                                 <segue destination="7F2-sS-loc" kind="unwind" unwindAction="unwindToViewController:" id="Hmu-l6-8py"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkj-4k-y18">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkj-4k-y18">
                                             <rect key="frame" x="24" y="47" width="60" height="63"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="Tmn-DA-DQX"/>
@@ -658,7 +658,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Received" backgroundImage="Icon 1"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lmc-VS-8YS">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lmc-VS-8YS">
                                             <rect key="frame" x="24" y="193" width="60" height="63"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="UbB-6c-ijh"/>
@@ -667,7 +667,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Appt Time" backgroundImage="Icon 3"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="V8g-Sy-Iub">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="V8g-Sy-Iub">
                                             <rect key="frame" x="24" y="339" width="60" height="63"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="Zoi-1Q-hr0"/>
@@ -676,7 +676,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Wait List Surgery" backgroundImage="Icon 5"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tls-jC-OOr">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tls-jC-OOr">
                                             <rect key="frame" x="24" y="412" width="60" height="63"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="Cge-m5-Kiz"/>
@@ -685,7 +685,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Finish" backgroundImage="Icon 6"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-Zf-6jR">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-Zf-6jR">
                                             <rect key="frame" x="24" y="120" width="60" height="63"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="Mrf-ZD-o84"/>
@@ -750,7 +750,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrL-jE-bkh">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrL-jE-bkh">
                                             <rect key="frame" x="24" y="266" width="60" height="63"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="4ON-9Q-AoK"/>
@@ -1808,7 +1808,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqN-Nb-5FK">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8N-pA-cUd">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8N-pA-cUd">
                                         <rect key="frame" x="8" y="22" width="55" height="27"/>
                                         <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
                                         <state key="normal" title=" Home">
@@ -2914,6 +2914,13 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GVu-MK-I2i">
                                                 <rect key="frame" x="218" y="0.0" width="100" height="48"/>
                                                 <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line-1" translatesAutoresizingMaskIntoConstraints="NO" id="5oL-iZ-cre">
+                                                        <rect key="frame" x="0.0" y="-12" width="1" height="60"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="1" id="sB2-dJ-8o0"/>
+                                                        </constraints>
+                                                    </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Treating Practitioner" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="HHh-Dr-afb">
                                                         <rect key="frame" x="10" y="3" width="80" height="41"/>
                                                         <constraints>
@@ -2924,13 +2931,6 @@
                                                         <color key="textColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line-1" translatesAutoresizingMaskIntoConstraints="NO" id="5oL-iZ-cre">
-                                                        <rect key="frame" x="0.0" y="-12" width="1" height="60"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="1" id="sB2-dJ-8o0"/>
-                                                        </constraints>
-                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.94509803921568625" green="0.94117647058823528" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -4740,7 +4740,7 @@
         <!--Change PinNumber-->
         <scene sceneID="3bt-r4-Oig">
             <objects>
-                <viewController storyboardIdentifier="ChangePinNumberViewControllerID" id="rRu-zd-gYI" userLabel="Change PinNumber" customClass="ChangePinNumberViewController" customModule="UrgentCare_Work" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangePinNumberViewControllerID" id="rRu-zd-gYI" userLabel="Change PinNumber" customClass="ChangePinNumberViewController" customModule="Telehealth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nwp-QX-hS0"/>
                         <viewControllerLayoutGuide type="bottom" id="7mB-x7-Vbo"/>
@@ -4770,14 +4770,14 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="fPZ-pD-C6B"/>
                                         <exclude reference="OFK-BW-20U"/>
+                                        <exclude reference="fPZ-pD-C6B"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
-                                        <include reference="fPZ-pD-C6B"/>
                                         <include reference="OFK-BW-20U"/>
+                                        <include reference="fPZ-pD-C6B"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=regular" misplaced="YES">
@@ -4787,10 +4787,10 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCg-Su-d8p" customClass="TPKeyboardAvoidingScrollView">
                                 <rect key="frame" x="0.0" y="125" width="320" height="405"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9m-Uu-pUF" customClass="DesignableView" customModule="UrgentCare_Work" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9m-Uu-pUF" customClass="DesignableView" customModule="Telehealth" customModuleProvider="target">
                                         <rect key="frame" x="10" y="81" width="300" height="190"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yV-Ld-HIF" customClass="DesignableButton" customModule="UrgentCare_Work" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yV-Ld-HIF" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
                                                 <rect key="frame" x="25" y="139" width="250" height="40"/>
                                                 <color key="backgroundColor" red="0.086274509799999996" green="0.12549019610000001" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -4809,7 +4809,7 @@
                                                     <action selector="ActionChangePinNumber:" destination="rRu-zd-gYI" eventType="touchUpInside" id="Ega-Du-lwS"/>
                                                 </connections>
                                             </button>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BKM-00-Tv2" customClass="DesignableTextField" customModule="UrgentCare_Work" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BKM-00-Tv2" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
                                                 <rect key="frame" x="25" y="30" width="250" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -4839,7 +4839,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Comfirm Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nV7-mX-c0l" customClass="DesignableTextField" customModule="UrgentCare_Work" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Comfirm Pin Number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nV7-mX-c0l" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
                                                 <rect key="frame" x="25" y="83" width="250" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -4897,20 +4897,20 @@
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="4w4-C1-waB"/>
+                                                <exclude reference="46J-rd-Kw5"/>
+                                                <exclude reference="M2z-XS-ela"/>
                                                 <exclude reference="aAF-jb-cx7"/>
                                                 <exclude reference="fPj-40-JHo"/>
-                                                <exclude reference="M2z-XS-ela"/>
-                                                <exclude reference="46J-rd-Kw5"/>
                                                 <exclude reference="hRC-Mc-GOY"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=compact">
                                             <mask key="constraints">
                                                 <include reference="4w4-C1-waB"/>
+                                                <include reference="46J-rd-Kw5"/>
+                                                <exclude reference="M2z-XS-ela"/>
                                                 <include reference="aAF-jb-cx7"/>
                                                 <include reference="fPj-40-JHo"/>
-                                                <exclude reference="M2z-XS-ela"/>
-                                                <include reference="46J-rd-Kw5"/>
                                                 <include reference="hRC-Mc-GOY"/>
                                             </mask>
                                         </variation>

@@ -3,7 +3,7 @@
 //  UrgentCare Work
 //
 //  Created by Meditek on 5/9/16.
-//  Copyright © 2016 Giap Vo Duc. All rights reserved.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit
@@ -18,6 +18,7 @@ class ChangePinNumberViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        txtOldPinNumber.delegate = self
         txtPinNumber.delegate = self
         txtConfirmPinNumber.delegate = self 
     }
@@ -36,7 +37,8 @@ class ChangePinNumberViewController: BaseViewController {
         }
     }
     @IBAction func ActionChangePinNumber(sender: AnyObject) {
-        if(txtPinNumber.text == txtConfirmPinNumber.text && txtPinNumber.text != "" && txtPinNumber.text?.length <= 6 && txtConfirmPinNumber.text != "" && txtOldPinNumber.text != "" && txtOldPinNumber.text?.length <= 6 && txtConfirmPinNumber.text?.length <= 6){
+        
+        if(txtPinNumber.text == txtConfirmPinNumber.text && txtPinNumber.text != "" && txtPinNumber.text?.length <= 6 && txtConfirmPinNumber.text != "" && txtOldPinNumber.text != "" && txtOldPinNumber.text?.length <= 6 && txtConfirmPinNumber.text?.length <= 6 && Context.validatePhoneNumber(txtPinNumber.text!,regex:Define.Regex.PinNumber) && Context.validatePhoneNumber(txtOldPinNumber.text!,regex:Define.Regex.PinNumber) && Context.validatePhoneNumber(txtConfirmPinNumber.text!,regex:Define.Regex.PinNumber)){
             
             let updatePinNumber : UpdatePinNumber = UpdatePinNumber()
             updatePinNumber.oldPin = txtOldPinNumber.text!

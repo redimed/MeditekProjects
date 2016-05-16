@@ -86,12 +86,16 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Telehealth/Alamofire.framework"
   install_framework "Pods-Telehealth/ObjectMapper.framework"
+  install_framework "Pods-Telehealth/Realm.framework"
+  install_framework "Pods-Telehealth/RealmSwift.framework"
   install_framework "Pods-Telehealth/SocketIOClientSwift.framework"
   install_framework "Pods-Telehealth/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Telehealth/Alamofire.framework"
   install_framework "Pods-Telehealth/ObjectMapper.framework"
+  install_framework "Pods-Telehealth/Realm.framework"
+  install_framework "Pods-Telehealth/RealmSwift.framework"
   install_framework "Pods-Telehealth/SocketIOClientSwift.framework"
   install_framework "Pods-Telehealth/SwiftyJSON.framework"
 fi

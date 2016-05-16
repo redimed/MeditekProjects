@@ -10,8 +10,8 @@ target 'Telehealth' do
     pod 'Socket.IO-Client-Swift', '~> 5.2.3' # Or latest version
     pod 'ObjectMapper', '~> 0.18'
     ###
-#    pod 'RealmSwift'
-#    pod 'Google/CloudMessaging'
+    pod 'RealmSwift'
+    pod 'Google/CloudMessaging'
 
 	
 end

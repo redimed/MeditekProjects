@@ -1,9 +1,9 @@
 <!-- content page -->
-<div class="portlet box green">
+<div class="portlet light bordered">
 	<div class="portlet-title">
-		<div class="caption">
-			<i class="icon-list"></i>
-			<span class="caption-subject bold uppercase">Patient</span>
+		<div class="caption font-blue bold uppercase">
+			<i class="icon-list font-blue"></i>
+			<span class="caption-subject">Patient</span>
 		</div>
 		<div class="actions">
 			<!-- <a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a> -->
@@ -13,89 +13,78 @@
 		</div>
 	</div>
 	<div class="portlet-body">
-
-        <!-- end filter -->
-		<!-- begin table -->
-		<div class="table-scrollable">
-			<table class="table table-bordered table-hover table-striped">
-			<thead>
-				<tr style="width:100%;">
-					<th width="1">#</th>
-					<th ng-repeat="i in items">
-						{{i.name}}
-						<i class="fa fa-sort-asc"  ng-click="sort(i.field,'ASC')" ng-show="fieldSort[i.field]=='ASC'" ng-if="i.field!='Enable'&&i.field!='UserAccount'" ></i>
-                        <i class="fa fa-sort-desc" ng-click="sort(i.field,'DESC')"ng-show="fieldSort[i.field]=='DESC'"ng-if="i.field!='Enable'&&i.field!='UserAccount'"></i>
- 					</th>
- 					<th>Enable</th>
- 					<th ng-if="isShowSelectButton">&nbsp;</th>
- 					<th>&nbsp;</th>
-				</tr>
-				<tr style="width:100%;" ng-hide="toggle">
-					<th>&nbsp;</th>
-					<th ng-repeat="i in items">
-						<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" ng-if="i.field!='Gender'">
-						<select class="form-control" ng-change="Search(search,'13')" ng-model="search[i.field]" ng-if="i.field=='Gender'">
-							<option value=""></option>
-							<option value="Male">Male</option>
-							<option value="Female">Female</option>
-							<option value="Other">Other</option>
-						</select>
+		<div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
+			<table class="table table-light table-hover table-striped">
+				<thead>
+					<tr class="uppercase">
+						<th width="1">#</th>
+						<th ng-repeat="i in items">
+							{{i.name}}
+							<i class="fa fa-sort-asc"  ng-click="sort(i.field,'ASC')" ng-show="fieldSort[i.field]=='ASC'" ng-if="i.field!='Enable'&&i.field!='UserAccount'" ></i>
+	                        <i class="fa fa-sort-desc" ng-click="sort(i.field,'DESC')"ng-show="fieldSort[i.field]=='DESC'"ng-if="i.field!='Enable'&&i.field!='UserAccount'"></i>
+	 					</th>
+	 					<th>Enable</th>
+	 					<th ng-if="isShowSelectButton" width="1"></th>
+	 					<th width="1"></th>
+					</tr>
+					<tr style="width:100%;" ng-hide="toggle">
+						<th></th>
+						<th ng-repeat="i in items">
+							<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" ng-if="i.field!='Gender'">
+							<select class="form-control" ng-change="Search(search,'13')" ng-model="search[i.field]" ng-if="i.field=='Gender'">
+								<option value=""></option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Other">Other</option>
+							</select>
+						</th>
+						<th style="width:10%;">
+							<select class="form-control" ng-change="Search(search,flag)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
+						</th>
+						<th ng-if="isShowSelectButton" width="1"></th>
+						<th width="1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn && p.UID!==undefined && p.UID!==null && p.UID!==''}" id="{{p.UID}}">
+						<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{p.stt}}</td>
+						<td ng-repeat="i in items" ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='Male'?'Male':p[i.field]=='Female'?'Female':'Other'}}</td>
+						<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)" style="text-align:center">
+							<span ng-if="p.UserAccount.Enable != 'N'">
+								<i class="glyphicon glyphicon-ok font-green"></i>
+							</span>
+						</td>
+						<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
+							<i ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)"style="font-size:150%;" ng-class="{'fa fa-check-square-o':p.UID == uidReturn,'fa fa-square-o':p.UID != uidReturn}" id="{{p.stt}}"></i>
+							<!-- <input type="checkbox" class="form-control" ng-model="checked" style="width:30%;" ng-click="selectPatient(p.UID)"/> -->
+						</td>
+						<td>
+							<a ng-click="clickOpen(p.UID,p.UserAccount.Enable)" class=" btn blue btn-sm" >
+								<i class="glyphicon glyphicon-search"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<th colspan="8" style="text-align:right">
+						<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+							<uib-pagination
+							boundary-links="true"
+							total-items="count"
+							ng-model="searchObjectMap.currentPage"
+							class="pagination-lg"
+							previous-text="&lsaquo; "
+							next-text="&rsaquo; "
+							first-text="&laquo; "
+							last-text="&raquo; "
+							items-per-page="searchObjectMap.limit"
+							max-size="searchObjectMap.maxSize"
+							ng-change="setPage()"></uib-pagination>
+						</div>
 					</th>
-					<th style="width:10%;">
-						<select class="form-control" ng-change="Search(search,flag)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
-					</th>
-					<th ng-if="isShowSelectButton">&nbsp;</th>
-					<th>&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tbody>
-				<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn && p.UID!==undefined && p.UID!==null && p.UID!==''}" id="{{p.UID}}">
-					<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{p.stt}}</td>
-					<td ng-repeat="i in items" ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='Male'?'Male':p[i.field]=='Female'?'Female':'Other'}}</td>
-					<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)" style="text-align:center">
-						<span ng-if="p.UserAccount.Enable != 'N'">
-							<i class="glyphicon glyphicon-ok font-green"></i>
-						</span>
-					</td>
-					<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
-						<i ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)"style="font-size:150%;" ng-class="{'fa fa-check-square-o':p.UID == uidReturn,'fa fa-square-o':p.UID != uidReturn}" id="{{p.stt}}"></i>
-						<!-- <input type="checkbox" class="form-control" ng-model="checked" style="width:30%;" ng-click="selectPatient(p.UID)"/> -->
-					</td>
-					<td style="width:10%; text-align:center;">
-						<a ng-click="clickOpen(p.UID,p.UserAccount.Enable)" class=" btn btn-info" >Detail</a>
-					</td>
-				</tr>
-			</tbody>
+				</tfoot>
 			</table>
 		</div>
-		<!-- begin pagination -->
-		<div class="row">
-			<div class="col-md-5 col-sm-12">
-				&nbsp;
-			</div>
-			<div class="col-md-7 col-sm-12" style="text-align:right">
-				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-					<uib-pagination
-					boundary-links="true"
-					total-items="count"
-					ng-model="searchObjectMap.currentPage"
-					class="pagination-lg "
-					previous-text="&lsaquo; "
-					next-text="&rsaquo; "
-					first-text="&laquo; "
-					last-text="&raquo; "
-					items-per-page="searchObjectMap.limit"
-					max-size="searchObjectMap.maxSize"
-					ng-change="setPage()"></uib-pagination>
-				</div>
-			</div>
-		</div>
-		<!-- end pagination -->
-		<!-- end table -->
-
-		<!-- begin pagination -->
-		<!-- end paginatiton -->
 	</div>
 </div>
 <!-- end content page -->

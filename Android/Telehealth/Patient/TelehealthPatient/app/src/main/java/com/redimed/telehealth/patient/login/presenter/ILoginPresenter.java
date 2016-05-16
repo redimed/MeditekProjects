@@ -9,16 +9,10 @@ import android.view.View;
  */
 public interface ILoginPresenter {
 
-    void verifyLogin(Bundle bundle, String code);
-
     void hideKeyboardFragment(View v);
-
-//    void verifyCode(String verifyCode);
-
-//    void requestCode(String phoneNumber);
 
     void changeFragment(Fragment fragment);
 
-//    void validatedPhone(String code, String phoneNumber);
+    void verifyLogin(Bundle bundle, String code);
 
 }

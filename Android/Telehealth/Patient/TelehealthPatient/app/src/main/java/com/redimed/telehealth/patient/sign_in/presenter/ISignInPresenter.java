@@ -8,9 +8,11 @@ import android.view.View;
  */
 public interface ISignInPresenter {
 
-    void register(String phone);
-
     void hideKeyboardFragment(View v);
 
+    void requestCode(String phoneNumber);
+
     void changeFragment(Fragment fragment);
+
+    void validatedPhone(String phoneNumber);
 }

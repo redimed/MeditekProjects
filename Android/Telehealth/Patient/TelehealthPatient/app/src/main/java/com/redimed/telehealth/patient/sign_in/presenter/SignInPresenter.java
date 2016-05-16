@@ -46,6 +46,7 @@ public class SignInPresenter implements ISignInPresenter {
     private ISignInView iSignInView;
     private SharedPreferences spDevice;
     private IMainPresenter iMainPresenter;
+    private SharedPreferences.Editor editor;
     private static final String TAG = "===SIGN_PRESENTER===";
 
     public SignInPresenter(Context context, ISignInView iSignInView, FragmentActivity activity) {
@@ -53,39 +54,53 @@ public class SignInPresenter implements ISignInPresenter {
         this.iSignInView = iSignInView;
 
         gson = new Gson();
+        bundle = new Bundle();
+        fragment = new LoginFragment();
         iMainPresenter = new MainPresenter(context, activity);
         spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
     }
 
+    //Validated phone number match 10-15 digit numbers
     @Override
-    public void register(String phone) {
+    public void validatedPhone(String phoneNumber) {
+        String result;
         String code = context.getResources().getString(R.string.phone_code);
-        String resultPhone = convertPhone(code, phone);
-        if (!resultPhone.equals("wrong")) {
-            String isActivated = "N";
-
-            bundle = new Bundle();
-            fragment = new LoginFragment();
-            switch (isActivated) {
-                case "Y":
-                    bundle.putBoolean("isActivated", true);
-                    bundle.putString("phoneNumber", resultPhone);
-                    fragment.setArguments(bundle);
-                    iMainPresenter.replaceFragment(fragment);
-                    break;
-                case "N":
-                    requestCode(resultPhone);
-                    break;
-                default:
-                    break;
-            }
-            iSignInView.onLoadSuccess();
+        if (phoneNumber.length() == 0) {
+            result = "wrong";
         } else {
-            iSignInView.onLoadError(context.getResources().getString(R.string.alert_login));
+            String expression = "^(/+61|0061|0)?4[0-9]{8}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(phoneNumber);
+            if (matcher.matches()) {
+                String mobile = null;
+                String subStringMobile = phoneNumber.substring(0, 4);
+                if (subStringMobile.equalsIgnoreCase("0061")) {
+                    mobile = code + phoneNumber.substring(4, phoneNumber.length());
+                } else {
+                    char subPhone = phoneNumber.charAt(0);
+                    switch (subPhone) {
+                        case '0':
+                            mobile = code + phoneNumber.substring(1);
+                            break;
+                        case '4':
+                            mobile = code + phoneNumber;
+                            break;
+                        case '+':
+                            mobile = code + phoneNumber;
+                            break;
+                    }
+                }
+                result = mobile;
+            } else {
+                result = "wrong";
+            }
         }
+        iSignInView.onValidated(result);
     }
 
-    private void requestCode(final String phoneNumber) {
+    //Register phone number with get token device
+    @Override
+    public void requestCode(final String phoneNumber) {
         TelehealthUser telehealthUser = new TelehealthUser();
         telehealthUser.setPhone(phoneNumber);
 
@@ -97,16 +112,17 @@ public class SignInPresenter implements ISignInPresenter {
             registerApi.activation(patientJSON, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
-                    String msg = jsonObject.get("status").getAsString();
-                    Log.d(TAG, msg);
-                    if (msg.equalsIgnoreCase("success")) {
 
-                        bundle.putBoolean("isActivated", false);
-                        bundle.putString("phoneNumber", phoneNumber);
-                        fragment.setArguments(bundle);
+                    editor = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE).edit();
+                    editor.putString("userUID", jsonObject.get("UserUID").isJsonNull() ? "" : jsonObject.get("UserUID").getAsString());
+                    editor.putString("patientUID", jsonObject.get("PatientUID").isJsonNull() ? "" : jsonObject.get("PatientUID").getAsString());
+                    editor.apply();
 
-                        iMainPresenter.replaceFragment(fragment);
-                    }
+                    bundle.putString("isActivated", jsonObject.get("Activated").isJsonNull() ? "" : jsonObject.get("Activated").getAsString());
+                    bundle.putString("phoneNumber", phoneNumber);
+                    fragment.setArguments(bundle);
+
+                    iMainPresenter.replaceFragment(fragment);
                 }
 
                 @Override
@@ -138,36 +154,6 @@ public class SignInPresenter implements ISignInPresenter {
             for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
                 View innerView = ((ViewGroup) view).getChildAt(i);
                 hideKeyboardFragment(innerView);
-            }
-        }
-    }
-
-    public String convertPhone(String code, String phoneNumber) {
-        if (phoneNumber.length() == 0) {
-            return "wrong";
-        } else {
-            String expression = "^(/+61|0061|0)?4[0-9]{8}$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(phoneNumber);
-            if (matcher.matches()) {
-                String mobile = null;
-                String subStringMobile = phoneNumber.substring(0, 4);
-                if (subStringMobile.equalsIgnoreCase("0061")) {
-                    mobile = code + phoneNumber.substring(4, phoneNumber.length());
-                } else {
-                    char subPhone = phoneNumber.charAt(0);
-                    switch (subPhone) {
-                        case '0':
-                            mobile = code + phoneNumber.substring(1);
-                            break;
-                        case '4':
-                            mobile = code + phoneNumber;
-                            break;
-                    }
-                }
-                return mobile;
-            } else {
-                return "wrong";
             }
         }
     }

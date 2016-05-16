@@ -7,9 +7,6 @@ public interface ILoginView {
 
     void onLogin();
 
-//    void onRequestCode();
-
     void onLoadError(String msg);
 
-//    void onValidate(String result);
 }

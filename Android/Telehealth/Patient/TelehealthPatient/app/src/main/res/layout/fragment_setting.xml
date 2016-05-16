@@ -106,17 +106,18 @@
                 android:layout_gravity="right"/>
 
             <RelativeLayout
+                android:id="@+id/layoutChangePin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
-                    android:id="@+id/btnAddNew"
+                    android:id="@+id/txtAddNew"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:text="@string/add_new"
+                    android:text="@string/change_pin"
                     android:textColor="@color/blueFont"
                     android:layout_centerVertical="true"/>
 

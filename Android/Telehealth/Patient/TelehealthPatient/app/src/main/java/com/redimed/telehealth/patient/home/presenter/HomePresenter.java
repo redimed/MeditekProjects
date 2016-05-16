@@ -128,7 +128,6 @@ public class HomePresenter implements IHomePresenter {
         }
     }
 
-    // TODO: 3/24/2016 Check Patient is Activated
     @Override
     public void checkExistsPatient() {
         SharedPreferences preferencesLogin = context.getSharedPreferences("isLogin", Context.MODE_PRIVATE);

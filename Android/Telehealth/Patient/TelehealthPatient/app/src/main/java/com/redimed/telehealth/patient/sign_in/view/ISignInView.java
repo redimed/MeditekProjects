@@ -5,7 +5,8 @@ package com.redimed.telehealth.patient.sign_in.view;
  */
 public interface ISignInView {
 
-    void onLoadSuccess();
-
     void onLoadError(String msg);
+
+    void onValidated(String result);
+
 }

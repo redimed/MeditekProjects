@@ -40,7 +40,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
 
     private Bundle bundle;
     private Context context;
-//    private boolean isActivated;
+//    private String isActivated;
     private SweetAlertDialog progressDialog;
     private ILoginPresenter iLoginPresenter;
     private static final String TAG = "=====ACTIVATION=====";
@@ -107,7 +107,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
     private void init() {
         bundle = this.getArguments();
 //        if (bundle != null) {
-//            isActivated = bundle.getBoolean("isActivated");
+//            isActivated = bundle.getString("isActivated");
 //        }
 
         layoutContainer.setAlpha(0.0f);
@@ -146,40 +146,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
                 progressDialog.show();
                 btnLogin.setEnabled(false);
                 iLoginPresenter.verifyLogin(bundle, txtCode.getText().toString());
-//                int currentView = layoutContainer.indexOfChild(layoutContainer.getCurrentView());
-//                iLoginPresenter.validatedPhone(lblPhoneCode.getText().toString(), txtPhone.getText().toString());
                 break;
             default:
                 break;
         }
     }
-
-//    @Override
-//    public void onValidate(String result) {
-//        if (!result.equalsIgnoreCase("wrong")) {
-//            iLoginPresenter.requestCode(result);
-//        } else {
-//            btnRequestCode.setEnabled(true);
-//            Toast.makeText(context, R.string.alert_wrong_phone, Toast.LENGTH_LONG).show();
-//        }
-//    }
-
-//    @Override
-//    public void onRequestCode() {
-////        switchView(R.anim.in_from_left, R.anim.out_to_right, layoutRegisterFone);
-//
-//        //Set text  and icon title appointment details
-//        lblTitle.setText(getResources().getString(R.string.activation_title));
-//        lblSubTitle.setText(getResources().getString(R.string.back));
-//        layoutBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                txtPhone.setText("");
-////                btnRequestCode.setEnabled(true);
-////                switchView(R.anim.in_from_right, R.anim.out_to_left, layoutRegisterFone);
-//            }
-//        });
-//    }
 
     @Override
     public void onLogin() {

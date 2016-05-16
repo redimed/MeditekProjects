@@ -10,9 +10,13 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.checkRoleUpdate = true;
             $scope.DataPrintPDF = null;
             var Window;
-            if ($cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
-                $scope.checkRoleUpdate = false;
-            };
+            for(var i = 0; i < $cookies.getObject('userInfo').roles.length; i++){
+                console.log("22222")
+                if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER') {
+                    console.log("111111")
+                    $scope.checkRoleUpdate = false;
+                };
+            }
             $scope.requestInfo = {
                 UID: $stateParams.UID,
                 Consultations: [{

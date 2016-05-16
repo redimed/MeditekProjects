@@ -156,36 +156,42 @@ app.directive('patientDetailDirective', function() {
     return {
         restrict: 'E',
         scope: {
-            apptuid: "="
+            info: "="
         },
         templateUrl: 'common/views/patientDetailDirective.html',
         controller: function($scope, WAAppointmentService) {
-            if ($scope.apptuid) {
-                WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                    if (data.data != null) {
-                        $scope.patientInfo = data.data.Patients[0];
+            $scope.info.setDataPatientDetail = function(data) {
+                console.log("patientDetailDirective",data);
+                $scope.apptdetail = data;
+                if ($scope.apptdetail != null) {
+                    if ($scope.apptdetail.Patients.length > 0) {
+                        $scope.patientInfo = $scope.apptdetail.Patients[0];
                         console.log('$scope.patientInfo', $scope.patientInfo);
-                    };
-                }, function(error) {});
-            };
+                    } else if ($scope.apptdetail.PatientAppointments.length > 0) {
+                        $scope.patientInfo = $scope.apptdetail.PatientAppointments[0];
+                        console.log('$scope.patientInfo', $scope.patientInfo);
+                    } else if ($scope.apptdetail.TelehealthAppointment != null) {
+                        $scope.patientInfo = $scope.apptdetail.TelehealthAppointment.PatientAppointment;
+                        console.log('$scope.patientInfo', $scope.patientInfo);
+                    }
+                };
+            }
         },
     };
 });
-app.directive('medicareDirective', function() {
+app.directive('medicareDirective', function($timeout) {
     return {
         scope: {
-            apptuid: "="
+            info: "="
         },
         restrict: 'E',
         templateUrl: 'common/views/medicareDirective.html',
         controller: function($scope, WAAppointmentService) {
-            if ($scope.apptuid) {
-                WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                    if (data.data != null) {
-                        $scope.patientTelehealth = data.data.TelehealthAppointment.PatientAppointment;
-                        console.log('$scope.patientTelehealth', $scope.patientTelehealth);
-                    };
-                }, function(error) {});
+            $scope.info.setDataMedicare = function(data) {
+                console.log("medicareDirective", data);
+                if (data && data.TelehealthAppointment != null) {
+                    $scope.patientTelehealth = data.TelehealthAppointment.PatientAppointment;
+                }
             }
         },
     };
@@ -194,22 +200,23 @@ app.directive('appointmentDetailDirective', function() {
     return {
         restrict: 'E',
         scope: {
-            apptuid: "="
+            info: "="
         },
         templateUrl: 'common/views/appointmentDetailDirective.html',
         controller: function($scope, WAAppointmentService, AuthenticationService, $cookies, $state, toastr) {
-            WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                if (data.data != null) {
-                    $scope.appointmentInfo = data.data;
-                    $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).format('DD/MM/YYYY') : 'N/A';
-                    $scope.apptTime = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).format('HH:mm') : 'N/A';
+            $scope.info.setDataApptDetail = function(data) {
+                console.log("appointmentDetailDirective", data);
+                $scope.apptdetail = data;
+                if ($scope.apptdetail != null) {
+                    $scope.apptDate = ($scope.apptdetail.FromTime != null) ? moment($scope.apptdetail.FromTime).format('DD/MM/YYYY') : 'N/A';
+                    $scope.apptTime = ($scope.apptdetail.FromTime != null) ? moment($scope.apptdetail.FromTime).format('HH:mm') : 'N/A';
                 };
-            }, function(error) {});
+            }
 
             var userInfo = $cookies.getObject('userInfo');
-            ioSocket.getRoomOpentok.then(function (data) {
+            ioSocket.getRoomOpentok.then(function(data) {
                 $scope.Opentok = data.data;
-                console.log("$scope.Opentok",$scope.Opentok);
+                console.log("$scope.Opentok", $scope.Opentok);
             })
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);

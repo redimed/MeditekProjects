@@ -6,7 +6,7 @@ app.directive('telehealthDetail', function(doctorService) {
         },
         restrict: 'E',
         templateUrl: "modules/consultation/directives/templates/consultationTelehealthDetailDirectives.html",
-        controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService) {
+        controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $uibModal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService) {
             o.loadingPage(true);
             $scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
@@ -106,16 +106,18 @@ app.directive('telehealthDetail', function(doctorService) {
                         if (checkDateUndefined($scope.wainformation.Patients[0])) {
                             $scope.ShowData.patient = angular.copy($scope.wainformation.Patients[0]);
                             $scope.ShowData.patient.PhoneNumber = $scope.ShowData.patient.UserAccount.PhoneNumber;
+                            $scope.ShowData.patient.MedicareExpiryDate = moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
                         };
                     } else {
                         if(_.isEmpty($scope.wainformation.TelehealthAppointment) == true) {
                             if($scope.wainformation.PatientAppointments) {
-                                console.log("asdasdad");
-                                $scope.ShowData.patient = $scope.wainformation.PatientAppointments[0];
+                                $scope.ShowData.patient = angular.copy($scope.wainformation.PatientAppointments[0]);
+                                $scope.ShowData.patient.MedicareExpiryDate = moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
                             }
                         }
                         else {
-                            $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment.PatientAppointment;
+                            $scope.ShowData.patient = angular.copy($scope.wainformation.TelehealthAppointment.PatientAppointment);
+                            $scope.ShowData.patient.MedicareExpiryDate = moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
                         }
                     }
                     if ($scope.wainformation.TelehealthAppointment != null || $scope.wainformation.TelehealthAppointment != undefined) {
@@ -544,6 +546,11 @@ app.directive('telehealthDetail', function(doctorService) {
                     $scope.ValidateData();
                     $scope.ClinicalDetails();
                     console.log("saveWaAppointment",$scope.wainformation);
+					if(!_.isEqual($scope.ShowData.patient, $scope.wainformation.PatientAppointments[0])) {
+                        $scope.wainformation.PatientAppointment = angular.copy($scope.ShowData.patient);
+                        $scope.wainformation.PatientAppointment.MedicareExpiryDate = moment($scope.wainformation.PatientAppointment.MedicareExpiryDate,'DD/MM/YYYY HH:mm:ss Z');
+                    }
+
                     if($scope.wainformation.PatientAppointments) {
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
                             delete $scope.wainformation['Patients'];
@@ -701,7 +708,7 @@ app.directive('telehealthDetail', function(doctorService) {
                 };
                 $scope.showImage = function(UID) {
                     var LinkUID = UID;
-                    var modalInstance = $modal.open({
+                    var modalInstance = $uibModal.open({
                         templateUrl: 'showImageTemplate',
                         controller: 'showImageController',
                         windowClass: 'app-modal-window-full',
@@ -763,7 +770,7 @@ app.directive('telehealthDetail', function(doctorService) {
                             }
                         }
                     }
-                    var modalInstance = $modal.open({
+                    var modalInstance = $uibModal.open({
                         animation: true,
                         templateUrl: '../modules/appointment/views/appointmentSelectPatientModal.html',
                         controller: function($scope, $modalInstance) {
@@ -895,7 +902,7 @@ app.directive('telehealthDetail', function(doctorService) {
 
             $scope.openCalendar = function(){
                 //var PatientAppointment = $scope.wainformation.TelehealthAppointment.PatientAppointment;
-                modalInstance = $modal.open({
+                modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: 'modules/onsite/views/onsiteCalendar.html',
                     controller: 'onsiteCalendarCtrl',
@@ -1101,7 +1108,8 @@ app.directive('telehealthDetail', function(doctorService) {
                                 getDetailSite({SiteIDRefer:$scope.wainformation.AppointmentData[i].Value}, nocompany);
                             }
                         }
-                        else if($scope.wainformation.AppointmentData[i].Name == 'SiteID') {
+                        else if($scope.wainformation.AppointmentData[i].Name == 'SiteID' && $scope.wainformation.AppointmentData[i].Value != "0" &&
+                            $scope.wainformation.AppointmentData[i].Value != 0) {
                             if($scope.wainformation.AppointmentData[i].Value != null && $scope.wainformation.AppointmentData[i].Value != ''){
                                 getDetailSite({ID:$scope.wainformation.AppointmentData[i].Value}, nocompany);
                             }

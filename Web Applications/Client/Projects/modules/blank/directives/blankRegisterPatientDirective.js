@@ -307,15 +307,15 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         };
                     };
                 }
-                if ($scope.postData.otherData.PatientMedicare !== undefined) {
-                    if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== undefined) {
-                        if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== '') {
-                            $scope.postData.otherData.PatientMedicare.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientMedicare.ExpiryDate);
-                        } else {
-                            $scope.postData.otherData.PatientMedicare.ExpiryDate = null;
-                        };
-                    };
-                }
+                // if ($scope.postData.otherData.PatientMedicare !== undefined) {
+                //     if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== undefined) {
+                //         if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== '') {
+                //             $scope.postData.otherData.PatientMedicare.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientMedicare.ExpiryDate);
+                //         } else {
+                //             $scope.postData.otherData.PatientMedicare.ExpiryDate = null;
+                //         };
+                //     };
+                // }
             }
             $scope.Submit = function() {
                 if($scope.postData.data.Email1) {
@@ -331,7 +331,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         }
                     }
                     $scope.AppointmentData();
-                    // $scope.FormatDate();
+                    $scope.FormatDate();
                     o.loadingPage(true);
                     if($scope.postData.otherData.PatientMedicare.ExpiryDate && $scope.postData.otherData.PatientMedicare.ExpiryDate != '') {
                         $scope.postData.otherData.PatientMedicare.ExpiryDate = '01/'+$scope.postData.otherData.PatientMedicare.ExpiryDate;

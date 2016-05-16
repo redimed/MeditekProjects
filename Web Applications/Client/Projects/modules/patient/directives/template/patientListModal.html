@@ -1,15 +1,14 @@
 <div class="modal-content" id="modalContent">
-    <div class="modal-header my-modal-header" ng-if="isShowFull==true">
+    <div class="modal-header" ng-if="isShowFull==true">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="onCancel()"></button>
-        <h4 class="modal-title"><b><i class="icon-note"></i> Patient Detail</b></h4>
+        <h4 class="modal-title bold uppercase font-blue"><i class="icon-settings"></i> Patient Detail</h4>
     </div>
     <div class="modal-body" id="modalBody">
         <form role="form" class="form">
             <div class="form-body">
                 <div class="tab-content" id="tabContent1">
-                    <div class="tabbable" id="tabBable">
-                        <!-- header tab -->
-                        <ul class="nav nav-tabs nav-tabs-lg">
+                    <div class="tabbable-custom" id="tabBable">
+                        <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
                             </li>
@@ -32,12 +31,11 @@
                                 <a href="index.html#tab_EForm" data-toggle="tab" aria-expanded="true" ng-click="getEForm()" >EForm</a>
                             </li>
                         </ul>
-                        <!-- end header tab -->
                         <!-- content tab -->
                         <div class="tab-content" id="tabContent2">
                             <div class="tab-pane active" id="Personal_info">
                                 <div class="row margin-top-30">
-                                    <div class="col-lg-3 col-md-12" id="columm1" ng-if="listShow.columm1">
+                                    <div class="col-xs-3" id="columm1" ng-if="listShow.columm1">
                                         <div ng-form name="checkInForm" novalidate>
                                             <div class="form-group">
                                                 <div id="viewIMG">
@@ -57,178 +55,233 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-12" id="columm2" ng-if="listShow.columm2">
-                                        <h4 class="form-section bold">Person Information</h4>
-                                        <div class="form-group">
-                                            <label class="control-label">Title</label>
-                                            <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
-                                            <span style="color:red;">{{ermsg.Title}}</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">First Name</label>
-                                            <input type="text" class="form-control" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')"><span style="color:red;">{{ermsg.FirstName}}</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Middle Name</label>
-                                            <input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"><span style="color:red;">{{ermsg.MiddleName}}</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Sur Name</label>
-                                            <input type="text" class="form-control" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')"><span style="color:red;">{{ermsg.LastName}}</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Date of Birth</label>
-                                            <div class="input-icon">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                                <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" />
-                                                <span style="color:red;">{{ermsg.DOB}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Gender</label>
-                                            <div class="input-icon">
-                                                <i class="fa fa-intersex"></i>
-                                                <select class="form-control" ng-model="info.Gender" ng-change="checkDataNull('Gender')">
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Occupation</label>
-                                            <div class="input-icon">
-                                                <i class="fa fa-odnoklassniki"></i>
-                                                <input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" ng-hide="isShowFull==false">
-                                            <div class="checkbox-list">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" class="regular-checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)"/>Enable</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-5 col-md-12 col-lg-offset-1" id="columm3" ng-if="listShow.columm3">
-                                        <h4 class="form-section bold">Contact Information</b></h4>
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-6">
-                                                <!-- Email -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Email</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-envelope"></i>
-                                                        <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.Email">
-                                                    </div>
-                                                </div>
-                                                <!-- end Email -->
-                                            </div>
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Work Phone</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-phone-alt"></i>
-                                                        <input type="text" class="form-control" ng-model="info.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"><span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
+                                    <div class="col-xs-9">
+                                        <div id="columm2" ng-if="listShow.columm2">
+                                            <h3 class="form-section">Personal Information</h3>
+                                            <div class="row">
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Title</label>
+                                                        <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
+                                                        <span style="color:red;">{{ermsg.Title}}</span>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">First Name</label>
+                                                        <input type="text" class="form-control" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')"><span style="color:red;">{{ermsg.FirstName}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Middle Name</label>
+                                                        <input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"><span style="color:red;">{{ermsg.MiddleName}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Last Name</label>
+                                                        <input type="text" class="form-control" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')"><span style="color:red;">{{ermsg.LastName}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Date of Birth</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                            <input date-picker 
+                                                                data-date-format="dd/mm/yyyy" 
+                                                                ng-model="info.DOB" 
+                                                                set-date="info.DOB"
+                                                                />
+                                                            <!-- <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" /> -->
+                                                            <span style="color:red;">{{ermsg.DOB}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Gender</label>
+                                                        <div class="input-icon">
+                                                            <i class="fa fa-intersex"></i>
+                                                            <select class="form-control" ng-model="info.Gender" ng-change="checkDataNull('Gender')">
+                                                                <option value="Male">Male</option>
+                                                                <option value="Female">Female</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Occupation</label>
+                                                        <div class="input-icon">
+                                                            <i class="fa fa-odnoklassniki"></i>
+                                                            <input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="row margin-top-30">
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group" ng-hide="isShowFull==false">
+                                                        <label class="control-label">Enable</label>
+                                                        <input type="checkbox" 
+                                                            class="make-switch" 
+                                                            ng-model="activeUser"
+                                                            ng-true-value="'Y'" 
+                                                            ng-false-value="'N'" 
+                                                            ng-click="changeEnable(activeUser)"
+                                                            data-on-text="<i class='fa fa-check'></i>" 
+                                                            data-off-text="<i class='fa fa-times'></i>" /> 
+                                                    </div>
+                                                    <!-- <div class="form-group" ng-hide="isShowFull==false">
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" class="regular-checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)"/>Enable</label>
+                                                        </div>
+                                                    </div>  --> 
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form-group" ng-hide="isShowFull==false">
+                                                        <label class="control-label">Activated</label>
+                                                        <input type="checkbox" 
+                                                            class="make-switch" 
+                                                            ng-model="activeUser"
+                                                            ng-true-value="'Y'" 
+                                                            ng-false-value="'N'" 
+                                                            data-on-text="<i class='fa fa-check'></i>" 
+                                                            data-off-text="<i class='fa fa-times'></i>" /> 
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-6">
-                                                <!-- Home Phone -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Home Phone</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-phone-alt"></i>
-                                                        <input type="text" class="form-control" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
+                                        <div id="columm3" ng-if="listShow.columm3">
+                                            <h3 class="form-section">Contact Information</b></h3>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <!-- Email -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Email</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-envelope"></i>
+                                                            <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.Email">
+                                                        </div>
+                                                    </div>
+                                                    <!-- end Email -->
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Work Phone</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-phone-alt"></i>
+                                                            <input type="text" class="form-control" ng-model="info.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"><span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <!-- end Home Phone -->
                                             </div>
-                                            <div class="col-md-6 col-sm-6">
-                                                <!-- Mobile Phone -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Mobile Phone</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-phone"></i>
-                                                        <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <!-- Home Phone -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Home Phone</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-phone-alt"></i>
+                                                            <input type="text" class="form-control" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
+                                                        </div>
                                                     </div>
+                                                    <!-- end Home Phone -->
                                                 </div>
-                                                <!-- end Mobile Phone -->
+                                                <div class="col-md-6 col-sm-6">
+                                                    <!-- Mobile Phone -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Mobile Phone</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-phone"></i>
+                                                            <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
+                                                        </div>
+                                                    </div>
+                                                    <!-- end Mobile Phone -->
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 col-sm-12">
-                                                <!-- Address1 -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Address1</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-road"></i>
-                                                        <input type="text" class="form-control" ng-model="info.Address1" ng-style="er.Address1" ng-change="ermsg.Address1='';checkDataNull('Address1')"><span style="color:red;">{{ermsg.Address1}}</span>
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <!-- Address1 -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Address1</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-road"></i>
+                                                            <input type="text" class="form-control" ng-model="info.Address1" ng-style="er.Address1" ng-change="ermsg.Address1='';checkDataNull('Address1')"><span style="color:red;">{{ermsg.Address1}}</span>
+                                                        </div>
                                                     </div>
+                                                    <!-- end Address1 -->
                                                 </div>
-                                                <!-- end Address1 -->
+                                                <div class="col-md-12 col-sm-12">
+                                                    <!-- Address2 -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Address2</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-road"></i>
+                                                            <input type="text" class="form-control" ng-model="info.Address2" ng-style="er.Address2" ng-change="ermsg.Address2='';checkDataNull('Address2')"><span style="color:red;">{{ermsg.Address2}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end Address2 -->
+                                                </div>
                                             </div>
-                                            <div class="col-md-12 col-sm-12">
-                                                <!-- Address2 -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Address2</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-road"></i>
-                                                        <input type="text" class="form-control" ng-model="info.Address2" ng-style="er.Address2" ng-change="ermsg.Address2='';checkDataNull('Address2')"><span style="color:red;">{{ermsg.Address2}}</span>
+                                            <div class="row">
+                                                <div class="col-md-8 col-sm-8">
+                                                    <!-- Suburb -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Suburb</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-tree-conifer"></i>
+                                                            <input type="text" class="form-control" ng-model="info.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb='';checkDataNull('Suburb')"><span style="color:red;">{{ermsg.Suburb}}</span>
+                                                        </div>
                                                     </div>
+                                                    <!-- end Surburb -->
                                                 </div>
-                                                <!-- end Address2 -->
+                                                <div class="col-md-4 col-sm-4">
+                                                    <!-- Postcode -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Postcode</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-map-marker"></i>
+                                                            <input type="text" class="form-control" ng-model="info.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode='';checkDataNull('Postcode')"><span style="color:red;">{{ermsg.Postcode}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end Postcode -->
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-8 col-sm-8">
-                                                <!-- Suburb -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Suburb</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-tree-conifer"></i>
-                                                        <input type="text" class="form-control" ng-model="info.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb='';checkDataNull('Suburb')"><span style="color:red;">{{ermsg.Suburb}}</span>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <!-- State -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">State</label>
+                                                        <div class="input-icon">
+                                                            <i class="glyphicon glyphicon-globe"></i>
+                                                            <select class="form-control" ng-model="info.State" ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''">
+                                                            </select><span style="color:red;">{{ermsg.State}}</span>
+                                                        </div>
                                                     </div>
+                                                    <!-- end state -->
                                                 </div>
-                                                <!-- end Surburb -->
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <!-- Postcode -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Postcode</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-map-marker"></i>
-                                                        <input type="text" class="form-control" ng-model="info.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode='';checkDataNull('Postcode')"><span style="color:red;">{{ermsg.Postcode}}</span>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <!-- Country -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Country</label>
+                                                        <div class="input-icon">
+                                                            <i class="fa fa-flag"></i>
+                                                            <select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries" ng-change="ermsg.CountryID1='';checkDataNull('CountryID1')">
+                                                            </select>
+                                                        </div>
                                                     </div>
+                                                    <!-- end Country -->
                                                 </div>
-                                                <!-- end Postcode -->
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-6">
-                                                <!-- State -->
-                                                <div class="form-group">
-                                                    <label class="control-label">State</label>
-                                                    <div class="input-icon">
-                                                        <i class="glyphicon glyphicon-globe"></i>
-                                                        <select class="form-control" ng-model="info.State" ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''">
-                                                        </select><span style="color:red;">{{ermsg.State}}</span>
-                                                    </div>
-                                                </div>
-                                                <!-- end state -->
-                                            </div>
-                                            <div class="col-md-6 col-sm-6">
-                                                <!-- Country -->
-                                                <div class="form-group">
-                                                    <label class="control-label">Country</label>
-                                                    <div class="input-icon">
-                                                        <i class="fa fa-flag"></i>
-                                                        <select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries" ng-change="ermsg.CountryID1='';checkDataNull('CountryID1')">
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <!-- end Country -->
                                             </div>
                                         </div>
                                     </div>
@@ -579,7 +632,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_company">
-                                <h3 class="form-section bold">
+                                <h3 class="form-section">
                                     <a href="javascript:;"
                                         class="btn btn-danger pull-right"
                                         style="position: relative; bottom:8px"
@@ -655,7 +708,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_EForm">
-                                <a ng-click="getEForm()" class="btn btn-info" ng-if="isIframe==true" >Back</a>
+                                <a ng-click="getEForm()" class="btn blue margin-top-30 margin-left-10" ng-if="isIframe==true">Back</a>
                                 <iframe width="100%" height="760" frameBorder="0" scrolling="yes" id="EForm"></iframe>
                             </div>
                         </div>
@@ -668,8 +721,12 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
-        <button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange()"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+        <button type="button" class="btn default" data-dismiss="modal" ng-click="onCancel()">
+            <i class="glyphicon glyphicon-arrow-left"></i> Close
+        </button>
+        <button type="button" class="btn blue" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange()">
+            Save changes <i class="glyphicon glyphicon-save"></i>
+        </button>
     </div>
 </div>
 <script>

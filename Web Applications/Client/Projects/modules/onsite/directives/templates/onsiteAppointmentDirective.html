@@ -74,13 +74,23 @@
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label class="control-label">Appointment Date</label>
-                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d" readonly="true">
+                                            <input date-picker 
+                                                data-date-format="dd/mm/yyyy" 
+                                                ng-model="info.appointmentDate" 
+                                                set-date="info.appointmentDate"
+                                                data-date-start-date="0d"
+                                            />
+                                            <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d" readonly="true"> -->
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label class="control-label">Appointment Time</label>
-                                            <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm" readonly="true">
+                                            <input time-picker
+                                                ng-model="info.appointmentTime" 
+                                                set-time="info.appointmentTime"
+                                            />
+                                            <!-- <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm" readonly="true"> -->
                                         </div>
                                     </div>
                                 </div>

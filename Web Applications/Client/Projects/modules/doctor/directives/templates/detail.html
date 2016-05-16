@@ -1,7 +1,7 @@
-<div class="portlet box green" style="margin-bottom:0px;" id="box">
-    <div class="portlet-title" style="padding:1em" ng-if="isShowFull!=false">
-        <div class="caption bold uppercase">
-            <i class="glyphicon glyphicon-th-list"></i>
+<div class="portlet light bordered" id="box" style="margin-bottom:0">
+    <div class="portlet-title" ng-if="isShowFull!=false">
+        <div class="caption bold uppercase font-blue">
+            <i class="glyphicon glyphicon-th-list font-blue"></i>
             <span class="caption-subject">Doctor Detail</span>
         </div>
         <div class="tools">
@@ -10,9 +10,9 @@
     </div>
     <div class="portlet-body form">
         <form>
-            <div class="form-body margin-bottom-40" style="padding:1em;">
-                <div class="row profile">
-                    <div class="col-md-3 col-sm-3" style="padding:2em;">
+            <div class="form-body">
+                <div class="row profile margin-bottom-40">
+                    <div class="col-md-3 col-sm-3">
 						<!-- ProfileImage -->
 						<div ng-form name="checkInForm" novalidate>
 							<div class="form-group">
@@ -34,7 +34,7 @@
 						<!-- end ProfileImage -->
                     </div>
                     <div class="col-md-9">
-                        <div class="tabbable-line">
+                        <div class="tabbable-custom">
                             <ul class="nav nav-tabs " id="tabtable">
                                 <li class="active" id="tab1">
                                     <a href="index.html#tab_UserAccount" data-toggle="tab"> User Account </a>
@@ -52,53 +52,90 @@
                             <div class="tab-content" id="tabtablecontent">
                                 <div class="tab-pane active" id="tab_UserAccount">
                                     <div class="form-horizontal">
-	                                    <div class="form-group">
+	                                    <div class="form-group margin-top-20">
 	                                        <label class="control-label col-md-3 col-ms-3">UserName</label>
 	                                        <div class="col-md-6 col-sm-6">
-	                                            <div class="input-icon">
+	                                        	<p class="form-control-static">{{info.UserAccount.UserName}}</p>
+	                                            <!-- <div class="input-icon">
 	                                                <i class="glyphicon glyphicon-user"></i>
 	                                                <input type="text" class="form-control" readonly="true" ng-model="info.UserAccount.UserName">
-	                                            </div>
+	                                            </div> -->
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <label class="control-label col-md-3 col-ms-3">Email</label>
 	                                        <div class="col-md-6 col-sm-6">
-	                                            <div class="input-icon">
+	                                        	<p class="form-control-static">{{info.Email}}</p>
+	                                            <!-- <div class="input-icon">
 	                                                <i class="glyphicon glyphicon-envelope"></i>
 	                                                <input type="text" class="form-control" readonly="true" ng-model="info.Email">
-	                                            </div>
+	                                            </div> -->
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <label class="control-label col-md-3 col-ms-3">Mobile</label>
 	                                        <div class="col-md-6 col-sm-6">
-	                                            <div class="input-icon">
+	                                        	<p class="form-control-static">{{info.UserAccount.PhoneNumber}}</p>
+	                                            <!-- <div class="input-icon">
 	                                                <i class="glyphicon glyphicon-phone"></i>
 	                                                <input type="text" class="form-control" readonly="true" ng-model="info.UserAccount.PhoneNumber">
-	                                            </div>
+	                                            </div> -->
 	                                        </div>
 	                                    </div>
-	                                    <div class="checkbox">
-	                                        <label class="label-control col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
-	                                            <input type="checkbox" ng-model="info.UserAccount.Enable" ng-true-value="'Y'" ng-false-value="'N'"> Enable
-	                                        </label>
+	                                    <div class="form-group">
+	                                    	<label class="control-label col-md-3 col-sm-3">Enable</label>
+	                                    	<div class="col-md-6 col-sm-6">
+	                                    		<input type="checkbox" 
+	                                    			class="make-switch" 
+	                                    			checked 
+	                                    			data-on-text="<i class='fa fa-check'></i>" 
+	                                    			data-off-text="<i class='fa fa-times'></i>"
+	                                    			ng-model="info.UserAccount.Enable" 
+	                                            	ng-true-value="'Y'" 
+	                                            	ng-false-value="'N'"/>
+	                                    		<!-- <div class="checkbox-list">
+			                                        <label class="checkbox-inline">
+			                                            <input type="checkbox" class="regular-checkbox" 
+			                                            	ng-model="info.UserAccount.Enable" 
+			                                            	ng-true-value="'Y'" 
+			                                            	ng-false-value="'N'"> Enable
+			                                        </label>
+			                                    </div> -->
+	                                    	</div>
 	                                    </div>
 	                                    <div class="form-group" ng-if="info.UserAccount.RelUserRoles[0].RoleId!=1 && info.UserAccount.RelUserRoles[0].RoleId!=2 && info.UserAccount.RelUserRoles[0].RoleId!=3">
-	                                    	<div class="col-md-3 col-sm-3">&nbsp;</div>
-	                                    	<div class="col-md-6 col-sm-6">
+	                                    	<div class="col-md-6 col-sm-6 col-md-offset-3 col-ms-offset-3">
+	                                    		<input type="checkbox" 
+	                                    			class="make-switch" 
+	                                    			checked 
+	                                    			data-on-text="&nbsp;Extertal&nbsp;Practitioner&nbsp;" 
+	                                    			data-off-text="&nbsp;Intertal&nbsp;Practitioner&nbsp;"
+	                                    			data-on-color="primary" 
+	                                    			data-off-color="info"
+	                                    			ng-model="info.UserAccount.Enable" 
+	                                            	ng-true-value="'Y'" 
+	                                            	ng-false-value="'N'"/>
+
+	                                    		<!-- <div class="radio-list">
 	                                                <label class="radio-inline">
-	                                                	<input name="Role" type="radio" ng-model="info.UserAccount.RelUserRoles[0].RoleId" ng-value="4"> Extertal Practitioner
+	                                                	<input name="Role" type="radio" 
+	                                                		ng-model="info.UserAccount.RelUserRoles[0].RoleId" 
+	                                                		class="regular-radio" 
+	                                                		ng-value="4"> Extertal Practitioner
 	                                                </label>
 	                                       	        <label class="radio-inline">
-	                                       	        	<input name="Role" type="radio" ng-model="info.UserAccount.RelUserRoles[0].RoleId" ng-value="5"> Intertal Practitioner
+	                                       	        	<input name="Role" type="radio" 
+	                                       	        		ng-model="info.UserAccount.RelUserRoles[0].RoleId" 
+	                                       	        		class="regular-radio"
+	                                       	        		ng-value="5"> Intertal Practitioner
 	                                       	        </label>
+	                                       	    </div> -->
 	                                    	</div>
                                         </div>
 	                                </div>
                                 </div>
                                 <div class="tab-pane" id="tab_Basic" ng-if="listShow.columm2==true">
-                                    <div class="form-horizontal">
+                                    <div class="form-horizontal margin-top-20">
 	                                    <!-- begin title -->
 	                                    <div class="form-group">
 	                                        <label class="control-label col-md-3 col-sm-3">Title</label>
@@ -187,7 +224,7 @@
 	                                </div>
                                 </div>
                                 <div class="tab-pane" id="tab_Contact" ng-if="listShow.columm3==true">
-                                	<div class="form-horizontal">
+                                	<div class="form-horizontal margin-top-20">
                                 		<!-- begin Workphone -->
 	                                    <div class="form-group">
 	                                        <label class="control-label col-md-3 col-sm-3">WorkPhone</label>
@@ -326,7 +363,7 @@
 										</div>
 										<div class="clearfix"></div>
 									</div> -->
-									<div class="row">
+									<div class="row margin-top-20">
 										<div class="col-md-6 col-sm-6 col-offset-3 col-sm-offset-3">
 											<div class="form-group">
 												<div ng-form name="checkInForm" novalidate>
@@ -334,12 +371,12 @@
 														<div>
 															<canvas id="imageSignatureCanvas" class="thumbnail" ng-show="isChoseSignature==true" ></canvas>
 															<img dimage dimage-uid="info.FileUID_sign" class="thumbnail" dimage-size="'550'" ng-show="(info.FileUID_sign!=null && info.FileUID_sign!=undefined) && isChoseSignature==false">
-															<img src="theme/assets/global/images/signature.jpg" class="thumbnail" ng-show="(info.FileUID_sign==null || info.FileUID_sign==undefined) && isChoseSignature==false" style="width:550px; height:280px; ">
+															<img src="theme/assets/global/images/no_signature.png" class="thumbnail" ng-show="(info.FileUID_sign==null || info.FileUID_sign==undefined) && isChoseSignature==false" style="width:550px; height:280px; ">
 														</div>
 														<div class="container">
 															<label for="imageSignature" style="float:left; padding-right: 1%;"> 
-																<span class="btn green" ng-if="isChoseSignature==false" style="width: 120px;">Select Image</span>
-																<span class="btn green" ng-if="isChoseSignature==true" style="width: 120px;">Change</span>
+																<span class="btn blue" ng-if="isChoseSignature==false" style="width: 120px;">Select Image</span>
+																<span class="btn blue" ng-if="isChoseSignature==true" style="width: 120px;">Change</span>
 																<input type="file" id="imageSignature" ng-click="setType('Signature')" name="imageSignature" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
 															</label> 
 															<span class="btn red" ng-if="isChoseSignature==true"style="width: 120px; float:left" ng-click="Remove('Signature')">Remove</span>
@@ -357,13 +394,13 @@
                     </div>
                 </div>
             </div>
-            <div class="form-actions">
-                <div class="row pull-right">
-                    <div class="col-md-12">
-                		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
-						<button type="button" class="btn btn-success" ng-click="save()" ng-disabled="infoChanged()||!infoClear()" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
-                    </div>
-                </div>
+            <div class="form-actions right">
+        		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()">
+        			<i class="icon-action-undo"></i> Close
+        		</button>
+				<button type="button" class="btn blue" ng-click="save()" ng-disabled="infoChanged()||!infoClear()" >
+					Save changes <i class="glyphicon glyphicon-save"></i>
+				</button>
             </div>
         </form>
     </div>

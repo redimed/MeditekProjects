@@ -67,12 +67,42 @@ app.directive('dropdownMenuHover', function() {
 // Datepicker
 app.directive('datePicker', function($timeout) {
     return {
+        restrict: "A",
+        scope: {
+            // startDate: '=startDate',
+            setDate: '=setDate',
+        },
+        controller: function($scope){
+            /*$('#inputDate').datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                // format: 'mm/dd/yyyy',
+                startDate: $scope.startDate,
+                autoclose: !0,
+            });*/
+
+        },
         link: function(scope, elem, attrs) {
-            $timeout(function() {
-                ComponentsDateTimePickers.init();
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..............");
+            console.log(elem);
+            console.log(attrs);
+            elem.datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                // format: 'mm/dd/yyyy', // ko co tac dung
+                // startDate: scope.startDate,
+                autoclose: !0,
             });
-            elem.addClass('form-control date-picker');
-            elem.attr('data-date-format', 'dd/mm/yyyy');
+            scope.$watch('setDate', function(oldVal, newVal) {
+                elem.datepicker('setDate', oldVal);
+            });
+            // $timeout(function(){
+            //     elem.datepicker('setDate', scope.setDate);
+            //     console.log('.................',scope.setDate);
+            // },0);
+
+            elem.addClass('form-control');
+            // elem.attr('data-date-format', 'dd/mm/yyyy');
             elem.attr('readonly', true);
             elem.attr('type', 'text');
             elem.attr('placeholder', 'dd/mm/yyyy');
@@ -82,14 +112,23 @@ app.directive('datePicker', function($timeout) {
     };
 });
 // Timepicker
-app.directive('timePickerNoSeconds', function($timeout) {
+app.directive('timePicker', function($timeout) {
     return {
+        scope: {
+            setTime: '=setTime',
+        },
         link: function(scope, elem, attrs) {
-            $timeout(function() {
-                ComponentsDateTimePickers.init();
+            elem.timepicker({
+                autoclose: false,
+                minuteStep: 1, // cach nhau bao nhieu phut
+                showSeconds: false, //ko show giay
+                showMeridian: false, // khong su dung kieu format AM PM
             });
-            elem.addClass('form-control timepicker timepicker-no-seconds');
-            elem.attr('data-format', 'hh:mm A');
+            scope.$watch('setTime', function(oldVal, newVal) {
+                elem.timepicker('setTime', oldVal);
+            });
+            elem.addClass('form-control');
+            // elem.attr('data-format', 'hh:mm A');
             elem.attr('data-default-time', '');
             elem.attr('readonly', true);
             elem.attr('type', 'text');

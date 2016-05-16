@@ -35,45 +35,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                     "PatientPension": {}
                 }
             };
-            // $scope.postData = {
-            //   "data": {
-            //     "Gender": "Male",
-            //     "State": "WA",
-            //     "CountryID1": 14,
-            //     "Title": "Master",
-            //     "FirstName": "123",
-            //     "LastName": "123",
-            //     "DOB": "03/04/2016",
-            //     "PhoneNumber": "0412312318",
-            //     "Address1": "13123",
-            //     "Suburb": "1234",
-            //     "Postcode": "1234"
-            //   },
-            //   "otherData": {
-            //     "PatientKin": {
-            //       "State": "WA",
-            //       "CountryID": 14,
-            //       "FirstName": "1",
-            //       "LastName": "1",
-            //       "MobilePhoneNumber": "0412345677",
-            //       "Address1": "13123",
-            //       "Suburb": "1234",
-            //       "Postcode": "1234"
-            //     },
-            //     "PatientMedicare": {
-                  
-            //     },
-            //     "Fund": {
-                  
-            //     },
-            //     "PatientDVA": {
-                  
-            //     },
-            //     "PatientPension": {
-                  
-            //     }
-            //   }
-            // };
+            
             var checkDateUndefined = function(data) {
                 if (data == ' ' || data == '' || data == undefined || data == null) {
                     return false;
@@ -226,67 +188,89 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 var data = '?';
                 $('#btn2').prop('disabled',true);
                 if ($scope.step1.$valid && number == 1) {
-                    if($scope.postData.data.PhoneNumber) {
-                        data = data+'&PhoneNumber='+$scope.postData.data.PhoneNumber;
+                    
+                    function checkField(callback) {
+                        var string = '?';
+                        var isCheck = false;
+                        if(($scope.postData.data.PhoneNumber && $scope.postData.data.PhoneNumber != '') ||
+                            ($scope.postData.data.Email1 && $scope.postData.data.Email1 != '')){
+                            isCheck = true;
+                            if($scope.postData.data.PhoneNumber && $scope.postData.data.PhoneNumber != '') {
+                                string = string+'&PhoneNumber='+$scope.postData.data.PhoneNumber;
+                            }
+                            if($scope.postData.data.Email1 && $scope.postData.data.Email1 != '' ) {
+                                string = string+'&Email='+$scope.postData.data.Email1;
+                            }
+                        }
+                        callback(isCheck, string);
                     }
-                    if($scope.postData.data.Email1) {
-                        data = data+'&Email='+$scope.postData.data.Email1;
-                    }
-                    blankServices.checkpatient(data).then(function(response) {
-                        if(response == null || response == '' || response.length == 0) {
+
+                    checkField(function(isChecked, stringParamsURL) {
+                        if(isChecked == true) {
+                            blankServices.checkpatient(stringParamsURL).then(function(response) {
+                                if(response == null || response == '' || response.length == 0) {
+                                    $scope.number++;
+                                    $scope.submitted = false;
+                                    o.loadingPage(false);
+                                    $('#btn2').prop('disabled',false);
+                                }
+                                else { 
+                                    o.loadingPage(false);
+                                    if($scope.postData.data.PhoneNumber.indexOf('0') == 0){
+                                        var parsePhone = $scope.postData.data.PhoneNumber.substr(0, 0)+"+614"+$scope.postData.data.PhoneNumber.substr(2);
+                                    }
+                                    for(var i = 0; i <= response.length; i++) {
+                                        if(i == response.length) {
+                                            if(isEmail == true && isPhoneNumber == true) {
+                                                toastr.error("Mobile Phone Number and Email existed");
+                                            }
+                                            else if(isEmail == true) {
+                                                toastr.error("Email existed");
+                                            }
+                                            else if(isPhoneNumber == true) {
+                                                toastr.error("Mobile Phone Number existed");
+                                            }
+                                        }
+                                        else {
+                                            if(response[i].Email == $scope.postData.data.Email1) {
+                                                isEmail = true;
+                                                // toastr.error("Email existed");
+                                            }
+                                            if(response[i].PhoneNumber == parsePhone) {
+                                                isPhoneNumber = true;
+                                                // toastr.error("Mobile Phone Number existed");
+                                            }
+                                        }
+                                    }
+                                }
+                                // if (!response.data.isCreated) {
+                                //     $scope.number++;
+                                //     $scope.submitted = false;
+                                // } else {
+                                //     if(response.data.field.Email == true && response.data.field.PhoneNumber == true) {
+                                //         toastr.error("Mobile Phone Number and Email existed");
+                                //     }
+                                //     else if(response.data.field.Email == true) {
+                                //         toastr.error("Email existed");
+                                //     }
+                                //     else if(response.data.field.PhoneNumber == true) {
+                                //         toastr.error("Mobile Phone Number existed");
+                                //     }
+
+                                // }
+                            }, function(err) {
+                                o.loadingPage(false);
+                                console.log(err.data.message);
+                            })
+                        }
+                        else {
                             $scope.number++;
                             $scope.submitted = false;
                             o.loadingPage(false);
                             $('#btn2').prop('disabled',false);
                         }
-                        else { 
-                            o.loadingPage(false);
-                            if($scope.postData.data.PhoneNumber.indexOf('0') == 0){
-                                var parsePhone = $scope.postData.data.PhoneNumber.substr(0, 0)+"+614"+$scope.postData.data.PhoneNumber.substr(2);
-                            }
-                            for(var i = 0; i <= response.length; i++) {
-                                if(i == response.length) {
-                                    if(isEmail == true && isPhoneNumber == true) {
-                                        toastr.error("Mobile Phone Number and Email existed");
-                                    }
-                                    else if(isEmail == true) {
-                                        toastr.error("Email existed");
-                                    }
-                                    else if(isPhoneNumber == true) {
-                                        toastr.error("Mobile Phone Number existed");
-                                    }
-                                }
-                                else {
-                                    if(response[i].Email == $scope.postData.data.Email1) {
-                                        isEmail = true;
-                                        // toastr.error("Email existed");
-                                    }
-                                    if(response[i].PhoneNumber == parsePhone) {
-                                        isPhoneNumber = true;
-                                        // toastr.error("Mobile Phone Number existed");
-                                    }
-                                }
-                            }
-                        }
-                        // if (!response.data.isCreated) {
-                        //     $scope.number++;
-                        //     $scope.submitted = false;
-                        // } else {
-                        //     if(response.data.field.Email == true && response.data.field.PhoneNumber == true) {
-                        //         toastr.error("Mobile Phone Number and Email existed");
-                        //     }
-                        //     else if(response.data.field.Email == true) {
-                        //         toastr.error("Email existed");
-                        //     }
-                        //     else if(response.data.field.PhoneNumber == true) {
-                        //         toastr.error("Mobile Phone Number existed");
-                        //     }
+                    });
 
-                        // }
-                    }, function(err) {
-                        o.loadingPage(false);
-                        console.log(err.data.message);
-                    })
                 } else if ($scope.step2.$valid && number == 2) {
                     o.loadingPage(false);
                     $scope.number++;
@@ -343,8 +327,12 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         }
                     }
                     $scope.AppointmentData();
-                    $scope.FormatDate();
+                    // $scope.FormatDate();
                     o.loadingPage(true);
+                    if($scope.postData.otherData.PatientMedicare.ExpiryDate && $scope.postData.otherData.PatientMedicare.ExpiryDate != '') {
+                        $scope.postData.otherData.PatientMedicare.ExpiryDate = '01/'+$scope.postData.otherData.PatientMedicare.ExpiryDate;
+                        console.log("date ",$scope.postData.otherData.PatientMedicare.ExpiryDate);
+                    }
                     blankServices.registerPatient($scope.postData).then(function(response) {
                         if (response.data.status = 200) {
                             $scope.logInData.UserUID = response.data.UserAccountUID;

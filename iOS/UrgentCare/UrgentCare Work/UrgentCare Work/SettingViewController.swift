@@ -117,8 +117,11 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     self.navigationController?.pushViewController(listSite, animated: true)
                 }
                 if(indexPath.row == 1 && indexPath.section == 1){
-                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
+                    let changPinNumber :ListTrackingViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListTrackingViewControllerID") as! ListTrackingViewController
                     self.navigationController?.pushViewController(changPinNumber, animated: true)
+                    
+//                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
+//                    self.navigationController?.pushViewController(changPinNumber, animated: true)
                 }
                 if(indexPath.row == 0 && indexPath.section == 1){
                     

@@ -22,10 +22,8 @@ class ListTrackingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getAppointmentLists()
-        
-        
-        
-        //        create refreshControl
+
+        //create refreshControl
         refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.blackColor()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -82,47 +80,10 @@ class ListTrackingViewController: UIViewController {
         }
 
     }
-    
-//    func getAppointmentList(patientUID:String,Offset:String){
-//        appointmentService.getAppointmentByID(patientUID, Limit: "20",Offset:Offset, completionHandler: {
-//            message , appointmentList ,sumPage in
-//            
-//            if message["message"] == "error" {
-//                self.alertView.alertMessage("Error", message: message["ErrorType"].string!)
-//                self.refreshControl.endRefreshing()
-//            }
-//            else {
-//                self.Appointment += appointmentList
-//                print(self.Appointment.count)
-//                self.view.hideLoading()
-//                self.refreshControl.endRefreshing()
-//                self.tableView.reloadData()
-//                self.loadingData = false
-//            }
-//            
-//        })
-//    }
-//    
-//    //sending data by segue
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "appointmentDetailsSegue" {
-//            let appointmentDedtails = segue.destinationViewController as! ListTrackingViewController
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//                appointmentDedtails.appointmentDetails = Appointment[indexPath.row]
-//            }
-//        }
-//    }
-    
-    
-    
-    
 }
 
 extension ListTrackingViewController:UITableViewDataSource,UITableViewDelegate{
-    
-    
-    
-    
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }

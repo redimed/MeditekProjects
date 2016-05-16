@@ -18,6 +18,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         }]
     };
 
+<<<<<<< 085576012d286c8ceb2b9623595f15c6779ab610
     $scope.dataDirective = {};
 
     $scope.getTelehealthDetail = function(UID) {
@@ -64,14 +65,12 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
 
     var userInfo = JSON.parse($cookies.get('userInfo'));
-    $scope.checkPatient = 'Y';
+    $scope.checkPatient = 'N';
     for (var i = 0; i < userInfo.roles.length; i++) {
         var role = userInfo.roles[i];
         if (role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN') {
             $scope.checkPatient = 'Y';
-        }
-        if (role.RoleCode === 'PATIENT') {
-            $scope.isRolePatient = true;
+            $scope.isRolePatient = false;
         }
     }
 
@@ -93,6 +92,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         /* END EFORM */
         //
     $scope.checkRoleUpdate = true;
+
     for (var i = 0; i < $cookies.getObject('userInfo').roles.length; i++) {
         if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
             $scope.checkRoleUpdate = false;

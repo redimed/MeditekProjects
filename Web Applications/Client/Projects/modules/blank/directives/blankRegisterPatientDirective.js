@@ -290,6 +290,9 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
             };
             $scope.Back = function() {
                 $scope.submitted = true;
+                if($scope.postData.otherData.PatientMedicare.ExpiryDate && $scope.postData.otherData.PatientMedicare.ExpiryDate != '') {
+                    $scope.postData.otherData.PatientMedicare.ExpiryDate = $scope.postData.otherData.PatientMedicare.ExpiryDate.slice(2,$scope.postData.otherData.PatientMedicare.ExpiryDate.length);
+                }
                 if ($scope.step1.$valid || $scope.step2.$valid) {
                     $scope.number--;
                 }

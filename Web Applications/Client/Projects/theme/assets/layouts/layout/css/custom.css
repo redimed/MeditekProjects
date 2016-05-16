@@ -623,7 +623,7 @@ html,
 body.full-background,
 body.full-background-compaign {
     min-height: 768px;
-    min-width: 1024px;
+    /*min-width: 1024px;*/
     height: 100%;
     width: 100%;
 }

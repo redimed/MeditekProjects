@@ -31,6 +31,10 @@
 		3FA53DA71CA8EE26000B8BE5 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA53DA61CA8EE26000B8BE5 /* Login.swift */; };
 		3FA53DAF1CA91E10000B8BE5 /* TelehealthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA53DAE1CA91E10000B8BE5 /* TelehealthUser.swift */; };
 		3FA53DB31CA929D1000B8BE5 /* UIAlertViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA53DB21CA929D1000B8BE5 /* UIAlertViewExtension.swift */; };
+		3FB398A61CE962B9008A7BDC /* ListTrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB398A51CE962B9008A7BDC /* ListTrackingViewController.swift */; };
+		3FB398A81CE96DF6008A7BDC /* AppointmentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB398A71CE96DF6008A7BDC /* AppointmentList.swift */; };
+		3FB398AA1CE981FB008A7BDC /* AppointmentListDataOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB398A91CE981FB008A7BDC /* AppointmentListDataOrder.swift */; };
+		3FB398AC1CE9823B008A7BDC /* AppointmentListDataFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB398AB1CE9823B008A7BDC /* AppointmentListDataFilter.swift */; };
 		3FBCA4481CBCE05800AD431E /* ListContactPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBCA4471CBCE05800AD431E /* ListContactPersonViewController.swift */; };
 		3FBCA44A1CBCE28700AD431E /* ListSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBCA4491CBCE28700AD431E /* ListSite.swift */; };
 		3FC565DA1CA8C67200706908 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC565D91CA8C67200706908 /* Context.swift */; };
@@ -171,6 +175,10 @@
 		3FA53DA61CA8EE26000B8BE5 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		3FA53DAE1CA91E10000B8BE5 /* TelehealthUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelehealthUser.swift; sourceTree = "<group>"; };
 		3FA53DB21CA929D1000B8BE5 /* UIAlertViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertViewExtension.swift; sourceTree = "<group>"; };
+		3FB398A51CE962B9008A7BDC /* ListTrackingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTrackingViewController.swift; sourceTree = "<group>"; };
+		3FB398A71CE96DF6008A7BDC /* AppointmentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentList.swift; sourceTree = "<group>"; };
+		3FB398A91CE981FB008A7BDC /* AppointmentListDataOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListDataOrder.swift; sourceTree = "<group>"; };
+		3FB398AB1CE9823B008A7BDC /* AppointmentListDataFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListDataFilter.swift; sourceTree = "<group>"; };
 		3FBCA4471CBCE05800AD431E /* ListContactPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListContactPersonViewController.swift; path = ListContactPersonViewController/ListContactPersonViewController.swift; sourceTree = "<group>"; };
 		3FBCA4491CBCE28700AD431E /* ListSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSite.swift; sourceTree = "<group>"; };
 		3FC565D91CA8C67200706908 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
@@ -357,6 +365,14 @@
 			name = Call;
 			sourceTree = "<group>";
 		};
+		3FB398A21CE95EEA008A7BDC /* ListTracking */ = {
+			isa = PBXGroup;
+			children = (
+				3FB398A51CE962B9008A7BDC /* ListTrackingViewController.swift */,
+			);
+			name = ListTracking;
+			sourceTree = "<group>";
+		};
 		3FBCA4461CBCE02F00AD431E /* ListContactPerson */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +402,9 @@
 				3F3136861CDC307B0094BB4B /* Notification.swift */,
 				3FD192091CE42A7000379364 /* ReceiveMessageData.swift */,
 				3FD1920D1CE4733200379364 /* UpdatePinNumber.swift */,
+				3FB398A71CE96DF6008A7BDC /* AppointmentList.swift */,
+				3FB398AB1CE9823B008A7BDC /* AppointmentListDataFilter.swift */,
+				3FB398A91CE981FB008A7BDC /* AppointmentListDataOrder.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -562,6 +581,7 @@
 		54EEAEAB1C83F1130096CA1F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3FB398A21CE95EEA008A7BDC /* ListTracking */,
 				3FD192001CE4255000379364 /* Popup */,
 				3F764AED1CCE1C420006CBBA /* Call */,
 				54EEAECB1C83F2EE0096CA1F /* Base */,
@@ -858,7 +878,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = "Giap Vo Duc";
+				ORGANIZATIONNAME = "Nguyen Duc Manh";
 				TargetAttributes = {
 					AF26B2201BEC869C006F37A4 = {
 						CreatedOnToolsVersion = 7.1;
@@ -998,6 +1018,7 @@
 				AF26B2B51BEC8787006F37A4 /* SpringTextView.swift in Sources */,
 				AF26B2A41BEC8787006F37A4 /* DesignableTabBarController.swift in Sources */,
 				54EEAED91C83F3420096CA1F /* UIViewControllerExtension.swift in Sources */,
+				3FB398A81CE96DF6008A7BDC /* AppointmentList.swift in Sources */,
 				54EEAED81C83F3420096CA1F /* UINavigationViewControllerExtension.swift in Sources */,
 				AF26B29E1BEC8787006F37A4 /* AsyncImageView.swift in Sources */,
 				AF26B2951BEC8787006F37A4 /* TPKeyboardAvoidingCollectionView.m in Sources */,
@@ -1050,6 +1071,7 @@
 				3FE3D4D91CBD055A00BF3E0A /* UserAccountDetail.swift in Sources */,
 				3FBCA44A1CBCE28700AD431E /* ListSite.swift in Sources */,
 				3FC8D5B41CB620AD0008B3DC /* VerifyViewController.swift in Sources */,
+				3FB398A61CE962B9008A7BDC /* ListTrackingViewController.swift in Sources */,
 				3F764AEF1CCE1C5A0006CBBA /* CallViewController.swift in Sources */,
 				AF26B29C1BEC8787006F37A4 /* SSRadioButtonsController.swift in Sources */,
 				3F2EEDE01CB7AB3400516422 /* ListStaffViewController.swift in Sources */,
@@ -1060,6 +1082,7 @@
 				54EEAEC41C83F2DD0096CA1F /* LineScale.swift in Sources */,
 				54EEAEC21C83F2DD0096CA1F /* DotTrianglePath.swift in Sources */,
 				AF26B2A81BEC8787006F37A4 /* ImageLoader.swift in Sources */,
+				3FB398AA1CE981FB008A7BDC /* AppointmentListDataOrder.swift in Sources */,
 				54EEAED51C83F3420096CA1F /* StringExtension.swift in Sources */,
 				3F99635B1CD9A2F40085FF71 /* CallContainer.swift in Sources */,
 				54EEAECD1C83F30F0096CA1F /* BaseViewController.swift in Sources */,
@@ -1085,6 +1108,7 @@
 				54EEAED41C83F3420096CA1F /* RequestExtension.swift in Sources */,
 				54EEAEE01C83F3960096CA1F /* Constants.swift in Sources */,
 				AF26B29F1BEC8787006F37A4 /* AutoTextView.swift in Sources */,
+				3FB398AC1CE9823B008A7BDC /* AppointmentListDataFilter.swift in Sources */,
 				3F5B01AD1CC774C500E393E0 /* RequestAppoint.swift in Sources */,
 				54EEAED61C83F3420096CA1F /* UIColorExtension.swift in Sources */,
 				3FA53DA31CA8C993000B8BE5 /* RequestFactory.swift in Sources */,

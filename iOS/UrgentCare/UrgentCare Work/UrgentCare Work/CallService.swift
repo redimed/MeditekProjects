@@ -2,8 +2,8 @@
 //  CallService.swift
 //  Telehealth
 //
-//  Created by Giap Vo Duc on 1/14/16.
-//  Copyright © 2016 Giap Vo Duc. All rights reserved.
+//  Created by Nguyen Duc Manh on 1/14/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import Foundation

@@ -139,6 +139,7 @@ class Define: NSObject {
         static let MobileNumber = "^(\\+61|0061|0)?4[0-9]{8}$"
         static let Email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
         static let PostCodeLength = "[0-9]{4,6}"
+        static let PinNumber = "[0-9]{6}"
     }
     
     struct ColorCustom{

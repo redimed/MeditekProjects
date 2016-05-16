@@ -294,6 +294,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         o.loadingPage(false);
                         consultationServices.detailConsultation(response.data[0].UID).then(function(response) {
                             $scope.checkRoleUpdate = false;
+                            $scope.uploader.clearQueue();
                             $scope.requestInfo = null;
                             $scope.requestOther = {};
                             if (response.data !== null) {

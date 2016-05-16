@@ -28,8 +28,8 @@
                 <tr>
                     <td>Status</td>
                     <td>
-                        <span ng-if="appointmentInfo.Status && appointmentInfo.Status != null">{{appointmentInfo.Status}}</span>
-                        <span ng-if="!appointmentInfo.Status || appointmentInfo.Status == null">N/A</span>
+                        <span ng-if="apptdetail.Status && apptdetail.Status != null">{{apptdetail.Status}}</span>
+                        <span ng-if="!apptdetail.Status || apptdetail.Status == null">N/A</span>
                     </td>
                 </tr>
                 <tr>
@@ -39,8 +39,8 @@
                 <tr>
                     <td>Treating Practitioner</td>
                     <td>
-                        <span ng-if="appointmentInfo.Doctors[0].FirstName != null || appointmentInfo.Doctors[0].LastName != null">{{appointmentInfo.Doctors[0].FirstName +" "+ appointmentInfo.Doctors[0].LastName}}</span>
-                        <span ng-if="appointmentInfo.Doctors[0].FirstName == null && appointmentInfo.Doctors[0].LastName == null">N/A</span>
+                        <span ng-if="apptdetail.Doctors[0].FirstName != null || apptdetail.Doctors[0].LastName != null">{{apptdetail.Doctors[0].FirstName +" "+ apptdetail.Doctors[0].LastName}}</span>
+                        <span ng-if="apptdetail.Doctors[0].FirstName == null && apptdetail.Doctors[0].LastName == null">N/A</span>
                     </td>
                 </tr>
                 <tr>

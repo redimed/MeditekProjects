@@ -490,25 +490,25 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group">
                                                                 <label class="control-label">First Name</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinFirstName">
+                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinFirstName">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group">
                                                                 <label class="control-label">Last Name</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinLastName">
+                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinLastName">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group">
                                                                 <label class="control-label">Relationship</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinRelationship">
+                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinRelationship">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$invalid}">
                                                                 <label class="control-label">Contact Number</label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinMobilePhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber">
+                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.PatientKinMobilePhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber">
                                                                 <div class="form-control-focus"> </div>
                                                                 <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
                                                             </div>
@@ -522,40 +522,40 @@
                                                                 <div class="radio-list">
                                                                     <label class="radio-inline">Medicare Eligible</label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="MedicareEligible" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> Yes
+                                                                        <input type="radio" class="regular-radio" name="MedicareEligible" value="Y" ng-model="ShowData.patient.MedicareEligible"> Yes
                                                                     </label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="MedicareEligible" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> No
+                                                                        <input type="radio" class="regular-radio" name="MedicareEligible" value="N" ng-model="ShowData.patient.MedicareEligible"> No
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row" ng-show="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'Y'">
+                                                    <div class="row" ng-show="ShowData.patient.MedicareEligible == 'Y'">
                                                         <div class="col-md-4 col-sm-4">
                                                             <div class="form-group">
                                                                 <label class="control-label">Medicare Number</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber">
+                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareNumber">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 col-sm-4">
                                                             <div class="form-group">
                                                                 <label class="control-label">Medicare reference number</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber">
+                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareReferenceNumber">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 col-sm-4">
                                                             <div class="form-group">
                                                                 <label class="control-label">Expiry date</label>
-                                                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.MedicareExpiryDate">
+                                                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="ShowData.patient.MedicareExpiryDate">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row" ng-show="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'Y'">
+                                                    <div class="row" ng-show="ShowData.patient.MedicareEligible == 'Y'">
                                                         <div class="col-md-4 col-sm-4">
                                                             <div class="form-group">
                                                                 <label class="control-label">DVA number</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DVANumber">
+                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.DVANumber">
                                                             </div>
                                                         </div>
                                                     </div>

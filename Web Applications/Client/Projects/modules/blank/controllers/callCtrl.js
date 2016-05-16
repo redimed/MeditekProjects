@@ -4,10 +4,11 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
-    var uidCall = $stateParams.uidCall;
-    var uidUser = $stateParams.uidUser;
+    var teleCallUID = $stateParams.teleCallUID;
+    var uidCall = $stateParams.receiverUID;
+    var uidUser = $stateParams.callerUID;
     var reverse = true;
-    $scope.userName = $stateParams.userName;
+    $scope.receiverName = $stateParams.receiverName;
     session = OT.initSession(apiKey, sessionId);
     var userInfo = $cookies.getObject('userInfo');
     console.log("userInfo", userInfo);
@@ -23,6 +24,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
             to: uidCall,
             message: "call",
             sessionId: sessionId,
+            teleCallUID: teleCallUID,
             fromName: userInfo.UserName
         }, function(data) {
             console.log("send call", data);
@@ -40,15 +42,34 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
                     sendCall();
                 }
             }
-
         }
     });
 
     $scope.streams = OTSession.streams;
 
-    $scope.$on("runtime", function(argument) {
+    $scope.$on("otLayout", function(event, args) {
         o.audio.pause();
         var mytimeout = $timeout($scope.onTimeout, 1000);
+    });
+
+    $scope.$on("otStreamCreated", function(event, args) {
+        $timeout(function() {
+            if (args.stream.hasVideo === false && args.stream.hasAudio === false) {
+                swal({
+                    title: "Devices issue",
+                    text: "Please check system and call back later",
+                    type: "warning",
+                    showCancelButton: false,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                }, function() {
+                    CallCancel("issue");
+                    setTimeout(function() {
+                        window.close();
+                    }, 1000);
+                });
+            };
+        }, 5000);
     });
 
     $scope.$on("changeSize", function(event, stream) {
@@ -161,7 +182,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     };
 
     $scope.EnAudio = function() {
-        $scope.subscriber.subscribeToAudio(false)
+        $scope.subscriber.subscribeToAudio(false);
     };
 
     $scope.EndCall = function() {
@@ -186,16 +207,20 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
 
     $scope.cancel = function() {
         console.log("socketTelehealth", socketTelehealth);
+        CallCancel("cancel");
+        window.close();
+    };
+
+    function CallCancel(message) {
         socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
             from: uidUser,
             to: uidCall,
-            message: "cancel"
+            message: message
         }, function(data) {
             console.log("send call", data);
             window.close();
         });
-        window.close();
-    };
+    }
 
 
     $scope.toggle = false;

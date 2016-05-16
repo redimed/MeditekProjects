@@ -5,8 +5,16 @@
     "Tristan Edwards <tristan.edwards@me.com> (http://tristanedwards.me)",
     "Limon Monte <limon.monte@gmail.com> (http://limonte.github.io)"
   ],
-  "description": "A beautiful replacement for JavaScript's alert.",
-  "main": ["dist/sweetalert2.min.js", "dist/sweetalert2.css"],
+  "dependencies": {
+    "es6-promise-polyfill": "*"
+  },
+  "ignore": [
+    "package.json",
+    "example",
+    "images"
+  ],
+  "description": "A replacement for JavaScript's popup boxes, supported fork of sweetalert",
+  "main": ["src/sweetalert2.js", "src/sweetalert2.scss", "dist/sweetalert2.css"],
   "keywords": [
     "alert",
     "modal"

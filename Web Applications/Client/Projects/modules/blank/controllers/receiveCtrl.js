@@ -14,14 +14,38 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     console.log(token);
     var userInfo = $cookies.getObject('userInfo');
     console.log("$stateParams", $stateParams);
+    console.log("uidCall " , uidCall);
     o.loadingPage(true);
 
     OTSession.init(apiKey, sessionId, token, function(err) {
         if (!err) {
             var mytimeout = $timeout($scope.onTimeout, 1000);
+        } else {
+            console.log('There was an error connecting to the session: ', error.code, error.message);
         }
     });
+
     $scope.streams = OTSession.streams;
+
+    $scope.$on("otStreamCreated", function(event, args) {
+        $timeout(function() {
+            if (args.stream.hasVideo === false && args.stream.hasAudio === false) {
+                swal({
+                    title: "Devices issue",
+                    text: "Please check system and call back later",
+                    type: "warning",
+                    showCancelButton: false,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                }, function() {
+                    CallCancel("issue");
+                    setTimeout(function() {
+                        window.close();
+                    }, 1000);
+                });
+            };
+        }, 5000);
+    });
 
     // session.connect(token, function(error) {
     //     // If the connection is successful, initialize a publisher and publish to the session
@@ -109,16 +133,20 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
 
     $scope.cancel = function() {
         console.log("socketTelehealth", socketTelehealth);
+        CallCancel("cancel");
+        window.close();
+    };
+
+    function CallCancel(message) {
         socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
             from: uidUser,
             to: uidCall,
-            message: "cancel"
+            message: message
         }, function(data) {
             console.log("send call", data);
             window.close();
         });
-        window.close();
-    };
+    }
 
     $scope.loadListDoctor = function(fullname) {
         //INTERNAL

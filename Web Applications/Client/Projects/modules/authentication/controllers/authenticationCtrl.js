@@ -150,7 +150,8 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         var info = {
             CallerInfo: $cookies.getObject('userInfo'),
             ReceiverName: ((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName),
-            ReceiverUID: data.UserAccount.TelehealthUser.UID,
+            ReceiverTeleUID: data.UserAccount.TelehealthUser.UID,
+            ReceiverTeleID: data.UserAccount.TelehealthUser.ID,
             ReceiverID: data.UserAccount.ID
         };
         console.log("info ", info);
@@ -165,11 +166,12 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     apiKey: argument.data.apiKey,
                     sessionId: argument.data.sessionId,
                     token: argument.data.token,
-                    userName: info.ReceiverName,
-                    uidCall: info.ReceiverUID,
-                    uidUser: info.CallerInfo.TelehealthUser.UID,
+                    teleCallUID: argument.data.TeleCallUID,
+                    receiverName: info.ReceiverName, //userName
+                    receiverUID: info.ReceiverTeleUID, //uidCall
+                    callerUID: info.CallerInfo.TelehealthUser.UID, //uidUser
                 }), "CAll", { directories: "no" });
-            }
+            };
         });
 
         // console.log(data);
@@ -219,7 +221,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         swal({
             title: msg.fromName,
             imageUrl: "theme/assets/global/images/E-call_33.png",
-            timer: 30000,
+            timer: 120000,
             html: "<img src='theme/assets/global/img/loading.gif' />",
             showCancelButton: true,
             confirmButtonColor: "#26C281",
@@ -229,7 +231,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             allowOutsideClick: false,
             allowEscapeKey: false,
         }, function(isConfirm) {
+            console.log("isConfirm ", isConfirm);
             if (isConfirm) {
+                console.log("Message MSG");
                 ioSocket.telehealthReceiveWindow = window.open($state.href("blank.receive", {
                     apiKey: msg.apiKey,
                     sessionId: msg.sessionId,
@@ -238,7 +242,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                 }), "CAll", { directories: "no" });
                 messageTransfer(msg.to, msg.from, "answer");
             } else {
-                messageTransfer(msg.to, msg.from, "decline");
+                messageTransfer(msg.from, msg.to, "decline");
             };
             o.audio.pause();
             swal.close();
@@ -270,7 +274,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         if (ioSocket.telehealthDoctorCallWindow) {
             ioSocket.telehealthDoctorCallWindow.close();
         }
-        swal.close();
+        swal("Receiver Busy", "Please Call Back Later");
         o.audio.pause();
     }
 
@@ -287,6 +291,19 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             allowOutsideClick: false,
             allowEscapeKey: false
         });
+    }
+
+    ioSocket.telehealthIssue = function(msg) {
+        console.log("Issueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
+        if (ioSocket.telehealthPatientCallWindow) {
+            ioSocket.telehealthPatientCallWindow.close();
+        }
+        if (ioSocket.telehealthDoctorCallWindow) {
+            ioSocket.telehealthDoctorCallWindow.close();
+        }
+        swal.close();
+        o.audio.pause();
+        swal("Receiver Busy", "Please Call Back Later");
     }
 });
 

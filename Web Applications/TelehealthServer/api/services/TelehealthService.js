@@ -250,7 +250,7 @@ module.exports = {
         note['content-available'] = 1;
         apnConnection.pushNotification(note, regTokens);
     },
-    // Kiet
+    // No Working
     UpdateStatusTelehealthUser: function(TeleUID, status) {
         var $q = require('q');
         var defer = $q.defer();
@@ -283,31 +283,43 @@ module.exports = {
         }
         return defer.promise;
     },
-    CreateTelehealthCall: function(InfoCall) {
+    CreateTelehealthCall: function(InfoCall, CallerID, CallerTeleID, ReceiverTeleID) {
         var $q = require('q');
         var defer = $q.defer();
-        TelehealthCall.create({
-            UID: UUIDService.Create(),
-            FromUserAccountID: InfoCall.FromUserAccountID,
-            ToUserAccountID: InfoCall.ToUserAccountID,
-            StartTime: new Date(),
-            Status: InfoCall.Status,
-            CreatedBy: InfoCall.FromUserAccountID
-        }).then(function(teleCall) {
-            if (teleCall) {
+        var TeleCallUID = "";
+        sequelize.transaction().then(function(t) {
+            return TelehealthCall.create({
+                UID: UUIDService.Create(),
+                FromUserAccountID: InfoCall.FromUserAccountID,
+                ToUserAccountID: InfoCall.ToUserAccountID,
+                StartTime: new Date(),
+                Status: InfoCall.Status,
+                CreatedBy: InfoCall.FromUserAccountID
+            }, { transaction: t }).then(function(teleCall) {
+                TeleCallUID = teleCall.UID;
+                var InfoUser = [{
+                    TelehealthCallID: teleCall.dataValues.ID,
+                    TelehealthUserID: CallerTeleID,
+                    CreatedBy: CallerID
+                }, {
+                    TelehealthCallID: teleCall.dataValues.ID,
+                    TelehealthUserID: ReceiverTeleID,
+                    CreatedBy: CallerID
+                }];
+                return TelehealthCallUser.bulkCreate(InfoUser, { transaction: t }).then(function(teleCallUser) {
+                    console.log("Create Telehealth Call User success");
+                });
+            }).then(function(result) {
                 defer.resolve({
-                    message: "success",
-                    data: teleCall.dataValues
+                    TeleCallUID:TeleCallUID,
+                    transaction: t
                 });
-            } else {
+            }, function(err) {
                 defer.reject({
-                    message: "No success"
+                    transaction: t
                 });
-            }
-        }, function(err) {
-            defer.reject({
-                message: err
             });
         });
+        return defer.promise;
     }
 }

@@ -6,7 +6,6 @@ var moment = require('moment');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
 var redisKey = "TelehealthServer";
-var ListMissCall = [];
 
 function emitError(socket, msg) {
     var err = new Error("Socket.Error");
@@ -67,11 +66,7 @@ module.exports = {
                     console.log("roomList", sails.sockets.rooms());
                     RedisWrap.hget(redisKey, uid).then(function(data) {
                         if (data != null) {
-                            var awaitTime = moment(new Date()) - moment(data.timeCall);
-                            console.log("++++++++++++++++++++++++++++++++++++++++++++", awaitTime);
-                            if (awaitTime > 120000) {
-                                data.message = "misscall";
-                            }
+                            data.message = "misscall";
                             sails.sockets.broadcast(uid, 'receiveMessage', data);
                             RedisWrap.hdel(redisKey, uid);
                         }
@@ -89,11 +84,11 @@ module.exports = {
             err.pushError("Socket Request Only!");
             return res.serverError(ErrorWrap(err));
         }
+        console.log("MessageTransfer");
         sails.log.debug("Socket MessageTransfer: " + JSON.stringify(req.params.all()));
         var from = req.param('from');
         var to = req.param('to');
         var message = req.param('message');
-        var data = {};
         if (!message || !from || !to) return;
         var fromName = req.param('fromName');
         var sessionId = null;
@@ -101,6 +96,11 @@ module.exports = {
         var tokenOptions = {
             role: 'moderator'
         };
+        var data = {};
+        data.from = from;
+        data.message = message;
+        data.to = to;
+        data.timeCall = new Date();
         var token = null;
         var roomList = sails.sockets.rooms();
         if (message.toLowerCase() == 'call') {
@@ -160,37 +160,25 @@ module.exports = {
                                 pushGCMNotification(pushInfo, tokens, config.GCMWorkInjury);
                         }
                     })
+                    if (_.contains(roomList, to)) {
+                        sails.sockets.broadcast(to, 'receiveMessage', data);
+                    }
                 }
             })
         }
         if (roomList.length > 0) {
-            data.from = from;
-            data.message = message;
-            data.to = to;
-            data.timeCall = new Date();
-            //if uid to online telehealth server
-            // RedisWrap.setex(redisKey, to, data);
-            // switch (message.toLowerCase()) {
-            //     case "call":
-            //         RedisWrap.hset(redisKey, to, data);
-            //         break;
-            //     default:
-            //         RedisWrap.hdel(redisKey, to);
-            //         console.log("DELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-            // }
-
-            if (_.contains(roomList, to)) {
+            // When receiver no choose Anwer
+            if (message.toLowerCase() === 'decline') {
+                sails.sockets.broadcast(from, 'receiveMessage', data);
+            };
+            // When caller or receiver no choose endcall in window waiting
+            if (message.toLowerCase() === 'cancel') {
                 sails.sockets.broadcast(to, 'receiveMessage', data);
-            }
-            sails.sockets.subscribers(from, function(err, socketIds) {
-                console.log("Socket IDddddddddddddddddddddddddddddddddddd", socketIds);
-            });
-
-            if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
-                data.message = 'decline';
-                data.to = from;
-                sails.sockets.emit(from, 'receiveMessage', data, req.socket);
-            }
+            };
+            // When device caller or receiver issue
+            if (message.toLowerCase() === 'issue') {
+                sails.sockets.broadcast(to, 'receiveMessage', data);
+            };
         }
     },
 
@@ -317,16 +305,18 @@ module.exports = {
     CallToReceiver: function(req, res) {
         var info = req.param('info');
         var ReceiverName = info.ReceiverName;
-        var ReceiverUID = info.ReceiverUID;
+        var ReceiverTeleUID = info.ReceiverTeleUID;
+        var ReceiverTeleID = info.ReceiverTeleID;
         var ReceiverID = info.ReceiverID;
         var CallerInfo = info.CallerInfo;
+        var CallerID = CallerInfo.ID;
+        var CallerTeleID = CallerInfo.TelehealthUser.ID;
         console.log("Call To Receiver ", info);
         var InfoCall = {
-            FromUserAccountID: CallerInfo.ID,
+            FromUserAccountID: CallerID,
             ToUserAccountID: ReceiverID
         };
-
-        TelehealthService.FindByUID(ReceiverUID).then(function(teleUser) {
+        TelehealthService.FindByUID(ReceiverTeleUID).then(function(teleUser) {
             if (teleUser) {
                 TelehealthDevice.findAll({
                     where: {
@@ -347,74 +337,87 @@ module.exports = {
                                     androidDevices.push(devices[i].DeviceToken);
                             }
                         }
-                        if (androidDevices.length > 0)
-                            pushGCMNotification(pushInfo, androidDevices);
-                        if (iosDevices.length > 0)
-                            pushAPNNotification(pushInfo, iosDevices);
                     }
                     if (iosDevices.length === 0 && androidDevices.length === 0) {
                         if (teleUser.Status1 === "Busy") {
                             InfoCall.Status = "Busy";
-                            TelehealthService.CreateTelehealthCall(InfoCall);
-                            RedisWrap.hget(redisKey, ReceiverUID).then(function(data) {
-                                if (data != null) {
-                                    data.TimeCall = new Date();
-                                    data.NumMissCall = data.NumMissCall + 1;
-                                    RedisWrap.hset(redisKey, ReceiverUID, data);
-                                } else {
-                                    CallerInfo.TimeCall = new Date();
-                                    CallerInfo.NumMissCall = 1;
-                                    RedisWrap.hset(redisKey, ReceiverUID, CallerInfo);
-                                }
+                            TelehealthService.CreateTelehealthCall(InfoCall, CallerID, CallerTeleID, ReceiverTeleID).then(function(msg) {
+                                RedisWrap.hget(redisKey, ReceiverTeleUID).then(function(data) {
+                                    if (data != null) {
+                                        data.TimeCall = new Date();
+                                        data.NumMissCall = data.NumMissCall + 1;
+                                        RedisWrap.hset(redisKey, ReceiverTeleUID, data);
+                                        console.log("List Miss Call ", data.NumMissCall);
+                                    } else {
+                                        CallerInfo.TimeCall = new Date();
+                                        CallerInfo.NumMissCall = 1;
+                                        RedisWrap.hset(redisKey, ReceiverTeleUID, CallerInfo);
+                                    }
+                                });
+                                msg.transaction.commit();
+                                res.ok({
+                                    message: 'Busy'
+                                });
+                            }, function(err) {
+                                err.transaction.rollback();
                             });
-                            res.ok({
-                                message: 'Busy'
-                            })
                         } else {
-                            if (_.indexOf(sails.sockets.rooms(), ReceiverUID) != -1) {
+                            if (_.indexOf(sails.sockets.rooms(), ReceiverTeleUID) != -1) {
                                 console.log(">>>>>>>>>>>>>>>>> Available <<<<<<<<<<<<<<");
                                 opentok.createSession({
                                     mediaMode: "routed"
                                 }, function(err, session) {
                                     if (err) return res.serverError(ErrorWrap(err));
-                                    InfoCall.Status = "Online";
-                                    TelehealthService.CreateTelehealthCall(InfoCall);
-                                    var sessionId = session.sessionId;
-                                    var tokenOptions = {
-                                        role: 'moderator',
-                                        expireTime: (new Date().getTime() / 1000) + (7 * 24 * 60 * 60),
-                                        data: 'name=Johnny'
-                                    };
-                                    var token = opentok.generateToken(sessionId, tokenOptions);
-                                    console.log("Generate Session Successfully");
-                                    if (token != null && sessionId != null) res.ok({
-                                        message: 'Success',
-                                        data: {
-                                            apiKey: config.OpentokAPIKey,
-                                            sessionId: sessionId,
-                                            token: token
+                                    InfoCall.Status = "Start Call";
+
+                                    TelehealthService.CreateTelehealthCall(InfoCall, CallerID, CallerTeleID, ReceiverTeleID).then(function(msg) {
+                                        var sessionId = session.sessionId;
+                                        var tokenOptions = {
+                                            role: 'moderator',
+                                            expireTime: (new Date().getTime() / 1000) + (7 * 24 * 60 * 60),
+                                            data: 'name=Johnny'
+                                        };
+                                        var token = opentok.generateToken(sessionId, tokenOptions);
+                                        console.log("Generate Session Successfully");
+                                        if (token != null && sessionId != null) {
+                                            msg.transaction.commit();
+                                            res.ok({
+                                                message: 'Success',
+                                                data: {
+                                                    apiKey: config.OpentokAPIKey,
+                                                    sessionId: sessionId,
+                                                    token: token,
+                                                    teleCallUID: msg.TeleCallUID
+                                                }
+                                            })
                                         }
-                                    })
+                                    }, function(err) {
+                                        err.transaction.rollback();
+                                    });
                                 });
                             } else {
                                 console.log(">>>>>>>>>>>>>>>>> Offline <<<<<<<<<<<<<<");
                                 InfoCall.Status = "Offline";
-                                TelehealthService.CreateTelehealthCall(InfoCall);
-                                RedisWrap.hget(redisKey, ReceiverUID).then(function(data) {
-                                    if (data != null) {
-                                        data.TimeCall = new Date();
-                                        data.NumMissCall = data.NumMissCall + 1;
-                                        RedisWrap.hset(redisKey, ReceiverUID, data);
-                                        console.log("List Miss Call ", data.NumMissCall);
-                                    } else {
-                                        CallerInfo.TimeCall = new Date();
-                                        CallerInfo.NumMissCall = 1;
-                                        RedisWrap.hset(redisKey, ReceiverUID, CallerInfo);
-                                    }
+                                TelehealthService.CreateTelehealthCall(InfoCall, CallerID, CallerTeleID, ReceiverTeleID).then(function(msg) {
+                                    RedisWrap.hget(redisKey, ReceiverTeleUID).then(function(data) {
+                                        if (data != null) {
+                                            data.TimeCall = new Date();
+                                            data.NumMissCall = data.NumMissCall + 1;
+                                            RedisWrap.hset(redisKey, ReceiverTeleUID, data);
+                                            console.log("List Miss Call ", data.NumMissCall);
+                                        } else {
+                                            CallerInfo.TimeCall = new Date();
+                                            CallerInfo.NumMissCall = 1;
+                                            RedisWrap.hset(redisKey, ReceiverTeleUID, CallerInfo);
+                                        }
+                                    });
+                                    msg.transaction.commit();
+                                    res.ok({
+                                        message: 'Offline'
+                                    });
+                                }, function(err) {
+                                    err.transaction.rollback();
                                 });
-                                res.ok({
-                                    message: 'Offline'
-                                })
                             }
                         }
                     } else {
@@ -422,24 +425,31 @@ module.exports = {
                             mediaMode: "routed"
                         }, function(err, session) {
                             if (err) return res.serverError(ErrorWrap(err));
-                            InfoCall.Status = "Online";
-                            TelehealthService.CreateTelehealthCall(InfoCall);
-                            var sessionId = session.sessionId;
-                            var tokenOptions = {
-                                role: 'moderator',
-                                expireTime: (new Date().getTime() / 1000) + (7 * 24 * 60 * 60),
-                                data: 'name=Johnny'
-                            };
-                            var token = opentok.generateToken(sessionId, tokenOptions);
-                            console.log("Generate Session Successfully");
-                            if (token != null && sessionId != null) res.ok({
-                                message: 'Success',
-                                data: {
-                                    apiKey: config.OpentokAPIKey,
-                                    sessionId: sessionId,
-                                    token: token
+                            InfoCall.Status = "Start Call";
+                            TelehealthService.CreateTelehealthCall(InfoCall, CallerID, CallerTeleID, ReceiverTeleID).then(function(msg) {
+                                var sessionId = session.sessionId;
+                                var tokenOptions = {
+                                    role: 'moderator',
+                                    expireTime: (new Date().getTime() / 1000) + (7 * 24 * 60 * 60),
+                                    data: 'name=Johnny'
+                                };
+                                var token = opentok.generateToken(sessionId, tokenOptions);
+                                console.log("Generate Session Successfully");
+                                if (token != null && sessionId != null) {
+                                    msg.transaction.commit();
+                                    res.ok({
+                                        message: 'Success',
+                                        data: {
+                                            apiKey: config.OpentokAPIKey,
+                                            sessionId: sessionId,
+                                            token: token,
+                                            teleCallUID: msg.TeleCallUID
+                                        }
+                                    })
                                 }
-                            })
+                            }, function(err) {
+                                err.transaction.rollback();
+                            });
                         });
                     }
                 })

@@ -115,6 +115,12 @@ function createSocketConnectTelehealth() {
                 else
                     ioSocket.telehealthMesageMisscall = msg;
                 break;
+            case "issue":
+                if (ioSocket.telehealthIssue)
+                    ioSocket.telehealthIssue(msg);
+                else
+                    ioSocket.telehealthMesageIssue = msg;
+                break;
             case "addDoctor":
                 if (ioSocket.telehealthCall)
                     ioSocket.telehealthCall(msg);

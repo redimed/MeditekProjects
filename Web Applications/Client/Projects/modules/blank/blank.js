@@ -19,7 +19,7 @@ app.config(function($stateProvider) {
         })
         .state('blank.call', {
             data: { pageTitle: 'Call' },
-            url: '/call/:apiKey/:sessionId/:token/:userName/:uidCall/:uidUser',
+            url: '/call/:apiKey/:sessionId/:token/:teleCallUID/:receiverName/:receiverUID/:callerUID',
             views: {
                 'blank': {
                     templateUrl: 'modules/blank/views/call.html',

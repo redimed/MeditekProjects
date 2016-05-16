@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_activation"
+    android:orientation="vertical"
+    tools:context="com.redimed.telehealth.patient.pin.PinFragment">
+
+    <include layout="@layout/custom_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/layoutChangePin"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txtCurrentPin"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:hint="@string/current_pin"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:paddingEnd="5dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="5dp"
+            android:paddingStart="0dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/txtNewPin"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:hint="@string/new_pin"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:paddingEnd="5dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="5dp"
+            android:paddingStart="0dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/txtConfirmPin"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:hint="@string/confirm_pin"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:paddingEnd="5dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="5dp"
+            android:paddingStart="0dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="320dp"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginBottom="10dp"
+            android:enabled="true"
+            android:text="@string/btn_submit"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

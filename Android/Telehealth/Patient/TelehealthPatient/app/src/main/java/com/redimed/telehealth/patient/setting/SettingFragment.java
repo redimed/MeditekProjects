@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.models.Patient;
+import com.redimed.telehealth.patient.pin.PinFragment;
 import com.redimed.telehealth.patient.setting.presenter.ISettingPresenter;
 import com.redimed.telehealth.patient.setting.presenter.SettingPresenter;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
@@ -25,7 +27,6 @@ import com.redimed.telehealth.patient.utlis.DialogConnection;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import retrofit.http.Part;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +49,8 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     RelativeLayout layoutAbout;
     @Bind(R.id.layoutProfile)
     LinearLayout layoutProfile;
+    @Bind(R.id.layoutChangePin)
+    RelativeLayout layoutChangePin;
 
     /* Toolbar */
     @Bind(R.id.toolBar)
@@ -72,6 +75,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
         btnLogout.setOnClickListener(this);
         layoutAbout.setOnClickListener(this);
         layoutProfile.setOnClickListener(this);
+        layoutChangePin.setOnClickListener(this);
 
         return v;
     }
@@ -149,6 +153,9 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
                 break;
             case R.id.layoutAbout:
                 iSettingPresenter.displayAbout();
+                break;
+            case R.id.layoutChangePin:
+                iSettingPresenter.displayPin(uid);
                 break;
         }
     }

@@ -61,11 +61,8 @@ public interface RegisterApi {
     void login(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     /* 3009 */
-    @POST("/api/telehealth/user/requestActivationCode")
+    @POST("/api/telehealth/checkActivation")
     void activation(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/user/verifyActivationCode")
-    void verify(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @GET("/api/telehealth/user/details/{teleUID}")
     void getDetailsPatient(@Path("teleUID") String teleUID, Callback<JsonObject> callback);
@@ -96,4 +93,7 @@ public interface RegisterApi {
 
     @GET("/api/telehealth/listCountry")
     void getListCountry(Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/updatePinNumber")
+    void updatePin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 }

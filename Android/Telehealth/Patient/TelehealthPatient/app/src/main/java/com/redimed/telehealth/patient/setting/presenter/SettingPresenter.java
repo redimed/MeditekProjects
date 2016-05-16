@@ -22,6 +22,7 @@ import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.pin.PinFragment;
 import com.redimed.telehealth.patient.services.RegistrationIntentService;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
 
@@ -37,7 +38,9 @@ import retrofit.client.Response;
 public class SettingPresenter implements ISettingPresenter {
 
     private Gson gson;
+    private Bundle bundle;
     private Context context;
+    private Fragment fragment;
     private Patient[] patients;
     private RegisterApi restClient;
     private ISettingView iSettingView;
@@ -49,6 +52,7 @@ public class SettingPresenter implements ISettingPresenter {
         this.iSettingView = iSettingView;
 
         gson = new Gson();
+        bundle = new Bundle();
         restClient = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
     }
@@ -75,14 +79,23 @@ public class SettingPresenter implements ISettingPresenter {
     @Override
     public void displayInfoPatient(String uid) {
         if (patients != null) {
-            Bundle bundle = new Bundle();
             bundle.putString("telehealthUID", uid);
 
-            Fragment fragment = new InformationFragment();
+            fragment = new InformationFragment();
             fragment.setArguments(bundle);
 
             iMainPresenter.replaceFragment(fragment);
         }
+    }
+
+    @Override
+    public void displayPin(String uid) {
+        bundle.putString("telehealthUID", uid);
+
+        fragment = new PinFragment();
+        fragment.setArguments(bundle);
+
+        iMainPresenter.replaceFragment(fragment);
     }
 
     @Override
@@ -94,9 +107,9 @@ public class SettingPresenter implements ISettingPresenter {
 
     @Override
     public void displayAbout() {
-        FAQsFragment fragment = new FAQsFragment();
-        Bundle bundle = new Bundle();
         bundle.putString("msg", "UR");
+
+        fragment = new FAQsFragment();
         fragment.setArguments(bundle);
         iMainPresenter.replaceFragment(fragment);
     }

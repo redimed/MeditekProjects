@@ -1,12 +1,16 @@
-package com.redimed.telehealth.patient.sign_in;
+package com.redimed.telehealth.patient.pin;
 
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,32 +19,40 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.sign_in.presenter.ISignInPresenter;
-import com.redimed.telehealth.patient.sign_in.presenter.SignInPresenter;
-import com.redimed.telehealth.patient.sign_in.view.ISignInView;
+import com.redimed.telehealth.patient.pin.presenter.IPinPresenter;
+import com.redimed.telehealth.patient.pin.presenter.PinPresenter;
+import com.redimed.telehealth.patient.pin.view.IPinView;
+import com.redimed.telehealth.patient.setting.SettingFragment;
 import com.redimed.telehealth.patient.utlis.DialogConnection;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SignInFragment extends Fragment implements ISignInView, View.OnClickListener {
+public class PinFragment extends Fragment implements IPinView {
 
     private Context context;
+    private Fragment fragment;
+    private IPinPresenter iPinPresenter;
     private SweetAlertDialog progressDialog;
-    private ISignInPresenter iSignInPresenter;
+    private static final String TAG = "=====PIN=====";
 
-    @Bind(R.id.txtPhone)
-    EditText txtPhone;
-    @Bind(R.id.btnContinue)
-    Button btnContinue;
+    @Bind(R.id.layoutChangePin)
+    LinearLayout layoutChangePin;
+//    @Bind(R.id.txtCurrentPin)
+//    EditText txtCurrentPin;
+//    @Bind(R.id.txtNewPin)
+//    EditText txtNewPin;
+//    @Bind(R.id.txtConfirmPin)
+//    EditText txtConfirmPin;
+
+    @Bind(R.id.btnSubmit)
+    Button btnSubmit;
 
     /* Toolbar */
     @Bind(R.id.toolBar)
@@ -52,47 +64,71 @@ public class SignInFragment extends Fragment implements ISignInView, View.OnClic
     @Bind(R.id.lblSubTitle)
     TextView lblSubTitle;
 
-    public SignInFragment() {
+    public PinFragment() {
+        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        final View v = inflater.inflate(R.layout.fragment_pin, container, false);
+        context = v.getContext();
         ButterKnife.bind(this, v);
-        this.context = v.getContext();
 
         init(v);
-        initToolbar();
+        onLoadToolbar();
 
-        btnContinue.setOnClickListener(this);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Log.d(TAG, "RUN TIME");
+//                    }
+//                }, 5000);
+                progressDialog.show();
+                btnSubmit.setEnabled(false);
+                iPinPresenter.checkDataField(layoutChangePin);
+            }
+        });
 
         return v;
     }
 
     private void init(View v) {
-        iSignInPresenter = new SignInPresenter(context, this, getActivity());
-        iSignInPresenter.hideKeyboardFragment(v);
 
+        iPinPresenter = new PinPresenter(this, context, getActivity());
+        iPinPresenter.hideKeyboardFragment(v);
+
+        //init progressDialog
         progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#B42047"));
         progressDialog.setTitleText("Loading");
         progressDialog.setCancelable(false);
     }
 
-    private void initToolbar() {
+    public void onLoadToolbar() {
         //init toolbar
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolBar);
 
         //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.login));
-        lblSubTitle.setText(getResources().getString(R.string.home_title));
+        lblTitle.setText(getResources().getString(R.string.pin_title));
+        lblSubTitle.setText(getResources().getString(R.string.setting_title));
         layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iSignInPresenter.changeFragment(new HomeFragment());
+                fragment = new SettingFragment();
+                fragment.setArguments(getArguments());
+                iPinPresenter.changeFragment(fragment);
             }
         });
+    }
+
+    @Override
+    public void onLoadSuccess() {
+        progressDialog.dismiss();
+        iPinPresenter.changeFragment(new HomeFragment());
     }
 
     @Override
@@ -108,35 +144,18 @@ public class SignInFragment extends Fragment implements ISignInView, View.OnClic
                     .setContentText(msg)
                     .show();
         }
-        txtPhone.setText("");
         progressDialog.dismiss();
-        btnContinue.setEnabled(true);
+        btnSubmit.setEnabled(true);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnContinue:
-                progressDialog.show();
-                btnContinue.setEnabled(false);
-                iSignInPresenter.validatedPhone(txtPhone.getText().toString());
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onValidated(String result) {
-        if (!result.equalsIgnoreCase("wrong")) {
-            iSignInPresenter.requestCode(result);
-        } else {
-            btnContinue.setEnabled(true);
-            Toast.makeText(context, R.string.alert_wrong_phone, Toast.LENGTH_LONG).show();
-        }
+    public void onResultField(EditText editText) {
         progressDialog.dismiss();
+        btnSubmit.setEnabled(true);
+        editText.setError(getResources().getString(R.string.error_pin));
     }
 
+    //Handler back button
     @Override
     public void onResume() {
         super.onResume();
@@ -146,7 +165,9 @@ public class SignInFragment extends Fragment implements ISignInView, View.OnClic
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iSignInPresenter.changeFragment(new HomeFragment());
+                    fragment = new SettingFragment();
+                    fragment.setArguments(getArguments());
+                    iPinPresenter.changeFragment(fragment);
                     return true;
                 }
                 return false;

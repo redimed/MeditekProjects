@@ -1,12 +1,13 @@
 /* here you can put your own css to customize and override the theme */
 
-.login {
-    background-color: #ccc !important;
+.page-content {
+    margin-top: 0;
+    padding: 0;
+    background-color: #eef1f5;
 }
 
-.content {
-    /*border: 1px solid #ccc;*/
-    /*width: 380px !important;*/
+.login {
+    background-color: #ccc !important;
 }
 
 .register-form {
@@ -272,11 +273,15 @@ ul.my-ul {
     border: 1px solid #ccc;
 }
 
-img.profile-imge {
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    height: 87px;
+.profile-picture {}
+.profile-picture img {
+    float: none;
+    margin: 0 auto;
+    width: 50%;
+    height: 100%;
+    -webkit-border-radius: 50%!important;
+    -moz-border-radius: 50%!important;
+    border-radius: 50%!important;
 }
 
 
@@ -286,12 +291,19 @@ img.profile-imge {
 .margin-left-20 { margin-left: 20px; }
 .margin-left-30 { margin-left: 30px; }
 .margin-left-40 { margin-left: 40px; }
+.margin-left-50 { margin-left: 50px; }
+.margin-left-60 { margin-left: 60px; }
 
 .margin-right-5  { margin-right: 5px;  }
 .margin-right-10 { margin-right: 10px; }
 .margin-right-20 { margin-right: 20px; }
 .margin-right-30 { margin-right: 30px; }
 .margin-right-40 { margin-right: 40px; }
+
+.padding-left-10 { padding-left: 10px; }
+.padding-left-20 { padding-left: 20px; }
+.padding-left-30 { padding-left: 30px; }
+.padding-left-40 { padding-left: 40px; }
 
 .padding-right-10 { padding-right: 10px; }
 .padding-right-20 { padding-right: 20px; }
@@ -789,7 +801,10 @@ body.full-background-compaign {
 
 
 /*end regular-checkbox, regular-radio===============================================================================*/
-
+.dashboard-stat2 {
+    border: 1px solid #e5e5e5;
+}
+.dashboard-stat2:hover,
 .dashboard-stat:hover {
     cursor: pointer;
 }
@@ -797,6 +812,14 @@ body.full-background-compaign {
 .dashboard-stat .details .number {
     font-size: 23px;
     font-weight: bolder;
+}
+
+.box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 0 0 20px;
+    padding: 15px 15px 30px 15px;
+    /*box-shadow: 0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.18);*/
 }
 
 @media (min-width: 992px){
@@ -894,6 +917,10 @@ span.glyphicon:hover {
 }
 
 .red_treating_border_left {
-    border-left: 1px solid #d9d9d9;
+    border-left: 1px solid #e5e5e5;
 }
+.red_treating_border_right {
+    border-right: 1px solid #e5e5e5;
+}
+
 /*======================================================<<tannv.dts@gmail.com*/

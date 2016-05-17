@@ -1,7 +1,7 @@
 <div class="portlet light bordered" style="margin-bottom:0px;" id="tabtablecontent">
     <div class="portlet-title" >
         <div class="caption bold uppercase font-blue">
-            <i class="glyphicon glyphicon-th-list font-blue"></i>
+            <i class="icon-rocket font-blue"></i>
             <span class="caption-subject">Urgent Care Detail</span>
         </div>
         <div class="tools">
@@ -9,179 +9,147 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form>
-            <div class="form-body margin-bottom-40" >
-                <div class="scroller" style="height:700px">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <fieldset>
-                                <legend>Request Information</legend>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Status</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.Status" name="Status">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Tried</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.Tried" name="Tried">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Request Type</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.UrgentRequestType" name="Request Type">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Request Date</label>
-                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.RequestDate" name="Request Date">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <label class="control-label col-md-12 col-sm-12">Request Services : </label>
-                                                <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
-                                                    <div class="checkbox-list">
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" class="regular-checkbox" ng-model="info.Physiotherapy" ng-true-value="'Y'" ng-false-value="'N'"> Physio Therapy
-                                                        </label>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" class="regular-checkbox" ng-model="info.ExerciseRehab" ng-true-value="'Y'" ng-false-value="'N'"> Exercise Rehab
-                                                        </label>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" class="regular-checkbox" ng-model="info.HandTherapy" ng-true-value="'Y'" ng-false-value="'N'"> Hand Therapy
-                                                        </label>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" class="regular-checkbox" ng-model="info.GP" ng-true-value="'Y'" ng-false-value="'N'"> GP
-                                                        </label>
-                                                        <label class="checkbox">
-                                                            <div class="form-inline">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="info.Specialist" ng-true-value="'Y'" ng-false-value="'N'"> Specialist
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control" ng-model="info.SpecialistType" style="text-align: center;" />
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <label class="col-md-12 col-sm-12">Has GP Referral</label>
-                                                <div class="col-md-11 col-sm-11 col-offset-1 col-sm-offset-1">
-                                                    <div class="radio-list">
-                                                        <label class="radio-inline">
-                                                            <input type="radio" class="regular-radio" name="GPReferral" ng-model="info.GPReferral" value="Y"> Yes
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" class="regular-radio" name="GPReferral" ng-model="info.GPReferral" value="N"> No
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <label class="control-label">Description</label>
-                                        <textarea class="form-control" rows="7" ng-model="info.Description"></textarea>
-                                    </div>
-                                </div>
-                            </fieldset>
+        <form class="form-horizontal">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 red_treating_border_right">
+                        <h4 class="form-section">Request Information</h4>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Status</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.Status" name="Status">
+                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
-                            <fieldset>
-                                <legend>Patient Information</legend>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Firstname</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.FirstName" name="Firstname">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Lastname</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.LastName" name="Lastname">
-                                        </div>
-                                    </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Tried</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.Tried" name="Tried">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Request Type</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.UrgentRequestType" name="Request Type">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Request Date</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.RequestDate" name="Request Date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Request Services </label>
+                            <div class="col-lg-9 col-md-8">
+                                <div class="checkbox-list">
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="regular-checkbox" ng-model="info.Physiotherapy" ng-true-value="'Y'" ng-false-value="'N'"> Physio Therapy
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="regular-checkbox" ng-model="info.ExerciseRehab" ng-true-value="'Y'" ng-false-value="'N'"> Exercise Rehab
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="regular-checkbox" ng-model="info.HandTherapy" ng-true-value="'Y'" ng-false-value="'N'"> Hand Therapy
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="regular-checkbox" ng-model="info.GP" ng-true-value="'Y'" ng-false-value="'N'"> GP
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="regular-checkbox"
+                                            ng-model="info.Specialist" 
+                                            ng-true-value="'Y'" ng-false-value="'N'"> Specialist
+                                    </label>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">DOB</label>
-                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.DOB" name="DOB">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Gender</label>
-                                            <div class="radio-list">
-                                                <label class="radio-inline"><input type="radio" class="regular-radio" name="gender" ng-model="info.Gender" value="M"> Male</label>
-                                                <label class="radio-inline"><input type="radio" class="regular-radio" name="gender" ng-model="info.Gender" value="F"> Female</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <input type="text" class="form-control" 
+                                    ng-show="info.Specialist == 'Y'"
+                                    ng-model="info.SpecialistType" 
+                                    style="text-align: center;" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Has GP Referral</label>
+                            <div class="col-lg-9 col-md-8">
+                                <div class="radio-list">
+                                    <label class="radio">
+                                        <input type="radio" class="regular-radio" name="GPReferral" ng-model="info.GPReferral" value="Y"> Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" class="regular-radio" name="GPReferral" ng-model="info.GPReferral" value="N"> No
+                                    </label>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Phonenumber</label>
-                                            <input type="text" class="form-control" placeholder="+614xxxxxxxx" ng-model="info.PhoneNumber" name="Phonenumber">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Email</label>
-                                            <input type="text" class="form-control" placeholder="exemple@gmail.com" ng-model="info.Email" name="Email">
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Description</label>
+                            <div class="col-lg-9 col-md-8">
+                                <textarea class="form-control" rows="7" ng-model="info.Description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <h4 class="form-section">Patient Information</h4>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Firstname</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.FirstName" name="Firstname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Lastname</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.LastName" name="Lastname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">DOB</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.DOB" name="DOB">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Gender</label>
+                            <div class="col-lg-9 col-md-8">
+                                <div class="radio-list">
+                                    <label class="radio"><input type="radio" class="regular-radio" name="gender" ng-model="info.Gender" value="M"> Male</label>
+                                    <label class="radio"><input type="radio" class="regular-radio" name="gender" ng-model="info.Gender" value="F"> Female</label>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Suburb</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.Suburb" name="Suburb">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Company Name</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.CompanyName" name="Company Name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Contact Person</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.ContactPerson" name="Contact Person">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Company Phonenumber</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.CompanyPhoneNumber" name="Company Phonenumber">
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Phonenumber</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="+614xxxxxxxx" ng-model="info.PhoneNumber" name="Phonenumber">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Email</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="exemple@gmail.com" ng-model="info.Email" name="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Suburb</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.Suburb" name="Suburb">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Company Name</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.CompanyName" name="Company Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Contact Person</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.ContactPerson" name="Contact Person">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 col-md-4">Company Phonenumber</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.CompanyPhoneNumber" name="Company Phonenumber">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,7 +157,7 @@
             <div class="form-actions">
                 <div class="row pull-right">
                     <div class="col-md-12">
-                        <button class="btn default" ng-click="close()">
+                        <button class="btn btn-default" ng-click="close()">
                             <i class="icon-action-undo"></i> Close</button>
                         <button class="btn blue" ng-click="save()" ng-if="false" >
                             <i class="glyphicon glyphicon-save"></i> Save change

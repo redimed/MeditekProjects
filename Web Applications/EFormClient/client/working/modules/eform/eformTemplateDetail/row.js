@@ -260,7 +260,10 @@ module.exports = React.createClass({
                     var name = this.refs[fieldRef].getName();
                     results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(type === 'table'){
-                    var tableFields = this.refs[fieldRef].getAllValue();
+                    if(stringType === 'print'){
+                        var tableFields = this.refs[fieldRef].getAllValue('print');
+                    }else
+                        var tableFields = this.refs[fieldRef].getAllValue('normal');
                     tableFields.map(function(tableField, index){
                         tableField.refRow = self.props.refTemp;
                         tableField.moduleID = self.props.moduleID

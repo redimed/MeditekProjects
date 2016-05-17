@@ -132,7 +132,7 @@
                                                     <div class="form-group" ng-hide="isShowFull==false">
                                                         <label class="control-label">Enable</label>
                                                         <input type="checkbox" 
-                                                            class="make-switch" 
+                                                            class="make-switch"
                                                             ng-model="activeUser"
                                                             ng-true-value="'Y'" 
                                                             ng-false-value="'N'" 
@@ -151,8 +151,9 @@
                                                     <div class="form-group" ng-hide="isShowFull==false">
                                                         <label class="control-label">Activated</label>
                                                         <input type="checkbox" 
-                                                            class="make-switch" 
-                                                            ng-model="activeUser"
+                                                            class="make-switch"
+                                                            ng-model="ActivatedUser"
+                                                            ng-click="changeActivated(ActivatedUser)"
                                                             ng-true-value="'Y'" 
                                                             ng-false-value="'N'" 
                                                             data-on-text="<i class='fa fa-check'></i>" 

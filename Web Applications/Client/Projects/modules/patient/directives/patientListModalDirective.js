@@ -312,6 +312,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				PatientService.detailPatient(data).then(function(response){
 					if(response.message=="success"){
 						scope.info = response.data[0];
+						scope.ActivatedUser = scope.info.UserAccount.Activated;
 						//scope.info.PatientKins = {};
 						scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
 						scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
@@ -502,6 +503,10 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	console.log(Enable);
 		    };
 
+		    scope.changeActivated = function(Activated){
+		    	scope.info.ActivatedUser = Activated;
+		    }
+
 		    scope.savechange = function(){
 		    	if(_.isEmpty(scope.style) == false) {
 		    		toastr.error('Please check information','Error');
@@ -522,6 +527,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			    	scope.updatedata.UserAccountID = scope.info.UserAccountID;
 					scope.updatedata.UID           = scope.info.UID;
 					scope.updatedata.EnableUser    = scope.info.EnableUser;
+					scope.updatedata.Activated     = scope.info.ActivatedUser;
 			    	console.log(scope.updatedata);
 			    	if(scope.info.PatientKin != null && scope.info.PatientKin != '') scope.updatedata.PatientKin = scope.info.PatientKin;
 			    	if(scope.info.PatientGP != null && scope.info.PatientGP != '') scope.updatedata.PatientGP = scope.info.PatientGP;

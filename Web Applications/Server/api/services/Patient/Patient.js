@@ -1919,20 +1919,23 @@ module.exports = {
                 } else {
                     return sequelize.Promise.each(data.model, function(modelName, index) {
                             return sequelize.models[modelName].findAll({
-                                    where: {
-                                        $and: data.where ? data.where : null,
-                                        PatientID: got_patient.ID,
-                                    },
-                                    limit: data.limit ? data.limit : null,
-                                    offset: data.offset ? data.offset : null,
-                                })
-                                .then(function(got_model) {
-                                    postData[modelName] = got_model;
-                                }, function(err) {
-                                    throw err;
-                                });
+                                where: {
+                                    $and: data.where ? data.where : null,
+                                    PatientID: got_patient.ID,
+                                },
+                                limit: data.limit ? data.limit : null,
+                                offset: data.offset ? data.offset : null,
+                            })
+                            .then(function(got_model) {
+                                postData[modelName] = got_model;
+                            }, function(err) {
+                                throw err;
+                            });
                         })
-                        .then(function(result) {}, function(err) {
+                        .then(function(result) {
+                            return result;
+                        }, function(err) {
+                            throw err;
                             console.log(err);
                         })
                 }

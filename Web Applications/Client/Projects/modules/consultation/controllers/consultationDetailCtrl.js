@@ -18,8 +18,6 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         }]
     };
 
-<<<<<<< 908524d65b76b88b40a40ed7c0af293db68cc23f
-<<<<<<< 085576012d286c8ceb2b9623595f15c6779ab610
     $scope.dataDirective = {};
 
     $scope.getTelehealthDetail = function(UID) {
@@ -37,7 +35,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     $scope.getTelehealthDetail($scope.Params.UID);
 
     $scope.HasRoleAdminOrPractitioner = false;
-    
+
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
             var checkedUser = false;

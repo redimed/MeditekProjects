@@ -88,7 +88,7 @@ module.exports = React.createClass({
             this.props.onUpdateColumn(this.props.code, data);
         }.bind(this))
     },
-    getAllValue: function(){
+    getAllValue: function(typeString){
         var content = this.props.content.toJS();
         var rows = content.rows;
         var cols = content.cols;
@@ -103,13 +103,19 @@ module.exports = React.createClass({
                         var refRadioChild = self.props.name+'_field_'+i+'_'+indexCol;
                         var value = self.refs[refRadioChild].getValue();
                     }
-                    else
-                        var value = self.refs[refChild].getValue();
+                    else{
+                        if(typeString === 'print' && col.type === 'd'){
+                            var value = self.refs[refChild].getValuePrint();
+                        }else
+                            var value = self.refs[refChild].getValue();
+                    }
                 }
                 else
                     var value = self.refs[refChild].getValueTable();
-                if(col.type === 'radio_yes_no')
+                if(col.type === 'radio_yes_no'){
+                    refChild = refRadioChild;
                     var typeChild = self.refs[refRadioChild].getType();
+                }
                 else
                     var typeChild = self.refs[refChild].getType();
                 var type = 'table';

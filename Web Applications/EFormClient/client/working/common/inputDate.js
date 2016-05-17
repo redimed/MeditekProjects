@@ -66,6 +66,11 @@ module.exports = React.createClass({
         var value = $(this.refs.input).val();
         return Config.getDateTimeZone(value);
     },
+    getValuePrint: function(){
+        var value = $(this.refs.input).val();
+        console.log(value);
+        return value;
+    },
     getText: function(){
         var value = $(this.refs.input).val();
         return value;

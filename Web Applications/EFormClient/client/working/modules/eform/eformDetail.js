@@ -294,12 +294,10 @@ module.exports = React.createClass({
                 })
             }
 
-            console.log(fields);
-
             var content = JSON.stringify(fields);
             var appointmentUID = self.appointmentUID;
 
-            /*if(self.formUID === null){
+            if(self.formUID === null){
                 EFormService.formSave({templateUID: self.templateUID, appointmentUID: appointmentUID, content: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){
                     resolve();
@@ -310,7 +308,7 @@ module.exports = React.createClass({
                 .then(function(){
                     resolve();
                 })
-            }*/
+            }
         });
         return p;
     },
@@ -337,7 +335,7 @@ module.exports = React.createClass({
             printMethod: self.EFormTemplate.PrintType,
             data: fields,
             templateUID: self.templateUID
-        }
+        }        
 
         EFormService.createPDFForm(data)
         .then(function(response){

@@ -107,18 +107,18 @@ app.directive('telehealthDetail', function(doctorService) {
                         if (checkDateUndefined($scope.wainformation.Patients[0])) {
                             $scope.ShowData.patient = angular.copy($scope.wainformation.Patients[0]);
                             $scope.ShowData.patient.PhoneNumber = $scope.ShowData.patient.UserAccount.PhoneNumber;
-                            $scope.ShowData.patient.MedicareExpiryDate = moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
+                            $scope.ShowData.patient.MedicareExpiryDate = $scope.ShowData.patient.MedicareExpiryDate!=null?moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
                         };
                     } else {
                         if(_.isEmpty($scope.wainformation.TelehealthAppointment) == true) {
                             if($scope.wainformation.PatientAppointments) {
                                 $scope.ShowData.patient = angular.copy($scope.wainformation.PatientAppointments[0]);
-                                $scope.ShowData.patient.MedicareExpiryDate = moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
+                                $scope.ShowData.patient.MedicareExpiryDate = $scope.ShowData.patient.MedicareExpiryDate!=null?moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
                             }
                         }
                         else {
                             $scope.ShowData.patient = angular.copy($scope.wainformation.TelehealthAppointment.PatientAppointment);
-                            $scope.ShowData.patient.MedicareExpiryDate = moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY');
+                            $scope.ShowData.patient.MedicareExpiryDate = $scope.ShowData.patient.MedicareExpiryDate!=null?moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
                         }
                     }
                     if ($scope.wainformation.TelehealthAppointment != null || $scope.wainformation.TelehealthAppointment != undefined) {
@@ -549,7 +549,15 @@ app.directive('telehealthDetail', function(doctorService) {
                     console.log("saveWaAppointment",$scope.wainformation);
 					if(!_.isEqual($scope.ShowData.patient, $scope.wainformation.PatientAppointments[0])) {
                         $scope.wainformation.PatientAppointment = angular.copy($scope.ShowData.patient);
-                        $scope.wainformation.PatientAppointment.MedicareExpiryDate = moment('01/'+$scope.wainformation.PatientAppointment.MedicareExpiryDate+' 00:00:00','DD/MM/YYYY HH:mm:ss Z').format('YYYY-MM-DD hh:mm:ss Z');
+                        console.log($scope.wainformation.PatientAppointment);
+                        if($scope.wainformation.PatientAppointment.MedicareExpiryDate && $scope.wainformation.PatientAppointment.MedicareExpiryDate != ''){
+                            if($scope.wainformation.PatientAppointment.MedicareExpiryDate != null){
+                                $scope.wainformation.PatientAppointment.MedicareExpiryDate = moment('01/'+$scope.wainformation.PatientAppointment.MedicareExpiryDate+' 00:00:00','DD/MM/YYYY HH:mm:ss Z').format('YYYY-MM-DD hh:mm:ss Z');
+                            }
+                        }
+                        else {
+                            $scope.wainformation.PatientAppointment.MedicareExpiryDate = null;
+                        }
                     }
 
                     if($scope.wainformation.PatientAppointments) {
@@ -1164,7 +1172,7 @@ app.directive('telehealthDetail', function(doctorService) {
                         $scope.ShowData.patient.MedicareEligible = $scope.wainformation.PatientAppointments[0].MedicareEligible;
                         $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientAppointments[0].MedicareNumber;
                         $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber;
-                        $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate ? 
+                        $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=null && $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=''? 
                             moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate).format('MM/YYYY') : null;
                         $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
                         callback(null);
@@ -1256,7 +1264,15 @@ app.directive('telehealthDetail', function(doctorService) {
                         setDataByPatientAppointment(function(err){});
                         break;
                     default:
-                        console.log("error");
+                            $scope.ShowData.patient.PatientKinFirstName = null;
+                            $scope.ShowData.patient.PatientKinLastName = null;
+                            $scope.ShowData.patient.PatientKinRelationship = null;
+                            $scope.ShowData.patient.PatientKinMobilePhoneNumber = null;
+                            $scope.ShowData.patient.MedicareEligible = null;
+                            $scope.ShowData.patient.MedicareNumber = null;
+                            $scope.ShowData.patient.MedicareReferenceNumber = null;
+                            $scope.ShowData.patient.MedicareExpiryDate = null;
+                            $scope.ShowData.patient.DVANumber = null;
                         break;
                 }
                 

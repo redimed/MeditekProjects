@@ -105,6 +105,7 @@ app.directive('onsiteAppointment', function(){
                         if (checkDateUndefined($scope.wainformation.Patients[0])) {
                             $scope.ShowData.patient = angular.copy($scope.wainformation.Patients[0]);
                             $scope.ShowData.patient.PhoneNumber = $scope.ShowData.patient.UserAccount.PhoneNumber;
+                            $scope.ShowData.patient.MedicareExpiryDate = $scope.ShowData.patient.MedicareExpiryDate!=null?moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
                         };
                     } else {
                         // $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment?$scope.wainformation.TelehealthAppointment.PatientAppointment:null;
@@ -112,10 +113,12 @@ app.directive('onsiteAppointment', function(){
                             if($scope.wainformation.PatientAppointments) {
                                 console.log("asdasdad");
                                 $scope.ShowData.patient = $scope.wainformation.PatientAppointments[0];
+                                $scope.ShowData.patient.MedicareExpiryDate = $scope.ShowData.patient.MedicareExpiryDate!=null?moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
                             }
                         }
                         else {
                             $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment.PatientAppointment;
+                            $scope.ShowData.patient.MedicareExpiryDate = $scope.ShowData.patient.MedicareExpiryDate!=null?moment($scope.ShowData.patient.MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
                         }
                     }
                     if ($scope.wainformation.TelehealthAppointment != null || $scope.wainformation.TelehealthAppointment != undefined) {
@@ -548,10 +551,23 @@ app.directive('onsiteAppointment', function(){
                     console.log($scope.wainformation)
                     if($scope.wainformation.PatientAppointments) {
                         $scope.wainformation.PatientAppointment = $scope.wainformation.PatientAppointments.length>0?$scope.wainformation.PatientAppointments[0]:{};
+                        if(!_.isEqual($scope.ShowData.patient, $scope.wainformation.PatientAppointments[0])) {
+                            $scope.wainformation.PatientAppointment = angular.copy($scope.ShowData.patient);
+                            console.log($scope.wainformation.PatientAppointment);
+                            if($scope.wainformation.PatientAppointment.MedicareExpiryDate && $scope.wainformation.PatientAppointment.MedicareExpiryDate != ''){
+                                if($scope.wainformation.PatientAppointment.MedicareExpiryDate != null){
+                                    $scope.wainformation.PatientAppointment.MedicareExpiryDate = moment('01/'+$scope.wainformation.PatientAppointment.MedicareExpiryDate+' 00:00:00','DD/MM/YYYY HH:mm:ss Z').format('YYYY-MM-DD hh:mm:ss Z');
+                                }
+                            }
+                            else {
+                                $scope.wainformation.PatientAppointment.MedicareExpiryDate = null;
+                            }
+                        }
                         delete $scope.wainformation['PatientAppointments'];
                         if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
                             delete $scope.wainformation['Patients'];
                         }
+
                         //tannv.dts@gmail.com comment
                         /*if($scope.wainformation.Doctors && $scope.wainformation.Doctors.length > 0) {
                             for(var i = 0; i < $scope.wainformation.Doctors.length; i++) {
@@ -1143,7 +1159,7 @@ app.directive('onsiteAppointment', function(){
                         $scope.ShowData.patient.MedicareEligible = $scope.wainformation.PatientAppointments[0].MedicareEligible;
                         $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientAppointments[0].MedicareNumber;
                         $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber;
-                        $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate ? 
+                        $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=null && $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=''? 
                             moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate).format('MM/YYYY') : null;
                         $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
                         callback(null);
@@ -1235,7 +1251,15 @@ app.directive('onsiteAppointment', function(){
                         setDataByPatientAppointment(function(err){});
                         break;
                     default:
-                        console.log("error");
+                        $scope.ShowData.patient.PatientKinFirstName = null;
+                        $scope.ShowData.patient.PatientKinLastName = null;
+                        $scope.ShowData.patient.PatientKinRelationship = null;
+                        $scope.ShowData.patient.PatientKinMobilePhoneNumber = null;
+                        $scope.ShowData.patient.MedicareEligible = null;
+                        $scope.ShowData.patient.MedicareNumber = null;
+                        $scope.ShowData.patient.MedicareReferenceNumber = null;
+                        $scope.ShowData.patient.MedicareExpiryDate = null;
+                        $scope.ShowData.patient.DVANumber = null;
                         break;
                 }
                 

@@ -17,6 +17,7 @@ app.directive('telehealthDetail', function(doctorService) {
 				{'code':'NT', 'name':'Northern Territory'},
 				{'code':'ACT', 'name':'Australian Capital Territory'}
 			];
+            $('#medicareExpiry').fdatepicker();
             WAAppointmentService.getDetailWAAppointmentByUid($stateParams.UID).then(function(data) {
                 $scope.wainformation = data.data;
                 $scope.wainformation.Company = {};
@@ -923,7 +924,7 @@ app.directive('telehealthDetail', function(doctorService) {
                         }
                     },
                 });
-            }
+            };
 
             $scope.type_of_treatment = ['physiotherapy','exerciseRehab','handTherapy'];
             $scope._onChangeChecked = function(id, list_id) {
@@ -1148,6 +1149,22 @@ app.directive('telehealthDetail', function(doctorService) {
                             getDetailChild($scope.wainformation.Company.UID);
                         }
                     }
+                }
+            };
+
+            $scope.getDetailPatient = function() {
+                console.log("wainformation ohohoho ",$scope.wainformation);
+                if($scope.wainformation.PatientAppointments && $scope.wainformation.PatientAppointments.length > 0) {
+                    $scope.ShowData.patient.PatientKinFirstName = $scope.wainformation.PatientAppointments[0].PatientKinFirstName;
+                    $scope.ShowData.patient.PatientKinLastName = $scope.wainformation.PatientAppointments[0].PatientKinLastName;
+                    $scope.ShowData.patient.PatientKinRelationship = $scope.wainformation.PatientAppointments[0].PatientKinRelationship;
+                    $scope.ShowData.patient.PatientKinMobilePhoneNumber = $scope.wainformation.PatientAppointments[0].PatientKinMobilePhoneNumber;
+                    $scope.ShowData.patient.MedicareEligible = $scope.wainformation.PatientAppointments[0].MedicareEligible;
+                    $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientAppointments[0].MedicareNumber;
+                    $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber;
+                    $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate ? 
+                        moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('MM/YYYY') : null;
+                    $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
                 }
             };
 

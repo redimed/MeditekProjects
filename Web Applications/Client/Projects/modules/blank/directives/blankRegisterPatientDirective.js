@@ -289,10 +289,12 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 }
             };
             $scope.Back = function() {
-                $scope.submitted = true;
                 if($scope.postData.otherData.PatientMedicare.ExpiryDate && $scope.postData.otherData.PatientMedicare.ExpiryDate != '') {
-                    $scope.postData.otherData.PatientMedicare.ExpiryDate = $scope.postData.otherData.PatientMedicare.ExpiryDate.slice(2,$scope.postData.otherData.PatientMedicare.ExpiryDate.length);
+                    console.log("$scope.postData.otherData.PatientMedicare.ExpiryDate ",$scope.postData.otherData.PatientMedicare.ExpiryDate);
+                    $scope.postData.otherData.PatientMedicare.ExpiryDate = $scope.postData.otherData.PatientMedicare.ExpiryDate.replace('01/','');
+                    $scope.postData.otherData.PatientMedicare.ExpiryDate = $scope.postData.otherData.PatientMedicare.ExpiryDate.replace(' 00:00:00','');
                 }
+                $scope.submitted = true;
                 if ($scope.step1.$valid || $scope.step2.$valid) {
                     $scope.number--;
                 }
@@ -307,15 +309,15 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         };
                     };
                 }
-                // if ($scope.postData.otherData.PatientMedicare !== undefined) {
-                //     if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== undefined) {
-                //         if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== '') {
-                //             $scope.postData.otherData.PatientMedicare.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientMedicare.ExpiryDate);
-                //         } else {
-                //             $scope.postData.otherData.PatientMedicare.ExpiryDate = null;
-                //         };
-                //     };
-                // }
+                if ($scope.postData.otherData.PatientMedicare !== undefined) {
+                    if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== undefined) {
+                        if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== '') {
+                            $scope.postData.otherData.PatientMedicare.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientMedicare.ExpiryDate);
+                        } else {
+                            $scope.postData.otherData.PatientMedicare.ExpiryDate = null;
+                        };
+                    };
+                }
             }
             $scope.Submit = function() {
                 if($scope.postData.data.Email1) {
@@ -331,12 +333,12 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         }
                     }
                     $scope.AppointmentData();
-                    $scope.FormatDate();
                     o.loadingPage(true);
                     if($scope.postData.otherData.PatientMedicare.ExpiryDate && $scope.postData.otherData.PatientMedicare.ExpiryDate != '') {
-                        $scope.postData.otherData.PatientMedicare.ExpiryDate = '01/'+$scope.postData.otherData.PatientMedicare.ExpiryDate;
-                        console.log("date ",$scope.postData.otherData.PatientMedicare.ExpiryDate);
+                        $scope.postData.otherData.PatientMedicare.ExpiryDate = '01/'+$scope.postData.otherData.PatientMedicare.ExpiryDate+'00:00:00';
+                        $scope.postData.otherData.PatientMedicare.MedicareEligible = 'Y';
                     }
+                    $scope.FormatDate();
                     blankServices.registerPatient($scope.postData).then(function(response) {
                         if (response.data.status = 200) {
                             $scope.logInData.UserUID = response.data.UserAccountUID;

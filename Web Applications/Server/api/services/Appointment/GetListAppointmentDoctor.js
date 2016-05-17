@@ -7,7 +7,7 @@ module.exports = function(data, userInfo, objRequired) {
             include: [{
                 attributes: ['ID'],
                 model: Doctor,
-                required: true
+                required: false
             }],
             where: {
                 $or: [{

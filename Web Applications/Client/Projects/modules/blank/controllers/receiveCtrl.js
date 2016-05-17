@@ -108,7 +108,8 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     };
 
     $scope.EnAudio = function() {
-        $scope.subscriber.subscribeToAudio(false)
+        $scope.$emit('$mute');
+        // $scope.subscriber.subscribeToAudio(false);
     };
 
     $scope.EndCall = function() {

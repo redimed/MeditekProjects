@@ -177,7 +177,8 @@ module.exports = {
             };
             // When device caller or receiver issue
             if (message.toLowerCase() === 'issue') {
-                sails.sockets.broadcast(to, 'receiveMessage', data);
+                var isissue = req.param('isissue');
+                sails.sockets.broadcast(isissue, 'receiveMessage', data);
             };
         }
     },

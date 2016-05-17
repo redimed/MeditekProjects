@@ -240,7 +240,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     token: msg.token,
                     userName: msg.fromName
                 }), "CAll", { directories: "no" });
-                messageTransfer(msg.to, msg.from, "answer");
+                messageTransfer(msg.from, msg.to, "answer");
             } else {
                 messageTransfer(msg.from, msg.to, "decline");
             };
@@ -301,9 +301,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         if (ioSocket.telehealthDoctorCallWindow) {
             ioSocket.telehealthDoctorCallWindow.close();
         }
-        swal.close();
+        // swal.close();
         o.audio.pause();
-        swal("Receiver Busy", "Please Call Back Later");
+        swal("Device Receiver issue", "Please Call Back Later");
     }
 });
 

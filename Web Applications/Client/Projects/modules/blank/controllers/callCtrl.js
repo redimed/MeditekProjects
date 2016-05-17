@@ -182,7 +182,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     };
 
     $scope.EnAudio = function() {
-        $scope.subscriber.subscribeToAudio(false);
+        $scope.$emit('$mute');
+        // $scope.subscriber.subscribeToAudio(false);
     };
 
     $scope.EndCall = function() {
@@ -212,11 +213,15 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     };
 
     function CallCancel(message) {
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        var info = {
             from: uidUser,
             to: uidCall,
             message: message
-        }, function(data) {
+        };
+        if (message === "issue") {
+            info.isissue = uidUser;
+        };
+        socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
             console.log("send call", data);
             window.close();
         });

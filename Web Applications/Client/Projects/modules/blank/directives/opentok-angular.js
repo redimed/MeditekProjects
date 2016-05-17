@@ -194,6 +194,9 @@ app.factory('OT', function() {
                     scope.$on('$destroy', function() {
                         OTSession.session.unsubscribe(subscriber);
                     });
+                    scope.$on('$mute', function() {
+                        subscriber.subscribeToAudio(false);
+                    });
                 }
             };
         }

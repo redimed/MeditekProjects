@@ -34,7 +34,8 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     console.log("$scope.Params", $scope.Params.UID);
     $scope.getTelehealthDetail($scope.Params.UID);
 
-    $scope.isRolePatient = false;
+    $scope.HasRoleAdminOrPractitioner = false;
+
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
             var checkedUser = false;
@@ -64,14 +65,11 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
 
     var userInfo = JSON.parse($cookies.get('userInfo'));
-    $scope.checkPatient = 'Y';
+
     for (var i = 0; i < userInfo.roles.length; i++) {
         var role = userInfo.roles[i];
         if (role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN') {
-            $scope.checkPatient = 'Y';
-        }
-        if (role.RoleCode === 'PATIENT') {
-            $scope.isRolePatient = true;
+            $scope.HasRoleAdminOrPractitioner = true;
         }
     }
 
@@ -93,6 +91,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         /* END EFORM */
         //
     $scope.checkRoleUpdate = true;
+
     for (var i = 0; i < $cookies.getObject('userInfo').roles.length; i++) {
         if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
             $scope.checkRoleUpdate = false;

@@ -221,7 +221,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         swal({
             title: msg.fromName,
             imageUrl: "theme/assets/global/images/E-call_33.png",
-            timer: 120000,
+            timer: 5000,
             html: "<img src='theme/assets/global/img/loading.gif' />",
             showCancelButton: true,
             confirmButtonColor: "#26C281",
@@ -232,7 +232,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             allowEscapeKey: false,
         }, function(isConfirm) {
             console.log("isConfirm ", isConfirm);
-            if (isConfirm) {
+            if (isConfirm === true) {
                 console.log("Message MSG");
                 ioSocket.telehealthReceiveWindow = window.open($state.href("blank.receive", {
                     apiKey: msg.apiKey,
@@ -240,12 +240,27 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     token: msg.token,
                     userName: msg.fromName
                 }), "CAll", { directories: "no" });
+                // When receiver choose anwer -> join room receiver in server
                 messageTransfer(msg.from, msg.to, "answer");
-            } else {
+                swal.close();
+            } else if (isConfirm === false) {
+                // When receiver choose cancel
                 messageTransfer(msg.from, msg.to, "decline");
+                swal.close();
+            } else {
+                // When receiver no choose and waiting 2m
+                var CallerInfo = $cookies.getObject('userInfo');
+                messageTransfer(msg.from, msg.to, "waiting", CallerInfo);
+
+                // swal({
+                //     title: "Miss Call",
+                //     text: "You have missed calls from " + msg.fromName,
+                //     imageUrl: "theme/assets/global/images/E-call_18.png",
+                //     showCancelButton: false,
+                //     confirmButtonText: "OK"
+                // });
             };
             o.audio.pause();
-            swal.close();
         });
         o.audio.loop = true;
         o.audio.play();
@@ -262,7 +277,13 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }
 
     ioSocket.telehealthCancel = function(msg) {
-        console.log(ioSocket.telehealthSwalCall);
+        console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
+        if (ioSocket.telehealthPatientCallWindow) {
+            ioSocket.telehealthPatientCallWindow.close();
+        }
+        if (ioSocket.telehealthDoctorCallWindow) {
+            ioSocket.telehealthDoctorCallWindow.close();
+        }
         swal.close();
         o.audio.pause();
     }
@@ -279,18 +300,24 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }
 
     ioSocket.telehealthMisscall = function(msg) {
-        swal({
-            title: "You have " + msg.NumMissCall + " missed calls from " + msg.UserName,
-            imageUrl: "theme/assets/global/images/E-call_18.png",
-            timer: 30000,
-            html: "<img src='theme/assets/global/img/loading.gif' />",
-            showCancelButton: false,
-            confirmButtonColor: "#26C281",
-            confirmButtonText: "OK",
-            cancelButtonColor: "#D91E18",
-            allowOutsideClick: false,
-            allowEscapeKey: false
-        });
+        var q = _.uniq(msg, 'ID');
+        var CallerName = "";
+        for (var i = 0; i < q.length; i++) {
+            if (i === q.length - 1) {
+                CallerName = CallerName + q[i].UserName;
+            } else {
+                CallerName = CallerName + q[i].UserName + " ,";
+            }
+        }
+        if (msg.length > 0) {
+            swal({
+                title: "Miss Call",
+                text: "You have " + msg.length + " miss call from " + CallerName,
+                imageUrl: "theme/assets/global/images/E-call_18.png",
+                showCancelButton: false,
+                confirmButtonText: "OK"
+            });
+        }
     }
 
     ioSocket.telehealthIssue = function(msg) {
@@ -304,6 +331,18 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         // swal.close();
         o.audio.pause();
         swal("Device Receiver issue", "Please Call Back Later");
+    }
+
+    ioSocket.telehealthWaiting = function(msg) {
+        console.log("Waitinggggggggggggggggggggggggggggggggggggggggg", msg);
+        if (ioSocket.telehealthPatientCallWindow) {
+            ioSocket.telehealthPatientCallWindow.close();
+        }
+        if (ioSocket.telehealthDoctorCallWindow) {
+            ioSocket.telehealthDoctorCallWindow.close();
+        }
+        o.audio.pause();
+        swal("Receiver Busy", "Please Call Back Later");
     }
 });
 

@@ -66,8 +66,7 @@ module.exports = {
                     console.log("roomList", sails.sockets.rooms());
                     RedisWrap.hget(redisKey, uid).then(function(data) {
                         if (data != null) {
-                            data.message = "misscall";
-                            sails.sockets.broadcast(uid, 'receiveMessage', data);
+                            sails.sockets.broadcast(uid, 'misscall', data);
                             RedisWrap.hdel(redisKey, uid);
                         }
                     });
@@ -167,11 +166,15 @@ module.exports = {
             })
         }
         if (roomList.length > 0) {
-            // When receiver no choose Anwer
+            // When receiver choose answer message call
+            if (message.toLowerCase() === 'answer') {
+                console.log();
+            };
+            // When receiver choose cancel message call
             if (message.toLowerCase() === 'decline') {
                 sails.sockets.broadcast(from, 'receiveMessage', data);
             };
-            // When caller or receiver no choose endcall in window waiting
+            // When caller or receiver choose endcall in window waiting
             if (message.toLowerCase() === 'cancel') {
                 sails.sockets.broadcast(to, 'receiveMessage', data);
             };
@@ -180,7 +183,28 @@ module.exports = {
                 var isissue = req.param('isissue');
                 sails.sockets.broadcast(isissue, 'receiveMessage', data);
             };
-        }
+            // When receiver without
+            if (message.toLowerCase() === 'waiting') {
+                sails.sockets.broadcast(from, 'receiveMessage', data);
+
+                var CallerInfo = req.param('CallerInfo');
+
+                RedisWrap.hget(redisKey, to).then(function(data) {
+                    if (data != null) {
+                        CallerInfo.TimeCall = new Date();
+                        data.push(CallerInfo);
+                        RedisWrap.hset(redisKey, to, data);
+                    } else {
+                        var MissCaller = [];
+                        CallerInfo.TimeCall = new Date();
+                        MissCaller.push(CallerInfo);
+                        RedisWrap.hset(redisKey, to, MissCaller);
+                    }
+                });
+
+                console.log("waiting ", data);
+            };
+        };
     },
 
     // No working
@@ -345,14 +369,14 @@ module.exports = {
                             TelehealthService.CreateTelehealthCall(InfoCall, CallerID, CallerTeleID, ReceiverTeleID).then(function(msg) {
                                 RedisWrap.hget(redisKey, ReceiverTeleUID).then(function(data) {
                                     if (data != null) {
-                                        data.TimeCall = new Date();
-                                        data.NumMissCall = data.NumMissCall + 1;
-                                        RedisWrap.hset(redisKey, ReceiverTeleUID, data);
-                                        console.log("List Miss Call ", data.NumMissCall);
-                                    } else {
                                         CallerInfo.TimeCall = new Date();
-                                        CallerInfo.NumMissCall = 1;
-                                        RedisWrap.hset(redisKey, ReceiverTeleUID, CallerInfo);
+                                        data.push(CallerInfo);
+                                        RedisWrap.hset(redisKey, ReceiverTeleUID, data);
+                                    } else {
+                                        var MissCaller = [];
+                                        CallerInfo.TimeCall = new Date();
+                                        MissCaller.push(CallerInfo);
+                                        RedisWrap.hset(redisKey, ReceiverTeleUID, MissCaller);
                                     }
                                 });
                                 msg.transaction.commit();
@@ -402,14 +426,14 @@ module.exports = {
                                 TelehealthService.CreateTelehealthCall(InfoCall, CallerID, CallerTeleID, ReceiverTeleID).then(function(msg) {
                                     RedisWrap.hget(redisKey, ReceiverTeleUID).then(function(data) {
                                         if (data != null) {
-                                            data.TimeCall = new Date();
-                                            data.NumMissCall = data.NumMissCall + 1;
-                                            RedisWrap.hset(redisKey, ReceiverTeleUID, data);
-                                            console.log("List Miss Call ", data.NumMissCall);
-                                        } else {
                                             CallerInfo.TimeCall = new Date();
-                                            CallerInfo.NumMissCall = 1;
-                                            RedisWrap.hset(redisKey, ReceiverTeleUID, CallerInfo);
+                                            data.push(CallerInfo);
+                                            RedisWrap.hset(redisKey, ReceiverTeleUID, data);
+                                        } else {
+                                            var MissCaller = [];
+                                            CallerInfo.TimeCall = new Date();
+                                            MissCaller.push(CallerInfo);
+                                            RedisWrap.hset(redisKey, ReceiverTeleUID, MissCaller);
                                         }
                                     });
                                     msg.transaction.commit();

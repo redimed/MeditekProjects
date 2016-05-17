@@ -32,6 +32,17 @@ messageTransfer = function(from, to, message) {
     });
 }
 
+messageTransfer = function(from, to, message, callerinfo) {
+    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        from: from,
+        to: to,
+        message: message,
+        CallerInfo: callerinfo
+    }, function(data) {
+        console.log("send call", data);
+    });
+}
+
 /*begin socket 3006 */
 socketAuth = io.sails.connect(o.const.authBaseUrl);
 socketAuth.on('connect', function() {
@@ -109,23 +120,31 @@ function createSocketConnectTelehealth() {
                 else
                     ioSocket.telehealthMesageCancel = msg;
                 break;
-            case "misscall":
-                if (ioSocket.telehealthMisscall)
-                    ioSocket.telehealthMisscall(msg);
-                else
-                    ioSocket.telehealthMesageMisscall = msg;
-                break;
             case "issue":
                 if (ioSocket.telehealthIssue)
                     ioSocket.telehealthIssue(msg);
                 else
                     ioSocket.telehealthMesageIssue = msg;
                 break;
+            case "waiting":
+                if (ioSocket.telehealthWaiting)
+                    ioSocket.telehealthWaiting(msg);
+                else
+                    ioSocket.telehealthMessageWaiting = msg;
+                break;
             case "addDoctor":
                 if (ioSocket.telehealthCall)
                     ioSocket.telehealthCall(msg);
                 break;
         };
+    });
+
+    socketTelehealth.on('misscall', function(msg) {
+        if (ioSocket.telehealthMisscall) {
+            ioSocket.telehealthMisscall(msg);
+        } else {
+            ioSocket.telehealthMesageMisscall = msg;
+        }
     });
 }
 /* begin socket 3009 */

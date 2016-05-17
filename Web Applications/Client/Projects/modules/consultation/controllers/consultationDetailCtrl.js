@@ -18,6 +18,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         }]
     };
 
+<<<<<<< 908524d65b76b88b40a40ed7c0af293db68cc23f
 <<<<<<< 085576012d286c8ceb2b9623595f15c6779ab610
     $scope.dataDirective = {};
 
@@ -35,7 +36,8 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     console.log("$scope.Params", $scope.Params.UID);
     $scope.getTelehealthDetail($scope.Params.UID);
 
-    $scope.isRolePatient = false;
+    $scope.HasRoleAdminOrPractitioner = false;
+    
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
             var checkedUser = false;
@@ -65,12 +67,11 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
 
     var userInfo = JSON.parse($cookies.get('userInfo'));
-    $scope.checkPatient = 'N';
+
     for (var i = 0; i < userInfo.roles.length; i++) {
         var role = userInfo.roles[i];
         if (role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN') {
-            $scope.checkPatient = 'Y';
-            $scope.isRolePatient = false;
+            $scope.HasRoleAdminOrPractitioner = true;
         }
     }
 

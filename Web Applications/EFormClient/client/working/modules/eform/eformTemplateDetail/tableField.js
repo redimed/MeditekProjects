@@ -121,7 +121,7 @@ module.exports = React.createClass({
                     var typeChild = self.refs[refChild].getType();
                 var type = 'table';
                 var name = self.getName();
-                results.push({refChild: refChild, value: value, type: 'somewhat', typeChild: typeChild, ref: self.props.refTemp, name: name});
+                results.push({refChild: refChild, value: value, type: 'table', typeChild: typeChild, ref: self.props.refTemp, name: name});
             })
         }
         return results;

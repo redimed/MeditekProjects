@@ -235,7 +235,7 @@ module.exports = React.createClass({
             case 'editTable':
                 var name = self.refs[refTemp].getName();
                 var size = self.refs[refTemp].getSize();
-                self.refs.modalFieldDetail.show();
+                $(self.refs.modalFieldDetail).css({display: 'block'});
                 var dataFieldDetail = { name: name, size: size, code: code, type: 'table', ref: refTemp }
                 self.refs.fieldDetail.init(dataFieldDetail);
                 break;

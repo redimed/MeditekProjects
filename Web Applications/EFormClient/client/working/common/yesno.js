@@ -21,7 +21,7 @@ module.exports = React.createClass({
         });
     },
     getValue: function(){
-        return this.props.value;
+        return this.value;
     },
     getType: function(){
         return this.props.type;
@@ -38,13 +38,13 @@ module.exports = React.createClass({
                 <div className="col-xs-12">
                     <div className="icheck-inline">
                         <label>
-                            <input type="radio" className="icheck" name={this.props.ref} ref="yes"
+                            <input type="radio" className="icheck" name={this.props.refTemp} ref="yes"
                                 value="yes"/>
                             &nbsp;
                             Yes
                         </label>
                         <label>
-                            <input type="radio" className="icheck" name={this.props.ref} ref="no"
+                            <input type="radio" className="icheck" name={this.props.refTemp} ref="no"
                                 value="no"/>
                             &nbsp;
                             No

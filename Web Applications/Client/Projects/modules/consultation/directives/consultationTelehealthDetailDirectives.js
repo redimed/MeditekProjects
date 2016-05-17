@@ -549,7 +549,7 @@ app.directive('telehealthDetail', function(doctorService) {
                     console.log("saveWaAppointment",$scope.wainformation);
 					if(!_.isEqual($scope.ShowData.patient, $scope.wainformation.PatientAppointments[0])) {
                         $scope.wainformation.PatientAppointment = angular.copy($scope.ShowData.patient);
-                        $scope.wainformation.PatientAppointment.MedicareExpiryDate = moment($scope.wainformation.PatientAppointment.MedicareExpiryDate,'DD/MM/YYYY HH:mm:ss Z');
+                        $scope.wainformation.PatientAppointment.MedicareExpiryDate = moment('01/'+$scope.wainformation.PatientAppointment.MedicareExpiryDate+' 00:00:00','DD/MM/YYYY HH:mm:ss Z').format('YYYY-MM-DD hh:mm:ss Z');
                     }
 
                     if($scope.wainformation.PatientAppointments) {
@@ -670,8 +670,8 @@ app.directive('telehealthDetail', function(doctorService) {
                         } else {
                             $scope.wainformation.FromTime = null;
                         };
-                        if ($scope.info.MedicareExpiryDate != null && $scope.info.MedicareExpiryDate != '') {
-                            $scope.wainformation.PatientAppointments[0].MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
+                        if ($scope.ShowData.patient.MedicareExpiryDate != null && $scope.ShowData.patient.MedicareExpiryDate != '') {
+                            // $scope.wainformation.PatientAppointments[0].MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
                         } else {
                             if ($scope.wainformation.PatientAppointments.length == 0) {
                                 $scope.wainformation.PatientAppointments.push({});
@@ -1153,19 +1153,113 @@ app.directive('telehealthDetail', function(doctorService) {
             };
 
             $scope.getDetailPatient = function() {
+                var flag;
                 console.log("wainformation ohohoho ",$scope.wainformation);
-                if($scope.wainformation.PatientAppointments && $scope.wainformation.PatientAppointments.length > 0) {
-                    $scope.ShowData.patient.PatientKinFirstName = $scope.wainformation.PatientAppointments[0].PatientKinFirstName;
-                    $scope.ShowData.patient.PatientKinLastName = $scope.wainformation.PatientAppointments[0].PatientKinLastName;
-                    $scope.ShowData.patient.PatientKinRelationship = $scope.wainformation.PatientAppointments[0].PatientKinRelationship;
-                    $scope.ShowData.patient.PatientKinMobilePhoneNumber = $scope.wainformation.PatientAppointments[0].PatientKinMobilePhoneNumber;
-                    $scope.ShowData.patient.MedicareEligible = $scope.wainformation.PatientAppointments[0].MedicareEligible;
-                    $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientAppointments[0].MedicareNumber;
-                    $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber;
-                    $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate ? 
-                        moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('MM/YYYY') : null;
-                    $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
+                function setDataByPatientAppointment(callback) {
+                    if($scope.wainformation.PatientAppointments && $scope.wainformation.PatientAppointments.length > 0) {
+                        $scope.ShowData.patient.PatientKinFirstName = $scope.wainformation.PatientAppointments[0].PatientKinFirstName;
+                        $scope.ShowData.patient.PatientKinLastName = $scope.wainformation.PatientAppointments[0].PatientKinLastName;
+                        $scope.ShowData.patient.PatientKinRelationship = $scope.wainformation.PatientAppointments[0].PatientKinRelationship;
+                        $scope.ShowData.patient.PatientKinMobilePhoneNumber = $scope.wainformation.PatientAppointments[0].PatientKinMobilePhoneNumber;
+                        $scope.ShowData.patient.MedicareEligible = $scope.wainformation.PatientAppointments[0].MedicareEligible;
+                        $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientAppointments[0].MedicareNumber;
+                        $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber;
+                        $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate ? 
+                            moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate).format('MM/YYYY') : null;
+                        $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
+                        callback(null);
+                    }
+                    else {
+                        var err = new Error("PatientAppointments.notFound");
+                        callback(err);
+                    }
                 }
+
+                function getChildDetail(obj, model) {
+                    PatientService.detailChildPatient({ UID: $scope.wainformation.Patients[0].UID , model: [model], where:{Enable:'Y'} })
+                    .then(function(response) {
+                        if(response.data && response.data[model].length > 0) {
+                            obj[model] = response.data[model][0];
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+                }
+
+                function setDataByPatient(callback) {
+                    var model = ['PatientKin','PatientDVA','PatientMedicare'];
+                    var obj = {};
+                    if($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                        for(var i = 0; i < model.length; i++) {
+                            getChildDetail($scope.wainformation, model[i]);
+                        }
+                        console.log("sau khi chon xong.", $scope.wainformation);
+                        if($scope.wainformation.PatientKins) {
+                            $scope.ShowData.patient.PatientKinFirstName = $scope.wainformation.PatientKins.FirstName;
+                            $scope.ShowData.patient.PatientKinLastName = $scope.wainformation.PatientKins.LastName;
+                            $scope.ShowData.patient.PatientKinRelationship = $scope.wainformation.PatientKins.Relationship;
+                            $scope.ShowData.patient.PatientKinMobilePhoneNumber = $scope.wainformation.PatientKins.MobilePhoneNumber;
+                        }
+                        if($scope.wainformation.PatientMedicares) {
+                            $scope.ShowData.patient.MedicareEligible = $scope.wainformation.PatientMedicares.MedicareEligible;
+                            $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientMedicares.MedicareNumber;
+                            $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientMedicares.MedicareReferenceNumber;
+                            $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientMedicares.MedicareExpiryDate ? 
+                                moment($scope.wainformation.PatientMedicares.MedicareExpiryDate).format('MM/YYYY') : null;
+                        }
+                        if($scope.wainformation.PatientDVAs){
+                            $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientDVAs.DVANumber;
+                        }
+                        callback(null);
+                    }
+                    else {
+                        var err = new Error("Patients.notFound");
+                        callback(err);
+                    }
+                }
+                if($scope.wainformation.Patients.length > 0 && $scope.wainformation.PatientAppointments.length > 0) {
+                    flag = 0;
+                }
+                else if ($scope.wainformation.Patients.length > 0) {
+                    flag = 1;
+                }
+                else if ($scope.wainformation.PatientAppointments.length > 0) {
+                    flag = 2;
+                }
+                switch(flag) {
+                    case 0:
+                        //truong hop co ca Patient va Patient Appointment => da dc link va khong cho sua
+                        console.log("truong hop 0");
+                        setDataByPatientAppointment(function(err) {
+                            if(err == null) {
+                                $('#tab_3-3 :input').attr("disabled",true);
+                                $('#tab_kinGuardian :input').attr("disabled",true);
+                            }
+                            else {
+                                console.log(err);
+                            }
+                        });
+                        break;
+                    case 1:
+                    //truong hop co Patient => da duoc link va khong cho sua
+                        console.log("truong hop 1");
+                        setDataByPatient(function(err) {
+                            if(err == null) {
+                                $('#tab_3-3 :input').attr("disabled",true);
+                                $('#tab_kinGuardian').attr("disabled",true);
+                            }
+                        });
+                        break;
+                    case 2:
+                    //truong hop co Patient Appointment => chua duoc link van cho phep sua
+                        console.log("truong hop 2");
+                        setDataByPatientAppointment(function(err){});
+                        break;
+                    default:
+                        console.log("error");
+                        break;
+                }
+                
             };
 
         }

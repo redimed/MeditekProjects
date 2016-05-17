@@ -113,14 +113,15 @@ module.exports = React.createClass({
                 else
                     var value = self.refs[refChild].getValueTable();
                 if(col.type === 'radio_yes_no'){
-                    refChild = refRadioChild;
                     var typeChild = self.refs[refRadioChild].getType();
+                    if(typeString !== 'print')
+                        refChild = refRadioChild;
                 }
                 else
                     var typeChild = self.refs[refChild].getType();
                 var type = 'table';
                 var name = self.getName();
-                results.push({refChild: refChild, value: value, type: type, typeChild: typeChild, ref: self.props.refTemp, name: name});
+                results.push({refChild: refChild, value: value, type: 'somewhat', typeChild: typeChild, ref: self.props.refTemp, name: name});
             })
         }
         return results;

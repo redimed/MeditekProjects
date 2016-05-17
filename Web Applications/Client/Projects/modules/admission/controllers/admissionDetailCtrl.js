@@ -77,7 +77,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                         if (response.data.PatientKin.length > 0) {
                             $scope.admissionDetail.KinFirstName = $scope.admissionDetail.KinFirstName ? $scope.admissionDetail.KinFirstName : response.data.PatientKin[0].FirstName ? response.data.PatientKin[0].FirstName : '';
                             $scope.admissionDetail.KinLastName = $scope.admissionDetail.KinLastName ? $scope.admissionDetail.KinLastName : response.data.PatientKin[0].LastName ? response.data.PatientKin[0].LastName : '';
-                            $scope.admissionDetail.KinFullName = Trim($scope.admissionDetail.KinFirstName + " " + $scope.admissionDetail.KinLastName);
+                            $scope.admissionDetail.KinFullName = $scope.admissionDetail.KinFullName ? $scope.admissionDetail.KinFullName : Trim((response.data.PatientKin[0].FirstName ? response.data.PatientKin[0].FirstName : '') + " " + (response.data.PatientKin[0].LastName ? response.data.PatientKin[0].LastName : ''));
                             $scope.admissionDetail.Relationship = $scope.admissionDetail.Relationship ? $scope.admissionDetail.Relationship : response.data.PatientKin[0].Relationship ? response.data.PatientKin[0].Relationship : '';
                             $scope.admissionDetail.MobilePhoneNumber = $scope.admissionDetail.MobilePhoneNumber ? $scope.admissionDetail.MobilePhoneNumber : response.data.PatientKin[0].MobilePhoneNumber ? response.data.PatientKin[0].MobilePhoneNumber : '';
                             console.log("PatientKin ", response.data.PatientKin[0]);

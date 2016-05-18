@@ -19,7 +19,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             listShow:'=onListshow',
             onCancel: '=',
             disable :'=onDisabled',
-            activeUser: '=onActive'            
+            activeUser: '=onActive'
         },
         controller:function($scope, FileUploader) {
         	$scope.disable == true?true:false;
@@ -28,9 +28,9 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				reader.onload = function(event){
 					var img = new Image();
 					img.onload = function(){
-					    canvasimg.style.width = "100%";
-				        canvasimg.style.height = "100%";
-					    ctximg.drawImage(img,0,0,width,height);
+					    canvasimg.width = width;
+				        canvasimg.height = height;
+					    ctximg.drawImage(img,0,0, width, height);
 					};
 					img.src = event.target.result;
 				}
@@ -547,7 +547,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 									//viet lai phan disable file
 									var postData = {};
 									postData.UserAccountID = scope.info.UserAccountID;
-									postData.Enable="N";									
+									postData.Enable="N";
 									postData.FileType = [];
 								   	for(var i = 0; i < scope.uploader.queue.length; i++) {
 								   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
@@ -619,11 +619,11 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 	                        blank.width = canvas.width;
 	                        blank.height = canvas.height;
 	                        if(canvas.toDataURL() == blank.toDataURL()) {
-	                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+	                            scope.buildImg(imageAvatar, canvas, ctx, e, 300, 300);
 	                        }
 	                        else {
 	                            ctx.clearRect(0, 0, 350, 350);
-	                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+	                            scope.buildImg(imageAvatar, canvas, ctx, e, 300, 300);
 	                        }
 							// scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
 					    }, false);
@@ -693,7 +693,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 										console.log(data);
 										data[model] = $scope.insertData[model];
 										data[model].PatientID = scope.info.ID;
-										data[model].Enable    = 'Y';										
+										data[model].Enable    = 'Y';
 										// data[model].PatientID = scope.info.ID;
 										// data[model].Enable = 'Y';
 										if(data[model].ExpiryDate) {
@@ -763,7 +763,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				else{
 					var postData = {
 						ID     : data,
-						Enable :'N'						
+						Enable :'N'
 					};
 					PatientService.changeStatusChild({model:model,data:postData})
 					.then(function(response){

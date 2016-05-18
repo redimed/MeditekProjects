@@ -39,8 +39,7 @@
                                         <div ng-form name="checkInForm" novalidate>
                                             <div class="form-group">
                                                 <div id="viewIMG">
-                                                    <canvas id="imageAvatarCanvas" ng-show="isChoseAvatar==true" 
-                                                        style="min-width:200px !important; max-width:350px !important"></canvas>
+                                                    <canvas id="imageAvatarCanvas" ng-show="isChoseAvatar==true"></canvas>
                                                     <img dimage dimage-uid="info.ProfileImage" dimage-size="'350'" ng-show="info.ProfileImage!=null && info.ProfileImage!=undefined && isChoseAvatar==false" width="100%">
                                                     <img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.ProfileImage==null || info.ProfileImage==undefined) && isChoseAvatar==false" width="100%">
                                                 </div>

@@ -1,5 +1,6 @@
 var CommonModal = require('common/modal');
 var CommonInputText = require('common/inputText');
+var CommonButtonReloadDoctor = require('common/buttonReloadDoctor');
 var CommonInputDate = require('common/inputDate');
 var CommonTextArea = require('common/textarea');
 var CommonCheckbox = require('common/checkbox');
@@ -34,7 +35,8 @@ module.exports = React.createClass({
         onCreateTableRow: React.PropTypes.func,
         onRemoveTableRow: React.PropTypes.func,
         onUpdateTableColumn: React.PropTypes.func,
-        onOrderRow: React.PropTypes.func
+        onOrderRow: React.PropTypes.func,
+        handleReloadDoctor: React.PropTypes.func
     },
     componentDidMount: function(){
         const self = this;
@@ -192,7 +194,22 @@ module.exports = React.createClass({
             if(Config.getPrefixField(type, 'signature') > -1){
                 dataFieldDetail.height = this.refs[ref].getHeight();
             }
+        } else if (Config.getPrefixField(type, 'button') > -1) {
+            var name = (typeof(this.refs[ref].getName)!=='undefined')?this.refs[ref].getName():'';
+            var preCal = (typeof(this.refs[ref].getPreCal)!=='undefined')?this.refs[ref].getPreCal():'';
+            var cal = (typeof(this.refs[ref].getCal)!=='undefined')?this.refs[ref].getCal():'';
+            dataFieldDetail = {
+                size: size,
+                code: code,
+                type: type,
+                ref: ref,
+                name: name,
+                preCal: preCal,
+                cal: cal,
+                roles: roles
+            }
         }
+
         switch (id) {
             case 'editField':
                 $(this.refs.modalFieldDetail).css({display: 'block'});
@@ -486,7 +503,23 @@ module.exports = React.createClass({
                                                                 preCal={field.get('preCal')}
                                                                 cal={field.get('cal')}
                                                                 onRightClickItem={this._onRightClickItem}/>
-                                                    else if(type === 'eform_input_date'){
+                                                    else if(type === 'eform_button_reload_doctor') {
+                                                            return <CommonButtonReloadDoctor key={index} type={type}
+                                                                groupId={groupId}
+                                                                name={field.get('name')}
+                                                                size={field.get('size')}
+                                                                permission={this.props.permission}
+                                                                context={displayContextMenu}
+                                                                ref={field.get('ref')}
+                                                                refTemp={field.get('ref')}
+                                                                code={index}
+                                                                roles={field.get('roles')}
+                                                                preCal={field.get('preCal')}
+                                                                cal={field.get('cal')}
+                                                                onRightClickItem={this._onRightClickItem}
+                                                                handleReloadDoctor = {this.props.handleReloadDoctor}
+                                                            />
+                                                    } else if(type === 'eform_input_date'){
                                                             return <CommonInputDate key={index} type={type}
                                                                 groupId={groupId}
                                                                 name={field.get('name')}
@@ -675,6 +708,20 @@ module.exports = React.createClass({
                                             code={index}
                                             onRightClickItem={this._onRightClickItem}
                                             preCal={field.get('preCal')}/>
+                                else if (type === 'eform_button_reload_doctor')
+                                        return <CommonButtonReloadDoctor key={index} type={type}
+                                            groupId={groupId}
+                                            name={field.get('name')}
+                                            size={field.get('size')}
+                                            permission={this.props.permission}
+                                            context={displayContextMenu}
+                                            ref={field.get('ref')}
+                                            refTemp={field.get('ref')}
+                                            code={index}
+                                            onRightClickItem={this._onRightClickItem}
+                                            preCal={field.get('preCal')}
+                                            handleReloadDoctor = {this.props.handleReloadDoctor}
+                                        />
                                 else if(type === 'eform_input_date')
                                         return <CommonInputDate key={index} type={type}
                                             groupId={groupId}

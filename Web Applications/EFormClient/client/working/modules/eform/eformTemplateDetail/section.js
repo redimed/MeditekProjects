@@ -32,7 +32,8 @@ module.exports = React.createClass({
         onChangePage: React.PropTypes.func,
         onChangeRef: React.PropTypes.func,
         onOrderSection: React.PropTypes.func,
-        onOrderRow: React.PropTypes.func
+        onOrderRow: React.PropTypes.func,
+        handleReloadDoctor: React.PropTypes.func
     },
     getCode: function(){
         return this.props.code;
@@ -324,7 +325,9 @@ module.exports = React.createClass({
                                                             onEditTableDynamicRow={this.props.onEditTableDynamicRow}
                                                             onRemoveTableDynamicRow={this.props.onRemoveTableDynamicRow}
                                                             onChangeRefRow={this.props.onChangeRefRow}
-                                                            onOrderRow={this.props.onOrderRow}/>
+                                                            onOrderRow={this.props.onOrderRow}
+                                                            handleReloadDoctor = {this.props.handleReloadDoctor}
+                                            />
                                         }, this)
                                     }
                                 </div>

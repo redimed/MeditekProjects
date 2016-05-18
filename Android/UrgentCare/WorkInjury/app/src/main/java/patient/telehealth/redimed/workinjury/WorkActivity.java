@@ -11,7 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,7 +23,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -51,7 +52,6 @@ import patient.telehealth.redimed.workinjury.model.AppointmentModel;
 import patient.telehealth.redimed.workinjury.model.PatientAppointmentModel;
 import patient.telehealth.redimed.workinjury.model.SiteModel;
 import patient.telehealth.redimed.workinjury.model.StaffModel;
-import patient.telehealth.redimed.workinjury.model.UrgentRequestModel;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.utils.TypefaceUtil;
 import retrofit.Callback;
@@ -63,7 +63,6 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG = "WORK";
     private DatePickerDialog birthdayPickerDialog;
     private SimpleDateFormat dateFormat;
-    private UrgentRequestModel objectUrgentRequest;
     private Gson gson;
     private String[] suburb;
     private List<EditText> arrEditText;
@@ -85,10 +84,8 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.txtDescription) EditText txtDescription;
     @Bind(R.id.autoCompleteSuburb) AutoCompleteTextView autoCompleteSuburb;
     @Bind(R.id.btnWorkInjury) Button btnWorkInjury;
-    @Bind(R.id.btnBack) LinearLayout btnBack;
     @Bind(R.id.btnSelectStaff) Button btnSelectStaff;
     @Bind(R.id.btnSelectSite) Button btnSelectSite;
-    @Bind(R.id.txtTitle) TextView txtTitle;
     @Bind(R.id.lblFNRequire) TextView lblFNRequire;
     @Bind(R.id.lblLNRequire) TextView lblLNRequire;
     @Bind(R.id.lblPhoneRequire) TextView lblPhoneRequire;
@@ -110,6 +107,14 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_work);
         TypefaceUtil.applyFont(this, findViewById(R.id.workActivity), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
         isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
         isTypeCompany = workinjury.getBoolean("isTypeCompany", false);
@@ -136,7 +141,6 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         });
         radioY.setChecked(true);
         btnWorkInjury.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
         btnSelectStaff.setOnClickListener(this);
         btnSelectSite.setOnClickListener(this);
         spinnerAppointmentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -174,16 +178,17 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
             switch (i.getStringExtra("URType")) {
                 case "rehab":
                     relativeLayoutTreatment.setVisibility(View.VISIBLE);
-                    txtTitle.setText(getResources().getText(R.string.green_btn));
+                    getSupportActionBar().setTitle(getResources().getText(R.string.green_btn));
                     urgentType = "rehab";
                     break;
                 case "specialist":
-                    txtTitle.setText(getResources().getText(R.string.blue_btn));
+                    getSupportActionBar().setTitle(getResources().getText(R.string.blue_btn));
+
                     urgentType = "specialist";
                     break;
                 case "gp":
                     relativeLayoutGPReferral.setVisibility(View.GONE);
-                    txtTitle.setText(getResources().getText(R.string.red_btn));
+                    getSupportActionBar().setTitle(getResources().getText(R.string.red_btn));
                     urgentType = "gp";
                     break;
             }
@@ -617,5 +622,17 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

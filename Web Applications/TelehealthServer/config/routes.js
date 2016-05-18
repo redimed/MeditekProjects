@@ -22,6 +22,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'CheckActivation'
     },
+    'POST /api/telehealth/updatePinNumber': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'UpdatePinNumber'
+    },
     //=====================================
 
     'GET /api/telehealth/user/:uid': {

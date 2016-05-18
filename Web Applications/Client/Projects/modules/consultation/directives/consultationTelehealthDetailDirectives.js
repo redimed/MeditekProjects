@@ -1173,7 +1173,7 @@ app.directive('telehealthDetail', function(doctorService) {
                         $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientAppointments[0].MedicareNumber;
                         $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber;
                         $scope.ShowData.patient.MedicareExpiryDate = $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=null && $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=''? 
-                            moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate).format('MM/YYYY') : null;
+                            moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('MM/YYYY') : null;
                         $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
                         callback(null);
                     }

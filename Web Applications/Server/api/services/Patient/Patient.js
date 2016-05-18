@@ -976,36 +976,78 @@ module.exports = {
                             throw err;
                         })
                         .then(function(user) {
-                            if (data.EnableUser != undefined && data.EnableUser != null && data.EnableUser != "") {
-                                return UserAccount.update({
-                                    Enable: data.EnableUser
-                                }, {
-                                    where: {
-                                        UID: data.UserAccountUID
-                                    },
-                                    transaction: t
-                                });
-                            } else {
-                                if (data.Email && data.Email != null && data.Email != '') {
-                                    var EmailPattern = new RegExp(check.regexPattern.email);
+                            if(data.Email || data.EnableUser || data.Activated){
+                                var UserWhereClause = {};
+                                var UserData = {};
+                                if(data.UserAccountUID) {
+                                    UserWhereClause.UID = data.UserAccountUID;
+                                }
+                                else if(data.UserAccountID) {
+                                    UserWhereClause.ID = data.UserAccountID;
+                                }
+                                if(data.Email) {
+                                    console.log("data.Email ", data.Email);
                                     if (!EmailPattern.test(data.Email)) {
                                         t.rollback();
                                         var err = new Error("UpdatePatient.Error");
                                         err.pushError("invalid.Email");
                                         throw err;
-                                    } else {
-                                        return UserAccount.update({
-                                            Email: data.Email
-                                        }, {
-                                            where: {
-                                                UID: data.UserAccountUID
-                                            },
-                                            transaction: t
-                                        });
                                     }
-                                } else
-                                    return user;
+                                    else {
+                                        UserData.Email = data.Email;
+                                    }
+                                }
+                                console.log("Activated ",data.Activated);
+                                if(data.EnableUser) UserData.Enable = data.EnableUser;
+                                if(data.Activated) UserData.Activated = data.Activated;
+                                return UserAccount.update(UserData,{
+                                    where: UserWhereClause,
+                                    transaction:t
+                                });
                             }
+                            else {
+                                return user;
+                            }
+                            // if (data.EnableUser != undefined && data.EnableUser != null && data.EnableUser != "") {
+                            //     var UserWhereClause = {};
+                            //     if(data.UserAccountUID) {
+                            //         UserWhereClause.UID = data.UserAccountUID;
+                            //     }
+                            //     else if(data.UserAccountID) {
+                            //         UserWhereClause.ID = data.UserAccountID;
+                            //     }
+                            //     return UserAccount.update({
+                            //         Enable: data.EnableUser
+                            //     }, {
+                            //         where: UserWhereClause,
+                            //         transaction: t
+                            //     });
+                            // } else {
+                            //     if (data.Email && data.Email != null && data.Email != '') {
+                            //         var EmailPattern = new RegExp(check.regexPattern.email);
+                            //         if (!EmailPattern.test(data.Email)) {
+                            //             t.rollback();
+                            //             var err = new Error("UpdatePatient.Error");
+                            //             err.pushError("invalid.Email");
+                            //             throw err;
+                            //         } else {
+                            //             var UserWhereClause = {};
+                            //             if(data.UserAccountUID) {
+                            //                 UserWhereClause.UID = data.UserAccountUID;
+                            //             }
+                            //             else if(data.UserAccountID) {
+                            //                 UserWhereClause.ID = data.UserAccountID;
+                            //             }
+                            //             return UserAccount.update({
+                            //                 Email: data.Email
+                            //             }, {
+                            //                 where: UserWhereClause,
+                            //                 transaction: t
+                            //             });
+                            //         }
+                            //     } else
+                            //         return user;
+                            // }
                         }, function(err) {
                             t.rollback();
                             throw err;
@@ -1485,7 +1527,7 @@ module.exports = {
 
                 include: [{
                     model: UserAccount,
-                    attributes: ['PhoneNumber', 'Email', 'ID', 'UID', 'Enable'],
+                    attributes: ['PhoneNumber', 'Email', 'ID', 'UID', 'Enable','Activated'],
                     required: true,
                     include: [{
                         model: RelUserRole,

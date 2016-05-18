@@ -521,6 +521,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			    	scope.updatedata.CountryID1    = scope.info.CountryID1;
 			    	scope.updatedata.UserAccountID = scope.info.UserAccountID;
 					scope.updatedata.UID           = scope.info.UID;
+					scope.updatedata.EnableUser    = scope.info.EnableUser;
 			    	console.log(scope.updatedata);
 			    	if(scope.info.PatientKin != null && scope.info.PatientKin != '') scope.updatedata.PatientKin = scope.info.PatientKin;
 			    	if(scope.info.PatientGP != null && scope.info.PatientGP != '') scope.updatedata.PatientGP = scope.info.PatientGP;

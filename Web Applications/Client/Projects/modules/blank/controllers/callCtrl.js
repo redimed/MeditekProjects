@@ -17,6 +17,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     console.log(token);
     console.log("$stateParams", $stateParams);
     o.loadingPage(true);
+    console.log("userInfo ", userInfo);
     //Connect to the session
     function sendCall() {
         socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
@@ -25,7 +26,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
             message: "call",
             sessionId: sessionId,
             teleCallUID: teleCallUID,
-            fromName: userInfo.UserName
+            fromName: userInfo.UserName,
+            callerInfo: userInfo
         }, function(data) {
             console.log("send call", data);
         });
@@ -53,8 +55,10 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     });
 
     $scope.$on("otStreamCreated", function(event, args) {
+        console.log("args.stream.hasVideo ", args.stream.hasVideo);
         $timeout(function() {
-            if (args.stream.hasVideo === false && args.stream.hasAudio === false) {
+            if (args.stream.hasVideo === false) {
+                CallCancel("issue");
                 swal({
                     title: "Devices issue",
                     text: "Please check system and call back later",
@@ -63,7 +67,6 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
                 }, function() {
-                    CallCancel("issue");
                     setTimeout(function() {
                         window.close();
                     }, 1000);
@@ -219,7 +222,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
             message: message
         };
         if (message === "issue") {
-            info.isissue = uidUser;
+            info.noissue = uidCall;
         };
         socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
             console.log("send call", data);

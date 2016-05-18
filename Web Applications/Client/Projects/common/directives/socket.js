@@ -32,14 +32,19 @@ messageTransfer = function(from, to, message) {
     });
 }
 
-messageTransfer = function(from, to, message, callerinfo) {
-    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-        from: from,
-        to: to,
-        message: message,
-        CallerInfo: callerinfo
-    }, function(data) {
-        console.log("send call", data);
+messageTransfer = function(caller, receiver, message, data, bool) {
+    var info = {
+        from: caller,
+        to: receiver,
+        message: message
+    };
+    if (bool === true) {
+        info.teleCallUID = data;
+    } else if (bool === false) {
+        info.callerInfo = data;
+    }
+    socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(msg) {
+        console.log("send call", msg);
     });
 }
 

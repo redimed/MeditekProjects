@@ -39,10 +39,10 @@ ot-layout {
     <div class="actions" ng-if="streams.length > 0">
         <div class="row">
             <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-                <img src="theme/assets/global/images/E-call_17.png" class="my-button">
+                <!-- <img src="theme/assets/global/images/E-call_17.png" class="my-button"> -->
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <img src="theme/assets/global/images/E-call_13.png" class="my-button" ng-click="toggleWhiteboard()">
+                <!-- <img src="theme/assets/global/images/E-call_13.png" class="my-button" ng-click="toggleWhiteboard()"> -->
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
                 <img src="theme/assets/global/images/E-call_06.png" class="my-button" ng-click="EnAudio()">
@@ -68,7 +68,7 @@ ot-layout {
                                 <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
                                 <div class="media-body">
                                     <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                    <div class="media-heading-sub font-green">Offline</div>
+                                    <!-- <div class="media-heading-sub font-green">Offline</div> -->
                                 </div>
                             </li>
                             <li class="media" ng-repeat="doctor in listDoctorExternal">
@@ -79,7 +79,7 @@ ot-layout {
                                 <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
                                 <div class="media-body">
                                     <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                    <div class="media-heading-sub font-green">Offline</div>
+                                    <!-- <div class="media-heading-sub font-green">Offline</div> -->
                                 </div>
                             </li>
                         </ul>

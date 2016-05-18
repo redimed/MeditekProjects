@@ -5,8 +5,8 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
     var reverse = true;
-    var uidCall = ($stateParams.uidCall) ? $stateParams.uidCall : null;
-    var uidUser = ($stateParams.uidUser) ? $stateParams.uidUser : null;
+    var uidCall = ($stateParams.receiverUID) ? $stateParams.receiverUID : null;
+    var uidUser = ($stateParams.callerUID) ? $stateParams.callerUID : null;
     $scope.userName = $stateParams.userName;
     var session = OT.initSession(apiKey, sessionId);
     console.log(apiKey);
@@ -14,9 +14,8 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     console.log(token);
     var userInfo = $cookies.getObject('userInfo');
     console.log("$stateParams", $stateParams);
-    console.log("uidCall " , uidCall);
     o.loadingPage(true);
-
+    console.log("userInfo ", userInfo);
     OTSession.init(apiKey, sessionId, token, function(err) {
         if (!err) {
             var mytimeout = $timeout($scope.onTimeout, 1000);
@@ -29,7 +28,8 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
 
     $scope.$on("otStreamCreated", function(event, args) {
         $timeout(function() {
-            if (args.stream.hasVideo === false && args.stream.hasAudio === false) {
+            if (args.stream.hasVideo === false) {
+                CallCancel("issue");
                 swal({
                     title: "Devices issue",
                     text: "Please check system and call back later",
@@ -38,7 +38,6 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
                 }, function() {
-                    CallCancel("issue");
                     setTimeout(function() {
                         window.close();
                     }, 1000);
@@ -139,11 +138,15 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     };
 
     function CallCancel(message) {
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        var info = {
             from: uidUser,
             to: uidCall,
             message: message
-        }, function(data) {
+        };
+        if (message === "issue") {
+            info.noissue = uidUser;
+        };
+        socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
             console.log("send call", data);
             window.close();
         });

@@ -29,7 +29,7 @@ app.config(function($stateProvider) {
         })
         .state('blank.receive', {
             data: { pageTitle: 'Receive Call' },
-            url: '/receive/:apiKey/:sessionId/:token/:userName',
+            url: '/receive/:apiKey/:sessionId/:token/:teleCallUID/:receiverName/:receiverUID/:callerUID',
             views: {
                 'blank': {
                     templateUrl: 'modules/blank/views/receive.html',

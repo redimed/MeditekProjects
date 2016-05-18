@@ -67,7 +67,7 @@ module.exports = {
                     RedisWrap.hget(redisKey, uid).then(function(data) {
                         if (data != null) {
                             sails.sockets.broadcast(uid, 'misscall', data);
-                            RedisWrap.hdel(redisKey, uid);
+                            // RedisWrap.hdel(redisKey, uid);
                         }
                     });
                 } else error = "User Is Not Exist";
@@ -90,6 +90,8 @@ module.exports = {
         var message = req.param('message');
         if (!message || !from || !to) return;
         var fromName = req.param('fromName');
+        var callerInfo = req.param('callerInfo');
+        var teleCallUID = req.param('teleCallUID');
         var sessionId = null;
         var appid = null;
         var tokenOptions = {
@@ -98,11 +100,15 @@ module.exports = {
         var data = {};
         data.from = from;
         data.message = message;
+        data.callerInfo = callerInfo;
         data.to = to;
         data.timeCall = new Date();
+        data.teleCallUID = teleCallUID;
         var token = null;
         var roomList = sails.sockets.rooms();
+        console.log("---------------- Room List ----------------", roomList);
         if (message.toLowerCase() == 'call') {
+            console.log("---------------- call1 ----------------");
             sessionId = req.param('sessionId');
             //appid = req.param("")
             if (!sessionId) return;
@@ -111,6 +117,7 @@ module.exports = {
             data.sessionId = sessionId;
             data.token = token;
             data.fromName = !fromName ? 'Unknown' : fromName;
+            console.log("---------------- call2 ----------------");
             var pushInfo = {
                 data: {
                     "data": {
@@ -126,6 +133,7 @@ module.exports = {
                 category: 'CALLING_MESSAGE'
             };
             TelehealthService.FindByUID(to).then(function(teleUser) {
+                console.log("---------------- call3 ----------------");
                 if (teleUser) {
                     TelehealthDevice.findAll({
                         where: {
@@ -159,8 +167,11 @@ module.exports = {
                                 pushGCMNotification(pushInfo, tokens, config.GCMWorkInjury);
                         }
                     })
+                    console.log("---------------- call4 ----------------");
                     if (_.contains(roomList, to)) {
+                        sails.sockets.join(req.socket, teleCallUID); // Join room chat in socket
                         sails.sockets.broadcast(to, 'receiveMessage', data);
+                        console.log("---------------- call5 ----------------");
                     }
                 }
             })
@@ -168,11 +179,14 @@ module.exports = {
         if (roomList.length > 0) {
             // When receiver choose answer message call
             if (message.toLowerCase() === 'answer') {
-                console.log();
+                // var teleCallUID = req.param('teleCallUID');
+                console.log("answer ", teleCallUID);
+                sails.sockets.join(req.socket, teleCallUID);
             };
             // When receiver choose cancel message call
             if (message.toLowerCase() === 'decline') {
                 sails.sockets.broadcast(from, 'receiveMessage', data);
+                sails.sockets.leaveAll(teleCallUID);
             };
             // When caller or receiver choose endcall in window waiting
             if (message.toLowerCase() === 'cancel') {
@@ -180,31 +194,36 @@ module.exports = {
             };
             // When device caller or receiver issue
             if (message.toLowerCase() === 'issue') {
-                var isissue = req.param('isissue');
-                sails.sockets.broadcast(isissue, 'receiveMessage', data);
+                var noissue = req.param('noissue');
+                sails.sockets.broadcast(noissue, 'receiveMessage', data);
+            };
+            // Delete MissCall in redis
+            if (message.toLowerCase() === 'delredis') {
+                console.log("to0000000000000000000000000000", to);
+                RedisWrap.hdel(redisKey, to);
             };
             // When receiver without
             if (message.toLowerCase() === 'waiting') {
                 sails.sockets.broadcast(from, 'receiveMessage', data);
-
-                var CallerInfo = req.param('CallerInfo');
-
-                RedisWrap.hget(redisKey, to).then(function(data) {
-                    if (data != null) {
-                        CallerInfo.TimeCall = new Date();
-                        data.push(CallerInfo);
-                        RedisWrap.hset(redisKey, to, data);
+                RedisWrap.hget(redisKey, to).then(function(info) {
+                    if (info != null) {
+                        callerInfo.TimeCall = new Date();
+                        info.push(callerInfo);
+                        RedisWrap.hset(redisKey, to, info);
+                        data.misscall = info;
+                        sails.sockets.broadcast(to, 'receiveMessage', data);
                     } else {
                         var MissCaller = [];
-                        CallerInfo.TimeCall = new Date();
-                        MissCaller.push(CallerInfo);
+                        callerInfo.TimeCall = new Date();
+                        MissCaller.push(callerInfo);
                         RedisWrap.hset(redisKey, to, MissCaller);
+                        data.misscall = MissCaller;
+                        sails.sockets.broadcast(to, 'receiveMessage', data);
                     }
                 });
-
-                console.log("waiting ", data);
             };
         };
+
     },
 
     // No working

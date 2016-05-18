@@ -95,6 +95,7 @@ public class RESTClient {
             paramRequestFacade.addHeader("appid", "com.redimed.telehealth.workinjury");
             paramRequestFacade.addHeader("Authorization", "Bearer " + workInjury.getString("token", ""));
             paramRequestFacade.addHeader("Cookie", workInjury.getString("cookie", ""));
+            paramRequestFacade.addHeader("useruid", workInjury.getString("useruid", ""));
         }
     }
 

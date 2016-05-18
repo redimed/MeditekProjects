@@ -986,5 +986,58 @@ module.exports = {
                 }
             })
         }
+    },
+    UpdatePinNumber: function(req, res) {
+        if (typeof req.body == 'undefined' || !HelperService.toJson(req.body)) {
+            var err = new Error("Telehealth.UpdatePinNumber.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body);
+        var oldPin = info.oldpin;
+        var newPin = info.newpin;
+        var headers = req.headers;
+        var userUid = headers.useruid;
+        if (newPin && (newPin.length == 6) && oldPin && userUid) {
+            return UserAccount.find({
+                where: {
+                    UID: userUid
+                }
+            }).then(function(user) {
+                if (user) {
+                    if (user.PinNumber == oldPin) {
+                        var body = {
+                            data: {
+                                PinNumber: newPin,
+                                UserAccountID: user.ID
+                            }
+                        };
+                        return TelehealthService.PostCoreServer("/api/patient/update-patient", "POST", body, headers).then(function(response) {
+                            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                            res.ok(response.getBody());
+                        }).catch(function(err) {
+                            res.json(err.getCode(), err.getBody());
+                        })
+                    } else {
+                        var err = new Error("Telehealth.UpdatePinNumber.Error");
+                        err.pushError("Wrong PinNumber");
+                        return res.serverError(ErrorWrap(err));
+                    }
+                } else {
+                    var err = new Error("Telehealth.UpdatePinNumber.Error");
+                    err.pushError("User Is Not Exist");
+                    return res.serverError(ErrorWrap(err));
+                }
+            });
+        } else {
+            var err = new Error("Telehealth.UpdatePinNumber.Error");
+            if (newPin.length != 6) {
+                err.pushError("Incorrect format PIN number");
+            }else{
+                err.pushError("Invalid Params");
+            }
+            res.serverError(ErrorWrap(err));
+        }
     }
 }

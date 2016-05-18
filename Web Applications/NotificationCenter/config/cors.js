@@ -49,7 +49,7 @@ module.exports.cors = {
 
   origin: 'http://localhost:3004, http://localhost:3006, '+
           'https://localhost:3004, https://localhost:3006 '+
-          'http://192.168.1.215:3004, http://192.168.1.215:3006 '+
+          'http://192.168.1.247:3004, http://192.168.1.247:3006 '+
           'http://192.168.1.216:3004, http://192.168.1.216:3006 '+
           'https://192.168.1.215:3004, https://192.168.1.215:3006',
 

@@ -566,11 +566,7 @@
                                                             <div class="col-md-4 col-sm-4">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Expiry date</label>
-                                                                    <input date-picker 
-                                                                        data-date-format="dd/mm/yyyy" 
-                                                                        ng-model="ShowData.patient.MedicareExpiryDate" 
-                                                                        set-date="ShowData.patient.MedicareExpiryDate"
-                                                                        />
+                                                                    <input type="text" class="form-control" id="medicareExpiry" data-date-format="mm/yyyy" data-start-view="year" data-min-view="year" placeholder="mm/yyyy" ng-model="ShowData.patient.MedicareExpiryDate">
                                                                     <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="ShowData.patient.MedicareExpiryDate"> -->
                                                                 </div>
                                                             </div>

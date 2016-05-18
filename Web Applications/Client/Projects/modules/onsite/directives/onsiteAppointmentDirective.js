@@ -580,7 +580,7 @@ app.directive('onsiteAppointment', function(){
                             console.log('saveWaAppointment', data);
                             toastr.success("Update appointment successfully !");
                             swal.close();
-                            $state.go("authentication.onsite.appointment", {}, {
+                            $state.go("authentication.consultation.detail.Onsite", {}, {
                                 reload: true
                             });
                         }, function(err) {
@@ -589,7 +589,7 @@ app.directive('onsiteAppointment', function(){
                             } else {
                                 swal.close();
                                 toastr.error('Update Appointment Failed');
-                                $state.go("authentication.onsite.appointment", {}, {
+                                $state.go("authentication.consultation.detail.Onsite", {}, {
                                     reload: true
                                 });
                             }
@@ -612,7 +612,7 @@ app.directive('onsiteAppointment', function(){
                             console.log('saveWaAppointment', data);
                             toastr.success("Update appointment successfully !");
                             swal.close();
-                            $state.go("authentication.onsite.appointment", {}, {
+                            $state.go("authentication.consultation.detail.Onsite", {}, {
                                 reload: true
                             });
                         }, function(err) {
@@ -621,7 +621,7 @@ app.directive('onsiteAppointment', function(){
                             } else {
                                 swal.close();
                                 toastr.error('Update Appointment Failed');
-                                $state.go("authentication.onsite.appointment", {}, {
+                                $state.go("authentication.consultation.detail.Onsite", {}, {
                                     reload: true
                                 });
                             }

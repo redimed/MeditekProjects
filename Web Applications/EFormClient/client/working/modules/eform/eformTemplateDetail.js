@@ -121,7 +121,20 @@ module.exports = React.createClass({
                     ))
                 }
             })
-        }else if(typeField === 'table'){
+        } else if (Config.getPrefixField(typeField, 'button') > -1) {
+            var object = { type: typeField, name: '', size: '1', ref: ref, preCal: ''};
+            switch (typeField) {
+                case 'eform_button_reload_doctor':
+                    break;
+            }
+            this.setState(function(prevState) {
+                return {
+                    sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields'], val => val.push(
+                        Immutable.Map(object)
+                    ))
+                }
+            })
+        } else if(typeField === 'table'){
             this.setState(function(prevState){
                 return {
                     sections: prevState.sections.updateIn([codeSection,'rows',codeRow,'fields'], val => val.push(
@@ -293,7 +306,23 @@ module.exports = React.createClass({
                         }
                 }
             })
-        }else if(dataField.type === 'table'){
+        } else if (Config.getPrefixField(dataField.type, 'button') > -1) {
+            this.setState(function(prevState) {
+                switch (dataField.type) {
+                    case 'eform_button_reload_doctor':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('cal', dataField.cal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+                            )
+                        }
+                }
+            })
+        } else if (dataField.type === 'table'){
             this.setState(function(prevState) {
                 return {
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
@@ -304,7 +333,7 @@ module.exports = React.createClass({
                     )
                 }
             })
-        }else if(dataField.type === 'line_chart'){
+        }else if (dataField.type === 'line_chart'){
             this.setState(function(prevState) {
                 return {
                     sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>

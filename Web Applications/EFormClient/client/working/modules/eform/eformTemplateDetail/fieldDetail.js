@@ -56,7 +56,13 @@ module.exports = React.createClass({
                     this.refs.formHeight.setValue(object.height);
                     break;
             }
-        }else if(this.type === 'table'){
+        } else if (Config.getPrefixField(this.type, 'button') > -1) {
+            if(typeof object.name !== 'undefined'){
+                this.refs.formName.setValue(object.name);
+            }
+            this.refs.formPrecal.setValue(object.preCal);
+            this.refs.formCal.setValue(object.cal);
+        } else if (this.type === 'table'){
             this.refs.formName.setValue(object.name);
         }
 
@@ -153,7 +159,18 @@ module.exports = React.createClass({
                     data.height = this.refs.formHeight.getValue();
                     break;
             }
-        }else if(this.type === 'table'){
+        } else if (Config.getPrefixField(this.type, 'button') > -1) {
+            data = {
+                name: this.refs.formName.getValue(),
+                code: this.code,
+                type: this.type,
+                size: size,
+                preCal: this.refs.formPrecal.getValue(),
+                cal: this.refs.formCal.getValue(),
+                roles: Permission,
+                ref: this.refs.formRef.getValue()
+            }
+        } else if(this.type === 'table'){
             data = {
                 name: this.refs.formName.getValue(),
                 code: this.code,
@@ -231,7 +248,10 @@ module.exports = React.createClass({
                     display_height = 'block';
                     break;
             }
-        }else if(this.type === 'table'){
+        } else if (Config.getPrefixField(this.type, 'button') > -1) {
+            display_name = 'block';
+            display_precal = 'none';
+        } else if (this.type === 'table'){
             display_name = 'block';
         }
 

@@ -28,6 +28,100 @@ module.exports = React.createClass({
 
         this._serverTemplateDetail();
     },
+
+    /**
+     * Dan xuat tu ham _serverPreFormDetail
+     */
+    _handleReloadDoctor:function (sectionIm) {
+        var section = sectionIm.toJS();
+        console.log('_handleReloadDoctor:section', section);
+        var self = this;
+        EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
+        .then(function(response){
+            if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null)
+                self.signatureDoctor = response.data.Doctor.FileUpload;
+            else
+                self.signatureDoctor = '';
+
+            for(var row_index = 0; row_index < section.rows.length; row_index++){
+                var row = section.rows[row_index];
+                for(var field_index = 0; field_index < row.fields.length; field_index++){
+                    var field = row.fields[field_index];
+
+                    var preCalArray = [];
+                    if(typeof field.preCal !== 'undefined'){
+                        preCalArray = field.preCal.split('|');
+                    }
+
+                    preCalArray.map(function(preCal){
+                        /* CONCAT PREFIX */
+                        if(Config.getPrefixField(preCal,'CONCAT') > -1){
+                            if(preCal !== ''){
+                                var preCalRes = Config.getArrayPrecal(7, preCal);
+                                var value = '';
+                                console.log('preCal', preCal); // CONCAT(Doctor.FirstName)
+                                console.log('preCalRes', preCalRes); //["Doctor.FirstName"]
+                                preCalRes.map(function(preCalResItem){
+                                    var preCalResItemArr = preCalResItem.split('.');
+                                    var responseTemp = null;
+                                    var preCalResItemTemp = '';
+                                    if(preCalResItemArr.length > 1){
+                                        responseTemp = response.data[preCalResItemArr[0]];
+                                        preCalResItemTemp = preCalResItemArr[1];
+                                    }else{
+                                        responseTemp = response.data;
+                                        preCalResItemTemp = preCalResItem;
+                                    }
+                                    console.log('preCalResItemArr',preCalResItemArr[0]);// "Doctor"
+                                    console.log('responseTemp', responseTemp);// Object Doctor
+                                    console.log('preCalResItemTemp', preCalResItemTemp); //Key FirstName
+                                    if(preCalResItemArr[0] === 'Doctor') {
+                                        for(var key in responseTemp){
+                                            if(key === preCalResItemTemp){
+                                                if(Config.getPrefixField(field.type,'checkbox') > -1){
+                                                    if(field.value === responseTemp[key]){
+                                                        value = 'yes';
+                                                    }
+                                                }
+                                                else if(Config.getPrefixField(field.type,'radio') > -1){
+                                                    if(field.value === responseTemp[key]){
+                                                        value = 'yes';
+                                                    }
+                                                }else{
+                                                    if(responseTemp[key] !== null)
+                                                        value += responseTemp[key]+' ';
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                        console.log("||||||||||||||||||||| "+ row.ref + '_' + field.ref + '_' + value);
+                                    }
+                                })
+                            }
+                        }
+                        /* END CONCAT PREFIX */
+                        /* DEFAULT PREFIX */
+                        // tan comment begin
+                        /*if(Config.getPrefixField(preCal,'DEFAULT') > -1){
+                            if(preCal !== ''){
+                                var preCalRes = Config.getArrayDefault(preCal);
+                                var value = preCalRes[0];
+
+                                if(value === 'TODAY'){
+                                    self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                }
+                            }
+                        }*/
+                        // tan comment end
+                        /* END DEFAULT PREFIX */
+                    })//end pre cal array
+                }
+            }
+        })
+
+    },
+
     _serverPreFormDetail: function(content){
         var self = this;
         EFormService.getUserRoles({UID: this.userUID})
@@ -403,7 +497,9 @@ module.exports = React.createClass({
                                         onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
                                         onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
                                         rows={section.get('rows')}
-                                        name={section.get('name')}/>
+                                        name={section.get('name')}
+                                         handleReloadDoctor = {this._handleReloadDoctor.bind(this, section)}
+                                    />
                                 else
                                     return null;
                             }, this)

@@ -19,7 +19,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             listShow:'=onListshow',
             onCancel: '=',
             disable :'=onDisabled',
-            activeUser: '=onActive'
+            activeUser: '=onActive'            
         },
         controller:function($scope, FileUploader) {
         	$scope.disable == true?true:false;
@@ -506,7 +506,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    scope.changeActivated = function(Activated){
 		    	scope.info.ActivatedUser = Activated;
 		    }
-
 		    scope.savechange = function(){
 		    	if(_.isEmpty(scope.style) == false) {
 		    		toastr.error('Please check information','Error');
@@ -548,7 +547,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 									//viet lai phan disable file
 									var postData = {};
 									postData.UserAccountID = scope.info.UserAccountID;
-									postData.Enable="N";
+									postData.Enable="N";									
 									postData.FileType = [];
 								   	for(var i = 0; i < scope.uploader.queue.length; i++) {
 								   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
@@ -694,7 +693,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 										console.log(data);
 										data[model] = $scope.insertData[model];
 										data[model].PatientID = scope.info.ID;
-										data[model].Enable    = 'Y';
+										data[model].Enable    = 'Y';										
 										// data[model].PatientID = scope.info.ID;
 										// data[model].Enable = 'Y';
 										if(data[model].ExpiryDate) {
@@ -764,7 +763,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				else{
 					var postData = {
 						ID     : data,
-						Enable :'N'
+						Enable :'N'						
 					};
 					PatientService.changeStatusChild({model:model,data:postData})
 					.then(function(response){

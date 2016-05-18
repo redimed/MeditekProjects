@@ -72,7 +72,7 @@ app.directive('datePicker', function($timeout) {
             // startDate: '=startDate',
             setDate: '=setDate',
         },
-        controller: function($scope){
+        controller: function($scope) {
             /*$('#inputDate').datepicker({
                 rtl: App.isRTL(),
                 orientation: "left",
@@ -161,7 +161,7 @@ app.directive('patientDetailDirective', function() {
         templateUrl: 'common/views/patientDetailDirective.html',
         controller: function($scope, WAAppointmentService) {
             $scope.info.setDataPatientDetail = function(data) {
-                console.log("patientDetailDirective",data);
+                console.log("patientDetailDirective", data);
                 $scope.apptdetail = data;
                 if ($scope.apptdetail != null) {
                     if ($scope.apptdetail.Patients.length > 0) {
@@ -179,18 +179,37 @@ app.directive('patientDetailDirective', function() {
         },
     };
 });
-app.directive('medicareDirective', function($timeout) {
+app.directive('medicareDirective', function() {
     return {
         scope: {
             info: "="
         },
         restrict: 'E',
         templateUrl: 'common/views/medicareDirective.html',
-        controller: function($scope, WAAppointmentService) {
+        controller: function($scope, WAAppointmentService, PatientService) {
             $scope.info.setDataMedicare = function(data) {
                 console.log("medicareDirective", data);
-                if (data && data.TelehealthAppointment != null) {
-                    $scope.patientTelehealth = data.TelehealthAppointment.PatientAppointment;
+                if (data != null) {
+                    if (data.Patients.length > 0) {
+                        PatientService.detailChildPatient({ UID: data.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA'] }).then(function(response) {
+                            console.log("PatientMedicare ", response.data)
+                            if (response.data) {
+                                if (response.data.PatientMedicare.length > 0) {
+                                    $scope.patientTelehealth = response.data.PatientMedicare[0];
+                                }
+                                if (response.data.PatientDVA.length > 0) {
+                                    $scope.patientTelehealth.DVANumber = response.data.PatientDVA[0].DVANumber;
+                                }
+                            }
+                        }, function(err) {
+                            console.log(err);
+                        })
+                    } else if (data.PatientAppointments.length > 0) {
+                        $scope.patientTelehealth = data.PatientAppointments[0];
+                        console.log("medicare Directive", $scope.patientTelehealth);
+                    } else if (data.TelehealthAppointment != null) {
+                        $scope.patientTelehealth = data.TelehealthAppointment.PatientAppointment;
+                    }
                 }
             }
         },
@@ -221,7 +240,7 @@ app.directive('appointmentDetailDirective', function() {
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
                 WAAppointmentService.GetDetailPatientByUid({
-                    UID: $scope.appointmentInfo.Patients[0].UID
+                    UID: $scope.apptdetail.Patients[0].UID
                 }).then(function(data) {
                     console.log(data);
                     if (data.data[0].TeleUID != null) {

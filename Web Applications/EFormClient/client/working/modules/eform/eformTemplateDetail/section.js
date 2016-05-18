@@ -323,6 +323,7 @@ module.exports = React.createClass({
                                                             onSaveTableDynamicRow={this.props.onSaveTableDynamicRow}
                                                             onEditTableDynamicRow={this.props.onEditTableDynamicRow}
                                                             onRemoveTableDynamicRow={this.props.onRemoveTableDynamicRow}
+                                                            onChangeRefRow={this.props.onChangeRefRow}
                                                             onOrderRow={this.props.onOrderRow}/>
                                         }, this)
                                     }

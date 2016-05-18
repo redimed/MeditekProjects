@@ -37,8 +37,16 @@ module.exports = React.createClass({
         onOrderRow: React.PropTypes.func
     },
     componentDidMount: function(){
-        if(this.props.permission === 'eformDev')
+        const self = this;
+        if(this.props.permission === 'eformDev'){
             this.refs.inputOrder.setValue(this.props.code);
+            $(this.refs.tempRef).on('keypress', function(event){
+                if(event.which == 13){
+                    self.props.onChangeRefRow(self.props.codeSection, self.props.code, event.target.value);
+                    return false;
+                }
+            })
+        }
     },
     getCode: function(){
         return this.props.code;
@@ -434,14 +442,11 @@ module.exports = React.createClass({
                                                     <i className="fa fa-angle-down"></i>
                                                 </a>
                                                 <ul className="dropdown-menu pull-right">
-                                                    {/*
                                                     <li>
-                                                        <a onClick={function(){this.refs.modalCreateFieldSection.show()}.bind(this)}>
-                                                            <i className="fa fa-plus"></i> Add Field
+                                                        <a>
+                                                            <input type="text" ref="tempRef" defaultValue={this.props.refTemp}/>
                                                         </a>
                                                     </li>
-                                                     */}
-
                                                     <li>
                                                         <a onClick={function(){this.refs.modalOrderRow.show()}.bind(this)}>
                                                             <i className="fa fa-plus"></i> Order Row

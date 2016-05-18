@@ -5,7 +5,7 @@
             <span class="caption-subject bold uppercase">Consult Note</span>
         </div>
         <div class="actions">
-             <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="PrintPDF()" ng-show="CheckUpdate == false">Print PDF</button>
+            <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="PrintPDF()" ng-show="CheckUpdate == false">Print PDF</button>
             <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="Reset()" ng-show="!checkRoleUpdate && CheckUpdate == false">
                 <i class="glyphicon glyphicon-plus"></i> Add New Consult Note</button>
         </div>
@@ -14,7 +14,6 @@
             <a href="javascript:;" class="fullscreen"> </a>
         </div> -->
     </div>
-   
     <div class="portlet-body form" id="ctrl">
         <form name="form" class="form-horizontal" novalidate ng-submit="submit()">
             <fieldset ng-disabled="checkRoleUpdate">
@@ -140,7 +139,6 @@
                                 <label class="control-label col-md-4 col-sm-4">Biopsied proven</label>
                                 <div class="col-md-8 col-sm-8">
                                     <div class="radio-list">
-                                        
                                         <label class="radio-inline">
                                             <input type="radio" class="regular-radio" name="Biopsied_proven" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Biopsiedproven'].Value"> No
                                         </label>
@@ -217,11 +215,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4 col-sm-4">
-                                    <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother'].Value"> OTHER
-                                </label>
-                                <div class="col-md-8 col-sm-8" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother'].Value=='Y'">
-                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.RelevantotherValue'].Value">
+                                <div class="col-md-8 col-sm-8 margin-left-30">
+                                    <label class="control-label col-md-4 col-sm-4">
+                                        <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother'].Value"> OTHER
+                                    </label>
+                                    <div class="col-md-8 col-sm-8" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother'].Value=='Y'">
+                                        <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.RelevantotherValue'].Value">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -312,13 +312,13 @@
                                             <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Merkel'].Value"> Merkel
                                         </label>
                                     </div>
-                                    <div class="col-md-2 col-sm-2" align="right">
-                                        <label class="checkbox-inline bold">
+                                    <div class="col-md-2 col-sm-2">
+                                        <label class="checkbox-inline bold margin-bottom-10">
                                             <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Ddxother'].Value"> Other
                                         </label>
                                     </div>
                                     <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Ddxother'].Value == 'Y'">
-                                        <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.DdxotherValue'].Value">
+                                        <input type="text" class="form-control " placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.DdxotherValue'].Value">
                                     </div>
                                 </div>
                             </div>
@@ -625,31 +625,19 @@
                     <hr/>
                     <h5 class="bold">Suitable :</h5>
                     <div class="form-group">
-                        <div class="checkbox-list">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3" align="right">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Specialist'].Value"> Refer to specialist :
-                                    </label>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.SpecialistValue'].Value">
-                                </div>
-                            </div>
+                        <label class="control-label col-md-3 col-sm-3 margin-left-30">
+                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Specialist'].Value"> Refer to specialist :
+                        </label>
+                        <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.SpecialistValue'].Value">
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="checkbox-list">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3" align="right">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Telehealth'].Value"> Suitable to telehealth :
-                                    </label>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue'].Value">
-                                </div>
-                            </div>
+                        <label class="control-label col-md-3 col-sm-3 margin-left-30">
+                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Telehealth'].Value"> Suitable to telehealth :
+                        </label>
+                        <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue'].Value">
                         </div>
                     </div>
                     <!--  <div class="form-group">5

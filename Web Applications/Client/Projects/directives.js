@@ -240,7 +240,7 @@ app.directive('appointmentDetailDirective', function() {
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
                 WAAppointmentService.GetDetailPatientByUid({
-                    UID: $scope.appointmentInfo.Patients[0].UID
+                    UID: $scope.apptdetail.Patients[0].UID
                 }).then(function(data) {
                     console.log(data);
                     if (data.data[0].TeleUID != null) {

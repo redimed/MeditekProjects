@@ -36,7 +36,7 @@
                 <tr>
                     <td>Expiry Date</td>
                     <td>
-                        <span ng-if="patientTelehealth.ExpiryDate && patientTelehealth.ExpiryDate != null">{{patientTelehealth.ExpiryDate}}</span>
+                        <span ng-if="patientTelehealth.ExpiryDate && patientTelehealth.ExpiryDate != null">{{patientTelehealth.ExpiryDate | date:'dd/MM/yyyy'}}</span>
                         <span ng-if="!patientTelehealth.ExpiryDate || patientTelehealth.ExpiryDate == null">N/A</span>
                     </td>
                 </tr>

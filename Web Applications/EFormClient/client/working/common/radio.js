@@ -82,7 +82,25 @@ module.exports = React.createClass({
             $('#'+countRef).val(count);
         })
     },
-    getValue: function(){
+    onBelongsGroup: function(group){
+        var self = this;
+        $('input[name='+group+']').on('ifClicked', function(event){
+            var value = event.target.value;
+            if(isNaN(value))
+                value = 0;
+            var radios = $('input[name='+self.props.name+']');
+            radios.filter(function(){
+                var id = $(this).attr('id');
+                var id_value = $('#'+id).val();
+                if(parseInt(value) === parseInt(id_value)){
+                    $('#'+id).iCheck('check');
+                }else{
+                    $('#'+id).iCheck('uncheck');
+                }
+            })
+        })
+    },
+    getValue: function(){        
         return this.props.value;
     },
     getName: function(){
@@ -132,7 +150,7 @@ module.exports = React.createClass({
                                 <div className="icheck-inline">
                                     <label>
                                         <input type="radio" className="icheck" name={this.props.name} ref="input" title={this.props.name}
-                                            value={this.props.value}/>
+                                            value={this.props.value} id={this.props.refTemp}/>
                                         &nbsp;
                                         {this.props.label}
                                     </label>

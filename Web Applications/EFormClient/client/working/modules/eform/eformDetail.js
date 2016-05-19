@@ -181,6 +181,32 @@ module.exports = React.createClass({
                             if(typeof field.cal !== 'undefined')
                                 calArray = field.cal.split('|');
                             calArray.map(function(cal){
+                                /*SUMGROUP PREFIX */
+                                if(Config.getPrefixField(cal, 'SGROUP') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(7, cal);
+                                        calRes.map(function(minorRef){
+                                            $('input[name='+minorRef+']').on('ifClicked', function(event){
+                                                var total_value = 0;
+                                                var name = $(this).attr('name');
+                                                var first_value = event.target.value;
+                                                if(isNaN(first_value))
+                                                    first_value = 0;
+                                                total_value = first_value;
+                                                calRes.map(function(calName){
+                                                    if(name !== calName){
+                                                        var value = $('input[name='+calName+']:checked').val();
+                                                        if(isNaN(value))
+                                                            value = 0;
+                                                        total_value = parseInt(total_value)+parseInt(value);
+                                                    }
+                                                })
+                                                $('#'+field.ref).val(total_value);
+                                            })//end event
+                                        })
+                                    }
+                                }
+                                /*END SUMGROUP PREFIX */
                                 /* SUM PREFIX */
                                 if(Config.getPrefixField(cal, 'SUM') > -1){
                                     if(cal !== ''){

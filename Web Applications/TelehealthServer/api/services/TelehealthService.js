@@ -250,7 +250,6 @@ module.exports = {
         note['content-available'] = 1;
         apnConnection.pushNotification(note, regTokens);
     },
-    // No Working
     UpdateStatusTelehealthUser: function(TeleUID, status) {
         var $q = require('q');
         var defer = $q.defer();

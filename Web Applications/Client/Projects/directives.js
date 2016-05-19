@@ -232,17 +232,12 @@ app.directive('appointmentDetailDirective', function() {
                 };
             }
 
-            var userInfo = $cookies.getObject('userInfo');
-            ioSocket.getRoomOpentok.then(function(data) {
-                $scope.Opentok = data.data;
-                console.log("$scope.Opentok", $scope.Opentok);
-            })
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
                 WAAppointmentService.GetDetailPatientByUid({
                     UID: $scope.apptdetail.Patients[0].UID
                 }).then(function(data) {
-                    console.log(data);
+                    console.log("Info Call", data);
                     if (data.data[0].TeleUID != null) {
                         var userCall = data.data[0].TeleUID;
                         var userName = data.data[0].FirstName + " " + data.data[0].LastName;

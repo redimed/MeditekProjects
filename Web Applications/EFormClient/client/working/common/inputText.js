@@ -80,6 +80,8 @@ module.exports = React.createClass({
         var self = this;
         $('input[name='+group+']').on('ifClicked', function(event){
             var value = event.target.value;
+            if(isNaN(value))
+                value = 0;
             $(self.refs.input).val(parseInt(value)).change();
         })
     },

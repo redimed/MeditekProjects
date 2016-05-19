@@ -1560,8 +1560,10 @@ module.exports = {
                 throw err;
             })
             .then(function(success) {
-                if (success != null && success != "" && success.length != 0)
+                if (success != null && success != "" && success.length != 0){
                     returnData[0].dataValues.TeleUID = success ? success[0].UID : null;
+                    returnData[0].dataValues.TeleID = success ? success[0].ID : null;
+                }
                 return returnData;
             }, function(err) {
                 throw err;

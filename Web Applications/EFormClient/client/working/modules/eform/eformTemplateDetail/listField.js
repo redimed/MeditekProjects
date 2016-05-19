@@ -1,7 +1,8 @@
 module.exports = React.createClass({
     countObj: {},
     propTypes: {
-        onSelectItem: React.PropTypes.func
+        onSelectItem: React.PropTypes.func,
+        onCloseModal: React.PropTypes.func
     },
     getInitialState: function(){
         return {
@@ -54,6 +55,13 @@ module.exports = React.createClass({
                             }, this)
                         }
                     </ul>
+                    <div className="form-body">
+                        <div className="form-group" style={{float:'right'}}>
+                            <button type="button" className="btn btn-default" onClick={this.props.onCloseModal}>Close</button>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         )   

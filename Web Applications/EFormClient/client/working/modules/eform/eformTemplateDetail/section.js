@@ -103,7 +103,7 @@ module.exports = React.createClass({
     },
     _onSaveUpdateViewType: function(){
         var viewType = this.refs.formUpdateViewType.getViewType();
-        this.refs.modalUpdateViewType.hide();
+        $(this.refs.modalUpdateViewType).css({display: 'none'})
         this.props.onUpdateViewType(this.props.code, viewType);
     },
     _onOrderSection: function(){
@@ -118,7 +118,8 @@ module.exports = React.createClass({
         this.props.onSelectField(codeSection, codeRow, this.props.refTemp, refRow, type);
     },
     _onUpdateViewType: function(){
-        this.refs.modalUpdateViewType.show();
+        $(this.refs.modalUpdateViewType).css({display: 'block'});
+
     },
     setValue: function(refRow, fieldRef, value){
         if(typeof this.refs[refRow] !== 'undefined')
@@ -198,7 +199,8 @@ module.exports = React.createClass({
                             <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateSection}>Save</button>
                         </div>
                     </CommonModal>
-                    <CommonModal ref="modalUpdateViewType">
+
+                    <div ref="modalUpdateViewType" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
                         <div className="header">
                             <h4>Update View Type</h4>
                         </div>
@@ -206,10 +208,11 @@ module.exports = React.createClass({
                             <ComponentFormUpdateViewType ref="formUpdateViewType" viewType={this.props.viewType}/>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={function(){this.refs.modalUpdateViewType.hide()}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" onClick={function(){$(this.refs.modalUpdateViewType).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateViewType}>Save</button>
                         </div>
-                    </CommonModal>
+                    </div>
+
                     <CommonModal ref="modalOrderSection">
                         <div className="header">
                             <h4>Order Section</h4>

@@ -98,6 +98,9 @@ module.exports = React.createClass({
         // this.refs.modalCreateFieldSection.hide();
         this.props.onSelectField(this.props.codeSection, this.props.code, this.props.refTemp, item.get('code'));
     },
+    _onComponentListFieldClose: function(){
+        $(this.refs.modalCreateFieldSection).css({display: 'none'});
+    },
     _onRightClickChartItem: function(code, e, ref){
         var id = $(e.target).attr('id')
         if (typeof id === 'undefined')
@@ -359,7 +362,7 @@ module.exports = React.createClass({
         this.props.onRemoveTableDynamicRow(this.props.codeSection, this.props.code, codeField, position);
     },
     _onOpenModalAddField: function(){
-        this.refs.modalCreateFieldSection.show();
+        $(this.refs.modalCreateFieldSection).css({display: 'block'});
         this.refs.listField.init(this.props.fields);
     },
     preCalSum: function(fieldRef, sumRef){
@@ -399,14 +402,16 @@ module.exports = React.createClass({
                             <li><a id="deleteTable"><i className="icon-trash"/> Delete Table</a></li>
                         </ul>
                     </div>
-                    <CommonModal ref="modalCreateFieldSection">
+                    <div ref="modalCreateFieldSection" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', bottom: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
                         <div className="header">
                             <h4>List Field</h4>
                         </div>
                         <div className="content">
-                            <ComponentListField ref="listField" onSelectItem={this._onComponentListFieldSelect}/>
+                            <ComponentListField ref="listField" onSelectItem={this._onComponentListFieldSelect}
+                                onCloseModal={this._onComponentListFieldClose}/>
                         </div>
-                    </CommonModal>
+                    </div>
+
                     <div ref="modalFieldDetail" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', bottom: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
                         <div className="header">
                             <h4>Modal Field Detail</h4>

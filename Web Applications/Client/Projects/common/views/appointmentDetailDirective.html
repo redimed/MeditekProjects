@@ -1,55 +1,51 @@
-<div class="portlet portlet-fit box blue-soft">
+<div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption">
-            <span class="caption-subject uppercase bold">
-                <i class="glyphicon glyphicon-calendar"></i> Appointment</span>
+            <span class="caption-subject uppercase bold font-blue">
+                <i class="fa fa-calendar-check-o font-blue margin-right-10"></i> Appointment</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse"> </a>
         </div>
     </div>
     <div class="portlet-body">
-        <div class="table-scrollable">
-            <table class="table table-hover">
-                <tr>
-                    <td>Date</td>
-                    <td>
-                        <span ng-if="apptDate && apptDate != null">{{apptDate}}</span>
-                        <span ng-if="!apptDate || apptDate == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Time</td>
-                    <td>
-                        <span ng-if="apptTime && apptTime != null">{{apptTime}}</span>
-                        <span ng-if="!apptTime || apptTime == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Status</td>
-                    <td>
-                        <span ng-if="apptdetail.Status && apptdetail.Status != null">{{apptdetail.Status}}</span>
-                        <span ng-if="!apptdetail.Status || apptdetail.Status == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Insurer</td>
-                    <td>N/A</td>
-                </tr>
-                <tr>
-                    <td>Treating Practitioner</td>
-                    <td>
-                        <span ng-if="apptdetail.Doctors[0].FirstName != null || apptdetail.Doctors[0].LastName != null">{{apptdetail.Doctors[0].FirstName +" "+ apptdetail.Doctors[0].LastName}}</span>
-                        <span ng-if="apptdetail.Doctors[0].FirstName == null && apptdetail.Doctors[0].LastName == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Online Users</td>
-                    <td>
-                        <button class="btn btn-sm btn-info" ng-click="funCallOpentok()" ng-disabled="!Opentok">
-                            Call &nbsp;&nbsp;<i class="glyphicon glyphicon-earphone"></i></button>
-                </tr>
-            </table>
+        <div class="margin-top-10 profile-desc-link">
+            <i><small>Date:</small></i>
+            <a href="">
+                <span ng-if="apptDate && apptDate != null">{{apptDate}}</span>
+                <span ng-if="!apptDate || apptDate == null">N/A</span>
+            </a>
+        </div>
+        <div class="margin-top-10 profile-desc-link">
+            <i><small>Time:</small></i>
+            <a href="">
+                <span ng-if="apptTime && apptTime != null">{{apptTime}}</span>
+                <span ng-if="!apptTime || apptTime == null">N/A</span>
+            </a>
+        </div>
+        <div class="margin-top-10 profile-desc-link">
+            <i><small>Status:</small></i>
+            <a href="">
+                <span ng-if="apptdetail.Status && apptdetail.Status != null">{{apptdetail.Status}}</span>
+                <span ng-if="!apptdetail.Status || apptdetail.Status == null">N/A</span>
+            </a>
+        </div>
+        <div class="margin-top-10 profile-desc-link">
+            <i><small>Insurer:</small></i>
+            <a href="">N/A</a>
+        </div>
+        <div class="margin-top-10 profile-desc-link">
+            <i><small>Treating Practitioner:</small></i>
+            <a href="">
+                <span ng-if="apptdetail.Doctors[0].FirstName != null || apptdetail.Doctors[0].LastName != null">{{apptdetail.Doctors[0].FirstName +" "+ apptdetail.Doctors[0].LastName}}</span>
+                <span ng-if="apptdetail.Doctors[0].FirstName == null && apptdetail.Doctors[0].LastName == null">N/A</span>
+            </a>
+        </div>
+        <div class="margin-top-10 profile-desc-link">
+            <i><small>Online Users:</small></i>
+            <a class="btn btn-circle green-meadow margin-left-20 padding-left-40 padding-right-40" 
+                ng-click="funCallOpentok()" ng-disabled="!Opentok">Call
+            </a>
         </div>
     </div>
 </div>

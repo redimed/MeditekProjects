@@ -1,70 +1,58 @@
-<div class="portlet portlet-fit box green">
-    <div class="portlet-title">
-        <div class="caption">
-            <span class="caption-subject ">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-4 col-xs-6">
-                            <div class="thumbnail" style="margin-bottom:3px; border-radius: 50% !important">
-                                <img dimage dimage-uid="patientInfo.UserAccount.FileUploads[0].UID" class="profile-imge" width="100%" style="border-radius: 50% !important" ng-if="patientInfo.UserAccount.FileUploads[0].UID"/>
-                                <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%"  style="border-radius: 50% !important" ng-if="!patientInfo.UserAccount.FileUploads[0].UID"/>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-md-4 col-xs-6">
-                            <h3 class="bold" ng-if="patientInfo">{{patientInfo.FirstName +" "+ patientInfo.LastName}}</h3>
-                            <h3 class="bold" ng-if="!patientInfo">N/A</h3>
-                            <h5 class="bold uppercase">Patient</h5>
-                        </div>
-                    </div>
-                </span>
+
+<div class="portlet light profile-sidebar-portlet bordered">
+    <div class="profile-userpic">
+        <img dimage dimage-uid="patientInfo.UserAccount.FileUploads[0].UID" 
+            class="img-responsive" 
+            ng-if="patientInfo.UserAccount.FileUploads[0].UID"/>
+        <img src="theme/assets/global/images/no_person.jpg" 
+            class="img-responsive" 
+            ng-if="!patientInfo.UserAccount.FileUploads[0].UID"/>
+    </div>
+    <div class="profile-usertitle">
+        <div class="profile-usertitle-name">
+            <span ng-if="patientInfo" style="text-transform:capitalize;">{{patientInfo.FirstName +" "+ patientInfo.LastName}}</span>
+            <span ng-if="!patientInfo" style="text-transform:capitalize;">N/A</span>
+        </div>
+        <div class="profile-usertitle-job">
+            <span ng-if="patientInfo.Gender">{{patientInfo.Gender}}</span>
+            <span ng-if="!patientInfo.Gender">N/A</span>
         </div>
     </div>
-    <div class="portlet-body">
-        <div class="table-scrollable">
-            <table class="table table-hover">
-                <tr>
-                    <td>DOB</td>
-                    <td>
-                        <span ng-if="patientInfo.DOB">{{patientInfo.DOB}}</span>
-                        <span ng-if="!patientInfo.DOB">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gender</td>
-                    <td>
-                        <span ng-if="patientInfo.Gender">{{patientInfo.Gender}}</span>
-                        <span ng-if="!patientInfo.Gender">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Workphone</td>
-                    <td>
-                        <span ng-if="patientInfo.WorkPhoneNumber && patientInfo.WorkPhoneNumber != null">{{patientInfo.WorkPhoneNumber}}</span>
-                        <span ng-if="!patientInfo.WorkPhoneNumber || patientInfo.WorkPhoneNumber == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Homephone</td>
-                    <td>
-                        <span ng-if="patientInfo.HomePhoneNumber && patientInfo.HomePhoneNumber != null">{{patientInfo.HomePhoneNumber}}</span>
-                        <span ng-if="!patientInfo.HomePhoneNumber || patientInfo.HomePhoneNumber == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Mobile</td>
-                    <td>
-                        <span ng-if="patientInfo.UserAccount && patientInfo.UserAccount.PhoneNumber != null">{{patientInfo.UserAccount.PhoneNumber}}</span>
-                        <span ng-if="!patientInfo.UserAccount || patientInfo.UserAccount.PhoneNumber == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <a href="javascript:;" class="btn blue">
-                            <i class="fa fa-calendar-plus-o"></i> New Appt
-                        </a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+    <div class="profile-userbuttons">
+        <a href="javascript:;" class="btn btn-circle blue">New Appt</a>
+        <a href="javascript:;" class="btn btn-circle red">Detail</a>
+    </div>
+    <div class="profile-usermenu">
+        <ul class="nav">
+            <li>
+                <a href="javascript:;">
+                    <i>Date of Birth: </i>
+                    <span ng-if="patientInfo.DOB">{{patientInfo.DOB}}</span>
+                    <span ng-if="!patientInfo.DOB">N/A</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i>Workphone: </i>
+                    <span ng-if="patientInfo.WorkPhoneNumber && patientInfo.WorkPhoneNumber != null">{{patientInfo.WorkPhoneNumber}}</span>
+                    <span ng-if="!patientInfo.WorkPhoneNumber || patientInfo.WorkPhoneNumber == null">N/A</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i>Homephone: </i>
+                    <span ng-if="patientInfo.HomePhoneNumber && patientInfo.HomePhoneNumber != null">{{patientInfo.HomePhoneNumber}}</span>
+                    <span ng-if="!patientInfo.HomePhoneNumber || patientInfo.HomePhoneNumber == null">N/A</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i>Homephone: </i>
+                    <span ng-if="patientInfo.UserAccount && patientInfo.UserAccount.PhoneNumber != null">{{patientInfo.UserAccount.PhoneNumber}}</span>
+                    <span ng-if="!patientInfo.UserAccount || patientInfo.UserAccount.PhoneNumber == null">N/A</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
+

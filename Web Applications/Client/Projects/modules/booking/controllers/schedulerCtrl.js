@@ -355,39 +355,165 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                             }
                         },
                         /*thao*/
-                        // create: {
-                        //     name: 'Create',
-                        //     callback: function(key, opt, start, end, event) {
-                        //         var UID = opt.selector.split('_')[2];
-                        //         console.log('eeeee', UID);
-                        //         BookingService.GetDetailBooking({ UID: UID })
-                        //             .then(function(response) {
-                        //                 var modalInstance = $uibModal.open({
-                        //                     animation: true,
-                        //                     size: 'lg',
-                        //                     templateUrl: 'modules/booking/views/schedulerCreate.html',
-                        //                     controller: function($scope) {
-                                                
-                        //                     },
-                        //                     resolve: {
-                        //                         event: function() {
-                        //                             return currentEvent;
-                        //                         },
-                        //                         start: function() {
-                        //                             return start;
-                        //                         },
-                        //                         end: function() {
-                        //                             return end;
-                        //                         },
-                        //                     }
-                        //                 });
-                        //             }, function(error) {})
-                        //     },
-                        //     icon: function(opt, $itemElement, itemKey, item) {
-                        //         $itemElement.html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create');
-                        //         return 'context-menu-icon-updated';
-                        //     }
-                        // },
+                        add: {
+                            name: 'Add',
+                            callback: function(key, opt, start, end) {
+                                var UID = opt.selector.split('_')[2];                                
+                                BookingService.GetDetailBooking({ UID: UID })
+                                    .then(function(response) {
+                                        console.log('response', response);
+                                        var modalInstance = $uibModal.open({
+                                            animation: true,
+                                            size: 'lg',
+                                            templateUrl: 'modules/booking/views/schedulerCreate.html',
+                                            controller: function($scope, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr) {                                                
+                                                $scope.items = [
+                                                    { field: "FirstName", name: "First Name" },
+                                                    { field: "LastName", name: "Last Name" },
+                                                    { field: "UserAccount", name: "Mobile" },
+                                                ];
+                                                $scope.patient = {
+                                                    runIfSuccess: function(data) {
+                                                        $timeout(function() {
+                                                            $scope.formData.Patient = data;
+                                                        }, 0);
+                                                    },
+                                                    runIfClose: function() {
+                                                        $modalInstance.close();
+                                                    }
+                                                };
+
+                                                function getListSite() {
+                                                    RosterService.GetListSite()
+                                                        .then(function(response) {
+                                                            $scope.listSites = response.data;
+                                                        }, function(error) {
+
+                                                        })
+                                                }
+                                                $scope.listTypes = [{
+                                                    code: 'Onsite',
+                                                    name: 'Onsite'
+                                                }, {
+                                                    code: 'Telehealth',
+                                                    name: 'Telehealth'
+                                                }];                                                
+                                                $scope.formData = {
+                                                    service: event.Services[0],
+                                                    site: event.Site,
+                                                    fromTime: moment(event.FromTime).format('HH:mm'),
+                                                    toTime: moment(event.ToTime).format('HH:mm'),
+                                                    date: moment(event.FromTime).format('DD/MM/YYYY'),
+                                                    Doctor: event.Doctors[0],
+                                                    type: event.Type
+                                                };                                            
+                                                $scope.cancel = function() {
+                                                    $modalInstance.dismiss('cancel');
+                                                };
+
+                                                function appendTime(time) {
+                                                    return (time < 10 && time.toString()[0] != '0') ? '0' + time : time;
+                                                }
+
+                                                function appendFullCalendarDateTime(date, time) {
+                                                    var split_time = time.split(':');                                                    
+                                                    var hour = appendTime(split_time[0]);                                                    
+                                                    var minute = split_time[1];
+                                                    var zone = moment().format('Z');
+                                                    return moment(date).format('YYYY-MM-DD') + ' ' + hour + ':' + minute + ':00 ' + zone;
+                                                }
+
+                                                function convertToTimeZone(time) {
+                                                    var split_time = time.split('/');
+                                                    return moment(split_time[2] + '-' + split_time[1] + '-' + split_time[0]).format('YYYY-MM-DD HH:mm:ss Z');
+                                                }
+
+                                                function convertToTime24(timeString) {
+                                                    var split = timeString.split(':');
+                                                    return parseInt(split[0] + split[1]);
+                                                };
+                                                $scope.submit = function() {
+                                                    var accept = true;
+                                                    var fromTimeParse = convertToTime24($scope.formData.fromTime);                                                    
+                                                    var toTimeParse = convertToTime24($scope.formData.toTime);
+                                                    if (fromTimeParse >= toTimeParse) {
+                                                        toastr.error('From Time must be smaller than To Time !!!');
+                                                        accept = false;
+                                                    } else if (PatientUID === '') {
+                                                        toastr.error('You must choose Patient');
+                                                        accept = false;
+                                                    } else {
+                                                        var fromTime = appendFullCalendarDateTime(start, $scope.formData.fromTime);                                                        
+                                                        var toTime = appendFullCalendarDateTime(start, $scope.formData.toTime);
+                                                        var type = $scope.formData.type;
+                                                        var zone = moment().format('Z');
+                                                        var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss') + " " + zone;
+                                                        var serviceUID = $scope.formData.service.UID;
+                                                        var siteUID = $scope.formData.site.UID;
+                                                        var DoctorUID = $scope.formData.Doctor.UID;
+                                                        var PatientUID = $scope.formData.Patient.UID;
+                                                        if (PatientUID === '')
+                                                            toastr.error('You must choose Patient');
+                                                        else {
+                                                            var postData = {
+                                                                Appointment: {
+                                                                    FromTime: fromTime,
+                                                                    ToTime: toTime,
+                                                                    Type: type,
+                                                                    RequestDate: requestDate
+                                                                },
+                                                                Service: {
+                                                                    UID: serviceUID
+                                                                },
+                                                                Site: {
+                                                                    UID: siteUID
+                                                                },
+                                                                Doctor: {
+                                                                    UID: DoctorUID
+                                                                },
+                                                                Patient: {
+                                                                    UID: PatientUID
+                                                                }
+                                                            }
+                                                            BookingService.CreateBooking(postData)
+                                                                .then(function(response) {
+                                                                    toastr.success('Create Booking Successfully');
+                                                                    //$modalInstance.close();
+                                                                    window.location.reload();
+                                                                }, function(error) {
+                                                                    if (typeof error.data !== 'undefined') {
+                                                                        var type = error.data.status;
+                                                                        switch (type) {
+                                                                            case 'withoutRoster':
+                                                                                toastr.error('Booking Appointment Time Wrong !!!');
+                                                                                break;
+                                                                        }
+                                                                    }
+                                                                })
+                                                        }
+                                                    }
+                                                };
+                                                getListSite();
+                                            },
+                                            resolve: {
+                                                event: function() {
+                                                    return response.data;
+                                                },
+                                                start: function() {
+                                                    return start;
+                                                },
+                                                end: function() {
+                                                    return end;
+                                                },
+                                            }
+                                        });
+                                    }, function(error) {})
+                            },
+                            icon: function(opt, $itemElement, itemKey, item) {
+                                $itemElement.html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add');
+                                return 'context-menu-icon-updated';
+                            }
+                        },
                         /*end thao*/
                         edit: {
                             name: 'Edit',

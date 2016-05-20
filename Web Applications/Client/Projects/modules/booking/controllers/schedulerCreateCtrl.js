@@ -47,6 +47,7 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
         code: 'Telehealth',
         name: 'Telehealth'
     }];
+    console.log("event ",event);
     $scope.formData = {
         service: event.Services[0],
         site: event.Sites[0],

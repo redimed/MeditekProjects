@@ -1070,7 +1070,6 @@ module.exports = {
 			order      : order,
 			subQuery   : false,
 			where: {
-				Enable:'Y',
 				$and: [
 					check.sqlParam(whereClause.Doctor),
 					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {

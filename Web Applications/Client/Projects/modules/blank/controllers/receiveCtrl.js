@@ -27,6 +27,7 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
     $scope.streams = OTSession.streams;
 
     $scope.$on("otStreamCreated", function(event, args) {
+        console.log("Start streammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
         $timeout(function() {
             if (args.stream.hasVideo === false) {
                 CallCancel("issue");

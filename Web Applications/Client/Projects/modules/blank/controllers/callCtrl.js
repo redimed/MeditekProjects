@@ -1,6 +1,6 @@
 var app = angular.module('app.blank.call.controller', []);
 
-app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, AuthenticationService, OTSession) {
+app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, AuthenticationService, OTSession, toastr) {
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
@@ -275,16 +275,34 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
 
     $scope.addDoctor = function(doctor) {
         if ($scope.streams.length < 2) {
-            socketTelehealth.get('/api/telehealth/socket/addDoctor', {
-                from: uidUser,
-                to: doctor.UserAccount.TelehealthUser.UID,
-                message: "add",
-                sessionId: sessionId,
-                apiKey: apiKey,
-                fromName: userInfo.UserName
-            }, function(data) {
-                console.log("send call", data);
-                window.close();
+            var info = {
+                CallerInfo: userInfo,
+                ReceiverName: ((doctor.FirstName === null) ? "" : doctor.FirstName) + " " + ((doctor.MiddleName === null) ? "" : doctor.MiddleName) + " " + ((doctor.LastName === null) ? "" : doctor.LastName),
+                ReceiverTeleUID: doctor.UserAccount.TelehealthUser.UID,
+                ReceiverTeleID: doctor.UserAccount.TelehealthUser.ID,
+                ReceiverID: doctor.UserAccount.ID
+            };
+            AuthenticationService.CallToReceiver(info).then(function(argument) {
+                if (argument.message === 'Offline') {
+                    toastr.error('Receiver Offline , Please Call Back Later');
+                    // swal("Receiver Offline", "Please Call Back Later");
+                } else if (argument.message === 'Busy') {
+                    toastr.error('Receiver Busy , Please Call Back Later');
+                    // swal("Receiver Busy", "Please Call Back Later");
+                } else if (argument.message === 'Success') {
+                    socketTelehealth.get('/api/telehealth/socket/addDoctor', {
+                        from: uidUser,
+                        to: doctor.UserAccount.TelehealthUser.UID,
+                        message: "add",
+                        sessionId: sessionId,
+                        apiKey: apiKey,
+                        fromName: userInfo.UserName,
+                        teleCallUID: teleCallUID
+                    }, function(data) {
+                        console.log("send call", data);
+                        window.close();
+                    });
+                };
             });
         } else {
             swal("Cann't Call", "You can not call more than 3 people!");

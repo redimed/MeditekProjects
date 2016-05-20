@@ -310,7 +310,7 @@ module.exports = {
                 });
             }).then(function(result) {
                 defer.resolve({
-                    TeleCallUID:TeleCallUID,
+                    TeleCallUID: TeleCallUID,
                     transaction: t
                 });
             }, function(err) {
@@ -318,6 +318,47 @@ module.exports = {
                     transaction: t
                 });
             });
+        });
+        return defer.promise;
+    },
+    CheckDevice: function(TeleUID) {
+        var $q = require('q');
+        var defer = $q.defer();
+        var Devices = {
+            iosDevices: [],
+            androidDevices: []
+        };
+        TelehealthService.FindByUID(TeleUID).then(function(teleUser) {
+            if (teleUser) {
+                Devices.teleUser = teleUser;
+                console.log("teleUser ", teleUser);
+                TelehealthDevice.findAll({
+                    where: {
+                        TelehealthUserID: teleUser.ID
+                    }
+                }).then(function(devices) {
+                    if (devices) {
+                        for (var i = 0; i < devices.length; i++) {
+                            if (devices[i].DeviceToken != null) {
+                                console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", devices[i].DeviceToken);
+                                if (devices[i].Type == 'IOS')
+                                    Devices.iosDevices.push(devices[i].DeviceToken);
+                                else
+                                    Devices.androidDevices.push(devices[i].DeviceToken);
+                            }
+                        }
+                    }
+                    defer.resolve({
+                        message: 'success',
+                        Devices: Devices
+                    });
+                }, function(err) {
+                    defer.reject({
+                        message: 'error',
+                        err: err
+                    });
+                })
+            }
         });
         return defer.promise;
     }

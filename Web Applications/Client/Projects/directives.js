@@ -232,6 +232,10 @@ app.directive('appointmentDetailDirective', function() {
                 };
             }
 
+            var CallerInfo = $cookies.getObject('userInfo');
+
+            $scope.AuthCall = CallerInfo.roles[0].RoleCode;
+
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
                 WAAppointmentService.GetDetailPatientByUid({
@@ -239,19 +243,25 @@ app.directive('appointmentDetailDirective', function() {
                 }).then(function(data) {
                     console.log("Info Call", data);
                     if (data.data[0].TeleUID != null) {
-                        var userCall = data.data[0].TeleUID;
-                        var userName = data.data[0].FirstName + " " + data.data[0].LastName;
-                        ioSocket.telehealthPatientCallWindow = window.open($state.href("blank.call", {
-                            apiKey: ioSocket.telehealthOpentok.apiKey,
-                            sessionId: ioSocket.telehealthOpentok.sessionId,
-                            token: ioSocket.telehealthOpentok.token,
-                            userName: userName,
-                            uidCall: userCall,
-                            uidUser: userInfo.TelehealthUser.UID,
+                        var info = {
+                            CallerInfo: CallerInfo,
+                            ReceiverName: data.data[0].FirstName + " " + data.data[0].LastName,
+                            ReceiverTeleUID: data.data[0].TeleUID,
+                            ReceiverTeleID: data.data[0].TeleID,
+                            ReceiverID: data.data[0].UserAccountID
+                        };
+                        ioSocket.telehealthDoctorCallWindow = window.open($state.href("blank.call", {
+                            apiKey: argument.data.apiKey,
+                            sessionId: argument.data.sessionId,
+                            token: argument.data.token,
+                            teleCallUID: argument.data.teleCallUID,
+                            receiverName: info.ReceiverName,
+                            receiverUID: info.ReceiverTeleUID,
+                            callerUID: info.CallerInfo.TelehealthUser.UID,
                         }), "CAll", { directories: "no" });
                     } else {
                         toastr.error("Patient Is Not Exist", "Error");
-                    };
+                    }
                 });
             };
         },

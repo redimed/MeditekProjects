@@ -273,9 +273,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     ioSocket.telehealthCancel = function(msg) {
         console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
-        if (ioSocket.telehealthPatientCallWindow) {
-            ioSocket.telehealthPatientCallWindow.close();
-        }
         if (ioSocket.telehealthDoctorCallWindow) {
             ioSocket.telehealthDoctorCallWindow.close();
         }
@@ -284,6 +281,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }
 
     ioSocket.telehealthDecline = function(msg) {
+        console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
         if (ioSocket.telehealthPatientCallWindow) {
             ioSocket.telehealthPatientCallWindow.close();
         }
@@ -324,9 +322,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     ioSocket.telehealthIssue = function(msg) {
         console.log("Issueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
-        if (ioSocket.telehealthPatientCallWindow) {
-            ioSocket.telehealthPatientCallWindow.close();
-        }
         if (ioSocket.telehealthDoctorCallWindow) {
             ioSocket.telehealthDoctorCallWindow.close();
         }
@@ -344,9 +339,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         if (msg.misscall) {
             ioSocket.telehealthMisscall(msg.misscall);
         } else {
-            if (ioSocket.telehealthPatientCallWindow) {
-                ioSocket.telehealthPatientCallWindow.close();
-            }
             if (ioSocket.telehealthDoctorCallWindow) {
                 ioSocket.telehealthDoctorCallWindow.close();
             }

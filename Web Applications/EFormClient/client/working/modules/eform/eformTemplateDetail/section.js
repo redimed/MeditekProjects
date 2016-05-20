@@ -107,11 +107,11 @@ module.exports = React.createClass({
         this.props.onUpdateViewType(this.props.code, viewType);
     },
     _onOrderSection: function(){
-        this.refs.modalOrderSection.show();
+        $(this.refs.modalOrderSection).css({display: 'block'});
     },
     _onSaveInputOrder: function(){
         var value = this.refs.inputOrder.getValue();
-        this.refs.modalOrderSection.hide();
+        $(this.refs.modalOrderSection).css({display: 'none'});
         this.props.onOrderSection(this.props.code, value);
     },
     _onSelectField: function(codeSection, codeRow, refRow, type){
@@ -213,7 +213,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
 
-                    <CommonModal ref="modalOrderSection">
+                    <div ref="modalOrderSection" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
                         <div className="header">
                             <h4>Order Section</h4>
                         </div>
@@ -221,10 +221,11 @@ module.exports = React.createClass({
                             <CommonInput ref="inputOrder"/>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={function(){this.refs.modalOrderSection.hide()}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" onClick={function(){$(this.refs.modalOrderSection).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrder}>Save</button>
                         </div>
-                    </CommonModal>
+                    </div>
+
                     <div className="col-md-12">
                         <div style={{display: displayViewType, marginBottom: '10px'}}>
                            <CommonRadio ref="radio_show" name={this.props.refTemp+'_viewType'} value="yes"

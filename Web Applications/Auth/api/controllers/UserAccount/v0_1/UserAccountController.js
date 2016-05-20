@@ -2,6 +2,7 @@ var regexp = require('node-regexp');
 var underscore=require('underscore');
 var moment=require('moment');
 var o=require("../../../services/HelperService");
+var $q = require('q');
 module.exports = {
 
 	TestSocket:function(req,res){
@@ -58,12 +59,33 @@ module.exports = {
 		})
 	},
 	
-	Test:function(req,res)
+	Test:function(req, res)
 	{
 		// console.log(req.headers.cookie);
-		var maxRole=o.getMaxRole(req.user.roles);
-		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});
+		/*var maxRole=o.getMaxRole(req.user.roles);
+		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});*/
+		var dm=resDMService.loadDMConfig(req);
+		/*$q.all([dm.payload(),dm.sendto()])
+		.spread(function(payload, sendto){
+			res.ok({payload:payload, sendto: sendto});
+		})
+		.fail(function(err){
+			res.ok(ErrorWrap(err));
+		})*/
+		resDMService.sendDM(dm, req)
+			.then(function(status){
+				res.ok(status);
+			},function(err){
+				res.serverError(err);
+			})
 
+		/*dm.payload()
+			.then(function(payload){
+				dm.sendto()
+					.then(function(sendto){
+						res.ok({payload:payload, sendto: sendto});
+					})
+			})*/
 	},
 
 	TestURL:function(req,res)

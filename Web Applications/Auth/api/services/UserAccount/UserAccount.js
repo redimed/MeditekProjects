@@ -405,7 +405,7 @@ module.exports = {
 	 * 	criteria: là json chứa 1 trong các thuộc tính [ID, UID, UserName, Email, Phone]
 	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
 	 * Output:
-	 * 	if success return promise update UserAccount
+	 * 	if success return promise update userAccount
 	 * 	if error throw err;
 	 */
 	DisableUserAccount:function(criteria,transaction)
@@ -442,7 +442,7 @@ module.exports = {
 	 * 	criteria: là json chứa 1 trong các thuộc tính [ID, UID, UserName, Email, Phone]
 	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
 	 * Output:
-	 * 	if success return promise update UserAccount
+	 * 	if success return promise update userAccount
 	 * 	if error throw err;
 	 */
 	EnableUserAccount:function(criteria,transaction)

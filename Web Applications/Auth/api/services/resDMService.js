@@ -1,0 +1,71 @@
+/**
+ * Created by tannguyen on 5/19/16.
+ */
+var $q = require('q');
+var dmUtils = require('./resDM/dmUtils');
+dmLog = dmUtils.dmLog;
+module.exports = {
+    loadDMConfig: function (req) {
+        var ctrReq = req.options.controller;
+        var actReq = req.options.action;
+        dmLog('controllerName from Request:', ctrReq);
+        dmLog('actionName from Request:', actReq);
+        for(var ctrKey in sails.config.resDM) {
+            var ctrKeyConf = ctrKey.substring(0, ctrKey.length-10).toLowerCase(); //10 ~ "Controller"
+            if(ctrKeyConf == ctrReq) {
+                dmLog("controllerName from Request have matched");
+                for (var actKey in sails.config.resDM[ctrKey]) {
+                    var actKeyConf = actKey.toLowerCase();
+                    if(actKeyConf == actReq) {
+                        dmLog("actionName from Request have matched");
+                        return sails.config.resDM[ctrKey][actKey];
+                    } else {
+                        dmLog("actionName from Request haven't matched");
+                    }
+                }
+            } else {
+                dmLog("controllerName from Request haven't matched");
+            }
+        }
+        return null;
+    },
+
+    sendDM: function(dmConfig, req) {
+        var error = new Error("resDMService.Error");
+        if(dmConfig.sendto==null)
+            dmConfig.sendto = senderNull;
+        return $q.all([dmConfig.payload(req),dmConfig.sendto(req)])
+        .spread(function(payload, sendto){
+            dmLog('payload:', payload);
+            dmLog('sendto:', sendto);
+            if(dmConfig.method === 'broadcast') {
+                if(sendto) {
+                    if(dmConfig.eventName) {
+                        sails.sockets.broadcast(sendto, dmConfig.eventName, payload);
+                    } else {
+                        error.pushError('broadcast.eventName.null');
+                    }
+                } else {
+                    error.pushError('broadcast.sendto.empty');
+                }
+            } else if (dmConfig.method === 'blast'){
+                if(dmConfig.eventName) {
+                    sails.sockets.blast(dmConfig.eventName, payload);
+                } else {
+                    error.pushError("blast.eventName.null");
+                }
+            } else {
+                error.pushError('dmMethod.invalid');
+            }
+            if(error.getErrors().length>0) {
+                throw error;
+            }
+            else {
+                return {status:'success'};
+            }
+        })
+        .fail(function(err){
+            throw err;
+        })
+    }
+}

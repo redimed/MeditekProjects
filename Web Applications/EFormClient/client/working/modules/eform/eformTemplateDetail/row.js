@@ -349,7 +349,7 @@ module.exports = React.createClass({
     },
     _onSaveInputOrder: function(){
         var value = this.refs.inputOrder.getValue();
-        this.refs.modalOrderRow.hide();
+        $(this.refs.modalOrderRow).css({display: 'none'});
         this.props.onOrderRow(this.props.codeSection, this.props.code, value);
     },
     _onSaveTableDynamicRow: function(codeField, fieldValues){
@@ -430,7 +430,8 @@ module.exports = React.createClass({
                                 onCloseModal={function(){this.refs.modalFieldDetailChart.hide()}.bind(this)}/>
                         </div>
                     </CommonModal>
-                    <CommonModal ref="modalOrderRow">
+
+                    <div ref="modalOrderRow" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
                         <div className="header">
                             <h4>Order Section</h4>
                         </div>
@@ -438,10 +439,12 @@ module.exports = React.createClass({
                             <CommonInputText ref="inputOrder"/>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={function(){this.refs.modalOrderRow.hide()}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" onClick={function(){$(this.refs.modalOrderRow).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrder}>Save</button>
                         </div>
-                    </CommonModal>
+                    </div>
+                    
+
                     <div className="col-md-12 dragRow">
                         <div className="portlet light" id={"dragRow_"+this.props.codeSection+'_'+this.props.code}>
                             <div className="portlet-title">
@@ -470,7 +473,7 @@ module.exports = React.createClass({
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a onClick={function(){this.refs.modalOrderRow.show()}.bind(this)}>
+                                                        <a onClick={function(){$(this.refs.modalOrderRow).css({display: 'block'})}.bind(this)} >
                                                             <i className="fa fa-plus"></i> Order Row
                                                         </a>
                                                     </li>

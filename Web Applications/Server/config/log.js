@@ -1,5 +1,5 @@
 var winston = require('winston');
-var graylog2 = require('winston-graylog2');
+require('winston-logstash');
 var fs = require('fs');
 if (!fs.existsSync('./logs')) {
     fs.mkdirSync('./logs');
@@ -47,18 +47,21 @@ var customLogger = new winston.Logger({
             formatter: true,
             filename: './logs/log'
         }),
-	// transport to graylog2
-	new graylog2({
-		name:'Graylog2',
-		level:'debug',
-		graylog:{
-			servers:[{host:'192.168.1.2', port:12201}]			
-		}
-	})
     ],
     levels: config.levels,
     colors: config.colors
 });
+
+var logstashLogger = new winston.Logger({
+    transports : [
+        new winston.transports.Logstash ({
+            port : 3005,
+            node_name : "core_3005_log",
+            host: "172.19.0.8",
+            level: 'debug',
+        }),
+    ]
+})
 
 customLogger.add(Mail, {
     host: "smtp.gmail.com",
@@ -93,6 +96,7 @@ var log = {};
 if (process.env.NODE_ENV === 'production') {
     log['custom'] = customLogger;
 } else {
-    log['level'] = 'verbose';
+    // log['level'] = 'verbose';
+    log['custom'] = logstashLogger;
 }
 module.exports.log = log;

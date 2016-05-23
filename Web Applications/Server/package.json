@@ -70,6 +70,7 @@
     "underscore": "^1.8.3",
     "winston": "https://registry.npmjs.org/winston/-/winston-0.8.3.tgz",
     "winston-graylog2": "https://registry.npmjs.org/winston-graylog2/-/winston-graylog2-0.4.2.tgz",
+    "winston-logstash": "^0.2.11",
     "winston-mail": "^0.5.0"
   },
   "scripts": {

@@ -30,11 +30,11 @@ module.exports = {
         return null;
     },
 
-    sendDM: function(dmConfig, req) {
+    sendDM: function(dmConfig, req, res) {
         var error = new Error("resDMService.Error");
         if(dmConfig.sendto==null)
             dmConfig.sendto = senderNull;
-        return $q.all([dmConfig.payload(req),dmConfig.sendto(req)])
+        return $q.all([dmConfig.payload(req, res),dmConfig.sendto(req, res)])
         .spread(function(payload, sendto){
             dmLog('payload:', payload);
             dmLog('sendto:', sendto);

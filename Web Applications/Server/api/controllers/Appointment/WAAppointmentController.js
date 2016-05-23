@@ -362,6 +362,7 @@ module.exports = {
                             LastName: candidateInfo.CandidateLastName,
                             DOB: candidateInfo.DOB,
                             Email1: candidateInfo.email,
+                            Email2: candidateInfo.email2,
                             PhoneNumber: candidateInfo.mobile,
                             HomePhoneNumber: candidateInfo.homePhoneNumber,
                             WorkPhoneNumber: candidateInfo.workPhoneNumber

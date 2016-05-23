@@ -505,7 +505,57 @@ module.exports = React.createClass({
                         onPrintForm={this._onComponentPageBarPrintForm}/>
                 <h3 className="page-title">{this.state.name}</h3>
                 <div className="row">
-                    <div className="col-md-9">
+
+                    {/*<div className="col-lg-3 col-md-12" style={{position: 'fixed', top: 40, right: 0}}>*/}
+                    <div className="col-md-3 col-md-push-9">
+                        <div className="portlet portlet-fit box blue">
+                            <div className="portlet-title">
+                                <div className="caption">
+                                    <span className="caption-subject bold uppercase">
+                                        <i className="icon-speedometer"></i> History
+                                    </span>
+                                </div>
+                                <div className="tools">
+                                    <a href="javascript:;" className="collapse"> </a>
+                                </div>
+                            </div>
+                            <div className="portlet-body">
+                                <table className="table table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th width="1">#</th>
+                                        <th>Code</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        this.state.history.map(function(h, index){
+                                            var appointment = h.Appointments[0];
+                                            var backgroundColor = 'none';
+                                            var textColor = 'inherit';
+                                            if(appointment.UID === this.appointmentUID){
+                                                backgroundColor = 'green';
+                                                textColor = 'white';
+                                            }
+                                            return (
+                                                <tr key={index} onClick={this._onGoToHistory.bind(this, h)}
+                                                    style={{backgroundColor: backgroundColor, color: textColor, cursor: 'pointer'}}>
+                                                    <td>{index+1}</td>
+                                                    <td>{appointment.Code}</td>
+                                                    <td>{moment(h.Appointments[0].CreatedDate).format('DD/MM/YYYY')}</td>
+                                                </tr>
+                                            )
+                                        }, this)
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/*<div className="col-md-9">*/}
+                    <div className="col-md-9 col-md-pull-3">
                         {
                             this.state.sections.map(function(section, index){
                                 var viewType = section.get('viewType');
@@ -531,52 +581,7 @@ module.exports = React.createClass({
                             }, this)
                         }
                     </div>
-                    <div className="col-lg-3 col-md-12" style={{position: 'fixed', top: 40, right: 0}}>
-                        <div className="portlet portlet-fit box blue">
-                            <div className="portlet-title">
-                                <div className="caption">
-                                    <span className="caption-subject bold uppercase">
-                                        <i className="icon-speedometer"></i> History
-                                    </span>
-                                </div>
-                                <div className="tools">
-                                    <a href="javascript:;" className="collapse"> </a>
-                                </div>
-                            </div>
-                            <div className="portlet-body">
-                                <table className="table table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th width="1">#</th>
-                                            <th>Code</th>
-                                            <th>Created Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            this.state.history.map(function(h, index){
-                                                var appointment = h.Appointments[0];
-                                                var backgroundColor = 'none';
-                                                var textColor = 'inherit';
-                                                if(appointment.UID === this.appointmentUID){
-                                                    backgroundColor = 'green';
-                                                    textColor = 'white';
-                                                }
-                                                return (
-                                                    <tr key={index} onClick={this._onGoToHistory.bind(this, h)}
-                                                        style={{backgroundColor: backgroundColor, color: textColor, cursor: 'pointer'}}>
-                                                        <td>{index+1}</td>
-                                                        <td>{appointment.Code}</td>
-                                                        <td>{moment(h.Appointments[0].CreatedDate).format('DD/MM/YYYY')}</td>
-                                                    </tr>
-                                                )
-                                            }, this)
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         )

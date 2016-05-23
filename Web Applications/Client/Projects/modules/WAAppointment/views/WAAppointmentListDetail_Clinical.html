@@ -1,207 +1,147 @@
-<div class="row profile-account">
-    <div class="col-lg-3 col-md-12 col-lg-offset-1">
-        <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
-        <ul class="nav nav-tabs tabs-left">
-            <li class="active">
-                <a data-toggle="tab" href="index.html#tab_medicalHistory">
-                    Relevant Past Medical History </a>
-                <span class="after"> </span>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_socialFactor">
-                    Relevant Social Factors </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_allergy">
-                    Allergies </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_medication">
-                    Current Medication </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_relevant">
-                    Relevant Investigation and Tests</a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_pathology">
-                    Pathology Provider and Radiology Provider </a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-lg-7 col-md-12">
-        <div class="tab-content">
-            <div id="tab_medicalHistory" class="tab-pane active">
-                <h4>Relevant Past Medical History</h4>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].Value"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">File Name</th>
-                                        <th width="30%">View</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].FileUploads">
-                                        <td><strong>{{ item.FileName }}</strong></td>
-                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="tab_socialFactor" class="tab-pane">
-                <h4>Relevant Social Factors</h4>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].Value"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">File Name</th>
-                                        <th width="30%">View</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].FileUploads">
-                                        <td><strong>{{ item.FileName }}</strong></td>
-                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="tab_allergy" class="tab-pane">
-                <h4>Allergy</h4>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].Value"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">File Name</th>
-                                        <th width="30%">View</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].FileUploads">
-                                        <td><strong>{{ item.FileName }}</strong></td>
-                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="tab_medication" class="tab-pane">
-                <h4>Current Medication</h4>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].Value"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">File Name</th>
-                                        <th width="30%">View</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].FileUploads">
-                                        <td><strong>{{ item.FileName }}</strong></td>
-                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="tab_relevant" class="tab-pane">
-                <h4>Relevant Investigation and Tests (Please Attach Results)</h4>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].Value"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">File Name</th>
-                                        <th width="30%">View</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].FileUploads">
-                                        <td><strong>{{ item.FileName }}</strong></td>
-                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="tab_pathology" class="tab-pane">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="control-label">Pathology provider</label>
-                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.PathologyProvider">
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="control-label">Radiology provider</label>
-                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.RadiologyProvider">
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12">
-                        <label class="control-label">Other Notes</label>
-                        <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.OtherNotes'].Value"></textarea>
-                    </div>
-                </div>
-            </div>
+ <div class="box">
+    <h4 class="form-section bold font-blue">Clinical Information</h4>
+    <div class="form-group">
+        <label class="col-md-12">Relevant Past Medical History</label>
+        <div class="col-lg-12">
+            <textarea class="form-control"
+                ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].Value">
+            </textarea>
         </div>
     </div>
-    <!--end col-md-9-->
+    <div class="table-scrollable table-scrollable-borderless">
+        <table class="table table-hover table-light">
+            <thead>
+                <tr class="uppercase">
+                    <th width="30%">File Name</th>
+                    <th width="30%">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].FileUploads">
+                    <td><strong>{{ item.FileName }}</strong></td>
+                    <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br/><br/><br/><br/><br/>
+    <hr/>
+    <div class="form-group">
+        <label class="col-lg-12">Relevant Social Factors</label>
+        <div class="col-lg-12">
+            <textarea class="form-control" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].Value"></textarea>
+        </div>
+    </div>
+    <div class="table-scrollable table-scrollable-borderless margin-bottom-40">
+        <table class="table table-hover table-light">
+            <thead>
+                <tr class="uppercase">
+                    <th width="30%">File Name</th>
+                    <th width="30%">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].FileUploads">
+                    <td><strong>{{ item.FileName }}</strong></td>
+                    <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/><br/><br/><br/>
+    <hr/>
+    <div class="form-group">
+        <label class="col-lg-12">Allergy</label>
+        <div class="col-lg-12">
+            <textarea class="form-control" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].Value"></textarea>
+        </div>
+    </div>
+    <div class="table-scrollable table-scrollable-borderless margin-bottom-40">
+        <table class="table table-hover table-light">
+            <thead>
+                <tr class="uppercase">
+                    <th width="30%">File Name</th>
+                    <th width="30%">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].FileUploads">
+                    <td><strong>{{ item.FileName }}</strong></td>
+                    <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/><br/><br/><br/>
+    <hr/>
+    <div class="form-group">
+        <label class="col-lg-12">Current Medication</label>
+        <div class="col-lg-12">
+            <textarea class="form-control" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].Value"></textarea>
+        </div>
+    </div>
+    <div class="table-scrollable table-scrollable-borderless margin-bottom-40">
+        <table class="table table-hover table-light">
+            <thead>
+                <tr class="uppercase">
+                    <th width="30%">File Name</th>
+                    <th width="30%">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].FileUploads">
+                    <td><strong>{{ item.FileName }}</strong></td>
+                    <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/><br/><br/><br/>
+    <hr/>
+    <div class="form-group">
+        <label class="col-lg-12">Relevant Investigation and Tests (Please Attach Results)</label>
+        <div class="col-lg-12">
+            <textarea class="form-control" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].Value"></textarea>
+        </div>
+    </div>
+    <div class="table-scrollable table-scrollable-borderless">
+        <table class="table table-hover table-light">
+            <thead>
+                <tr class="uppercase">
+                    <th width="30%">File Name</th>
+                    <th width="30%">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].FileUploads">
+                    <td><strong>{{ item.FileName }}</strong></td>
+                    <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/><br/><br/><br/>
+    <hr/>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4 col-md-4">Pathology provider</label>
+        <div class="col-lg-8 col-md-8">
+            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.PathologyProvider">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4 col-md-4">Radiology provider</label>
+        <div class="col-lg-8 col-md-8">
+            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.RadiologyProvider">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-lg-4 col-md-4">Other Notes</label>
+        <div class="col-lg-8 col-md-8">
+            <textarea class="form-control"
+                ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.OtherNotes'].Value"></textarea>
+        </div>
+    </div>
 </div>

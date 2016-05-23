@@ -223,12 +223,12 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         }
     };
 
-    var col9 = "col-md-9 col-sm-9";
-    var col3 = "col-md-3 col-sm-3";
+    var col9 = "ol-lg-9 col-md-8 col-xs-6";
+    var col3 = "col-lg-3 col-md-4 col-xs-6";
     $scope.iconCol = "Hide Detail"
     $scope.fullScreen = function() {
-        col9 = col9 === "col-md-9 col-sm-9" ? "col-md-12 col-sm-12" : "col-md-9 col-sm-9";
-        col3 = col3 === "col-md-3 col-sm-3" ? "hide" : "col-md-3 col-sm-3";
+        col9 = col9 === "ol-lg-9 col-md-8 col-xs-6" ? "col-md-12 col-sm-12" : "ol-lg-9 col-md-8 col-xs-6";
+        col3 = col3 === "col-lg-3 col-md-4 col-xs-6" ? "hide" : "col-lg-3 col-md-4 col-xs-6";
         $scope.iconCol = $scope.iconCol === "Hide Detail" ? "Show Detail" : "Hide Detail";
         angular.element("#col9").attr("class", col9);
         angular.element("#col3").attr("class", col3);

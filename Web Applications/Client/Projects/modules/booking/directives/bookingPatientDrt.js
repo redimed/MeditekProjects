@@ -519,7 +519,7 @@ app.controller("bookingController", function($scope, $timeout, $uibModal, $cooki
                                     }, function(error) {})
                             },
                             icon: function(opt, $itemElement, itemKey, item) {
-                                $itemElement.html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add');
+                                $itemElement.html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Patient');
                                 return 'context-menu-icon-updated';
                             }
                         },

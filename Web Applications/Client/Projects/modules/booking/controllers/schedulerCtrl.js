@@ -510,7 +510,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                                     }, function(error) {})
                             },
                             icon: function(opt, $itemElement, itemKey, item) {
-                                $itemElement.html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add');
+                                $itemElement.html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Patient');
                                 return 'context-menu-icon-updated';
                             }
                         },

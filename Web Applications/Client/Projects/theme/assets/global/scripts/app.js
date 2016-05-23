@@ -600,7 +600,7 @@ var App = function() {
 
             //UI Component handlers     
             handleMaterialDesign(); // handle material design       
-            // handleUniform(); // hanfle custom radio & checkboxes
+            handleUniform(); // hanfle custom radio & checkboxes
             handleiCheck(); // handles custom icheck radio and checkboxes
             handleBootstrapSwitch(); // handle bootstrap switch plugin
             handleScrollers(); // handles slim scrolling contents 

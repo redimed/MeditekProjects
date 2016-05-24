@@ -1,4 +1,5 @@
 var winston = require('winston');
+require('winston-logstash');
 var fs = require('fs');
 if (!fs.existsSync('./logs')) {
     fs.mkdirSync('./logs');
@@ -50,6 +51,18 @@ var customLogger = new winston.Logger({
     levels: config.levels,
     colors: config.colors
 });
+
+var logstashLogger = new winston.Logger({
+    transports : [
+        new winston.transports.Logstash ({
+            port : 3015,
+            node_name : "eform_core_3015_log",
+            host: "172.19.0.8",
+            level: 'verbose',
+        }),
+    ]
+})
+
 customLogger.add(Mail, {
     host: "smtp.gmail.com",
     port: 465,
@@ -83,6 +96,7 @@ var log = {};
 if (process.env.NODE_ENV === 'production') {
     log['custom'] = customLogger;
 } else {
-    log['level'] = 'verbose';
+    // log['level'] = 'verbose';
+    log['custom'] = logstashLogger;
 }
 module.exports.log = log;

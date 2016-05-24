@@ -13,6 +13,7 @@ module.exports = React.createClass({
     signatureDoctor: null,
     EFormTemplate: null,
     page: 1,
+    maxPage : 0,
     getInitialState: function(){
         return {
             name: '',
@@ -28,7 +29,6 @@ module.exports = React.createClass({
         this.templateUID = locationParams.templateUID;
         if(typeof locationParams.page !== 'undefined')
             this.page = locationParams.page;
-
         this._serverTemplateDetail();
     },
 
@@ -388,17 +388,13 @@ module.exports = React.createClass({
         .then(function(response){
             var EFormTemplate = self.EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
-            console.log("?????????????????????????????????????????????????????");
-            console.log(content);
             var page_content = [];
             for(var i = 0; i < content.sections.length; i++){
-                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                console.log(content.sections[i].getPage());
                 if(parseInt(self.page) === parseInt(content.sections[i].page)){
                     page_content.push(content.sections[i]);
                 }
             }
-
+            self.maxPage = content.sections[content.sections.length -1 ].page;
              EFormService.eformHistoryDetail({EFormTemplateUID: self.templateUID, PatientUID: self.patientUID})
             .then(function(result){
                 self.setState(function(prevState){
@@ -408,12 +404,16 @@ module.exports = React.createClass({
                         history: result.data.rows
                     }
                 })
+
+                $(self.refs['page_index_'+self.page]).addClass('active');
+                if(self.page <= 1)
+                    $(self.refs['page_index_previous']).addClass('disabled');
+                else if (self.page >= self.maxPage)
+                    $(self.refs['page_index_next']).addClass('disabled');
                 self._serverPreFormDetail(page_content);
             })
         })
     },
-
-
 
     _onDetailSaveForm: function(){
         var self = this;
@@ -513,7 +513,29 @@ module.exports = React.createClass({
         })
         swal("Success!", "Deleted", "success");
     },
+    _onGetPageContent: function (i) {
+        if(i >= 1 && i <= this.maxPage)
+        {
+            var locationParams = Config.parseQueryString(window.location.href);
+            locationParams.page = i;
+            var queryString = $.param(locationParams);
+            window.location.href = '/#/eform/detail?'+queryString ;
+            window.location.reload();
+        }
+    },
+
+
+
     render: function(){
+        var pageList = [];
+        for (var i = 1; i <= this.maxPage; i++)
+        {
+            pageList.push(
+                <li key = {i} ref={"page_index_"+i}>
+                    <a onClick = {this._onGetPageContent.bind(this, i)}>{i}</a>
+                </li>);
+
+        }
         return (
             <div className="page-content">
                 <ComponentPageBar ref="pageBar"
@@ -603,18 +625,14 @@ module.exports = React.createClass({
                     <div className = "col-md-12">
                         <nav>
                             <ul className="pagination pagination-lg">
-                                <li>
-                                    <a href="#" aria-label="Previous">
+                                <li ref = "page_index_previous">
+                                    <a aria-label="Previous" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) - 1)}>
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">
+                                {pageList}
+                                <li ref = "page_index_next">
+                                    <a aria-label="Next" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) + 1)}>
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>

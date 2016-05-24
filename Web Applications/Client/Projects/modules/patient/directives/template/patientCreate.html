@@ -236,12 +236,22 @@
 												<h4 class="form-section bold">Contact Information</h4>
 												<!-- begin Email -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Email</label>
+													<label class="control-label col-md-3">Email 1</label>
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-envelope"></i>
 															<input type="text" class="form-control" placeholder="Email1" ng-model="data.Email1" ng-style="er.Email1" ng-change="ermsg.Email1='';checkDataNull('Email1')" disabled="true" />
 														<span style="color:red;">{{ermsg.Email1}}</span>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-3">Email 2</label>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-envelope"></i>
+															<input type="text" class="form-control" placeholder="Email2" ng-model="data.Email2" ng-style="er.Email2" ng-change="ermsg.Email2='';checkDataNull('Email2')" />
+														<span style="color:red;">{{ermsg.Email2}}</span>
 														</div>
 													</div>
 												</div>

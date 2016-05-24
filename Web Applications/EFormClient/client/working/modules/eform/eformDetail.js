@@ -13,6 +13,7 @@ module.exports = React.createClass({
     signatureDoctor: null,
     EFormTemplate: null,
     page: 1,
+    maxPage : 0,
     getInitialState: function(){
         return {
             name: '',
@@ -28,7 +29,6 @@ module.exports = React.createClass({
         this.templateUID = locationParams.templateUID;
         if(typeof locationParams.page !== 'undefined')
             this.page = locationParams.page;
-
         this._serverTemplateDetail();
     },
 
@@ -389,13 +389,12 @@ module.exports = React.createClass({
             var EFormTemplate = self.EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
             var page_content = [];
-
             for(var i = 0; i < content.sections.length; i++){
                 if(parseInt(self.page) === parseInt(content.sections[i].page)){
                     page_content.push(content.sections[i]);
                 }
             }
-
+            self.maxPage = content.sections[content.sections.length -1 ].page;
              EFormService.eformHistoryDetail({EFormTemplateUID: self.templateUID, PatientUID: self.patientUID})
             .then(function(result){
                 self.setState(function(prevState){
@@ -405,10 +404,17 @@ module.exports = React.createClass({
                         history: result.data.rows
                     }
                 })
+
+                $(self.refs['page_index_'+self.page]).addClass('active');
+                if(self.page <= 1)
+                    $(self.refs['page_index_previous']).addClass('disabled');
+                else if (self.page >= self.maxPage)
+                    $(self.refs['page_index_next']).addClass('disabled');
                 self._serverPreFormDetail(page_content);
             })
         })
     },
+
     _onDetailSaveForm: function(){
         var self = this;
         var p = new Promise(function(resolve, reject){
@@ -507,7 +513,29 @@ module.exports = React.createClass({
         })
         swal("Success!", "Deleted", "success");
     },
+    _onGetPageContent: function (i) {
+        if(i >= 1 && i <= this.maxPage)
+        {
+            var locationParams = Config.parseQueryString(window.location.href);
+            locationParams.page = i;
+            var queryString = $.param(locationParams);
+            window.location.href = '/#/eform/detail?'+queryString ;
+            window.location.reload();
+        }
+    },
+
+
+
     render: function(){
+        var pageList = [];
+        for (var i = 1; i <= this.maxPage; i++)
+        {
+            pageList.push(
+                <li key = {i} ref={"page_index_"+i}>
+                    <a onClick = {this._onGetPageContent.bind(this, i)}>{i}</a>
+                </li>);
+
+        }
         return (
             <div className="page-content">
                 <ComponentPageBar ref="pageBar"
@@ -590,6 +618,26 @@ module.exports = React.createClass({
                                     return null;
                             }, this)
                         }
+                    </div>
+
+                </div>
+                <div className = "row">
+                    <div className = "col-md-12">
+                        <nav>
+                            <ul className="pagination pagination-lg">
+                                <li ref = "page_index_previous">
+                                    <a aria-label="Previous" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) - 1)}>
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                {pageList}
+                                <li ref = "page_index_next">
+                                    <a aria-label="Next" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) + 1)}>
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
 
                 </div>

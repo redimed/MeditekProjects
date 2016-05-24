@@ -6,6 +6,7 @@ var regexp = require('node-regexp');
 var underscore=require('underscore');
 var moment=require('moment');
 var o=require("../../../services/HelperService");
+var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 module.exports = {
 	Test:function(req,res)
 	{
@@ -31,15 +32,15 @@ module.exports = {
 			res.serverError(err);
 		})
 	},
-	
+
 	/**
 	 * @function CreateUserAccount
 	 * @memberOf Controller.UserAccount
 	 * @param {object} req resquest
-	 * @param {object} req.body 
-	 * @param {string} [req.body.UserName] 
-	 * @param {string} [req.body.Email] 
-	 * @param {string} [req.body.PhoneNumber] 
+	 * @param {object} req.body
+	 * @param {string} [req.body.UserName]
+	 * @param {string} [req.body.Email]
+	 * @param {string} [req.body.PhoneNumber]
 	 * @param {string} req.body.Password
 	 * @param {object} res response
 	 * @return {object} New UserAccount
@@ -57,7 +58,7 @@ module.exports = {
 			Enable:'Y',
 			CreatedBy:req.user?req.user.ID:null,
 		}
-		
+
 		sequelize.transaction().then(function(t){
 			return Services.UserAccount.CreateUserAccount(userInfo,t)
 			.then(function (data) {
@@ -68,7 +69,7 @@ module.exports = {
 				t.rollback();
 				res.serverError(ErrorWrap(err));
 			});
-		});	
+		});
 
 	},
 
@@ -119,9 +120,9 @@ module.exports = {
 				t.rollback;
 				res.serverError(ErrorWrap(err));
 			})
-		});	
+		});
 	},
-	
+
 	/**
 	 * @typedef {object} DisableUserAccountException
 	 * @memberOf Controller.UserAccount
@@ -138,7 +139,7 @@ module.exports = {
 	 * @param {object} req request
 	 * @param {object} req.body
 	 * @param {string} [req.body.UID] uid của user
-	 * @param {string} [req.body.UserName] 
+	 * @param {string} [req.body.UserName]
 	 * @param {string} [req.body.Email]
 	 * @param {string} [req.body.Phone]
 	 * @param {object} res response
@@ -173,7 +174,7 @@ module.exports = {
 			});
 		});
 	},
-	
+
 	/**
 	 * @typedef {object} EnableUserAccountException
 	 * @memberOf Controller.UserAccount
@@ -190,11 +191,11 @@ module.exports = {
 	 * @param {object} req request
 	 * @param {object} req.body
 	 * @param {string} [req.body.UID] UID của user
-	 * @param {string} [req.body.UserName] 
-	 * @param {string} [req.body.Email] 
-	 * @param {string} [req.body.Phone] 
+	 * @param {string} [req.body.UserName]
+	 * @param {string} [req.body.Email]
+	 * @param {string} [req.body.Phone]
 	 * @return {Number} trả về 1 nếu thành công
-	 * @throws {Controller.UserAccount.EnableUserAccountException} 
+	 * @throws {Controller.UserAccount.EnableUserAccountException}
 	 * @throws {Service.UserAccount.EnableUserAccountException}
 	 */
 	EnableUserAccount:function(req,res)
@@ -239,11 +240,11 @@ module.exports = {
 	 * @summary Lấy thông tin chi tiết của user.
 	 * Cần cung cấp 1 trong 4 tiêu chí UID, UserName, Email, Phone
 	 * @param {object} req request
-	 * @param {object} req.query 
+	 * @param {object} req.query
 	 * @param {object} [req.query.UID] UID của user
-	 * @param {string} [req.query.UserName] 
-	 * @param {string} [req.query.Email] 
-	 * @param {string} [req.query.PhoneNumber] 
+	 * @param {string} [req.query.UserName]
+	 * @param {string} [req.query.Email]
+	 * @param {string} [req.query.PhoneNumber]
 	 * @return {object} userInfo
 	 * @throws {Controller.UserAccount.GetUserAccountDetailsException}
 	 * @throws {Service.UserAccount.GetUserAccountDetailsException}
@@ -308,18 +309,18 @@ module.exports = {
 	 * @memberOf Controller.UserAccount
 	 * @summary Lấy danh sách UserAccount (Chức năng chỉ dành cho admin)
 	 * @param {object} req request
-	 * @param {object} req.body 
-	 * @param {object} req.body.criteria 
+	 * @param {object} req.body
+	 * @param {object} req.body.criteria
 	 *        Là một json chứa các field điều kiện, ví dụ: {"UserName":"ta","Email":"tan@gmail.com"}
-	 * @param {object} req.body.attributes 
+	 * @param {object} req.body.attributes
 	 *        Là một mảng chứa các field thông tin trả về, ví dụ: ["ID","UserName"]
 	 * @param {object} req.body.order
 	 *        Là một json chứa tên field cần sắp xếp và kiểu sắp xếp, ví dụ:{"UserName":"ASC"}
 	 * @param {Number} req.body.limit Trả về bao nhiêu dòng dữ liệu trong tổng số kết quả
-	 * @param {Number} req.body.offset 
+	 * @param {Number} req.body.offset
 	 *        Bỏ qua bao nhiêu dòng dữ liệu đầu tiên(hoặc có thể hiểu là thứ tự dòng bắt đầu được lấy, số dòng đánh dấu bắt đầu từ 0)
 	 * @param {object} res response
-	 * @return {Controller.UserAccount.GetListUsersReturn} 
+	 * @return {Controller.UserAccount.GetListUsersReturn}
 	 * @throws {Controller.UserAccount.GetListUsersException}
 	 * @throws {Service.UserAccount.GetListUsersException}
 	 */
@@ -353,7 +354,7 @@ module.exports = {
 	 * @memberOf Controller.UserAccount
 	 * @summary xóa thông tin file hồ sơ của user
 	 * @param {object} req request
-	 * @param {object} req.body 
+	 * @param {object} req.body
 	 * Cần cung cấp 1 trong các tham số UserUID, UserName, Email, PhoneNumber
 	 * @param {string} [req.body.UserUID]
 	 * @param {string} [req.body.UserName]
@@ -380,15 +381,15 @@ module.exports = {
 			error.pushError("RemoveIdentifierImage.transactionBeginError");
 			res.serverError(ErrorWrap(error));
 		})
-		
+
 	},
-	
+
 	/**
 	 * @function GetIdentifierImageInfo
 	 * @memberOf Controller.UserAccount
 	 * @summary Lấy thông tin file hồ sơ của user
 	 * @param {object} req request
-	 * @param {object} req.body 
+	 * @param {object} req.body
 	 * Cần cung cấp 1 trong các tham số UserUID, UserName, Email, PhoneNumber
 	 * @param {string} [req.body.UserUID]
 	 * @param {string} [req.body.UserName]
@@ -475,6 +476,40 @@ module.exports = {
 			}
 		},function(err) {
 			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	GeneratePassword: function(req, res) {
+		var data = req.body.data;
+		return sequelize.transaction()
+		.then(function(t) {
+			Services.UserAccount.GeneratePassword(data)
+			.then(function(result) {
+				t.commit();
+				res.ok({message:"success",data:result});
+			}, function(err) {
+				t.rollback();
+				res.serverError(ErrorWrap(err));
+			})
+		}, function(err) {
+			return res.serverError(ErrorWrap(err));
+		})
+	},
+
+	forgetPassword: function(req, res) {
+		var data = req.body.data;
+		return sequelize.transaction()
+		.then(function(t) {
+			Services.UserAccount.forgetPassword(data, secret, t)
+			.then(function(result) {
+				t.commit();
+				res.ok({message:"success",data:result});
+			}, function(err) {
+				t.rollback();
+				res.serverError(ErrorWrap(err));
+			})
+		}, function(err) {
+			return res.serverError(ErrorWrap(err));
 		})
 	}
 

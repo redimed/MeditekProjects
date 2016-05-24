@@ -11,10 +11,12 @@ module.exports={
 	    'RemoveIdentifierImage':['isAuthenticated','isAdmin'],
       'CheckExistUser':true,
       'forceChangePass':true,
-  	},
+	  //'GeneratePassword':true,
+	  'forgetPassword':true,
+	},
 
   	'UserAccount/v0_1/UserActivationController':{
-  		
+
   	},
 
   	'UserAccount/v0_1/AuthController':{

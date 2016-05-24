@@ -1128,6 +1128,131 @@ module.exports = {
         },function(err){
         	throw err;
         });
-	}
+	},
+
+	GeneratePassword: function(data, transaction) {
+		var user;
+		var password;
+		var err = new Error('GeneratePassword.error');
+		if(!data.UID) {
+			err.pushError('UID.invalid.params');
+			throw err;
+		}
+		return UserAccount.findOne({
+			where:{
+				UID : data.UID
+			},
+			transaction: transaction,
+		})
+		.then(function(got_user) {
+			if(!got_user) {
+				err.pushError('UserAccount.notFound');
+				throw err;
+			} else {
+				user = got_user;
+				password = generatePassword(12, false);
+				return UserAccount.update({Password:password},{
+					where:{
+						UID : data.UID
+					},
+					transaction: transaction,
+				});
+			}
+		}, function(err) {
+			throw err;
+		})
+		.then(function(updated) {
+			if(!updated) {
+				err.pushError("update.queryError");
+				throw err;
+			} else {
+				var returnData = {};
+				returnData.UserName = user.UserName;
+				returnData.Password = password;
+				return returnData;
+			}
+		}, function(err) {
+			throw err;
+		})
+	},
+
+	forgetPassword:function(data, secret, transaction) {
+		var user;
+		var token;
+		var err = new Error('forgetPassword.error');
+		return Appointment.findOne({
+			where: {
+				Code : data.Code
+			},
+			transaction : transaction,
+		})
+		.then(function(got_appt) {
+			if(!got_appt) {
+				err.pushError('Appointment.notFound');
+				throw err;
+			} else {
+				return got_appt.getPatients({
+					where:{
+						Enable: 'Y'
+					}
+				});
+			}
+		}, function(err) {
+			throw err;
+		})
+		.then(function(got_patient) {
+			if(!got_patient) {
+				err.pushError('Patient.notFound');
+				throw err;
+			} else {
+				console.log("got_patient ",got_patient);
+				return UserAccount.findOne({
+					where:{
+						ID : got_patient[0].UserAccountID
+					},
+					transaction : transaction,
+				})
+			}
+		}, function(err) {
+			throw err;
+		})
+		.then(function(got_user) {
+			if(!got_user) {
+				err.pushError('UserAccount.notFound');
+				throw err;
+			} else {
+				user = got_user;
+				var payload = {
+		                UID : user.UID
+		        };
+		        token = jwt.sign(
+		                        payload,
+		                        secret,
+		                        {expiresIn:48*60*60}
+		       	);
+				return UserForgot.create({
+		        	UserAccountUID : user.UID,
+		        	Token          : token
+		        },{transaction: transaction});
+			}
+		} ,function(err) {
+			throw err;
+		})
+		.then(function(success){
+			if(!success) {
+				err.pushError('create.queryError');
+				throw err;
+			}
+			else {
+				var returnData = {};
+				returnData.UserName = user.UserName;
+				returnData.link = config.url+'/#/changepass/'+user.UID+'/'+token;
+				return returnData;
+			}
+		},function(err){
+			throw err;
+		});
+
+	},
 
 }

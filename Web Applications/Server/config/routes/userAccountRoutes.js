@@ -8,7 +8,7 @@ module.exports={
 	// 'get /api/user-account/test':function(req,res){
 	// 	res.json({status:"heheehehhehe"});
 	// },
-	// 
+	//
 	'get /api/user-account/test-url/:param1/:param2/:param3':{
 		controller:'UserAccount/v0_1/UserAccountController',
 		action:'TestURL',
@@ -77,7 +77,7 @@ module.exports={
 		action:'GetListUsers'
 	},
 
-	
+
 
 	'post /api/login':{
 		controller:'UserAccount/v0_1/AuthController',
@@ -114,7 +114,7 @@ module.exports={
     	action:'CreateUserActivation'
 	},
 
-	
+
 	'get /api/user-activation/activation':{
 		controller:'UserAccount/v0_1/UserActivationController',
     	action:'Activation'
@@ -138,5 +138,15 @@ module.exports={
 	'get /api/user-account/get-detail/:uid' :{
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'GetDetail'
+	},
+
+	'post /api/user-account/generate-password': {
+		controller:'UserAccount/v0_1/UserAccountController',
+    	action:'GeneratePassword'
+	},
+
+	'post /api/user-account/forget-password': {
+		controller:'UserAccount/v0_1/UserAccountController',
+    	action:'forgetPassword'
 	},
 };

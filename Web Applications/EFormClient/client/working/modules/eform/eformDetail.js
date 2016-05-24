@@ -391,7 +391,7 @@ module.exports = React.createClass({
             var page_content = [];
 
             for(var i = 0; i < content.sections.length; i++){
-                if(parseInt(self.page) === parseInt(content.sections[i].page) || typeof content.sections[i].page !== 'undefined'){
+                if(parseInt(self.page) === parseInt(content.sections[i].page)){
                     page_content.push(content.sections[i]);
                 }
             }

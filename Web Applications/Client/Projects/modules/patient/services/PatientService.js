@@ -149,6 +149,15 @@ PatientService.validate = function(info) {
 				}
 			}
 
+			if('Email2' in info){
+				if(info.Email2){
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
+					if(!EmailPattern.test(info.Email2)){
+						error.push({field:"Email2",message:"invalid email"});
+					}
+				}
+			}
+
 			//validate Occupation
 			if('Occupation' in info){
 				if(info.Occupation){

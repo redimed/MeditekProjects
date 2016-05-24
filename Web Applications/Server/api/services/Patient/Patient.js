@@ -662,6 +662,7 @@ module.exports = {
             Suburb: data.Suburb,
             Postcode: data.Postcode,
             Email1: data.Email1,
+            Email2: data.Email2,
             UID: UUIDService.Create(),
             Address1: data.Address1,
             Address2: data.Address2,

@@ -432,10 +432,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email1.$invalid}">
-                                                        <label class="control-label col-lg-4 col-md-4">Email</label>
+                                                        <label class="control-label col-lg-4 col-md-4">Email 1</label>
                                                         <div class="col-lg-8 col-md-8">
-                                                            <input type="email" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email1" name="TelehealthAppointment_PatientAppointment_Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
+                                                            <input type="email1" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email1" name="TelehealthAppointment_PatientAppointment_Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
                                                             <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email2.$invalid}">
+                                                        <label class="control-label col-lg-4 col-md-4">Email 2</label>
+                                                        <div class="col-lg-8 col-md-8">
+                                                            <input type="email2" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email2" name="TelehealthAppointment_PatientAppointment_Email2" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
+                                                            <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email2.$error.pattern" class="help-block">Please enter a valid email address.</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">

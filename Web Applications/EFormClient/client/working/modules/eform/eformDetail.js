@@ -388,9 +388,12 @@ module.exports = React.createClass({
         .then(function(response){
             var EFormTemplate = self.EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
+            console.log("?????????????????????????????????????????????????????");
+            console.log(content);
             var page_content = [];
-
             for(var i = 0; i < content.sections.length; i++){
+                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                console.log(content.sections[i].getPage());
                 if(parseInt(self.page) === parseInt(content.sections[i].page)){
                     page_content.push(content.sections[i]);
                 }
@@ -409,6 +412,9 @@ module.exports = React.createClass({
             })
         })
     },
+
+
+
     _onDetailSaveForm: function(){
         var self = this;
         var p = new Promise(function(resolve, reject){
@@ -593,7 +599,7 @@ module.exports = React.createClass({
                     </div>
 
                 </div>
-                /*<div className = "row">
+                <div className = "row">
                     <div className = "col-md-12">
                         <nav>
                             <ul className="pagination pagination-lg">
@@ -616,7 +622,7 @@ module.exports = React.createClass({
                         </nav>
                     </div>
 
-                </div>*/
+                </div>
             </div>
         )
     }

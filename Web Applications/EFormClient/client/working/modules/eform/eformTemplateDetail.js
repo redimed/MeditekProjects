@@ -17,13 +17,12 @@ module.exports = React.createClass({
         EFormService.eformTemplateDetail({ uid: this.props.params.templateUID })
         .then(function(response) {
             this.refs.pageBar.setName(response.data.Name);
-            this.refs.pageBarBottom.setName(response.data.Name);
             var EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
             this.setState(function(prevState) {
                 return {
                     name: EFormTemplate.Name,
-                    sections: Immutable.fromJS(content)
+                    sections: Immutable.fromJS(content.sections)
                 }
             })
         }.bind(this))
@@ -406,7 +405,10 @@ module.exports = React.createClass({
     _onComponentPageBarSaveForm: function() {
         var templateUID = this.props.params.templateUID;
         var content = this.state.sections.toJS();
-        EFormService.eformTemplateSave({ uid: templateUID, content: JSON.stringify(content), userUID: this.props.userUID })
+        var real_content = {
+            sections: content
+        }
+        EFormService.eformTemplateSave({ uid: templateUID, content: JSON.stringify(real_content), userUID: this.props.userUID })
         .then(function(response) {
             swal("Success!", "Your form has been saved.", "success");
         }.bind(this))
@@ -475,6 +477,7 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection], val => val.set('page', value))
             }
         })
+        swal("Success!", "Success");
     },
     _onComponentSectionOrderSection: function(codeSection, value){
         var sections = this.state.sections.deleteIn([codeSection]);
@@ -580,7 +583,6 @@ module.exports = React.createClass({
         swal("Success!", "Change Ref", "success");
     },
     _onComponentSectionUpdateViewType: function(code, viewType){
-        console.log(viewType);
         this.setState(function(prevState) {
             return {
                 sections: prevState.sections.updateIn([code, 'viewType'], val => viewType)

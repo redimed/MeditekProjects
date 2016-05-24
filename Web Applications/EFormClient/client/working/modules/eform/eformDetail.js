@@ -12,6 +12,7 @@ module.exports = React.createClass({
     formUID: null,
     signatureDoctor: null,
     EFormTemplate: null,
+    page: 1,
     getInitialState: function(){
         return {
             name: '',
@@ -25,6 +26,8 @@ module.exports = React.createClass({
         this.patientUID = locationParams.patientUID;
         this.userUID = locationParams.userUID;
         this.templateUID = locationParams.templateUID;
+        if(typeof locationParams.page !== 'undefined')
+            this.page = locationParams.page;
 
         this._serverTemplateDetail();
     },
@@ -385,17 +388,24 @@ module.exports = React.createClass({
         .then(function(response){
             var EFormTemplate = self.EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
+            var page_content = [];
+
+            for(var i = 0; i < content.sections.length; i++){
+                if(parseInt(self.page) === parseInt(content.sections[i].page)){
+                    page_content.push(content.sections[i]);
+                }
+            }
 
              EFormService.eformHistoryDetail({EFormTemplateUID: self.templateUID, PatientUID: self.patientUID})
             .then(function(result){
                 self.setState(function(prevState){
                     return {
                         name: EFormTemplate.Name,
-                        sections: Immutable.fromJS(content),
+                        sections: Immutable.fromJS(page_content),
                         history: result.data.rows
                     }
                 })
-                self._serverPreFormDetail(content);
+                self._serverPreFormDetail(page_content);
             })
         })
     },

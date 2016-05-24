@@ -7,34 +7,6 @@ var CommonRadio = require('common/radio');
 
 module.exports = React.createClass({
     viewTypeDynamic: undefined,
-    propTypes: {
-        code: React.PropTypes.number,
-        moduleID: React.PropTypes.any,
-        type: React.PropTypes.string,
-        page: React.PropTypes.number,
-        rows: React.PropTypes.object,
-        refTemp: React.PropTypes.string,
-        permission: React.PropTypes.string,
-        onUpdateSection: React.PropTypes.func,
-        onRemoveSection: React.PropTypes.func,
-        onDragSection: React.PropTypes.func,
-        onDragRow: React.PropTypes.func,
-        onCreateRow: React.PropTypes.func,
-        onRemoveRow: React.PropTypes.func,
-        onSelectField: React.PropTypes.func,
-        onSaveFieldDetail: React.PropTypes.func,
-        onRemoveField: React.PropTypes.func,
-        onRemoveTableColumn: React.PropTypes.func,
-        onCreateTableColumn: React.PropTypes.func,
-        onCreateTableRow: React.PropTypes.func,
-        onRemoveTableRow: React.PropTypes.func,
-        onUpdateTableColumn: React.PropTypes.func,
-        onChangePage: React.PropTypes.func,
-        onChangeRef: React.PropTypes.func,
-        onOrderSection: React.PropTypes.func,
-        onOrderRow: React.PropTypes.func,
-        handleReloadDoctor: React.PropTypes.func
-    },
     getCode: function(){
         return this.props.code;
     },
@@ -65,6 +37,11 @@ module.exports = React.createClass({
                 if(event.which == 13){
                     self.props.onChangeRef(self.props.code, event.target.value);
                     return false;
+                }
+            })
+            $(this.refs.page).on('keypress', function(event){
+                if(event.which == 13){
+                    self.props.onChangePage(self.props.code, event.target.value)
                 }
             })
         }else{
@@ -294,6 +271,12 @@ module.exports = React.createClass({
                                                 <li>
                                                     <a onClick={this._onRemoveSection}>
                                                         <i className="fa fa-trash-o"></i> Remove Section
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a>
+                                                        Page&nbsp;&nbsp;
+                                                        <input type="text" ref="page" defaultValue={this.props.page}/>
                                                     </a>
                                                 </li>
                                             </ul>

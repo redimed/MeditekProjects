@@ -1,4 +1,5 @@
 var winston = require('winston');
+require('winston-logstash');
 var fs = require('fs');
 if (!fs.existsSync('./logs')) {
     fs.mkdirSync('./logs');
@@ -50,18 +51,30 @@ var customLogger = new winston.Logger({
     levels: config.levels,
     colors: config.colors
 });
+
+var logstashLogger = new winston.Logger({
+    transports : [
+        new winston.transports.Logstash ({
+            port : 3001,
+            node_name : "urgent_3001_log",
+            host: "172.19.0.8",
+            level: 'verbose',
+        }),
+    ]
+})
+
 customLogger.add(Mail, {
     host: "smtp.gmail.com",
     port: 465,
     ssl: true,
     username: 'meditek.manage.system@gmail.com',
     password: 'meditek123456',
-    subject: 'Debug Production 3001',
+    subject: 'Debug Production 3005',
     from: 'Meditek Production <meditek.manage.system@gmail.com>',
-    to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>',
+    to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>, MinhDevOps <minhnguyen@telehealthvietnam.com.vn>',
     level: 'error'
 });
-customLogger.on('logging', function(transport, level, msg, meta) {
+/*customLogger.on('logging', function(transport, level, msg, meta) {
     switch (transport.name) {
         case 'mail':
             var callback = function(err) {
@@ -78,11 +91,12 @@ customLogger.on('logging', function(transport, level, msg, meta) {
         default:
             break;
     }
-});
+});*/
 var log = {};
 if (process.env.NODE_ENV === 'production') {
     log['custom'] = customLogger;
 } else {
-    log['level'] = 'verbose';
+    // log['level'] = 'verbose';
+    log['custom'] = logstashLogger;
 }
 module.exports.log = log;

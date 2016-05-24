@@ -58,7 +58,7 @@ var logstashLogger = new winston.Logger({
             port : 3005,
             node_name : "core_3005_log",
             host: "172.19.0.8",
-            level: 'debug',
+            level: 'verbose',
         }),
     ]
 })

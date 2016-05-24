@@ -34,7 +34,8 @@
     "twilio": "^2.4.0",
     "underscore": "^1.8.3",
     "waterline": "^0.10.26",
-    "winston": "^0.8.3",
+    "winston": "^2.2.0",
+    "winston-logstash": "^0.2.11",
     "winston-mail": "^1.0.0"
   },
   "scripts": {

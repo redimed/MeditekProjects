@@ -34,7 +34,9 @@
     "sails-hook-sequelize": "^1.0.1",
     "sails-mysql": "^0.11.2",
     "socket.io-redis": "^1.0.0",
-    "twilio": "^2.8.0"
+    "twilio": "^2.8.0",
+    "winston": "^2.2.0",
+    "winston-logstash": "^0.2.11"
   },
   "scripts": {
     "debug": "node debug app.js",

@@ -43,9 +43,11 @@ module.exports = React.createClass({
                 <div className="col-md-12">
                     <ul className="list-group">
                         {
+
                             this.state.list.map(function(item, index){
                                 return (
-                                    <li className="list-group-item bg-blue bg-hover-blue bg-font-blue" key={index} style={{cursor:'pointer'}}
+                                    /*<li className="list-group-item bg-blue bg-hover-blue bg-font-blue" key={index} style={{cursor:'pointer'}}*/
+                                    <li className="list-group-item eform-bg-hover-blue" key={index} style={{cursor:'pointer'}}
                                         onClick={this._onSelectItem.bind(this,item)}>
                                         {item.get('name')}
                                         <span className="badge">{this.countObj[item.get('code')]?this.countObj[item.get('code')]:0}</span>

@@ -177,7 +177,7 @@ module.exports = React.createClass({
                         </div>
                     </CommonModal>
 
-                    <div ref="modalUpdateViewType" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
+                    <div ref="modalUpdateViewType" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>Update View Type</h4>
                         </div>
@@ -190,7 +190,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
 
-                    <div ref="modalOrderSection" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
+                    <div ref="modalOrderSection" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>Order Section</h4>
                         </div>

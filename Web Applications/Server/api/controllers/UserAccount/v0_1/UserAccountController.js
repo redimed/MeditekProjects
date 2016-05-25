@@ -10,7 +10,13 @@ var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 module.exports = {
 	Test:function(req,res)
 	{
-		res.ok({status:'success'});
+		var dm=ResDMService.loadDMConfig(req);
+		ResDMService.sendDM(dm, req)
+			.then(function(status){
+				res.ok(status);
+			},function(err){
+				res.serverError(err);
+			})
 	},
 
 	TestURL:function(req,res)

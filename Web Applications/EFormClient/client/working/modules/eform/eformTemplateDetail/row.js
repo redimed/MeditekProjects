@@ -212,11 +212,15 @@ module.exports = React.createClass({
                 roles: roles
             }
         }
-
+        var self = this;
         switch (id) {
             case 'editField':
                 $(this.refs.modalFieldDetail).css({display: 'block'});
                 this.refs.fieldDetail.init(dataFieldDetail);
+                setTimeout(function(){
+                    $(self.refs.modalFieldDetail).scrollTop(60);
+
+                },100)
                 break;
             case 'deleteField':
                 var self = this;
@@ -402,7 +406,7 @@ module.exports = React.createClass({
                             <li><a id="deleteTable"><i className="icon-trash"/> Delete Table</a></li>
                         </ul>
                     </div>
-                    <div ref="modalCreateFieldSection" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', bottom: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
+                    <div ref="modalCreateFieldSection" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>List Field</h4>
                         </div>
@@ -412,7 +416,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
 
-                    <div ref="modalFieldDetail" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', bottom: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
+                    <div ref="modalFieldDetail" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>Modal Field Detail</h4>
                         </div>
@@ -421,6 +425,7 @@ module.exports = React.createClass({
                                 onCloseModal={this._onComponentFieldDetailClose}/>
                         </div>
                     </div>
+
                     <CommonModal ref="modalFieldDetailChart">
                         <div className="header">
                             <h4>Modal Field Detail</h4>
@@ -431,7 +436,7 @@ module.exports = React.createClass({
                         </div>
                     </CommonModal>
 
-                    <div ref="modalOrderRow" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
+                    <div ref="modalOrderRow" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>Order Section</h4>
                         </div>

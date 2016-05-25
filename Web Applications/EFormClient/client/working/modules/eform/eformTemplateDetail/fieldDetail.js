@@ -49,6 +49,10 @@ module.exports = React.createClass({
                     this.refs.formLabel.setValue(object.label);
                     this.refs.formValue.setValue(object.value);
                     break;
+                case 'eform_input_check_label':
+                    this.refs.formLabel.setValue(object.label);
+                    this.refs.formValue.setValue(object.value);
+                    break;
                 case 'eform_input_check_label_html':
                     this.refs.formEditorLabel.setValue(object.value);
                     break;
@@ -80,10 +84,12 @@ module.exports = React.createClass({
             for (var i = 1; i <= 12; i++)
             {
                 var size =(
-                    <input key={i} type="button" className={"btn btn-default " + (this.formSize==i?'active':'')} value={i}  onClick={this._onClickSetFormSize}/>
+                    <input key={i} type="button" className={"btn btn-default eform-btn-toolbar-size " + (this.formSize==i?'active':'')} value={i}  onClick={this._onClickSetFormSize}/>
                 )
                 /*<input type="radio" className="btn btn-default" value={i}  onClick={this._onClickSetFormSize}/>*/
                 this.formSizeSelection.push(size);
+                if(i==6)
+                    this.formSizeSelection.push(<br key = "13"/>);
             }
 
             this.ref = object.ref;
@@ -317,6 +323,7 @@ module.exports = React.createClass({
                                 <CommonInputText placeholder="Ref" ref="formRef"/>
                             </div>
                             <div className="form-group">
+
                                 <div className="icheck-inline">
                                     <label>
                                         <CommonCheckbox ref="checkall_view"
@@ -325,7 +332,23 @@ module.exports = React.createClass({
                                         Check All View
                                     </label>
                                 </div>
-                                <div className="icheck-inline">
+                                <div className = "row">
+                                    {
+                                        this.roles.map(function(role, index){
+                                            return (
+                                                <div key={index} className ="col-lg-6 col-md-12 eform-font-sm eform-word-wrap">
+                                                    <label >
+                                                        <CommonCheckbox ref={'view_'+role.RoleCode}/>
+                                                        &nbsp;
+                                                        {role.RoleCode.length>9? (role.RoleCode.substring(0,9)+'...'):role.RoleCode}
+                                                    </label>
+                                                </div>
+
+                                            )
+                                        })
+                                    }
+                                </div>
+                                {/*<div className="icheck-inline">
                                 {
                                     this.roles.map(function(role, index){
                                         return (
@@ -337,7 +360,7 @@ module.exports = React.createClass({
                                         )
                                     })
                                 }
-                                </div>
+                                </div>*/}
                             </div>
                             <div className="form-group">
                                 <div className="icheck-inline">
@@ -348,7 +371,24 @@ module.exports = React.createClass({
                                         Check All Edit
                                     </label>
                                 </div>
-                                <div className="icheck-inline">
+                                <div className = "row">
+                                    {
+                                        this.roles.map(function(role, index){
+                                            return (
+                                                <div key={index} className = "col-lg-6 col-md-12 eform-font-sm eform-word-wrap">
+                                                    <label >
+                                                        <CommonCheckbox ref={'edit_'+role.RoleCode}/>
+                                                        &nbsp;
+                                                        {role.RoleCode.length>9? (role.RoleCode.substring(0,9)+'...'):role.RoleCode}
+                                                    </label>
+                                                </div>
+
+                                            )
+                                        })
+                                    }
+
+                                </div>
+                                {/*<div className="icheck-inline">
                                 {
                                     this.roles.map(function(role, index){
                                         return (
@@ -360,7 +400,7 @@ module.exports = React.createClass({
                                         )
                                     })
                                 }
-                                </div>
+                                </div>*/}
                             </div>
                             <div className="form-group" style={{float:'right'}}>
                                 <button type="button" className="btn btn-default" onClick={this.props.onCloseModal}>Close</button>

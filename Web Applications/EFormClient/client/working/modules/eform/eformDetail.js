@@ -432,7 +432,6 @@ module.exports = React.createClass({
 
             var content = JSON.stringify(fields);
             var appointmentUID = self.appointmentUID;
-
             if(self.formUID === null){
                 EFormService.formSave({templateUID: self.templateUID, appointmentUID: appointmentUID, content: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){

@@ -593,65 +593,71 @@ module.exports = React.createClass({
     render: function(){
 	return (
 		<div className="page-content">
-                                <CommonModal ref="modalListEFormTemplateModule">
-                                    <div className="header">
-                                        <h4>List EForm Template Module</h4>
-                                    </div>
-                                    <div className="content">
-                                        <ComponentEFormTemplateModuleList ref="eformTemplateModuleList"
-                                            onSelect={this._onSelectEFormTemplateModule}/>
-                                    </div>
-                                </CommonModal>
-		      <ComponentPageBar ref="pageBar"
-		          onAddNewSection={this._onComponentPageBarAddNewSection}
-                                    onAddNewModule={this._onComponentPageBarAddNewModule} 
-		          onSaveForm={this._onComponentPageBarSaveForm}/>
-            		      <h3 className="page-title">{this.state.name}</h3>
-                                {
-                                    	this.state.sections.map(function(section, index){
-                        		      return <ComponentSection key={index}
-                        			ref={section.get('ref')}
-                                                    refTemp={section.get('ref')}
-                                                    viewType={section.get('viewType')}
-                                                    moduleID={section.get('moduleID') | ''}
-                        			key={index}
-                        			code={index}
-                                                    type="section"
-                                                    page={section.get('page')}
-                                                    permission="eformDev"
-                                                    rows={section.get('rows')}
-                        			name={section.get('name')}
-                        			onUpdateSection={this._onComponentSectionUpdate}
-                                                    onUpdateViewType={this._onComponentSectionUpdateViewType}
-                        			onRemoveSection={this._onComponentSectionRemove}
-                        			onDragSection={this._onComponentSectionDrag}
-                                                    onCreateRow={this._onComponentSectionCreateRow}
-                                                    onRemoveRow={this._onComponentSectionRemoveRow}
-                        			onSelectField={this._onComponentSectionSelectField}
-                        			onDragField={this._onComponentSectionDragField}
-                        			onRemoveField={this._onComponentSectionRemoveField}
-                        			onSaveFieldDetail={this._onComponentSectionSaveFieldDetail}
-                        			onCreateTableRow={this._onComponentSectionCreateTableRow}
-                        			onRemoveTableRow={this._onComponentSectionRemoveTableRow}
-                        			onCreateTableColumn={this._onComponentSectionCreateTableColumn}
-                        			onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
-                        			onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
-                                                    onDragRow={this._onComponentSectionDragRow}
-                                                    onChangePage={this._onComponentSectionChangePage}
-                                                    onChangeRef={this._onComponentSectionChangeRef}
-                                                    onChangeRefRow={this._onComponentSectionChangeRefRow}
-                                                    onOrderSection={this._onComponentSectionOrderSection}
-                                                    onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
-                                                    onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
-                                                    onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
-                                                    onOrderRow={this._onComponentSectionOrderRow}/>
-                                    	}, this)
-                                }
-                                <ComponentPageBar ref="pageBarBottom"
+            <div className="col-md-3 col-md-push-9">
+
+            </div>
+            <div className="col-md-9 col-md-pull-3">
+                <CommonModal ref="modalListEFormTemplateModule">
+                    <div className="header">
+                        <h4>List EForm Template Module</h4>
+                    </div>
+                    <div className="content">
+                        <ComponentEFormTemplateModuleList ref="eformTemplateModuleList"
+                                                          onSelect={this._onSelectEFormTemplateModule}/>
+                    </div>
+                </CommonModal>
+                <ComponentPageBar ref="pageBar"
                                   onAddNewSection={this._onComponentPageBarAddNewSection}
                                   onAddNewModule={this._onComponentPageBarAddNewModule}
                                   onSaveForm={this._onComponentPageBarSaveForm}/>
-	           </div>
+                <h3 className="page-title">{this.state.name}</h3>
+                {
+                    this.state.sections.map(function(section, index){
+                        return <ComponentSection key={index}
+                                                 ref={section.get('ref')}
+                                                 refTemp={section.get('ref')}
+                                                 viewType={section.get('viewType')}
+                                                 moduleID={section.get('moduleID') | ''}
+                                                 key={index}
+                                                 code={index}
+                                                 type="section"
+                                                 page={section.get('page')}
+                                                 permission="eformDev"
+                                                 rows={section.get('rows')}
+                                                 name={section.get('name')}
+                                                 onUpdateSection={this._onComponentSectionUpdate}
+                                                 onUpdateViewType={this._onComponentSectionUpdateViewType}
+                                                 onRemoveSection={this._onComponentSectionRemove}
+                                                 onDragSection={this._onComponentSectionDrag}
+                                                 onCreateRow={this._onComponentSectionCreateRow}
+                                                 onRemoveRow={this._onComponentSectionRemoveRow}
+                                                 onSelectField={this._onComponentSectionSelectField}
+                                                 onDragField={this._onComponentSectionDragField}
+                                                 onRemoveField={this._onComponentSectionRemoveField}
+                                                 onSaveFieldDetail={this._onComponentSectionSaveFieldDetail}
+                                                 onCreateTableRow={this._onComponentSectionCreateTableRow}
+                                                 onRemoveTableRow={this._onComponentSectionRemoveTableRow}
+                                                 onCreateTableColumn={this._onComponentSectionCreateTableColumn}
+                                                 onRemoveTableColumn={this._onComponentSectionRemoveTableColumn}
+                                                 onUpdateTableColumn={this._onComponentSectionUpdateTableColumn}
+                                                 onDragRow={this._onComponentSectionDragRow}
+                                                 onChangePage={this._onComponentSectionChangePage}
+                                                 onChangeRef={this._onComponentSectionChangeRef}
+                                                 onChangeRefRow={this._onComponentSectionChangeRefRow}
+                                                 onOrderSection={this._onComponentSectionOrderSection}
+                                                 onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
+                                                 onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
+                                                 onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
+                                                 onOrderRow={this._onComponentSectionOrderRow}/>
+                    }, this)
+                }
+                <ComponentPageBar ref="pageBarBottom"
+                                  onAddNewSection={this._onComponentPageBarAddNewSection}
+                                  onAddNewModule={this._onComponentPageBarAddNewModule}
+                                  onSaveForm={this._onComponentPageBarSaveForm}/>
+            </div>
+
+        </div>
 	)
     }
 })

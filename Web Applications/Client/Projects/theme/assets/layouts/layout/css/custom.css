@@ -837,7 +837,12 @@ input[type="email"]:disabled,
     padding-left: 10px !important;
 }*/
 
-
+.profile-userpic img {
+    -webkit-border-radius: 10% !important; 
+    -moz-border-radius: 10% !important;
+    border-radius: 10% !important; 
+    max-height: 150px !important; 
+}
 /*phan quoc chien================================================================================*/
 
     .margin-left-right-0 {

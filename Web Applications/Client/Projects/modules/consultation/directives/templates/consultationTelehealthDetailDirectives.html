@@ -61,6 +61,34 @@
                                                 <a href="javascript:;" class="btn red margin-left-10" ng-click="openCalendar()">Booking</a>
                                             </h4>
                                             <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Patient</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <p class="form-control bold text-info">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Appointment Date</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input date-picker 
+                                                        data-date-format="dd/mm/yyyy" 
+                                                        ng-model="info.appointmentDate" 
+                                                        set-date="info.appointmentDate"
+                                                        data-date-start-date="0d"
+                                                        />
+                                                </div>
+                                                <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d"> -->
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Appointment Time</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input time-picker
+                                                        ng-model="info.appointmentTime" 
+                                                        set-time="info.appointmentTime"
+                                                        />
+                                                </div>
+                                                <!-- <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm"> -->
+                                            </div>                                            
+                                            <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Duration of Referral</label>
                                                 <div class="col-lg-8 col-md-8">
                                                     <p class="form-control bold text-info" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</p>
@@ -89,35 +117,7 @@
                                                         <input type="checkbox" class="regular-checkbox" name="Correspondence12" ng-true-value="'Y'" ng-false-value="'N'" ng-model="wainformation.TelehealthAppointment.Correspondence"> Correspondence
                                                     </label>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-md-4">Appointment Date</label>
-                                                <div class="col-lg-8 col-md-8">
-                                                    <input date-picker 
-                                                        data-date-format="dd/mm/yyyy" 
-                                                        ng-model="info.appointmentDate" 
-                                                        set-date="info.appointmentDate"
-                                                        data-date-start-date="0d"
-                                                        />
-                                                </div>
-                                                <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d"> -->
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-md-4">Appointment Time</label>
-                                                <div class="col-lg-8 col-md-8">
-                                                    <input time-picker
-                                                        ng-model="info.appointmentTime" 
-                                                        set-time="info.appointmentTime"
-                                                        />
-                                                </div>
-                                                <!-- <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm"> -->
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-md-4">Patient</label>
-                                                <div class="col-lg-8 col-md-8">
-                                                    <p class="form-control bold text-info">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</p>
-                                                </div>
-                                            </div>
+                                            </div>                                            
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Referring Practitioner</label>
                                                 <div class="col-lg-8 col-md-8">
@@ -248,7 +248,7 @@
                                             <i class="fa fa-key"></i> Generate Password Patient
                                         </a>
                                         <h3 class="bold font-red" ng-if="wainformation.Patients.length != 0">
-                                            PATIENT NO : <span class="font-red"> {{wainformation.Patients[0].UserAccount.UserName}}</span>
+                                            PATIENT : <span class="font-red"> {{wainformation.Patients[0].UserAccount.UserName}}</span>
                                         </h3>
                                     </div>
                                 </div>

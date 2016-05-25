@@ -244,8 +244,11 @@
                                         <a class="btn red pull-right" ng-click="selectPatient()" ng-hide="checkRoleUpdate">
                                             <i class="glyphicon glyphicon-plus"></i> Link Patient
                                         </a>
+                                        <a class="btn blue pull-right" ng-click="SelectDialogPassword()" style="margin-right: 2px;">
+                                            <i class="fa fa-key"></i> Generate Password Patient
+                                        </a>
                                         <h3 class="bold font-red" ng-if="wainformation.Patients.length != 0">
-                                            PATIENT NO : <span class="font-red"> Linked</span>
+                                            PATIENT NO : <span class="font-red"> {{wainformation.Patients[0].UserAccount.UserName}}</span>
                                         </h3>
                                     </div>
                                 </div>
@@ -1045,3 +1048,31 @@
 <script type="text/ng-template " id="LinkCompanyModal">
     <company-list on-patient-uid="patientuid" on-cancel="cancel" on-company-info="info" ></company-list>
 </script>
+
+<script type="text/ng-template" id="LinkGeneratePassword">
+    <div class="modal-header">
+        <h4 class="modal-title bold font-blue">
+            <i class="fa fa-key"></i> Generate Password Patient 
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-lg-5 bold">Username:</label>
+                <div class="col-lg-7">
+                    <p class="form-control-static">{{UserName}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-5 bold">Password:</label>
+                <div class="col-lg-7">
+                    <p class="form-control-static">{{Password}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div>
+</script>
+

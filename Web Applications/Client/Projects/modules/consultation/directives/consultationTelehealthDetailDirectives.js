@@ -6,7 +6,7 @@ app.directive('telehealthDetail', function(doctorService) {
         },
         restrict: 'E',
         templateUrl: "modules/consultation/directives/templates/consultationTelehealthDetailDirectives.html",
-        controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $uibModal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService) {
+        controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $uibModal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService, consultationServices) {
             o.loadingPage(true);
             $scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
@@ -63,6 +63,7 @@ app.directive('telehealthDetail', function(doctorService) {
                     isLinkPatient: false,
                     patient: []
                 };
+
                 var checkDateUndefined = function(data) {
                     if (data == ' ' || data == '' || data == undefined) {
                         return false;
@@ -1277,6 +1278,34 @@ app.directive('telehealthDetail', function(doctorService) {
                 }
                 
             };
+            $scope.SelectDialogPassword = function(){
+                if($scope.ShowData.isLinkPatient === true){
+                    var UID = $scope.wainformation.Patients[0].UserAccount.UID;
+                    consultationServices.generatepassword({UID:UID})
+                    .then(function(response) {
+                        var modalInstance = $uibModal.open({                            
+                            size:'sm',
+                            templateUrl:'LinkGeneratePassword',
+                            controller: function($scope,$modalInstance,data){
+                                $scope.UserName = data.UserName;
+                                $scope.Password = data.Password;
+                                $scope.close = function(){
+                                    $modalInstance.close('err');
+                                }
+                            },
+                            resolve:{
+                                data: function(){
+                                    return response.data;
+                                }
+                            },
+                        });
+                    }, function(err) {
+                        
+                    })
+                } else{
+                    toastr.warning('You need link Patient');
+                }
+            }
 
         }
     };

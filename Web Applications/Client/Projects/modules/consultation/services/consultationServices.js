@@ -61,5 +61,9 @@ angular.module("app.authentication.consultation.services", [])
         services.updateConsultation = function(data) {
             return api.all('consultation/update').post({ data: data });
         }
+        services.generatepassword = function(data) {
+            return api.all('user-account/generate-password').post({ data: data });
+        }
         return services;
+
     });

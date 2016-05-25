@@ -140,7 +140,7 @@ module.exports = function(appointmentUID, userInfo) {
                         }
                     }],
                     attributes: Services.AttributesAppt.UserAccount(),
-                    required: !_.isEmpty(filter.UserAccount),
+                    required: false,
                     where: filter.UserAccount
                 }, {
                     model: Company,

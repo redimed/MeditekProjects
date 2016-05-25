@@ -35,131 +35,63 @@
                 <div class="portlet-body">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                            <div class="dashboard-stat2" ng-click="consultNote()">
-                                <div class="display">
-                                    <div class="number">
-                                        <h3 class="font-red">
-                                            <span data-counter="counterup" data-value="7800"><i class="fa fa-comments"></i></span>
-                                            <small class="font-red"></small>
-                                        </h3>
-                                        <small class="font-red">CONSULT NOTE</small>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fa fa-search"></i>
-                                    </div>
+                            <div class="dashboard-stat red margin-bottom-20" ng-click="consultNote()">
+                                <div class="visual">
+                                    <i class="fa fa-search"></i>
                                 </div>
-                                <div class="progress-info">
-                                    <div class="progress">
-                                        <span style="width: 100%;" class="progress-bar progress-bar-info red">
-                                            <span class="sr-only"></span>
+                                <div class="details">
+                                    <div class="number">
+                                        <span data-counter="counterup" data-value="0">
+                                            <i class="fa fa-file"></i>
                                         </span>
                                     </div>
-                                    <div class="status">
-                                        <div class="status-title">view</div>
-                                        <div class="status-number"><i class="fa fa-long-arrow-right"></i></div>
-                                    </div>
+                                    <div class="desc uppercase bold"> Consult Note </div>
                                 </div>
+                                <a class="more" href="javascript:;">
+                                    View
+                                    <i class="m-icon-swapright m-icon-white"></i>
+                                </a>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                            <div class="dashboard-stat2" ng-click="telehealthDetail()">
-                                <div class="display">
-                                    <div class="number">
-                                        <h3 class="font-green-jungle">
-                                            <span data-counter="counterup" data-value="7800"><i class="fa fa-calendar"></i></span>
-                                            <small class="font-green-jungle"></small>
-                                        </h3>
-                                        <small class="font-green-jungle">appointment detail</small>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fa fa-search"></i>
-                                    </div>
+                            <div class="dashboard-stat green-jungle margin-bottom-20" ng-click="telehealthDetail()">
+                                <div class="visual">
+                                    <i class="fa fa-search"></i>
                                 </div>
-                                <div class="progress-info">
-                                    <div class="progress">
-                                        <span style="width: 100%;" class="progress-bar progress-bar-info green-jungle">
-                                            <span class="sr-only"></span>
+                                <div class="details">
+                                    <div class="number">
+                                        <span data-counter="counterup" data-value="0">
+                                            <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <div class="status">
-                                        <div class="status-title">view</div>
-                                        <div class="status-number"><i class="fa fa-long-arrow-right"></i></div>
-                                    </div>
+                                    <div class="desc uppercase bold"> Appointment Detail </div>
                                 </div>
+                                <a class="more" href="javascript:;">
+                                    View
+                                    <i class="m-icon-swapright m-icon-white"></i>
+                                </a>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                            <div class="dashboard-stat2" ng-click="getEFormByPatient()">
-                                <div class="display">
-                                    <div class="number">
-                                        <h3 class="font-blue">
-                                            <span data-counter="counterup" data-value="7800"><i class="fa fa-folder"></i></span>
-                                            <small class="font-blue"></small>
-                                        </h3>
-                                        <small class="font-blue">all patient e-form</small>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fa fa-search"></i>
-                                    </div>
+                            <div class="dashboard-stat blue margin-bottom-20" ng-click="getEFormByPatient()">
+                                <div class="visual">
+                                    <i class="fa fa-search"></i>
                                 </div>
-                                <div class="progress-info">
-                                    <div class="progress">
-                                        <span style="width: 100%;" class="progress-bar progress-bar-info blue">
-                                            <span class="sr-only"></span>
+                                <div class="details">
+                                    <div class="number">
+                                        <span data-counter="counterup" data-value="0">
+                                            <i class="fa fa-file"></i>
                                         </span>
                                     </div>
-                                    <div class="status">
-                                        <div class="status-title">view</div>
-                                        <div class="status-number"><i class="fa fa-long-arrow-right"></i></div>
-                                    </div>
+                                    <div class="desc uppercase bold"> All Patient E-Form </div>
                                 </div>
+                                <a class="more" href="javascript:;">
+                                    View
+                                    <i class="m-icon-swapright m-icon-white"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat red-thunderbird" ng-click="consultNote()">
-                                <div class="visual">
-                                    <i class="icon-notebook"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">Consult Note</div>
-                                    <div class="desc bold uppercase" style="font-size:1.5em;">&nbsp;</div>
-                                </div>
-                                <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.consultNote">
-                                    Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat blue-steel" ng-click="telehealthDetail()">
-                                <div class="visual">
-                                    <i class=" icon-rocket"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">Appointment Detail</div>
-                                    <div class="desc bold uppercase" style="font-size:1.5em;">&nbsp;</div>
-                                </div>
-                                <a class="more" href="javascript:;" ng-click="telehealthDetail()">
-                                    View  <i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat yellow-crusta" ng-click="getEFormByPatient()">
-                                <div class="visual">
-                                    <i class="icon-docs"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">All Patient E-Form</div>
-                                    <div class="desc bold uppercase" style="font-size:1.5em;">&nbsp;</div>
-                                </div>
-                                <a class="more" href="javascript:;">
-                                    View  <i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
             <!-- EFORM -->
@@ -178,78 +110,46 @@
                 <div class="portlet-body">
                     <!-- ROW -->
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat2" ng-click="admission()">
-                                <div class="display">
-                                    <div class="number">
-                                        <h3 class="font-yellow-crusta">
-                                            <span data-counter="counterup" data-value="7800">
-                                                <i class="fa fa-file"></i>
-                                            </span>
-                                            <small class="font-yellow-crusta"></small>
-                                        </h3>
-                                        <small class="font-yellow-crusta">Patient Admission</small>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fa fa-search"></i>
-                                    </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            <div class="dashboard-stat purple-seance margin-bottom-20" ng-click="admission()">
+                                <div class="visual">
+                                    <i class="fa fa-search"></i>
                                 </div>
-                                <div class="progress-info">
-                                    <div class="progress">
-                                        <span style="width: 100%;" class="progress-bar progress-bar-info yellow-crusta">
-                                            <span class="sr-only"></span>
+                                <div class="details">
+                                    <div class="number">
+                                        <span data-counter="counterup" data-value="0">
+                                            <i class="fa fa-file"></i>
                                         </span>
                                     </div>
-                                    <div class="status">
-                                        <div class="status-title">view</div>
-                                        <div class="status-number"><i class="fa fa-long-arrow-right"></i></div>
-                                    </div>
+                                    <div class="desc uppercase bold"> Patient Admission </div>
                                 </div>
+                                <a class="more" href="javascript:;">
+                                    View
+                                    <i class="m-icon-swapright m-icon-white"></i>
+                                </a>
                             </div>
                         </div>
-                        
-                        <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-bottom: 10px;">
-                                <div class="dashboard-stat green-jungle" ng-click="admission()">
-                                    <div class="visual">
-                                        <i class="icon-drawer"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">Patient Admission</div>
-                                        <div class="desc bold uppercase" style="font-size:1.5em;">&nbsp;</div>
-                                    </div>
-                                    <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.admission.detail">
-                                        View  <i class="m-icon-swapright m-icon-white"></i>
-                                    </a>
-                                </div>
-                        </div> -->
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" 
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" 
                             ng-repeat="eformTemplate in eformTemplates track by $index">
-                            <div class="dashboard-stat2" 
+                            <div class="dashboard-stat grey margin-bottom-20" 
                                 ng-class="styleFunction(eformTemplate.EForms)"
                                 ng-click="eFormTemplate(eformTemplate)">
-                                <div class="display">
-                                    <div class="number">
-                                        <h3 class="font-blue">
-                                            <span data-counter="counterup" data-value="7800"><i class="fa fa-file"></i></span>
-                                            <small class="font-blue"></small>
-                                        </h3>
-                                        <small class="font-blue">{{eformTemplate.Name}}</small>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fa fa-search"></i>
-                                    </div>
+
+                                <div class="visual">
+                                    <i class="fa fa-search"></i>
                                 </div>
-                                <div class="progress-info">
-                                    <div class="progress">
-                                        <span style="width: 100%;" class="progress-bar progress-bar-info blue">
-                                            <span class="sr-only"></span>
+                                <div class="details">
+                                    <div class="number">
+                                        <span data-counter="counterup" data-value="0">
+                                            <i class="fa fa-file"></i>
                                         </span>
                                     </div>
-                                    <div class="status">
-                                        <div class="status-title">view</div>
-                                        <div class="status-number"><i class="fa fa-long-arrow-right"></i></div>
-                                    </div>
+                                    <div class="desc uppercase bold"> {{eformTemplate.Name}} </div>
                                 </div>
+                                <a class="more" href="javascript:;">
+                                    View
+                                    <i class="m-icon-swapright m-icon-white"></i>
+                                </a>
                             </div>
                         </div>
                         <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="eformTemplate in eformTemplates track by $index" style="margin-bottom: 10px;">

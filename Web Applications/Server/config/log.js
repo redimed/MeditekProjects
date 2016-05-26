@@ -60,6 +60,9 @@ var logstashLogger = new winston.Logger({
             host: "172.19.0.8",
             level: 'verbose',
         }),
+	new winston.transports.Console({
+            level: 'verbose'
+        }),
     ]
 })
 

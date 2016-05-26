@@ -403,11 +403,23 @@ module.exports = React.createClass({
         //swal("Success!", "Update column table successfully.", "success")
     },
     _onComponentPageBarSaveForm: function() {
+        var self = this;
         var templateUID = this.props.params.templateUID;
         var content = this.state.sections.toJS();
         var real_content = {
-            sections: content
+            sections: content,
+            objects: []
         }
+
+        for(var i = 0; i < real_content.sections.length; i++){
+            var section = real_content.sections[i];
+            var sectionRef = section.ref;
+            var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('form');
+            tempFields.map(function(field, index){
+                real_content.objects.push(field);
+            })
+        }
+
         EFormService.eformTemplateSave({ uid: templateUID, content: JSON.stringify(real_content), userUID: this.props.userUID })
         .then(function(response) {
             swal("Success!", "Your form has been saved.", "success");
@@ -425,7 +437,6 @@ module.exports = React.createClass({
                 sections: prevState.sections.updateIn([codeSection, 'rows'], val => val.push(Immutable.Map({ref: rowRef, type: 'row', fields: Immutable.List(), size: 12})))
             }
         })
-        //swal("Success!", "Your row has been created.", "success");
     },
     _onComponentSectionRemoveRow: function(codeSection, codeRow){
         this.setState(function(prevState) {
@@ -433,7 +444,6 @@ module.exports = React.createClass({
                 sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow])
             }
         })
-        //swal("Deleted!", "Your section has been deleted.", "success")
     },
     _onReplaceRefModule: function(module){
         var sectionSizes = this.state.sections.size;

@@ -111,7 +111,8 @@ module.exports = React.createClass({
                                 <a className="btn btn-primary btn-sm" onClick={this._onReset} ref="reset">
                                     Reset
                                 </a>
-                                <div ref="signature" style={{background: '#EEEEEE', height: this.props.height}}/>
+                                <div ref="signature" style={{background: '#EEEEEE', height: this.props.height}}
+                                    id={this.props.refTemp}/>
                             </div>
                         </div>
                     </div>

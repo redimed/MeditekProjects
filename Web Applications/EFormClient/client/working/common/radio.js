@@ -150,7 +150,8 @@ module.exports = React.createClass({
                                 <div className="icheck-inline">
                                     <label>
                                         <input type="radio" className="icheck" name={this.props.name} ref="input" title={this.props.name}
-                                            value={this.props.value} id={this.props.refTemp}/>
+                                            value={this.props.value} id={this.props.refTemp}
+                                            id={this.props.refTemp}/>
                                         &nbsp;
                                         {this.props.label}
                                     </label>

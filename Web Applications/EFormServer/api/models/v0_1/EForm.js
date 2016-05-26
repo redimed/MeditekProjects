@@ -20,6 +20,10 @@ module.exports = {
                 key: 'ID'
             }
         },
+        Status: {
+            type: Sequelize.STRING(45),
+            defaultValue: 'saved'
+        },
         Enable: {
             type: Sequelize.STRING(1),
             defaultValue: 'Y'

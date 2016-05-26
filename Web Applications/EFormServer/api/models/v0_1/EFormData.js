@@ -12,6 +12,9 @@ module.exports = {
         FormData: {
             type: Sequelize.TEXT()
         },
+        TempData: {
+            type: Sequelize.TEXT()
+        },
         EFormID: {
             type: Sequelize.BIGINT(20),
             references: {

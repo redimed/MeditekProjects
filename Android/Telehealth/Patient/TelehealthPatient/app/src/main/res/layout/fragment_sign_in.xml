@@ -9,20 +9,9 @@
         android:id="@+id/toolBar"
         layout="@layout/custom_toolbar" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/toolBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/logo_redimed"
-        android:contentDescription="@string/welcome" />
-
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/logo"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical">

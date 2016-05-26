@@ -1,6 +1,7 @@
 package com.redimed.telehealth.patient.pin.presenter;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 public interface IPinPresenter {
 
     EditText checkDataField(View v);
+
+    void initToolbar(Toolbar toolbar);
 
     void hideKeyboardFragment(View v);
 

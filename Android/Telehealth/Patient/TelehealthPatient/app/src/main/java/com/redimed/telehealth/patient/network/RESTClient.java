@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.utlis.DefineKey;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -110,7 +111,7 @@ public class RESTClient {
 
         //3005
         restAdapterCore = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Config.apiURLCore)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
@@ -119,7 +120,7 @@ public class RESTClient {
 
         //3006
         restAdapterLogin = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Config.apiURLLogin)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
@@ -129,12 +130,12 @@ public class RESTClient {
 
     public static class SessionRequestInterceptor extends RequestInterceptor implements retrofit.RequestInterceptor {
         public void intercept(RequestFacade paramRequestFacade) {
-            paramRequestFacade.addHeader("SystemType", "ARD");
+            paramRequestFacade.addHeader("SystemType", DefineKey.SystemType);
             paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", ""));
             paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", ""));
             paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", ""));
             paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", ""));
-            paramRequestFacade.addHeader("AppID", "com.redimed.telehealth.patient");
+            paramRequestFacade.addHeader("AppID", DefineKey.AppID);
         }
     }
 
@@ -201,12 +202,12 @@ public class RESTClient {
             com.squareup.okhttp.Request originalRequest = chain.request();
 
             com.squareup.okhttp.Request compressedRequest = originalRequest.newBuilder()
-                    .header("SystemType", "ARD")
+                    .header("SystemType", DefineKey.SystemType)
                     .header("DeviceID", spDevice.getString("deviceID", ""))
                     .header("Authorization", "Bearer " + uidTelehealth.getString("token", ""))
                     .header("UserUID", uidTelehealth.getString("userUID", ""))
                     .header("Cookie", uidTelehealth.getString("cookie", ""))
-                    .header("AppID", "com.redimed.telehealth.patient")
+                    .header("AppID", DefineKey.AppID)
                     .build();
 
             return chain.proceed(compressedRequest);

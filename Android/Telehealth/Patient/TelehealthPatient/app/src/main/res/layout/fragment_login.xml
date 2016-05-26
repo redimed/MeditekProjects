@@ -10,74 +10,23 @@
         android:id="@+id/toolBar"
         layout="@layout/custom_toolbar" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
+    <RelativeLayout
+        android:id="@+id/layoutLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/logo_redimed"
-        android:contentDescription="@string/welcome" />
+        android:layout_centerHorizontal="true">
 
-    <!--<ViewFlipper-->
-    <!--android:id="@+id/layoutContainer"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerInParent="true">-->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/logo_redimed"
+            android:contentDescription="@string/welcome"
+            android:visibility="visible" />
 
-    <!--<LinearLayout-->
-    <!--android:id="@+id/layoutRequestPin"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/txtPin"-->
-    <!--android:layout_width="320dp"-->
-    <!--android:layout_height="?android:actionBarSize"-->
-    <!--android:background="@android:color/white"-->
-    <!--android:gravity="center"-->
-    <!--android:hint="@string/hint_pin"-->
-    <!--android:inputType="numberPassword"-->
-    <!--android:maxLength="15"-->
-    <!--android:maxLines="1"-->
-    <!--android:singleLine="true"-->
-    <!--android:textColor="@android:color/black"-->
-    <!--android:textColorHint="@android:color/black"-->
-    <!--android:textSize="17sp" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/layoutVerifyCode"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="#41000000"-->
-    <!--android:descendantFocusability="beforeDescendants"-->
-    <!--android:focusableInTouchMode="true"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/txtVerifyCode"-->
-    <!--android:layout_width="320dp"-->
-    <!--android:layout_height="?android:actionBarSize"-->
-    <!--android:background="@android:color/white"-->
-    <!--android:focusable="true"-->
-    <!--android:focusableInTouchMode="true"-->
-    <!--android:gravity="center"-->
-    <!--android:hint="@string/hint_code"-->
-    <!--android:inputType="number"-->
-    <!--android:maxLength="6"-->
-    <!--android:maxLines="1"-->
-    <!--android:singleLine="true"-->
-    <!--android:textColor="@android:color/black"-->
-    <!--android:textColorHint="@android:color/black"-->
-    <!--android:textSize="17sp" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--</ViewFlipper>-->
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layoutContainer"

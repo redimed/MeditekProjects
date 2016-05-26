@@ -21,6 +21,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -70,9 +73,6 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     private static final int RESULT_RELOAD = 3;
     private static final int MEDIA_TYPE_IMAGE = 1;
 
-    /* Variable field */
-    private String status;
-    private String fromTime;
     private String firstDoctor;
     private String middleDoctor;
     private String lastDoctor;
@@ -120,27 +120,17 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
     public AppointmentFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_appointment_details, container, false);
+        setHasOptionsMenu(true);
         this.context = v.getContext();
         ButterKnife.bind(this, v);
 
-//        if (savedInstanceState != null) {
-//            fileUri = savedInstanceState.getParcelable("fileUri");
-//            bundle = savedInstanceState.getBundle("dataAppt");
-//        }
         initVariable();
-        onLoadToolbar();
 
         btnUpload.setOnClickListener(this);
         layoutStatus.setOnClickListener(this);
@@ -150,10 +140,11 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
 
     private void initVariable() {
         gson = new Gson();
+        iAppointmentPresenter = new AppointmentPresenter(context, this, getActivity());
+        iAppointmentPresenter.initToolbar(toolBar);
 
         bundle = getArguments();
         if (bundle != null) {
-            iAppointmentPresenter = new AppointmentPresenter(context, this, getActivity());
             iAppointmentPresenter.getAppointmentDetails(bundle.getString("apptUID", ""));
         }
         progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
@@ -163,29 +154,36 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
         progressDialog.show();
     }
 
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.appt_title));
-        lblSubTitle.setText(getResources().getString(R.string.sub_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 iAppointmentPresenter.changeFragment(new TrackingFragment());
-            }
-        });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public void onLoadAppointment(JsonObject dataAppt) {
         if (!dataAppt.get("data").isJsonNull()) {
-            fromTime = dataAppt.get("data").getAsJsonObject().get("FromTime").isJsonNull() ?
+            String fromTime = dataAppt.get("data").getAsJsonObject().get("FromTime").isJsonNull() ?
                     "NONE" : dataAppt.get("data").getAsJsonObject().get("FromTime").getAsString();
 
-            status = dataAppt.get("data").getAsJsonObject().get("Status").isJsonNull() ?
+
+            String status = dataAppt.get("data").getAsJsonObject().get("Status").isJsonNull() ?
                     "NONE" : dataAppt.get("data").getAsJsonObject().get("Status").getAsString();
 
             String code = dataAppt.get("data").getAsJsonObject().get("Code").isJsonNull() ?
@@ -250,7 +248,7 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layoutStatus:
-                iAppointmentPresenter.viewStatus(status, fromTime);
+                iAppointmentPresenter.viewStatus();
                 break;
             case R.id.btnUpload:
                 DialogUploadImage();
@@ -283,13 +281,6 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
         });
         alertDialog.show();
     }
-
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putParcelable("fileUri", fileUri);
-//        outState.putBundle("dataAppt", bundle);
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -379,17 +370,19 @@ public class AppointmentFragment extends Fragment implements IAppointmentView, V
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iAppointmentPresenter.changeFragment(new TrackingFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        iAppointmentPresenter.changeFragment(new TrackingFragment());
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 }

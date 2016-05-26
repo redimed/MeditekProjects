@@ -1,6 +1,7 @@
 package com.redimed.telehealth.patient.tracking.presenter;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 
 import com.redimed.telehealth.patient.models.Appointment;
 
@@ -12,10 +13,13 @@ import java.util.concurrent.ExecutionException;
  */
 public interface ITrackingPresenter {
 
-    List<Appointment> getListAppointment(int offset);
+    void initToolbar(Toolbar toolbar);
 
     void changeFragment(Fragment fragment);
 
     void setProgressBarVisibility(int visibility);
+
+    List<Appointment> getListAppointment(int offset);
+
 
 }

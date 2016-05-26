@@ -13,6 +13,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -57,12 +60,6 @@ public class PinFragment extends Fragment implements IPinView {
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
     public PinFragment() {
         // Required empty public constructor
@@ -71,21 +68,15 @@ public class PinFragment extends Fragment implements IPinView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_pin, container, false);
+        setHasOptionsMenu(true);
         context = v.getContext();
         ButterKnife.bind(this, v);
 
         init(v);
-        onLoadToolbar();
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Log.d(TAG, "RUN TIME");
-//                    }
-//                }, 5000);
                 progressDialog.show();
                 btnSubmit.setEnabled(false);
                 iPinPresenter.checkDataField(layoutChangePin);
@@ -98,6 +89,7 @@ public class PinFragment extends Fragment implements IPinView {
     private void init(View v) {
 
         iPinPresenter = new PinPresenter(this, context, getActivity());
+        iPinPresenter.initToolbar(toolBar);
         iPinPresenter.hideKeyboardFragment(v);
 
         //init progressDialog
@@ -107,22 +99,28 @@ public class PinFragment extends Fragment implements IPinView {
         progressDialog.setCancelable(false);
     }
 
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.pin_title));
-        lblSubTitle.setText(getResources().getString(R.string.setting_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 fragment = new SettingFragment();
                 fragment.setArguments(getArguments());
                 iPinPresenter.changeFragment(fragment);
-            }
-        });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -159,19 +157,21 @@ public class PinFragment extends Fragment implements IPinView {
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    fragment = new SettingFragment();
-                    fragment.setArguments(getArguments());
-                    iPinPresenter.changeFragment(fragment);
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        fragment = new SettingFragment();
+                        fragment.setArguments(getArguments());
+                        iPinPresenter.changeFragment(fragment);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 }

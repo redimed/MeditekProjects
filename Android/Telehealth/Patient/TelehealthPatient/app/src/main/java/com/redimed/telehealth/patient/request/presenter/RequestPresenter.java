@@ -48,6 +48,7 @@ import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.request.RequestFragment;
 import com.redimed.telehealth.patient.request.view.IRequestView;
+import com.redimed.telehealth.patient.utlis.DefineKey;
 import com.redimed.telehealth.patient.views.SignaturePad;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -193,8 +194,8 @@ public class RequestPresenter implements IRequestPresenter {
     public void getValueSign(String sign) {
         String url = Config.apiURLDownload + sign;
         GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
-                .addHeader("SystemType", "ARD")
-                .addHeader("AppID", "com.redimed.telehealth.patient")
+                .addHeader("SystemType", DefineKey.SystemType)
+                .addHeader("AppID", DefineKey.AppID)
                 .addHeader("Cookie", uidTelehealth.getString("cookie", ""))
                 .addHeader("DeviceID", uidTelehealth.getString("deviceID", ""))
                 .addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", ""))

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.redimed.telehealth.patient.pin.PinFragment">
 
-    <include layout="@layout/custom_toolbar" />
+    <include android:id="@+id/toolBar" layout="@layout/custom_toolbar" />
 
     <LinearLayout
         android:id="@+id/layoutChangePin"

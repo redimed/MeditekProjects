@@ -104,7 +104,7 @@
     <string name="home_title">Home</string>
     <string name="green_btn">Request Telehealth</string>
     <string name="blue_btn">Tracking Bookings</string>
-    <string name="red_btn">Setting</string>
+    <string name="red_btn">Settings</string>
     <string name="phone_call">0892300900</string>
     <string name="orange_btn">Other Services</string>
     <string name="urgent_btn">ABOUT US</string>
@@ -152,7 +152,7 @@
     <string name="pre_pra">Treating Practitioner</string>
 
     <!-- Setting Layout-->
-    <string name="setting_title">Setting</string>
+    <string name="setting_title">Settings</string>
     <string name="setting_account">ACCOUNT</string>
     <string name="setting_profile">PATIENT PROFILE</string>
     <string name="complete_profile">Incomplete Profile</string>
@@ -225,6 +225,7 @@
     <string name="sign_clear">Clear</string>
     <string name="sign_cancel">Cancel</string>
     <string name="sign_save">Save Signature</string>
+    <string name="action_settings">Settings</string>
 
     <!-- Notification-->
     <string name="not_title">Telehealth</string>

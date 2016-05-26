@@ -5,10 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -44,11 +50,13 @@ public class SettingPresenter implements ISettingPresenter {
     private Patient[] patients;
     private RegisterApi restClient;
     private ISettingView iSettingView;
+    private FragmentActivity activity;
     private IMainPresenter iMainPresenter;
     private static final String TAG = "===SETTING_PRESENTER===";
 
     public SettingPresenter(ISettingView iSettingView, Context context, FragmentActivity activity) {
         this.context = context;
+        this.activity = activity;
         this.iSettingView = iSettingView;
 
         gson = new Gson();
@@ -96,6 +104,29 @@ public class SettingPresenter implements ISettingPresenter {
         fragment.setArguments(bundle);
 
         iMainPresenter.replaceFragment(fragment);
+    }
+
+    @Override
+    public void initToolbar(Toolbar toolbar) {
+        //init toolbar
+        AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+        appCompatActivity.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle(context.getResources().getString(R.string.setting_title));
+
+            actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+            actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+
+            // Change color image back, set a custom icon for the default home button
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+            actionBar.setHomeAsUpIndicator(upArrow);
+        }
     }
 
     @Override

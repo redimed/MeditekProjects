@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.redimed.telehealth.patient.information.InformationFragment">
 
-    <include layout="@layout/custom_toolbar" />
+    <include android:id="@+id/toolBar" layout="@layout/custom_toolbar" />
 
     <RelativeLayout
         android:id="@+id/layoutProfile"

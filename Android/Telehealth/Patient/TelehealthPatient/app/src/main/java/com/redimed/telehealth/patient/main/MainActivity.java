@@ -1,8 +1,6 @@
 package com.redimed.telehealth.patient.main;
 
 import android.os.Bundle;
-
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
+
+    private static final String TAG = "=====MAIN=====";
 
     @Bind(R.id.frame_container)
     FrameLayout main_contain;
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
         IMainPresenter iMainPresenter = new MainPresenter(this, this);
         iMainPresenter.replaceFragment(new HomeFragment());
+
     }
 
     @Override

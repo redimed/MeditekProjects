@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,10 +58,6 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
 
     public SettingFragment() {
     }
@@ -66,11 +65,11 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
+        setHasOptionsMenu(true);
         context = v.getContext();
         ButterKnife.bind(this, v);
 
         initVariable();
-        onLoadToolbar();
 
         btnLogout.setOnClickListener(this);
         layoutAbout.setOnClickListener(this);
@@ -82,6 +81,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
 
     private void initVariable() {
         iSettingPresenter = new SettingPresenter(this, context, getActivity());
+        iSettingPresenter.initToolbar(toolBar);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -127,19 +127,26 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
         progressDialog.dismiss();
     }
 
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.setting_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 iSettingPresenter.changeFragment(new HomeFragment());
-            }
-        });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -164,17 +171,19 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iSettingPresenter.changeFragment(new HomeFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        iSettingPresenter.changeFragment(new HomeFragment());
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 }

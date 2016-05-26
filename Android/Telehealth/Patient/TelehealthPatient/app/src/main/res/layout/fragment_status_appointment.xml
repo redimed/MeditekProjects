@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.redimed.telehealth.patient.fragment.TrackingFragment">
+    tools:context=".status_appointment.StatusFragment">
 
-    <include layout="@layout/custom_toolbar" />
+    <include android:id="@+id/toolBar" layout="@layout/custom_toolbar" />
 
     <LinearLayout
         android:id="@+id/layoutApptStatus"

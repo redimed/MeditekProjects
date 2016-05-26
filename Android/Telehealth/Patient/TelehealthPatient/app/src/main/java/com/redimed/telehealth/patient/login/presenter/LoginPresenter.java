@@ -3,9 +3,15 @@ package com.redimed.telehealth.patient.login.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,8 +42,8 @@ import retrofit.client.Response;
 public class LoginPresenter implements ILoginPresenter {
 
     private Context context;
-//    private String isActivated;
     private ILoginView iLoginView;
+    private FragmentActivity activity;
     private IMainPresenter iMainPresenter;
     private SharedPreferences.Editor editor;
     private SharedPreferences spDevice, spTele;
@@ -48,29 +54,20 @@ public class LoginPresenter implements ILoginPresenter {
     public LoginPresenter(ILoginView iLoginView, Context context, FragmentActivity activity) {
         this.iLoginView = iLoginView;
         this.context = context;
+        this.activity = activity;
 
         //init variable
-//        gson = new Gson();
-//        patientJSON = new JsonObject();
-//        telehealthUser = new TelehealthUser();
         registerApi = RESTClient.getRegisterApi();
         registerApiLogin = RESTClient.getRegisterApiLogin();
         iMainPresenter = new MainPresenter(context, activity);
         spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         spTele = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
-        editor = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE).edit();
     }
 
     @Override
     public void verifyLogin(Bundle bundle, String code) {
         if (bundle != null) {
-//            isActivated = bundle.getString("isActivated");
-//            Log.d(TAG, isActivated + "");
-//            if (isActivated.equalsIgnoreCase("Y")) {
-//                Log.d(TAG, "OK");
-//            } else {
-                login(code);
-//            }
+            login(code);
         }
     }
 
@@ -81,7 +78,6 @@ public class LoginPresenter implements ILoginPresenter {
         jsonLogin.addProperty("PinNumber", pinNumber);
         jsonLogin.addProperty("UserUID", spTele.getString("userUID", ""));
         jsonLogin.addProperty("DeviceID", spDevice.getString("deviceID", ""));
-//        jsonLogin.addProperty("VerificationToken", jsonObject.get("verifyCode").isJsonNull() ? "" : jsonObject.get("verifyCode").getAsString());
         jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
         return jsonLogin;
     }
@@ -90,16 +86,13 @@ public class LoginPresenter implements ILoginPresenter {
         registerApiLogin.login(initJsonLogin(pin), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-
+                editor = spTele.edit();
                 editor.putString("token", jsonObject.get("token").isJsonNull() ? "" : jsonObject.get("token").getAsString());
                 editor.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ? "" : jsonObject.get("refreshCode").getAsString());
-//                editor.putString("deviceID", spDevice.getString("deviceID", ""));
                 editor.apply();
 
                 JsonObject userJson = jsonObject.get("user").getAsJsonObject();
                 GetTelehealthUID(userJson.get("UID").isJsonNull() ? "" : userJson.get("UID").getAsString());
-
-//                Log.d(TAG, jsonObject + "");
             }
 
             @Override
@@ -114,6 +107,7 @@ public class LoginPresenter implements ILoginPresenter {
             registerApi.getTelehealthUID(userUID, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
+                    editor = spTele.edit();
                     editor.putString("uid", jsonObject.get("UID").isJsonNull() ? "" : jsonObject.get("UID").getAsString());
                     editor.apply();
 
@@ -137,6 +131,29 @@ public class LoginPresenter implements ILoginPresenter {
     public void changeFragment(Fragment fragment) {
         if (fragment != null) {
             iMainPresenter.replaceFragment(fragment);
+        }
+    }
+
+    @Override
+    public void initToolbar(Toolbar toolbar) {
+        //init toolbar
+        AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+        appCompatActivity.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle(context.getResources().getString(R.string.login));
+
+            actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+            actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+
+            // Change color image back, set a custom icon for the default home button
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+            actionBar.setHomeAsUpIndicator(upArrow);
         }
     }
 

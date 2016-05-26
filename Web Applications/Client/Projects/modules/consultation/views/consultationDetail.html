@@ -37,7 +37,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="dashboard-stat red margin-bottom-20" ng-click="consultNote()">
                                 <div class="visual">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-file"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
@@ -56,7 +56,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="dashboard-stat green-jungle margin-bottom-20" ng-click="telehealthDetail()">
                                 <div class="visual">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-calendar"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
@@ -75,7 +75,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="dashboard-stat blue margin-bottom-20" ng-click="getEFormByPatient()">
                                 <div class="visual">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-file"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
@@ -111,9 +111,9 @@
                     <!-- ROW -->
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                            <div class="dashboard-stat purple-seance margin-bottom-20" ng-click="admission()">
+                            <div class="dashboard-stat green-haze margin-bottom-20" ng-click="admission()">
                                 <div class="visual">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-file"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
@@ -131,12 +131,12 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" 
                             ng-repeat="eformTemplate in eformTemplates track by $index">
-                            <div class="dashboard-stat grey margin-bottom-20" 
+                            <div class="dashboard-stat blue margin-bottom-20" 
                                 ng-class="styleFunction(eformTemplate.EForms)"
                                 ng-click="eFormTemplate(eformTemplate)">
 
                                 <div class="visual">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-file"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">

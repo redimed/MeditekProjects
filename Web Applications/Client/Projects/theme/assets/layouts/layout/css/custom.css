@@ -139,11 +139,11 @@ ul.my-ul {
     background: #ddd;
 }
 
-.tab-top-custom>.nav-pills>li:not(.active)>a {
-    background: #ddd;
+.tabbable-custom>.nav-tabs>li:not(.active)>a {
+    background: #ededed;
 }
-.tab-top-custom>.nav-pills>li.active>a{
-    background-color: #36c6d3;
+.tabbable-custom>.nav-tabs>li.active>a{
+    /*background-color: #36c6d3;*/
 }
 /*BEGIN tab-vertical-custom========================================*/
     .tab-vertical-custom {
@@ -157,7 +157,7 @@ ul.my-ul {
             margin: 0;
             width: 30%;
             float: left;
-            margin-top: 50px;
+            margin-top: 20px;
         }
     }
     @media (min-width: 768px) and (max-width: 1023px){
@@ -165,7 +165,7 @@ ul.my-ul {
             margin: 0;
             width: 30%;
             float: left;
-            margin-top: 50px;
+            margin-top: 20px;
         }
     }
     @media (min-width: 1336px){
@@ -173,7 +173,7 @@ ul.my-ul {
             margin: 0;
             width: 25%;
             float: left;
-            margin-top: 50px;
+            margin-top: 20px;
         }
     }
     
@@ -243,8 +243,8 @@ ul.my-ul {
     .tab-vertical-custom>.tabs-left.nav-tabs>li.active>a:hover>li.active>a:focus {
         /*border: 1px solid #337ab7;*/
         border-right: none;
-        color: white;
-        background-color: #36c6d3;/*#337ab7;*/
+        color: #fff;
+        background-color: #306586;/*#337ab7;*/
         -webkit-transition: background 1s, color 1s; /* Safari */
         transition: background 1s, color 1s;
         /*border-left: solid 3px #337ab7;*/
@@ -837,7 +837,12 @@ input[type="email"]:disabled,
     padding-left: 10px !important;
 }*/
 
-
+.profile-userpic img {
+    -webkit-border-radius: 10% !important; 
+    -moz-border-radius: 10% !important;
+    border-radius: 10% !important; 
+    max-height: 150px !important; 
+}
 /*phan quoc chien================================================================================*/
 
     .margin-left-right-0 {

@@ -18,6 +18,11 @@ public class AccountModel {
     private String ModifiedDate;
     private String ModifiedBy;
 
+    public AccountModel(String ID, String UID) {
+        this.ID = ID;
+        this.UID = UID;
+    }
+
     public String getID() {
         return ID;
     }

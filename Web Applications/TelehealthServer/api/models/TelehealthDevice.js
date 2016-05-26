@@ -103,7 +103,15 @@ module.exports = {
         DeviceType: {
             type: Sequelize.TEXT,
             validate: {
-
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Appid: {
+            type: Sequelize.TEXT,
+            validate: {
                 len: {
                     args: [0, 255],
                     msg: 'Too long!'

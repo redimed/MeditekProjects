@@ -92,7 +92,7 @@ public class RESTClient {
         public void intercept(RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("systemtype", "ARD");
             paramRequestFacade.addHeader("deviceid", android.os.Build.MANUFACTURER+android.os.Build.MODEL);
-            paramRequestFacade.addHeader("appid", "com.redimed.telehealth.workinjury");
+            paramRequestFacade.addHeader("appid", "au.com.redimed.workinjury");
             paramRequestFacade.addHeader("Authorization", "Bearer " + workInjury.getString("token", ""));
             paramRequestFacade.addHeader("Cookie", workInjury.getString("cookie", ""));
             paramRequestFacade.addHeader("useruid", workInjury.getString("useruid", ""));

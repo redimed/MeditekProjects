@@ -6,10 +6,8 @@ var $q = require('q');
 var http = require('http');
 var _ = require('lodash');
 var rootPath = process.cwd();
-var gcm = require('node-gcm');
-var gcmSender = new gcm.Sender(config.GCMApiKey);
-var gcmSenderWorkInjury = new gcm.Sender(config.GCMInjuryApiKey);
 var apn = require('apn');
+var gcm = require('node-gcm');
 var options = {
     cert: config.APNCert,
     key: config.APNKey,
@@ -225,27 +223,11 @@ module.exports = {
             rejectUnauthorized: false
         })
     },
-    SendGCMPush: function(opts, tokens) {
+    SendGCMPush: function(opts, tokens, gcmSender) {
         var defer = $q.defer();
-        var message = new gcm.Message(opts)
+        var message = new gcm.Message(opts);
         var regTokens = tokens;
         gcmSender.send(message, {
-            registrationIds: regTokens
-        }, 10, function(err, result) {
-            if (err) defer.reject({
-                message: err
-            });
-            defer.resolve({
-                message: result
-            });
-        })
-        return defer.promise;
-    },
-    SendGCMWorkInjuryPush: function(opts, tokens) {
-        var defer = $q.defer();
-        var message = new gcm.Message(opts)
-        var regTokens = tokens;
-        gcmSenderWorkInjury.send(message, {
             registrationIds: regTokens
         }, 10, function(err, result) {
             if (err) defer.reject({

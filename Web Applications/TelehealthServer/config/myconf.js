@@ -1,4 +1,9 @@
 var rootPath = process.cwd();
+var gcm = require('node-gcm');
+var telehealthApiKey = 'AIzaSyBdHCijDr0RNRzYYjvImikY8ZmMWibiYkc';
+var workinjuryApiKey = 'AIzaSyAX5704J8-KtexZHaPoFFglzneoPKwv5cs';
+var gcmTelehealth = new gcm.Sender(telehealthApiKey);
+var gcmWorkInjury = new gcm.Sender(workinjuryApiKey);
 module.exports.myconf = {
 	//============ Twilio SMS Service Key=============
     twilioSID: 'AC7772e542a52ff56dcf0d13f95a99b154',
@@ -8,10 +13,12 @@ module.exports.myconf = {
     OpentokAPIKey: '45364382',
     OpentokAPISecret: 'eaacb0aba8fa68400314cb9b3316ca12a3dcbd86',
     //============ GCM Push Notification =============
-    GCMApiKey: 'AIzaSyDz2pMblr_p6HwWqCeBNUoxuat1rcOQwdk',
-    // GCMInjuryApiKey: 'AIzaSyAg1tnh5akORy2ZhgJR2qZByHjS3F4G4fw',
-    GCMInjuryApiKey: 'AIzaSyAX5704J8-KtexZHaPoFFglzneoPKwv5cs',
-    GCMTelehealthApiKey: 'AIzaSyBdHCijDr0RNRzYYjvImikY8ZmMWibiYkc',
+    GCMWorkinjuryApiKey: workinjuryApiKey,
+    GCMTelehealthApiKey: telehealthApiKey,
+    GCMTelehealth: gcmTelehealth,
+    GCMWorkInjury: gcmWorkInjury,
+    TelehealthAppid: 'au.com.redimed.telehealth',
+    WorkinjuryAppid: 'au.com.redimed.workinjury',
     //============ APN Push Notification DEV=============
     APNCert: rootPath + '/config/push_key/TelePushCert.pem',
     APNKey: rootPath + '/config/push_key/TelePushKey.pem',

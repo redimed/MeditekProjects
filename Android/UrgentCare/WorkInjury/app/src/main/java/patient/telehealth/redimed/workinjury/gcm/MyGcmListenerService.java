@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
-import patient.telehealth.redimed.workinjury.HomeActivity;
+import patient.telehealth.redimed.workinjury.HomeActivity111;
 import patient.telehealth.redimed.workinjury.R;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -33,7 +33,7 @@ public class MyGcmListenerService extends GcmListenerService {
         sendNotification(message);
     }
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeActivity111.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import patient.telehealth.redimed.workinjury.main.MainActivity;
+
 public class LauncherActivity extends AppCompatActivity {
 
     @Override
@@ -16,7 +18,7 @@ public class LauncherActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         },1500);

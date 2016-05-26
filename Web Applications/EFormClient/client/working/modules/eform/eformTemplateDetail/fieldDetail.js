@@ -11,7 +11,6 @@ module.exports = React.createClass({
     ref: '',
     type: '',
     formSize:null,
-    formSizeSelection:null,
     propTypes: {
         onSave: React.PropTypes.func,
         onCloseModal: React.PropTypes.func
@@ -80,18 +79,6 @@ module.exports = React.createClass({
             this.roles = response.data;
             this.type = object.type;
             this.formSize=object.size;
-            this.formSizeSelection=[];
-            for (var i = 1; i <= 12; i++)
-            {
-                var size =(
-                    <input key={i} type="button" className={"btn btn-default eform-btn-toolbar-size " + (this.formSize==i?'active':'')} value={i}  onClick={this._onClickSetFormSize}/>
-                )
-                /*<input type="radio" className="btn btn-default" value={i}  onClick={this._onClickSetFormSize}/>*/
-                this.formSizeSelection.push(size);
-                if(i==6)
-                    this.formSizeSelection.push(<br key = "13"/>);
-            }
-
             this.ref = object.ref;
             this.forceUpdate();
             this._initExtend(object);
@@ -261,6 +248,19 @@ module.exports = React.createClass({
             display_name = 'block';
         }
 
+        var formSizeSelection=[];
+        for (var i = 1; i <= 12; i++)
+        {
+            var size =(
+                <input key={i} type="button" className={"btn btn-default eform-btn-toolbar-size " + (this.formSize==i?'active':'')} value={i}  onClick={this._onClickSetFormSize}/>
+            )
+            /*<input type="radio" className="btn btn-default" value={i}  onClick={this._onClickSetFormSize}/>*/
+            formSizeSelection.push(size);
+            if(i==6)
+                formSizeSelection.push(<br key = "13"/>);
+        }
+
+
         return (
             <div className="row">
                 <div className="col-md-12">
@@ -304,13 +304,9 @@ module.exports = React.createClass({
                             </div>
                             <div className="form-group">
                                 <label>Size</label>
-                                {/*<CommonInputText placeholder="Type size" ref="formSize"/>*/}
-                                {/*<div className="form-inline">
-                                    {this.formSizeSelection}
-                                </div>*/}
                                 <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                     <div className="btn-group" role="group" aria-label="First group">
-                                        {this.formSizeSelection}
+                                        {formSizeSelection}
                                     </div>
                                 </div>
                             </div>

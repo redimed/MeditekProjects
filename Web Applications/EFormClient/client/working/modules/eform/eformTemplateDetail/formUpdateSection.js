@@ -4,6 +4,11 @@ module.exports = React.createClass({
     propTypes: {
         name: React.PropTypes.string
     },
+
+    init: function (){
+        this.refs.inputName.setValue(this.props.name)
+    },
+
     componentDidMount: function(){
         this.refs.inputName.setValue(this.props.name);
     },
@@ -11,6 +16,7 @@ module.exports = React.createClass({
         return this.refs.inputName.getValue();
     },
     render: function(){
+
         return (
             <div className="row">
                 <div className="col-md-12">

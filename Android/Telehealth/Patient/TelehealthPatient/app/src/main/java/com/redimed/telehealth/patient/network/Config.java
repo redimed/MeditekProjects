@@ -20,6 +20,7 @@ public class Config {
 
     public static final String apiURLImageResize = "http://192.168.1.247:3005/api/downloadFile/400/";
 
+
     /*Test App*/
 //    public static final String socketURL = "https://testapp.redimed.com.au:3009";
 //

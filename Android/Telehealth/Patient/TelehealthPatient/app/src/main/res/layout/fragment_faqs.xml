@@ -5,52 +5,7 @@
     android:orientation="vertical"
     tools:context="com.redimed.telehealth.patient.faq.FAQsFragment">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        android:elevation="1dp">
-
-        <LinearLayout
-            android:id="@+id/layoutBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:padding="10dp"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true">
-
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center"
-                android:background="@drawable/icon_back"
-                style="?android:attr/borderlessButtonStyle"/>
-
-            <com.redimed.telehealth.patient.font.RobotoTextView
-                android:id="@+id/lblSubTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back"
-                android:textSize="12sp"
-                android:layout_gravity="center"
-                android:textColor="@color/lightFont"/>
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/logo_work"
-            android:layout_width="180dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/logo_redimed" />
-
-    </android.support.v7.widget.Toolbar>
-
+    <include android:id="@+id/toolBar" layout="@layout/custom_toolbar" />
 
     <WebView
         android:id="@+id/webFAQs"

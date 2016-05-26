@@ -2,6 +2,7 @@ package com.redimed.telehealth.patient.information.presenter;
 
 import android.net.Uri;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,17 +21,19 @@ public interface IInfoPresenter {
 
     ArrayAdapter loadJsonCountry();
 
+    Uri getOutputMediaFileUri(int type);
+
     void loadAvatar(String url);
 
     void displayDatePickerDialog();
 
     void getInfoPatient(String uid);
 
-    Uri getOutputMediaFileUri(int type);
-
-    void hideKeyboardFragment(View view);
+    void initToolbar(Toolbar toolbar);
 
     void downloadSignature(String url);
+
+    void hideKeyboardFragment(View view);
 
     void changeFragment(Fragment fragment);
 

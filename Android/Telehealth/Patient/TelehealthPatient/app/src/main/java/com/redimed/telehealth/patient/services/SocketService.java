@@ -46,8 +46,8 @@ public class SocketService extends Service {
 
     private void initializeSocket() {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
-        String auth = uidTelehealth.getString("token", null);
-        String deviceId = uidTelehealth.getString("deviceId", null);
+        String auth = uidTelehealth.getString("token", "");
+        String deviceId = uidTelehealth.getString("deviceId", "");
         try {
             SSLContext sc = null;
             sc = SSLContext.getInstance("TLS");
@@ -139,7 +139,7 @@ public class SocketService extends Service {
     public static void JoinRoom() {
         try {
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("uid", uidTelehealth.getString("uid", null));
+            params.put("uid", uidTelehealth.getString("uid", ""));
             SocketService.sendData("socket/joinRoom", params);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -204,7 +204,7 @@ public class SocketService extends Service {
                     i.putExtra("sessionId", data.get("sessionId").toString());
                     i.putExtra("token", data.get("token").toString());
                     i.putExtra("to", data.get("from").toString());
-                    i.putExtra("from", uidTelehealth.getString("uid", null));
+                    i.putExtra("from", uidTelehealth.getString("uid", ""));
                     i.putExtra("message", data.get("message").toString());
                     i.putExtra("fromName", data.get("fromName").toString());
                     startActivity(i);

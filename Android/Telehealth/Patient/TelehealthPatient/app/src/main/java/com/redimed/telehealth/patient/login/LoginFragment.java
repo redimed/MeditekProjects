@@ -3,16 +3,14 @@ package com.redimed.telehealth.patient.login;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
-
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,9 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
+import android.widget.RelativeLayout;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.login.presenter.LoginPresenter;
@@ -40,29 +36,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
 
     private Bundle bundle;
     private Context context;
-//    private String isActivated;
     private SweetAlertDialog progressDialog;
     private ILoginPresenter iLoginPresenter;
     private static final String TAG = "=====ACTIVATION=====";
 
+    @Bind(R.id.layoutLogo)
+    RelativeLayout layoutLogo;
     @Bind(R.id.logo)
     ImageView mLogo;
-
-//    //=======Layout 1=========
-//    @Bind(R.id.txtPin)
-//    EditText txtPin;
-//
-//    //======Layout 2==========
-//    @Bind(R.id.txtVerifyCode)
-//    EditText txtVerifyCode;
-//
-//    @Bind(R.id.layoutContainer)
-//    ViewFlipper layoutContainer;
-//    @Bind(R.id.layoutRequestPin)
-//    LinearLayout layoutRegisterPin;
-//    @Bind(R.id.layoutVerifyCode)
-//    LinearLayout layoutVerifyCode;
-
     @Bind(R.id.layoutContainer)
     LinearLayout layoutContainer;
     @Bind(R.id.txtCode)
@@ -73,26 +54,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
-        context = v.getContext();
-        ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        setHasOptionsMenu(true);
+        context = view.getContext();
+        ButterKnife.bind(this, view);
 
         //init Presenter
         iLoginPresenter = new LoginPresenter(this, context, getActivity());
-        iLoginPresenter.hideKeyboardFragment(v);
+        iLoginPresenter.initToolbar(toolBar);
+        iLoginPresenter.hideKeyboardFragment(view);
 
         //init variable
         init();
-        initToolbar();
 
         //init animation function
         animationLogo();
@@ -101,42 +77,40 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
         //set listener
         btnLogin.setOnClickListener(this);
 
-        return v;
+        return view;
     }
 
     private void init() {
         bundle = this.getArguments();
-//        if (bundle != null) {
-//            isActivated = bundle.getString("isActivated");
-//        }
-
         layoutContainer.setAlpha(0.0f);
-//        layoutContainer.setAnimateFirstView(true);
-//        if (isActivated)
-//            layoutContainer.setDisplayedChild(layoutContainer.indexOfChild(layoutRegisterPin));
-//        else
-//            layoutContainer.setDisplayedChild(layoutContainer.indexOfChild(layoutVerifyCode));
 
         progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
         progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         progressDialog.setTitleText("Loading");
         progressDialog.setCancelable(false);
+
     }
 
-    private void initToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.login));
-        lblSubTitle.setText(getResources().getString(R.string.back));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 iLoginPresenter.changeFragment(new SignInFragment());
-            }
-        });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -178,7 +152,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
 
     public void animationLogo() {
         Animation anim = AnimationUtils.loadAnimation(context, R.anim.translate_center_to_top);
-        mLogo.startAnimation(anim);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLogo.setVisibility(View.GONE);
+            }
+        });
+        layoutLogo.startAnimation(anim);
+
     }
 
     public void animationContainer() {
@@ -220,17 +210,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iLoginPresenter.changeFragment(new SignInFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        iLoginPresenter.changeFragment(new SignInFragment());
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 }

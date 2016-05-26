@@ -80,6 +80,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LauncherActivity" />
         </activity>
         <activity
             android:name=".main.MainActivity"
@@ -98,24 +101,38 @@
                     android:scheme="https" />
                 <!-- note that the leading "/" is required for pathPrefix-->
             </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".model.ModelActivity"
-            android:label="@string/title_activity_model" />
+            android:label="@string/title_activity_model" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".model.ModelActivity" />
+        </activity>
         <activity
             android:name=".waiting.WaitingActivity"
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="true"
             android:noHistory="true"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".waiting.WaitingActivity" />
+        </activity>
         <activity
             android:name=".call.CallActivity"
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="true"
             android:keepScreenOn="true"
             android:label="@string/title_activity_call"
-            android:launchMode="singleTask" />
-
+            android:launchMode="singleTask" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".call.CallActivity" />
+        </activity>
         <activity
             android:name=".gallery.GalleryActivity"
             android:label="@string/title_activity_gallery">
@@ -124,6 +141,9 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".gallery.GalleryActivity" />
         </activity>
 
         <meta-data

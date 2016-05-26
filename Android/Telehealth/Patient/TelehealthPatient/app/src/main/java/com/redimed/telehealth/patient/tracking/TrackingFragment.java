@@ -14,6 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -73,30 +76,25 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
     public TrackingFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_appointment, container, false);
+        setHasOptionsMenu(true);
         context = v.getContext();
         ButterKnife.bind(this, v);
 
         iTrackingPresenter = new TrackingPresenter(context, this, getActivity());
+        iTrackingPresenter.initToolbar(toolBar);
         iTrackingPresenter.setProgressBarVisibility(View.VISIBLE);
 
-        listAppt = new ArrayList<Appointment>();
+        listAppt = new ArrayList<>();
         listAppt.addAll(iTrackingPresenter.getListAppointment(offset));
 
         loadDataAppt();
         SwipeRefresh();
-        onLoadToolbar();
 
         return v;
     }
@@ -149,19 +147,26 @@ public class TrackingFragment extends Fragment implements ITrackingView {
         iTrackingPresenter.setProgressBarVisibility(View.GONE);
     }
 
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.list_appt_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 iTrackingPresenter.changeFragment(new HomeFragment());
-            }
-        });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -185,54 +190,6 @@ public class TrackingFragment extends Fragment implements ITrackingView {
                 android.R.color.holo_red_light);
     }
 
-//    @Override
-    public void onLoadDataTracking() {
-        lblNoData.setVisibility(View.GONE);
-        iTrackingPresenter.setProgressBarVisibility(View.GONE);
-
-        rvListAppointment.setHasFixedSize(true);
-        rvListAppointment.setLayoutManager(linearLayoutManager);
-        rvListAppointment.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                swipeInfo.setEnabled(linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
-            }
-        });
-
-        adapterAppointment = new AdapterAppointment(context, listAppt, getActivity(), rvListAppointment);
-        rvListAppointment.setAdapter(adapterAppointment);
-        adapterAppointment.setOnLoadMoreListener(new EndlessRecyclerOnScrollListener() {
-            @Override
-            public void onLoadMore() {
-                listAppt.add(null);
-                adapterAppointment.notifyItemInserted(listAppt.size() - 1);
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        listAppt.remove(listAppt.size() - 1);
-                        adapterAppointment.notifyItemRemoved(listAppt.size());
-
-                        int start = listAppt.size();
-                        int end = start + 10;
-
-                        for (int i = start + 1; i < end ; i++){
-                            listAppt.addAll(iTrackingPresenter.getListAppointment(i));
-                            adapterAppointment.notifyItemInserted(listAppt.size());
-                        }
-                        adapterAppointment.setLoaded();
-                    }
-                }, 2000);
-            }
-        });
-        swipeInfo.setRefreshing(false);
-    }
-
     @Override
     public void onLoadError(String msg) {
         if (msg.equalsIgnoreCase("Network Error")) {
@@ -254,17 +211,19 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iTrackingPresenter.changeFragment(new HomeFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        iTrackingPresenter.changeFragment(new HomeFragment());
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 }

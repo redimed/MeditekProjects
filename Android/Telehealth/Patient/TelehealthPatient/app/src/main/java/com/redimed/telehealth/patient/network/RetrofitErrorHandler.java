@@ -41,7 +41,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
                     try {
                         String json = new String(((TypedByteArray) cause.getResponse().getBody()).getBytes());
                         JSONObject dataObject = new JSONObject(json);
-                        String strError = dataObject.optString("ErrorsList") == null ? "" : dataObject.optString("ErrorsList");
+                        String strError = dataObject.opt("ErrorsList") == null ? dataObject.opt("ErrorType").toString() : dataObject.opt("ErrorsList").toString();
                         if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]") || strError.equalsIgnoreCase("[\"isAuthenticated.oldRefreshCodeExpired\"]")) {
                             errorDescription = "TokenExpiredError";
                         } else if (strError.equalsIgnoreCase("[\"isAuthenticated.sessionUserMismatchedUserAccess\"]")) {

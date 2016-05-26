@@ -12,8 +12,6 @@ public interface IInfoView {
 
     void onReload();
 
-    void onLoadToolbar();
-
     void onLoadDOB(String dob);
 
     void onLoadError(String msg);

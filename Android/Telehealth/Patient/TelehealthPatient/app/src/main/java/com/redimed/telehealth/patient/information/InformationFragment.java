@@ -22,6 +22,9 @@ import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -67,6 +70,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
     private Uri fileUri;
     private Context context;
+    private Fragment fragment;
     private boolean flagSign = false;
     private IInfoPresenter iInfoPresenter;
     private SweetAlertDialog progressDialog;
@@ -128,8 +132,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Bind(R.id.layoutButtonUpdate)
     LinearLayout layoutButtonUpdate;
     // Contain button to submit or cancel
-    @Bind(R.id.layoutUpdateProfile)
-    RelativeLayout layoutUpdateProfile;
+//    @Bind(R.id.layoutUpdateProfile)
+//    RelativeLayout layoutUpdateProfile;
     // Button to cancel or submit update information
     @Bind(R.id.lblSubmit)
     TextView btnSubmit;
@@ -166,12 +170,6 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
     public InformationFragment() {
     }
@@ -179,10 +177,12 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_information, container, false);
+        setHasOptionsMenu(true);
         context = v.getContext();
         ButterKnife.bind(this, v);
 
         iInfoPresenter = new InfoPresenter(this, context, getActivity());
+        iInfoPresenter.initToolbar(toolBar);
         iInfoPresenter.hideKeyboardFragment(v);
 
         initVariable();
@@ -241,7 +241,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         }
 
         //init array EditText
-        arrEditText = new ArrayList<EditText>();
+        arrEditText = new ArrayList<>();
         arrEditText.add(txtFirstName);
         arrEditText.add(txtMidName);
         arrEditText.add(txtLastName);
@@ -345,6 +345,30 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         progressDialog.dismiss();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+                /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                fragment = new SettingFragment();
+                fragment.setArguments(getArguments());
+                iInfoPresenter.changeFragment(fragment);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     //Load image avatar
     @Override
     public void onLoadAvatar(Bitmap bitmap) {
@@ -360,23 +384,6 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         }
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-    }
-
-    @Override
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
-
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.profile_title));
-        lblSubTitle.setText(getResources().getString(R.string.home_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iInfoPresenter.changeFragment(new HomeFragment());
-            }
-        });
     }
 
     @Override
@@ -431,18 +438,22 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iInfoPresenter.changeFragment(new HomeFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        fragment = new SettingFragment();
+                        fragment.setArguments(getArguments());
+                        iInfoPresenter.changeFragment(fragment);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 
     @Override

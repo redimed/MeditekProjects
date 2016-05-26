@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +65,8 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
 
     private Context context;
     private String apptType;
+    private boolean flagBack;
+    private ActionBar actionBar;
     private ArrayList<EditText> arrEditText;
     private IRequestPresenter iRequestPresenter;
     private ArrayList<CustomGallery> customGalleries;
@@ -135,7 +144,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Bind(R.id.imgSignature)
     ImageView imgSignature;
 
-
     /* Upload */
     @Bind(R.id.layoutUpload)
     RelativeLayout layoutUpload;
@@ -145,12 +153,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
     public RequestFragment() {
     }
@@ -158,6 +160,7 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_request_telehealth, container, false);
+        setHasOptionsMenu(true);
         context = v.getContext();
         ButterKnife.bind(this, v);
 
@@ -184,11 +187,12 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     }
 
     void init() {
+
         onLoadData(iRequestPresenter.loadDataInfoExists());
-        customGalleries = new ArrayList<CustomGallery>();
+        customGalleries = new ArrayList<>();
 
         //init array EditText
-        arrEditText = new ArrayList<EditText>();
+        arrEditText = new ArrayList<>();
         arrEditText.add(txtFirstName);
         arrEditText.add(txtLastName);
         arrEditText.add(txtMobile);
@@ -252,20 +256,28 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolBar);
 
-        //Set text and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.res_title));
-        lblSubTitle.setText(getResources().getString(R.string.home_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iRequestPresenter.changeFragment(new HomeFragment());
-            }
-        });
+        actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle(getResources().getString(R.string.res_title));
+
+            actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+            actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+
+            // Change color image back, set a custom icon for the default home button
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+            actionBar.setHomeAsUpIndicator(upArrow);
+        }
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            boolean flag = bundle.getBoolean("confirmRequest", false);
-            if (flag) {
+            flagBack = bundle.getBoolean("confirmRequest", false);
+            if (flagBack) {
+                actionBar.setTitle(getResources().getString(R.string.confirm_title));
+
                 customGalleries = bundle.getParcelableArrayList("fileUploads");
                 lblNamePatient.setText(bundle.getString("firstName") + " " + bundle.getString("lastName"));
                 lblDOB.setText(bundle.getString("dob"));
@@ -274,20 +286,42 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 lblSuburb.setText(bundle.getString("suburb"));
                 lblRequestDate.setText(iRequestPresenter.getCurrentDateSystem());
 
-                lblTitle.setText(getResources().getString(R.string.confirm_title));
-                lblSubTitle.setText(getResources().getString(R.string.back));
-                layoutBack.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onLoadToolbar();
-                        vfContainerRequest.setDisplayedChild(vfContainerRequest.indexOfChild(layoutRequest));
-                    }
-                });
-
                 vfContainerRequest.setDisplayedChild(vfContainerRequest.indexOfChild(layoutConfirm));
                 iRequestPresenter.returnData(bundle);
                 bundle.clear();
             }
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (vfContainerRequest.indexOfChild(vfContainerRequest.getCurrentView()) == 0) {
+                    iRequestPresenter.changeFragment(new HomeFragment());
+                } else {
+                    vfContainerRequest.setDisplayedChild(vfContainerRequest.indexOfChild(layoutRequest));
+                }
+//                if (flagBack) {
+//                    onLoadToolbar();
+//                    vfContainerRequest.setDisplayedChild(vfContainerRequest.indexOfChild(layoutRequest));
+//                } else {
+//                    vfContainerRequest.setDisplayedChild(vfContainerRequest.indexOfChild(layoutConfirm));
+//                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -396,6 +430,7 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 startActivityForResult(i, 200);
                 break;
             case R.id.lblSubmit:
+                actionBar.setTitle(getResources().getString(R.string.confirm_title));
                 iRequestPresenter.checkFields(arrEditText, autoCompleteSuburb.getText().toString(), apptType);
                 break;
             case R.id.lblSave:
@@ -436,15 +471,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
 
     @Override
     public void changeViewFlipper() {
-        lblTitle.setText(getResources().getString(R.string.confirm_title));
-        lblSubTitle.setText(getResources().getString(R.string.back));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onLoadToolbar();
-                vfContainerRequest.setDisplayedChild(vfContainerRequest.indexOfChild(layoutRequest));
-            }
-        });
         lblNamePatient.setText(txtFirstName.getText() + " " + txtLastName.getText());
         lblDOB.setText(txtDOB.getText());
         lblEmail.setText(txtEmail.getText());
@@ -459,7 +485,6 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     public void onLoadSuccess() {
         iRequestPresenter.changeFragment(new HomeFragment());
     }
-
 
     @Override
     public void onLoadError(String msg) {
@@ -488,17 +513,19 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iRequestPresenter.changeFragment(new HomeFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        iRequestPresenter.changeFragment(new HomeFragment());
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 }

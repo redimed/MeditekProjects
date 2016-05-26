@@ -44,9 +44,17 @@ module.exports = {
     options: {
         tableName: 'TelehealthCallUser',
         timestamps: false,
+        // createdAt: 'CreatedDate',
+        // updatedAt: 'ModifiedDate',
         hooks: {
             beforeCreate: function(telehealthcalluser, options, callback) {
                 telehealthcalluser.CreatedDate = new Date();
+                callback();
+            },
+            beforeBulkCreate: function(telehealthcallusers, options, callback) {
+                telehealthcallusers.forEach(function(telehealthcalluser, index) {
+                    telehealthcallusers[index].CreatedDate = new Date();
+                });
                 callback();
             },
             beforeUpdate: function(telehealthcalluser, options, callback) {

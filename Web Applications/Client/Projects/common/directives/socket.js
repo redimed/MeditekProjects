@@ -32,18 +32,32 @@ messageTransfer = function(from, to, message) {
     });
 }
 
-messageTransfer = function(caller, receiver, message, data, bool) {
+messageTransfer = function(caller, receiver, message, teleCallUID, callerInfo) {
     var info = {
         from: caller,
         to: receiver,
-        message: message
+        message: message,
+        teleCallUID: teleCallUID
     };
-    if (bool === true) {
-        info.teleCallUID = data;
-    } else if (bool === false) {
-        info.callerInfo = data;
+    if (callerInfo != null) {
+        info.callerInfo = callerInfo;
     }
     socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(msg) {
+        console.log("send call", msg);
+    });
+}
+
+addCallMessage = function(caller, receiver, message, teleCallUID, callerInfo) {
+    var info = {
+        callerTeleUID: caller,
+        receiverTeleUID: receiver,
+        message: message,
+        teleCallUID: teleCallUID
+    };
+    if (callerInfo != null) {
+        info.callerInfo = callerInfo;
+    }
+    socketTelehealth.get('/api/telehealth/socket/addcallmessage', info, function(msg) {
         console.log("send call", msg);
     });
 }
@@ -115,7 +129,7 @@ function createSocketConnectTelehealth() {
                 break;
             case "call":
                 if (ioSocket.telehealthCall)
-                    ioSocket.telehealthCall(msg);
+                    ioSocket.telehealthCall(msg, true);
                 else
                     ioSocket.telehealthMesageCall = msg;
                 break;
@@ -137,9 +151,9 @@ function createSocketConnectTelehealth() {
                 else
                     ioSocket.telehealthMessageWaiting = msg;
                 break;
-            case "addDoctor":
+            case "addcall":
                 if (ioSocket.telehealthCall)
-                    ioSocket.telehealthCall(msg);
+                    ioSocket.telehealthCall(msg, false);
                 break;
         };
     });

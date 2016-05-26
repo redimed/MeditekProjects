@@ -7,5 +7,7 @@ module.exports = {
         'TotalUserInRoom': true,
         'Logout': true,
         'AddDoctor': true,
+        'JoinRoomCall': true,
+        'AddCallMessage': true,
     }
 }

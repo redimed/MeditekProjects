@@ -282,10 +282,43 @@ module.exports = {
         }
         return defer.promise;
     },
+    UpdateStatusTelehealthCall: function(TeleUID, status) {
+        var $q = require('q');
+        var defer = $q.defer();
+        console.log("UpdateStatusTelehealthCall ", TeleUID, status);
+        if (!TeleUID || !status) {
+            defer.reject({
+                message: 'Deficient'
+            });
+        } else {
+            console.log("UpdateStatusTelehealthCall ", TeleUID);
+            TelehealthCall.find({ where: { UID: TeleUID } }).then(function(teleCall) {
+                if (teleCall) { // if the record exists in the db
+                    teleCall.updateAttributes({
+                        Status: status
+                    }).then(function(success) {
+                        defer.resolve({
+                            message: 'Success'
+                        });
+                    }, function(err) {
+                        defer.reject({
+                            message: err
+                        });
+                    });
+                } else {
+                    defer.reject({
+                        message: 'No Exists'
+                    });
+                }
+            });
+        }
+        return defer.promise;
+    },
     CreateTelehealthCall: function(InfoCall, CallerID, CallerTeleID, ReceiverTeleID) {
         var $q = require('q');
         var defer = $q.defer();
         var TeleCallUID = "";
+        var TeleCallID = "";
         sequelize.transaction().then(function(t) {
             return TelehealthCall.create({
                 UID: UUIDService.Create(),
@@ -296,6 +329,7 @@ module.exports = {
                 CreatedBy: InfoCall.FromUserAccountID
             }, { transaction: t }).then(function(teleCall) {
                 TeleCallUID = teleCall.UID;
+                TeleCallID = teleCall.ID;
                 var InfoUser = [{
                     TelehealthCallID: teleCall.dataValues.ID,
                     TelehealthUserID: CallerTeleID,
@@ -311,12 +345,41 @@ module.exports = {
             }).then(function(result) {
                 defer.resolve({
                     TeleCallUID: TeleCallUID,
+                    TeleCallID: TeleCallID,
                     transaction: t
                 });
             }, function(err) {
                 defer.reject({
                     transaction: t
                 });
+            });
+        });
+        return defer.promise;
+    },
+    CreateTelehealthCallUser: function(teleCallID, CallerTeleID, CallerID) {
+        console.log("----- CreateTelehealthCallUser -----");
+
+        var $q = require('q');
+        var defer = $q.defer();
+
+        var InfoUser = {
+            TelehealthCallID: teleCallID,
+            TelehealthUserID: CallerTeleID,
+            CreatedBy: CallerID
+        }
+
+        console.log(InfoUser);
+
+        TelehealthCallUser.create(InfoUser).then(function(teleCallUser) {
+            console.log("----- Start Create -----");
+            defer.resolve({
+                message: 'success'
+            });
+        }, function(err) {
+            console.log("----- Error Create -----", err);
+            defer.reject({
+                message: 'error',
+                err: err
             });
         });
         return defer.promise;
@@ -331,7 +394,7 @@ module.exports = {
         TelehealthService.FindByUID(TeleUID).then(function(teleUser) {
             if (teleUser) {
                 Devices.teleUser = teleUser;
-                console.log("teleUser ", teleUser);
+                // console.log("teleUser ", teleUser);
                 TelehealthDevice.findAll({
                     where: {
                         TelehealthUserID: teleUser.ID

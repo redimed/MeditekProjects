@@ -1,14 +1,15 @@
 var app = angular.module('app.blank.call.controller', []);
 
-app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, AuthenticationService, OTSession, toastr) {
+app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, $window, AuthenticationService, OTSession, toastr) {
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
     var teleCallUID = $stateParams.teleCallUID;
+    var teleCallID = $stateParams.teleCallID;
     var uidCall = $stateParams.receiverUID;
     var uidUser = $stateParams.callerUID;
     var reverse = true;
-    $scope.receiverName = $stateParams.receiverName;
+    $scope.callName = $stateParams.receiverName;
     session = OT.initSession(apiKey, sessionId);
     var userInfo = $cookies.getObject('userInfo');
     console.log("userInfo", userInfo);
@@ -26,6 +27,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
             message: "call",
             sessionId: sessionId,
             teleCallUID: teleCallUID,
+            teleCallID: teleCallID,
             fromName: userInfo.UserName,
             callerInfo: userInfo
         }, function(data) {
@@ -35,13 +37,65 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
         o.audio.play();
     };
 
+    function joinRoomCall() {
+        socketTelehealth.get('/api/telehealth/socket/joinroomcall', {
+            teleCallUID: teleCallUID,
+            message: 'joinroom'
+        }, function(data) {
+            console.log("Join Room", data);
+        });
+    };
+
+    function toastrMessage() {
+        socketTelehealth.on('addMessage', function(msg) {
+            console.log("Show messageeeeeeeeeeeeeeeeeeeeeee", msg);
+            switch (msg.message) { // Send to all room
+                case "closecall":
+                    toastr.info('One person out room');
+                    break;
+            }
+            if (msg.callerTeleUID === userInfo.TelehealthUser.UID) { // Send to Caller
+                switch (msg.message) {
+                    case "offline":
+                        toastr.error('Receiver Offline , Please Call Back Later');
+                        break;
+                    case "busy":
+                        toastr.error('Receiver Busy , Please Call Back Later');
+                        break;
+                    case "decline":
+                        toastr.error('Receiver decline , Please Call Back Later');
+                        break;
+                    case "cancel":
+                        toastr.error('Receiver Busy , Please Call Back Later');
+                        break;
+                    case "issue":
+                        toastr.error('Receiver Issue , Please Call Back Later');
+                        break;
+                    case "waiting":
+                        toastr.error('Receiver Busy , Please Call Back Later');
+                        break;
+                    case "answer":
+                        $scope.toggle = false;
+                        break;
+                }
+            } else if (msg.receiverTeleUID === userInfo.TelehealthUser.UID) { // Send to Receiver
+
+            }
+        });
+    }
+
+
     OTSession.init(apiKey, sessionId, token, function(err) {
         if (!err) {
             if (!_.isEmpty(socketTelehealth)) {
+                joinRoomCall();
                 sendCall();
+                toastrMessage();
             } else {
                 ioSocket.telehealthConnect = function() {
+                    joinRoomCall();
                     sendCall();
+                    toastrMessage();
                 }
             }
         }
@@ -49,30 +103,31 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
 
     $scope.streams = OTSession.streams;
 
-    $scope.$on("otLayout", function(event, args) {
-        o.audio.pause();
-        var mytimeout = $timeout($scope.onTimeout, 1000);
-    });
+    console.log(" $scope.streams.length ", $scope.streams.length);
+
+    // $scope.$on("otLayout", function(event, args) {
+
+    // });
 
     $scope.$on("otStreamCreated", function(event, args) {
         console.log("args.stream.hasVideo ", args.stream.hasVideo);
+        var mytimeout = $timeout($scope.onTimeout, 1000);
+        o.audio.pause();
         $timeout(function() {
             if (args.stream.hasVideo === false) {
                 CallCancel("issue");
-                swal({
-                    title: "Devices issue",
-                    text: "Please check system and call back later",
-                    type: "warning",
-                    showCancelButton: false,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true
-                }, function() {
-                    setTimeout(function() {
-                        window.close();
-                    }, 1000);
-                });
+                window.close();
+                // swal({
+                //     title: "Devices issue",
+                //     text: "Please check system and call back later",
+                //     type: "warning",
+                //     showCancelButton: false,
+                //     closeOnConfirm: false,
+                //     showLoaderOnConfirm: true
+                // }, function() {});
             };
         }, 5000);
+        $scope.$apply();
     });
 
     $scope.$on("changeSize", function(event, stream) {
@@ -149,30 +204,31 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     // }
 
     //disconect
-    session.on('sessionDisconnected', function(event) {
-        console.log('You were disconnected from the session.', event.reason);
-        if ($scope.streams.length < 1) {
-            window.close();
-        }
-    });
+    // session.on('sessionDisconnected', function(event) {
+    //     console.log('You were disconnected from the session.', event.reason);
+    //     if ($scope.streams.length < 1) {
 
-    session.on('connectionDestroyed', function() {
-        console.log("connectionDestroyed ", $scope.streams.length);
-        if ($scope.streams.length < 1) {
-            window.close();
-        }
-    })
+    //         window.close();
+    //     }
+    // });
 
-    session.on('streamDestroyed', function() {
-        console.log("streamDestroyed ", $scope.streams.length);
-        if ($scope.streams.length < 1) {
-            window.close();
-        }
-    })
+    // session.on('connectionDestroyed', function() {
+    //     console.log("connectionDestroyed ", $scope.streams.length);
+    //     if ($scope.streams.length < 1) {
+    //         window.close();
+    //     }
+    // })
+
+    // session.on('streamDestroyed', function() {
+    //     console.log("streamDestroyed ", $scope.streams.length);
+    //     if ($scope.streams.length < 1) {
+    //         window.close();
+    //     }
+    // })
 
     session.on("signal:endCall", function(event) {
         console.log("Signal sent from connection ", event);
-        if ($scope.streams.length < 1) {
+        if ($scope.streams.length <= 1) {
             window.close();
         }
     });
@@ -186,32 +242,16 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
 
     $scope.EnAudio = function() {
         $scope.$emit('$mute');
-        // $scope.subscriber.subscribeToAudio(false);
     };
 
     $scope.EndCall = function() {
-        if ($scope.streams.length <= 1) {
-            session.signal({
-                    data: "end",
-                    type: "endCall"
-                },
-                function(error) {
-                    if (error) {
-                        console.log("signal error (" + error.code + "): " + error.message);
-                    } else {
-                        console.log("signal sent.");
-                    }
-                }
-            );
-            session.disconnect();
-        } else {
-            window.close();
-        }
+        window.close();
     };
 
+    var cancel = false;
+
     $scope.cancel = function() {
-        console.log("socketTelehealth", socketTelehealth);
-        CallCancel("cancel");
+        cancel = true;
         window.close();
     };
 
@@ -219,17 +259,38 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
         var info = {
             from: uidUser,
             to: uidCall,
-            message: message
+            message: message,
+            teleCallUID: teleCallUID
         };
         if (message === "issue") {
             info.noissue = uidCall;
+            info.issue = uidUser;
+        };
+        if (message === "endcall") {
+            if ($scope.streams.length === 1) {
+                session.signal({
+                        data: "end",
+                        type: "endCall"
+                    },
+                    function(error) {
+                        if (error) {
+                            console.log("signal error (" + error.code + "): " + error.message);
+                        } else {
+                            console.log("signal sent.");
+                        }
+                    }
+                );
+                session.disconnect();
+                info.UserUid = uidUser;
+            } else {
+                info.message = 'closecall';
+            }
         };
         socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
             console.log("send call", data);
             window.close();
         });
     }
-
 
     $scope.toggle = false;
     $scope.zoom = false;
@@ -276,37 +337,28 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     $scope.addDoctor = function(doctor) {
         if ($scope.streams.length < 2) {
             var info = {
+                apiKey: apiKey,
+                sessionId: sessionId,
                 CallerInfo: userInfo,
                 ReceiverName: ((doctor.FirstName === null) ? "" : doctor.FirstName) + " " + ((doctor.MiddleName === null) ? "" : doctor.MiddleName) + " " + ((doctor.LastName === null) ? "" : doctor.LastName),
                 ReceiverTeleUID: doctor.UserAccount.TelehealthUser.UID,
                 ReceiverTeleID: doctor.UserAccount.TelehealthUser.ID,
-                ReceiverID: doctor.UserAccount.ID
+                ReceiverID: doctor.UserAccount.ID,
+                TeleCallID: teleCallID,
+                TeleCallUID: teleCallUID
             };
-            AuthenticationService.CallToReceiver(info).then(function(argument) {
-                if (argument.message === 'Offline') {
-                    toastr.error('Receiver Offline , Please Call Back Later');
-                    // swal("Receiver Offline", "Please Call Back Later");
-                } else if (argument.message === 'Busy') {
-                    toastr.error('Receiver Busy , Please Call Back Later');
-                    // swal("Receiver Busy", "Please Call Back Later");
-                } else if (argument.message === 'Success') {
-                    socketTelehealth.get('/api/telehealth/socket/addDoctor', {
-                        from: uidUser,
-                        to: doctor.UserAccount.TelehealthUser.UID,
-                        message: "add",
-                        sessionId: sessionId,
-                        apiKey: apiKey,
-                        fromName: userInfo.UserName,
-                        teleCallUID: teleCallUID
-                    }, function(data) {
-                        console.log("send call", data);
-                        window.close();
-                    });
-                };
+            socketTelehealth.get('/api/telehealth/socket/addDoctor', info, function(data) {
+                console.log("send call", data);
+                window.close();
             });
         } else {
             swal("Cann't Call", "You can not call more than 3 people!");
         }
+    };
+
+    // Even when close window
+    $window.onbeforeunload = function(event) {
+        return (cancel === false ? CallCancel("endcall") : CallCancel("cancel"));
     };
 });
 

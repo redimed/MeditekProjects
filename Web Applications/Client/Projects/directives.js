@@ -234,7 +234,7 @@ app.directive('appointmentDetailDirective', function() {
 
             var CallerInfo = $cookies.getObject('userInfo');
 
-            $scope.AuthCall = CallerInfo.roles[0].RoleCode;
+            $scope.AuthCall = CallerInfo.roles[CallerInfo.roles.length - 1].RoleCode;
 
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
@@ -250,15 +250,26 @@ app.directive('appointmentDetailDirective', function() {
                             ReceiverTeleID: data.data[0].TeleID,
                             ReceiverID: data.data[0].UserAccountID
                         };
-                        ioSocket.telehealthDoctorCallWindow = window.open($state.href("blank.call", {
-                            apiKey: argument.data.apiKey,
-                            sessionId: argument.data.sessionId,
-                            token: argument.data.token,
-                            teleCallUID: argument.data.teleCallUID,
-                            receiverName: info.ReceiverName,
-                            receiverUID: info.ReceiverTeleUID,
-                            callerUID: info.CallerInfo.TelehealthUser.UID,
-                        }), "CAll", { directories: "no" });
+
+                        AuthenticationService.CallToReceiver(info).then(function(argument) {
+                            if (argument.message === 'Offline') {
+                                swal("Receiver Offline", "Please Call Back Later");
+                            } else if (argument.message === 'Busy') {
+                                swal("Receiver Busy", "Please Call Back Later");
+                            } else if (argument.message === 'Success') {
+                                console.log("Success", argument);
+                                ioSocket.telehealthDoctorCallWindow = window.open($state.href("blank.call", {
+                                    apiKey: argument.data.apiKey,
+                                    sessionId: argument.data.sessionId,
+                                    token: argument.data.token,
+                                    teleCallUID: argument.data.teleCallUID,
+                                    teleCallID: argument.data.teleCallID,
+                                    receiverName: info.ReceiverName, //userName
+                                    receiverUID: info.ReceiverTeleUID, //uidCall
+                                    callerUID: info.CallerInfo.TelehealthUser.UID, //uidUser
+                                }), "CAll", { directories: "no" });
+                            };
+                        });
                     } else {
                         toastr.error("Patient Is Not Exist", "Error");
                     }

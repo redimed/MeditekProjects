@@ -18,7 +18,7 @@ ot-layout {
     <div class="my-header">
         <div class="row margin-left-right-0 padding-10">
             <div class="col-md-3 col-sm-3 col-xs-3 pull-left">
-                <h1 class="page-title">{{userName}}</h1>
+                <h1 class="page-title">{{callName}}</h1>
                 <h2 class="page-title">{{counter|formatTimer}}</h2>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 pull-right padding-0">
@@ -68,7 +68,7 @@ ot-layout {
                                 <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
                                 <div class="media-body">
                                     <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                    <div class="media-heading-sub font-green">Offline</div>
+                                    <!-- <div class="media-heading-sub font-green">Offline</div> -->
                                 </div>
                             </li>
                             <li class="media" ng-repeat="doctor in listDoctorExternal">
@@ -79,7 +79,7 @@ ot-layout {
                                 <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
                                 <div class="media-body">
                                     <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                    <div class="media-heading-sub font-green">Offline</div>
+                                    <!-- <div class="media-heading-sub font-green">Offline</div> -->
                                 </div>
                             </li>
                         </ul>

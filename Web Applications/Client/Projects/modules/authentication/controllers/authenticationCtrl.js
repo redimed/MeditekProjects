@@ -12,7 +12,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     } else {
         document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white";
     }
-
     $scope.$on('$includeContentLoaded', function() {
         // Layout.initHeader(); // init header
         // Layout.initSidebar(); // init sidebar
@@ -22,6 +21,10 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         // Demo.init(); // init theme panel
         // Layout.initFooter(); // init footer
     });
+    
+    var UserInfo = $cookies.getObject('userInfo');
+    $scope.Role = UserInfo.roles[UserInfo.roles.length - 1].RoleCode;
+    console.log("User Info ", $cookies.getObject('userInfo'));
 
     $scope.info = {};
     $scope.logout = function() {
@@ -118,30 +121,39 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         }];
 
     //phan quoc chien
+
+    var clickDoctor = true;
+
     $scope.loadListDoctor = function(fullname) {
         //INTERNAL
-        AuthenticationService.getListDoctor({
-            Search: {
-                FullName: (fullname) ? fullname : null
-            },
-            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
-            isAvatar: true,
-            RoleID: [4]
-        }).then(function(data) {
-            $scope.listDoctorInternal = data.data;
-        });
+        if (clickDoctor === true) {
+            AuthenticationService.getListDoctor({
+                Search: {
+                    FullName: (fullname) ? fullname : null
+                },
+                attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+                isAvatar: true,
+                RoleID: [4]
+            }).then(function(data) {
+                $scope.listDoctorInternal = data.data;
+            });
 
-        //EXTERNAL 
-        AuthenticationService.getListDoctor({
-            Search: {
-                FullName: (fullname) ? fullname : null
-            },
-            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
-            isAvatar: true,
-            RoleID: [5]
-        }).then(function(data) {
-            $scope.listDoctorExternal = data.data;
-        });
+            //EXTERNAL 
+            AuthenticationService.getListDoctor({
+                Search: {
+                    FullName: (fullname) ? fullname : null
+                },
+                attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+                isAvatar: true,
+                RoleID: [5]
+            }).then(function(data) {
+                $scope.listDoctorExternal = data.data;
+            });
+
+            clickDoctor = false;
+        } else {
+            clickDoctor = true;
+        }
     };
 
     $scope.loadListDoctor();
@@ -167,6 +179,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     sessionId: argument.data.sessionId,
                     token: argument.data.token,
                     teleCallUID: argument.data.teleCallUID,
+                    teleCallID: argument.data.teleCallID,
                     receiverName: info.ReceiverName, //userName
                     receiverUID: info.ReceiverTeleUID, //uidCall
                     callerUID: info.CallerInfo.TelehealthUser.UID, //uidUser
@@ -217,12 +230,12 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         }), "CAll", { directories: "no" });
     }
 
-    ioSocket.telehealthCall = function(msg) {
+    ioSocket.telehealthCall = function(msg, bool) {
         console.log("isConfirm ", msg);
         swal({
             title: msg.fromName,
             imageUrl: "theme/assets/global/images/E-call_33.png",
-            timer: 120000,
+            timer: 5000,
             html: "<img src='theme/assets/global/img/loading.gif' />",
             showCancelButton: true,
             confirmButtonColor: "#26C281",
@@ -239,21 +252,37 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     sessionId: msg.sessionId,
                     token: msg.token,
                     teleCallUID: msg.teleCallUID,
+                    teleCallID: msg.teleCallID,
                     receiverName: msg.fromName,
                     receiverUID: msg.to,
-                    callerUID: msg.from
+                    callerUID: msg.from,
+                    addcall: !bool
                 }), "CAll", { directories: "no" });
-                // When receiver choose anwer -> join room receiver in server
-                messageTransfer(msg.from, msg.to, "answer", msg.teleCallUID, true);
+                if (bool === true) {
+                    // When receiver choose anwer
+                    messageTransfer(msg.from, msg.to, "answer", msg.teleCallUID, null);
+                } else {
+                    console.log("msg ", msg);
+                    addCallMessage(msg.callerTeleUID, msg.receiverTeleUID, "answer", msg.teleCallUID, null);
+                }
                 swal.close();
             } else if (isConfirm === false) {
-                // When receiver choose cancel
-                messageTransfer(msg.from, msg.to, "decline", msg.teleCallUID, true);
+                if (bool === true) {
+                    // When receiver choose cancel
+                    messageTransfer(msg.from, msg.to, "decline", msg.teleCallUID, null);
+                } else {
+                    addCallMessage(msg.callerTeleUID, msg.receiverTeleUID, "decline", msg.teleCallUID, null);
+                }
                 swal.close();
             } else {
-                // When receiver no choose and waiting 2m
-                console.log("callerInfo waiting ", msg.callerInfo);
-                messageTransfer(msg.from, msg.to, "waiting", msg.callerInfo, false);
+                if (bool === true) {
+                    // When receiver no choose and waiting 2m
+                    console.log("teleCallUID waiting ", msg.teleCallUID);
+                    messageTransfer(msg.from, msg.to, "waiting", msg.teleCallUID, msg.callerInfo);
+                } else {
+                    console.log("callerInfo waiting ", msg.teleCallUID);
+                    addCallMessage(msg.callerTeleUID, $cookies.getObject('userInfo').TelehealthUser.UID, "waiting", msg.teleCallUID, msg.callerInfo);
+                }
             };
             o.audio.pause();
         });
@@ -275,6 +304,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         if (ioSocket.telehealthDoctorCallWindow) {
             ioSocket.telehealthDoctorCallWindow.close();
+        }
+        if (ioSocket.telehealthReceiveWindow) {
+            ioSocket.telehealthReceiveWindow.close();
         }
         swal.close();
         o.audio.pause();
@@ -331,7 +363,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         }
         // swal.close();
         o.audio.pause();
-        swal("Device partner issue", "Please Call Back Later");
+        swal("Device issue", "Please Call Back Later");
     }
 
     ioSocket.telehealthWaiting = function(msg) {

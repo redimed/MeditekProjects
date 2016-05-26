@@ -44,7 +44,7 @@ module.exports = React.createClass({
         }
         this.setState(function(prevState) {
             return {
-                sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List(), page: page }))
+                sections: prevState.sections.push(Immutable.Map({ name: 'New Section', ref: sectionRef, rows: Immutable.List(), page: page, viewType: 'static' }))
             }
         })
         //swal("Success!", "Your section has been created.", "success");

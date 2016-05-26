@@ -68,14 +68,15 @@ module.exports = React.createClass({
         this.props.onCreateRow(this.props.code, this.props.refTemp);
     },
     _onUpdateSection: function() {
-        this.refs.modalUpdateSection.show();
+        $(this.refs.modalUpdateSection).css({display: 'block'});
+        this.refs.formUpdateSection.init();
     },
     _onRemoveSection: function() {
         this.props.onRemoveSection(this.props.code);
     },
     _onSaveUpdateSection: function() {
         var name = this.refs.formUpdateSection.getName();
-        this.refs.modalUpdateSection.hide();
+        $(this.refs.modalUpdateSection).css({display: 'none'});
         this.props.onUpdateSection(this.props.code, name);
     },
     _onSaveUpdateViewType: function(){
@@ -164,7 +165,20 @@ module.exports = React.createClass({
         if(typeof this.props.viewType === 'undefined') displayViewType = 'none';
         return (
                 <div className="row">
-                    <CommonModal ref="modalUpdateSection">
+                    <div ref="modalUpdateSection" className = "eform-dialog-fixed">
+                        <div className="header">
+                            <h4>Update Section</h4>
+                        </div>
+                        <div className="content">
+                            <ComponentFormUpdateSection ref="formUpdateSection" name={this.props.name}/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){$(this.refs.modalUpdateSection).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateSection}>Save</button>
+                        </div>
+                    </div>
+
+                    {/*<CommonModal ref="modalUpdateSection">
                         <div className="header">
                             <h4>Update Section</h4>
                         </div>
@@ -175,9 +189,10 @@ module.exports = React.createClass({
                             <button type="button" onClick={function(){this.refs.modalUpdateSection.hide()}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateSection}>Save</button>
                         </div>
-                    </CommonModal>
+                    </CommonModal>*/}
 
-                    <div ref="modalUpdateViewType" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
+
+                    <div ref="modalUpdateViewType" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>Update View Type</h4>
                         </div>
@@ -190,7 +205,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
 
-                    <div ref="modalOrderSection" style={{display: 'none', padding: '15px', border: '1px solid black', position: 'fixed', top: 0, zIndex: 10, width: '30%', right: 0, backgroundColor: 'white'}}>
+                    <div ref="modalOrderSection" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>Order Section</h4>
                         </div>

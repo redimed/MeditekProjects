@@ -218,6 +218,28 @@ module.exports = {
 		})
 		return p;
 	},
+	formSaveInit: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eform/saveInit',
+				success: resolve
+			})
+		})
+		return p;
+	},
+	formSaveStep: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eform/saveStep',
+				success: resolve
+			})
+		})
+		return p;
+	},
 	formClientList: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

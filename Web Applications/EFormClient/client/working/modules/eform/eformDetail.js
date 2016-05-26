@@ -12,8 +12,11 @@ module.exports = React.createClass({
     formUID: null,
     signatureDoctor: null,
     EFormTemplate: null,
+    EFormID: null,
+    EFormStatus: null,
     page: 1,
     maxPage : 0,
+    allFields: [],
     getInitialState: function(){
         return {
             name: '',
@@ -316,13 +319,48 @@ module.exports = React.createClass({
         EFormService.eformCheckDetail({templateUID: this.templateUID, appointmentUID: this.appointmentUID})
         .then(function(response){
             if(response.data){
+                self.EFormID = response.data.ID;
+                self.EFormStatus = response.data.Status;
                 self.formUID = response.data.UID;
-                var EFormDataContent = JSON.parse(response.data.EFormData.FormData);
-                var rowDynamicTable = {fields: []};
-                var countRowDynamicTable = 0;
-                var countFieldDynamicTable = 0;
-                var currentRefDynamicTable = '';
+                self.allFields = JSON.parse(response.data.EFormData.TempData);
+                var EFormDataContent = self.allFields;
                 EFormDataContent.map(function(field, indexField){
+                    var split = field.ref.split('_');
+                    var section_ref = "section_"+split[1];
+                    var row_ref = "row_"+split[1]+"_"+split[2];
+                    var field_ref = field.ref;
+                    if(field.moduleID > 0){
+                        self.refs[section_ref].checkShowHide(field.value);
+                    }
+                    if(typeof self.refs[section_ref] !== 'undefined'){
+                        if(typeof field.refChild === 'undefined'){
+                            if(Config.getPrefixField(field.type, 'radio') > -1 || Config.getPrefixField(field.type, 'checkbox') > -1){
+                                self.refs[section_ref].setValueForRadio(row_ref, field_ref, field.checked);
+                            }else{
+                                if(field.type === 'line_chart'){
+                                    self.refs[section_ref].setValueForChart(row_ref, field_ref, field, 'line');
+                                }
+                                else if(field.type !== 'eform_input_image_doctor'){
+                                    self.refs[section_ref].setValue(row_ref, field_ref, field.value);
+                                }
+                            }
+                        }else{
+                            if(field.type === 'table'){
+                                var fieldRefChild = field.refChild;
+                                self.refs[section_ref].setValueForTable(row_ref, field_ref, field.refChild, field.value);
+                            }
+                        }
+                    }
+                })
+            }else{
+                var tempData = JSON.stringify(self.allFields);
+                EFormService.formSaveInit({templateUID: self.templateUID, appointmentUID: self.appointmentUID, tempData: tempData, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
+                .then(function(response){
+                    self.EFormID = response.data.ID;
+                    self.EFormStatus = response.data.Status;
+                })
+            }
+                /*EFormDataContent.map(function(field, indexField){
                     if(field.moduleID > 0){
                         var section = field.refRow.split('_');
                         section = "section_"+section[1];
@@ -378,8 +416,7 @@ module.exports = React.createClass({
                             }
                         }
                     }
-                })
-            }
+                })*/
         })
     },
     _serverTemplateDetail: function(){
@@ -410,11 +447,31 @@ module.exports = React.createClass({
                     $(self.refs['page_index_previous']).addClass('disabled');
                 else if (self.page >= self.maxPage)
                     $(self.refs['page_index_next']).addClass('disabled');
+                self.allFields = content.objects;
                 self._serverPreFormDetail(page_content);
             })
         })
     },
-
+    _mergeTwoObjects: function(obj_large, obj_small){
+        var self = this;
+        var temp_obj = $.extend([], obj_large);
+        obj_small.map(function(item, index){
+            for(var i = 0; i < obj_large.length; i++){
+                if(typeof item.refChild === 'undefined'){
+                    if(obj_large[i].ref === item.ref){
+                        temp_obj[i] = item;
+                        break;
+                    }
+                }else{
+                    if(item.refChild === obj_large[i].refChild){
+                        temp_obj[i] = item;
+                        break;  
+                    }
+                }
+            }
+        })
+        return temp_obj;
+    },
     _onDetailSaveForm: function(){
         var self = this;
         var p = new Promise(function(resolve, reject){
@@ -430,10 +487,12 @@ module.exports = React.createClass({
                 })
             }
 
-            var content = JSON.stringify(fields);
             var appointmentUID = self.appointmentUID;
-            if(self.formUID === null){
-                EFormService.formSave({templateUID: self.templateUID, appointmentUID: appointmentUID, content: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
+            var content = self._mergeTwoObjects(self.allFields, fields);
+            content = JSON.stringify(content);
+
+            if(self.EFormStatus === 'unsaved'){
+                EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){
                     resolve();
                     window.location.reload();
@@ -512,19 +571,32 @@ module.exports = React.createClass({
         })
         swal("Success!", "Deleted", "success");
     },
-    _onGetPageContent: function (i) {
-        if(i >= 1 && i <= this.maxPage)
+    _onGetPageContent: function (page) {
+        if(page >= 1 && page <= this.maxPage)
         {
-            var locationParams = Config.parseQueryString(window.location.href);
-            locationParams.page = i;
-            var queryString = $.param(locationParams);
-            window.location.href = '/#/eform/detail?'+queryString ;
-            window.location.reload();
+            var sections = this.state.sections.toJS();
+            var fields = [];
+            for(var i = 0; i < sections.length; i++){
+                var section = sections[i];
+                var sectionRef = section.ref;
+                var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation('form');
+                tempFields.map(function(field, index){
+                    fields.push(field);
+                })
+            }
+
+            var content = this._mergeTwoObjects(this.allFields, fields);
+            content = JSON.stringify(content);
+            EFormService.formSaveStep({id: this.EFormID, tempData: content})
+            .then(function(response){
+                var locationParams = Config.parseQueryString(window.location.href);
+                locationParams.page = page;
+                var queryString = $.param(locationParams);
+                window.location.href = '/#/eform/detail?'+queryString;
+                window.location.reload();
+            })
         }
     },
-
-
-
     render: function(){
         var pageList = [];
         for (var i = 1; i <= this.maxPage; i++)

@@ -263,7 +263,20 @@ module.exports = {
             res.json({data: data});
         })
     },
-    PostSave: function(req, res){
+    PostSaveStep: function(req, res){
+        EFormData.find({ where: {EFormID: req.body.id} })
+        .then(function(EFormData){
+            if(EFormData){
+                EFormData.update({
+                    TempData: req.body.tempData
+                })
+                .then(function(data){
+                    res.json({data: data});
+                })
+            }
+        })
+    },
+    PostSaveInit: function(req, res){
         var eform = null;
         var userAccount = null;
         var eformTemplate = null;
@@ -281,6 +294,7 @@ module.exports = {
                         userAccount = UserAccount;
                         return EForm.create({
                             Name: req.body.name,
+                            Status: 'unsaved',
                             EFormTemplateID: eformTemplate.ID,
                             CreatedBy: UserAccount.ID,
                             ModifiedBy: UserAccount.ID
@@ -293,7 +307,8 @@ module.exports = {
                         eform = EForm;
                         return EFormData.create({
                             EFormID: EForm.ID,
-                            FormData: req.body.content,
+                            FormData: '[]',
+                            TempData: req.body.tempData,
                             CreatedBy: userAccount.ID,
                             ModifiedBy: userAccount.ID
                         }, {transaction: t})
@@ -341,11 +356,42 @@ module.exports = {
                         res.status(400).json({err: err});
                         return t.rollback();
                     })
-                    .then(function(data){
-                        return res.json({data: data});
+                    .then(function(){
+                        EForm.findOne({
+                            order: 'ID DESC'
+                        })
+                        .then(function(data){
+                            return res.json({data: data});
+                        })
                     }, function(err){
                         res.status(400).json({err: err});
                         return t.rollback();
+                    })
+                })
+            }
+        })
+    },
+    PostSave: function(req, res){
+        EForm.find({where: {ID: req.body.id}})
+        .then(function(EForm){
+            if(EForm){
+                return sequelize.transaction(function(t){
+                    return EForm.update({
+                        Status: 'saved'
+                    })
+                    .then(function(){
+                        EFormData.find({ where: {EFormID: req.body.id} })
+                        .then(function(EFormData){
+                            if(EFormData){
+                                EFormData.update({
+                                    FormData: req.body.FormData,
+                                    TempData: req.body.FormData
+                                })
+                                .then(function(data){
+                                    res.json({data: data});
+                                })
+                            }
+                        })
                     })
                 })
             }
@@ -365,6 +411,7 @@ module.exports = {
         })
     },
     PostUpdate: function(req, res){
+        var eForm = null;
         EForm.find({ where: {UID: req.body.UID} })
         .then(function(EForm){
             if(EForm){
@@ -372,7 +419,8 @@ module.exports = {
                 .then(function(EFormData){
                     if(EFormData){
                         EFormData.update({
-                            FormData: req.body.content
+                            FormData: req.body.content,
+                            TempData: req.body.content
                         })
                         .then(function(EFormData){
                             res.json({data: EFormData});
@@ -547,6 +595,7 @@ module.exports = {
     },
     PostHistoryDetail: function(req, res){
         EForm.findAndCountAll({
+            where: {Status: 'saved'},
             include: [
                 {
                     model: Patient,

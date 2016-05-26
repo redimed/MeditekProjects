@@ -108,7 +108,7 @@ module.exports = React.createClass({
         var htmlSignature = (this.imageSignature)?<img ref="sign"/>:'No signature';
         var display = (
             <div className="col-xs-12" style={{border: '1px solid green'}}>
-                <img ref="canvas" width="100%"/>
+                <img ref="canvas" width="100%" id={this.props.refTemp}/>
             </div>
         )
         switch(type){

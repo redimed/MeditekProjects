@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     android:paddingTop="@dimen/activity_horizontal_margin"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity111">
 
     <ImageView
         android:id="@+id/logo_work"

@@ -11,8 +11,8 @@
     <!-- [START gcm_permission] -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- [END gcm_permission] -->
 
+    <!-- [END gcm_permission] -->
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeActivity111"
             android:label="@string/app_name" />
         <activity
             android:name=".WorkActivity"
@@ -47,34 +47,33 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="gcm.play.android.samples.com.gcmquickstart" />
             </intent-filter>
         </receiver>
 
         <service
             android:name=".gcm.MyGcmListenerService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
         <service
             android:name=".gcm.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-
         <service
             android:name=".gcm.RegistrationIntentService"
-            android:exported="false">
-        </service>
+            android:exported="false"></service>
         <!-- [END gcm_service] -->
+        <activity android:name=".main.MainActivity"></activity>
     </application>
 
 </manifest>

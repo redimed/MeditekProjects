@@ -33,7 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity111 extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "HOME";
     private Intent i;
@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home111);
         TypefaceUtil.applyFont(this, findViewById(R.id.activityHome), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
         workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);

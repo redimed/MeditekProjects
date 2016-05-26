@@ -13,7 +13,7 @@ function sendSMS(toNumber, content) {
     });
 };
 
-function pushGCMNotification(info, devices) {
+function pushGCMNotification(info, devices, gcmSender) {
     var androidMess = {
         collapseKey: 'REDiMED',
         priority: 'high',
@@ -27,7 +27,7 @@ function pushGCMNotification(info, devices) {
             body: info.content ? info.content : 'Push Notification From REDiMED'
         }
     };
-    TelehealthService.SendGCMPush(androidMess, devices).then(function(result) {
+    TelehealthService.SendGCMPush(androidMess, devices, gcmSender).then(function(result) {
         console.log(result);
     }).catch(function(err) {
         console.log(err);
@@ -192,6 +192,7 @@ module.exports = {
         var uid = info.uid;
         var headers = req.headers;
         var systemtype = headers.systemtype;
+        var appid = headers.appid;
         var deviceType = headers.deviceid;
         var deviceToken = info.token || null;
         if (!uid || !deviceType) {
@@ -218,14 +219,16 @@ module.exports = {
                             where: {
                                 TelehealthUserID: teleUser.ID,
                                 Type: systemtype,
-                                DeviceType: deviceType
+                                DeviceType: deviceType,
+                                Appid: appid
                             },
                             defaults: {
                                 TelehealthUserID: teleUser.ID,
                                 UID: UUIDService.Create(),
+                                DeviceID: UUIDService.Create(),
                                 Type: systemtype,
                                 DeviceType: deviceType,
-                                DeviceID: UUIDService.Create()
+                                Appid: appid
                             }
                         }).spread(function(teleDevice, created) {
                             if (teleDevice) {
@@ -571,7 +574,10 @@ module.exports = {
             res.serverError(ErrorWrap(err));
             return;
         }
+
         var info = HelperService.toJson(req.body);
+        var headers = req.headers;
+        var appid = headers.appid;
         var data = info.data;
         var sound = info.sound;
         var title = info.title;
@@ -598,36 +604,56 @@ module.exports = {
             contentAvailable: true,
             delayWhileIdle: true,
             timeToLive: 3,
+            dryRun: false,
             data: {
                 "data": data
             },
             notification: {
                 title: "REDiMED",
                 icon: "ic_launcher",
-                body: title ? title : 'Notification From REDiMED'
+                body: title ? title : 'Notification From REDiMED',
+                sound: "default"
             }
         };
         TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
                 TelehealthDevice.findAll({
                     where: {
-                        TelehealthUserID: teleUser.ID
+                        TelehealthUserID: teleUser.ID,
+                        Appid: appid
                     }
                 }).then(function(devices) {
-                    var iosDevices = [];
-                    var androidDevices = [];
                     if (devices) {
-                        for (var i = 0; i < devices.length; i++) {
-                            if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
-                            else androidDevices.push(devices[i].DeviceToken);
-                        }
-                        if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
-                        if (androidDevices.length > 0) {
-                            TelehealthService.SendGCMPush(androidMess, androidDevices).then(function(result) {
-                                console.log(result);
-                            }).catch(function(err) {
-                                console.log(err);
-                            })
+                        if (appid == config.WorkinjuryAppid) {
+                            var tokens = [];
+                            for (var i = 0; i < devices.length; i++) {
+                                if (devices[i].DeviceToken != null)
+                                    tokens.push(devices[i].DeviceToken);
+                            }
+                            if (token.length > 0) {
+                                TelehealthService.SendGCMPush(androidMess, tokens, config.GCMWorkInjury).then(function(result) {
+                                    console.log(result);
+                                }).catch(function(err) {
+                                    console.log(err);
+                                })
+                            }
+                        } else {
+                            var iosDevices = [];
+                            var androidDevices = [];
+                            for (var i = 0; i < devices.length; i++) {
+                                if (devices[i].DeviceToken != null) {
+                                    if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
+                                    else androidDevices.push(devices[i].DeviceToken);
+                                }
+                            }
+                            if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
+                            if (androidDevices.length > 0) {
+                                TelehealthService.SendGCMPush(androidMess, androidDevices, config.GCMTelehealth).then(function(result) {
+                                    console.log(result);
+                                }).catch(function(err) {
+                                    console.log(err);
+                                })
+                            }
                         }
                         return res.ok({
                             status: 'success'
@@ -645,12 +671,13 @@ module.exports = {
             }
         })
     },
-    TestPushAPN: function(req, res) {
+    TestTelehealthPushAPN: function(req, res) {
         var tokens = [];
         var params = req.params.all();
         TelehealthDevice.findAll({
             where: {
-                Type: 'IOS'
+                Type: 'IOS',
+                Appid: config.TelehealthAppid
             }
         }).then(function(devices) {
             if (devices) {
@@ -681,11 +708,12 @@ module.exports = {
             });
         })
     },
-    TestPushGCM: function(req, res) {
+    TestTelehealthPushGCM: function(req, res) {
         var tokens = [];
         TelehealthDevice.findAll({
             where: {
-                Type: 'ARD'
+                Type: 'ARD',
+                Appid: config.TelehealthAppid
             }
         }).then(function(devices) {
             if (devices) {
@@ -714,7 +742,7 @@ module.exports = {
                         body: "Test Push Notification"
                     }
                 };
-                TelehealthService.SendGCMPush(opts, tokens).then(function(result) {
+                TelehealthService.SendGCMPush(opts, tokens, config.GCMTelehealth).then(function(result) {
                     res.ok(result);
                 }).catch(function(err) {
                     return res.serverError(ErrorWrap(err));
@@ -753,10 +781,10 @@ module.exports = {
                     sound: "default"
                 }
             };
-            TelehealthService.SendGCMWorkInjuryPush(opts, tokens).then(function(result) {
+            return TelehealthService.SendGCMPush(opts, tokens, config.GCMWorkInjury).then(function(result) {
                 res.ok(result);
             }).catch(function(err) {
-                return res.serverError(ErrorWrap(err));
+                res.serverError(ErrorWrap(err));
             })
         } else return res.ok({
             msg: 'No Device Found!'
@@ -912,10 +940,12 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body);
         var headers = req.headers;
+        var appid = headers.appid;
         var deviceType = headers.deviceid;
         var phoneNumber = info.phone;
         var deviceToken = info.token;
         var phoneRegex = /^\+[0-9]{9,15}$/;
+        var gcmSender = (appid == config.WorkinjuryAppid) ? config.GCMWorkInjury : config.GCMTelehealth;
         if (phoneNumber && phoneNumber.match(phoneRegex) && deviceToken && deviceType) {
             UserAccount.find({
                 where: {
@@ -937,7 +967,7 @@ module.exports = {
                                 }
                             }).then(function(device) {
                                 var opts = {
-                                    collapseKey: 'demo',
+                                    collapseKey: 'REDiMED',
                                     priority: 'high',
                                     contentAvailable: true,
                                     delayWhileIdle: true,
@@ -947,18 +977,18 @@ module.exports = {
                                         message: "Pinumber is " + user.PinNumber
                                     },
                                     notification: {
-                                        title: "Redimed",
+                                        title: "REDiMED",
                                         icon: "ic_launcher",
                                         body: "Push Notification From REDiMED",
                                         sound: "default"
                                     }
                                 };
                                 var tokens = [];
-                                console.log("device",device);
+                                console.log("device", device);
                                 if (device) {
                                     console.log("pushhhhhhhhhhhhhhh");
                                     tokens.push(device.DeviceToken);
-                                    return TelehealthService.SendGCMWorkInjuryPush(opts, tokens).then(function(result) {
+                                    return TelehealthService.SendGCMPush(opts, tokens, gcmSender).then(function(result) {
                                         console.log("push success", result);
                                         res.ok({ message: "success", data: result });
                                     }).catch(function(err) {
@@ -967,7 +997,7 @@ module.exports = {
                                 } else {
                                     console.log("senddddddddd");
                                     return sendSMS(phoneNumber, "Your REDiMED account pin number is " + user.PinNumber).then(function(mess) {
-                                        res.ok({status:"Send sms success", data:mess});                                    
+                                        res.ok({ status: "Send sms success", data: mess });
                                     }, function(error) {
                                         res.serverError(ErrorWrap(error));
                                     });
@@ -1034,7 +1064,7 @@ module.exports = {
             var err = new Error("Telehealth.UpdatePinNumber.Error");
             if (newPin.length != 6) {
                 err.pushError("Incorrect format PIN number");
-            }else{
+            } else {
                 err.pushError("Invalid Params");
             }
             res.serverError(ErrorWrap(err));

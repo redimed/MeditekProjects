@@ -123,13 +123,13 @@ module.exports.routes = {
         action: 'RequestAppointmentPatient'
     },
     //=================Test Push Notification=============================
-    'GET /api/testPushAPN/:badge': {
+    'GET /api/testTelehealthPushAPN/:badge': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TestPushAPN'
+        action: 'TestTelehealthPushAPN'
     },
-    'GET /api/testPushGCM': {
+    'GET /api/testTelehealthPushGCM': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TestPushGCM'
+        action: 'TestTelehealthPushGCM'
     },
     'GET /api/testGCM/:device': {
         controller: 'Telehealth/v1_0/TelehealthController',

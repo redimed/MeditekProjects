@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnBack:
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, HomeActivity111.class));
                 finish();
                 break;
             case R.id.btnCheckActivation:
@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             }
                         });
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), HomeActivity111.class));
                         finish();
                     }
 

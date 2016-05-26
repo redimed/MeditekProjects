@@ -13,7 +13,7 @@ function emitError(socket, msg) {
     sails.sockets.emit(socket, 'errorMsg', ErrorWrap(err))
 };
 
-function pushGCMNotification(info, devices) {
+function pushGCMNotification(info, devices, gcmSender) {
     var androidMess = {
         collapseKey: 'REDiMED',
         priority: 'high',
@@ -27,7 +27,7 @@ function pushGCMNotification(info, devices) {
             body: info.content ? info.content : 'Push Notification From REDiMED'
         }
     };
-    TelehealthService.SendGCMPush(androidMess, devices).then(function(result) {
+    TelehealthService.SendGCMPush(androidMess, devices, gcmSender).then(function(result) {
         console.log(result);
     }).catch(function(err) {
         console.log(err);
@@ -46,6 +46,7 @@ function pushAPNNotification(info, devices) {
 module.exports = {
     JoinConferenceRoom: function(req, res) {
         console.log("aaaaaaa", req.param('uid'), req.isSocket);
+        console.log("headers", req.headers);
         if (!req.isSocket) {
             var err = new Error("Socket.JoinConferenceRoom.Error");
             err.pushError("Socket Request Only!");
@@ -94,6 +95,7 @@ module.exports = {
         if (!message || !from || !to) return;
         var fromName = req.param('fromName');
         var sessionId = null;
+        var appid = null;
         var tokenOptions = {
             role: 'moderator'
         };
@@ -101,6 +103,7 @@ module.exports = {
         var roomList = sails.sockets.rooms();
         if (message.toLowerCase() == 'call') {
             sessionId = req.param('sessionId');
+            //appid = req.param("")
             if (!sessionId) return;
             token = opentok.generateToken(sessionId, tokenOptions);
             data.apiKey = config.OpentokAPIKey;
@@ -130,20 +133,29 @@ module.exports = {
                     }).then(function(devices) {
                         var iosDevices = [];
                         var androidDevices = [];
+                        var tokens = [];
                         if (devices) {
                             for (var i = 0; i < devices.length; i++) {
-                                if (devices[i].DeviceToken != null) {
-                                    console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", devices[i].DeviceToken);
-                                    if (devices[i].Type == 'IOS')
-                                        iosDevices.push(devices[i].DeviceToken);
-                                    else
-                                        androidDevices.push(devices[i].DeviceToken);
+                                if (devices[i].Appid == config.WorkinjuryAppid) {
+                                    console.log("WorkinjuryAppid",devices[i].DeviceToken);
+                                    if (devices[i].DeviceToken != null)
+                                        tokens.push(devices[i].DeviceToken);
+                                } else {
+                                    console.log("TelehealthAppid",devices[i].DeviceToken);
+                                    if (devices[i].DeviceToken != null) {
+                                        if (devices[i].Type == 'IOS')
+                                            iosDevices.push(devices[i].DeviceToken);
+                                        else
+                                            androidDevices.push(devices[i].DeviceToken);
+                                    }
                                 }
                             }
                             if (androidDevices.length > 0)
-                                pushGCMNotification(pushInfo, androidDevices);
+                                pushGCMNotification(pushInfo, androidDevices, config.GCMTelehealth);
                             if (iosDevices.length > 0)
                                 pushAPNNotification(pushInfo, iosDevices);
+                            if (tokens.length >0)
+                                pushGCMNotification(pushInfo, tokens, config.GCMWorkInjury);
                         }
                     })
                 }
@@ -282,14 +294,13 @@ module.exports = {
         data.sessionId = sessionId;
         data.token = token;
         data.fromName = !fromName ? 'Unknown' : fromName;
-        
+
         var to = req.body.to;
         if (_.indexOf(sails.sockets.rooms(), to) != -1) {
             data.message = 'addDoctor';
             console.log(">>>>>>>>>>>>>>>>> Online <<<<<<<<<<<<<<");
             sails.sockets.broadcast(to, 'receiveMessage', data);
-        } 
-        else {
+        } else {
             data.message = 'offline';
             console.log(">>>>>>>>>>>>>>>>> Offline <<<<<<<<<<<<<<");
             sails.sockets.broadcast(from, 'receiveMessage', data);

@@ -146,6 +146,7 @@ ul.my-ul {
     /*background-color: #36c6d3;*/
 }
 /*BEGIN tab-vertical-custom========================================*/
+    /*col-sm*/
     @media (max-width: 767px){
         .tab-vertical-custom {
             width: 100%;
@@ -175,92 +176,12 @@ ul.my-ul {
             
         }
         .tab-vertical-custom>.nav>li>a>i {
-            width: 30px;
+            min-width: 50px;
             padding: 20px 10px;
             font-size: 20px;
             vertical-align: middle;
             text-align: center;
-            background-color: #bfced8;
-            display: table-cell;
-            border: 1px solid #ddd;
-        }
-        .tab-vertical-custom>.nav>li.active>a>i {
-            background-color: #1f5374;
-        }
-        .tab-vertical-custom>.nav>li>a>span {
-            display: table-cell;
-            vertical-align: middle;
-            width: 100%;
-            border: 1px solid #ddd;
-            padding-left: 5px;
-        }
-        .tab-vertical-custom>.tab-content{
-            float: left;
-            width: 70% !important;
-            min-height: 650px;
-            margin: 0;
-            margin-left: -1px;
-            padding: 20px 20px;
-            border: 1px solid #ddd;
-            border-left: 5px solid #ddd;/*#337ab7;*/
-            background-color: white;
-        }
-        .tab-vertical-custom>.tabs-left.nav-tabs>li>a:hover,
-        .tab-vertical-custom>.tabs-left.nav-tabs>li>a:focus {
-            /*border: 1px solid #3598dc;*/
-            border-right: none;
-            background: #e0eaf0;
-            color: #557386;
-            -webkit-transition: background .75s, color .75s; /* Safari */
-            transition: background .75s, color .75s;
-        }
-
-        .tab-vertical-custom>.tabs-left.nav-tabs>li.active>a,
-        .tab-vertical-custom>.tabs-left.nav-tabs>li.active>a:hover>li.active>a:focus {
-            /*border: 1px solid #337ab7;*/
-            border-right: none;
-            color: #fff;
-            background-color: #306586;/*#337ab7;*/
-            -webkit-transition: background 1s, color 1s; /* Safari */
-            transition: background 1s, color 1s;
-            /*border-left: solid 3px #337ab7;*/
-        }
-    }
-    @media (min-width: 768px) and (max-width: 1023px){
-        .tab-vertical-custom {
-            width: 100%;
-            overflow: auto;
-            margin: 0;
-            padding: 0;
-        }
-        .tab-vertical-custom>.nav{
-            padding: 0;
-            margin: 0;
-        }
-        .tab-vertical-custom>.nav {
-            margin: 0;
-            width: 30%;
-            float: left;
-            margin-top: 20px;
-        }
-        .tab-vertical-custom>.nav>li>a {
-            /*padding: 20px 15px;*/
-            /*background: #f0f6fa;*/
-            color: #337ab7;
-            /*border-left: solid 3px #c4d5df;*/
-            border: 1px solid #ddd;/*#337ab7;*/
-            border-right: none;
-            font-size: 15px;
-            display: table-row;
-            
-        }
-        .tab-vertical-custom>.nav>li>a>i {
-            width: 50px;
-            padding: 20px 20px;
-            font-size: 30px;
-            vertical-align: middle;
-            text-align: center;
-            background-color: #aec3d0;
+            /*background-color: #bfced8;*/
             display: table-cell;
             border: 1px solid #ddd;
         }
@@ -307,7 +228,7 @@ ul.my-ul {
         }
     }
     /*col-md*/
-    @media (min-width: 1024px) and (max-width: 1365px){
+    @media (min-width: 768px) and (max-width: 1023px){
         .tab-vertical-custom {
             width: 100%;
             overflow: auto;
@@ -336,12 +257,13 @@ ul.my-ul {
             
         }
         .tab-vertical-custom>.nav>li>a>i {
-            width: 50px;
-            padding: 20px 20px;
-            font-size: 30px;
+            min-width: 60px;
+            height: 60px;
+            padding: 15px 15px;
+            font-size: 25px;
             vertical-align: middle;
             text-align: center;
-            background-color: #aec3d0;
+            /*background-color: #aec3d0;*/
             display: table-cell;
             border: 1px solid #ddd;
         }
@@ -387,7 +309,8 @@ ul.my-ul {
             /*border-left: solid 3px #337ab7;*/
         }
     }
-    @media (min-width: 1366px) and (max-width: 1919px){
+    /*col-lg*/
+    @media (min-width: 1024px) and (max-width: 1366px){
         .tab-vertical-custom {
             width: 100%;
             overflow: auto;
@@ -416,12 +339,13 @@ ul.my-ul {
             
         }
         .tab-vertical-custom>.nav>li>a>i {
-            width: 50px;
+            min-width: 70px;
+            height: 70px;
             padding: 20px 20px;
-            font-size: 30px;
+            font-size: 25px;
             vertical-align: middle;
             text-align: center;
-            background-color: #aec3d0;
+            /*background-color: #aec3d0;*/
             display: table-cell;
             border: 1px solid #ddd;
         }
@@ -467,7 +391,8 @@ ul.my-ul {
             /*border-left: solid 3px #337ab7;*/
         }
     }
-    @media (min-width: 1920px){
+    /*col-ex-lg*/
+    @media (min-width: 1367px){
         .tab-vertical-custom {
             width: 100%;
             overflow: auto;
@@ -496,12 +421,13 @@ ul.my-ul {
             
         }
         .tab-vertical-custom>.nav>li>a>i {
-            width: 50px;
+            min-width: 95px;
+            height: 95px;
             padding: 20px 20px;
-            font-size: 50px;
+            font-size: 45px;
             vertical-align: middle;
             text-align: center;
-            background-color: #aec3d0;
+            /*background-color: #aec3d0;*/
             display: table-cell;
             border: 1px solid #ddd;
         }
@@ -518,7 +444,7 @@ ul.my-ul {
         .tab-vertical-custom>.tab-content{
             float: left;
             width: 75% !important;
-            min-height: 650px;
+            min-height: 960px;
             margin: 0;
             margin-left: -1px;
             padding: 20px 20px;

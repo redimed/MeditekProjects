@@ -341,7 +341,8 @@ module.exports = React.createClass({
                     var row_ref = "row_"+split[1]+"_"+split[2];
                     var field_ref = field.ref;
                     if(field.moduleID > 0){
-                        self.refs[section_ref].checkShowHide(field.value);
+                        if(typeof self.refs[section_ref] !== 'undefined')
+                            self.refs[section_ref].checkShowHide(field.value);
                     }
                     if(typeof self.refs[section_ref] !== 'undefined'){
                         if(typeof field.refChild === 'undefined'){

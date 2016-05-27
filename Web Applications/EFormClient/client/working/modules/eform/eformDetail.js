@@ -17,6 +17,7 @@ module.exports = React.createClass({
     page: 1,
     maxPage : 0,
     allFields: [],
+    calculation: [],
     getInitialState: function(){
         return {
             name: '',
@@ -188,7 +189,7 @@ module.exports = React.createClass({
                                 calArray = field.cal.split('|');
                             calArray.map(function(cal){
                                 /*SUMGROUP PREFIX */
-                                if(Config.getPrefixField(cal, 'SGROUP') > -1){
+                                /*if(Config.getPrefixField(cal, 'SGROUP') > -1){
                                     if(cal !== ''){
                                         var calRes = Config.getArrayPrecal(7, cal);
                                         calRes.map(function(minorRef){
@@ -208,11 +209,19 @@ module.exports = React.createClass({
                                                     }
                                                 })
                                                 $('#'+field.ref).val(total_value);
-                                            })//end event
+                                            })
                                         })
                                     }
-                                }
+                                }*/
                                 /*END SUMGROUP PREFIX */
+                                /* SUMP PREFIX */
+                                if(Config.getPrefixField(cal, 'SUMP') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(5, cal);
+                                        self.calculation.push({type: 'SUMP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
+                                    }
+                                }
+                                /* END SUMP PREFIX */
                                 /* SUM PREFIX */
                                 if(Config.getPrefixField(cal, 'SUM') > -1){
                                     if(cal !== ''){
@@ -221,7 +230,8 @@ module.exports = React.createClass({
                                             var splitMinorRef = minorRef.split('_');
                                             var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
                                             var sectionRefField = 'section_'+splitMinorRef[1];
-                                            self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
+                                            if(typeof self.refs[sectionRefField] !== 'undefined')
+                                                self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
                                         })
                                     }
                                 }
@@ -322,7 +332,8 @@ module.exports = React.createClass({
                 self.EFormID = response.data.ID;
                 self.EFormStatus = response.data.Status;
                 self.formUID = response.data.UID;
-                self.allFields = JSON.parse(response.data.EFormData.TempData);
+                var tempData = JSON.parse(response.data.EFormData.TempData);
+                self.allFields = self._mergeTwoObjects(self.allFields, tempData);
                 var EFormDataContent = self.allFields;
                 EFormDataContent.map(function(field, indexField){
                     var split = field.ref.split('_');
@@ -352,6 +363,21 @@ module.exports = React.createClass({
                         }
                     }
                 })
+                if(self.calculation.length > 0){
+                    self.calculation.map(function(cal){
+                        if(cal.type === 'SUMP'){
+                            var total = 0;
+                            cal.cal.map(function(name){
+                                for(var i = 0; i < EFormDataContent.length; i++){
+                                    if(EFormDataContent[i].name === name){
+                                        total = parseInt(total)+parseInt(EFormDataContent[i].value);
+                                    }
+                                }
+                            })
+                            self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
+                        }
+                    })
+                }
             }else{
                 var tempData = JSON.stringify(self.allFields);
                 EFormService.formSaveInit({templateUID: self.templateUID, appointmentUID: self.appointmentUID, tempData: tempData, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
@@ -360,63 +386,6 @@ module.exports = React.createClass({
                     self.EFormStatus = response.data.Status;
                 })
             }
-                /*EFormDataContent.map(function(field, indexField){
-                    if(field.moduleID > 0){
-                        var section = field.refRow.split('_');
-                        section = "section_"+section[1];
-                        self.refs[section].checkShowHide(field.value);
-                    }
-                    var fieldRef = field.ref;
-                    var fieldData = field.value;
-                    var rowRef = field.refRow;
-                    var sections = self.state.sections.toJS();
-                    for(var i = 0; i < sections.length; i++){
-                        var section = sections[i];
-                        if(typeof field.refChild === 'undefined'){
-                            if(Config.getPrefixField(field.type, 'radio') > -1 || Config.getPrefixField(field.type, 'checkbox') > -1){
-                                self.refs[section.ref].setValueForRadio(rowRef, fieldRef, field.checked);
-                            }else{
-                                if(field.type === 'line_chart'){
-                                    self.refs[section.ref].setValueForChart(rowRef, fieldRef, field, 'line');
-                                }
-                                else if(field.type !== 'eform_input_image_doctor'){
-                                    self.refs[section.ref].setValue(rowRef, fieldRef, fieldData);
-                                }
-                            }
-                        }else{
-                            if(field.type === 'table'){
-                                var fieldRefChild = field.refChild;
-                                self.refs[section.ref].setValueForTable(rowRef, fieldRef, fieldRefChild, fieldData);
-                            }else if(field.type === 'dynamic_table'){
-                                var refRow = parseInt(field.refChild.split('_')[1]);
-                                if(currentRefDynamicTable !== field.ref){
-                                    if(currentRefDynamicTable !== null){
-                                        rowDynamicTable = {fields: []};
-                                        countRowDynamicTable = 0;
-                                        countFieldDynamicTable = 0;
-                                    }
-                                    currentRefDynamicTable = field.ref;
-                                }
-                                    
-                                if(countRowDynamicTable <= refRow){
-                                    rowDynamicTable.fields.push(field);
-                                    if(field.cols-1 > countFieldDynamicTable){
-                                        countFieldDynamicTable++;
-                                    }
-                                    else{
-                                        countFieldDynamicTable = 0;
-                                        self.refs[section.ref].addRowForDynamicTable(rowDynamicTable);
-                                    }
-                                    if(refRow > countRowDynamicTable){
-                                        rowDynamicTable.fields = [];
-                                        rowDynamicTable.fields.push(field);
-                                        countRowDynamicTable++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                })*/
         })
     },
     _serverTemplateDetail: function(){

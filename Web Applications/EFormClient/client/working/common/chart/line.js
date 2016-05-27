@@ -150,7 +150,10 @@ module.exports = React.createClass({
         chart.redraw();
     },
     getAllValue: function(){
-        var series = this.refs.inputAxisX.getValue();
+        if(this.props.permission !== 'eformDev')
+            var series = this.refs.inputAxisX.getValue();
+        else
+            var series = '';
         var type = 'line_chart';
         var name = this.props.name;
         var ref = this.props.refTemp;

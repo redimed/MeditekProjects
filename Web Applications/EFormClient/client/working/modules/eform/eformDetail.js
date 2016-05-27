@@ -131,6 +131,7 @@ module.exports = React.createClass({
 
     _serverPreFormDetail: function(content){
         var self = this;
+        var objRef = {};
         EFormService.getUserRoles({UID: this.userUID})
         .then(function(responseRoles){
             EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
@@ -175,13 +176,13 @@ module.exports = React.createClass({
                                     }
                                     /* END EDIT */
                                 }
-                                if(!edit_flag)
+                                if(!edit_flag && self.refs[section.ref])
                                     self.refs[section.ref].setDisplay(row.ref, field.ref, 'disable');
-                                if(!view_flag)
+                                if(!view_flag && self.refs[section.ref])
                                     self.refs[section.ref].setDisplay(row.ref, field.ref, 'hidden');
                             }
                             /* END ROLES */
-                            if(field.type === 'eform_input_image_doctor'){
+                            if(field.type === 'eform_input_image_doctor' && self.refs[section.ref]){
                                 self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
                             }
                             var calArray = [];
@@ -244,7 +245,8 @@ module.exports = React.createClass({
                                             var splitMinorRef = minorRef.split('_');
                                             var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
                                             var sectionRefField = 'section_'+splitMinorRef[1];
-                                            self.refs[sectionRefField].preCalCount(rowRefField, minorRef, field.ref);
+                                            if(self.refs[sectionRefField])
+                                                self.refs[sectionRefField].preCalCount(rowRefField, minorRef, field.ref);
                                         })
                                     }
                                 }
@@ -261,7 +263,8 @@ module.exports = React.createClass({
                                     if(preCal !== ''){
                                        var preCalRes = Config.getArrayPrecal(6, preCal);
                                        preCalRes = preCalRes[0];
-                                       self.refs[section.ref].preCalBelongsGroup(row.ref, field.ref, preCalRes);
+                                        if(self.refs[section.ref])
+                                            self.refs[section.ref].preCalBelongsGroup(row.ref, field.ref, preCalRes);
                                     }
                                 }
                                 /* END BELONGS GROUP PREFIX */
@@ -300,7 +303,11 @@ module.exports = React.createClass({
                                                 }
                                             }
                                         })
-                                        self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                        objRef[field.ref] = {refRow: row.ref, value: value};
+                                        if(self.refs[section.ref]) {
+                                            self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                        }
+
                                     }
                                 }
                                 /* END CONCAT PREFIX */
@@ -311,7 +318,8 @@ module.exports = React.createClass({
                                         var value = preCalRes[0];
 
                                         if(value === 'TODAY'){
-                                            self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                            if(self.refs[section.ref])
+                                                self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
                                         }
                                     }
                                 }
@@ -320,6 +328,13 @@ module.exports = React.createClass({
                         }
                     }
                 }//end for
+
+                for(var i =0; i <self.allFields.length; i++) {
+                    if(objRef[self.allFields[i].ref]) {
+                        self.allFields[i].value = objRef[self.allFields[i].ref].value;
+                        console.log("~~~~~~~~~~~~~~~~~~~~~~~~", self.allFields[i].value);
+                    }
+                }
                 self._checkServerEFormDetail();
             })
         })
@@ -418,7 +433,9 @@ module.exports = React.createClass({
                 else if (self.page >= self.maxPage)
                     $(self.refs['page_index_next']).addClass('disabled');
                 self.allFields = content.objects;
-                self._serverPreFormDetail(page_content);
+		//tannv.dts@gmail.com comment
+                // self._serverPreFormDetail(page_content);
+                self._serverPreFormDetail(content.sections);
             })
         })
     },

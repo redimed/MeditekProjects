@@ -45,6 +45,11 @@ var o = {
         ncBaseUrl: _ncBaseURL,
 
         PDFFormUrl: _PDFFormUrl,
+
+        eformStatus: {
+            saved: 'saved',
+            unsaved: 'unsaved'
+        }
     },
 
     checkData: function(value) {

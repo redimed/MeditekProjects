@@ -80,7 +80,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                 var Appointments = EForm.Appointments;
                 for (var j = 0; j < Appointments.length; j++) {
                     var Appointment = Appointments[j];
-                    if (Appointment.UID === $stateParams.UID) {
+                    if (Appointment.UID === $stateParams.UID && EForm.Status ==o.const.eformStatus.saved) {
                         check = true;
                         break;
                     }

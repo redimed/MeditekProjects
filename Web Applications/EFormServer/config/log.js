@@ -58,10 +58,10 @@ var logstashLogger = new winston.Logger({
             port : 3015,
             node_name : "eform_core_3015_log",
             host: "172.19.0.8",
-            level: 'verbose',
+            level: 'silly',
         }),
 	new winston.transports.Console({
-            level: 'verbose'
+            level: 'silly'
         }), 
    ]
 })

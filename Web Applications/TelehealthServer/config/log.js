@@ -58,10 +58,10 @@ var logstashLogger = new winston.Logger({
             port : 3009,
             node_name : "tele_3009_log",
             host: "172.19.0.8",
-            level: 'verbose',
+            level: 'silly',
         }),
 	new winston.transports.Console({
-            level: 'verbose'
+            level: 'silly'
         }),
     ]
 })

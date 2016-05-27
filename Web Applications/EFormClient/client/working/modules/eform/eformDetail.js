@@ -450,7 +450,7 @@ module.exports = React.createClass({
                         break;
                     }
                 }else{
-                    if(item.refChild === obj_large[i].refChild){
+                    if(item.refChild === obj_large[i].refChild && obj_large[i].ref === item.ref){
                         temp_obj[i] = item;
                         break;  
                     }
@@ -476,15 +476,16 @@ module.exports = React.createClass({
 
             var appointmentUID = self.appointmentUID;
             var content = self._mergeTwoObjects(self.allFields, fields);
-            content = JSON.stringify(content);
+            content = JSON.stringify(content);            
 
             if(self.EFormStatus === 'unsaved'){
                 EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){
                     resolve();
-                    window.location.reload();
+                    //window.location.reload();
                 })
             }else{
+                //console.log(content);
                 EFormService.formUpdate({UID: self.formUID, content: content})
                 .then(function(){
                     resolve();

@@ -108,7 +108,7 @@ module.exports = function(data) {
                         required:true,
                     }
                 ],
-                where:pagination.whereClause.EForm,
+                where:{$and:[pagination.whereClause.EForm, {Status:'saved'}]},
                 limit:data.limit,
                 offset:data.offset,
                 subQuery:false,

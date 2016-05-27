@@ -1,4 +1,4 @@
-var env = 'local'; //local,meditekServer,testApp,app
+var env = 'meditekServer'; //local,meditekServer,testApp,app
 var configRestBaseUrl = {
     //'local': 'https://localhost:3005',
     'local': 'http://192.168.1.247:3005',

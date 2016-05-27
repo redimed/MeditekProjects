@@ -36,8 +36,11 @@ module.exports = React.createClass({
         onRemoveTableRow: React.PropTypes.func,
         onUpdateTableColumn: React.PropTypes.func,
         onOrderRow: React.PropTypes.func,
-        handleReloadDoctor: React.PropTypes.func
+        handleReloadDoctor: React.PropTypes.func,
+        onOrderField: React.PropTypes.func
     },
+    currentSelectedField: null,
+
     componentDidMount: function(){
         const self = this;
         if(this.props.permission === 'eformDev'){
@@ -226,6 +229,10 @@ module.exports = React.createClass({
                 var self = this;
                 self.props.onRemoveField(self.props.codeSection, self.props.code, code);
                 break;
+            case 'orderField':
+                $(this.refs.modalOrderField).css({display: 'block'});
+                this.currentSelectedField = dataFieldDetail;
+                break;
         }
     },
     _onComponentFieldDetailSave: function(data) {
@@ -356,6 +363,15 @@ module.exports = React.createClass({
         $(this.refs.modalOrderRow).css({display: 'none'});
         this.props.onOrderRow(this.props.codeSection, this.props.code, value);
     },
+    _onSaveInputOrderField: function() {
+        var value = this.refs.inputOrderField.getValue();
+        $(this.refs.modalOrderField).css({display: 'none'});
+        console.log(this.props.fields);
+        console.log(typeof this.props.fields);
+        this.props.onOrderField(this.props.codeSection, this.props.code, this.currentSelectedField.code, value);
+
+    },
+
     _onSaveTableDynamicRow: function(codeField, fieldValues){
         this.props.onSaveTableDynamicRow(this.props.codeSection, this.props.code, codeField, fieldValues);
     },
@@ -388,6 +404,7 @@ module.exports = React.createClass({
                     <div id="contextMenu">
                         <ul className="dropdown-menu" role="menu">
                             <li><a id="editField"><i className="icon-pencil"/> Edit Field</a></li>
+                            <li><a id="orderField"><i className="icon-pencil"/> Order Field</a></li>
                             <li><a id="deleteField"><i className="icon-trash"/> Delete Field</a></li>
                         </ul>
                     </div>
@@ -446,6 +463,19 @@ module.exports = React.createClass({
                         <div className="modal-footer">
                             <button type="button" onClick={function(){$(this.refs.modalOrderRow).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrder}>Save</button>
+                        </div>
+                    </div>
+
+                    <div ref="modalOrderField" className = "eform-dialog-fixed">
+                        <div className="header">
+                            <h4>Order Field</h4>
+                        </div>
+                        <div className="content">
+                            <CommonInputText ref="inputOrderField"/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){$(this.refs.modalOrderField).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrderField}>Save</button>
                         </div>
                     </div>
                     

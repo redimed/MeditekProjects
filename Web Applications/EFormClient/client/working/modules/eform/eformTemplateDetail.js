@@ -509,15 +509,21 @@ module.exports = React.createClass({
     },
     _onComponentSectionOrderRow: function(codeSection, codeRow, value){
         var rows = this.state.sections.deleteIn([codeSection, 'rows', codeRow]);
+        console.log("rows", rows.toJS());
         var rowOrder = this.state.sections.get(codeSection).get('rows').get(codeRow);
+        console.log("rowOrder", rowOrder.toJS());
         var firstRows = rows.get(codeSection).get('rows');
         firstRows = firstRows.slice(0, value);
+        console.log("firstRows", firstRows.toJS());
         var appendFirstRows = firstRows.push(rowOrder);
+        console.log("appendFirstRows", appendFirstRows.toJS());
         var secondRows = rows.get(codeSection).get('rows').slice(value, this.state.sections.get(codeSection).get('rows').size);
+        console.log("secondRows", secondRows.toJS());
         var finalRows = appendFirstRows;
         secondRows.toJS().map(function(row){
             finalRows = finalRows.push(Immutable.fromJS(row));
         })
+        console.log("finalRows", finalRows.toJS());
 
        this.setState(function(prevState) {
             return {
@@ -526,6 +532,25 @@ module.exports = React.createClass({
         })
         //swal("Success!", "Your row has change order", "success"); 
     },
+
+    _onComponentRowOrderField: function (codeSection, codeRow, codeField, value) {
+        var fields = this.state.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField]);
+        var fieldOrder = this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields').get(codeField);
+        var firstFields = fields.get(codeSection).get('rows').get(codeRow).get('fields');
+        firstFields = firstFields.slice(0, value);
+        var appendFirstFields = firstFields.push(fieldOrder);
+        var secondFields = fields.get(codeSection).get('rows').get(codeRow).get('fields').slice(value, this.state.sections.get(codeSection).get('rows').get(codeRow).get('fields').size);
+        var finalFields = appendFirstFields;
+        secondFields.toJS().map(function(field){
+            finalFields = finalFields.push(Immutable.fromJS(field));
+        })
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields'], val => finalFields)
+            }
+        });
+    },
+    
     _onComponentSectionSaveTableDynamicRow: function(codeSection, codeRow, codeField, row){
         this.setState(function(prevState) {
             return {
@@ -658,7 +683,8 @@ module.exports = React.createClass({
                                                  onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
                                                  onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
                                                  onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
-                                                 onOrderRow={this._onComponentSectionOrderRow}/>
+                                                 onOrderRow={this._onComponentSectionOrderRow}
+                                                 onOrderField={this._onComponentRowOrderField}/>
                     }, this)
                 }
                 <ComponentPageBar ref="pageBarBottom"

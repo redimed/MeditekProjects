@@ -329,6 +329,7 @@ module.exports = React.createClass({
                                                             onChangeRefRow={this.props.onChangeRefRow}
                                                             onOrderRow={this.props.onOrderRow}
                                                             handleReloadDoctor = {this.props.handleReloadDoctor}
+                                                            onOrderField = {this.props.onOrderField}
                                             />
                                         }, this)
                                     }

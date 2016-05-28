@@ -41,7 +41,6 @@ module.exports = React.createClass({
      */
     _handleReloadDoctor:function (sectionIm) {
         var section = sectionIm.toJS();
-        console.log('_handleReloadDoctor:section', section);
         var self = this;
         EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
         .then(function(response){
@@ -66,8 +65,6 @@ module.exports = React.createClass({
                             if(preCal !== ''){
                                 var preCalRes = Config.getArrayPrecal(7, preCal);
                                 var value = '';
-                                console.log('preCal', preCal); // CONCAT(Doctor.FirstName)
-                                console.log('preCalRes', preCalRes); //["Doctor.FirstName"]
                                 preCalRes.map(function(preCalResItem){
                                     var preCalResItemArr = preCalResItem.split('.');
                                     var responseTemp = null;
@@ -79,9 +76,6 @@ module.exports = React.createClass({
                                         responseTemp = response.data;
                                         preCalResItemTemp = preCalResItem;
                                     }
-                                    console.log('preCalResItemArr',preCalResItemArr[0]);// "Doctor"
-                                    console.log('responseTemp', responseTemp);// Object Doctor
-                                    console.log('preCalResItemTemp', preCalResItemTemp); //Key FirstName
                                     if(preCalResItemArr[0] === 'Doctor') {
                                         for(var key in responseTemp){
                                             if(key === preCalResItemTemp){
@@ -102,7 +96,6 @@ module.exports = React.createClass({
                                             }
                                         }
                                         self.refs[section.ref].setValue(row.ref, field.ref, value);
-                                        console.log("||||||||||||||||||||| "+ row.ref + '_' + field.ref + '_' + value);
                                     }
                                 })
                             }
@@ -116,7 +109,8 @@ module.exports = React.createClass({
                                 var value = preCalRes[0];
 
                                 if(value === 'TODAY'){
-                                    self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                    if(typeof self.refs[section.ref] !== 'undefined')
+                                        self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
                                 }
                             }
                         }*/
@@ -216,7 +210,7 @@ module.exports = React.createClass({
                                 }*/
                                 /*END SUMGROUP PREFIX */
                                 /* SUMP PREFIX */
-                                if(Config.getPrefixField(cal, 'SUMP') > -1){
+                                if(Config.getPrefixField(cal, 'SUMP(') > -1){
                                     if(cal !== ''){
                                         var calRes = Config.getArrayPrecal(5, cal);
                                         self.calculation.push({type: 'SUMP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
@@ -224,7 +218,7 @@ module.exports = React.createClass({
                                 }
                                 /* END SUMP PREFIX */
                                 /* SUM PREFIX */
-                                if(Config.getPrefixField(cal, 'SUM') > -1){
+                                if(Config.getPrefixField(cal, 'SUM(') > -1){
                                     if(cal !== ''){
                                         var calRes = Config.getArrayPrecal(4, cal);
                                         calRes.map(function(minorRef){
@@ -258,8 +252,16 @@ module.exports = React.createClass({
                                 preCalArray = field.preCal.split('|');
                             }
                             preCalArray.map(function(preCal){
+                                /* EQUALP GROUP */
+                                if(Config.getPrefixField(preCal, 'EQUALP(') > -1){
+                                    if(preCal !== ''){
+                                        var preCalRes = Config.getArrayPrecal(7, preCal);
+                                        self.calculation.push({type: 'EQUALP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, field: field, cal: preCalRes});
+                                    }
+                                }
+                                /* END EQUALP GROUP */
                                 /* BELONGS GROUP PREFIX */
-                                if(Config.getPrefixField(preCal,'EQUAL') > -1){
+                                if(Config.getPrefixField(preCal,'EQUAL(') > -1){
                                     if(preCal !== ''){
                                        var preCalRes = Config.getArrayPrecal(6, preCal);
                                        preCalRes = preCalRes[0];
@@ -318,6 +320,7 @@ module.exports = React.createClass({
                                         var value = preCalRes[0];
 
                                         if(value === 'TODAY'){
+                                            objRef[field.ref] = {refRow: row.ref, value: value};
                                             if(self.refs[section.ref])
                                                 self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
                                         }
@@ -332,7 +335,6 @@ module.exports = React.createClass({
                 for(var i =0; i <self.allFields.length; i++) {
                     if(objRef[self.allFields[i].ref]) {
                         self.allFields[i].value = objRef[self.allFields[i].ref].value;
-                        console.log("~~~~~~~~~~~~~~~~~~~~~~~~", self.allFields[i].value);
                     }
                 }
                 self._checkServerEFormDetail();
@@ -368,7 +370,8 @@ module.exports = React.createClass({
                                     self.refs[section_ref].setValueForChart(row_ref, field_ref, field, 'line');
                                 }
                                 else if(field.type !== 'eform_input_image_doctor'){
-                                    self.refs[section_ref].setValue(row_ref, field_ref, field.value);
+                                    if(typeof self.refs[section_ref] !== 'undefined')
+                                        self.refs[section_ref].setValue(row_ref, field_ref, field.value);
                                 }
                             }
                         }else{
@@ -390,7 +393,27 @@ module.exports = React.createClass({
                                     }
                                 }
                             })
-                            self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
+                            if(typeof self.refs[cal.section_ref] !== 'undefined')
+                                self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
+                        }else if(cal.type === 'EQUALP'){
+                            cal.cal.map(function(name){
+                               for(var i = 0; i < EFormDataContent.length; i++){
+                                    if(EFormDataContent[i].name === name && EFormDataContent[i].checked){
+                                        if(EFormDataContent[i].value === cal.field.value){
+                                            if(typeof self.refs[cal.section_ref] !== 'undefined')
+                                                self.refs[cal.section_ref].setValueForRadio(cal.row_ref, cal.field_ref, EFormDataContent[i].checked);
+                                        }else{
+                                            if(cal.field.value === '1'){
+                                                if(isNaN(EFormDataContent[i].value)){
+                                                    if(typeof self.refs[cal.section_ref] !== 'undefined'){
+                                                        self.refs[cal.section_ref].setValueForRadio(cal.row_ref, cal.field_ref, EFormDataContent[i].checked);
+                                                    }
+                                                }
+                                            }
+                                        }//end else
+                                    }
+                                } 
+                            })
                         }
                     })
                 }
@@ -476,7 +499,7 @@ module.exports = React.createClass({
 
             var appointmentUID = self.appointmentUID;
             var content = self._mergeTwoObjects(self.allFields, fields);
-            content = JSON.stringify(content);            
+            content = JSON.stringify(content);
 
             if(self.EFormStatus === 'unsaved'){
                 EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
@@ -485,7 +508,6 @@ module.exports = React.createClass({
                     //window.location.reload();
                 })
             }else{
-                //console.log(content);
                 EFormService.formUpdate({UID: self.formUID, content: content})
                 .then(function(){
                     resolve();
@@ -502,6 +524,7 @@ module.exports = React.createClass({
     },
     _onComponentPageBarPrintForm: function(){
         var self = this;
+
         var sections = self.state.sections.toJS();
         var fields = [];
         for(var i = 0; i < sections.length; i++){
@@ -513,9 +536,12 @@ module.exports = React.createClass({
             })
         }
 
+        var appointmentUID = self.appointmentUID;
+        var content = self._mergeTwoObjects(self.allFields, fields);
+
         var data = {
             printMethod: self.EFormTemplate.PrintType,
-            data: fields,
+            data: content,
             templateUID: self.templateUID
         }        
 

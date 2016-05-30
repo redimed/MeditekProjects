@@ -321,7 +321,7 @@ module.exports = React.createClass({
                     if(stringType !== 'print'){
                         var value = this.refs[fieldRef].getValue();
                         var name = this.refs[fieldRef].getName();
-                        results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
+                        results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                     }
                     else{
                         var value = this.refs[fieldRef].getValue();

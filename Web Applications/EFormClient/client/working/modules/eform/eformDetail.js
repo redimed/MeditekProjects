@@ -389,7 +389,8 @@ module.exports = React.createClass({
                             cal.cal.map(function(name){
                                 for(var i = 0; i < EFormDataContent.length; i++){
                                     if(EFormDataContent[i].name === name){
-                                        total = parseInt(total)+parseInt(EFormDataContent[i].value);
+                                        if(!isNaN(parseInt(EFormDataContent[i].value)))
+                                            total = parseInt(total)+parseInt(EFormDataContent[i].value);
                                     }
                                 }
                             })
@@ -474,9 +475,12 @@ module.exports = React.createClass({
         for(var j = 0; j < obj_large.length; j++){
             if(type === 'print'){
                 if(obj_large[j].type === 'eform_input_signature'){
-                    temp_obj[j].base64Data = temp_obj[j].value.sub;
+                    if(temp_obj[j].value)
+                        temp_obj[j].base64Data = temp_obj[j].value.sub;
                     temp_obj[j].value = null;
                 }
+                if(obj_large[j].value === 'TODAY')
+                    temp_obj[j].value = moment().format('DD/MM/YYYY');
             }
         }
         obj_small.map(function(item, index){
@@ -486,7 +490,8 @@ module.exports = React.createClass({
                         if(type === 'print'){
                             if(obj_large[i] === 'eform_input_signature'){
                                 temp_obj[i] = item;    
-                                temp_obj[i].base64Data = item.value.sub;
+                                if(temp_obj[j].value)
+                                    temp_obj[i].base64Data = item.value.sub;
                                 temp_obj[i].value = null;
                             }
                         }else
@@ -559,6 +564,8 @@ module.exports = React.createClass({
 
         var appointmentUID = self.appointmentUID;
         var content = self._mergeTwoObjects(self.allFields, fields, 'print');
+
+        console.log(JSON.stringify(content));
 
         var data = {
             printMethod: self.EFormTemplate.PrintType,

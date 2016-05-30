@@ -399,6 +399,10 @@ module.exports = React.createClass({
                             cal.cal.map(function(name){
                                for(var i = 0; i < EFormDataContent.length; i++){
                                     if(EFormDataContent[i].name === name && EFormDataContent[i].checked){
+                                        if(cal.field.type  === 'eform_input_text'){
+                                            if(typeof self.refs[cal.section_ref] !== 'undefined')
+                                                self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, EFormDataContent[i].value);
+                                        }
                                         if(EFormDataContent[i].value === cal.field.value){
                                             if(typeof self.refs[cal.section_ref] !== 'undefined')
                                                 self.refs[cal.section_ref].setValueForRadio(cal.row_ref, cal.field_ref, EFormDataContent[i].checked);

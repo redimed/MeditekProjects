@@ -23,9 +23,11 @@ module.exports = React.createClass({
         return this.props.page;
     },
     checkShowHide: function(value){
-        if(this.viewTypeDynamic === 'hide'){
+        if(value !== ''){
+            this.viewTypeDynamic === 'show';
             this.refs.radio_show.setChecked(true);
             this.refs.radio_hide.setChecked(false);
+            this._onChangeViewType('yes');
         }
 
     },
@@ -133,6 +135,19 @@ module.exports = React.createClass({
                 var rowRef = row.ref;
                 var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
                 tempFields.map(function(field, index){
+                    fields.push(field);
+                })
+            }
+        }else{
+            for(var i = 0; i < rows.length; i++){
+                var row = rows[i];
+                var rowRef = row.ref;
+                var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
+                tempFields.map(function(field, index){
+                    if(field.type === 'eform_input_check_radio')
+                        field.checked = false;
+                    else
+                        field.value = '';
                     fields.push(field);
                 })
             }

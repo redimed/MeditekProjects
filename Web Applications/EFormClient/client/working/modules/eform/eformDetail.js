@@ -358,8 +358,15 @@ module.exports = React.createClass({
                     var row_ref = "row_"+split[1]+"_"+split[2];
                     var field_ref = field.ref;
                     if(field.moduleID > 0){
-                        if(typeof self.refs[section_ref] !== 'undefined')
-                            self.refs[section_ref].checkShowHide(field.value);
+                        if(typeof self.refs[section_ref] !== 'undefined'){
+                            if(field.type === 'eform_input_check_radio'){
+                                var radio_value = (field.checked)?'yes':'';
+                               self.refs[section_ref].checkShowHide(radio_value); 
+                            }
+                            else{
+                                self.refs[section_ref].checkShowHide(field.value);
+                            }
+                        }
                     }
                     if(typeof self.refs[section_ref] !== 'undefined'){
                         if(typeof field.refChild === 'undefined'){
@@ -489,7 +496,6 @@ module.exports = React.createClass({
                     if(obj_large[i].ref === item.ref){
                         if(type === 'print'){
                             if(obj_large[i] === 'eform_input_signature'){
-                                temp_obj[i] = item;    
                                 if(temp_obj[j].value)
                                     temp_obj[i].base64Data = item.value.sub;
                                 temp_obj[i].value = null;
@@ -565,7 +571,6 @@ module.exports = React.createClass({
         var appointmentUID = self.appointmentUID;
         var content = self._mergeTwoObjects(self.allFields, fields, 'print');
 
-        console.log(JSON.stringify(content));
 
         var data = {
             printMethod: self.EFormTemplate.PrintType,
@@ -579,7 +584,10 @@ module.exports = React.createClass({
             var blob = new Blob([response], {
                 type: 'application/pdf'
             });
-            saveAs(blob, fileName);
+            var filesaver = saveAs(blob, fileName);
+            setTimeout(function(){
+                window.location.reload();
+            }, 1000)
         }, function(error){
 
         })

@@ -393,8 +393,10 @@ module.exports = React.createClass({
                                     }
                                 }
                             })
-                            if(typeof self.refs[cal.section_ref] !== 'undefined')
-                                self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
+                            if(typeof self.refs[cal.section_ref] !== 'undefined'){
+                                if(!isNaN(total))
+                                    self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
+                            }
                         }else if(cal.type === 'EQUALP'){
                             cal.cal.map(function(name){
                                for(var i = 0; i < EFormDataContent.length; i++){
@@ -466,14 +468,29 @@ module.exports = React.createClass({
             })
         })
     },
-    _mergeTwoObjects: function(obj_large, obj_small){
+    _mergeTwoObjects: function(obj_large, obj_small, type){
         var self = this;
         var temp_obj = $.extend([], obj_large);
+        for(var j = 0; j < obj_large.length; j++){
+            if(type === 'print'){
+                if(obj_large[j].type === 'eform_input_signature'){
+                    temp_obj[j].base64Data = temp_obj[j].value.sub;
+                    temp_obj[j].value = null;
+                }
+            }
+        }
         obj_small.map(function(item, index){
             for(var i = 0; i < obj_large.length; i++){
                 if(typeof item.refChild === 'undefined'){
                     if(obj_large[i].ref === item.ref){
-                        temp_obj[i] = item;
+                        if(type === 'print'){
+                            if(obj_large[i] === 'eform_input_signature'){
+                                temp_obj[i] = item;    
+                                temp_obj[i].base64Data = item.value.sub;
+                                temp_obj[i].value = null;
+                            }
+                        }else
+                            temp_obj[i] = item;
                         break;
                     }
                 }else{
@@ -541,13 +558,13 @@ module.exports = React.createClass({
         }
 
         var appointmentUID = self.appointmentUID;
-        var content = self._mergeTwoObjects(self.allFields, fields);
+        var content = self._mergeTwoObjects(self.allFields, fields, 'print');
 
         var data = {
             printMethod: self.EFormTemplate.PrintType,
             data: content,
             templateUID: self.templateUID
-        }        
+        }
 
         EFormService.createPDFForm(data)
         .then(function(response){

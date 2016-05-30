@@ -41,12 +41,14 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        if(value !== null && value !== ''){
-            if(typeof value.join !== 'undefined'){
-                valueArr = value.join(",");
-                if(valueArr !== "image/jsignature;base30,"){
-                    if(typeof $(this.refs.signature).jSignature !== 'undefined')
-                        $(this.refs.signature).jSignature("setData", "data:" + value.join(","));
+        if(value){
+            if(value.main !== null && value.main !== ''){
+                if(typeof value.main.join !== 'undefined'){
+                    valueArr = value.main.join(",");
+                    if(valueArr !== "image/jsignature;base30,"){
+                        if(typeof $(this.refs.signature).jSignature !== 'undefined')
+                            $(this.refs.signature).jSignature("setData", "data:" + value.main.join(","));
+                    }
                 }
             }
         }
@@ -63,7 +65,12 @@ module.exports = React.createClass({
         }
     },
     getValue: function(){
-        return $(this.refs.signature).jSignature('getData', 'base30');
+        var data = $(this.refs.signature).jSignature('getData', 'default');
+        data = data.replace('data:image/png;base64,','');
+        return {
+            main: $(this.refs.signature).jSignature('getData', 'base30'),
+            sub: data
+        }
     },
     getBase64Value: function(){
         var data = $(this.refs.signature).jSignature('getData', 'default');

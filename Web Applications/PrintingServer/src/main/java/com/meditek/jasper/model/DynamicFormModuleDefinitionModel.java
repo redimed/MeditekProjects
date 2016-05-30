@@ -22,13 +22,13 @@ public class DynamicFormModuleDefinitionModel {
             this.modulesDef = new Hashtable();
             this.modulesDef.put("3", new FormModuleModel("Functional Assessment Header", "FunctionalAssessment_Header", true, false));
             this.modulesDef.put("footer", new FormModuleModel("Functional Assessment Footer", "FunctionalAssessment_Footer", false, true));
-            this.modulesDef.put("6", new FormModuleModel("Functional Assessment Participate Ability", "FunctionalAssessment_ParticipateAbility", false, false));
+            this.modulesDef.put("4", new FormModuleModel("Functional Assessment Participate Ability", "FunctionalAssessment_ParticipateAbility", false, false));
             this.modulesDef.put("5", new FormModuleModel("Functional Assessment - Range Of Motion Assessment", "FunctionalAssessment_RangeOfMotionAssessment", false, false));
             this.modulesDef.put("8", new FormModuleModel("Functional Assessment - Hamstring Flexibility", "FunctionalAssessment_HamstringFlexibility", false, false));
             this.modulesDef.put("9", new FormModuleModel("Functional Assessment - Upper Limb Strength Test", "FunctionalAssessment_UpperLimbStrengthTest", false, false));
             this.modulesDef.put("11", new FormModuleModel("Functional Assessment - Lower Limb Function", "FunctionalAssessment_LowerLimbFunction", false, false));
             this.modulesDef.put("15", new FormModuleModel("Functional Assessment - Cardiovascular Fitness", "FunctionalAssessment_CardiovascularFitness3Mins", false, false));
-            this.modulesDef.put("18", new FormModuleModel("Functional Assessment - Core Strength", "FunctionalAssessment_CoreStrength", false, false));
+            this.modulesDef.put("17", new FormModuleModel("Functional Assessment - Core Strength", "FunctionalAssessment_CoreStrength", false, false));
             this.modulesDef.put("19", new FormModuleModel("Functional Assessment - Floor to Waist Lift", "FunctionalAssessment_Lift_FloorToWaist", false, false));
             this.modulesDef.put("20", new FormModuleModel("Functional Assessment - Carrying at Waist Height", "FunctionalAssessment_Carrying_WaistHeight", false, false));
             this.modulesDef.put("21", new FormModuleModel("Functional Assessment - Bilateral Lifting Waist to Shoulder Height", "FunctionalAssessment_Lift_WaistToShoulder", false, false));
@@ -44,12 +44,12 @@ public class DynamicFormModuleDefinitionModel {
             this.modulesDef.put("31", new FormModuleModel("Functional Assessment - Ladder Climb", "FunctionalAssessment_Ladder_Climb", false, false));
             this.modulesDef.put("32", new FormModuleModel("Functional Assessment - Deadlift", "FunctionalAssessment_Deadlift", false, false));
             this.modulesDef.put("33", new FormModuleModel("Functional Assessment - Unilateral Carry", "FunctionalAssessment_Unilateral_Carry", false, false));
-            this.modulesDef.put("17", new FormModuleModel("Functional Assessment - Overall Manual Handling Rating", "FunctionalAssessment_Overral_Manual_Handling", false, false));
-            this.modulesDef.put("10", new FormModuleModel("Functional Assessment Summary - Range Of Motion", "FunctionalAssessment_Summary_RangeOfMotion", false, false));
-            this.modulesDef.put("12", new FormModuleModel("Functional Assessment Summary - General Physical Capacity", "FunctionalAssessment_Summary_GeneralPhysicalCapacity", false, false));
-            this.modulesDef.put("13", new FormModuleModel("Functional Assessment Summary - Job Specific Capacity", "FunctionalAssessment_Summary_JobSpecificCapacity", false, false));
-            this.modulesDef.put("14", new FormModuleModel("Functional Assessment Summary - Risk Rating", "FunctionalAssessment_Summary_RiskRating", false, false));
-            this.modulesDef.put("34", new FormModuleModel("Functional Assessment Doctor Info", "FunctionalAssessment_DoctorInfo", false, false));
+            this.modulesDef.put("36", new FormModuleModel("Functional Assessment - Overall Manual Handling Rating", "FunctionalAssessment_Overral_Manual_Handling", false, false));
+            this.modulesDef.put("40", new FormModuleModel("Functional Assessment Summary - Range Of Motion", "FunctionalAssessment_Summary_RangeOfMotion", false, false));
+            this.modulesDef.put("41", new FormModuleModel("Functional Assessment Summary - General Physical Capacity", "FunctionalAssessment_Summary_GeneralPhysicalCapacity", false, false));
+            this.modulesDef.put("42", new FormModuleModel("Functional Assessment Summary - Job Specific Capacity", "FunctionalAssessment_Summary_JobSpecificCapacity", false, false));
+            this.modulesDef.put("43", new FormModuleModel("Functional Assessment Summary - Risk Rating", "FunctionalAssessment_Summary_RiskRating", false, false));
+            this.modulesDef.put("44", new FormModuleModel("Functional Assessment Doctor Info", "FunctionalAssessment_DoctorInfo", false, false));
         }
         return modulesDef;
     }

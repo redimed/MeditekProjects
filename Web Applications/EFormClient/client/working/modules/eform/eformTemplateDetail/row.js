@@ -324,7 +324,7 @@ module.exports = React.createClass({
                         results.push({value: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp});
                     }
                     else{
-                        var value = this.refs[fieldRef].getBase64Value();
+                        var value = this.refs[fieldRef].getValue();
                         var name = this.refs[fieldRef].getName();
                         results.push({base64Data: value, name: name, ref: fieldRef, type: type, refRow: this.props.refTemp, value: '', moduleID: this.props.moduleID});
                     }
@@ -366,8 +366,6 @@ module.exports = React.createClass({
     _onSaveInputOrderField: function() {
         var value = this.refs.inputOrderField.getValue();
         $(this.refs.modalOrderField).css({display: 'none'});
-        console.log(this.props.fields);
-        console.log(typeof this.props.fields);
         this.props.onOrderField(this.props.codeSection, this.props.code, this.currentSelectedField.code, value);
 
     },

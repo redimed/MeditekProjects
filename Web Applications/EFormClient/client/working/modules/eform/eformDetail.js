@@ -710,19 +710,19 @@ module.exports = React.createClass({
                     </div>
 
                 </div>
-                <div className = "row">
-                    <div className = "col-md-12">
+                <div className = "">
+                    <div className = " eform-col-center">
                         <nav>
                             <ul className="pagination pagination-lg">
                                 <li ref = "page_index_previous">
                                     <a aria-label="Previous" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) - 1)}>
-                                        <span aria-hidden="true">&laquo;</span>
+                                        <span aria-hidden="true">Previous Page</span>
                                     </a>
                                 </li>
                                 {pageList}
                                 <li ref = "page_index_next">
                                     <a aria-label="Next" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) + 1)}>
-                                        <span aria-hidden="true">&raquo;</span>
+                                        <span aria-hidden="true">Next Page</span>
                                     </a>
                                 </li>
                             </ul>

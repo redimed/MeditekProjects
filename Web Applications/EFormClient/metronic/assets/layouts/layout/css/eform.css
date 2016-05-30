@@ -30,3 +30,8 @@
     background: #2a70a5;
     color: white;
 }
+
+.eform-col-center {
+    margin: auto;
+    max-width: 50%;
+}

@@ -341,7 +341,7 @@ ul.my-ul {
         .tab-vertical-custom>.nav>li>a>i {
             min-width: 70px;
             height: 70px;
-            padding: 20px 20px;
+            padding: 18px 18px;
             font-size: 25px;
             vertical-align: middle;
             text-align: center;
@@ -357,7 +357,7 @@ ul.my-ul {
             vertical-align: middle;
             width: 100%;
             border: 1px solid #ddd;
-            padding-left: 5px;
+            padding-left: 10px;
         }
         .tab-vertical-custom>.tab-content{
             float: left;
@@ -421,10 +421,10 @@ ul.my-ul {
             
         }
         .tab-vertical-custom>.nav>li>a>i {
-            min-width: 95px;
-            height: 95px;
-            padding: 20px 20px;
-            font-size: 45px;
+            min-width: 75px;
+            height: 75px;
+            padding: 18px 18px;
+            font-size: 30px;
             vertical-align: middle;
             text-align: center;
             /*background-color: #aec3d0;*/
@@ -439,7 +439,7 @@ ul.my-ul {
             vertical-align: middle;
             width: 100%;
             border: 1px solid #ddd;
-            padding-left: 5px;
+            padding-left: 10px;
         }
         .tab-vertical-custom>.tab-content{
             float: left;
@@ -472,10 +472,7 @@ ul.my-ul {
             transition: background 1s, color 1s;
             /*border-left: solid 3px #337ab7;*/
         }
-    }
-    
-
-    
+    }   
 /*END tab-vertical-custom========================================*/
 
 

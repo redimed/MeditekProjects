@@ -107,6 +107,10 @@ module.exports = React.createClass({
                 </div>
             )
         }
+        var inputStyle = {
+            paddingLeft: '1px',
+            paddingRight:'1px'
+        }
         switch(type){
             case 'default':
                 html = (
@@ -119,7 +123,7 @@ module.exports = React.createClass({
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <input title={this.props.name} type="text" className={this.props.className} name={this.props.name} ref="input" placeholder={this.props.placeholder}
+                                <input title={this.props.name} type="text" className={this.props.className} style={inputStyle} name={this.props.name} ref="input" placeholder={this.props.placeholder}
                                     id={this.props.refTemp}/>
                             </div>
                         </div>
@@ -128,7 +132,7 @@ module.exports = React.createClass({
                 break;
             case 'd':
                 html = (
-                    <input type="text" className={this.props.className} name={this.props.name} ref="input" placeholder={this.props.placeholder}
+                    <input type="text" className={this.props.className} style={inputStyle} name={this.props.name} ref="input" placeholder={this.props.placeholder}
                         id={this.props.refTemp}/>
                 )
                 break;

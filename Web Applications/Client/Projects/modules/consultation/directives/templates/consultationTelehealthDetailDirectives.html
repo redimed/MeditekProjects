@@ -90,7 +90,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Patient</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="form-control bold text-info">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
+                                                    <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -118,10 +118,10 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Duration of Referral</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="form-control bold text-info" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
-                                                    <div class="form-control bold text-info" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
-                                                    <div class="form-control bold text-info" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
-                                                    <div class="form-control bold text-info" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -134,7 +134,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Request Date</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="form-control bold text-info">{{wainformation.CreatedDate | date:'dd/MM/yyyy'}}</div>
+                                                    <div class="form-control">{{wainformation.CreatedDate | date:'dd/MM/yyyy'}}</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -148,7 +148,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Referring Practitioner</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="form-control bold text-info">{{wainformation.TelehealthAppointment.RefName}}</div>
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.RefName}}</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -240,19 +240,19 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Speciality</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="form-control bold text-info">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Name of Specialist (if required)</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="form-control bold text-info">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Name}}</div>
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Name}}</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Site</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="form-control bold text-info">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">

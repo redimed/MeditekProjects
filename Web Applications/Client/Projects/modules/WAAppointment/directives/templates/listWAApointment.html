@@ -37,24 +37,25 @@
                 <thead>
                     <tr class="uppercase">
                         <th width="1">#</th>
-                        <th >Code</th>
-                        <th>Patient</th>
-                        <th>Treating Practitioner</th>
-                        <th>
+                        <th>Code</th>
+                        <th style="min-width:180px;">Patient</th>
+                        <th style="min-width:200px;">Treating Practitioner</th>
+                        <th style="min-width:120px;">
                             Submit Date
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
                             <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
+                        </th>
+                        <th style="min-width:150px;">Appointment Type</th>
+                        <th style="min-width:150px;">
+                            Appointment Date
+                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
+                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('AppointmentDate','DESC')" ng-show="typeAppointmentDate == 'DESC'"></i>
                         </th>
                         <th width="1" align="center" style="text-align:center">
                             Referral Tracking
                             <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
                         </th>
-                        <th width="160px">Appointment Type</th>
-                        <th>
-                            Appointment Date
-                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
-                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('AppointmentDate','DESC')" ng-show="typeAppointmentDate == 'DESC'"></i>
-                        </th>
+                        
                         <th width="1">Correspondence</th>
                     </tr>
                     <tr ng-hide="info.toggle">
@@ -68,16 +69,12 @@
                         <td>
                             <input type="text" class="form-control" ng-model="info.data.Search[1].Doctor.FullName" ng-enter="reloadData()">
                         </td>
-                        <td class="form-inline">
-                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="reloadData()"> to
-                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="reloadData()">
+                        <!-- submit date -->
+                        <td>
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="reloadData()" placeholder="Form date"> 
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="reloadData()" placeholder="To date">
                         </td>
-                        <td width="131px">
-                            {{info.data.Filter.Appointment.Status}}
-                            <select class="form-control" ng-model="info.data.Filter[0].Appointment.Status" name="Status" ng-options="item.value as item.name for item in info.apptStatus" ng-change="reloadData()">
-                                <option value="">All</option>
-                            </select>
-                        </td>
+                        <!-- appointment type -->
                         <td>
                             <select class="form-control" ng-model="info.data.Filter[0].Appointment.Type" name="Type" ng-change="reloadData()">
                                 <option value="">All</option>
@@ -87,10 +84,18 @@
                                 <option value="Campaign">Campaign</option>
                             </select>
                         </td>
-                        <td class="form-inline">
-                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="starFromTime" ng-change="reloadData()"> to
-                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="endFromTime" ng-change="reloadData()">
+                        <!-- appointment date -->
+                        <td>
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" ng-model="starFromTime" ng-change="reloadData()" placeholder="From date">
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" ng-model="endFromTime" ng-change="reloadData()" placeholder="To date">
                         </td>
+                        <td width="131px">
+                            {{info.data.Filter.Appointment.Status}}
+                            <select class="form-control" ng-model="info.data.Filter[0].Appointment.Status" name="Status" ng-options="item.value as item.name for item in info.apptStatus" ng-change="reloadData()">
+                                <option value="">All</option>
+                            </select>
+                        </td>
+                        
                         <td>
                         </td>
                     </tr>
@@ -100,7 +105,6 @@
                         <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
                         <td>{{appt.Code}}</td>
                         <td>
-
                             <span>
                             {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
                             </span><span ng-if="appt.ishavePatientAppointment === true" style="color:red;">*</span>
@@ -114,7 +118,10 @@
                                 {{appt.Doctors.length>1?'Group':appt.DoctorsName}}
                             </span>
                         </td>
+                        <!-- submit date -->
                         <td>{{appt.CreatedDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{(appt.Type !== "Onsite")?appt.Type:"On Site"}}</td>
+                        <td>{{appt.FromTime | date: 'dd/MM/yyyy - HH:mm'}}</td>
                         <td>
                             <span ng-if="appt.Status === info.apptStatus[3].value"><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
                             <span ng-if="appt.Status === info.apptStatus[4].value"><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
@@ -124,8 +131,6 @@
                             <span ng-if="appt.Status === info.apptStatus[2].value"><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
                             <span ng-if="appt.Status === info.apptStatus[5].value"><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
                         </td>
-                        <td>{{(appt.Type !== "Onsite")?appt.Type:"On Site"}}</td>
-                        <td>{{appt.FromTime | date: 'dd/MM/yyyy - HH:mm'}}</td>
                         <td class="text-center">
                             <i class="glyphicon glyphicon-ok font-green-haze" ng-if="appt.TelehealthAppointment.Correspondence === 'Y'"></i>
                             <i class="glyphicon glyphicon-remove font-red" ng-if="appt.TelehealthAppointment.Correspondence !== 'Y'"></i>

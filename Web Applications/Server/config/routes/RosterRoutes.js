@@ -26,5 +26,9 @@ module.exports = {
     'get /api/site/list': {
         controller: 'Roster/RosterController',
         action: 'GetListSite'
-    }
+    },
+    'get /TestSocket': {
+        controller: 'UserAccount/v0_1/UserAccountController',
+        action: 'TestSocket',
+    },
 };

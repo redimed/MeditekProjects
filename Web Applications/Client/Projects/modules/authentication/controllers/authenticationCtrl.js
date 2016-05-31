@@ -212,20 +212,18 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         socketJoinRoom(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
     }
 
-    ioSocket.authConnect = function() {
-        console.log("reconnect socketAuth");
+    ioSocket.socketAuthReconnect = function() {
+        console.log("reconnect socketAuth-> makeUserOwnRoom");
         socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
     }
 
     ioSocket.telehealthCancel = function(msg) {
-        console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         console.log(ioSocket.telehealthSwalCall);
         swal.close();
         o.audio.pause();
     }
 
     ioSocket.telehealthDecline = function(msg) {
-        console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
         if (ioSocket.telehealthPatientCallWindow) {
             ioSocket.telehealthPatientCallWindow.close();
         }

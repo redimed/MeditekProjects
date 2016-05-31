@@ -1,10 +1,13 @@
-var ioSocket = {},
-    socketAuth = ioSocket.Auth,
-    socketRest = ioSocket.Rest,
-    socketTelehealth = ioSocket.Telehealth,
-    socketNc = ioSocket.Nc;
-
-
+var ioSocket = {
+    Auth: null,
+    Rest: null,
+    Telehealth: null,
+    Nc: null
+};
+var socketAuth = ioSocket.Auth;
+var socketRest = ioSocket.Rest;
+var socketTelehealth = ioSocket.Telehealth;
+var socketNc = ioSocket.Nc;
 socketJoinRoom = function(server, api, obj) {
     server.request({
         method: 'get',
@@ -32,15 +35,18 @@ messageTransfer = function(from, to, message) {
 /*begin socket 3006 */
 socketAuth = io.sails.connect(o.const.authBaseUrl);
 socketAuth.on('connect', function() {
-    connectedAuth();
     console.log("auth connect socket");
-    if (ioSocket.authConnect) {
-        ioSocket.authConnect();
+    if (ioSocket.socketAuthReconnect) {
+        ioSocket.socketAuthReconnect();
     }
+    createSocketConnectRest();
 });
 socketAuth.on('testmessage', function(msg) {
-    console.log(JSON.stringify("a" + msg));
+    console.log(JSON.stringify("aa" + msg));
 });
+socketAuth.on('UpdateRequestWAAppointmentCompany_DM', function(msg) {
+    console.log('UpdateRequestWAAppointmentCompany_DM', msg);
+})
 /* end socket 3006 */
 
 
@@ -48,15 +54,18 @@ socketAuth.on('testmessage', function(msg) {
 
 
 /* begin socket 3005 */
-function connectedAuth() {
+function createSocketConnectRest() {
     //====connect 3009
     socketRest = io.sails.connect(o.const.restBaseUrl);
     socketRest.on('connect', function() {
-        connectedTelehealth();
+        createSocketConnectTelehealth();
         console.log("rest connect socket");
     });
     socketRest.on('testmessage', function(msg) {
         console.log(JSON.stringify("b" + msg));
+    })
+    socketRest.on('testaaa', function(msg){
+        console.log("testaaa",msg);
     })
 }
 /* begin socket 3005 */
@@ -65,11 +74,11 @@ function connectedAuth() {
 
 
 /* begin socket 3009 */
-function connectedTelehealth() {
+function createSocketConnectTelehealth() {
     //====connect 3016
     socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
     socketTelehealth.on('connect', function() {
-        connectedNc();
+        createSocketConnectNC();
         console.log("telehealth connect socket");
         if (ioSocket.telehealthConnect) {
             ioSocket.telehealthConnect();
@@ -119,7 +128,7 @@ function connectedTelehealth() {
 
 
 /* begin socket 3016 */
-function connectedNc() {
+function createSocketConnectNC() {
     socketNc = io.sails.connect(o.const.ncBaseUrl);
     socketNc.on('connect', function() {
         console.log("notification center connect socket");

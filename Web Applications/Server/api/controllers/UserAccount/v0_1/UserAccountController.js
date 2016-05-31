@@ -19,6 +19,11 @@ module.exports = {
 			})
 	},
 
+	TestSocket:function(req,res){
+		sails.sockets.broadcast(req.user.UID,'testmessage',{name:'tan'});
+		res.ok({status:'rest test socket success'}) ;
+	},
+
 	TestURL:function(req,res)
 	{
 		res.ok("test url 1");

@@ -1,5 +1,6 @@
 
 module.exports={
+	'TestSocket':['isAuthenticated'],
 	'get /api/user-account/test':{
 		controller:'UserAccount/v0_1/UserAccountController',
 		action:'Test',

@@ -20,11 +20,11 @@ module.exports = {
                         dmLog("actionName from Request have matched");
                         return sails.config.resDM[ctrKey][actKey];
                     } else {
-                        dmLog("actionName from Request haven't matched");
+                        //dmLog("actionName from Request haven't matched");
                     }
                 }
             } else {
-                dmLog("controllerName from Request haven't matched");
+                //dmLog("controllerName from Request haven't matched");
             }
         }
         return null;

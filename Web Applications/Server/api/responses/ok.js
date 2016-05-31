@@ -10,13 +10,27 @@
  * @param  {String|Object} options
  *          - pass string to render specified view
  */
-
+var dmUtils = require('../services/resDM/dmUtils');
+var dmLog = dmUtils.dmLog;
 module.exports = function sendOK (data, options) {
 
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
   var res = this.res;
   var sails = req._sails;
+
+  //Config ResDM Begin-------------------------------------------
+  var dm=ResDMService.loadDMConfig(req);
+  if(dm) {
+    ResDMService.sendDM(dm, req)
+    .then(function(status){
+      dmLog('Send Direct Message Success: ', status);
+    },function(err){
+      dmLog('Send Direct Message Error:', err);
+    })
+  }
+
+  //Config ResDM End---------------------------------------------
 
   sails.log.silly('res.ok() :: Sending 200 ("OK") response or 202 if refresh token');
 

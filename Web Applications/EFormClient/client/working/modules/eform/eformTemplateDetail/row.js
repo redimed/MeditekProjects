@@ -18,29 +18,7 @@ var ComponentFieldDetailChart = require('modules/eform/eformTemplateDetail/field
 var Config = require('config');
 
 module.exports = React.createClass({
-    propTypes: {
-        code: React.PropTypes.number,
-        codeSection: React.PropTypes.number,
-        type: React.PropTypes.string,        
-        refTemp: React.PropTypes.string,
-        permission: React.PropTypes.string,
-        size: React.PropTypes.number,
-        fields: React.PropTypes.object,
-        onRemoveRow: React.PropTypes.func,
-        onSelectField: React.PropTypes.func,
-        onSaveFieldDetail: React.PropTypes.func,
-        onRemoveField: React.PropTypes.func,
-        onRemoveTableColumn: React.PropTypes.func,
-        onCreateTableColumn: React.PropTypes.func,
-        onCreateTableRow: React.PropTypes.func,
-        onRemoveTableRow: React.PropTypes.func,
-        onUpdateTableColumn: React.PropTypes.func,
-        onOrderRow: React.PropTypes.func,
-        handleReloadDoctor: React.PropTypes.func,
-        onOrderField: React.PropTypes.func
-    },
     currentSelectedField: null,
-
     componentDidMount: function(){
         const self = this;
         if(this.props.permission === 'eformDev'){

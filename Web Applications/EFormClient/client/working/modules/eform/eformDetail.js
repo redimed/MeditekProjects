@@ -5,6 +5,7 @@ var ComponentPageBar = require('modules/eform/eformDetail/pageBar');
 var History = ReactRouter.hashHistory;
 
 module.exports = React.createClass({
+    content: null,
     appointmentUID: null,
     patientUID: null,
     userUID: null,
@@ -447,6 +448,7 @@ module.exports = React.createClass({
         .then(function(response){
             var EFormTemplate = self.EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
+            self.content = content;
             var page_content = [];
             for(var i = 0; i < content.sections.length; i++){
                 if(parseInt(self.page) === parseInt(content.sections[i].page)){
@@ -557,39 +559,90 @@ module.exports = React.createClass({
     _onComponentPageBarPrintForm: function(){
         var self = this;
 
-        var sections = self.state.sections.toJS();
         var fields = [];
-        for(var i = 0; i < sections.length; i++){
-            var section = sections[i];
-            var sectionRef = section.ref;
-            var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('print');
-            tempFields.map(function(field, index){
-                fields.push(field);
-            })
-        }
+        this.content.sections.map(function(section){
+            if(typeof section.viewType !== 'undefined'){
+                if(section.viewType === 'dynamic'){
+                    if(typeof self.refs[section.ref] !== 'undefined'){
+                        var tempFields = self.refs[section.ref].getAllFieldValueWithValidation('print');
+                        tempFields.map(function(field, index){
+                            fields.push(field);
+                        })
+                    }else{
+                        section.rows.map(function(row){
+                            row.fields.map(function(content_field){
+                                self.allFields.map(function(field){
+                                    if(content_field.ref === field.ref){
+                                        var temp_value = '';
+                                        if(field.type === 'eform_input_check_radio')
+                                            temp_value = (field.checked)?'yes':'';
+                                        else
+                                            temp_value = field.value;
+                                        if(temp_value !== '')
+                                            fields.push(field);
+                                    }
+                                })
+                            })
+                        })
+                    }
+                }else{
+                    self.allFields.map(function(field){
+                        var split = field.ref.split('_');
+                        var section_ref = "section_"+split[1];
+                        if(section_ref === section.ref){
+                            var field_temp = $.extend({}, field);
+                            if(field.type === 'eform_input_signature'){
+                                if(field.value)
+                                    field_temp.base64Data = field.value.sub;
+                                field_temp.value = null;
+                            }
+                            if(field.value === 'TODAY')
+                                field_temp.value = moment().format('DD/MM/YYYY');
+                            fields.push(field_temp);
+                        }
+                    })
+                }
+            }else{
+                self.allFields.map(function(field){
+                    var split = field.ref.split('_');
+                    var section_ref = "section_"+split[1];
+                    if(section_ref === section.ref){
+                        if(field.type === 'eform_input_signature'){
+                            if(field.value)
+                                field.base64Data = field.value.sub;
+                            field.value = null;
+                        }
+                        if(field.value === 'TODAY')
+                            field.value = moment().format('DD/MM/YYYY');
+                        fields.push(field);
+                    }
+                })
+            }
+        })
 
         var appointmentUID = self.appointmentUID;
-        var content = self._mergeTwoObjects(self.allFields, fields, 'print');
-
 
         var data = {
             printMethod: self.EFormTemplate.PrintType,
-            data: content,
+            data: fields,
             templateUID: self.templateUID
         }
 
-        EFormService.createPDFForm(data)
-        .then(function(response){
-            var fileName = 'report_'+moment().format('X');
-            var blob = new Blob([response], {
-                type: 'application/pdf'
-            });
-            var filesaver = saveAs(blob, fileName);
-            setTimeout(function(){
-                window.location.reload();
-            }, 1000)
-        }, function(error){
+        this._onDetailSaveForm()
+        .then(function(){
+            EFormService.createPDFForm(data)
+            .then(function(response){
+                var fileName = 'report_'+moment().format('X');
+                var blob = new Blob([response], {
+                    type: 'application/pdf'
+                });
+                var filesaver = saveAs(blob, fileName);
+                setTimeout(function(){
+                    window.location.reload();
+                }, 1000)
+            }, function(error){
 
+            })
         })
     },
     _onGoToHistory: function(history){

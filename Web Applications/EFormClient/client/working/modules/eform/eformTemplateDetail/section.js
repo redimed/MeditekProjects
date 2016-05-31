@@ -139,17 +139,19 @@ module.exports = React.createClass({
                 })
             }
         }else{
-            for(var i = 0; i < rows.length; i++){
-                var row = rows[i];
-                var rowRef = row.ref;
-                var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
-                tempFields.map(function(field, index){
-                    if(field.type === 'eform_input_check_radio')
-                        field.checked = false;
-                    else
-                        field.value = '';
-                    fields.push(field);
-                })
+            if(stringType !== 'print'){
+                for(var i = 0; i < rows.length; i++){
+                    var row = rows[i];
+                    var rowRef = row.ref;
+                    var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
+                    tempFields.map(function(field, index){
+                        if(field.type === 'eform_input_check_radio')
+                            field.checked = false;
+                        else
+                            field.value = '';
+                        fields.push(field);
+                    })
+                }
             }
         }
         return fields;

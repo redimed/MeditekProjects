@@ -526,19 +526,23 @@ module.exports = React.createClass({
                             content[field_index].value = total;
                     }else if(cal.type === 'EQUALP'){
                         var field_index = 0;
-                        var total = '';
+                        var value = '';
+                        var checked = '';
                         cal.cal.map(function(name){
                            for(var i = 0; i < content.length; i++){
                                 if(content[i].name === name && content[i].checked){
                                     if(cal.field.type  === 'eform_input_text'){
-                                        total = content[i].value;
+                                        value = content[i].value;
                                     }
                                     if(content[i].value === cal.field.value){
-                                        total = content[i].checked;
+                                        checked = content[i].checked;
+                                        value = content[i].value;
                                     }else{
                                         if(cal.field.value === '1'){
-                                            if(isNaN(content[i].value))
-                                                total = content[i].checked;
+                                            if(isNaN(content[i].value)){
+                                                checked = content[i].checked;
+                                                value = content[i].value;
+                                            }
                                         }
                                     }//end else
                                 }
@@ -546,12 +550,8 @@ module.exports = React.createClass({
                                     field_index = i;
                             } 
                         })
-                        if(typeof total !== 'boolean')
-                            content[field_index].value = total;
-                        else{
-                            content[field_index].checked = total;
-                            content[field_index].value = (total)?'1':'0';
-                        }
+                        content[field_index].value = value;
+                        content[field_index].checked = checked;
                     }
                 })
             }

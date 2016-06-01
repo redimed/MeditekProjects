@@ -1,3 +1,9 @@
+/*
+Directive su dung thu vien 
+https://github.com/vakata/jstree
+http://jstree-directive.herokuapp.com/#/plugins
+*/
+
 angular.module("app.common.drawing",[])
 .directive('drawing', function ($window,Restangular, $timeout, toastr,consultationServices,CommonService,$cookies) {
     return {
@@ -277,6 +283,22 @@ angular.module("app.common.drawing",[])
                     })
                 }
             }
+            
+            scope.trackDoubleTouch;
+            scope.trackCurrentNodeTouch;
+            scope.selectNodeCBViaDoubleTouch = function (e) {
+                var now = new Date().getTime();
+                var timesince = now - scope.trackDoubleTouch;
+                var idArr = String(e.target.id).split('_');
+                if((timesince < 600) && (timesince > 0) && (scope.trackCurrentNodeTouch == idArr[0])) {
+                    // double tap   
+                    scope.selectNodeCB(e);
+                } else {
+                    // too much time to be a doubletap
+                 }
+                scope.trackDoubleTouch = new Date().getTime();
+                scope.trackCurrentNodeTouch = idArr[0];
+            }
       
             scope.changeColor = function (c) {
             	if(c == 'blue-ebonyclay')
@@ -338,6 +360,9 @@ angular.module("app.common.drawing",[])
 
             angular.element(canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', 
               function (event) {
+                //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>originalEvent:", event.originalEvent);
+                //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>targetTouches:", event.originalEvent.targetTouches);
+                //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>evtouchesent:", event.originalEvent.touches);
                 //Nếu di chuyển chuột nhưng không ở chế độ vẽ hay chữ thì return
                 if (event.type === 'mousemove' && !drawing && !scope.typing) {
                     // Ignore mouse move Events if we're not dragging
@@ -348,10 +373,15 @@ angular.module("app.common.drawing",[])
                 switch (event.type) {
                 case 'mousedown':
                 case 'touchstart':
-                    if(event.offsetX!==undefined){
+                    if(event.offsetX){
 			          lastX = event.offsetX;
 			          lastY = event.offsetY;
-			        } else {
+			        }
+                    else if (event.originalEvent) {
+                        lastX = event.originalEvent.targetTouches[0].pageX - angular.element(canvas).offset().left;
+                        lastY = event.originalEvent.targetTouches[0].pageY - angular.element(canvas).offset().top;
+                    }
+                    else {
 			        	lastX = event.pageX-angular.element(canvas).offset().left;
 			        	lastY = event.pageY-angular.element(canvas).offset().top;
 			        }
@@ -365,9 +395,12 @@ angular.module("app.common.drawing",[])
                 case 'touchmove':
                     if(scope.typing || drawing)
                     {
-                        if(event.offsetX!==undefined){
+                        if(event.offsetX){
                             currentX = event.offsetX;
                             currentY = event.offsetY;
+                        } else if (event.originalEvent) {
+                            currentX = event.originalEvent.targetTouches[0].pageX - angular.element(canvas).offset().left;
+                            currentY = event.originalEvent.targetTouches[0].pageY - angular.element(canvas).offset().top;
                         } else {
                             currentX = event.pageX-angular.element(canvas).offset().left;
                             currentY = event.pageY-angular.element(canvas).offset().top;

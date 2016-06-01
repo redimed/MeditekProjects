@@ -25,9 +25,7 @@
  *  http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.cors.html
  *
  */
-
-module.exports.cors = {
-
+var corsConfig = {
     /***************************************************************************
      *                                                                          *
      * Allow CORS on all routes by default? If not, you must enable CORS on a   *
@@ -91,5 +89,12 @@ module.exports.cors = {
      * but extended to all protocols (so things like Postman and curl won't work).
      */
     securityLevel: 1,
-
 };
+
+
+if (process.argv.indexOf("--allowcors") >= 0) {
+    console.log("||||||||||||||||||||||| CORS: Allow all domain");
+    corsConfig.origin = "*";
+} 
+
+module.exports.cors = corsConfig;

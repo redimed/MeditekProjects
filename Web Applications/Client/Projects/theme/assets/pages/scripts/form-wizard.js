@@ -1,13 +1,13 @@
-var FormWizard = function() {
+var FormWizard = function () {
 
 
     return {
         //main function to initiate the module
-        init: function() {
+        init: function () {
             if (!jQuery().bootstrapWizard) {
                 return;
             }
-
+            // BEGIN thêm vào
             jQuery.validator.addMethod("MailCus", function(value, element) {
                 return this.optional(element) || /^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/.test(value);
             }, "Please enter a valid email address.");
@@ -20,6 +20,8 @@ var FormWizard = function() {
              jQuery.validator.addMethod("Work", function(value, element) {
                 return this.optional(element) || /^[*#-_0-9]{6,20}$/.test(value);
             }, "This is not a work phone number");
+            // END thêm vào
+
             function format(state) {
                 if (!state.id) return state.text; // optgroup
                 return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
@@ -29,9 +31,9 @@ var FormWizard = function() {
                 placeholder: "Select",
                 allowClear: true,
                 formatResult: format,
-                width: 'auto',
+                width: 'auto', 
                 formatSelection: format,
-                escapeMarkup: function(m) {
+                escapeMarkup: function (m) {
                     return m;
                 }
             });
@@ -219,10 +221,10 @@ var FormWizard = function() {
                     'Merkel_radio[]': {
                         required: "Please select at least one option",
                         minlength: jQuery.validator.format("Please select at least one option")
-                    }
+                    },
                 },
 
-                errorPlacement: function(error, element) { // render error placement for each input type
+                errorPlacement: function (error, element) { // render error placement for each input type
                     if (element.attr("name") == "gender") { // for uniform radio buttons, insert the after the given container
                         error.insertAfter("#form_gender_error");
                     } else if (element.attr("name") == "payment[]") { // for uniform checkboxes, insert the after the given container
@@ -246,35 +248,35 @@ var FormWizard = function() {
                     }
                 },
 
-                invalidHandler: function(event, validator) { //display error alert on form submit   
+                invalidHandler: function (event, validator) { //display error alert on form submit   
                     success.hide();
                     error.show();
                     App.scrollTo(error, -200);
                 },
 
-                highlight: function(element) { // hightlight error inputs
+                highlight: function (element) { // hightlight error inputs
                     $(element)
                         .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
                 },
 
-                unhighlight: function(element) { // revert the change done by hightlight
+                unhighlight: function (element) { // revert the change done by hightlight
                     $(element)
                         .closest('.form-group').removeClass('has-error'); // set error class to the control group
                 },
 
-                success: function(label) {
-                    if (label.attr("for") == "gender" || label.attr("for") == "examination[]" || label.attr("for") == "preferred[]" || label.attr("for") == "duration[]" || label.attr("for") == "BCC_radio[]" || label.attr("for") == "SCC_radio[]" || label.attr("for") == "Melanoma_radio[]" || label.attr("for") == "Merkel_radio[]") { // for checkboxes and radio buttons, no need to show OK icon
+                success: function (label) {
+                    if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
                         label
                             .closest('.form-group').removeClass('has-error').addClass('has-success');
                         label.remove(); // remove error label here
                     } else { // display success icon for other inputs
                         label
                             .addClass('valid') // mark the current input as valid and display OK icon
-                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
                     }
                 },
 
-                submitHandler: function(form) {
+                submitHandler: function (form) {
                     success.show();
                     error.hide();
                     //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
@@ -283,10 +285,10 @@ var FormWizard = function() {
             });
 
             var displayConfirm = function() {
-                $('#tab4 .form-control-static', form).each(function() {
-                    var input = $('[name="' + $(this).attr("data-display") + '"]', form);
+                $('#tab4 .form-control-static', form).each(function(){
+                    var input = $('[name="'+$(this).attr("data-display")+'"]', form);
                     if (input.is(":radio")) {
-                        input = $('[name="' + $(this).attr("data-display") + '"]:checked', form);
+                        input = $('[name="'+$(this).attr("data-display")+'"]:checked', form);
                     }
                     if (input.is(":text") || input.is("textarea")) {
                         $(this).html(input.val());
@@ -296,28 +298,10 @@ var FormWizard = function() {
                         $(this).html(input.attr("data-title"));
                     } else if ($(this).attr("data-display") == 'payment[]') {
                         var payment = [];
-                        $('[name="payment[]"]:checked', form).each(function() {
+                        $('[name="payment[]"]:checked', form).each(function(){ 
                             payment.push($(this).attr('data-title'));
                         });
                         $(this).html(payment.join("<br>"));
-                    } else if ($(this).attr("data-display") == 'examination[]') {
-                        var examination = [];
-                        $('[name="examination[]"]:checked', form).each(function() {
-                            examination.push($(this).attr('data-title'));
-                        });
-                        $(this).html(examination.join("<br>"));
-                    } else if ($(this).attr("data-display") == 'preferred[]') {
-                        var preferred = [];
-                        $('[name="preferred[]"]:checked', form).each(function() {
-                            preferred.push($(this).attr('data-title'));
-                        });
-                        $(this).html(preferred.join("<br>"));
-                    } else if ($(this).attr("data-display") == 'duration[]') {
-                        var duration = [];
-                        $('[name="duration[]"]:checked', form).each(function() {
-                            duration.push($(this).attr('data-title'));
-                        });
-                        $(this).html(duration.join("<br>"));
                     }
                 });
             }
@@ -355,18 +339,18 @@ var FormWizard = function() {
             $('#form_wizard_1').bootstrapWizard({
                 'nextSelector': '.button-next',
                 'previousSelector': '.button-previous',
-                onTabClick: function(tab, navigation, index, clickedIndex) {
+                onTabClick: function (tab, navigation, index, clickedIndex) {
                     return false;
-
+                    
                     success.hide();
                     error.hide();
                     if (form.valid() == false) {
                         return false;
                     }
-
+                    
                     handleTitle(tab, navigation, clickedIndex);
                 },
-                onNext: function(tab, navigation, index) {
+                onNext: function (tab, navigation, index) {
                     success.hide();
                     error.hide();
 
@@ -376,13 +360,13 @@ var FormWizard = function() {
 
                     handleTitle(tab, navigation, index);
                 },
-                onPrevious: function(tab, navigation, index) {
+                onPrevious: function (tab, navigation, index) {
                     success.hide();
                     error.hide();
 
                     handleTitle(tab, navigation, index);
                 },
-                onTabShow: function(tab, navigation, index) {
+                onTabShow: function (tab, navigation, index) {
                     var total = navigation.find('li').length;
                     var current = index + 1;
                     var $percent = (current / total) * 100;
@@ -393,12 +377,12 @@ var FormWizard = function() {
             });
 
             $('#form_wizard_1').find('.button-previous').hide();
-            $('#form_wizard_1 .button-submit').click(function() {
-
+            $('#form_wizard_1 .button-submit').click(function () {
+                alert('Finished! Hope you like it :)');
             }).hide();
 
             //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
-            $('#country_list', form).change(function() {
+            $('#country_list', form).change(function () {
                 form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
             });
         }

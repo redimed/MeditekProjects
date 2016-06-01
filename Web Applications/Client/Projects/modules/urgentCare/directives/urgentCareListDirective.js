@@ -75,7 +75,22 @@ app.directive('urgentcareList', function(urgentCareService, $uibModal, toastr,$c
 
 	        scope.Search = function(data,e){
 				if(e==13){
-					console.log("asdasd");
+					for(var key in data) {
+						if(data[key] == '') {
+							data[key] = null;
+						}
+						if(typeof data[key] == 'object') {
+							for(var childKey in data[key]) {
+								if(data[key][childKey] == ''){
+									delete data[key][childKey];
+								}
+							}
+							if(_.isEmpty(data[key])) {
+								delete data[key];
+							}
+						}
+					}
+					console.log("daat ", data);
 					scope.searchObjectMap.Search = data;
 					scope.loadList(scope.searchObjectMap);
 				}

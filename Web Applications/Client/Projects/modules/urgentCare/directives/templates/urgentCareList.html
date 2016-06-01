@@ -76,8 +76,8 @@
                                 <td><input type="text" class="form-control" ng-model="search.RequestType" ng-keypress="Search(search,$event.which)"></td>
                                 <td>
                                     <div class="form-inline">
-                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.from" style="font-size:13px;" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>  to 
-                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.to" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.from" style="font-size:13px;" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" placeholder="dd/mm/yyyy"/>  to 
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.to" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" placeholder="dd/mm/yyyy"/>
                                     </div>
                                     <!-- <div class="input-group input-medium date-picker input-daterange" data-date-format="dd/mm/yyyy" >
                                         <input type="text" class="form-control" ng-model="search.RequestDate.from" ng-change="Search(search,flag)">

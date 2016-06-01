@@ -14,40 +14,39 @@
     </a>
 		
 	
-    <ul  ng-if="node.nodes" class="sub-menu">
+    <ul ng-if="node.nodes" class="sub-menu">
         <li class="nav-item"  ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'" finish-render>
         </li>
     </ul>
 </script>
-
-<ul class="page-sidebar-menu page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" id="sidebar">
-	<!-- <li class="sidebar-toggler-wrapper">
-		<div class="sidebar-toggler"></div>
-	</li> -->
-<!-- 	<li>&nbsp;</li>
-	<li>&nbsp;</li>
-    <li>&nbsp;</li>
-	<li class="heading"><h3 class="uppercase">Menu</h3></li>
-	</li> -->
-
-	<li class="start active ">
-		<a href="javascript:;" ui-sref="authentication.home.list">
-		<i class="icon-home"></i>
-		<span class="title">Homepage</span>
-		<span class="selected"></span>
-		<span class="arrow open"></span>
-		</a>
-	</li>
-    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render>
-    </li>
-    <li class="nav-item" >
-    	<a href="javascript:;" ui-sref="authentication.user.profile" class="nav-link">
-            <i class="glyphicon glyphicon-user"></i>
-            <span class="title">User Profile</span>
-            <span class="arrow"></span>
-        </a>
-    </li>
-</ul>
+<div class="page-sidebar navbar-collapse collapse">
+    <ul class="page-sidebar-menu page-header-fixed page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" id="sidebar">
+        <li class="sidebar-toggler-wrapper hide">
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            <div class="sidebar-toggler">
+                <span></span>
+            </div>
+            <!-- END SIDEBAR TOGGLER BUTTON -->
+        </li>
+    	<li class="nav-item start active open">
+    		<a href="javascript:;" ui-sref="authentication.home.list">
+    		<i class="icon-home"></i>
+    		<span class="title">Homepage</span>
+    		<span class="selected"></span>
+    		<span class="arrow open"></span>
+    		</a>
+    	</li>
+        <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render>
+        </li>
+        <li class="nav-item" >
+        	<a href="javascript:;" ui-sref="authentication.user.profile" class="nav-link">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="title">User Profile</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+    </ul>
+</div>
 <!-- 
 <img dimage dimage-uid="'bb965155-2b92-41f8-aa78-aa072e70b452'" dimage-size="'30'" width:"400" height:'400'/>
 
@@ -55,5 +54,5 @@
 
 <script>
     
-	Layout.init(); // init current layout
+	// Layout.init(); // init current layout
 </script>

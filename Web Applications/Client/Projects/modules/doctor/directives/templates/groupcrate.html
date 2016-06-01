@@ -2,10 +2,10 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true" ng-click="cancel()"></button>
-		<h4 class="modal-title uppercase bold font-red" ng-show="showTitle=='create'">
-			<i class="icon-settings"></i> Create New Group Doctor</h4>
-		<h4 class="modal-title uppercase bold font-red" ng-show="showTitle=='update'">
-				<i class="icon-settings"></i> Update Group Doctor</h4>
+		<h4 class="modal-title uppercase bold font-blue" ng-show="showTitle=='create'">
+			<i class="icon-pencil"></i> Create New Group Doctor</h4>
+		<h4 class="modal-title uppercase bold font-blue" ng-show="showTitle=='update'">
+				<i class="icon-pencil"></i> Update Group Doctor</h4>
 	</div>
 	<div class="modal-body">
 		<div class="form-body">
@@ -39,12 +39,12 @@
 	</div>
 	<div class="modal-footer">
 		<div class="form-actions right">
-			<button type="button" class="btn btn-lg dark" data-dismiss="modal"
+			<button type="button" class="btn dark" data-dismiss="modal"
 				ng-click="cancel()">
 					<i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
-			<button class="btn btn-lg red" ng-click="create()" ng-show="showTitle=='create'">
+			<button class="btn blue" ng-click="create()" ng-show="showTitle=='create'">
 				Submit <i class="glyphicon glyphicon-save"></i></button>
-			<button class="btn btn-lg red" ng-click="update()" ng-show="showTitle=='update'">
+			<button class="btn blue" ng-click="update()" ng-show="showTitle=='update'">
 				Update <i class="glyphicon glyphicon-save"></i></button>
 		</div>
 	</div>

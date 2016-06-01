@@ -124,7 +124,8 @@ ul.my-ul {
 
 .page-header.navbar.navbar-fixed-top,
 .page-header.navbar.navbar-static-top {
-    z-index: 995 !important;
+    /*z-index: 995 !important;*/
+    z-index: 9;
 }
 
 

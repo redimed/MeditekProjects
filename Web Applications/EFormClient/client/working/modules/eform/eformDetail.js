@@ -184,32 +184,6 @@ module.exports = React.createClass({
                             if(typeof field.cal !== 'undefined')
                                 calArray = field.cal.split('|');
                             calArray.map(function(cal){
-                                /*SUMGROUP PREFIX */
-                                /*if(Config.getPrefixField(cal, 'SGROUP') > -1){
-                                    if(cal !== ''){
-                                        var calRes = Config.getArrayPrecal(7, cal);
-                                        calRes.map(function(minorRef){
-                                            $('input[name='+minorRef+']').on('ifClicked', function(event){
-                                                var total_value = 0;
-                                                var name = $(this).attr('name');
-                                                var first_value = event.target.value;
-                                                if(isNaN(first_value))
-                                                    first_value = 0;
-                                                total_value = first_value;
-                                                calRes.map(function(calName){
-                                                    if(name !== calName){
-                                                        var value = $('input[name='+calName+']:checked').val();
-                                                        if(isNaN(value))
-                                                            value = 0;
-                                                        total_value = parseInt(total_value)+parseInt(value);
-                                                    }
-                                                })
-                                                $('#'+field.ref).val(total_value);
-                                            })
-                                        })
-                                    }
-                                }*/
-                                /*END SUMGROUP PREFIX */
                                 /* SUMP PREFIX */
                                 if(Config.getPrefixField(cal, 'SUMP(') > -1){
                                     if(cal !== ''){
@@ -403,8 +377,9 @@ module.exports = React.createClass({
                                 }
                             })
                             if(typeof self.refs[cal.section_ref] !== 'undefined'){
-                                if(!isNaN(total))
+                                if(!isNaN(total)){
                                     self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
+                                }
                             }
                         }else if(cal.type === 'EQUALP'){
                             cal.cal.map(function(name){
@@ -518,21 +493,69 @@ module.exports = React.createClass({
     },
     _onDetailSaveForm: function(){
         var self = this;
+        var templateUID = self.templateUID;
+        var sections = self.state.sections.toJS();
+        var fields = [];
+        for(var i = 0; i < sections.length; i++){
+            var section = sections[i];
+            var sectionRef = section.ref;
+            var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('form');
+            tempFields.map(function(field, index){
+                fields.push(field);
+            })
+        }
+        var appointmentUID = self.appointmentUID;
+        var content = self._mergeTwoObjects(self.allFields, fields);
         var p = new Promise(function(resolve, reject){
-            var templateUID = self.templateUID;
-            var sections = self.state.sections.toJS();
-            var fields = [];
-            for(var i = 0; i < sections.length; i++){
-                var section = sections[i];
-                var sectionRef = section.ref;
-                var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('form');
-                tempFields.map(function(field, index){
-                    fields.push(field);
+            if(self.calculation.length > 0){
+                self.calculation.map(function(cal){
+                    if(cal.type === 'SUMP'){
+                        var total = 0;
+                        var field_index = 0;
+                        cal.cal.map(function(name){
+                            for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name){
+                                    if(!isNaN(parseInt(content[i].value)))
+                                        total = parseInt(total)+parseInt(content[i].value);
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            }
+                        })
+                        if(!isNaN(total))
+                            content[field_index].value = total;
+                    }else if(cal.type === 'EQUALP'){
+                        var field_index = 0;
+                        var total = '';
+                        cal.cal.map(function(name){
+                           for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name && content[i].checked){
+                                    if(cal.field.type  === 'eform_input_text'){
+                                        total = content[i].value;
+                                    }
+                                    if(content[i].value === cal.field.value){
+                                        total = content[i].checked;
+                                    }else{
+                                        if(cal.field.value === '1'){
+                                            if(isNaN(content[i].value))
+                                                total = content[i].checked;
+                                        }
+                                    }//end else
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            } 
+                        })
+                        if(typeof total !== 'boolean')
+                            content[field_index].value = total;
+                        else{
+                            content[field_index].checked = total;
+                            content[field_index].value = (total)?'1':'0';
+                        }
+                    }
                 })
             }
 
-            var appointmentUID = self.appointmentUID;
-            var content = self._mergeTwoObjects(self.allFields, fields);
             content = JSON.stringify(content);
 
             if(self.EFormStatus === 'unsaved'){
@@ -628,21 +651,20 @@ module.exports = React.createClass({
             templateUID: self.templateUID
         }
 
-        this._onDetailSaveForm()
-        .then(function(){
-            EFormService.createPDFForm(data)
-            .then(function(response){
-                var fileName = 'report_'+moment().format('X');
-                var blob = new Blob([response], {
-                    type: 'application/pdf'
-                });
-                var filesaver = saveAs(blob, fileName);
-                setTimeout(function(){
-                    window.location.reload();
-                }, 1000)
-            }, function(error){
+        console.log(JSON.stringify(fields));
 
-            })
+        EFormService.createPDFForm(data)
+        .then(function(response){
+            var fileName = 'report_'+moment().format('X');
+            var blob = new Blob([response], {
+                type: 'application/pdf'
+            });
+            var filesaver = saveAs(blob, fileName);
+            /*setTimeout(function(){
+                window.location.reload();
+            }, 1000)*/
+        }, function(error){
+
         })
     },
     _onGoToHistory: function(history){

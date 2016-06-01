@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<div class="page-bar">
+<div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
@@ -18,25 +18,25 @@
 </div>
 <!-- END PAGE HEADER-->
 
-<h3 class="page-title bold">Doctor Group</h3>
+<!-- <h3 class="page-title bold">Doctor Group</h3> -->
 
 <!-- content page -->
-<div class="portlet box green">
+<div class="portlet light bordered">
 	<div class="portlet-title">
-		<div class="caption">
-			<i class="icon-list"></i>
+		<div class="caption font-blue">
+			<i class="icon-list font-blue"></i>
 			<span class="caption-subject bold uppercase">Doctor Group</span>
 		</div>
 		<div class="actions">
-			<a  href="javascript:;" class="btn blue" ng-click="create()">
+			<a  href="javascript:;" class="btn btn-outline blue" ng-click="create()">
 			<i class="glyphicon glyphicon-plus"></i> Create</a>
 		</div>
 	</div>
 	<div class="portlet-body">
-		<div class="table-scrollable">
-			<table class="table table-bordered table-hover table-striped">
+		<div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
+			<table class="table table-light table-hover table-striped">
 				<thead>
-					<tr style="width:100%;">
+					<tr class="uppercase">
 						<th width="1">#</th>
                         <th>
 							Group Code
@@ -84,6 +84,26 @@
 						</td>
                     </tr>
 				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="4" class="text-right">
+							<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+								<uib-pagination
+								boundary-links="true"
+								total-items="count"
+								ng-model="searchObjectMap.currentPage"
+								class="pagination-md "
+								previous-text="&lsaquo; "
+								next-text="&rsaquo; "
+								first-text="&laquo; "
+								last-text="&raquo; "
+								items-per-page="searchObjectMap.limit"
+								max-size="searchObjectMap.maxSize"
+								ng-change="setPage()"></uib-pagination>
+							</div>
+						</th>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 		<div class="row">
@@ -91,20 +111,7 @@
 				&nbsp;
 			</div>
 			<div class="col-md-7 col-sm-12" style="text-align:right">
-				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-					<uib-pagination
-					boundary-links="true"
-					total-items="count"
-					ng-model="searchObjectMap.currentPage"
-					class="pagination-md "
-					previous-text="&lsaquo; "
-					next-text="&rsaquo; "
-					first-text="&laquo; "
-					last-text="&raquo; "
-					items-per-page="searchObjectMap.limit"
-					max-size="searchObjectMap.maxSize"
-					ng-change="setPage()"></uib-pagination>
-				</div>
+				
 			</div>
 		</div>
 	</div>

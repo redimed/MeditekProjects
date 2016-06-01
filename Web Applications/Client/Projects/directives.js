@@ -103,7 +103,7 @@ app.directive('datePicker', function($timeout) {
 
             elem.addClass('form-control');
             // elem.attr('data-date-format', 'dd/mm/yyyy');
-            elem.attr('readonly', true);
+            // elem.attr('readonly', true);
             elem.attr('type', 'text');
             elem.attr('placeholder', 'dd/mm/yyyy');
             // elem.attr('data-date-start-date',"20/11/2015");
@@ -130,7 +130,7 @@ app.directive('timePicker', function($timeout) {
             elem.addClass('form-control');
             // elem.attr('data-format', 'hh:mm A');
             elem.attr('data-default-time', '');
-            elem.attr('readonly', true);
+            // elem.attr('readonly', true);
             elem.attr('type', 'text');
             elem.attr('placeholder', 'hh:mm');
         },

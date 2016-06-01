@@ -552,6 +552,10 @@ module.exports = React.createClass({
                         })
                         content[field_index].value = value;
                         content[field_index].checked = checked;
+                        if(checked !== ''){
+                            if(isNaN(value))
+                                content[field_index].value = '1';
+                        }
                     }
                 })
             }

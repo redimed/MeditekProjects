@@ -203,6 +203,7 @@ module.exports = React.createClass({
                                             if(typeof self.refs[sectionRefField] !== 'undefined')
                                                 self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
                                         })
+                                        //self.calculation.push({type: 'SUM', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
                                     }
                                 }
                                 /* END SUM PREFIX */
@@ -365,7 +366,7 @@ module.exports = React.createClass({
                     }
                 })
                 if(self.calculation.length > 0){
-                    self.calculation.map(function(cal){
+                    /*self.calculation.map(function(cal){
                         if(cal.type === 'SUMP'){
                             var total = 0;
                             cal.cal.map(function(name){
@@ -405,7 +406,7 @@ module.exports = React.createClass({
                                 } 
                             })
                         }
-                    })
+                    })*/
                 }
             }else{
                 var tempData = JSON.stringify(self.allFields);
@@ -530,10 +531,14 @@ module.exports = React.createClass({
                         var checked = '';
                         cal.cal.map(function(name){
                            for(var i = 0; i < content.length; i++){
-                                if(content[i].name === name && content[i].checked){
-                                    if(cal.field.type  === 'eform_input_text'){
+                                if(content[i].name === name && cal.field.type === 'eform_input_text'){
+                                    if(content[i].type === 'eform_input_text')
                                         value = content[i].value;
-                                    }
+                                    else
+                                        if(content[i].checked === true)
+                                            value = content[i].value;
+                                }
+                                if(content[i].name === name && content[i].checked === true){
                                     if(content[i].value === cal.field.value){
                                         checked = content[i].checked;
                                         value = content[i].value;
@@ -655,8 +660,6 @@ module.exports = React.createClass({
             templateUID: self.templateUID
         }
 
-        console.log(JSON.stringify(fields));
-
         EFormService.createPDFForm(data)
         .then(function(response){
             var fileName = 'report_'+moment().format('X');
@@ -664,9 +667,9 @@ module.exports = React.createClass({
                 type: 'application/pdf'
             });
             var filesaver = saveAs(blob, fileName);
-            /*setTimeout(function(){
+            setTimeout(function(){
                 window.location.reload();
-            }, 1000)*/
+            }, 1000)
         }, function(error){
 
         })
@@ -701,6 +704,7 @@ module.exports = React.createClass({
         swal("Success!", "Deleted", "success");
     },
     _onGetPageContent: function (page) {
+        var self = this;
         if(page >= 1 && page <= this.maxPage)
         {
             var sections = this.state.sections.toJS();
@@ -715,6 +719,63 @@ module.exports = React.createClass({
             }
 
             var content = this._mergeTwoObjects(this.allFields, fields);
+            if(self.calculation.length > 0){
+                self.calculation.map(function(cal){
+                    if(cal.type === 'SUMP'){
+                        var total = 0;
+                        var field_index = 0;
+                        cal.cal.map(function(name){
+                            for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name){
+                                    if(!isNaN(parseInt(content[i].value)))
+                                        total = parseInt(total)+parseInt(content[i].value);
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            }
+                        })
+                        if(!isNaN(total))
+                            content[field_index].value = total;
+                    }else if(cal.type === 'EQUALP'){
+                        var field_index = 0;
+                        var value = '';
+                        var checked = '';
+                        cal.cal.map(function(name){
+                           for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name && cal.field.type === 'eform_input_text'){
+                                    if(content[i].type === 'eform_input_text')
+                                        value = content[i].value;
+                                    else
+                                        if(content[i].checked === true)
+                                            value = content[i].value;
+                                }
+                                if(content[i].name === name && content[i].checked === true){
+                                    if(content[i].value === cal.field.value){
+                                        checked = content[i].checked;
+                                        value = content[i].value;
+                                    }else{
+                                        if(cal.field.value === '1'){
+                                            if(isNaN(content[i].value)){
+                                                checked = content[i].checked;
+                                                value = content[i].value;
+                                            }
+                                        }
+                                    }//end else
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            } 
+                        })
+                        content[field_index].value = value;
+                        content[field_index].checked = checked;
+                        if(checked !== ''){
+                            if(isNaN(value))
+                                content[field_index].value = '1';
+                        }
+                    }
+                })
+            }
+
             content = JSON.stringify(content);
             EFormService.formSaveStep({id: this.EFormID, tempData: content})
             .then(function(response){

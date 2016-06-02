@@ -112,7 +112,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         displayTimeLabel.text = "\(strMinutes):\(strSeconds)"
     }
     
-    //Giap: Open or close publisher video
+    //Open or close publisher video
     @IBAction func buttonHoldCallAction(sender: DesignableButton) {
         
         if publisher?.publishVideo.boolValue == true {
@@ -130,7 +130,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         
         
     }
-    //Giap: On or Off speaker
+    // On or Off speaker
     @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
         if subscriber?.subscribeToAudio.boolValue == true {
             subscriber?.subscribeToAudio = false
@@ -165,7 +165,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         
     }
     
-    //Giap: Func handle emit socket to server 2 message : Answer or EndCall
+    //Func handle emit socket to server 2 message : Answer or EndCall
 //    func emitDataToServer(message:String){
 //        let modifieldURLString = NSString(format: Constants.UrlAPISocket.emitAnswer,self.uuidFrom,self.uuidTo,message) as String
 //        let dictionNary : NSDictionary = ["url": modifieldURLString]

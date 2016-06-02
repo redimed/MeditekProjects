@@ -24,13 +24,13 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        buttonLogin.hidden = false
         self.navigationController?.navigationBarHidden = true
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             GetPatientInfomation()
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
                 loadInformationData()
             }
-            
             self.socketService.openSocket(Context.getDataDefasults(Define.keyNSDefaults.TelehealthUserUID) as! String,complete: {
                 complete in
             })
@@ -281,7 +281,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
         self.navigationController?.pushViewController(setting, animated: true)
     }
     @IBAction func actionLogin(sender: AnyObject) {
-        let setting :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("RegisterViewControllerID") as! RegisterViewController
+        let setting :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("LoginViewControllerID") as! LoginViewController
         self.navigationController?.pushViewController(setting, animated: false)
     }
     // load data from JSON file

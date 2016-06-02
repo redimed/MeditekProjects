@@ -346,7 +346,11 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         let patientAppointment = PatientAppointment()
         let patients = PatientsCompany()
         let dataCompany = DataCompany()
-        patients.UID = staff.UID
+        if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
+            patients.UID = staff.UID
+        }else{
+            patients.UID = Context.getDataDefasults(Define.keyNSDefaults.PatientUID) as! String
+        }
         
         requestAppointDataCompany.RequestDate = Context.NowDate()
         requestAppointDataCompany.Type = typeRequest.text!

@@ -113,7 +113,7 @@ class RegisterViewController : BaseViewController {
     }
     
     // Animation phone view
-    func animationView(view:DesignableView){
+    override func animationView(view:DesignableView){
         view.animation = "shake"
         view.curve = "easeIn"
         view.force = 2.0

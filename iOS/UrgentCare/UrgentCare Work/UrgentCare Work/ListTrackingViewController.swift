@@ -18,7 +18,8 @@ class ListTrackingViewController: UIViewController {
     var patientUid = String()
     var refreshControl: UIRefreshControl!
     var loadingData = false
-    var sumPage = String()
+    var sumPage = Int()
+    var appointmentList = AppointmentListResponse()
     override func viewDidLoad() {
         super.viewDidLoad()
         getAppointmentLists()
@@ -31,10 +32,12 @@ class ListTrackingViewController: UIViewController {
         tableView.addSubview(refreshControl)
         
     }
-    
-    
-    
-    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.navigationBar.topItem?.title = "Back"
+        self.navigationItem.title = "List Tracking"
+
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -42,18 +45,22 @@ class ListTrackingViewController: UIViewController {
     
     //Giap: Get Appointment List
     func getAppointmentLists() {
-       refreshPage(Context.getDataDefasults(Define.keyNSDefaults.PatientUID) as! String,Offset: "0")
+        refreshPage(Context.getDataDefasults(Define.keyNSDefaults.PatientUID) as! String,Offset: "0",refreshPage:true)
     }
     
-    func refreshPage(patientUID:String,Offset:String){
+    func refreshPage(patientUID:String,Offset:String,refreshPage:Bool){
         appointmentListTrackingData.Offset = Offset
+        appointmentListTrackingData.Limit = "10"
         filterPatientData.UID = patientUID
+        
         
         filterPatient.Patient = filterPatientData
         orderAppointment.Appointment = orderAppointmentData
         appointmentListTrackingData.Filter.removeAll()
         appointmentListTrackingData.Order.removeAll()
-        appointmentListTrackingData.Filter.append(filterPatient)
+        if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String == ""){
+            appointmentListTrackingData.Filter.append(filterPatient)
+        }
         appointmentListTrackingData.Order.append(orderAppointment)
         appointmentListTracking.data = appointmentListTrackingData
 
@@ -62,11 +69,23 @@ class ListTrackingViewController: UIViewController {
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let userAccountDetail = Mapper<UserAccountDetail>().map(response.result.value) {
-                            print(userAccountDetail.id)
-                            if(userAccountDetail.UserName != ""){
+                        if let appointmentListResponse = Mapper<AppointmentListResponse>().map(response.result.value) {
+                            if(refreshPage){
+                             self!.appointmentList = appointmentListResponse
+                            }else{
+                                self!.appointmentList.rows += appointmentListResponse.rows
+                            }
+                            
+                            if(appointmentListResponse.rows.count > 0){
+                                self!.view.hideLoading()
+                                self!.sumPage = appointmentListResponse.count
+                                self!.refreshControl.endRefreshing()
+                                self!.tableView.reloadData()
+                                self!.loadingData = false
+                                
                                 
                             }else{
+                                self!.refreshControl.endRefreshing()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                     self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                 }
@@ -85,24 +104,36 @@ class ListTrackingViewController: UIViewController {
 extension ListTrackingViewController:UITableViewDataSource,UITableViewDelegate{
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return appointmentList.rows.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentTableViewCell
+        let data = appointmentList.rows[indexPath.row]
+        cell.appointmentDate.text = data.CreatedDate.toDateTimeZone(Define.formatTime.dateTimeZone, format: Define.formatTime.formatDate)
+        cell.doctorName.text = data.DoctorsName == "" ? "N/A" : data.DoctorsName
+        cell.status.text = data.Status == "" ? "N/A" : data.Status
+        return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
        // performSegueWithIdentifier("appointmentDetailsSegue", sender: self)
-        //tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        print(indexPath.row)
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        let detailsViewController :AppointmentDetailsViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("AppointmentDetailsViewControllerID") as! AppointmentDetailsViewController
+        detailsViewController.appointmentListResponseDetail = appointmentList.rows[indexPath.row]
+        self.navigationController?.pushViewController(detailsViewController, animated: true)
     }
     
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        cell.alpha = 0
-        UIView.animateWithDuration(0.25, animations: {
-            cell.alpha = 1
-        })
+        print(self.loadingData,indexPath.row,appointmentList.rows.count,sumPage)
+        if !self.loadingData && indexPath.row == appointmentList.rows.count - 1 && appointmentList.rows.count + 1 <= Int(sumPage) {
+            self.loadingData = true
+            let count = String(appointmentList.rows.count)
+            refreshPage(Context.getDataDefasults(Define.keyNSDefaults.PatientUID) as! String,Offset: count,refreshPage: false)
+            
+        }
     }
     
 }

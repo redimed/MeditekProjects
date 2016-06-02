@@ -24,6 +24,7 @@ class UserAccountDetail: BaseModel {
     dynamic var UID = ""
     dynamic var UserName = ""
     dynamic var UserType = ""
+    var fileUploads = [FileUploads]()
     
     required convenience init?(_ map: Map) {
         self.init()
@@ -43,6 +44,7 @@ class UserAccountDetail: BaseModel {
         UID    <- map["UID"]
         UserName    <- map["UserName"]
         UserType    <- map["UserType"]
+        fileUploads    <- map["FileUploads"]
     }
     
 }

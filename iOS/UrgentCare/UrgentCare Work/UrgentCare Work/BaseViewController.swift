@@ -25,6 +25,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         socketService.delegate = self
+        NSNotificationCenter.defaultCenter().removeObserver(self,name:Define.LogoutFunction, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.LogoutWhenIsAuthenticated), name: Define.LogoutFunction, object: nil)
     }
     
@@ -32,24 +33,18 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-      
+    func animationView(view:DesignableView){
+        view.animation = "shake"
+        view.curve = "easeIn"
+        view.force = 2.0
+        view.duration = 0.5
+        view.animate()
+    }
     func leftNavButtonClick(sender:UIButton!)
     {
         self.navigationController?.popViewControllerAnimated(true)
     }
-    //MARK: - deletate DT ALERT
-    func willPresentDTAlertView(alertView: DTAlertView) {
-        NSLog("%@", "will present")
-    }
-    func didPresentDTAlertView(alertView: DTAlertView) {
-        NSLog("%@", "Did present")
-    }
-    func DTAlertViewWillDismiss(alertView: DTAlertView) {
-        NSLog("%@", "Will Dismiss")
-    }
-    func DTAlertViewDidDismiss(alertView: DTAlertView) {
-        NSLog("%@", "did Dismiss")
-    }
+    
     func showAlertWithMessageTitle(message: String, title: String, alertStyle: DTAlertStyle){
         self.alertDTAlertView = DTAlertView(alertStyle: alertStyle, message: message, title: title, object: self)
         self.alertDTAlertView.show()
@@ -104,11 +99,9 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     
     func pressCancel(sender: MyPopupViewController) {
         backMusic.stop()
-//        if let from  = savedData.from {
-//           // socketService.emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
-//        }
+        socketService.emitDataToServer(Define.MessageString.Decline, uidFrom: receiveMessageData.to, uuidTo: receiveMessageData.from)
         self.dismissPopupViewController(.Fade)
-        savedData = CallContainer()
+        //savedData = CallContainer()
     }
     //Play ringtone while have calling
     func playRingtone() {
@@ -124,7 +117,6 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
         let url = NSURL.fileURLWithPath(path!)
         var audioPlayer:AVAudioPlayer?
-        
         do {
             try audioPlayer = AVAudioPlayer(contentsOfURL: url)
         } catch {
@@ -133,8 +125,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         
         return audioPlayer!
     }
-
-
+    
     func LogoutWhenIsAuthenticated(){
         
         CallAPILogout(Context.getDataDefasults(Define.keyNSDefaults.UID) as! String)
@@ -147,6 +138,8 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         Context.deleteDatDefaults(Define.keyNSDefaults.IsCompanyAccount)
         Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
         Context.deleteDatDefaults(Define.keyNSDefaults.TeleheathUserDetail)
+        Context.deleteDatDefaults(Define.keyNSDefaults.TelehealthUserUID)
+        Socket.disconnect()
     }
     func CallAPILogout(uid:String){
        self.showloading(Define.MessageString.PleaseWait)

@@ -48,14 +48,6 @@ extension UIViewController {
             objc_setAssociatedObject(self, &kpopupViewController, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-//    var dismissedCallback:UIViewController? {
-//        get {
-//            return objc_getAssociatedObject(self, kSLViewDismissKey) as? UIViewController
-//        }
-//        set(newValue) {
-//            objc_setAssociatedObject(self, kSLViewDismissKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-//        }
-//    }
     
     func presentpopupViewController(popupViewController: UIViewController, animationType:SLpopupViewAnimationType, completion:() -> Void) {
         
@@ -69,10 +61,6 @@ extension UIViewController {
             return
         }
         popupView.layer.shadowPath = UIBezierPath(rect: popupView.bounds).CGPath
-//        popupView.layer.masksToBounds = false
-//        popupView.layer.shadowOffset = CGSizeMake(5, 5)
-//        popupView.layer.shadowRadius = 5
-//        popupView.layer.shadowOpacity = 0.5
         popupView.layer.shouldRasterize = true
         popupView.layer.rasterizationScale = UIScreen.mainScreen().scale
         

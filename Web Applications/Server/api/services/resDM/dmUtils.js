@@ -4,7 +4,7 @@
 module.exports = {
     dmLog: function () {
         var resDMSeparate = '||||||ResDM||||||:';
-        var args = Array.from(arguments);
+        var args = Array.prototype.slice.call(arguments);
         args.unshift(resDMSeparate);
         if(console) {
             console.log.apply(console, args);

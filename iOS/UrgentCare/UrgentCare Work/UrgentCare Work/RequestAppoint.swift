@@ -19,6 +19,7 @@ class RequestAppointData: BaseModel {
     dynamic var patientAppointment : PatientAppointment!
     var appointmentData = [AppointmentData]()
     var fileUploads = [FileUploads]()
+    var patientsCompany = [PatientsCompany]()
     required convenience init?(_ map: Map) {
         self.init()
     }
@@ -98,12 +99,25 @@ class AppointmentData : Mappable{
 class FileUploads : Mappable{
     
     dynamic var UID = ""
+    dynamic var FileLocation = ""
+    dynamic var FileType = ""
+    dynamic var UserAccountID = ""
+    dynamic var FileName = ""
+    dynamic var FileExtension = ""
+    dynamic var Description = ""
+    
     required convenience init?(_ map: Map) {
         self.init()
     }
     
     func mapping(map: Map) {
         UID    <- map["UID"]
+        FileLocation    <- map["FileLocation"]
+        FileType    <- map["FileType"]
+        UserAccountID    <- map["UserAccountID"]
+        FileName    <- map["FileName"]
+        FileExtension    <- map["FileExtension"]
+        Description    <- map["Description"]
     }
     
 }

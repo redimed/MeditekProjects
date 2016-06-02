@@ -15,6 +15,7 @@ protocol MyPopupViewControllerDelegate {
 class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate {
     var uuidFrom = String()
     var uuidTo = String()
+    let WaitTimeCall = 120 * Double(NSEC_PER_SEC)
     @IBOutlet weak var userCallingLabel: UILabel!
     var indicatorView1 : MAActivityIndicatorView!
     @IBOutlet weak var viewForActivity1: UIView!
@@ -30,7 +31,10 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
     }
     
     override func viewDidLoad() {
-        
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self.WaitTimeCall))
+        dispatch_after(time, dispatch_get_main_queue(), {
+             self.cancelCall()
+        })
         super.viewDidLoad()
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
         view.frame = CGRect(x: 0.0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
@@ -38,35 +42,16 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
         self.view.layer.masksToBounds = true
         uuidTo = receiveMessageData.from
         uuidFrom = Context.getDataDefasults(Define.keyNSDefaults.TelehealthUserUID) as! String
-        //Get uuid from in localstorage
-//        if let uuid = defaults.valueForKey("uid") as? String {
-//            uuidFrom = uuid
-//            
-//        }
         declineBtn.layer.cornerRadius = 25
         answerBtn.layer.cornerRadius = 25
-//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//            
-//            self.indicatorView1 = MAActivityIndicatorView(frame: self.viewForActivity1.frame)
-//            self.indicatorView1.defaultColor = UIColor.redColor()
-//            self.indicatorView1.animationDuration    = 1
-//            self.indicatorView1.numberOfCircles      = 4
-//            self.indicatorView1.maxRadius            = 4
-//            self.indicatorView1.delegate = self
-//            self.indicatorView1.startAnimating()
-//            self.view.addSubview(self.indicatorView1)
-//            
-//        })
         
-        userCallingLabel.text = savedData.fromName
+        userCallingLabel.text = receiveMessageData.fromName
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPopupViewController.cancelCall), name: "cancelCall", object: nil)
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     func cancelCall() {
         self.delegate?.pressCancel(self)
@@ -81,11 +66,4 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
         
         return UIColor(red: R, green: G, blue: B, alpha: 1)
     }
-
-    
-    
-    
-
-
-
 }

@@ -47,6 +47,9 @@ class UserService {
     class func postAppointmentList(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_APPOINTMENTLIST, model: model, completion: completion)
     }
+    class func upDateImageToAppointment(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_POST_UPDATEFILE_TO_APPOINTMENT, model: model, completion: completion)
+    }
     
     //Get API
     class func getLogout(completion : Response<AnyObject, NSError> -> Void) -> Request {
@@ -67,6 +70,16 @@ class UserService {
     }
     class func getDetailCompanyByUser(userID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.get(Constants.UserURL.URL_GET_DETAIL_COMPANY_BY_USER+"/"+userID, completion: completion)
+    }
+    class func getDetailAppointment(AppointmentUID:String, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.get(Constants.UserURL.URL_GET_DETAILS_APPOINMENT+"/"+AppointmentUID, completion: completion)
+    }
+    class func getImage(UID:String, completion : Response<NSData, NSError> -> Void) -> Request {
+        return RequestFactory.getImage(Constants.UserURL.URL_GET_IMAGE+"/"+UID, completion: completion)
+    }
+    //Upload
+    class func uploadImage(image: UIImage,uploadImage: UploadImage, completion : Response<AnyObject, NSError> -> Void) {
+        return RequestFactory.postWithMutipart(Constants.UserURL.URL_UPLOAD_IMAGE, image: image, uploadImage: uploadImage, completion: completion)
     }
  
 }

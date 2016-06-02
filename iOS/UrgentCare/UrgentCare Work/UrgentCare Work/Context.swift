@@ -22,6 +22,10 @@ struct FAIcon {
     
 }
 class Context {
+    static var headers = [String:String]()
+    class func setValueHeader( value: String, header: String ) {
+        headers[header] = value
+    }
     class func getTokenHeader() -> [String : String]{
         if (NSUserDefaults.standardUserDefaults().objectForKey("token") == nil){
             return ["x-access-token" : ""]
@@ -70,12 +74,15 @@ class Context {
             message = "Authentication Error - invalid username"
         }else if (ErrorType == "Telehealth.UpdatePinNumber.Error"){
             message = "Invalid Params"
+        }else if (ErrorType == "Missing credentials"){
+            message = "Missing credentials"
         }
         return message
     }
     
     class func getAppID() -> String {
-        let appid =  NSBundle.mainBundle().bundleIdentifier!
+        //let appid =  NSBundle.mainBundle().bundleIdentifier!
+        let appid = "au.com.redimed.workinjury"
         return appid
     }
     

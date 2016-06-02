@@ -14,7 +14,7 @@ class RequestFactory {
     
     class func get(url:String, completion: Response <AnyObject, NSError> -> Void )-> Request {
         let request = NSMutableURLRequest(URL: NSURL(string: url)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 5)
-        print("url",url)
+        
         request.HTTPMethod = "GET"
         request.setValue(Define.forHTTPHeaderField.ApplicationJson, forHTTPHeaderField: Define.forHTTPHeaderField.ContentType)
         request.setValue(Define.forHTTPHeaderField.IOS, forHTTPHeaderField: Define.forHTTPHeaderField.SystemType)
@@ -23,12 +23,13 @@ class RequestFactory {
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.DeviceID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.DeviceId)
         request.setValue(Context.getDataDefasults(Define.keyNSDefaults.UserUID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.UserUID)
         request.setValue(Context.getAppID(), forHTTPHeaderField: Define.forHTTPHeaderField.Appid)
+        request.setValue("1.0", forHTTPHeaderField: "Version")
         
+        print(request.allHTTPHeaderFields)
         let alamofireRequest = Alamofire.request(request)
         alamofireRequest.responseJSON{response in
             Completion(request,response:response ){
                 response in completion(response)
-                print(response.response?.allHeaderFields)
             }
         }
         return alamofireRequest
@@ -101,11 +102,9 @@ class RequestFactory {
                     }
                 }
             }else{
-                print(response.response?.allHeaderFields)
                 completion(response)
             }
         }else{
-            print(response.response?.allHeaderFields)
             completion(response)
         }
     }
@@ -130,6 +129,60 @@ class RequestFactory {
             completion(response)
         }
         
+    }
+    class func getImage(url:String, completion: Response <NSData, NSError> -> Void )-> Request {
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 5)
+        
+        request.HTTPMethod = "GET"
+        request.setValue(Define.forHTTPHeaderField.ApplicationJson, forHTTPHeaderField: Define.forHTTPHeaderField.ContentType)
+        request.setValue(Define.forHTTPHeaderField.IOS, forHTTPHeaderField: Define.forHTTPHeaderField.SystemType)
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Authorization) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.Authorization)
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.Cookie) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.Cookie)
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.DeviceID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.DeviceId)
+        request.setValue(Context.getDataDefasults(Define.keyNSDefaults.UserUID) as? String, forHTTPHeaderField: Define.forHTTPHeaderField.UserUID)
+        request.setValue(Context.getAppID(), forHTTPHeaderField: Define.forHTTPHeaderField.Appid)
+        request.setValue("1.0", forHTTPHeaderField: "Version")
+        
+        print(request.allHTTPHeaderFields)
+        let alamofireRequest = Alamofire.request(request)
+        alamofireRequest.responseData {
+                response in completion(response)
+        }
+        return alamofireRequest
+    }
+    class func postWithMutipart(url : String, image:UIImage,uploadImage:UploadImage, completion: Response <AnyObject, NSError> -> Void) {
+        let imageData = UIImageJPEGRepresentation(image,1.0)
+        
+        Context.setValueHeader(Define.forHTTPHeaderField.ApplicationJson,header: Define.forHTTPHeaderField.ContentType)
+        Context.setValueHeader(Define.forHTTPHeaderField.IOS,header: Define.forHTTPHeaderField.SystemType)
+        Context.setValueHeader((Context.getDataDefasults(Define.keyNSDefaults.Authorization) as? String)!,header: Define.forHTTPHeaderField.Authorization)
+        Context.setValueHeader((Context.getDataDefasults(Define.keyNSDefaults.Cookie) as? String)!,header: Define.forHTTPHeaderField.Cookie)
+        Context.setValueHeader((Context.getDataDefasults(Define.keyNSDefaults.DeviceID) as? String)!,header: Define.forHTTPHeaderField.DeviceId)
+        Context.setValueHeader(Context.getAppID(),header: Define.forHTTPHeaderField.Appid)
+        Context.setValueHeader(Context.getAppID(),header: Define.forHTTPHeaderField.Appid)
+        Context.setValueHeader(uploadImage.fileType,header: "fileType")
+        Context.setValueHeader(uploadImage.userUID,header: "userUID")
+        
+        return  Alamofire.upload(Alamofire.Method.POST, url, headers: Context.headers, multipartFormData: { multipartFormData in
+            
+            multipartFormData.appendBodyPart(data: uploadImage.fileType.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
+            multipartFormData.appendBodyPart(data: uploadImage.userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
+            multipartFormData.appendBodyPart(
+                data: imageData!,
+                name: "uploadFile",
+                fileName: "AppointmentImg_\(image.hash).png",
+                mimeType: "image/png"
+            )
+            }, encodingCompletion: {
+                encodingResult in
+                switch encodingResult {
+                case .Success(let upload, _, _ ):
+                    upload.responseJSON{response in completion(response)}
+                    
+                case .Failure( _): break
+                    
+                }
+        })
     }
 }
 

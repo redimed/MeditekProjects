@@ -14,7 +14,7 @@ import ObjectMapper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GCMReceiverDelegate {
-
+    
     var window: UIWindow?
     
     var connectedToGCM      = false
@@ -22,12 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     var gcmSenderID: String?
     var registrationToken: String?
     var registrationOptions = [String: AnyObject]()
-    
+    var socketService = SocketService()
     let registrationKey     = "onRegistrationCompleted"
     let messageKey          = "onMessageReceived"
     let subscriptionTopic   = "/topics/global"
     let TAG: String         = "AppDelegate | "
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // [START register_for_remote_notifications]
@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         gcmConfig.receiverDelegate = self
         GCMService.sharedInstance().startWithConfig(gcmConfig)
         // [END start_gcm_service]
-
         
         setDeviceID()
         return true
@@ -58,17 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         application.registerForRemoteNotifications()
     }
-
+    
     
     func setDeviceID(){
-        let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if  defaults.valueForKey("deviceID") as? String == nil {
-            let deviceID  = UIDevice.currentDevice().modelName
-            print(deviceID)
-            defaults.setValue(deviceID, forKey: "deviceID")
-            defaults.synchronize()
+        if  Context.getDataDefasults(Define.keyNSDefaults.DeviceID)as! String != "" {
+            Context.setDataDefaults(UIDevice.currentDevice().modelName, key: Define.keyNSDefaults.DeviceID)
         }else {
-            print(defaults.valueForKey("deviceID") as? String)
+            Context.setDataDefaults(UIDevice.currentDevice().modelName, key: Define.keyNSDefaults.DeviceID)
         }
     }
     func subscribeToTopic() {
@@ -111,6 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         GCMService.sharedInstance().disconnect()
         // [START_EXCLUDE]
         self.connectedToGCM = false
+        NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
         // [END_EXCLUDE]
     }
     // [END disconnect_gcm_service]
@@ -119,15 +115,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
         
         // [START get_gcm_reg_token]
-        // Create a config and set a delegate that implements the GGLInstaceIDDelegate protocol.
         let instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
         instanceIDConfig.delegate = self
         
         // Start the GGLInstanceID shared instance with that config and request a registration token to enable reception of notifications
         GGLInstanceID.sharedInstance().startWithConfig(instanceIDConfig)
         registrationOptions = [kGGLInstanceIDRegisterAPNSOption: deviceToken, kGGLInstanceIDAPNSServerTypeSandboxOption: Constants.KeyPushNotification.SandboxOption]
-        //True: using key develoment
-        //False: using key product
         GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
         // [END get_gcm_reg_token]
     }
@@ -150,7 +143,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         // This works only if the app started the GCM service
         GCMService.sharedInstance().appDidReceiveMessage(userInfo);
         
-        // Handle the received message
         // [START_EXCLUDE]
         NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
         // [END_EXCLUDE]
@@ -176,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         }
     }
     // [END ack_message_reception]
-
+    
     func registrationHandler(registrationToken: String!, error: NSError!) {
         if (registrationToken != nil) {
             Context.setDataDefaults(registrationToken, key: Define.keyNSDefaults.DeviceToken)
@@ -201,39 +193,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
     }
     // [END on_token_refresh]
-
-
+    
     func willSendDataMessageWithID(messageID: String!, error: NSError!) {
         if (error != nil) {
         } else {
             print(TAG, messageID)
         }
     }
-
+    
     func didDeleteMessagesOnServer() {
-        // Some messages sent to this device were deleted on the GCM server before reception, likely
-        // because the TTL expired. The client should notify the app server of this, so that the app
-        // server can resend those messages.
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
-     }
-
-
+    }
+    
+    
     func applicationWillTerminate(application: UIApplication) {
         self.saveContext()
     }
-
+    
     lazy var applicationDocumentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
-
+    
     lazy var managedObjectModel: NSManagedObjectModel = {
         let modelURL = NSBundle.mainBundle().URLForResource("UrgentCare_Sport", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
-
+    
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
@@ -245,7 +233,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
             var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
-
+            
             dict[NSUnderlyingErrorKey] = error as NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             abort()
@@ -253,14 +241,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         
         return coordinator
     }()
-
+    
     lazy var managedObjectContext: NSManagedObjectContext = {
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
-
+    
     func saveContext () {
         if managedObjectContext.hasChanges {
             do {
@@ -272,6 +260,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
             }
         }
     }
-
+    
 }
 

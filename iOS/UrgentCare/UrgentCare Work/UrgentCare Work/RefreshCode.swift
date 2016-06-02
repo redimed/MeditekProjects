@@ -11,7 +11,7 @@ import ObjectMapper
 import RealmSwift
 
 class RefreshCode: BaseModel {
-    dynamic var refreshCode = Context.getDataDefasults(Define.keyNSDefaults.RefreshCode)
+    dynamic var refreshCode = Context.getDataDefasults(Define.keyNSDefaults.RefreshCode) as! String
     
     required convenience init?(_ map: Map) {
         self.init()

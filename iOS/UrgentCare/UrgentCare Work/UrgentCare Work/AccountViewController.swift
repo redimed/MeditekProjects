@@ -32,11 +32,10 @@ class AccountViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // ScrollView.contentSize.height = 1000
-        self.navigationItem.title = "Account"
+        
         loadDataUserAccount()
         GetPatientInfomation()
-         DatepickerMode()
+        DatepickerMode()
     }
     func DatepickerMode(){
         txtDOB.tintColor = UIColor.clearColor()
@@ -72,7 +71,7 @@ class AccountViewController: BaseViewController {
     func cancelClick() {
         txtDOB.resignFirstResponder()
     }
-
+    
     func loadDataUserAccount(){
         
         let userInforDict : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.userInfor) as! NSDictionary
@@ -192,6 +191,7 @@ class AccountViewController: BaseViewController {
         super.didReceiveMemoryWarning()
     }
     override func viewWillAppear(animated: Bool) {
+        self.navigationItem.title = "Account"
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.navigationBar.topItem?.title = "Back"
     }

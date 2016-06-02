@@ -14,8 +14,8 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
     @IBOutlet weak var tableView: UITableView!
     
     var nameComapny :String = "name"
-    var array = [["List Staff"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
-    var arrayTitle = ["Company", "Accounts", "", "", ""]
+    var array = [["List Tracking"],["List Staff"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
+    var arrayTitle = ["Tracking","Company", "Accounts", "", "", ""]
     var StringIncompleteProfile :String = "Incomplete Profile"
     var companyInfo = DetailCompanyResponse()
     var userInfor = LoginResponse()
@@ -34,13 +34,14 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     companyInfo = Mapper().map(companyInfoDict)!
                 }
                 if(companyInfo.data.count > 0){
-                    array[0].append(companyInfo.data[0].CompanyName)
+                    print(companyInfo.data[0])
+                    array[1].append(companyInfo.data[0].CompanyName)
                 }else{
-                    array[0].append("")
+                    array[1].append("")
                 }
             }else{
-                array = [["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
-                arrayTitle = ["Accounts", "", "", ""]
+                array = [["List Tracking"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
+                arrayTitle = ["Tracking","Accounts", "", "", ""]
                 
             }
         }else{
@@ -68,7 +69,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != ""){
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
-                if(indexPath.section == 1 && indexPath.row == 0){
+                if(indexPath.section == 2 && indexPath.row == 0){
                     let cell = tableView.dequeueReusableCellWithIdentifier("CellInfor", forIndexPath: indexPath) as! CustomTableViewCell;
                     cell.lbName.text = userInfor.user?.UserName
                     cell.lbProfile.text = StringIncompleteProfile
@@ -79,7 +80,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     return cell
                 }
             }else{
-                if(indexPath.section == 0 && indexPath.row == 0){
+                if(indexPath.section == 1 && indexPath.row == 0){
                     let cell = tableView.dequeueReusableCellWithIdentifier("CellInfor", forIndexPath: indexPath) as! CustomTableViewCell;
                     cell.lbName.text = userInfor.user?.UserName
                     cell.lbProfile.text = StringIncompleteProfile
@@ -105,23 +106,52 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row,indexPath.section)
         if(Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != ""){
+            
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
                 if(indexPath.row == 0 && indexPath.section == 0){
+                    let changPinNumber :ListTrackingViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListTrackingViewControllerID") as! ListTrackingViewController
+                    self.navigationController?.pushViewController(changPinNumber, animated: true)
+                }
+                if(indexPath.row == 0 && indexPath.section == 1){
                     let listStaff :ListStaffViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListStaffViewControllerID") as! ListStaffViewController
                      listStaff.CheckStaffInfor = true
                     self.navigationController?.pushViewController(listStaff, animated: true)
                 }
-                if(indexPath.row == 1 && indexPath.section == 0){
+                if(indexPath.row == 1 && indexPath.section == 1){
                     let listSite :ListContactPersonViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListContactPersonViewControllerID") as! ListContactPersonViewController
                     listSite.CheckCompanyInfor = true
                     self.navigationController?.pushViewController(listSite, animated: true)
                 }
-                if(indexPath.row == 1 && indexPath.section == 1){
+                if(indexPath.row == 1 && indexPath.section == 2){
+                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
+                    self.navigationController?.pushViewController(changPinNumber, animated: true)
+                }
+                if(indexPath.row == 0 && indexPath.section == 2){
+                    
+                    let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("AccountViewControllerID") as! AccountViewController
+                    self.navigationController?.pushViewController(account, animated: true)
+                    
+                }
+                if(indexPath.row == 0 && indexPath.section == 3){
+                    let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
+                    faqs.fileName = "FAQs"
+                    faqs.navigationBarString = "FAQs"
+                    self.navigationController?.pushViewController(faqs, animated: true)
+                }
+                if(indexPath.row == 1 && indexPath.section == 3){
+                    let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
+                    faqs.fileName = "UrgentCare"
+                    faqs.navigationBarString = "ABOUT REDIMED"
+                    self.navigationController?.pushViewController(faqs, animated: true)
+                }
+                if(indexPath.row == 2 && indexPath.section == 3){
+                    LogoutWhenIsAuthenticated()
+                }
+            }else{
+                if(indexPath.row == 0 && indexPath.section == 0){
+                    
                     let changPinNumber :ListTrackingViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListTrackingViewControllerID") as! ListTrackingViewController
                     self.navigationController?.pushViewController(changPinNumber, animated: true)
-                    
-//                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
-//                    self.navigationController?.pushViewController(changPinNumber, animated: true)
                 }
                 if(indexPath.row == 0 && indexPath.section == 1){
                     
@@ -129,6 +159,11 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     self.navigationController?.pushViewController(account, animated: true)
                     
                 }
+                if(indexPath.row == 1 && indexPath.section == 1){
+                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
+                    self.navigationController?.pushViewController(changPinNumber, animated: true)
+                }
+
                 if(indexPath.row == 0 && indexPath.section == 2){
                     let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
                     faqs.fileName = "FAQs"
@@ -142,33 +177,6 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     self.navigationController?.pushViewController(faqs, animated: true)
                 }
                 if(indexPath.row == 2 && indexPath.section == 2){
-                    LogoutWhenIsAuthenticated()
-                }
-            }else{
-                if(indexPath.row == 0 && indexPath.section == 0){
-                    
-                    let account :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("AccountViewControllerID") as! AccountViewController
-                    self.navigationController?.pushViewController(account, animated: true)
-                    
-                }
-                if(indexPath.row == 1 && indexPath.section == 0){
-                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
-                    self.navigationController?.pushViewController(changPinNumber, animated: true)
-                }
-
-                if(indexPath.row == 0 && indexPath.section == 1){
-                    let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
-                    faqs.fileName = "FAQs"
-                    faqs.navigationBarString = "FAQs"
-                    self.navigationController?.pushViewController(faqs, animated: true)
-                }
-                if(indexPath.row == 1 && indexPath.section == 1){
-                    let faqs = self.storyboard?.instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
-                    faqs.fileName = "UrgentCare"
-                    faqs.navigationBarString = "ABOUT REDIMED"
-                    self.navigationController?.pushViewController(faqs, animated: true)
-                }
-                if(indexPath.row == 2 && indexPath.section == 1){
                     LogoutWhenIsAuthenticated()
                 }
                 

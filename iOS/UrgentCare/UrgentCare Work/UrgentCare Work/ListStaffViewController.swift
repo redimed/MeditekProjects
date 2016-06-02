@@ -19,12 +19,13 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
     var CheckStaffInfor = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "List Staff"
+        
         tableView.delegate = self
         tableView.dataSource = self
         loadData()
     }
     override func viewWillAppear(animated: Bool) {
+        self.navigationItem.title = "List Staff"
         if(CheckStaffInfor == true){
             self.navigationController?.navigationBarHidden = false
             self.navigationController?.navigationBar.topItem?.title = "Back"

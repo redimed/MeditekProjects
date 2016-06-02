@@ -141,14 +141,40 @@ class Define: NSObject {
         static let PostCodeLength = "[0-9]{4,6}"
         static let PinNumber = "[0-9]{6}"
     }
-    
+    struct formatTime {
+        static let dateTime : String = "yyyy-MM-dd HH:mm:ss"
+        static let dateTimeZone : String = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+        
+        static let formatDate : String = "dd/MM/yyyy"
+        static let formatDateTime : String = "dd/MM/yyyy HH:mm"
+        static let formatTime : String = "HH:mm"
+        static let confirmDate : String = "eee, d MMM yyyy 'at' hh:mm a"
+    }
+    struct colorStatusAppointment{
+        static let colorAttended = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
+        static let colorWaitlist = "Waitlist"
+        static let colorPending = "Pending"
+        static let colorReceived = UIColor(red: 72/255, green: 191/255, blue: 226/255, alpha: 1.0)
+        static let colorApproved = "Approved"
+        static let colorFinished = "Finished"
+    }
+    struct statusAppointment {
+        static let Attended : String = "Attended"
+        static let Waitlist : String = "Waitlist"
+        static let Pending : String = "Pending"
+        static let Received : String = "Received"
+        static let Cancelled : String = "Cancelled"
+        static let Approved : String = "Approved"
+        static let Finished : String = "Finished"
+    }
     struct ColorCustom{
         static let colorCustomRed = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
-        static let  colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
+        static let colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
+        static let grayBack = "16204A"
     }
     struct UrlAPISocket  {
         static let joinRoom : String = "/api/telehealth/socket/joinRoom?uid=%@"
-        static let emitAnswer : String = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
+        static let emit : String = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
     }
     
 }

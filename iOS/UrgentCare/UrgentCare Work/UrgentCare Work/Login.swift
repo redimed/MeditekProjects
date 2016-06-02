@@ -14,7 +14,7 @@ class Login: BaseModel {
     dynamic var UserName = "1"
     dynamic var Password = "2"
     dynamic var UserUID = ""
-    dynamic var DeviceID = Context.getDataDefasults(Define.keyNSDefaults.DeviceID)
+    dynamic var DeviceID = Context.getDataDefasults(Define.keyNSDefaults.DeviceID) as! String
     dynamic var PinNumber = ""
     dynamic var AppID = UIApplication.sharedApplication().bundleID()
     

@@ -20,7 +20,7 @@ class ListContactPersonViewController:BaseViewController,UITableViewDelegate ,UI
     var CheckCompanyInfor = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationItem.title = "List Site"
+        
         tableView.delegate = self
         tableView.dataSource = self
         loadData()

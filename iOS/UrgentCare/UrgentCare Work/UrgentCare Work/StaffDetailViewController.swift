@@ -32,8 +32,6 @@ class StaffDetailViewController: BaseViewController {
         txtAddress.text = staff.Address1
         txtSuburb.text = staff.Suburb
         txtPostCode.text = staff.Postcode
-        
-        print(staff)
     }
 
     override func didReceiveMemoryWarning() {

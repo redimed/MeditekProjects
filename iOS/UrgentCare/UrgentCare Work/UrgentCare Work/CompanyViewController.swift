@@ -23,7 +23,7 @@ class CompanyViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Company"
+        
         
         if let companyInfoDict:NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.companyInfor) as? NSDictionary {
             companyInfo = Mapper().map(companyInfoDict)!
@@ -42,6 +42,7 @@ class CompanyViewController: BaseViewController {
         super.didReceiveMemoryWarning()
     }
     override func viewWillAppear(animated: Bool) {
+        self.navigationItem.title = "Company"
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.navigationBar.topItem?.title = "Back"
     }

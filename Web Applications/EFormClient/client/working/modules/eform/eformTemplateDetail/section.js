@@ -168,13 +168,15 @@ module.exports = React.createClass({
         }
     },
     preCalSum: function(rowRef, fieldRef, sumRef){
-        this.refs[rowRef].preCalSum(fieldRef, sumRef);
+        if(typeof this.refs[rowRef] !== 'undefined')
+            this.refs[rowRef].preCalSum(fieldRef, sumRef);
     },
     preCalCount: function(rowRef, fieldRef, sumRef){
         this.refs[rowRef].preCalCount(fieldRef, sumRef);
     },
     preCalBelongsGroup(rowRef, fieldRef, group){
-        this.refs[rowRef].preCalBelongsGroup(fieldRef, group);
+        if(typeof this.refs[rowRef] !== 'undefined')
+            this.refs[rowRef].preCalBelongsGroup(fieldRef, group);
     },
     render: function(){
         var displayPermission = (this.props.permission === 'eformDev')?'inline-block':'none';

@@ -362,13 +362,16 @@ module.exports = React.createClass({
         this.refs.listField.init(this.props.fields);
     },
     preCalSum: function(fieldRef, sumRef){
-        this.refs[fieldRef].onSum(sumRef);
+        if(typeof this.refs[fieldRef] !== 'undefined')
+            this.refs[fieldRef].onSum(sumRef);
     },
     preCalCount: function(fieldRef, sumRef){
-        this.refs[fieldRef].onCount(sumRef);
+        if(typeof this.refs[fieldRef] !== 'undefined')
+            this.refs[fieldRef].onCount(sumRef);
     },
     preCalBelongsGroup(fieldRef, group){
-        this.refs[fieldRef].onBelongsGroup(group);
+        if(typeof this.refs[fieldRef] !== 'undefined')
+            this.refs[fieldRef].onBelongsGroup(group);
     },
     render: function(){        
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';

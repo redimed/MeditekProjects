@@ -549,6 +549,26 @@ module.exports = React.createClass({
         })
         swal("Success!", "Change Ref", "success");
     },
+
+    _onComponentSectionChangeRefRow: function(codeSection, codeRow, newRef){
+        var sections = this.state.sections.toJS();
+        var section = this.state.sections.get(codeSection).toJS();
+        var self = this;
+        var splitRow = newRef.split('_');
+        section.rows[codeRow].ref = newRef;
+        section.rows[codeRow].fields.map(function(field, fieldIndex){
+            var splitField = field.ref.split('_');
+            section.rows[codeRow].fields[fieldIndex].ref = splitField[0]+'_'+splitField[1]+'_'+splitRow[2]+'_'+splitField[3];
+        })
+        sections[codeSection] = section;
+        this.setState(function(prevState) {
+            return {
+                sections: Immutable.fromJS(sections)
+            }
+        })
+        swal("Success!", "Change Ref", "success");
+    },
+
     render: function(){
     return (
         <div className="page-content">
@@ -598,6 +618,7 @@ module.exports = React.createClass({
                                                     onDragRow={this._onComponentSectionDragRow}
                                                     onChangePage={this._onComponentSectionChangePage}
                                                     onChangeRef={this._onComponentSectionChangeRef}
+                                                    onChangeRefRow={this._onComponentSectionChangeRefRow}
                                                     onOrderSection={this._onComponentSectionOrderSection}
                                                     onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
                                                     onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}

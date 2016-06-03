@@ -26,18 +26,18 @@ var app = angular.module('app', [
 
 app
     .config(function($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider, toastrConfig) {
-            // TOASTR CONFIG
-            angular.extend(toastrConfig, {
-                autoDismiss: false,
-                containerId: 'toast-container',
-                maxOpened: 5,
-                newestOnTop: true,
-                positionClass: 'toast-top-right',
-                preventDuplicates: false,
-                preventOpenDuplicates: false,
-                target: 'body',
-                tapToDismiss: true
-            });
+        // TOASTR CONFIG
+        angular.extend(toastrConfig, {
+            autoDismiss: false,
+            containerId: 'toast-container',
+            maxOpened: 5,
+            newestOnTop: true,
+            positionClass: 'toast-top-right',
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            target: 'body',
+            tapToDismiss: true
+        });
         //END TOASTR CONFIG
         // JWT SIGN
         $httpProvider.interceptors.push(function($q, $location, $cookies, $rootScope) {
@@ -126,6 +126,11 @@ app
             }
         });
     })
+
+    
+
+    
+
     .factory('settings', ['$rootScope', function($rootScope) {
         // supported languages
         var settings = {
@@ -231,7 +236,7 @@ app
         })
 
         $rootScope.$on('$viewContentLoaded', function() {
-            App.initAjax();
+            // App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
 
@@ -240,8 +245,7 @@ app
             //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            App.initAjax();
-
+            // App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });

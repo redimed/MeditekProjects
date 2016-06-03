@@ -24,6 +24,7 @@ module.exports = React.createClass({
         if(this.props.permission === 'eformDev'){
             this.refs.inputOrder.setValue(this.props.code);
             $(this.refs.tempRef).on('keypress', function(event){
+
                 if(event.which == 13){
                     self.props.onChangeRefRow(self.props.codeSection, self.props.code, event.target.value);
                     return false;

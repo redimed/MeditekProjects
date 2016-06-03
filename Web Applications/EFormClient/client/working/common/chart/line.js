@@ -17,8 +17,10 @@ module.exports = React.createClass({
             })
         }
         var series = this.props.series.toJS();
-        series[1].color = 'blue';
-        series[0].color = 'red';
+        if(series[1])
+            series[1].color = 'blue';
+        if(series[0])
+            series[0].color = 'red';
         $(this.refs.line_chart).highcharts({
             chart: {
                 height: 700,

@@ -1,24 +1,40 @@
 module.exports.routes = {
     //=================Telehealth User Routes======================
+    // khong xai nua
     'POST /api/telehealth/user/updateToken': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'UpdateDeviceToken'
     },
-    'POST /api/telehealth/user/logout': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'Logout'
-    },
+
+    //khong xai nua
     'POST /api/telehealth/user/requestActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'RequestActivationCode'
     },
+    //khong xai nua
     'POST /api/telehealth/user/verifyActivationCode': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'VerifyActivationCode'
     },
+
+    //=================Login====================
+    'POST /api/telehealth/checkActivation': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'CheckActivation'
+    },
+    'POST /api/telehealth/updatePinNumber': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'UpdatePinNumber'
+    },
+    //=====================================
+
     'GET /api/telehealth/user/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetTelehealthUser'
+    },
+    'POST /api/telehealth/user': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'GetTelehealthUserNew'
     },
     'GET /api/telehealth/user/details/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
@@ -48,6 +64,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'PushNotification'
     },
+    'POST /api/telehealth/user/forgetPin': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'ForgetPIN'
+    },
     'POST /api/telehealth/listDoctor': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetListDoctor'
@@ -55,6 +75,10 @@ module.exports.routes = {
     'GET /api/telehealth/listCountry': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetListCountry'
+    },
+    'POST /api/telehealth/sendCoreServer': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'SendCoreServer'
     },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
@@ -64,6 +88,14 @@ module.exports.routes = {
     '/api/telehealth/socket/messageTransfer': {
         controller: 'SocketController',
         action: 'MessageTransfer'
+    },
+    '/api/telehealth/logout': {
+        controller: 'SocketController',
+        action: 'Logout'
+    },
+    '/api/telehealth/socket/addDoctor': {
+        controller: 'SocketController',
+        action: 'AddDoctor'
     },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',
@@ -91,12 +123,16 @@ module.exports.routes = {
         action: 'RequestAppointmentPatient'
     },
     //=================Test Push Notification=============================
-    'GET /api/testPushAPN/:badge': {
+    'GET /api/testTelehealthPushAPN/:badge': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TestPushAPN'
+        action: 'TestTelehealthPushAPN'
     },
-    'GET /api/testPushGCM': {
+    'GET /api/testTelehealthPushGCM': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TestPushGCM'
+        action: 'TestTelehealthPushGCM'
+    },
+    'GET /api/testGCM/:device': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'TestGCM'
     }
 };

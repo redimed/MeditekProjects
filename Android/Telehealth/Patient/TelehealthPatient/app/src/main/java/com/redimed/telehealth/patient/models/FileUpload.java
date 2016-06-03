@@ -1,38 +1,28 @@
 package com.redimed.telehealth.patient.models;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ProgressBar;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lam on 10/21/2015.
  */
-public class FileUpload {
+public class FileUpload implements Parcelable {
 
-    @SerializedName("ID")
-    private int ID;
-
-    @SerializedName("fileUID")
-    private String fileUID;
+    private String apptUID;
 
     @SerializedName("UID")
     private String UID;
 
-    private String apptUID;
-
-    public FileUpload(String uid) {
-        this.UID = uid;
-    }
+    @SerializedName("fileUID")
+    private String fileUID;
 
     public FileUpload() {}
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     public String getUID() {
         return UID;
@@ -57,5 +47,33 @@ public class FileUpload {
     public void setApptUID(String apptUID) {
         this.apptUID = apptUID;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(UID);
+        dest.writeString(fileUID);
+    }
+
+    public FileUpload(Parcel in){
+        UID = in.readString();
+        fileUID = in.readString();
+    }
+
+    public static final Parcelable.Creator<FileUpload> CREATOR = new Parcelable.Creator<FileUpload>(){
+        @Override
+        public FileUpload createFromParcel(Parcel source) {
+            return new FileUpload(source);
+        }
+
+        @Override
+        public FileUpload[] newArray(int size) {
+            return new FileUpload[size];
+        }
+    };
 }
 

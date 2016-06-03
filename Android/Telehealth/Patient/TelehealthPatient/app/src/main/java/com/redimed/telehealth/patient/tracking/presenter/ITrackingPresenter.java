@@ -1,22 +1,25 @@
 package com.redimed.telehealth.patient.tracking.presenter;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 
 import com.redimed.telehealth.patient.models.Appointment;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Fox on 1/18/2016.
  */
 public interface ITrackingPresenter {
 
-    void getListAppointment(int offset);
+    void initToolbar(Toolbar toolbar);
 
     void changeFragment(Fragment fragment);
 
-    void getListMoreAppointment(int offset);
-
     void setProgressBarVisibility(int visibility);
+
+    List<Appointment> getListAppointment(int offset);
+
 
 }

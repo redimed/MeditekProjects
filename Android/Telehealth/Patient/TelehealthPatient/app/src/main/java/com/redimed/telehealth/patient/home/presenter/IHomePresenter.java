@@ -26,4 +26,5 @@ public interface IHomePresenter {
     void createdJsonDataCountry();
 
     void displayFAQs(String content);
+
 }

@@ -13,14 +13,14 @@ module.exports = React.createClass({
      },
     _serverCreateForm: function(data){
             var self = this;
-            EFormService.eformGroupCreate(data)
+            EFormService.eformTemplateModuleCreate(data)
             .then(function(response){
                 self.props.onSave();
             })
     },
     _onSave: function(){
        var name = this.refs.inputName.getValue();
-            this._serverCreateForm({name:name, userUID: this.userUID});
+        this._serverCreateForm({name:name, userUID: this.userUID});
     },
     render: function(){
         return (

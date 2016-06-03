@@ -1,11 +1,33 @@
 var app = angular.module('app.authentication.company.create.directive',[]);
 
-app.directive('companyCreate', function($uibModal, $timeout, $state, companyService, toastr){
+app.directive('companyCreate', function($uibModal, $timeout, $state, companyService, toastr, doctorService){
 	return {
 		restrict: 'E',
+		scope:{
+			info:'=onCompanyInfo',
+			cancel:'=onCancel',
+			load:'=onLoad',
+		},
 		templateUrl: 'modules/company/directives/templates/companyCreateDirective.html',
 		link: function(scope, elem, attrs){
-			scope.info = {};
+			scope.state = [
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australian Capital Territory'}
+			];
+			doctorService.listCountry()
+			.then(function(response){
+				scope.country = response;
+			},function(err){
+				console.log(err);
+			});
+			console.log(scope.info);
+			// scope.info = {};
+			scope.info = scope.info?scope.info:{};
 			scope.erlist ={};
 			scope.toggle = false;
 			scope.toggleFilter = function(){
@@ -35,8 +57,8 @@ app.directive('companyCreate', function($uibModal, $timeout, $state, companyServ
 					companyService.createCompany(scope.info)
 					.then(function(success){
 						toastr.success('Create Successfully','Success');
-						scope.load();
-						scope.cancel();
+						if(scope.load) scope.load();
+						if (scope.cancel) scope.cancel();
 					},function(err){
 						toastr.error('Please check data again !!!','error');
 						for(var i = 0; i < err.data.ErrorsList.length; i++) {

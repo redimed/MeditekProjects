@@ -21,6 +21,15 @@ module.exports = {
                 }
             }
         },
+        SiteIDRefer: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
+        },
         CompanyID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,

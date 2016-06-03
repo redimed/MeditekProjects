@@ -6,7 +6,10 @@
         <a href="javascript:;" ui-sref="loggedIn.home.list">
             <img src="/{{settings.globalPath}}/images/logoRedimed-02.png" alt="logoRedimed-02" class="logo-default" width="100%" />
         </a>
-        <div class="menu-toggler sidebar-toggler"></div>
+        <!-- <a class="menu-toggler sidebar-toggler"></a> -->
+        <div class="menu-toggler sidebar-toggler">
+                        <span></span>
+                    </div>
     </div>
     <!-- END LOGO -->
     <!-- BEGIN HEADER SEARCH BOX -->
@@ -23,18 +26,21 @@
         </form> -->
     <!-- END HEADER SEARCH BOX -->
     <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a>
+    <!-- <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a> -->
+    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        <span></span>
+    </a>
     <!-- END RESPONSIVE MENU TOGGLER -->
     <!-- BEGIN TOP NAVIGATION MENU -->
     <div class="top-menu">
         <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-            <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+           <!--  <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="icon-call-end"></i>
+                    <i class="icon-call-end"></i> -->
                     <!-- <span class="badge badge-default"> 4 </span> -->
-                </a>
+               <!--  </a>
                 <ul class="dropdown-menu">
                     <li class="external">
                         <h3>
@@ -58,13 +64,13 @@
                                             <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" class="img-circle" alt="" ng-if="ddoctor.UserAccount.FileUploads[0].UID">
                                             <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
                                     <span class="subject">
-                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span>
+                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span> -->
                                     <!-- <span class="time font-green-jungle">Online</span> -->
-                                    </span>
+                                   <!--  </span>
                                     <span class="message">
-                                            <br>
+                                            <br> -->
                                             <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                    <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
+                                  <!--   <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
                                     </span>
                                 </a>
                             </li>
@@ -74,20 +80,20 @@
                                             <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" class="img-circle" alt="" ng-if="doctor.UserAccount.FileUploads[0].UID">
                                             <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
                                     <span class="subject">
-                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span>
+                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span> -->
                                     <!-- <span class="time font-green-jungle">Online</span> -->
-                                    </span>
+                                  <!--   </span>
                                     <span class="message">
-                                            <br>
+                                            <br> -->
                                             <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                    <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
+                               <!--      <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
                                     </span>
                                 </a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             <li class="dropdown dropdown-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" dimage dimage-uid="info.fileupload[0].UID" dimage-size="'300'" class="img-circle" ng-if="info.fileupload.length > 0" />
@@ -127,5 +133,5 @@
 <!-- END HEADER INNER -->
 <!-- END HEADER -->
 <script>
-Layout.init(); // init current layout
+// Layout.init(); // init current layout
 </script>

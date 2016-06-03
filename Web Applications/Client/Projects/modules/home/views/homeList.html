@@ -9,7 +9,7 @@
 </div>
 <!-- END PAGE HEADER-->
 
-<h3 class="page-title bold">Home <small>Home</small></h3>
+<h3 class="page-title bold">Home</h3>
 
 <div class="portlet light bordered">
     <!-- <div class="portlet-title">
@@ -64,21 +64,9 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-show="checkRole" ng-click="ListTodayConsultation('list')">
-                <div class="dashboard-stat green">
-                    <div class="visual">
-                        <i class="fa fa-gear"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number">Consultation List History</div>
-                    </div>
-                    <a class="more" href="javascript:;" >
-                        Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-show="checkRole" ng-click="ListTodayConsultation('today')">
-                <div class="dashboard-stat purple"  >
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-show="checkRole">
+                <p style="font-size:15px;" class="font-blue">Please Click Today’s consultation to complete required questionnaire</p>
+                <div class="dashboard-stat purple" ng-click="ListTodayConsultation('today')">
                     <div class="visual">
                         <i class="fa fa-gear"></i>
                     </div>
@@ -86,6 +74,20 @@
                         <div class="number">Today's Consultation</div>
                     </div>
                     <a class="more" href="javascript:;">
+                        Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-show="checkRole">
+                <p style="font-size:15px;">&nbsp;</p>
+                <div class="dashboard-stat green" ng-click="ListTodayConsultation('list')" >
+                    <div class="visual">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Consultation List History</div>
+                    </div>
+                    <a class="more" href="javascript:;" >
                         Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
                     </a>
                 </div>

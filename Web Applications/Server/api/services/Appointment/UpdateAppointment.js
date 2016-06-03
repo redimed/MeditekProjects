@@ -3,6 +3,7 @@ module.exports = function(objUpdate) {
         where: {
             UID: objUpdate.where
         },
-        transaction: objUpdate.transaction
+        transaction: objUpdate.transaction,
+        individualHooks: true
     });
 };

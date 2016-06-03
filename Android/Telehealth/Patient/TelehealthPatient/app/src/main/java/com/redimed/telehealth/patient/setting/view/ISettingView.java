@@ -7,6 +7,8 @@ import com.redimed.telehealth.patient.models.Patient;
  */
 public interface ISettingView {
 
+    void onLoadError(String msg);
+
     void displayShortInfo(Patient[] patients);
 
 }

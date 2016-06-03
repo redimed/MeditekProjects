@@ -8,18 +8,19 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 		},
 		templateUrl: 'modules/company/directives/templates/companyDetailDirective.html',
 		link: function(scope, elem, attrs){
+			scope.count;
 			scope.styles = {};
 			scope.info = {};
 			scope.updatedata = {};
+			scope.search = {};
 			//load company detail
-			scope.init = function(){
+			scope.getDetailCompany = function(){
 				companyService.detailcompany({UID:scope.uid})
 				.then(function(response) {
 					if(response.data){
 						scope.info = response.data;
 						companyService.getDetailChild({UID:response.data.UID,model:'CompanySites'})
 						.then(function(result){
-							console.log(result);
 							scope.info.CompanySites = result.data;
 						},function(err) {
 							console.log(err);
@@ -30,7 +31,7 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 				});
 			};
 
-			scope.init();
+			scope.getDetailCompany();
 
 			scope.openmodal = function(model, type, uid) {
 				// console.log(uid);
@@ -73,11 +74,8 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 						$scope.compid = scope.info.ID;
 						$scope.staff = {};
 						$scope.staff.runIfSuccess = function(data){
-							console.log(data);
-							console.log(uid);
 							companyService.createUser({CompanyUID:uid,patientUID:data.UID})
 							.then(function(success) {
-								console.log(success);
 								toastr.success("success","success");
 								$scope.cancel();
 								scope.viewmodel('UserAccounts');
@@ -93,7 +91,6 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 							});
 						};
 						$scope.staff.createSuccess = function(data) {
-							console.log(data);
 							toastr.success("success","success");
 							$scope.cancel();
 							scope.viewmodel('UserAccounts');
@@ -118,15 +115,15 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 				var modalInstance = $uibModal.open({
 					templateUrl: 'CreateStaff',
 					controller: function($scope,$modalInstance){
-						$scope.cancel = function(){
-							$modalInstance.dismiss('cancel');
-						};
 						$scope.compid   = scope.info.ID;
 						$scope.staff = {};
 						$scope.staff.runIfSuccess = function(data){
 							toastr.success("success","success");
 							$scope.cancel();
 							scope.viewmodel('Patients');
+						};
+						$scope.staff.runIfClose = function(){
+							$modalInstance.dismiss('cancel');
 						};
 						$scope.loadagain = function() {
 							scope.viewmodel('Patients');
@@ -143,19 +140,158 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 				});
 			};
 
+			scope.init = function() {
+	            scope.searchObjectMap = {
+	                limit: isNaN(scope.limit)?10:scope.limit,
+	                offset: 0,
+	                currentPage: 1,
+	                maxSize: 5,
+	                // attributes:scope.items,
+	                Search:null,
+	                order: null,
+	                model:null
+	            };
+	        };
+
+	        scope.init();
+
+			scope.setPage = function(model) {
+	            scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
+	            scope.viewmodel(model);
+	        };
+
 			scope.viewmodel = function(model) {
-				if(!model) {
-					console.log("invalid.model");
-				}
-				else {
-					companyService.getDetailChild({UID:scope.info.UID,model:model})
+				function callData (value) {
+					if(model == 'Patients'){
+						var data = {
+							UID:scope.info.UID,
+							model:model,
+							Search:!value.Search?null:value.Search,
+							limit:!value.limit?null:value.limit,
+							offset:!value.offset?null:value.offset,
+						};
+					}
+					else {
+						var data = {
+							UID:scope.info.UID,
+							model:model
+						};
+					}
+					companyService.getDetailChild(data)
 					.then(function(result){
-						console.log(result);
 						scope.info[model] = result.data;
+						for(var i = 0; i < scope.info[model].length;i++){
+							scope.info[model][i].stt = scope.searchObjectMap.offset*1 + i + 1;
+						}
+						scope.count = result.count?result.count:null;
 					},function(err) {
 						console.log(err);
 					});
 				}
+				if(!model) {
+					console.log("invalid.model");
+				}
+				else {
+					if(!scope.searchObjectMap.model){
+						scope.searchObjectMap.model = model;
+						callData(scope.searchObjectMap);
+					}
+					else if(scope.searchObjectMap.model != model) {
+						scope.init();
+						scope.searchObjectMap.model = model;
+						callData(scope.searchObjectMap);
+					}
+					else if(scope.searchObjectMap.model == model) {
+						callData(scope.searchObjectMap);
+					}
+				}
+			};
+
+			scope.deleteUser = function(data) {
+				swal({   
+					title: "Delete User", 
+					text: "Do you want delete this user?" ,
+					type: "warning",   
+					showCancelButton: true,   
+					confirmButtonColor: "#DD6B55",   
+					confirmButtonText: "Ok",   
+					cancelButtonText: "Cancel",   
+					closeOnConfirm: true,   
+					closeOnCancel: true 
+				}, 
+				function(isConfirm){   
+					if (isConfirm) {  
+						companyService.changestatus({
+												whereClauses:{
+													RoleId:6,UserAccountId:data.UserAccountID
+												},
+												info:{Enable:'N'}, 
+												model:'RelUserRole',
+												CompanyID:data.RelCompanyPatient.CompanyID,
+												isRemoveAdmin:true,
+												PatientID:data.ID
+						})
+						.then(function(response) {
+							scope.viewmodel('UserAccounts');
+							toastr.success("Delete Successfully","success");
+						},function(err) {
+							console.log(err);
+							toastr.error("Delete Error","error");
+						});
+					}
+				});
+			};
+
+			scope.Search = function(data,e){
+				if(e==13){
+					scope.searchObjectMap.Search = data;
+					scope.viewmodel('Patients');
+				}
+			};
+
+			scope.checknull = function(name) {
+				if(scope.search[name] == '' || scope.search[name] == null) {
+					delete scope.search[name];
+				}
+			};
+
+			scope.updateCompany = function(info) {
+				var modalInstance = $uibModal.open({
+					templateUrl: 'UpdateCompanyModal',
+					controller: function($scope,$modalInstance){
+						$scope.info   = angular.copy(info);
+						$scope.cancel = function(){
+							$modalInstance.dismiss('cancel');
+						};
+						$scope.reset = function() {
+							toastr.success("Update Successfully");
+							scope.getDetailCompany();
+							$modalInstance.dismiss('cancel');
+						};
+						$scope.click = function() {
+							if( angular.equals($scope.info,info) == true ) {
+								toastr.error('Please change basic information before update');
+							}
+							else {
+								var data = {
+									CompanyName: $scope.info.CompanyName,
+									Description: $scope.info.Description,
+									UID: $scope.info.UID
+								};
+								console.log(data);
+								companyService.update({model:'Company',info:data})
+								.then(function(result) {
+									console.log(result);
+									$scope.reset();
+								},function(err) {
+									console.log(err);
+								});
+							}
+						};
+					},
+					// size: 'lg',
+					windowClass: 'app-modal-window'
+				});
 			};
 		},
 	};

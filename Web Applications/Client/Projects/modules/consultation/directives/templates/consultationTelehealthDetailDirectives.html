@@ -1,910 +1,596 @@
-<div class="portlet box green" style="margin-bottom:0px;">
+<div class="portlet portlet-fit light bordered">
     <div class="portlet-title bold uppercase" >
-        <div class="caption">
-            <i class="glyphicon glyphicon-th-list"></i>
+        <div class="caption bold uppercase font-blue">
+            <i class="glyphicon glyphicon-th-list font-blue"></i>
             <span class="caption-subject">Appointment Detail</span>
         </div>
-        <div class="tools">
-            <a class="remove" ng-click="close()"></a>
+        <div class="actions">
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"> </a>
         </div>
     </div>
     <div class="portlet-body form">
         <fieldset ng-disabled="checkRoleUpdate">
-            <form name="userForm" novalidate>
-                <div class="form-body margin-bottom-10">
-                    <ul class="nav nav-tabs ">
-                        <li class="active">
-                            <a href="index.html#tab_appointment" data-toggle="tab"> Appointment</a>
-                        </li>
-                        <li>
-                            <a href="index.html#tab_patient" data-toggle="tab"> Patient </a>
-                        </li>
-                        <li>
-                            <a href="index.html#tab_referral" data-toggle="tab"> Referral </a>
-                        </li>
-                        <li>
-                            <a href="index.html#tab_clinical" data-toggle="tab"> Clinical </a>
-                        </li>
-                        <li>
-                            <a href="index.html#tab_treating" data-toggle="tab"> Treating Practitioner </a>
-                        </li>
-                        <li>
-                            <a href="index.html#tab_medical_images" data-toggle="tab"> Medical Images </a>
-                        </li>
-                        <li>
-                            <a href="index.html#tab_referring" data-toggle="tab"> Referring Practitioner </a>
-                        </li>
-                        <li>
-                            <a href="index.html#tab_complain" data-toggle="tab"> Present Complain & Allergy </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_appointment">
-                            <div class="my-modal-body">
-                                <form role="form">
-                                    <div class="row">
-                                        <!-- col 1 -->
-                                        <div class="col-lg-6 col-md-12 col-lg-offset-1">
-                                            <h4 class="form-section bold">
-                                                <a href="javascript:;" 
-                                                    class="btn yellow-gold pull-right"
-                                                    style="position: relative; bottom:13px" 
-                                                    ng-click="openCalendar()">
-                                                    Booking
-                                                </a>
-                                                Appointment:
-                                                {{(wainformation.Code===null || wainformation.Code==='' || wainformation.Code===undefined)?"N/A":wainformation.Code}} 
-                                            </h4>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Duration of Referral</label>
-                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
-                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
-                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
-                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Status</label>
-                                                        <select class="form-control" name="Speciality" ng-model="wainformation.Status" ng-options="item.value as item.name for item in info.apptStatus">
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Request Date</label>
-                                                        <div type="text" class="form-control">{{wainformation.CreatedDate | date:'dd/MM/yyyy'}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">&nbsp;</label>
-                                                        <div class="checkbox-list">
-                                                            <label class="checkbox-inline">
-                                                                <input type="checkbox" class="regular-checkbox" name="Correspondence12" ng-true-value="'Y'" ng-false-value="'N'" ng-model="wainformation.TelehealthAppointment.Correspondence"> Correspondence
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Appointment Date</label>
-                                                        <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Appointment Time</label>
-                                                        <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Patient</label>
-                                                        <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Referring Practitioner</label>
-                                                        <div class="form-control">{{wainformation.TelehealthAppointment.RefName}}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Fund Type</label>
-                                                        <select class="form-control" ng-model="wainformation.TelehealthAppointment.FundType">
-                                                            <option value="">------Select Fund Type-----</option>
-                                                            <option value='WC'>Workers' Compensation</option>
-                                                            <option value='Private'>Private</option>
-                                                            <option value='Public'>Public</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Fund</label>
-                                                        <select class="form-control" ng-model="wainformation.TelehealthAppointment.Fund">
-                                                            <option value="">------Select Fund-----</option>
-                                                            <option value='ACA'>ACA Health Benefits Fund</option>
-                                                            <option value='AHM'>ahm Health Insurance</option>
-                                                            <option value='AUF'>Australian Unity Health Limited</option>
-                                                            <option value='BUP'>Bupa Australia Pty Ltd</option>
-                                                            <option value='CBH'>CBHS Health Fund Limited</option>
-                                                            <option value='CDH'>CDH Benefits Fund</option>
-                                                            <option value='CPS'>CUA Health Limited</option>
-                                                            <option value='AHB'>Defence Health Limited</option>
-                                                            <option value='AMA'>Doctors' Health Fund</option>
-                                                            <option value='GMF'>GMF Health</option>
-                                                            <option value='GMH'>GMHBA Limited</option>
-                                                            <option value='FAI'>Grand United Corporate Health</option>
-                                                            <option value='HBF'>HBF Health Limited</option>
-                                                            <option value='HCF'>HCF</option>
-                                                            <option value='HCI'>Health Care Insurance Limited</option>
-                                                            <option value='HIF'>Health Insurance Fund of Australia Limited</option>
-                                                            <option value='SPS'>Health Partners</option>
-                                                            <option value='HEA'>health.com.au</option>
-                                                            <option value='LHS'>Latrobe Health Services</option>
-                                                            <option value='MBP'>Medibank Private Limited</option>
-                                                            <option value='MDH'>Mildura Health Fund</option>
-                                                            <option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
-                                                            <option value='NHB'>Navy Health Ltd</option>
-                                                            <option value='NIB'>NIB Health Funds Ltd.</option>
-                                                            <option value='LHM'>Peoplecare Health Insurance</option>
-                                                            <option value='PWA'>Phoenix Health Fund Limited</option>
-                                                            <option value='SPE'>Police Health</option>
-                                                            <option value='QCH'>Queensland Country Health Fund Ltd</option>
-                                                            <option value='RTE'>Railway and Transport Health Fund Limited</option>
-                                                            <option value='RBH'>Reserve Bank Health Society Ltd</option>
-                                                            <option value='SLM'>St.Lukes Health</option>
-                                                            <option value='NTF'>Teachers Health Fund</option>
-                                                            <option value='TFS'>Transport Health Pty Ltd</option>
-                                                            <option value='QTU'>TUH</option>
-                                                            <option value='WFD'>Westfund Limited</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- col 2 -->
-                                        <div class="col-lg-3 col-md-12 col-lg-offset-1">
-                                            <h4 class="form-section bold">Referral To</h4>
+            <form name="userForm" novalidate class="form-horizontal">
+                <div class="form-body">
+                    <div class="tab-vertical-custom margin-bottom-10">
+                        <ul class="nav nav-tabs tabs-left">
+                            <li class="active">
+                                <a href="index.html#tab_appointment" data-toggle="tab">
+                                    <i class="fa fa-calendar"></i>
+                                    <span>Appointment</span> 
+                                </a>
+                                <!-- <span className="after"></span> -->
+                            </li>
+                            <li>
+                                <a href="index.html#tab_patient" data-toggle="tab">
+                                    <i class="fa fa-bed"></i>
+                                    <span>Patient</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#tab_company" data-toggle="tab" ng-click="getSiteFromAppData()" >
+                                    <i class="fa fa-building"></i>
+                                    <span>Company</span> 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#tab_referral" data-toggle="tab">
+                                    <i class="fa fa-file-text-o"></i>
+                                    <span>Referral</span> 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#tab_clinical" data-toggle="tab">
+                                    <i class="fa fa-heartbeat"></i>
+                                    <span>Clinical</span> 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#tab_treating" data-toggle="tab">
+                                    <i class="fa fa-user-md"></i>
+                                    <span>Treating Practitioner</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#tab_medical_images" data-toggle="tab">
+                                    <i class="fa fa-image"></i>
+                                    <span>Medical Images</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#tab_referring" data-toggle="tab">
+                                    <i class="fa fa-user-md"></i>
+                                    <span>Referring Practitioner</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#tab_complain" data-toggle="tab">
+                                    <i class="fa fa-file-text"></i>
+                                    <span>Present Complain & Allergy</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_appointment">
+                                <div class="tabbable-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="@#tab_appointment1" data-toggle="tab">Appointment</a>
+                                        </li>
+                                        <li>
+                                            <a href="@#tab_appointment2" data-toggle="tab">Referral</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_appointment1">
+                                            <h3 class="form-section">
+                                                Appointment: {{(wainformation.Code===null || wainformation.Code==='' || wainformation.Code===undefined)?"N/A":wainformation.Code}}
+                                                <a href="javascript:;" class="btn btn-outline red margin-left-10" ng-click="openCalendar()">Booking</a>
+                                            </h3>
                                             <div class="form-group">
-                                                <label class="control-label">Speciality</label>
-                                                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
+                                                <label class="control-label col-lg-4 col-md-4">Patient</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">Name of Specialist (if required)</label>
-                                                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Name}}</div>
+                                                <label class="control-label col-lg-4 col-md-4">Appointment Date</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input date-picker 
+                                                        data-date-format="dd/mm/yyyy" 
+                                                        ng-model="info.appointmentDate" 
+                                                        set-date="info.appointmentDate"
+                                                        data-date-start-date="0d"
+                                                        />
+                                                </div>
+                                                <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d"> -->
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">Site</label>
-                                                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
+                                                <label class="control-label col-lg-4 col-md-4">Appointment Time</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input time-picker
+                                                        ng-model="info.appointmentTime" 
+                                                        set-time="info.appointmentTime"
+                                                        />
+                                                </div>
+                                                <!-- <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm"> -->
+                                            </div>                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Duration of Referral</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
+                                                    <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">Decription</label>
-                                                <textarea class="form-control" rows="5" ng-model="wainformation.TelehealthAppointment.Description"></textarea>
+                                                <label class="control-label col-lg-4 col-md-4">Status</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select class="form-control" name="Speciality" ng-model="wainformation.Status" ng-options="item.value as item.name for item in info.apptStatus">
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab_patient">
-                            <div class="row margin-top-30">
-                                <div class="col-lg-10 col-md-12 col-lg-offset-1">
-                                    <div class="row" ng-if="wainformation.Patients.length != 0">
-                                        <div class="col-lg-11 col-md-11 col-sm-12 pull-left">
-                                            <h4>
-                                                <b>PATIENT NO :</b>
-                                                <span class="text-danger"> Linked</span>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="row profile-account">
-                                        <div class="col-lg-3 col-md-12 col-sm-12 margin-bottom-20">
-                                            <ul class="nav nav-tabs tabs-left">
-                                                <li class="active">
-                                                    <a data-toggle="tab" href="index.html#tab_1-1">Basic Information </a>
-                                                    <span class="after"> </span>
-                                                </li>
-                                                <li>
-                                                    <a data-toggle="tab" href="index.html#tab_2-2">Contact Information </a>
-                                                </li>
-                                                <li>
-                                                    <a data-toggle="tab" href="index.html#tab_kinGuardian"> Kin/Guardian </a>
-                                                </li>
-                                                <li>
-                                                    <a data-toggle="tab" href="index.html#tab_3-3">Medicare Information</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-9 col-md-12 col-sm-12">
-                                            <div class="tab-content">
-                                                <div id="tab_1-1" class="tab-pane active">
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-md-12">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Title</label>
-                                                                <select class="form-control" ng-model="ShowData.patient.Title" ng-disabled="ShowData.isLinkPatient">
-                                                                    <option value="">Select Title</option>
-                                                                    <option value="Mr">Mr</option>
-                                                                    <option value="Mrs">Mrs</option>
-                                                                    <option value="Ms">Ms</option>
-                                                                    <option value="Miss">Miss</option>
-                                                                    <option value="Dr">Dr</option>
-                                                                    <option value="Master">Master</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group" ng-class="{'has-error': userForm.FirstName.$invalid && submited} ">
-                                                                <label class="control-label">First name
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.FirstName" name="FirstName" required ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.FirstName.$invalid && submited" class="help-block">First name is required</p>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Middle name</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MiddleName" ng-disabled="ShowData.isLinkPatient">
-                                                            </div>
-                                                            <div class="form-group" ng-class="{'has-error': userForm.LastName.$invalid && submited} ">
-                                                                <label class="control-label">Last name
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.LastName" name="LastName" required ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.LastName.$invalid && submited" class="help-block">Last name is required</p>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Preferred name</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PreferredName" ng-disabled="ShowData.isLinkPatient">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Previous name</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PreviousName" ng-disabled="ShowData.isLinkPatient">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-12 col-lg-offset-1">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Country of Birth</label>
-                                                                <select size="1" class="form-control" ng-model="ShowData.patient.CountryOfBirth" ng-disabled="ShowData.isLinkPatient">
-                                                                    <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group" ng-class="{'has-error': userForm.DOB.$invalid && submited} ">
-                                                                <label class="control-label">Date of Birth
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <input type="text" class="form-control date-picker edited" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="ShowData.patient.DOB" data-date-end-date="0d" name="DOB" required ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.DOB.$invalid && submited" class="help-block">Date of birth is required</p>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Marital status</label>
-                                                                <select class="form-control" ng-model="ShowData.patient.MaritalStatus" ng-disabled="ShowData.isLinkPatient">
-                                                                    <option value=""></option>
-                                                                    <option value="Married">Married</option>
-                                                                    <option value="Never married">Never married</option>
-                                                                    <option value="Widowed">Widowed</option>
-                                                                    <option value="Divorced">Divorced</option>
-                                                                    <option value="Separated">Separated</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Sex</label>
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="radioTest12" value="Male" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Male
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="radioTest12" value="Female" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Female
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" size="15" ng-click="info.selectRadioGender()" name="radioTest12" ng-checked="(ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null)?true:false" ng-disabled="ShowData.isLinkPatient"> Other &nbsp;
-                                                                        <input type="text" size="10" ng-if="ShowData.patient.Gender == 'Male' || ShowData.patient.Gender == 'Female' || ShowData.patient.Gender == null" disabled>
-                                                                        <input type="text" size="10" ng-model="ShowData.patient.Gender" ng-if="ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null" ng-disabled="ShowData.isLinkPatient">
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Indigenous status</label>
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Aboriginal
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Interpreter required ?</label>
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> Yes
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> No
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
-                                                                <label class="control-label">If yes, language/dialect </label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Other special needs ?</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.OtherSpecialNeed" ng-disabled="ShowData.isLinkPatient">
-                                                            </div>
-                                                        </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Request Date</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="form-control">{{wainformation.CreatedDate | date:'dd/MM/yyyy'}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">&nbsp;</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <label class="checkbox margin-left-30">
+                                                        <input type="checkbox" class="regular-checkbox" name="Correspondence12" ng-true-value="'Y'" ng-false-value="'N'" ng-model="wainformation.TelehealthAppointment.Correspondence"> Correspondence
+                                                    </label>
+                                                </div>
+                                            </div>                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Referring Practitioner</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.RefName}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Fund Type</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select class="form-control" ng-model="wainformation.TelehealthAppointment.FundType">
+                                                        <option value="">------Select Fund Type-----</option>
+                                                        <option value='WC'>Workers' Compensation</option>
+                                                        <option value='Private'>Private</option>
+                                                        <option value='Public'>Public</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Fund</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select class="form-control" ng-model="wainformation.TelehealthAppointment.Fund">
+                                                        <option value="">------Select Fund-----</option>
+                                                        <option value='ACA'>ACA Health Benefits Fund</option>
+                                                        <option value='AHM'>ahm Health Insurance</option>
+                                                        <option value='AUF'>Australian Unity Health Limited</option>
+                                                        <option value='BUP'>Bupa Australia Pty Ltd</option>
+                                                        <option value='CBH'>CBHS Health Fund Limited</option>
+                                                        <option value='CDH'>CDH Benefits Fund</option>
+                                                        <option value='CPS'>CUA Health Limited</option>
+                                                        <option value='AHB'>Defence Health Limited</option>
+                                                        <option value='AMA'>Doctors' Health Fund</option>
+                                                        <option value='GMF'>GMF Health</option>
+                                                        <option value='GMH'>GMHBA Limited</option>
+                                                        <option value='FAI'>Grand United Corporate Health</option>
+                                                        <option value='HBF'>HBF Health Limited</option>
+                                                        <option value='HCF'>HCF</option>
+                                                        <option value='HCI'>Health Care Insurance Limited</option>
+                                                        <option value='HIF'>Health Insurance Fund of Australia Limited</option>
+                                                        <option value='SPS'>Health Partners</option>
+                                                        <option value='HEA'>health.com.au</option>
+                                                        <option value='LHS'>Latrobe Health Services</option>
+                                                        <option value='MBP'>Medibank Private Limited</option>
+                                                        <option value='MDH'>Mildura Health Fund</option>
+                                                        <option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
+                                                        <option value='NHB'>Navy Health Ltd</option>
+                                                        <option value='NIB'>NIB Health Funds Ltd.</option>
+                                                        <option value='LHM'>Peoplecare Health Insurance</option>
+                                                        <option value='PWA'>Phoenix Health Fund Limited</option>
+                                                        <option value='SPE'>Police Health</option>
+                                                        <option value='QCH'>Queensland Country Health Fund Ltd</option>
+                                                        <option value='RTE'>Railway and Transport Health Fund Limited</option>
+                                                        <option value='RBH'>Reserve Bank Health Society Ltd</option>
+                                                        <option value='SLM'>St.Lukes Health</option>
+                                                        <option value='NTF'>Teachers Health Fund</option>
+                                                        <option value='TFS'>Transport Health Pty Ltd</option>
+                                                        <option value='QTU'>TUH</option>
+                                                        <option value='WFD'>Westfund Limited</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Has GP Referral</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="gp_referral" id="gp_referral_Y" value="Y" /> Yes
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="gp_referral" id="gp_referral_N" value="N" /> No
+                                                        </label>
                                                     </div>
                                                 </div>
-                                                <div id="tab_2-2" class="tab-pane">
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid}">
-                                                                <label class="control-label">Contact number (M)</label>
-                                                                <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="ShowData.patient.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
-                                                                <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$invalid}">
-                                                                <label class="control-label">Contact number (H)</label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email1.$invalid}">
-                                                                <label class="control-label">Email</label>
-                                                                <input type="email" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email1" name="TelehealthAppointment_PatientAppointment_Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Fax number</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.FaxNumber" ng-disabled="ShowData.isLinkPatient">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-sm-12">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.Address1.$invalid && submited} ">
-                                                                <label class="control-label">Address1
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Address1" name="Address1" required ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.Address1.$invalid && submited" class="help-block">Address1 name is required</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Address2</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.Address2" ng-disabled="ShowData.isLinkPatient">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-8 col-sm-8">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.Suburb.$invalid && submited} ">
-                                                                <label class="control-label">Suburb
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" required ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-4">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.Postcode.$invalid && submited}">
-                                                                <label class="control-label">Postcode
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Postcode" name="Postcode" required ng-disabled="ShowData.isLinkPatient">
-                                                                <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.State.$invalid && submited} ">
-                                                                <label class="control-label">State
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <select class="form-control edited" ng-model="ShowData.patient.State" required name="State" ng-disabled="ShowData.isLinkPatient">
-                                                                    <option value=""></option>
-                                                                    <option value="WA">Western Australia</option>
-                                                                    <option value="VIC">Victoria</option>
-                                                                    <option value="TAS">Tasmania</option>
-                                                                    <option value="QLD">Queensland</option>
-                                                                    <option value="NSW">New South Wales</option>
-                                                                    <option value="NT">Northern Territory</option>
-                                                                    <option value="ACT">Australian Capital Territory</option>
-                                                                </select>
-                                                                <p ng-show="userForm.State.$invalid && submited" class="help-block">State name is required</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Country</label>
-                                                                <select size="1" class="form-control" ng-model="ShowData.patient.Country" ng-disabled="ShowData.isLinkPatient">
-                                                                    <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="tab_kinGuardian" class="tab-pane">
-                                                    <div class="row">
-                                                        <h4 class="control-label col-md-12 col-sm-12">Next of Kin/Guardian</h4>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="control-label">First Name</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinFirstName">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Last Name</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinLastName">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Relationship</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinRelationship">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$invalid}">
-                                                                <label class="control-label">Contact Number</label>
-                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinMobilePhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber">
-                                                                <div class="form-control-focus"> </div>
-                                                                <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="tab_3-3" class="tab-pane">
-                                                    <div class="row margin-bottom-40">
-                                                        <div class="col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">Medicare Eligible</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="MedicareEligible" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> Yes
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="MedicareEligible" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> No
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" ng-show="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'Y'">
-                                                        <div class="col-md-4 col-sm-4">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Medicare Number</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-4">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Medicare reference number</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-4">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Expiry date</label>
-                                                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.MedicareExpiryDate">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" ng-show="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'Y'">
-                                                        <div class="col-md-4 col-sm-4">
-                                                            <div class="form-group">
-                                                                <label class="control-label">DVA number</label>
-                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DVANumber">
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Type of Treatment</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="type_of_treatment" id="Physiotherapy" value="Physiotherapy" ng-click="_onChangeChecked('physiotherapy',type_of_treatment)" /> Physiotherapy
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="type_of_treatment" id="Exercuse_Rehab" value="Exercuse_Rehab" ng-click="_onChangeChecked('exerciseRehab',type_of_treatment)" /> Exercise Rehab
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="type_of_treatment" id="Hand_Therapy" value="Hand_Therapy" ng-click="_onChangeChecked('handTherapy',type_of_treatment)" /> Hand Therapy
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end col-md-9-->
-                                    </div>
-                                    <div class="row pull-right">
-                                        <div class="col-md-12 col-xs-12" style="text-align:right">
-                                            <a class="btn red" ng-click="selectPatient()" ng-hide="checkRoleUpdate">
-                                                <i class="glyphicon glyphicon-plus"></i> Link Patient
-                                            </a>
+                                        <div class="tab-pane" id="tab_appointment2">
+                                            <h3 class="form-section">Referral To</h3>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Speciality</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Name of Specialist (if required)</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Name}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Site</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Description</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <textarea class="form-control" rows="5" ng-model="wainformation.Description" ng-change="changeValue('Description')"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="tab_referral">
-                            <div class="margin-top-20 my-modal-body scroller" style="height:600px">
-                                <div class="row margin-top-30 profile-account">
-                                    <div class="col-lg-3 col-md-12">
-                                        <ul class="nav nav-tabs tabs-left">
-                                            <li class="active">
-                                                <a data-toggle="tab" href="index.html#tab_referral1">Referral Information </a>
-                                                <span class="after"> </span>
-                                            </li>
-                                            <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral2">Reason for referral/Presenting Problem </a>
-                                            </li>
-                                            <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral3"> History of Previous Skin cancers and treatmens </a>
-                                            </li>
-                                            <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral4"> History of Previous Hand surgery </a>
-                                            </li>
-                                        </ul>
+                            <div class="tab-pane" id="tab_patient">
+                                <div class="row margin-bottom-10">
+                                    <div class="col-lg-12">
+                                        <a class="btn btn-outline red pull-right" ng-click="selectPatient()" ng-hide="checkRoleUpdate">
+                                            <i class="glyphicon glyphicon-plus"></i> Link Patient
+                                        </a>
+                                        <a class="btn btn-outline blue pull-right" ng-click="SelectDialogPassword()" style="margin-right: 2px;">
+                                            <i class="fa fa-key"></i> Generate Password Patient
+                                        </a>
+                                        <h3 class="font-red" ng-if="wainformation.Patients.length != 0">
+                                            PATIENT : <span class="font-red"> {{wainformation.Patients[0].UserAccount.UserName}}</span>
+                                        </h3>
                                     </div>
-                                    <div class="col-lg-9 col-md-12">
-                                        <div class="tab-content">
-                                            <div id="tab_referral1" class="tab-pane active">
-                                                <div class="row">
-                                                    <div class="col-lg-4 col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="control-label">Has the referral been discussed with a registrar or consultant?</label>
-                                                            <div class="radio-list">
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="HasConsultant" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.HasConsultant"> Yes
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="HasConsultant" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.HasConsultant"> No
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">Clinical name</label>
-                                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantName">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">Site</label>
-                                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantSite">
-                                                        </div>
-                                                        <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$invalid}">
-                                                            <label class="control-label">Contact number</label>
-                                                            <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantContactNumber" name="TelehealthAppointment_WAAppointment_ConsultantContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
-                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">Referral advice given</label>
-                                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantNote">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 col-md-12 col-lg-offset-1">
-                                                        <div class="form-group margin-bottom-40">
-                                                            <div class="radio-list">
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="InjuryType" value="Motor vehicle accident" ng-model="wainformation.TelehealthAppointment.WAAppointment.InjuryType"> Motor vehicle accident ?
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="InjuryType" value="Work injury" ng-model="wainformation.TelehealthAppointment.WAAppointment.InjuryType"> Work injury ?
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Patients usual GP ?
-                                                            </label>
-                                                            <div class="radio-list">
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="referrer_radio" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP"> Yes
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="referrer_radio" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP"> No
-                                                                </label>
-                                                            </div>
-                                                        </div>    
-                                                        <div class="row" ng-if="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Name of patients usual GP</label>
-                                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPName" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" ng-if="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
-                                                            <div class="col-md-6 col-sm-6">
-                                                                <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_WAAppointment_UsualGPContactNumber.$invalid}">
-                                                                    <label class="control-label">Contact Number</label>
-                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPContactNumber" name="TelehealthAppointment_WAAppointment_UsualGPContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" />
-                                                                    <p ng-show="userForm.TelehealthAppointment_WAAppointment_UsualGPContactNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Fax Number</label>
-                                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPFaxNumber" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Need to be referred to the same place again ?
-                                                            </label>
-                                                            <div class="radio-list">
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="IsSamePlacePreference" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> Yes
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="IsSamePlacePreference" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> No
-                                                                </label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Suitable for a telehealth consult
-                                                            </label>
-                                                            <div class="radio-list">
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="IsTelehealthSuitable" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsTelehealthSuitable"> Yes </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="IsTelehealthSuitable" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsTelehealthSuitable"> No </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">Length of referral </label>
-                                                            <div class="radio-list">
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="RefDurationOfReferral" value="03" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> 3 months
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="RefDurationOfReferral" value="12" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> 12 months
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="RefDurationOfReferral" value="00" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> Indefinite
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">
-                                                                Is this a renewed referral ?
-                                                            </label>
-                                                            <div class="radio-list">
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="radio7" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsRenewReferral"> Yes
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="radio7" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsRenewReferral"> No
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                </div>
+                                <div class="tabbable-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="@#tab_patient1" data-toggle="tab">Basic Info</a></li>
+                                        <li><a href="@#tab_patient2" data-toggle="tab">Contact Info</a></li>
+                                        <li><a href="@#tab_patient3" data-toggle="tab">More Info</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_patient1">
+                                            <h4 class="form-section">Basic Information</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Title</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select class="form-control" ng-model="ShowData.patient.Title" ng-disabled="ShowData.isLinkPatient">
+                                                        <option value="">Select Title</option>
+                                                        <option value="Mr">Mr</option>
+                                                        <option value="Mrs">Mrs</option>
+                                                        <option value="Ms">Ms</option>
+                                                        <option value="Miss">Miss</option>
+                                                        <option value="Dr">Dr</option>
+                                                        <option value="Master">Master</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.FirstName.$invalid && submited}">
+                                                <label class="control-label col-lg-4 col-md-4">First name<span class="required"> * </span></label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.FirstName" name="FirstName" required ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.FirstName.$invalid && submited" class="help-block">First name is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Middle name</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MiddleName" ng-disabled="ShowData.isLinkPatient">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.LastName.$invalid && submited} ">
+                                                <label class="control-label col-lg-4 col-md-4">Last name<span class="required"> * </span></label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.LastName" name="LastName" required ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.LastName.$invalid && submited" class="help-block">Last name is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Preferred name</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PreferredName" ng-disabled="ShowData.isLinkPatient">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Previous name</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PreviousName" ng-disabled="ShowData.isLinkPatient">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Country of Birth</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select size="1" class="form-control" ng-model="ShowData.patient.CountryOfBirth" ng-disabled="ShowData.isLinkPatient">
+                                                        <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.DOB.$invalid && submited} ">
+                                                <label class="control-label col-lg-4 col-md-4">Date of Birth
+                                                    <span class="required"> * </span>
+                                                </label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input date-picker 
+                                                        data-date-format="dd/mm/yyyy" 
+                                                        ng-model="ShowData.patient.DOB" 
+                                                        set-date="ShowData.patient.DOB"
+                                                        name="DOB"
+                                                        required 
+                                                        ng-disabled="ShowData.isLinkPatient"
+                                                        />
+                                                    <!-- <input type="text" class="form-control date-picker edited" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="ShowData.patient.DOB" data-date-end-date="0d" name="DOB" required ng-disabled="ShowData.isLinkPatient"> -->
+                                                    <p ng-show="userForm.DOB.$invalid && submited" class="help-block">Date of birth is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Marital status</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select class="form-control" ng-model="ShowData.patient.MaritalStatus" ng-disabled="ShowData.isLinkPatient">
+                                                        <option value=""></option>
+                                                        <option value="Married">Married</option>
+                                                        <option value="Never married">Never married</option>
+                                                        <option value="Widowed">Widowed</option>
+                                                        <option value="Divorced">Divorced</option>
+                                                        <option value="Separated">Separated</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Sex</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="radioTest12" value="Male" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Male
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="radioTest12" value="Female" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Female
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" size="15" ng-click="info.selectRadioGender()" name="radioTest12" ng-checked="(ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null)?true:false" ng-disabled="ShowData.isLinkPatient"> Other &nbsp;
+                                                            <input type="text" size="10" ng-if="ShowData.patient.Gender == 'Male' || ShowData.patient.Gender == 'Female' || ShowData.patient.Gender == null" disabled>
+                                                            <input type="text" size="10" ng-model="ShowData.patient.Gender" ng-if="ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null" ng-disabled="ShowData.isLinkPatient">
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="tab_referral2" class="tab-pane">
-                                                <div class="row">
-                                                    <div class="col-md-12 col-sm-12">
-                                                        <h5 class="form-section bold">Reason for referral/Presenting Problem</h5>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control" rows="3" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].Value">
-                                                            </textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="table-scrollable table-scrollable-borderless">
-                                                            <table class="table table-hover table-light">
-                                                                <thead>
-                                                                    <tr class="uppercase">
-                                                                        <th width="30%">File Name</th>
-                                                                        <th width="30%">View</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].FileUploads">
-                                                                        <td><strong>{{ item.FileName }}</strong></td>
-                                                                        <td>
-                                                                            <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 col-sm-12">
-                                                        <h5 class="form-section bold">Skin cancer</h5>
-                                                        <div class="row">
-                                                            <div class="col-md-3 col-sm-3">
-                                                                <div class="checkbox-list">
-                                                                    <label>
-                                                                        <input type="checkbox" class="regular-checkbox" ng-model="BCC" ng-true-value="'Yes'" ng-false-value="'N'"> BCC</label>
-                                                                    <label>
-                                                                        <input type="checkbox" class="regular-checkbox" ng-model="SCC" ng-true-value="'Yes'" ng-false-value="'N'"> SCC</label>
-                                                                    <label>
-                                                                        <input type="checkbox" class="regular-checkbox" ng-model="Melanoma" ng-true-value="'Yes'" ng-false-value="'N'"> Melanoma</label>
-                                                                    <label>
-                                                                        <input type="checkbox" class="regular-checkbox" ng-model="Merkel" ng-true-value="'Yes'" ng-false-value="'N'"> Merkel's</label>
-                                                                    <label>
-                                                                        <input type="checkbox" class="regular-checkbox" ng-model="SkincancerOThers" ng-true-value="'Yes'" ng-false-value="'N'">Others
-                                                                        <input type="text" size="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'].Value" ng-disabled="SkincancerOThers !== 'Yes'">
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-9 col-sm-9">
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">Size :</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="> 2 cm"> > 2 cm</label>
-                                                                </div>
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">Size : </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="> 2 cm"> > 2 cm</label>
-                                                                </div>
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">Size : </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="> 2 cm"> > 2 cm</label>
-                                                                </div>
-                                                                <div class="radio-list">
-                                                                    <label class="radio-inline">Size : </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" class="regular-radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="> 2 cm"> > 2 cm</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <h5 class="form-section bold">Hand condition</h5>
-                                                        <div class="checkbox-list">
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.Ganglion'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Ganglion</label>
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.Arthritis'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Arthritis</label>
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.DeQuervains__/__Trigger'].Value" ng-true-value="'Y'" ng-false-value="'N'"> DeQuervains/Trigger</label>
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.Contracture'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Contracture </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <h5 class="form-section bold">PNS</h5>
-                                                        <div class="checkbox-list">
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Carpal__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Carpal Tunnel</label>
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Cubital__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Cubital Tunnel</label>
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Tarsal__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Tarsal Tunnel</label>
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Complex__Reconstructive__Case'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Complex Reconstructive Case</label>
-                                                            <label class="control-label">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="PNSOther" ng-true-value="'Yes'" ng-false-value="'N'"> Other &nbsp;
-                                                                <input type="text" placeholder="Other" size="15" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value" ng-disabled="PNSOther !== 'Yes'">
-                                                            </label>
-                                                        </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Indigenous status</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Aboriginal
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="tab_referral3" class="tab-pane">
-                                                <div class="row">
-                                                    <h5 class="col-md-12 col-sm-12">
-                                                    <div class="form-inline">
-                                                        <div class="form-group">
-                                                            <div class="radio-list">
-                                                                 <label class="radio-inline control-label bold">
-                                                                    History of Previous skin cancers and treatmens
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes 
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No 
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </h5>
-                                                    <div class="col-md-6 col-sm-6" ng-show="cancersTreatmens == 'Yes'">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6" ng-show="cancersTreatmens == 'Yes'">
-                                                        <div class="table-scrollable table-scrollable-borderless">
-                                                            <table class="table table-hover table-light">
-                                                                <thead>
-                                                                    <tr class="uppercase">
-                                                                        <th width="30%">File Name</th>
-                                                                        <th width="30%">View</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].FileUploads">
-                                                                        <td><strong>{{ item.FileName }}</strong></td>
-                                                                        <td>
-                                                                            <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Interpreter required ?</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> Yes
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> No
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="tab_referral4" class="tab-pane">
-                                                <div class="row">
-                                                    <h5 class="col-md-12 col-sm-12">
-                                                    <div class="form-inline">
-                                                        <div class="form-group">
-                                                            <div class="radio-list">
-                                                                 <label class="radio-inline control-label bold">
-                                                                    History of Previous hand surgery
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes 
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" class="regular-radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No 
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                            <div class="form-group" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
+                                                <label class="control-label col-lg-4 col-md-4">If yes, language/dialect </label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Other special needs ?</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.OtherSpecialNeed" ng-disabled="ShowData.isLinkPatient">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab_patient2">
+                                            <h4 class="form-section">Contact Information</h4>
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid}">
+                                                <label class="control-label col-lg-4 col-md-4">Contact number (M)</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="ShowData.patient.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
+                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$invalid}">
+                                                <label class="control-label col-lg-4 col-md-4">Contact number (H)</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$invalid}">
+                                                <label class="control-label col-lg-4 col-md-4">Contact number (W)</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.WorkPhoneNumber" name="TelehealthAppointment_PatientAppointment_WorkPhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$error.pattern" class="help-block">Work phone is a 4-10 digits number</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email1.$invalid}">
+                                                <label class="control-label col-lg-4 col-md-4">Email</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="email" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email1" name="TelehealthAppointment_PatientAppointment_Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Fax number</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.FaxNumber" ng-disabled="ShowData.isLinkPatient">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.Address1.$invalid && submited} ">
+                                                <label class="control-label col-lg-4 col-md-4">Address1<span class="required"> * </span></label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Address1" name="Address1" required ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.Address1.$invalid && submited" class="help-block">Address1 name is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Address2</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.Address2" ng-disabled="ShowData.isLinkPatient">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.Suburb.$invalid && submited} ">
+                                                <label class="control-label col-lg-4 col-md-4">Suburb<span class="required"> * </span></label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" required ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.Postcode.$invalid && submited}">
+                                                <label class="control-label col-lg-4 col-md-4">Postcode<span class="required"> * </span></label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Postcode" name="Postcode" required ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.State.$invalid && submited} ">
+                                                <label class="control-label col-lg-4 col-md-4">State<span class="required"> * </span></label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select class="form-control edited" ng-model="ShowData.patient.State" required name="State" ng-disabled="ShowData.isLinkPatient">
+                                                        <option value=""></option>
+                                                        <option value="WA">Western Australia</option>
+                                                        <option value="VIC">Victoria</option>
+                                                        <option value="TAS">Tasmania</option>
+                                                        <option value="QLD">Queensland</option>
+                                                        <option value="NSW">New South Wales</option>
+                                                        <option value="NT">Northern Territory</option>
+                                                        <option value="ACT">Australian Capital Territory</option>
+                                                    </select>
+                                                    <p ng-show="userForm.State.$invalid && submited" class="help-block">State name is required</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Country</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <select size="1" class="form-control" ng-model="ShowData.patient.Country" ng-disabled="ShowData.isLinkPatient">
+                                                        <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab_patient3">
+                                            <h4 class="form-section">Next of Kin/Guardian</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">First Name</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinFirstName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Last Name</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinLastName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Relationship</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinRelationship">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$invalid}">
+                                                <label class="control-label col-lg-4 col-md-4">Contact Number</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.PatientKinMobilePhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber">
+                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
+                                                </div>
+                                            </div>
+                                            <h4 class="form-section">Medicare Information</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Medicare Eligible</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="MedicareEligible" value="Y" ng-model="ShowData.patient.MedicareEligible"> Yes
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="MedicareEligible" value="N" ng-model="ShowData.patient.MedicareEligible"> No
+                                                        </label>
                                                     </div>
-                                                </h5>
-                                                    <div class="col-md-6 col-sm-6" ng-show="previousHandSurgery == 'Yes'">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].Value"></textarea>
-                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div ng-show="ShowData.patient.MedicareEligible == 'Y'">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4">Medicare Number</label>
+                                                    <div class="col-lg-8 col-md-8">
+                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareNumber">
                                                     </div>
-                                                    <div class="col-md-6 col-sm-6" ng-show="previousHandSurgery == 'Yes'">
-                                                        <div class="table-scrollable table-scrollable-borderless">
-                                                            <table class="table table-hover table-light">
-                                                                <thead>
-                                                                    <tr class="uppercase">
-                                                                        <th width="30%">File Name</th>
-                                                                        <th width="30%">View</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].FileUploads">
-                                                                        <td><strong>{{ item.FileName }}</strong></td>
-                                                                        <td>
-                                                                            <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4">Medicare reference number</label>
+                                                    <div class="col-lg-8 col-md-8">
+                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareReferenceNumber">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4">Expiry date</label>
+                                                    <div class="col-lg-8 col-md-8">
+                                                        <input date-picker 
+                                                            data-date-format="dd/mm/yyyy" 
+                                                            ng-model="ShowData.patient.MedicareExpiryDate" 
+                                                            set-date="ShowData.patient.MedicareExpiryDate"
+                                                        />
+                                                    </div>
+                                                    <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="ShowData.patient.MedicareExpiryDate"> -->
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4">DVA number</label>
+                                                    <div class="col-lg-8 col-md-8">
+                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.DVANumber">
                                                     </div>
                                                 </div>
                                             </div>
@@ -912,36 +598,508 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="tab_clinical">
-                            <div class="margin-top-40 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Clinical.html'"></div>
-                        </div>
-                        <div class="tab-pane" id="tab_treating">
-                            <div class="margin-top-30 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Treating.html'"></div>
-                        </div>
-                        <div class="tab-pane" id="tab_medical_images">
-                            <div class="margin-top-30 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_MedicalImages.html'"></div>
-                        </div>
-                        <div class="tab-pane" id="tab_referring">
-                            <div class="margin-top-40 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referring.html'"></div>
-                        </div>
-                        <div class="tab-pane" id="tab_complain">
-                            <div class="margin-top-40 my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_ComplainAndAllergy.html'"></div>
+                            <div class="tab-pane" id="tab_company">
+                                <div class="">
+                                    <h3 class="form-section">
+                                        Company Information
+                                        <a class="btn btn-outline red" id="btnLinkComp" ng-click="linkcompany()" >Link Company</a>
+                                    </h3>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Company Name</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" class="form-control" ng-model="wainformation.Company.CompanyName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Description</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <textarea class="form-control" ng-model="wainformation.Company.Description" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Site Name</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" name="site_name" class="form-control" ng-model="wainformation.CompanySite.SiteName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Address1</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" name="address1" class="form-control" ng-model="wainformation.CompanySite.Address1" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Address2</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" name="Address2" class="form-control" ng-model="wainformation.CompanySite.Address2" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Suburb</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" name="suburb" class="form-control" ng-model="wainformation.CompanySite.Suburb" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Postcode</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" name="postcode" class="form-control" ng-model="wainformation.CompanySite.Postcode" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">State</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <select class="form-control" ng-options="s.code as s.name for s in state" ng-model="wainformation.CompanySite.State">
+                                                <option value="">Select State</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Country</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <select class="form-control" ng-options="c.ID as c.ShortName for c in ListContry" ng-model="wainformation.CompanySite.Country" >
+                                                <option value="">Select Country</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Contact Name</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" name="contact_name" class="form-control" ng-model="wainformation.CompanySite.ContactName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4">Contact Number</label>
+                                        <div class="col-lg-8 col-md-8">
+                                            <input type="text" name="contact_number" class="form-control" ng-model="wainformation.CompanySite.HomePhoneNumber" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_referral">
+                                <div class="tabbable-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="index.html#tab_referral1">Referral Information </a>
+                                            <span class="after"> </span>
+                                        </li>
+                                        <li><a data-toggle="tab" href="index.html#tab_referral2">Extra Information</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="tab_referral1" class="tab-pane active">
+                                            <h3 class="form-section">Referral Information</h3>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Has the referral been discussed with a registrar or consultant?</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="HasConsultant" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.HasConsultant"> Yes
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="HasConsultant" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.HasConsultant"> No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Clinical Name</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Site</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantSite">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$invalid}">
+                                                <label class="control-label col-lg-4 col-md-5">Contact number</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantContactNumber" name="TelehealthAppointment_WAAppointment_ConsultantContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
+                                                    <p ng-show="userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Referral advice given</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantNote">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5"></label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="InjuryType" value="Motor vehicle accident" ng-model="wainformation.TelehealthAppointment.WAAppointment.InjuryType"> Motor vehicle accident ?
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="InjuryType" value="Work injury" ng-model="wainformation.TelehealthAppointment.WAAppointment.InjuryType"> Work injury ?
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Patients usual GP ?</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="referrer_radio" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP"> Yes
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="referrer_radio" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP"> No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-if="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
+                                                <label class="control-label col-lg-4 col-md-5">Name of patients usual GP</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPName" />
+                                                </div>
+                                            </div>                                                    
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_WAAppointment_UsualGPContactNumber.$invalid}"
+                                                ng-if="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
+                                                <label class="control-label col-lg-4 col-md-5">Contact Number</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPContactNumber" name="TelehealthAppointment_WAAppointment_UsualGPContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" />
+                                                    <p ng-show="userForm.TelehealthAppointment_WAAppointment_UsualGPContactNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Fax Number</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPFaxNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Need to be referred to the same place again ?</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="IsSamePlacePreference" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> Yes
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="IsSamePlacePreference" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Suitable for a telehealth consult</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="IsTelehealthSuitable" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsTelehealthSuitable"> Yes </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="IsTelehealthSuitable" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsTelehealthSuitable"> No </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Length of referral </label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="RefDurationOfReferral" value="03" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> 3 months
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="RefDurationOfReferral" value="12" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> 12 months
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="RefDurationOfReferral" value="00" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> Indefinite
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-5">Is this a renewed referral ?</label>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="radio-list">
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="radio7" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsRenewReferral"> Yes
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" class="regular-radio" name="radio7" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsRenewReferral"> No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab_referral2" class="tab-pane">
+                                            <h3 class="form-section">Extra Information</h3>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Reason for referral/Presenting Problem</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <textarea class="form-control" rows="3" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].Value">
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable table-scrollable-borderless margin-bottom-40">
+                                                <table class="table table-hover table-light">
+                                                    <thead>
+                                                        <tr class="uppercase">
+                                                            <th width="30%">File Name</th>
+                                                            <th width="30%">View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].FileUploads">
+                                                            <td><strong>{{ item.FileName }}</strong></td>
+                                                            <td>
+                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label bold col-lg-4 col-md-4">Skin cancer</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="checkbox-list">
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="BCC" ng-true-value="'Yes'" ng-false-value="'N'"> BCC</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="SCC" ng-true-value="'Yes'" ng-false-value="'N'"> SCC</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="Melanoma" ng-true-value="'Yes'" ng-false-value="'N'"> Melanoma</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="Merkel" ng-true-value="'Yes'" ng-false-value="'N'"> Merkel's</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="SkincancerOThers" ng-true-value="'Yes'" ng-false-value="'N'">Others
+                                                            <input type="text" size="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'].Value" ng-disabled="SkincancerOThers !== 'Yes'">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">BCC Size</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="> 2 cm"> > 2 cm</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">SCC Size</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="> 2 cm"> > 2 cm</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4">Melanoma Size</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="> 2 cm"> > 2 cm</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group margin-bottom-30">
+                                                <label class="control-label col-lg-4 col-md-4">Merkel's Size</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="0 - 1 cm"> 0 - 1 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="> 2 cm"> > 2 cm</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/> 
+                                            <div class="form-group">
+                                                <label class="control-label bold col-lg-4 col-md-4">Hand condition</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="checkbox-list">
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.Ganglion'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Ganglion
+                                                        </label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.Arthritis'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Arthritis
+                                                        </label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.DeQuervains__/__Trigger'].Value" ng-true-value="'Y'" ng-false-value="'N'"> DeQuervains/Trigger
+                                                        </label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.Contracture'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Contracture 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label bold col-lg-4 col-md-4">PNS</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="checkbox-list">
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Carpal__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Carpal Tunnel</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Cubital__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Cubital Tunnel</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Tarsal__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Tarsal Tunnel</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Complex__Reconstructive__Case'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Complex Reconstructive Case</label>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" class="regular-checkbox" ng-model="PNSOther" ng-true-value="'Yes'" ng-false-value="'N'"> Other &nbsp;
+                                                            <input type="text" placeholder="Other" size="15" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value" ng-disabled="PNSOther !== 'Yes'">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <hr/>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-6 col-md-7">
+                                                    History of Previous skin cancers and treatmens
+                                                </label>
+                                                <div class="col-lg-6 col-md-5">
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group" ng-show="cancersTreatmens == 'Yes'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value"></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="table-scrollable table-scrollable-borderless margin-bottom-40" ng-show="cancersTreatmens == 'Yes'">
+                                                <table class="table table-hover table-light">
+                                                    <thead>
+                                                        <tr class="uppercase">
+                                                            <th width="30%">File Name</th>
+                                                            <th width="30%">View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].FileUploads">
+                                                            <td><strong>{{ item.FileName }}</strong></td>
+                                                            <td>
+                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr/>                                                        
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-6 col-md-7">History of Previous hand surgery</label>
+                                                <div class="col-lg-6 col-md-5">
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" class="regular-radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-show="previousHandSurgery == 'Yes'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].Value"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable table-scrollable-borderless margin-bottom-30" ng-show="previousHandSurgery == 'Yes'">
+                                                <table class="table table-hover table-light">
+                                                    <thead>
+                                                        <tr class="uppercase">
+                                                            <th width="30%">File Name</th>
+                                                            <th width="30%">View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].FileUploads">
+                                                            <td><strong>{{ item.FileName }}</strong></td>
+                                                            <td>
+                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_clinical">
+                                <div class="" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Clinical.html'"></div>
+                            </div>
+                            <div class="tab-pane" id="tab_treating">
+                                <div ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Treating.html'"></div>
+                            </div>
+                            <div class="tab-pane" id="tab_medical_images">
+                                <div class="" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_MedicalImages.html'"></div>
+                            </div>
+                            <div class="tab-pane" id="tab_referring">
+                                <div class="" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referring.html'"></div>
+                            </div>
+                            <div class="tab-pane" id="tab_complain">
+                                <div class="" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_ComplainAndAllergy.html'"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-actions">
-                    <div class="row pull-right">
-                        <div class="col-md-12">
-                            <!-- <button class="btn default" ng-click="close()">
-                                <i class="icon-action-undo"></i> Close</button> -->
-                            <button type="submit" class="btn green" ng-click="submitUpdate()">
-                                <i class="glyphicon glyphicon-save"></i> Save change
-                            </button>
-                        </div>
-                    </div>
+                <div class="form-actions right">
+                    <button type="submit" class="btn blue" ng-click="submitUpdate()">
+                        Submit <i class="glyphicon glyphicon-save"></i>
+                    </button>
                 </div>
             </form>
         </fieldset>
     </div>
 </div>
+<script type="text/ng-template " id="LinkCompanyModal">
+    <company-list on-patient-uid="patientuid" on-cancel="cancel" on-company-info="info" ></company-list>
+</script>
+
+<script type="text/ng-template" id="LinkGeneratePassword">
+    <div class="modal-header">
+        <h4 class="modal-title bold font-blue">
+            <i class="fa fa-key"></i> Generate Password Patient 
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-lg-5 bold">Username:</label>
+                <div class="col-lg-7">
+                    <p class="form-control-static">{{UserName}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-5 bold">Password:</label>
+                <div class="col-lg-7">
+                    <p class="form-control-static">{{Password}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div>
+</script>
+

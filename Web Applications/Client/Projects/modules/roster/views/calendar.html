@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE BAR -->
-<div class="page-bar">
+<div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
@@ -17,22 +17,27 @@
 </div>
 <!-- END PAGE BAR -->
 <!-- BEGIN PAGE TITLE-->
-<h3 class="page-title bold text-center">Roster Calendar of <small>{{doctorName}}</small></h3>
+<!-- <h3 class="page-title bold text-center">Roster Calendar of <small>{{doctorName}}</small></h3> -->
 <!-- END PAGE TITLE-->
-<div class="row">
-    <div class="col-md-4 col-sm-4 form-group">
-        <label class="control-label">Search Date</label>
-        <input id="datepicker-inline" class="form-control" placeholder="Search Date">
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-2 col-md-2 col-sm-2">Search Date</label>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <input id="datepicker-inline" class="form-control" placeholder="Search Date">
+        </div>
+        
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="portlet box dark">
+        <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-calendar"></i>
-                    <span class="caption-subject bold uppercase">Calendar</span>
-                    <span class="caption-helper"></span>
+                    <span class="caption-subject bold uppercase">Roster Calendar of</span>
+                    <span class="caption-helper">{{doctorName}}</span>
                 </div>
                 <!-- <div class="actions">
                     <a href="javascript:;" class="btn blue-soft">

@@ -12,8 +12,6 @@ public interface IInfoView {
 
     void onReload();
 
-    void onLoadToolbar();
-
     void onLoadDOB(String dob);
 
     void onLoadError(String msg);
@@ -26,7 +24,7 @@ public interface IInfoView {
 
     void onResultField(EditText editText);
 
-    void onResultSignature(Bitmap bitmap);
+//    void onResultSignature(Bitmap bitmap);
 
     void onLoadSignature(Bitmap bitmap, String pathSign);
 }

@@ -15,23 +15,25 @@ import java.util.ArrayList;
  */
 public interface IRequestView {
 
-    void onFieldOk();
+    void changeViewFlipper();
 
-    void onLoadToolbar();
+    void onLoadSuccess();
 
     void onLoadDOB(String dob);
+
+    void onLoadError(String msg);
 
     void onResultEmail(boolean email);
 
     void onResultMobile(boolean phone);
-
-    void startActivityResult(Intent i);
 
     void onResultSuburb(boolean suburb);
 
     void onResultField(EditText editText);
 
     void onResultApptType(boolean apptType);
+
+    void onLoadImgSignature(Bitmap bitmap, String path);
 
     void onLoadGallery(ArrayList<CustomGallery> customGalleries);
 }

@@ -69,7 +69,7 @@ class TokenAPI {
             Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:config.headers, parameters: parameters)
                 .responseJSON {
                     response in
-                    
+                    print("updateTokenPush",response)
                     switch response.result {
                     case .Success(let JSONData):
                         if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {

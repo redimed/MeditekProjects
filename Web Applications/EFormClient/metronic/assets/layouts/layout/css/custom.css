@@ -711,6 +711,11 @@ img.profile-imge {
     right: 0;
 }
 
+.dashboard-stat .details .number {
+    font-size: 23px;
+    font-weight: bolder;
+}
+
 .dashboard-stat:hover{
     cursor: pointer;
 }

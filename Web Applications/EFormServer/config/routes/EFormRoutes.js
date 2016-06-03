@@ -31,6 +31,14 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'GetEFormUserRoles'
     },
+    'post /eform/saveInit': {
+        controller: 'EForm/EFormController',
+        action: 'PostSaveInit'
+    },
+    'post /eform/saveStep': {
+        controller: 'EForm/EFormController',
+        action: 'PostSaveStep'
+    },
     'post /eform/list': {
         controller: 'EForm/EFormController',
         action: 'PostList'
@@ -99,8 +107,16 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostSaveRolesEFormTemplate'
     },
-    'get /eformgroup/list': {
+    'post /eformgroup/list': {
         controller: 'EForm/EFormController',
         action: 'GetListEFormGroup'
-    }
+    },
+    'post /eformtemplate/list-filter': {
+        controller: 'EForm/EFormController',
+        action: 'GetListEFormTemplateFilter'
+    },
+    'post /eform/get-list-eform-by-patient':{
+        controller: 'EForm/EFormController',
+        action: 'GetListEFormTemplateByPatient',
+    },
 };

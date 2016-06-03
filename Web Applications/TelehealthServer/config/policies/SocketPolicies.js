@@ -5,5 +5,7 @@ module.exports = {
         'OnlineUserList': true,
         'listRoomSocket': true,
         'TotalUserInRoom': true,
+        'Logout': true,
+        'AddDoctor': true,
     }
 }

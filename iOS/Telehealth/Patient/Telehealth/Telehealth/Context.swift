@@ -41,6 +41,8 @@ class Context {
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){
            // NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
             message = "Please login again !"
+        }else if(ErrorType == "socket hang up"){
+            message = "Socket Hang Up"
         }
         return message
     }

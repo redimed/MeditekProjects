@@ -6,7 +6,8 @@ var FormRole = require('modules/eform/eformTemplate/formRole');
 
 var printTypes = [
     {code: 'itext', name: 'IText Report'},
-    {code: 'jasper', name: 'Jasper Report'}
+    {code: 'jasper', name: 'Jasper Report'},
+    {code: 'dynamicJasper', name: 'Dynamic Jasper Report'}
 ];
 module.exports = React.createClass({
     propTypes: {

@@ -108,7 +108,7 @@ module.exports.sockets = {
      *                                                                          *
      ***************************************************************************/
     afterDisconnect: function(session, socket, cb) {
-        // sails.sockets.blast('onlineUser');
+        sails.sockets.blast('onlineUser');
         return cb();
     },
     /***************************************************************************

@@ -4,13 +4,23 @@ package com.redimed.telehealth.patient.home;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +38,8 @@ import com.redimed.telehealth.patient.utlis.DialogConnection;
 import com.redimed.telehealth.patient.utlis.PageIndicator;
 import com.redimed.telehealth.patient.utlis.AdapterSlider;
 
+import java.io.File;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -42,6 +54,9 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     private boolean shouldFinish = false;
     private IHomePresenter iHomePresenter;
     private static final String TAG = "=====HOME=====";
+
+    @Bind(R.id.toolBar)
+    Toolbar toolBar;
 
     /* Non Patient View */
     @Bind(R.id.layoutNonPatient)
@@ -90,6 +105,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
 
         init();
         initSlider();
+        initToolbar();
 
         /* Non Patient View */
         btnLogin.setOnClickListener(this);
@@ -106,7 +122,6 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         btnContact.setOnClickListener(this);
         btnFAQ.setOnClickListener(this);
         btnUrgentCare.setOnClickListener(this);
-
         return v;
     }
 
@@ -115,7 +130,6 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         iHomePresenter.checkExistsPatient();
         iHomePresenter.createdJsonDataSuburb();
         iHomePresenter.createdJsonDataCountry();
-
     }
 
     //Generation Slider Image
@@ -137,6 +151,24 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
             }
         };
         handler.postDelayed(runnable, 4000);
+    }
+
+    private void initToolbar() {
+        //init toolbar
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolBar);
+
+        ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle(getResources().getString(R.string.home_title));
+//            actionBar.setSubtitle(getResources().getString(R.string.home_title));
+
+            actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+            actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+        }
     }
 
     @Override
@@ -192,34 +224,34 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        getView().requestFocus();
-        getView().setFocusableInTouchMode(true);
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    if (!shouldFinish) {
-                        Toast.makeText(v.getContext(), R.string.confirm_exit, Toast.LENGTH_SHORT).show();
-                        shouldFinish = true;
-                        return true;
-                    } else {
-                        getActivity().moveTaskToBack(true);
-                        getActivity().finish();
-                        return false;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        if (!shouldFinish) {
+                            Toast.makeText(v.getContext(), R.string.confirm_exit, Toast.LENGTH_SHORT).show();
+                            shouldFinish = true;
+                            return true;
+                        } else {
+                            getActivity().moveTaskToBack(true);
+                            getActivity().finish();
+                            return false;
+                        }
                     }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 
     @Override
-    public void changeView(boolean result) {
-        if (result){
-            iHomePresenter.getInfoPatient();
-            btnLogin.setVisibility(View.GONE);
-            vfHome.setDisplayedChild(vfHome.indexOfChild(layoutPatient));
-        }
+    public void changeView() {
+        iHomePresenter.getInfoPatient();
+        btnLogin.setVisibility(View.GONE);
+        vfHome.setDisplayedChild(vfHome.indexOfChild(layoutPatient));
     }
 
     @Override
@@ -236,4 +268,5 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                     .show();
         }
     }
+
 }

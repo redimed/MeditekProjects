@@ -2,21 +2,38 @@ var app = angular.module('app.authentication.controller', [
 
 ]);
 
+
+
 app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cookies, AuthenticationService, toastr, CommonService, $q) {
     // Chinh kich thuoc man hinh khi su dung ipad mini
     var w = $(window).width();
-    if (w < 1024 && w > 768) {
-        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-closed";
+    if (w <= 1024 && w >= 768) {
+        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white page-sidebar-closed";
     } else {
-        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-content-white";
+        document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white";
     }
+
+    $scope.$on('$includeContentLoaded', function() {
+        // Layout.initHeader(); // init header
+        // Layout.initSidebar(); // init sidebar
+        setTimeout(function() {
+            QuickSidebar.init(); // init quick sidebar        
+        }, 2000);
+        // Demo.init(); // init theme panel
+        // Layout.initFooter(); // init footer
+    });
 
     $scope.info = {};
     $scope.logout = function() {
         AuthenticationService.logout().then(function() {
+            socketJoinRoom(socketTelehealth, '/api/telehealth/logout', {
+                uid: $cookies.getObject('userInfo').TelehealthUser.UID,
+                deviceid: "30f56b7cb6a4abbc0a1ca359deb",
+                systemtype: "ARD"
+            });
             var cookies = $cookies.getAll();
             angular.forEach(cookies, function(v, k) {
-                if(k != 'remember')
+                if (k != 'remember')
                     $cookies.remove(k);
             });
             $state.go("unAuthentication.login", null, {
@@ -86,19 +103,19 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
 
     $rootScope.insurers = [{
-        name: 'Insurer Company'
-    }, {
-        name: 'Mineral Resources'
-    }, {
-        name: 'Mesa Minerals'
-    }];
+            name: 'Insurer Company'
+        }, {
+            name: 'Mineral Resources'
+        }, {
+            name: 'Mesa Minerals'
+        }];
     $rootScope.Account_types = [{
-        name: 'Titanium Privilege Account'
-    }, {
-        name: '3-in-1 Account'
-    }, {
-        name: 'Silver Savings Account'
-    }];
+            name: 'Titanium Privilege Account'
+        }, {
+            name: '3-in-1 Account'
+        }, {
+            name: 'Silver Savings Account'
+        }];
 
     //phan quoc chien
     $scope.loadListDoctor = function(fullname) {
@@ -158,7 +175,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                     console.log("xoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", ioSocket.telehealthMesageCall);
                 }
                 if (ioSocket.telehealthMesageMisscall) {
-                    alert("miss call");
                     delete ioSocket.telehealthMesageMisscall;
                 }
                 console.log("telehealthOpentok", data.data);
@@ -172,7 +188,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     ioSocket.getRoomOpentok = getRoomOpentok();
 
     ioSocket.telehealthCall = function(msg) {
-        console.log("CAllllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         swal({
             title: msg.fromName,
             imageUrl: "theme/assets/global/images/E-call_33.png",
@@ -209,20 +224,18 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         socketJoinRoom(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
     }
 
-    ioSocket.authConnect = function() {
-        console.log("reconnect socketAuth");
+    ioSocket.socketAuthReconnect = function() {
+        console.log("reconnect socketAuth-> makeUserOwnRoom");
         socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
     }
 
     ioSocket.telehealthCancel = function(msg) {
-        console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
         console.log(ioSocket.telehealthSwalCall);
         swal.close();
         o.audio.pause();
     }
 
     ioSocket.telehealthDecline = function(msg) {
-        console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
         if (ioSocket.telehealthPatientCallWindow) {
             ioSocket.telehealthPatientCallWindow.close();
         }
@@ -234,7 +247,53 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }
 
     ioSocket.telehealthMisscall = function(msg) {
-            alert("Miss Call");
-        }
-        // end chien
+        swal({
+            title: "Miss Call From " + msg.fromName,
+            imageUrl: "theme/assets/global/images/E-call_18.png",
+            timer: 30000,
+            html: "<img src='theme/assets/global/img/loading.gif' />",
+            showCancelButton: false,
+            confirmButtonColor: "#26C281",
+            confirmButtonText: "OK",
+            cancelButtonColor: "#D91E18",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
+    }
 });
+
+
+/* Setup Layout Part - Header */
+// app.controller('HeaderController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Layout.initHeader(); // init header
+//     });
+// }]);
+/* Setup Layout Part - Sidebar */
+// app.controller('SidebarController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Layout.initSidebar(); // init sidebar
+//     });
+// }]);
+/* Setup Layout Part - Quick Sidebar */
+// app.controller('QuickSidebarController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         setTimeout(function() {
+//             QuickSidebar.init(); // init quick sidebar        
+//         }, 2000)
+//     });
+// }]);
+
+/* Setup Layout Part - Theme Panel */
+// app.controller('ThemePanelController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Demo.init(); // init theme panel
+//     });
+// }])
+
+/* Setup Layout Part - Footer */
+// app.controller('FooterController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Layout.initFooter(); // init footer
+//     });
+// }])

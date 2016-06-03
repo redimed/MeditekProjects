@@ -19,3 +19,4 @@
 /app/build.gradle
 *.iml
 /*/build/
+.DS_Store

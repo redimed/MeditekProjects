@@ -2,15 +2,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawerCategories"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <!-- Framelayout to display Fragments -->
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <!-- Your normal content view -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- Listview to display slider menu -->
+        <!-- We use a Toolbar so that our drawer can be displayed in front of the action bar -->
+        <!--<include android:id="@+id/toolBar" layout="@layout/custom_toolbar"/>-->
+
+        <!-- FrameLayout to display Fragments -->
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!-- List View to display slider menu -->
     <RelativeLayout
         android:id="@+id/leftLayout"
         android:layout_width="300dp"

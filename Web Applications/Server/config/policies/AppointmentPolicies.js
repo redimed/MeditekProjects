@@ -13,6 +13,8 @@ module.exports = {
         'GetDetailWAAppointmentforEform': true,
         'UpdateRequestWAAppointment': ['isAuthenticated'],
         'DisableWAAppointment': ['isAuthenticated'],
-        'RequestWAAppointmentPatient': true
+        'RequestWAAppointmentPatient': true,
+        'RequestAppointmentMedicalBooking': ['isIp'],
+        'RequestWAAppointmentPatientNew': true
     }
 };

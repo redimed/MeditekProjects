@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,6 +22,9 @@ import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -66,7 +70,10 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
     private Uri fileUri;
     private Context context;
+    private Fragment fragment;
+    private boolean flagSign = false;
     private IInfoPresenter iInfoPresenter;
+    private SweetAlertDialog progressDialog;
     private ArrayList<EditText> arrEditText;
     private static final int RESULT_PHOTO = 1;
     private static final int RESULT_CAMERA = 2;
@@ -81,7 +88,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Bind(R.id.scrollViewInfo)
     ScrollView scrollViewInfo;
 
-    /* Information Patient */
+    /* Fields Information Patient */
     @Bind(R.id.avatarPatient)
     ImageView avatarPatient;
     @Bind(R.id.lblNamePatient)
@@ -102,7 +109,6 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     EditText txtPostCode;
     @Bind(R.id.autoCompleteCountry)
     AutoCompleteTextView autoCompleteCountry;
-
     @Bind(R.id.layoutPatientName)
     LinearLayout layoutPatientName;
     @Bind(R.id.txtFirstName)
@@ -113,33 +119,49 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     EditText txtLastName;
     @Bind(R.id.txtDOB)
     EditText txtDOB;
-
+    @Bind(R.id.lblEmail)
+    TextView lblEmail;
+    //Button Update Profile
     @Bind(R.id.lblUpdateProfile)
     TextView lblUpdateProfile;
 
-    /* View Flipper */
+    /* View Flipper contain button to update profile */
     @Bind(R.id.vfContainerProfile)
     ViewFlipper vfContainerProfile;
-
-    @Bind(R.id.layoutImg)
-    RelativeLayout layoutImg;
-    @Bind(R.id.imgSignature)
-    ImageView imgSignature;
-    @Bind(R.id.lblNoSign)
-    TextView lblNoSign;
-
-    @Bind(R.id.layoutSignature)
-    LinearLayout layoutSignature;
-    @Bind(R.id.signaturePad)
-    SignaturePad signaturePad;
+    // Contain button to update
     @Bind(R.id.layoutButtonUpdate)
     LinearLayout layoutButtonUpdate;
-
-    /* Button */
+    // Contain button to submit or cancel
+//    @Bind(R.id.layoutUpdateProfile)
+//    RelativeLayout layoutUpdateProfile;
+    // Button to cancel or submit update information
     @Bind(R.id.lblSubmit)
     TextView btnSubmit;
     @Bind(R.id.lblCancel)
     TextView btnCancel;
+
+    /* View Flipper contain layout signature image & signature pad*/
+    @Bind(R.id.vfContainerSignature)
+    ViewFlipper vfContainerSignature;
+    // Layout contain to show signature image
+    @Bind(R.id.layoutSignatureImage)
+    RelativeLayout layoutSignatureImage;
+    @Bind(R.id.imgSignature)
+    ImageView imgSignature;
+    @Bind(R.id.lblNoSign)
+    TextView lblNoSign;
+    // Layout contain to show signature pad
+    @Bind(R.id.layoutSignaturePad)
+    LinearLayout layoutSignaturePad;
+    @Bind(R.id.signaturePad)
+    SignaturePad signaturePad;
+
+    /* Button to open layout button signature */
+    @Bind(R.id.lblEdit)
+    TextView btnEdit;
+    // Layout contain button to clear, save signature
+    @Bind(R.id.layoutButtonSignature)
+    LinearLayout layoutButtonSignature;
     @Bind(R.id.lblSave)
     TextView btnSaveSign;
     @Bind(R.id.lblClear)
@@ -148,12 +170,6 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
     public InformationFragment() {
     }
@@ -161,10 +177,12 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_information, container, false);
+        setHasOptionsMenu(true);
         context = v.getContext();
         ButterKnife.bind(this, v);
 
         iInfoPresenter = new InfoPresenter(this, context, getActivity());
+        iInfoPresenter.initToolbar(toolBar);
         iInfoPresenter.hideKeyboardFragment(v);
 
         initVariable();
@@ -174,6 +192,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         lblNoSign.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        btnEdit.setOnClickListener(this);
         btnClear.setOnClickListener(this);
         btnSaveSign.setOnClickListener(this);
         avatarPatient.setOnClickListener(this);
@@ -196,6 +215,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
             public void onStartSigning() {
+                flagSign = true;
+                btnClear.setText(getResources().getString(R.string.sign_clear));
                 Toast.makeText(context, "OnStartSigning", Toast.LENGTH_SHORT).show();
             }
 
@@ -207,6 +228,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
             @Override
             public void onClear() {
                 btnSaveSign.setEnabled(false);
+                btnClear.setText(getResources().getString(R.string.sign_cancel));
             }
         });
     }
@@ -219,7 +241,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         }
 
         //init array EditText
-        arrEditText = new ArrayList<EditText>();
+        arrEditText = new ArrayList<>();
         arrEditText.add(txtFirstName);
         arrEditText.add(txtMidName);
         arrEditText.add(txtLastName);
@@ -239,6 +261,13 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
             autoCompleteCountry.setThreshold(1);
             autoCompleteCountry.setAdapter(iInfoPresenter.loadJsonCountry());
         }
+
+        //init progressDialog
+        progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#B42047"));
+        progressDialog.setTitleText("Loading");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     //Refresh information patient
@@ -288,6 +317,7 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 lblPhoneNumber.setText(patient.getPhoneNumber());
                 txtHomePhone.setText(patient.getHomePhoneNumber() == null ? "NONE" : patient.getHomePhoneNumber());
                 txtEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
+                lblEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
                 lblDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
                 txtAddress.setText(patient.getAddress1() == null ? "NONE" : patient.getAddress1());
                 autoCompleteSuburb.setText(patient.getSuburb() == null ? "NONE" : patient.getSuburb());
@@ -312,6 +342,31 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 }
             }
         }
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+                /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                fragment = new SettingFragment();
+                fragment.setArguments(getArguments());
+                iInfoPresenter.changeFragment(fragment);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     //Load image avatar
@@ -324,28 +379,11 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
 
     @Override
     public void onReload() {
-        for (EditText editText : arrEditText){
+        for (EditText editText : arrEditText) {
             editText.setError(null);
         }
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-    }
-
-    @Override
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
-
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.profile_title));
-        lblSubTitle.setText(getResources().getString(R.string.home_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iInfoPresenter.changeFragment(new HomeFragment());
-            }
-        });
     }
 
     @Override
@@ -358,15 +396,6 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         if (editText != null) {
             editText.requestFocus(); // Scrolls view to this field.
             editText.setError(getResources().getString(R.string.field_empty));
-        }
-    }
-
-    @Override
-    public void onResultSignature(Bitmap bitmap) {
-        if (bitmap != null) {
-            imgSignature.setImageBitmap(bitmap);
-            lblNoSign.setVisibility(View.VISIBLE);
-            vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutImg));
         }
     }
 
@@ -384,8 +413,8 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
         if (bitmap != null) {
             imgSignature.setImageBitmap(bitmap);
             lblNoSign.setVisibility(View.VISIBLE);
-            new UploadFile(context, progressBarUpload, "Signature", pathSign).execute();
-            vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutImg));
+            if (pathSign != null)
+                new UploadFile(context, progressBarUpload, "Signature", pathSign).execute();
         }
     }
 
@@ -402,24 +431,29 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                     .setContentText(msg)
                     .show();
         }
+        progressDialog.dismiss();
     }
 
     //Handler back button
     @Override
     public void onResume() {
         super.onResume();
-        getView().requestFocus();
-        getView().setFocusableInTouchMode(true);
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iInfoPresenter.changeFragment(new HomeFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        fragment = new SettingFragment();
+                        fragment.setArguments(getArguments());
+                        iInfoPresenter.changeFragment(fragment);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -432,14 +466,21 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
                 iInfoPresenter.updateProfile(arrEditText, autoCompleteSuburb.getText().toString(), autoCompleteCountry.getText().toString());
                 break;
             case R.id.lblClear:
-                vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutImg));
+                if (!flagSign) {
+                    btnEdit.setVisibility(View.VISIBLE);
+                    layoutButtonSignature.setVisibility(View.GONE);
+                    vfContainerSignature.setDisplayedChild(vfContainerSignature.indexOfChild(layoutSignatureImage));
+                }
+                flagSign = false;
                 signaturePad.clear();
                 break;
             case R.id.lblSave:
                 iInfoPresenter.saveBitmapSign(signaturePad);
                 break;
             case R.id.lblNoSign:
-                vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
+                btnEdit.setVisibility(View.GONE);
+                layoutButtonSignature.setVisibility(View.VISIBLE);
+                vfContainerSignature.setDisplayedChild(vfContainerSignature.indexOfChild(layoutSignaturePad));
                 break;
             case R.id.avatarPatient:
                 DialogUploadImage();
@@ -447,19 +488,22 @@ public class InformationFragment extends Fragment implements IInfoView, View.OnC
             case R.id.lblCancel:
                 onReload();
                 break;
+            case R.id.lblEdit:
+                btnEdit.setVisibility(View.GONE);
+                layoutButtonSignature.setVisibility(View.VISIBLE);
+                vfContainerSignature.setDisplayedChild(vfContainerSignature.indexOfChild(layoutSignaturePad));
+                break;
         }
     }
 
-    private void ChangeViewUpdate(){
-        lblUpdateProfile.setVisibility(View.GONE);
+    private void ChangeViewUpdate() {
         layoutPatientName.setVisibility(View.VISIBLE);
-        layoutButtonUpdate.setVisibility(View.VISIBLE);
-        for (EditText editText : arrEditText){
+        for (EditText editText : arrEditText) {
             editText.setEnabled(true);
         }
         autoCompleteSuburb.setEnabled(true);
         autoCompleteCountry.setEnabled(true);
-        vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutSignature));
+        vfContainerProfile.setDisplayedChild(vfContainerProfile.indexOfChild(layoutButtonUpdate));
     }
 
     //Display dialog choose camera or gallery to upload image

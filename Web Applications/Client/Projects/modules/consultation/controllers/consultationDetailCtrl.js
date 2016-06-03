@@ -7,31 +7,47 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr, EFormService) {
     /* EFORM */
     var postData = {
-            Filter: [
-                    {
-                        EFormTemplate: {
-                            Enable: 'Y'
-                        }
-                    },
-                    {
-                        Appointment: {
-                            UID: $stateParams.UID
-                        }
-                    }
-            ]
+        Filter: [{
+            EFormTemplate: {
+                Enable: 'Y'
+            }
+        }, {
+            Appointment: {
+                UID: $stateParams.UID
+            }
+        }]
     };
+
+    $scope.dataDirective = {};
+
+    $scope.getTelehealthDetail = function(UID) {
+        WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
+            $scope.wainformation = data.data;
+            $scope.dataDirective.setDataPatientDetail($scope.wainformation);
+            $scope.dataDirective.setDataMedicare($scope.wainformation);
+            $scope.dataDirective.setDataApptDetail($scope.wainformation);
+            console.log(" o day wainformation ", $scope.wainformation);
+        }, function(error) {});
+    };
+
+    $scope.Params = $stateParams;
+    console.log("$scope.Params", $scope.Params.UID);
+    $scope.getTelehealthDetail($scope.Params.UID);
+
+    $scope.HasRoleAdminOrPractitioner = false;
+
     EFormService.PostListEFormTemplate(postData)
         .then(function(response) {
             var checkedUser = false;
             var eformTemplates = response.data.rows;
             $scope.eformTemplates = [];
-            for(var i = 0; i < $cookies.getObject('userInfo').roles.length; i++){
+            for (var i = 0; i < $cookies.getObject('userInfo').roles.length; i++) {
                 var role = $cookies.getObject('userInfo').roles[i];
-                for(var j = 0; j < eformTemplates.length; j++){
+                for (var j = 0; j < eformTemplates.length; j++) {
                     var template = eformTemplates[j];
-                    for(var k = 0; k < template.Roles.length; k++){
+                    for (var k = 0; k < template.Roles.length; k++) {
                         var RelEFormTemplateRole = template.Roles[k].RelEFormTemplateRole;
-                        if(RelEFormTemplateRole.RoleID === role.ID && RelEFormTemplateRole.View === 'Y'){
+                        if (RelEFormTemplateRole.RoleID === role.ID && RelEFormTemplateRole.View === 'Y') {
                             checkedUser = true;
                             $scope.eformTemplates.push(template);
                             break;
@@ -39,7 +55,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     }
                 }
             }
-            
+
         }, function(error) {
 
         })
@@ -49,11 +65,11 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
 
     var userInfo = JSON.parse($cookies.get('userInfo'));
-    $scope.checkPatient = 'Y';
+
     for (var i = 0; i < userInfo.roles.length; i++) {
         var role = userInfo.roles[i];
         if (role.RoleCode === 'INTERNAL_PRACTITIONER' || role.RoleCode === 'ADMIN') {
-            $scope.checkPatient = 'Y';
+            $scope.HasRoleAdminOrPractitioner = true;
         }
     }
 
@@ -64,7 +80,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                 var Appointments = EForm.Appointments;
                 for (var j = 0; j < Appointments.length; j++) {
                     var Appointment = Appointments[j];
-                    if (Appointment.UID === $stateParams.UID) {
+                    if (Appointment.UID === $stateParams.UID && EForm.Status ==o.const.eformStatus.saved) {
                         check = true;
                         break;
                     }
@@ -75,24 +91,17 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         /* END EFORM */
         //
     $scope.checkRoleUpdate = true;
+
     for (var i = 0; i < $cookies.getObject('userInfo').roles.length; i++) {
         if ($cookies.getObject('userInfo').roles[i].RoleCode == 'INTERNAL_PRACTITIONER' || $cookies.getObject('userInfo').roles[i].RoleCode == 'ADMIN') {
             $scope.checkRoleUpdate = false;
         };
     }
     //
-    $scope.Params = $stateParams;
-    console.log("$scope.Params", $scope.Params.UID);
-    $scope.getTelehealthDetail = function(UID) {
-        WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
-            $scope.wainformation = data.data;
-            console.log(" o day wainformation ", $scope.wainformation);
-        }, function(error) {
 
-        });
-    };
 
-    $scope.getTelehealthDetail($scope.Params.UID);
+
+
 
     /*==addmission star==*/
     $scope.admissionDetail = {};
@@ -207,20 +216,37 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
     $scope.telehealthDetail = function() {
         if ($scope.wainformation.Type == 'Onsite') {
-            $state.go("authentication.onsite.appointment", { UID: $scope.wainformation.UID })
+            $state.go("authentication.consultation.detail.Onsite", { UID: $scope.wainformation.UID })
         } else {
-            $state.go("authentication.consultation.detail.telehealth", { UID: $scope.wainformation.UID });
+            //$state.go("authentication.consultation.detail.telehealth", { UID: $scope.wainformation.UID });
+            $state.go("authentication.WAAppointment.detail", { UID: $scope.wainformation.UID });
         }
     };
 
-    var col9 = "col-md-9 col-sm-9";
-    var col3 = "col-md-3 col-sm-3";
+    var col9 = "ol-lg-9 col-md-8 col-xs-6";
+    var col3 = "col-lg-3 col-md-4 col-xs-6";
     $scope.iconCol = "Hide Detail"
     $scope.fullScreen = function() {
-        col9 = col9 === "col-md-9 col-sm-9" ? "col-md-12 col-sm-12" : "col-md-9 col-sm-9";
-        col3 = col3 === "col-md-3 col-sm-3" ? "hide" : "col-md-3 col-sm-3";
+        col9 = col9 === "ol-lg-9 col-md-8 col-xs-6" ? "col-md-12 col-sm-12" : "ol-lg-9 col-md-8 col-xs-6";
+        col3 = col3 === "col-lg-3 col-md-4 col-xs-6" ? "hide" : "col-lg-3 col-md-4 col-xs-6";
         $scope.iconCol = $scope.iconCol === "Hide Detail" ? "Show Detail" : "Hide Detail";
         angular.element("#col9").attr("class", col9);
         angular.element("#col3").attr("class", col3);
     };
+
+    $scope.getEFormByPatient = function() {
+        if (!_.isEmpty($scope.wainformation)) {
+            if ($scope.wainformation.Patients && $scope.wainformation.Patients.length > 0) {
+                var patientUID = $scope.wainformation.Patients[0].UID;
+                var userUID = $scope.wainformation.Patients[0].UserAccount.UID;
+                var UID = $stateParams.UID;
+                $state.go("authentication.consultation.eformbypatient", { UID: UID, patientUID: patientUID, userUID: userUID });
+            } else {
+                toastr.error("Patient not found.");
+            }
+        } else {
+            toastr.error("Patient not found.");
+        }
+
+    }
 });

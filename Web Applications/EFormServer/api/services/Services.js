@@ -38,6 +38,7 @@ module.exports = {
     UpdatePatientAppointment: require('./Appointment/UpdatePatientAppointment'),
     RequestWAAppointment: require('./Appointment/RequestWAAppointment'),
     GetDetailWAAppointment: require('./Appointment/GetDetailWAAppointment'),
+    GetCompanyInfo: require('./Appointment/GetCompanyInfo'),
     CreateClinicalDetailWAAppointment: require('./Appointment/CreateClinicalDetailWAAppointment'),
     CreateWAAppointment: require('./Appointment/CreateWAAppointment'),
     RelClinicalDetailFileUpload: require('./Appointment/RelClinicalDetailFileUpload'),
@@ -113,6 +114,9 @@ module.exports = {
     //begin Roster
     //Begin Company
     GetListCompany: require('./Company/GetListCompany'),
-    CreateCompany: require('./Company/CreateCompany')
+    CreateCompany: require('./Company/CreateCompany'),
     //End Company
+    GetListEFormGroup: require('./EForm/GetListEFormGroup'),
+    GetListEFormTemplateFilter: require('./EForm/GetListEFormTemplateFilter'),
+    GetListEFormTemplateByPatient: require('./EForm/GetListEFormTemplateByPatient'),
 };

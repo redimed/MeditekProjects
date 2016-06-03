@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +28,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.appointment.AppointmentFragment;
 import com.redimed.telehealth.patient.status_appointment.presenter.IStatusPresenter;
 import com.redimed.telehealth.patient.status_appointment.presenter.StatusPresenter;
 import com.redimed.telehealth.patient.status_appointment.view.IStatusView;
@@ -42,9 +46,8 @@ import butterknife.ButterKnife;
 public class StatusFragment extends Fragment implements IStatusView {
 
     private Context context;
-    private Picasso picasso;
     private IStatusPresenter iStatusPresenter;
-    private String TAG = "STATUS";
+    private final static String TAG = "=====STATUS=====";
 
     @Bind(R.id.layoutApptStatus)
     LinearLayout layoutApptStatus;
@@ -78,22 +81,20 @@ public class StatusFragment extends Fragment implements IStatusView {
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.layoutBack)
-    LinearLayout layoutBack;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.lblSubTitle)
-    TextView lblSubTitle;
 
-    public StatusFragment() {}
+    public StatusFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_status_appointment, container, false);
+        setHasOptionsMenu(true);
         this.context = v.getContext();
         ButterKnife.bind(this, v);
+
         initVariable();
         animationBG();
+
         return v;
     }
 
@@ -116,18 +117,49 @@ public class StatusFragment extends Fragment implements IStatusView {
                 });
     }
 
-    private void initVariable(){
+    private void initVariable() {
         iStatusPresenter = new StatusPresenter(context, this, getActivity());
+        iStatusPresenter.initToolbar(toolBar);
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             displayStatus(bundle.getString("statusAppt", ""), bundle.getString("timeAppt", ""));
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Fragment fragment;
+                if (getArguments() != null) {
+                    fragment = new AppointmentFragment();
+                    fragment.setArguments(getArguments());
+                } else {
+                    fragment = new TrackingFragment();
+                }
+                iStatusPresenter.changeFragment(fragment);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void displayStatus(String statusAppt, String fromTime) {
-        switch (statusAppt){
+        switch (statusAppt) {
             case "Attended":
-                picasso = new Picasso.Builder(context).listener(new Picasso.Listener() {
+                Picasso picasso = new Picasso.Builder(context).listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                         Log.d(TAG, exception.getLocalizedMessage());
@@ -157,7 +189,7 @@ public class StatusFragment extends Fragment implements IStatusView {
                         .into(borderPending);
                 break;
             case "Received":
-                Picasso picasso = new Picasso.Builder(context).listener(new Picasso.Listener() {
+                picasso = new Picasso.Builder(context).listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                         Log.d(TAG, exception.getLocalizedMessage());
@@ -171,7 +203,7 @@ public class StatusFragment extends Fragment implements IStatusView {
                 layoutApptTime.setVisibility(View.VISIBLE);
                 lblApp_Date.setText(MyApplication.getInstance().ConvertDate(fromTime));
                 lblApp_Time.setText(MyApplication.getInstance().ConvertTime(fromTime));
-                lblApp_Location.setText("None");
+                lblApp_Location.setText(getResources().getString(R.string.none));
                 picasso = new Picasso.Builder(context).listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
@@ -195,36 +227,28 @@ public class StatusFragment extends Fragment implements IStatusView {
     }
 
     @Override
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
-
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.list_appt_title));
-        lblSubTitle.setText(getResources().getString(R.string.list_appt_title));
-        layoutBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iStatusPresenter.changeFragment(new TrackingFragment());
-            }
-        });
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    iStatusPresenter.changeFragment(new TrackingFragment());
-                    return true;
+        if (getView() != null) {
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        Fragment fragment;
+                        if (getArguments() != null) {
+                            fragment = new AppointmentFragment();
+                            fragment.setArguments(getArguments());
+                        } else {
+                            fragment = new TrackingFragment();
+                        }
+                        iStatusPresenter.changeFragment(fragment);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 }

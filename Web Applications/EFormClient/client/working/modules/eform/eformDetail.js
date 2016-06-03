@@ -5,6 +5,7 @@ var ComponentPageBar = require('modules/eform/eformDetail/pageBar');
 var History = ReactRouter.hashHistory;
 
 module.exports = React.createClass({
+    content: null,
     appointmentUID: null,
     patientUID: null,
     userUID: null,
@@ -12,6 +13,12 @@ module.exports = React.createClass({
     formUID: null,
     signatureDoctor: null,
     EFormTemplate: null,
+    EFormID: null,
+    EFormStatus: null,
+    page: 1,
+    maxPage : 0,
+    allFields: [],
+    calculation: [],
     getInitialState: function(){
         return {
             name: '',
@@ -25,17 +32,109 @@ module.exports = React.createClass({
         this.patientUID = locationParams.patientUID;
         this.userUID = locationParams.userUID;
         this.templateUID = locationParams.templateUID;
-
+        if(typeof locationParams.page !== 'undefined')
+            this.page = locationParams.page;
         this._serverTemplateDetail();
     },
+
+    /**
+     * Dan xuat tu ham _serverPreFormDetail
+     */
+    _handleReloadDoctor:function (sectionIm) {
+        var section = sectionIm.toJS();
+        var self = this;
+        EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
+        .then(function(response){
+            if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null)
+                self.signatureDoctor = response.data.Doctor.FileUpload;
+            else
+                self.signatureDoctor = '';
+
+            for(var row_index = 0; row_index < section.rows.length; row_index++){
+                var row = section.rows[row_index];
+                for(var field_index = 0; field_index < row.fields.length; field_index++){
+                    var field = row.fields[field_index];
+
+                    var preCalArray = [];
+                    if(typeof field.preCal !== 'undefined'){
+                        preCalArray = field.preCal.split('|');
+                    }
+
+                    preCalArray.map(function(preCal){
+                        /* CONCAT PREFIX */
+                        if(Config.getPrefixField(preCal,'CONCAT') > -1){
+                            if(preCal !== ''){
+                                var preCalRes = Config.getArrayPrecal(7, preCal);
+                                var value = '';
+                                preCalRes.map(function(preCalResItem){
+                                    var preCalResItemArr = preCalResItem.split('.');
+                                    var responseTemp = null;
+                                    var preCalResItemTemp = '';
+                                    if(preCalResItemArr.length > 1){
+                                        responseTemp = response.data[preCalResItemArr[0]];
+                                        preCalResItemTemp = preCalResItemArr[1];
+                                    }else{
+                                        responseTemp = response.data;
+                                        preCalResItemTemp = preCalResItem;
+                                    }
+                                    if(preCalResItemArr[0] === 'Doctor') {
+                                        for(var key in responseTemp){
+                                            if(key === preCalResItemTemp){
+                                                if(Config.getPrefixField(field.type,'checkbox') > -1){
+                                                    if(field.value === responseTemp[key]){
+                                                        value = 'yes';
+                                                    }
+                                                }
+                                                else if(Config.getPrefixField(field.type,'radio') > -1){
+                                                    if(field.value === responseTemp[key]){
+                                                        value = 'yes';
+                                                    }
+                                                }else{
+                                                    if(responseTemp[key] !== null)
+                                                        value += responseTemp[key]+' ';
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                    }
+                                })
+                            }
+                        }
+                        /* END CONCAT PREFIX */
+                        /* DEFAULT PREFIX */
+                        // tan comment begin
+                        /*if(Config.getPrefixField(preCal,'DEFAULT') > -1){
+                            if(preCal !== ''){
+                                var preCalRes = Config.getArrayDefault(preCal);
+                                var value = preCalRes[0];
+
+                                if(value === 'TODAY'){
+                                    if(typeof self.refs[section.ref] !== 'undefined')
+                                        self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                }
+                            }
+                        }*/
+                        // tan comment end
+                        /* END DEFAULT PREFIX */
+                    })//end pre cal array
+                }
+            }
+        })
+
+    },
+
     _serverPreFormDetail: function(content){
         var self = this;
+        var objRef = {};
         EFormService.getUserRoles({UID: this.userUID})
         .then(function(responseRoles){
-            EFormService.preFormDetail({UID: self.appointmentUID})
+            EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
             .then(function(response){
-                if(typeof response.data.Doctor !== 'undefined')
+                if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null)
                     self.signatureDoctor = response.data.Doctor.FileUpload;
+                else
+                    self.signatureDoctor = '';
                 for(var section_index = 0; section_index < content.length; section_index++){
                     var section = content[section_index];
                     for(var row_index = 0; row_index < section.rows.length; row_index++){
@@ -72,24 +171,85 @@ module.exports = React.createClass({
                                     }
                                     /* END EDIT */
                                 }
-                                if(!edit_flag)
+                                if(!edit_flag && self.refs[section.ref])
                                     self.refs[section.ref].setDisplay(row.ref, field.ref, 'disable');
-                                if(!view_flag)
+                                if(!view_flag && self.refs[section.ref])
                                     self.refs[section.ref].setDisplay(row.ref, field.ref, 'hidden');
                             }
                             /* END ROLES */
-                            if(field.type === 'eform_input_image_doctor'){
+                            if(field.type === 'eform_input_image_doctor' && self.refs[section.ref]){
                                 self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
                             }
+                            var calArray = [];
+                            if(typeof field.cal !== 'undefined')
+                                calArray = field.cal.split('|');
+                            calArray.map(function(cal){
+                                /* SUMP PREFIX */
+                                if(Config.getPrefixField(cal, 'SUMP(') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(5, cal);
+                                        self.calculation.push({type: 'SUMP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
+                                    }
+                                }
+                                /* END SUMP PREFIX */
+                                /* SUM PREFIX */
+                                if(Config.getPrefixField(cal, 'SUM(') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(4, cal);
+                                        calRes.map(function(minorRef){
+                                            var splitMinorRef = minorRef.split('_');
+                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
+                                            var sectionRefField = 'section_'+splitMinorRef[1];
+                                            if(typeof self.refs[sectionRefField] !== 'undefined')
+                                                self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
+                                        })
+                                        //self.calculation.push({type: 'SUM', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
+                                    }
+                                }
+                                /* END SUM PREFIX */
+                                /* COUNT PREFIX */
+                                if(Config.getPrefixField(cal, 'COUNT') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(6, cal);
+                                        calRes.map(function(minorRef){
+                                            var splitMinorRef = minorRef.split('_');
+                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
+                                            var sectionRefField = 'section_'+splitMinorRef[1];
+                                            if(self.refs[sectionRefField])
+                                                self.refs[sectionRefField].preCalCount(rowRefField, minorRef, field.ref);
+                                        })
+                                    }
+                                }
+                                /* END COUNT PREFIX */
+                            })
+
                             var preCalArray = [];
                             if(typeof field.preCal !== 'undefined'){
                                 preCalArray = field.preCal.split('|');
                             }
                             preCalArray.map(function(preCal){
+                                /* EQUALP GROUP */
+                                if(Config.getPrefixField(preCal, 'EQUALP(') > -1){
+                                    if(preCal !== ''){
+                                        var preCalRes = Config.getArrayPrecal(7, preCal);
+                                        self.calculation.push({type: 'EQUALP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, field: field, cal: preCalRes});
+                                    }
+                                }
+                                /* END EQUALP GROUP */
+                                /* BELONGS GROUP PREFIX */
+                                if(Config.getPrefixField(preCal,'EQUAL(') > -1){
+                                    if(preCal !== ''){
+                                       var preCalRes = Config.getArrayPrecal(6, preCal);
+                                       preCalRes = preCalRes[0];
+                                        if(self.refs[section.ref])
+                                            self.refs[section.ref].preCalBelongsGroup(row.ref, field.ref, preCalRes);
+                                    }
+                                }
+                                /* END BELONGS GROUP PREFIX */
                                 /* CONCAT PREFIX */
                                 if(Config.getPrefixField(preCal,'CONCAT') > -1){
                                     if(preCal !== ''){
-                                        var preCalRes = Config.getArrayConcat(preCal);
+                                        var preCalRes = Config.getArrayPrecal(7, preCal);
                                         var value = '';
                                         preCalRes.map(function(preCalResItem){
                                             var preCalResItemArr = preCalResItem.split('.');
@@ -121,7 +281,11 @@ module.exports = React.createClass({
                                                 }
                                             }
                                         })
-                                        self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                        objRef[field.ref] = {refRow: row.ref, value: value};
+                                        if(self.refs[section.ref]) {
+                                            self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                        }
+
                                     }
                                 }
                                 /* END CONCAT PREFIX */
@@ -132,7 +296,9 @@ module.exports = React.createClass({
                                         var value = preCalRes[0];
 
                                         if(value === 'TODAY'){
-                                            self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                            objRef[field.ref] = {refRow: row.ref, value: value};
+                                            if(self.refs[section.ref])
+                                                self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
                                         }
                                     }
                                 }
@@ -141,6 +307,12 @@ module.exports = React.createClass({
                         }
                     }
                 }//end for
+
+                for(var i =0; i <self.allFields.length; i++) {
+                    if(objRef[self.allFields[i].ref]) {
+                        self.allFields[i].value = objRef[self.allFields[i].ref].value;
+                    }
+                }
                 self._checkServerEFormDetail();
             })
         })
@@ -150,29 +322,98 @@ module.exports = React.createClass({
         EFormService.eformCheckDetail({templateUID: this.templateUID, appointmentUID: this.appointmentUID})
         .then(function(response){
             if(response.data){
+                self.EFormID = response.data.ID;
+                self.EFormStatus = response.data.Status;
                 self.formUID = response.data.UID;
-                var EFormDataContent = JSON.parse(response.data.EFormData.FormData);
-                console.log(EFormDataContent);
+                var tempData = JSON.parse(response.data.EFormData.TempData);
+                self.allFields = self._mergeTwoObjects(self.allFields, tempData);
+                var EFormDataContent = self.allFields;
                 EFormDataContent.map(function(field, indexField){
-                    var fieldRef = field.ref;
-                    var fieldData = field.value;
-                    var rowRef = field.refRow;
-                    var sections = self.state.sections.toJS();
-                    for(var i = 0; i < sections.length; i++){
-                        var section = sections[i];
+                    var split = field.ref.split('_');
+                    var section_ref = "section_"+split[1];
+                    var row_ref = "row_"+split[1]+"_"+split[2];
+                    var field_ref = field.ref;
+                    if(field.moduleID > 0){
+                        if(typeof self.refs[section_ref] !== 'undefined'){
+                            if(field.type === 'eform_input_check_radio'){
+                                var radio_value = (field.checked)?'yes':'';
+                               self.refs[section_ref].checkShowHide(radio_value); 
+                            }
+                            else{
+                                self.refs[section_ref].checkShowHide(field.value);
+                            }
+                        }
+                    }
+                    if(typeof self.refs[section_ref] !== 'undefined'){
                         if(typeof field.refChild === 'undefined'){
                             if(Config.getPrefixField(field.type, 'radio') > -1 || Config.getPrefixField(field.type, 'checkbox') > -1){
-                                self.refs[section.ref].setValueForRadio(rowRef, fieldRef, field.checked);
+                                self.refs[section_ref].setValueForRadio(row_ref, field_ref, field.checked);
                             }else{
-                                if(field.type !== 'eform_input_image_doctor'){
-                                    self.refs[section.ref].setValue(rowRef, fieldRef, fieldData);
+                                if(field.type === 'line_chart'){
+                                    self.refs[section_ref].setValueForChart(row_ref, field_ref, field, 'line');
+                                }
+                                else if(field.type !== 'eform_input_image_doctor'){
+                                    if(typeof self.refs[section_ref] !== 'undefined')
+                                        self.refs[section_ref].setValue(row_ref, field_ref, field.value);
                                 }
                             }
                         }else{
-                            var fieldRefChild = field.refChild;
-                            self.refs[section.ref].setValueForTable(rowRef, fieldRef, fieldRefChild, fieldData);
+                            if(field.type === 'table'){
+                                var fieldRefChild = field.refChild;
+                                self.refs[section_ref].setValueForTable(row_ref, field_ref, field.refChild, field.value);
+                            }
                         }
                     }
+                })
+                if(self.calculation.length > 0){
+                    /*self.calculation.map(function(cal){
+                        if(cal.type === 'SUMP'){
+                            var total = 0;
+                            cal.cal.map(function(name){
+                                for(var i = 0; i < EFormDataContent.length; i++){
+                                    if(EFormDataContent[i].name === name){
+                                        if(!isNaN(parseInt(EFormDataContent[i].value)))
+                                            total = parseInt(total)+parseInt(EFormDataContent[i].value);
+                                    }
+                                }
+                            })
+                            if(typeof self.refs[cal.section_ref] !== 'undefined'){
+                                if(!isNaN(total)){
+                                    self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
+                                }
+                            }
+                        }else if(cal.type === 'EQUALP'){
+                            cal.cal.map(function(name){
+                               for(var i = 0; i < EFormDataContent.length; i++){
+                                    if(EFormDataContent[i].name === name && EFormDataContent[i].checked){
+                                        if(cal.field.type  === 'eform_input_text'){
+                                            if(typeof self.refs[cal.section_ref] !== 'undefined')
+                                                self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, EFormDataContent[i].value);
+                                        }
+                                        if(EFormDataContent[i].value === cal.field.value){
+                                            if(typeof self.refs[cal.section_ref] !== 'undefined')
+                                                self.refs[cal.section_ref].setValueForRadio(cal.row_ref, cal.field_ref, EFormDataContent[i].checked);
+                                        }else{
+                                            if(cal.field.value === '1'){
+                                                if(isNaN(EFormDataContent[i].value)){
+                                                    if(typeof self.refs[cal.section_ref] !== 'undefined'){
+                                                        self.refs[cal.section_ref].setValueForRadio(cal.row_ref, cal.field_ref, EFormDataContent[i].checked);
+                                                    }
+                                                }
+                                            }
+                                        }//end else
+                                    }
+                                } 
+                            })
+                        }
+                    })*/
+                }
+            }else{
+                var tempData = JSON.stringify(self.allFields);
+                EFormService.formSaveInit({templateUID: self.templateUID, appointmentUID: self.appointmentUID, tempData: tempData, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
+                .then(function(response){
+                    self.EFormID = response.data.ID;
+                    self.EFormStatus = response.data.Status;
                 })
             }
         })
@@ -183,51 +424,161 @@ module.exports = React.createClass({
         .then(function(response){
             var EFormTemplate = self.EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
-
+            self.content = content;
+            var page_content = [];
+            for(var i = 0; i < content.sections.length; i++){
+                if(parseInt(self.page) === parseInt(content.sections[i].page)){
+                    page_content.push(content.sections[i]);
+                }
+            }
+            self.maxPage = content.sections[content.sections.length -1 ].page;
              EFormService.eformHistoryDetail({EFormTemplateUID: self.templateUID, PatientUID: self.patientUID})
             .then(function(result){
                 self.setState(function(prevState){
                     return {
                         name: EFormTemplate.Name,
-                        sections: Immutable.fromJS(content),
+                        sections: Immutable.fromJS(page_content),
                         history: result.data.rows
                     }
                 })
-                self._serverPreFormDetail(content);
+
+                $(self.refs['page_index_'+self.page]).addClass('active');
+                if(self.page <= 1)
+                    $(self.refs['page_index_previous']).addClass('disabled');
+                else if (self.page >= self.maxPage)
+                    $(self.refs['page_index_next']).addClass('disabled');
+                self.allFields = content.objects;
+		//tannv.dts@gmail.com comment
+                // self._serverPreFormDetail(page_content);
+                self._serverPreFormDetail(content.sections);
             })
         })
     },
+    _mergeTwoObjects: function(obj_large, obj_small, type){
+        var self = this;
+        var temp_obj = $.extend([], obj_large);
+        for(var j = 0; j < obj_large.length; j++){
+            if(type === 'print'){
+                if(obj_large[j].type === 'eform_input_signature'){
+                    if(temp_obj[j].value)
+                        temp_obj[j].base64Data = temp_obj[j].value.sub;
+                    temp_obj[j].value = null;
+                }
+                if(obj_large[j].value === 'TODAY')
+                    temp_obj[j].value = moment().format('DD/MM/YYYY');
+            }
+        }
+        obj_small.map(function(item, index){
+            for(var i = 0; i < obj_large.length; i++){
+                if(typeof item.refChild === 'undefined'){
+                    if(obj_large[i].ref === item.ref){
+                        if(type === 'print'){
+                            if(obj_large[i] === 'eform_input_signature'){
+                                if(temp_obj[j].value)
+                                    temp_obj[i].base64Data = item.value.sub;
+                                temp_obj[i].value = null;
+                            }
+                        }else
+                            temp_obj[i] = item;
+                        break;
+                    }
+                }else{
+                    if(item.refChild === obj_large[i].refChild && obj_large[i].ref === item.ref){
+                        temp_obj[i] = item;
+                        break;  
+                    }
+                }
+            }
+        })
+        return temp_obj;
+    },
     _onDetailSaveForm: function(){
         var self = this;
+        var templateUID = self.templateUID;
+        var sections = self.state.sections.toJS();
+        var fields = [];
+        for(var i = 0; i < sections.length; i++){
+            var section = sections[i];
+            var sectionRef = section.ref;
+            var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('form');
+            tempFields.map(function(field, index){
+                fields.push(field);
+            })
+        }
+        var appointmentUID = self.appointmentUID;
+        var content = self._mergeTwoObjects(self.allFields, fields);
         var p = new Promise(function(resolve, reject){
-            var templateUID = self.templateUID;
-            var sections = self.state.sections.toJS();
-            var fields = [];
-            for(var i = 0; i < sections.length; i++){
-                var section = sections[i];
-                var sectionRef = section.ref;
-                var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('form');
-                tempFields.map(function(field, index){
-                    fields.push(field);
+            if(self.calculation.length > 0){
+                self.calculation.map(function(cal){
+                    if(cal.type === 'SUMP'){
+                        var total = 0;
+                        var field_index = 0;
+                        cal.cal.map(function(name){
+                            for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name){
+                                    if(!isNaN(parseInt(content[i].value)))
+                                        total = parseInt(total)+parseInt(content[i].value);
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            }
+                        })
+                        if(!isNaN(total))
+                            content[field_index].value = total;
+                    }else if(cal.type === 'EQUALP'){
+                        var field_index = 0;
+                        var value = '';
+                        var checked = '';
+                        cal.cal.map(function(name){
+                           for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name && cal.field.type === 'eform_input_text'){
+                                    if(content[i].type === 'eform_input_text')
+                                        value = content[i].value;
+                                    else
+                                        if(content[i].checked === true)
+                                            value = content[i].value;
+                                }
+                                if(content[i].name === name && content[i].checked === true){
+                                    if(content[i].value === cal.field.value){
+                                        checked = content[i].checked;
+                                        value = content[i].value;
+                                    }else{
+                                        if(cal.field.value === '1'){
+                                            if(isNaN(content[i].value)){
+                                                checked = content[i].checked;
+                                                value = content[i].value;
+                                            }
+                                        }
+                                    }//end else
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            } 
+                        })
+                        content[field_index].value = value;
+                        content[field_index].checked = checked;
+                        if(checked !== ''){
+                            if(isNaN(value))
+                                content[field_index].value = '1';
+                        }
+                    }
                 })
             }
 
-            var content = JSON.stringify(fields);
-            var appointmentUID = self.appointmentUID;
+            content = JSON.stringify(content);
 
-            if(self.formUID === null){
-                EFormService.formSave({templateUID: self.templateUID, appointmentUID: appointmentUID, content: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
+            if(self.EFormStatus === 'unsaved'){
+                EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){
                     resolve();
-                    window.location.reload();
+                    //window.location.reload();
                 })
             }else{
                 EFormService.formUpdate({UID: self.formUID, content: content})
                 .then(function(){
                     resolve();
-                    //swal("Success!", "Your form has been saved.", "success");
                 })
-            }  
+            }
         });
         return p;
     },
@@ -239,16 +590,69 @@ module.exports = React.createClass({
     },
     _onComponentPageBarPrintForm: function(){
         var self = this;
-        var sections = self.state.sections.toJS();
+
         var fields = [];
-        for(var i = 0; i < sections.length; i++){
-            var section = sections[i];
-            var sectionRef = section.ref;
-            var tempFields = self.refs[sectionRef].getAllFieldValueWithValidation('print');
-            tempFields.map(function(field, index){
-                fields.push(field);
-            })
-        }
+        this.content.sections.map(function(section){
+            if(typeof section.viewType !== 'undefined'){
+                if(section.viewType === 'dynamic'){
+                    if(typeof self.refs[section.ref] !== 'undefined'){
+                        var tempFields = self.refs[section.ref].getAllFieldValueWithValidation('print');
+                        tempFields.map(function(field, index){
+                            fields.push(field);
+                        })
+                    }else{
+                        section.rows.map(function(row){
+                            row.fields.map(function(content_field){
+                                self.allFields.map(function(field){
+                                    if(content_field.ref === field.ref){
+                                        var temp_value = '';
+                                        if(field.type === 'eform_input_check_radio')
+                                            temp_value = (field.checked)?'yes':'';
+                                        else
+                                            temp_value = field.value;
+                                        if(temp_value !== '')
+                                            fields.push(field);
+                                    }
+                                })
+                            })
+                        })
+                    }
+                }else{
+                    self.allFields.map(function(field){
+                        var split = field.ref.split('_');
+                        var section_ref = "section_"+split[1];
+                        if(section_ref === section.ref){
+                            var field_temp = $.extend({}, field);
+                            if(field.type === 'eform_input_signature'){
+                                if(field.value)
+                                    field_temp.base64Data = field.value.sub;
+                                field_temp.value = null;
+                            }
+                            if(field.value === 'TODAY')
+                                field_temp.value = moment().format('DD/MM/YYYY');
+                            fields.push(field_temp);
+                        }
+                    })
+                }
+            }else{
+                self.allFields.map(function(field){
+                    var split = field.ref.split('_');
+                    var section_ref = "section_"+split[1];
+                    if(section_ref === section.ref){
+                        if(field.type === 'eform_input_signature'){
+                            if(field.value)
+                                field.base64Data = field.value.sub;
+                            field.value = null;
+                        }
+                        if(field.value === 'TODAY')
+                            field.value = moment().format('DD/MM/YYYY');
+                        fields.push(field);
+                    }
+                })
+            }
+        })
+
+        var appointmentUID = self.appointmentUID;
 
         var data = {
             printMethod: self.EFormTemplate.PrintType,
@@ -262,8 +666,10 @@ module.exports = React.createClass({
             var blob = new Blob([response], {
                 type: 'application/pdf'
             });
-            saveAs(blob, fileName);
-            //swal("Success!", "Your form has been printed to PDF.", "success");
+            var filesaver = saveAs(blob, fileName);
+            setTimeout(function(){
+                window.location.reload();
+            }, 1000)
         }, function(error){
 
         })
@@ -273,7 +679,124 @@ module.exports = React.createClass({
         window.location.href = '/#/eform/detail?appointmentUID='+appointmentUID+'&patientUID='+this.patientUID+'&templateUID='+this.templateUID+'&userUID='+this.userUID;
         window.location.reload();
     },
+    _onComponentSectionSaveTableDynamicRow: function(codeSection, codeRow, codeField, row){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows'], 
+                    val => val.push(Immutable.fromJS(row)))
+            }
+        })
+    },
+    _onComponentSectionEditTableDynamicRow: function(codeSection, codeRow, codeField, position, row){        
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position], 
+                    val => Immutable.fromJS(row))
+            }
+        })
+    },
+    _onComponentSectionRemoveTableDynamicRow: function(codeSection, codeRow, codeField, position){
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.deleteIn([codeSection, 'rows', codeRow, 'fields', codeField, 'content', 'rows', position])
+            }
+        })
+        swal("Success!", "Deleted", "success");
+    },
+    _onGetPageContent: function (page) {
+        var self = this;
+        if(page >= 1 && page <= this.maxPage)
+        {
+            var sections = this.state.sections.toJS();
+            var fields = [];
+            for(var i = 0; i < sections.length; i++){
+                var section = sections[i];
+                var sectionRef = section.ref;
+                var tempFields = this.refs[sectionRef].getAllFieldValueWithValidation('form');
+                tempFields.map(function(field, index){
+                    fields.push(field);
+                })
+            }
+
+            var content = this._mergeTwoObjects(this.allFields, fields);
+            if(self.calculation.length > 0){
+                self.calculation.map(function(cal){
+                    if(cal.type === 'SUMP'){
+                        var total = 0;
+                        var field_index = 0;
+                        cal.cal.map(function(name){
+                            for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name){
+                                    if(!isNaN(parseInt(content[i].value)))
+                                        total = parseInt(total)+parseInt(content[i].value);
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            }
+                        })
+                        if(!isNaN(total))
+                            content[field_index].value = total;
+                    }else if(cal.type === 'EQUALP'){
+                        var field_index = 0;
+                        var value = '';
+                        var checked = '';
+                        cal.cal.map(function(name){
+                           for(var i = 0; i < content.length; i++){
+                                if(content[i].name === name && cal.field.type === 'eform_input_text'){
+                                    if(content[i].type === 'eform_input_text')
+                                        value = content[i].value;
+                                    else
+                                        if(content[i].checked === true)
+                                            value = content[i].value;
+                                }
+                                if(content[i].name === name && content[i].checked === true){
+                                    if(content[i].value === cal.field.value){
+                                        checked = content[i].checked;
+                                        value = content[i].value;
+                                    }else{
+                                        if(cal.field.value === '1'){
+                                            if(isNaN(content[i].value)){
+                                                checked = content[i].checked;
+                                                value = content[i].value;
+                                            }
+                                        }
+                                    }//end else
+                                }
+                                if(cal.field_ref === content[i].ref)
+                                    field_index = i;
+                            } 
+                        })
+                        content[field_index].value = value;
+                        content[field_index].checked = checked;
+                        if(checked !== ''){
+                            if(isNaN(value))
+                                content[field_index].value = '1';
+                        }
+                    }
+                })
+            }
+
+            content = JSON.stringify(content);
+            EFormService.formSaveStep({id: this.EFormID, tempData: content})
+            .then(function(response){
+                var locationParams = Config.parseQueryString(window.location.href);
+                locationParams.page = page;
+                var queryString = $.param(locationParams);
+                window.location.href = '/#/eform/detail?'+queryString;
+                window.location.reload();
+            })
+        }
+    },
     render: function(){
+        var pageList = [];
+        for (var i = 1; i <= this.maxPage; i++)
+        {
+            pageList.push(
+                <li key = {i} ref={"page_index_"+i}>
+                    <a onClick = {this._onGetPageContent.bind(this, i)}>{i}</a>
+                </li>);
+
+        }
         return (
             <div className="page-content">
                 <ComponentPageBar ref="pageBar"
@@ -281,22 +804,9 @@ module.exports = React.createClass({
                         onPrintForm={this._onComponentPageBarPrintForm}/>
                 <h3 className="page-title">{this.state.name}</h3>
                 <div className="row">
-                    <div className="col-md-9">
-                        {
-                            this.state.sections.map(function(section, index){
-                                return <ComponentSection key={index}
-                                    ref={section.get('ref')}
-                                    refTemp={section.get('ref')}
-                                    key={index}
-                                    code={index}
-                                    type="section"
-                                    permission="normal"
-                                    rows={section.get('rows')}
-                                    name={section.get('name')}/>
-                            }, this)
-                        }
-                    </div>
-                    <div className="col-lg-3 col-md-12" style={{position: 'fixed', top: 40, right: 0}}>
+
+                    {/*<div className="col-lg-3 col-md-12" style={{position: 'fixed', top: 40, right: 0}}>*/}
+                    <div className="col-md-3 col-md-push-9">
                         <div className="portlet portlet-fit box blue">
                             <div className="portlet-title">
                                 <div className="caption">
@@ -311,37 +821,86 @@ module.exports = React.createClass({
                             <div className="portlet-body">
                                 <table className="table table-hover table-striped">
                                     <thead>
-                                        <tr>
-                                            <th width="1">#</th>
-                                            <th>Code</th>
-                                            <th>Created Date</th>
-                                        </tr>
+                                    <tr>
+                                        <th width="1">#</th>
+                                        <th>Code</th>
+                                        <th>Created Date</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        {
-                                            this.state.history.map(function(h, index){
-                                                var appointment = h.Appointments[0];
-                                                var backgroundColor = 'none';
-                                                var textColor = 'inherit';
-                                                if(appointment.UID === this.appointmentUID){
-                                                    backgroundColor = 'green';
-                                                    textColor = 'white';
-                                                }
-                                                return (
-                                                    <tr key={index} onClick={this._onGoToHistory.bind(this, h)}
-                                                        style={{backgroundColor: backgroundColor, color: textColor, cursor: 'pointer'}}>
-                                                        <td>{index+1}</td>
-                                                        <td>{appointment.Code}</td>
-                                                        <td>{moment(h.Appointments[0].CreatedDate).format('DD/MM/YYYY')}</td>
-                                                    </tr>
-                                                )
-                                            }, this)
-                                        }
+                                    {
+                                        this.state.history.map(function(h, index){
+                                            var appointment = h.Appointments[0];
+                                            var backgroundColor = 'none';
+                                            var textColor = 'inherit';
+                                            if(appointment.UID === this.appointmentUID){
+                                                backgroundColor = 'green';
+                                                textColor = 'white';
+                                            }
+                                            return (
+                                                <tr key={index} onClick={this._onGoToHistory.bind(this, h)}
+                                                    style={{backgroundColor: backgroundColor, color: textColor, cursor: 'pointer'}}>
+                                                    <td>{index+1}</td>
+                                                    <td>{appointment.Code}</td>
+                                                    <td>{moment(h.Appointments[0].CreatedDate).format('DD/MM/YYYY')}</td>
+                                                </tr>
+                                            )
+                                        }, this)
+                                    }
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+
+                    {/*<div className="col-md-9">*/}
+                    <div className="col-md-9 col-md-pull-3">
+                        {
+                            this.state.sections.map(function(section, index){
+                                var viewType = section.get('viewType');
+                                if(viewType !== 'hide')
+                                    return <ComponentSection key={index}
+                                        ref={section.get('ref')}
+                                        refTemp={section.get('ref')}
+                                        viewType={section.get('viewType')}
+                                        moduleID={section.get('moduleID') | ''}
+                                        key={index}
+                                        code={index}
+                                        type="section"
+                                        permission="normal"
+                                        onSaveTableDynamicRow={this._onComponentSectionSaveTableDynamicRow}
+                                        onEditTableDynamicRow={this._onComponentSectionEditTableDynamicRow}
+                                        onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
+                                        rows={section.get('rows')}
+                                        name={section.get('name')}
+                                         handleReloadDoctor = {this._handleReloadDoctor.bind(this, section)}
+                                    />
+                                else
+                                    return null;
+                            }, this)
+                        }
+                    </div>
+
+                </div>
+                <div className = "">
+                    <div className = " eform-col-center">
+                        <nav>
+                            <ul className="pagination pagination-lg">
+                                <li ref = "page_index_previous">
+                                    <a aria-label="Previous" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) - 1)}>
+                                        <span aria-hidden="true">Previous Page</span>
+                                    </a>
+                                </li>
+                                {pageList}
+                                <li ref = "page_index_next">
+                                    <a aria-label="Next" onClick = {this._onGetPageContent.bind(this, parseInt(this.page) + 1)}>
+                                        <span aria-hidden="true">Next Page</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
                 </div>
             </div>
         )

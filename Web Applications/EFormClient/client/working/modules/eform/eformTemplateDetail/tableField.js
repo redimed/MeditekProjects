@@ -1,5 +1,6 @@
 var CommonModal = require('common/modal');
 var CommonInputText = require('common/inputText');
+var CommonInputDate = require('common/inputDate');
 var CommonCheckbox = require('common/checkbox');
 var CommonYesNo = require('common/yesno');
 var ComponentFormEditTableColumn = require('modules/eform/eformTemplateDetail/formUpdateTableColumn');
@@ -87,7 +88,7 @@ module.exports = React.createClass({
             this.props.onUpdateColumn(this.props.code, data);
         }.bind(this))
     },
-    getAllValue: function(){
+    getAllValue: function(typeString){
         var content = this.props.content.toJS();
         var rows = content.rows;
         var cols = content.cols;
@@ -97,14 +98,30 @@ module.exports = React.createClass({
         for(var i = 0; i < rows; i++){
             cols.map(function(col, indexCol){
                 var refChild = "field_"+i+"_"+indexCol;
-                if(col.type !== 'c')
-                    var value = self.refs[refChild].getValue();
+                if(col.type !== 'c'){
+                    if(col.type === 'radio_yes_no'){
+                        var refRadioChild = self.props.name+'_field_'+i+'_'+indexCol;
+                        var value = self.refs[refRadioChild].getValue();
+                    }
+                    else{
+                        if(typeString === 'print' && col.type === 'd'){
+                            var value = self.refs[refChild].getValuePrint();
+                        }else
+                            var value = self.refs[refChild].getValue();
+                    }
+                }
                 else
                     var value = self.refs[refChild].getValueTable();
-                var typeChild = self.refs[refChild].getType();
+                if(col.type === 'radio_yes_no'){
+                    var typeChild = self.refs[refRadioChild].getType();
+                    if(typeString !== 'print')
+                        refChild = refRadioChild;
+                }
+                else
+                    var typeChild = self.refs[refChild].getType();
                 var type = 'table';
                 var name = self.getName();
-                results.push({refChild: refChild, value: value, type: type, typeChild: typeChild, ref: self.props.refTemp, name: name});
+                results.push({refChild: refChild, value: value, type: 'table', typeChild: typeChild, ref: self.props.refTemp, name: name});
             })
         }
         return results;
@@ -189,13 +206,26 @@ module.exports = React.createClass({
                                                                     </center>
                                                                 </td>
                                                             )
+                                                        else if(type === 'd')
+                                                            return (
+                                                                <td key={indexCol} style={{verticalAlign: 'middle'}}>
+                                                                    <center>
+                                                                        <span style={{verticalAlign: 'middle', display: 'inline-block', textAlign: 'center'}}>
+                                                                            <CommonInputDate key={indexCol} type={type}
+                                                                                ref={"field_"+indexRow+'_'+indexCol}
+                                                                                code={indexCol}/>
+                                                                        </span>
+                                                                    </center>
+                                                                </td>
+                                                            )
                                                         else if(type === 'radio_yes_no')
                                                             return (
                                                                 <td key={indexCol} style={{verticalAlign: 'middle'}}>
                                                                     <center>
                                                                         <span style={{verticalAlign: 'middle', display: 'inline-block', textAlign: 'center'}}>
                                                                             <CommonYesNo key={indexCol} type={type}
-                                                                                ref={"field_"+indexRow+'_'+indexCol}
+                                                                                refTemp={this.props.name+"_field_"+indexRow+'_'+indexCol}
+                                                                                ref={this.props.name+"_field_"+indexRow+'_'+indexCol}
                                                                                 code={indexCol}/>
                                                                         </span>
                                                                     </center>

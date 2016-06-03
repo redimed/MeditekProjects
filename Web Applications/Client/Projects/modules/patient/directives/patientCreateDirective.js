@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.create.directive', []);
-app.directive('patientCreate', function(toastr, PatientService, $state, $timeout, $rootScope, $cookies, AuthenticationService, UnauthenticatedService) {
+app.directive('patientCreate', function(toastr, PatientService, $state, $timeout, $rootScope, $cookies, AuthenticationService, UnauthenticatedService, $uibModal) {
     return {
         scope: {
             appointment: '=',
@@ -8,7 +8,11 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             rolecompany:'=roleCompany',
             reset:'=onReset',
             compid:'=onCompid',
-            RoleId:'=onRoleid'
+            RoleId:'=onRoleid',
+            ishaveusername:'=isHaveUsername',
+            cancel:'=onCancel',
+            createtype:'=onCreateType',// 'nocompany':show create not link company, 'company': show create link company, null :show 2 create,
+            iscompanycreate:'=isCompanyCreate'
         },
         restrict: "EA",
         controller: function($scope, FileUploader) {
@@ -78,6 +82,11 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
 
         },
         link: function(scope, elem, attrs) {
+            console.log('createtype ',scope.createtype);
+            scope.createtype = scope.createtype?scope.createtype:null;
+            scope.iscompanycreate = scope.iscompanycreate?scope.iscompanycreate:false;
+            scope.createtype = scope.createtype?scope.createtype:null;
+            scope.ishaveusername = scope.ishaveusername?scope.ishaveusername:false;
             scope.rolecompany = scope.rolecompany==null||scope.rolecompany==undefined?false:scope.rolecompany;
             scope.isChoseAvatar = false;
             // State
@@ -113,7 +122,7 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             scope.ermsg = {};
             scope.isShowNext = false;
             scope.isBlockStep1 = false;
-            //if appointment add this directive to their template 
+            //if appointment add this directive to their template
             //this directive will receive data from appointment
             //when this code run
             if (scope.appointment) {
@@ -134,110 +143,147 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
             };
             //event timeout will call after this template's directive rendered
             $timeout(function() {
-                App.setAssetsPath('theme/assets/'); // Set the assets folder path	
+                App.setAssetsPath('theme/assets/'); // Set the assets folder path
                 FormWizard.init(); // form step
                 ComponentsDateTimePickers.init();
             }, 0);
             //checkPhone : validate data to correct and check PhoneNumber can be used to create patient
             //input : data(FirstName,MiddleName,LastName,PhoneNumber)
-            //output: 
+            //output:
             //****show Continue button and show notification check success if check success
-            //****show notification check error if data doesn't match validate or 
+            //****show notification check error if data doesn't match validate or
             //PhoneNumber used to create patient
             scope.checkPhone = function(data) {
+
+                function checkPhone(verifyData) {
+                    PatientService.checkPatient(verifyData)
+                        .then(function(result) {
+                            if (result != undefined && result != null && result != '' && result.length != 0) {
+                                if (result.data.isCreated == false) {
+                                    scope.er = '';
+                                    scope.ermsg = '';
+                                    scope.loadingCheck = false;
+                                    toastr.success("Information can be choose to create patient", "SUCCESS");
+                                    scope.isShowEmail1 = verifyData.Email;
+                                    scope.data.Email1 = verifyData.Email;
+                                    scope.isShowNext = true;
+                                    scope.data.CountryID1 = 14;
+                                    scope.data.Title = verifyData.Title;
+                                    scope.data.Gender = verifyData.Gender;
+                                    scope.data.Address1 = verifyData.Address1;
+                                    scope.data.Address2 = verifyData.Address2;
+                                    scope.data.Suburb = verifyData.Suburb;
+                                    scope.data.Postcode = verifyData.Postcode;
+                                    scope.data.State = verifyData.State;
+                                    scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
+                                    // scope.data.DOB = new Date('1/1/1990');
+                                } else {
+                                    // toastr.error("Information was used to create patient", "ERROR");
+                                    scope.isBlockStep1 = false;
+                                    scope.loadingCheck = false;
+                                    var existedField = '';
+                                    for(var key in result.data.field) {
+                                        if(key == 'PhoneNumber') {
+                                            existedField+=' Mobile Phone Number and';
+                                        }
+                                        else {
+                                            existedField+=' '+key+' and';
+                                        }
+                                    }
+                                    if(existedField.substr(existedField.length - 3) == 'and') {
+                                        existedField = existedField.slice(0, -3);
+                                        existedField+=' existed';
+                                        toastr.error(existedField);
+                                    }
+
+
+                                }
+                            }
+                        }, function(err) {
+                            //if receive error push error message into array ermsg,
+                            //push error css into array er
+                            //and show in template
+                            scope.loadingCheck = false;
+                            scope.er = {};
+                            scope.ermsg = {};
+                            toastr.error("Please input correct information", "ERROR");
+                            for (var i = 0; i < err.data.message.ErrorsList.length; i++) {
+                                scope.er[err.data.message.ErrorsList[i].field] = { 'border': '2px solid #DCA7B0' };
+                                scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+                            }
+                        });
+                }
+
                 scope.loadingCheck = true;
                 //service validate data
                 var verifyData = {
-                    FirstName: data.FirstName,
-                    MiddleName: data.MiddleName,
-                    Title: data.Title,
-                    State: data.State,
-                    LastName: data.LastName,
-                    PhoneNumber: data.PhoneNumber,
-                    DOB: data.DOB,
-                    Address1: data.Address1,
-                    Address2: data.Address2,
-                    Suburb: data.Suburb,
-                    Postcode: data.Postcode,
-                    Email1: data.Email,
-                    Email : data.Email,
-                    HomePhoneNumber: data.HomePhoneNumber,
-                    Gender: data.Gender
+                    FirstName: data?data.FirstName:null,
+                    MiddleName: data?data.MiddleName:null,
+                    Title: data?data.Title:null,
+                    State: data?data.State:null,
+                    LastName: data?data.LastName:null,
+                    PhoneNumber: data?data.PhoneNumber:null,
+                    DOB: data?data.DOB:null,
+                    Address1: data?data.Address1:null,
+                    Address2: data?data.Address2:null,
+                    Suburb: data?data.Suburb:null,
+                    Postcode: data?data.Postcode:null,
+                    Email1: data?data.Email:null,
+                    Email : data?data.Email:null,
+                    HomePhoneNumber: data?data.HomePhoneNumber:null,
+                    Gender: data?data.Gender:null,
+                    UserName:data?data.UserName:null
                 };
-                if((data.Email == null || data.Email == '') &&
-                   (data.PhoneNumber == null || data.PhoneNumber == '')){
-                    if(data.FirstName == null || data.FirstName == ''){
+                if((verifyData.FirstName == null || verifyData.FirstName == '') &&
+                   (verifyData.LastName == null || verifyData.LastName == '')){
+                    if(verifyData.FirstName == null || verifyData.FirstName == ''){
                         scope.er['FirstName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['FirstName'] = 'required';
                     }
-                    if(data.LastName == null || data.LastName == ''){
+                    if(verifyData.UserName == null || verifyData.UserName == ''){
+                        scope.er['UserName'] = { 'border': '2px solid #DCA7B0' };
+                        scope.ermsg['UserName'] = 'required';
+                    }
+                    if(verifyData.LastName == null || verifyData.LastName == ''){
                         scope.er['LastName'] = { 'border': '2px solid #DCA7B0' };
                         scope.ermsg['LastName'] = 'required';
                     }
                     toastr.error("Please check data again.", "ERROR");
                     scope.loadingCheck = false;
-                    scope.er['Email'] = { 'border': '2px solid #DCA7B0' };
-                    scope.ermsg['Email'] = 'required';
-                    scope.er['PhoneNumber'] = { 'border': '2px solid #DCA7B0' };
-                    scope.ermsg['PhoneNumber'] = 'required';
+                    // scope.er['Email'] = { 'border': '2px solid #DCA7B0' };
+                    // scope.ermsg['Email'] = 'required';
+                    // scope.er['PhoneNumber'] = { 'border': '2px solid #DCA7B0' };
+                    // scope.ermsg['PhoneNumber'] = 'required';
                 }
                 else{
-                    PatientService.validateCheckPhone(data)
+
+                    PatientService.validateCheckPhone(data,scope.ishaveusername)
                     .then(function(success) {
                         scope.er = '';
                         scope.ermsg = '';
                         scope.isBlockStep1 = true;
                         //service call API check PhoneNumber can be used to create Patient
-                        PatientService.checkPatient(verifyData)
-                            .then(function(result) {
-                                if (result != undefined && result != null && result != '' && result.length != 0) {
-                                    if (result.data.isCreated == false) {
-                                        scope.er = '';
-                                        scope.ermsg = '';
-                                        scope.loadingCheck = false;
-                                        toastr.success("Information can be choose to create patient", "SUCCESS");
-                                        scope.isShowEmail1 = verifyData.Email;
-                                        scope.data.Email1 = verifyData.Email;
-                                        scope.isShowNext = true;
-                                        scope.data.CountryID1 = 14;
-                                        scope.data.Title = verifyData.Title;
-                                        scope.data.Gender = verifyData.Gender;
-                                        scope.data.Address1 = verifyData.Address1;
-                                        scope.data.Address2 = verifyData.Address2;
-                                        scope.data.Suburb = verifyData.Suburb;
-                                        scope.data.Postcode = verifyData.Postcode;
-                                        scope.data.State = verifyData.State;
-                                        scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
-                                        // scope.data.DOB = new Date('1/1/1990');
-                                    } else {
-                                        // toastr.error("Information was used to create patient", "ERROR");
-                                        scope.isBlockStep1 = false;
-                                        scope.loadingCheck = false;
-                                        if(result.data.field.Email && result.data.field.PhoneNumber) {
-                                            toastr.error("Mobile Phone Number and Email existed");
-                                        }
-                                        else if (result.data.field.Email) {
-                                            toastr.error("Email existed");
-                                        }
-                                        else if (result.data.field.PhoneNumber) {
-                                            toastr.error("Mobile Phone Number existed");
-                                        }
-                
-                                    }
-                                }
-                            }, function(err) {
-                                //if receive error push error message into array ermsg, 
-                                //push error css into array er
-                                //and show in template
-                                scope.loadingCheck = false;
-                                scope.er = {};
-                                scope.ermsg = {};
-                                toastr.error("Please input correct information", "ERROR");
-                                for (var i = 0; i < err.data.message.ErrorsList.length; i++) {
-                                    scope.er[err.data.message.ErrorsList[i].field] = { 'border': '2px solid #DCA7B0' };
-                                    scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
-                                }
-                            });
+                        if( _.isEmpty(scope.data.Email) && _.isEmpty(scope.data.PhoneNumber) ) {
+                            scope.er = '';
+                            scope.ermsg = '';
+                            scope.loadingCheck = false;
+                            toastr.success("Information can be choose to create patient", "SUCCESS");
+                            scope.isShowEmail1 = verifyData.Email;
+                            scope.data.Email1 = verifyData.Email;
+                            scope.isShowNext = true;
+                            scope.data.CountryID1 = 14;
+                            scope.data.Title = verifyData.Title;
+                            scope.data.Gender = verifyData.Gender;
+                            scope.data.Address1 = verifyData.Address1;
+                            scope.data.Address2 = verifyData.Address2;
+                            scope.data.Suburb = verifyData.Suburb;
+                            scope.data.Postcode = verifyData.Postcode;
+                            scope.data.State = verifyData.State;
+                            scope.data.HomePhoneNumber = verifyData.HomePhoneNumber == "" || verifyData.HomePhoneNumber == null ? null : verifyData.HomePhoneNumber;
+                        }
+                        else {
+                            checkPhone(verifyData);
+                        }
                     }, function(err) {
                         console.log(err);
                         scope.loadingCheck = false;
@@ -258,21 +304,27 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 }
                 else if(scope.staff){
                     scope.staff.runIfClose();
-                } else {
+                }
+                else if(scope.cancel) {
+                    scope.cancel();
+                }
+                else {
                     $state.go('authentication.patient.list', null, {
                         'reload': true
                     });
-                };
+                }
             };
+
+            console.log('rolecompany ',scope.rolecompany,' compid ',scope.compid,' RoleId ',scope.RoleId, ' ishaveusername ',scope.ishaveusername);
 
 
             //CreatePatient : create patient
             //input : data information
-            //output: 
-            //****create UserAccount to create Patient if validate data success 
+            //output:
+            //****create UserAccount to create Patient if validate data success
             //and show notification success
-            //****show notification error if validate data error 
-            scope.createPatient = function(data) {
+            //****show notification error if validate data error
+            scope.createPatient = function(data, company) {
                 scope.loadingCreate = true;
                 //service check data
                 return PatientService.validate(data)
@@ -297,16 +349,77 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                                 //run function success transmission from appointment
                                 //****else show notification success and back state list patient
                                 if (scope.appointment) {
-                                    scope.appointment.runIfSuccess(success.data);
+
+                                    if(company == 'company' && scope.iscompanycreate == false){
+                                        var modalInstance = $uibModal.open({
+                                            templateUrl: 'companyLinkmodal',
+                                            controller: function($scope,$modalInstance){
+                                                $scope.patientuid = success.data.UID;
+                                                $scope.cancel = function(){
+                                                    $modalInstance.dismiss('cancel');
+                                                    scope.appointment.runIfSuccess(success.data);
+                                                };
+                                            },
+                                            // windowClass: 'app-modal-window'
+                                            size: 'lg',
+
+                                        });
+                                    }
+                                    else {
+                                        scope.appointment.runIfSuccess(success.data);
+                                    }
+
                                 }else if(scope.staff){
-                                    scope.staff.runIfSuccess(success.data);
+
+                                    if(company == 'company' && scope.iscompanycreate == false){
+                                        var modalInstance = $uibModal.open({
+                                            templateUrl: 'companyLinkmodal',
+                                            controller: function($scope,$modalInstance){
+                                                $scope.patientuid = success.data.UID;
+                                                $scope.cancel = function(){
+                                                    $modalInstance.dismiss('cancel');
+                                                    scope.staff.runIfSuccess(success.data);
+                                                };
+                                            },
+                                            // windowClass: 'app-modal-window'
+                                            size: 'lg',
+
+                                        });
+                                    }
+                                    else {
+                                        scope.staff.runIfSuccess(success.data);
+                                    }
+
                                 }else if(scope.rolecompany == true) {
+
                                     scope.reset();
-                                } else {
-                                    toastr.success("Create Successful!!", "SUCCESS");
-                                    $state.go('authentication.patient.list', null, {
-                                        'reload': true
-                                    });
+
+                                }else {
+                                    console.log("here ", scope.iscompanycreate);
+                                    if(company == 'company' && scope.iscompanycreate == false){
+                                        var modalInstance = $uibModal.open({
+                                            templateUrl: 'companyLinkmodal',
+                                            controller: function($scope,$modalInstance){
+                                                $scope.patientuid = success.data.UID;
+                                                $scope.cancel = function(){
+                                                    $modalInstance.dismiss('cancel');
+                                                    toastr.success("Create Successful!!", "SUCCESS");
+                                                    $state.go('authentication.patient.list', null, {
+                                                        'reload': true
+                                                    });
+                                                };
+                                            },
+                                            // windowClass: 'app-modal-window'
+                                            size: 'lg',
+
+                                        });
+                                    }
+                                    else {
+                                        toastr.success("Create Successful!!", "SUCCESS");
+                                        $state.go('authentication.patient.list', null, {
+                                            'reload': true
+                                        });
+                                    }
                                 };
                             }, function(err) {
                                 scope.er = {};

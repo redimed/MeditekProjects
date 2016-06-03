@@ -66,6 +66,7 @@
     "twilio": "^2.5.1",
     "underscore": "^1.8.3",
     "winston": "https://registry.npmjs.org/winston/-/winston-0.8.3.tgz",
+    "winston-logstash": "^0.2.11",
     "winston-mail": "^0.5.0"
   },
   "scripts": {
@@ -78,5 +79,8 @@
     "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
   },
   "author": "anonymous node/sails user",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "skipper": "^0.5.9"
+  }
 }

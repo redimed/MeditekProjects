@@ -22,8 +22,14 @@ module.exports = {
         root: path.join(__dirname, 'node_modules')
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            
-        })
+        /*new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+          compress: { warnings: false },
+          comments: false,
+          sourceMap: false,
+          mangle: true,
+          minimize: true
+        })*/
     ]
 }

@@ -2,12 +2,12 @@ package patient.telehealth.redimed.workinjury;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,10 +16,8 @@ public class FAQsActivity extends AppCompatActivity {
 
     private Intent i;
 
-    @Bind(R.id.webFAQs)
-    WebView webViewFAQs;
-    @Bind(R.id.btnBack)
-    Button btnBack;
+    @Bind(R.id.webFAQs) WebView webViewFAQs;
+    @Bind(R.id.btnBack) LinearLayout btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class FAQsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, HomeActivity111.class));
         finish();
     }
 }

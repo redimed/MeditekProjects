@@ -1,0 +1,51 @@
+<form name="form">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true" ng-click="cancel()"></button>
+		<h4 class="modal-title uppercase bold font-blue" ng-show="showTitle=='create'">
+			<i class="icon-pencil"></i> Create New Group Doctor</h4>
+		<h4 class="modal-title uppercase bold font-blue" ng-show="showTitle=='update'">
+				<i class="icon-pencil"></i> Update Group Doctor</h4>
+	</div>
+	<div class="modal-body">
+		<div class="form-body">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<div class="form-group">
+						<label class="control-label">Group Name</label>
+						<input type="text" class="form-control" ng-model="info.GroupName" ng-style="er.GroupName.style" ng-change="er.GroupName={}" />
+						<span style="color:red;">{{er.GroupName.message}}</span>
+					</div>
+				</div>
+                <div class="col-lg-6 col-md-12">
+					<div class="form-group">
+						<label class="control-label">Group Code</label>
+						<input type="text" class="form-control" ng-model="info.GroupCode" ng-style="er.GroupCode.style" ng-change="er.GroupCode={}" />
+						<span style="color:red;">{{er.GroupCode.message}}</span>
+					</div>
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+					<div class="form-group">
+						<label class="control-label">Description</label>
+						<!-- <input type="text" class="form-control" ng-model="info.Description" /> -->
+                        <textarea class="form-control" rows="4" ng-model="info.Description" ng-style="er.Description.style" ng-change="er.Description={}"></textarea>
+						<span style="color:red;">{{er.Description.message}}</span>
+					</div>
+				</div>
+            </div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn dark" data-dismiss="modal"
+				ng-click="cancel()">
+					<i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+			<button class="btn blue" ng-click="create()" ng-show="showTitle=='create'">
+				Submit <i class="glyphicon glyphicon-save"></i></button>
+			<button class="btn blue" ng-click="update()" ng-show="showTitle=='update'">
+				Update <i class="glyphicon glyphicon-save"></i></button>
+		</div>
+	</div>
+</form>

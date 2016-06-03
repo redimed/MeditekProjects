@@ -143,7 +143,7 @@ class PatientService{
         Context.deleteDatDefaults("patientUID")
         Context.deleteDatDefaults("userUID")
         Context.deleteDatDefaults("refreshCode")
-        Context.deleteDatDefaults("deviceToken")
+        //Context.deleteDatDefaults("deviceToken")
         sharedSocket.socket.disconnect()
     }
     

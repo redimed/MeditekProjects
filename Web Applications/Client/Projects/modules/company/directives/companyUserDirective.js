@@ -10,10 +10,12 @@ app.directive('companyUser', function($uibModal, $timeout, $state, companyServic
 			loadagain:'=onLoadAgain',
 			cancel:'=onCancel',
 			reset:'=onReset',
-			compid:'=onCompid'
+			compid:'=onCompid',
+			ishaveusername:'=isHaveUsername'
 		},
 		templateUrl: 'modules/company/directives/templates/companyUserDirective.html',
 		link: function(scope, elem, attrs){
+			console.log(scope.ishaveusername);
 			console.log(scope);
 			scope.data = {};
 			console.log(scope.uid," ",scope.type);
@@ -41,9 +43,13 @@ app.directive('companyUser', function($uibModal, $timeout, $state, companyServic
 				}
 				else if (scope.type == 'delete') {
 					// scope.data.Enable = 'N';
-					scope.data.UID = scope.uid.UID;
+					var arrRole = scope.uid.UserAccount.Roles;
+					scope.data.RoleId = arrRole.filter(function(el){
+						return el.RelUserRole.RoleId == 6;
+					});
+					console.log(scope.data.RoleId)
 					scope.data.Enable = scope.uid.Enable=='Y'?'N':'Y';
-					companyService.changestatus({whereClauses:{UID:scope.data.UID},info:{Enable:scope.data.Enable}, model:'UserAccount'})
+					companyService.changestatus({whereClauses:{RoleId:6,UserAccountId:scope.uid.UserAccountID},info:{Enable:scope.data.Enable}, model:'RelUserRole'})
 					.then(function(response) {
 						console.log(response);
 						toastr.success("Delete Successfully","success");

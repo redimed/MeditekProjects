@@ -177,10 +177,7 @@ module.exports = {
         }
         return Services.UserActivation.CheckActivated(criteria)
             .then(function(data) {
-            	var Activated = false;
-                if (data.Activated === "Y")
-                	Activated = true;
-                res.ok({Activated:Activated});
+                res.ok(data);
             })
             .fail(function(err){
                 res.serverError(ErrorWrap(err));

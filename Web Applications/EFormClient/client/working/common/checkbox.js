@@ -99,6 +99,9 @@ module.exports = React.createClass({
     getPreCal: function(){
         return this.props.preCal;
     },
+    getCal: function(){
+        return this.props.cal;
+    },
     getRoles: function(){
         return this.props.roles;
     },
@@ -127,7 +130,8 @@ module.exports = React.createClass({
                             <div className="col-xs-12">
                                 <div className="icheck-inline">
                                     <label>
-                                        <input type="checkbox" className="icheck" name={this.props.name} ref="input" title={this.props.name}/>
+                                        <input type="checkbox" className="icheck" 
+                                            id={this.props.refTemp} name={this.props.name} ref="input" title={this.props.name}/>
                                         &nbsp;
                                         {this.props.label}
                                     </label>

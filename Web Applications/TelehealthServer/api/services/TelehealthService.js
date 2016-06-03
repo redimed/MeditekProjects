@@ -6,9 +6,8 @@ var $q = require('q');
 var http = require('http');
 var _ = require('lodash');
 var rootPath = process.cwd();
-var gcm = require('node-gcm');
-var gcmSender = new gcm.Sender(config.GCMApiKey);
 var apn = require('apn');
+var gcm = require('node-gcm');
 var options = {
     cert: config.APNCert,
     key: config.APNKey,
@@ -159,6 +158,25 @@ module.exports = {
             headers: headers
         });
     },
+    PostCoreServer: function(path, method, body, headers) {
+        headers['content-type'] = 'application/json';
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: path,
+            method: method,
+            body: body,
+            headers: headers
+        });
+    },
+    GetCoreServer: function(path, method, headers) {
+        headers['content-type'] = 'application/json';
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: path,
+            method: method,
+            headers: headers
+        });
+    },
     CheckToken: function(info) {
         var defer = $q.defer();
         if (!info.authorization || !info.deviceid || !info.systemtype || (info.systemtype && HelperService.const.systemType[info.systemtype.toLowerCase()] == undefined)) {
@@ -205,9 +223,9 @@ module.exports = {
             rejectUnauthorized: false
         })
     },
-    SendGCMPush: function(opts, tokens) {
+    SendGCMPush: function(opts, tokens, gcmSender) {
         var defer = $q.defer();
-        var message = new gcm.Message(opts)
+        var message = new gcm.Message(opts);
         var regTokens = tokens;
         gcmSender.send(message, {
             registrationIds: regTokens

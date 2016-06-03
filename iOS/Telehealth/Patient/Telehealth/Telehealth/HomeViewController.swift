@@ -98,6 +98,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func checkLogin(){
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
+            print(defaults.valueForKey("deviceToken") as? String)
             if let deviceToken = defaults.valueForKey("deviceToken") as? String{
                 api.updateTokenPush(uid,deviceToken:deviceToken)
             }
@@ -174,7 +175,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     //setup timer slide
     func resetTimer() {
         timer?.invalidate()
-        let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "handleIdleEventAutoSlide:", userInfo: nil, repeats: true)
+        let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(HomeViewController.handleIdleEventAutoSlide(_:)), userInfo: nil, repeats: true)
         timer = nextTimer
     }
     // handle slide image
@@ -377,6 +378,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             patientService.getInformationPatientByUUID(uuid){
                 message , data in
                 if message["message"] == "success" {
+                    print(data)
                     self.view.hideLoading()
                     self.patientInformation = data!
                     

@@ -104,7 +104,7 @@ class DTAlertView: UIView {
         }
         self.translatesAutoresizingMaskIntoConstraints = true
         
-        let gesture: UITapGestureRecognizer! = UITapGestureRecognizer(target: self, action: Selector("hide"))
+        let gesture: UITapGestureRecognizer! = UITapGestureRecognizer(target: self, action: #selector(DTAlertView.hide))
         self.addGestureRecognizer(gesture)
         
         
@@ -159,7 +159,7 @@ class DTAlertView: UIView {
     }
     func hide()
     {
-        if (self.delegate .respondsToSelector(Selector("DTAlertViewWillDismiss:")))
+        if (self.delegate .respondsToSelector(#selector(DTAlertViewDelegate.DTAlertViewWillDismiss(_:))))
         {
             self.delegate.DTAlertViewWillDismiss!(self)
         }
@@ -175,7 +175,7 @@ class DTAlertView: UIView {
                 {
                     self.isPresenting = false
                     self.removeFromSuperview()
-                    if (self.delegate .respondsToSelector(Selector("DTAlertViewDidDismiss:")))
+                    if (self.delegate .respondsToSelector(#selector(DTAlertViewDelegate.DTAlertViewDidDismiss(_:))))
                     {
                         self.delegate.DTAlertViewDidDismiss!(self)
                     }
@@ -232,11 +232,11 @@ class DTAlertView: UIView {
             self.alpha = 1
             }, completion: {
                 (value: Bool) in
-                if (self.delegate .respondsToSelector(Selector("didPresentDTAlertView:")))
+                if (self.delegate .respondsToSelector(#selector(DTAlertViewDelegate.didPresentDTAlertView(_:))))
                 {
                     self.delegate.didPresentDTAlertView!(self)
                 }
-                self.performSelector(Selector("hide"), withObject: self, afterDelay: 10.0)
+                self.performSelector(#selector(DTAlertView.hide), withObject: self, afterDelay: 10.0)
         })
         
         

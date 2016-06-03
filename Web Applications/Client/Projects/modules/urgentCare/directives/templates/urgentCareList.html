@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<div class="page-bar">
+<div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
@@ -14,17 +14,17 @@
 </div>
 <!-- END PAGE HEADER-->
 
-<h3 class="page-title bold">Urgent Care <small>Urgent Care List</small></h3>
+<!-- <h3 class="page-title bold">Urgent Care</h3> -->
 
 
-<div class="portlet box green">
+<div class="portlet light bordered">
     <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-list"></i>
-            <span class="caption-subject bold uppercase">Urgent Care</span>
+        <div class="caption uppercase bold font-blue">
+            <i class="icon-rocket font-blue"></i>
+            <span class="caption-subject">Urgent Care</span>
         </div>
         <div class="actions">
-            <a href="javascript:;" class="btn red-thunderbird btn-sm" ng-click="toggleFilter()">
+            <a href="javascript:;" class="btn btn-outline blue" ng-click="toggleFilter()">
                 <i class="fa fa-filter"></i> Filter
             </a>
             <!-- <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
@@ -34,11 +34,10 @@
         <!-- begin table -->
         <div class="row margin-top-10">
             <div class="col-md-12 col-sm-12">
-                <div class="table-scrollable table-scrollable-borderless">
-                    <table class="table table-bordered table-striped table-hover">
-                    <!-- <table class="table table-hover table-bordered flip-content"> -->
+                <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
+                    <table class="table table-light table-hover table-striped">
                         <thead class="flip-content">
-                            <tr>
+                            <tr class="uppercase">
                                 <th width="1">#</th>
                                 <th>
                                     Full Name
@@ -77,8 +76,8 @@
                                 <td><input type="text" class="form-control" ng-model="search.RequestType" ng-keypress="Search(search,$event.which)"></td>
                                 <td>
                                     <div class="form-inline">
-                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.from" style="font-size:13px;" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>  to 
-                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.to" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.from" style="font-size:13px;" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" placeholder="dd/mm/yyyy"/>  to 
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.to" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" placeholder="dd/mm/yyyy"/>
                                     </div>
                                     <!-- <div class="input-group input-medium date-picker input-daterange" data-date-format="dd/mm/yyyy" >
                                         <input type="text" class="form-control" ng-model="search.RequestDate.from" ng-change="Search(search,flag)">
@@ -99,48 +98,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tbody>
-                                <tr ng-repeat=" u in urgent" ng-click="clickDetail(u.UID)">
-                                    <td>{{u.stt}}</td>
-                                    <td>{{u.FirstName}} {{u.LastName}}</td>
-                                    <td>{{u.UrgentRequestType}}</td>
-                                    <td>{{u.RequestDate}}</td>
-                                    <td>{{u.PhoneNumber}}</td>
-                                    <td>{{u.Suburb}}</td>
-                                    <td>
-                                        <span class="label" ng-class="{'label-warning':u.Status=='pending','label-success':u.Status=='confirmed','label-danger':u.Status=='spending'}">{{u.Status}}</span>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tr ng-repeat=" u in urgent" ng-click="clickDetail(u.UID)">
+                                <td>{{u.stt}}</td>
+                                <td>{{u.FirstName}} {{u.LastName}}</td>
+                                <td>{{u.UrgentRequestType}}</td>
+                                <td>{{u.RequestDate}}</td>
+                                <td>{{u.PhoneNumber}}</td>
+                                <td>{{u.Suburb}}</td>
+                                <td>
+                                    <span class="label" ng-class="{'label-warning':u.Status=='pending','label-success':u.Status=='confirmed','label-danger':u.Status=='spending'}">{{u.Status}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <th colspan="7">
+                                <p>{{ filteredTodos.length }}</p>
+                                <div class="dataTables_paginate paging_simple_numbers pull-right" id="sample_1_paginate">
+                                    <uib-pagination 
+                                        boundary-links="true " 
+                                        total-items="count " 
+                                        ng-model="searchObjectMap.currentPage " 
+                                        class="pagination-md" 
+                                        previous-text="&lsaquo; " 
+                                        next-text="&rsaquo; " 
+                                        first-text="&laquo; " 
+                                        last-text="&raquo; " 
+                                        items-per-page="searchObjectMap.limit " 
+                                        max-size="searchObjectMap.maxSize "
+                                        ng-change="setPage()">
+                                    </uib-pagination>
+                                </div>
+                            </th>
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </div>
         <!-- end table -->
-        <!-- begin pagination -->
-        <div class="row">
-            <div class="col-md-5 col-sm-12">
-                {{filteredTodos.length }}
-            </div>
-            <div class="col-md-7 col-sm-12" style="text-align:right">
-                <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                    <uib-pagination 
-                        boundary-links="true " 
-                        total-items="count " 
-                        ng-model="searchObjectMap.currentPage " 
-                        class="pagination-lg " 
-                        previous-text="&lsaquo; " 
-                        next-text="&rsaquo; " 
-                        first-text="&laquo; " 
-                        last-text="&raquo; " 
-                        items-per-page="searchObjectMap.limit " 
-                        max-size="searchObjectMap.maxSize "
-                        ng-change="setPage()">
-                    </uib-pagination>
-                </div>
-            </div>
-        </div>
-        <!-- end pagination -->
     </div>
 </div>
 <script type="text/ng-template " id="urgentCareDetail">

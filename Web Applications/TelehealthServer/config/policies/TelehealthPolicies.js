@@ -3,6 +3,10 @@ module.exports = {
 		'RequestActivationCode':true,
 		'VerifyActivationCode':true,
 		'TestPushAPN':true,
-		'TestPushGCM':true
+		'TestPushGCM':true,
+		'CheckActivation':true,
+		'GetListCountry':true,
+		'ForgetPIN':true,
+		'TestGCM':true
 	}
 }

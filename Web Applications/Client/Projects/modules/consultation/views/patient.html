@@ -1,0 +1,29 @@
+<div ui-view>
+    <div class="page-bar ">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="javascript:;" ui-sref="authentication.home.list">Home</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <a href="javascript:;" ui-sref="authentication.consultation.list">Consultation</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <a href="javascript:;" ui-sref="authentication.consultation.detail({UID:$state.params.UID, UIDPatient:$state.params.patientUID})">Consultation Detail</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <b>EForm Patient</b>
+            </li>
+        </ul>
+    </div>
+    <h3 class="page-title bold">EForm Patient</h3>
+    <div class="row">
+        <div class="col-lg-12 col-md-12" id="col9">
+            <a ng-click="getEForm()" class="btn btn-info" ng-if="isIframe==true" >Back</a>
+            <iframe width="100%" height="760" frameBorder="0" scrolling="yes" id="EForm"></iframe>
+        </div>
+    </div>
+</div>

@@ -44,6 +44,14 @@ app.config(function($stateProvider) {
             templateUrl: 'modules/consultation/views/consultationDetail.html',
             controller: 'consultationDetailCtrl'
         })
+        .state('authentication.consultation.detail.Onsite', {
+            url: '/Onsite',
+            data: {
+                pageTitle: 'Onsite Detail'
+            },
+            templateUrl: 'modules/onsite/views/onsiteAppointment.html',
+            controller: 'onsiteAppointmentCtrl',
+        })
         .state('authentication.consultation.detail.patientAdmission', {
             url: '/patientAdmission',
             data: {
@@ -88,5 +96,14 @@ app.config(function($stateProvider) {
             },
             templateUrl: 'modules/consultation/views/drawing.html',
             controller: 'drawingCtrl',
+        })
+        .state('authentication.consultation.eformbypatient', {
+            url: '/eform/patient/:UID/:patientUID/:userUID',
+            data: {
+                title: 'EForm Patient',
+                pageTitle: 'EForm Patient'
+            },
+            templateUrl: 'modules/consultation/views/patient.html',
+            controller: 'EFormPatientCtrl',
         })
 });

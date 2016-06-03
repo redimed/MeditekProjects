@@ -42,10 +42,7 @@ app.directive('companyStaff', function($uibModal, $timeout, $state, companyServi
 				if(scope.type == 'delete') {
 					console.log(scope.uid);
 					scope.postData = {};
-					if(scope.uid.RelCompanyPatient.Active == 'N')
-						scope.postData.Active = 'Y';
-					else
-						scope.postData.Active = 'N';
+					scope.postData.Active = 'N';
 					scope.whereClauses = {
 						PatientID : scope.uid.ID,
 						CompanyID : scope.compid

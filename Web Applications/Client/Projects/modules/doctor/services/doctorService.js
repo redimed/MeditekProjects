@@ -57,6 +57,39 @@ angular.module('app.authentication.doctor.service', [])
 		return changeStatusFile.post({data:data});
 	}
 
+	services.loadlistGroup = function(data) {
+		var loadlistGroup = api.all('doctor/load-list-group');
+		return loadlistGroup.post({data:data});
+	}
+
+	services.createGroup = function(data) {
+		var createGroup = api.all('doctor/create-group');
+		return createGroup.post({data:data});
+	}
+	services.getDetailGroup = function(data) {
+		var getDetailGroup = api.one('doctor/get-detail-group?UID='+data.UID);
+		return getDetailGroup.get();
+	}
+	services.addDoctor = function(data) {
+		var addDoctor = api.all('doctor/add-doctor-to-group');
+		return addDoctor.post({data:data});
+	}
+	services.loadlistDoctorfromGroup = function(data) {
+		var loadlistDoctorfromGroup = api.all('doctor/load-list-doctor-from-group');
+		return loadlistDoctorfromGroup.post({data:data});
+	}
+	services.deleteDoctorfromGroup = function(data) {
+		var deleteDoctorfromGroup = api.all('doctor/delete-doctor-from-group');
+		return deleteDoctorfromGroup.post({data:data});
+	}
+	services.updateGroup = function(data) {
+		var updateGroup = api.all('doctor/update-group');
+		return updateGroup.post({data:data});
+	}
+	services.changeStatusGroup = function(data) {
+		var changeStatusGroup = api.all('doctor/change-status-group');
+		return changeStatusGroup.post({data:data});
+	}
 	services.checkphoneUserAccount = function(data) {
 		var instanceApi = api.all('checkphoneUserAccount');
 		return instanceApi.post({data: data});
@@ -107,9 +140,9 @@ angular.module('app.authentication.doctor.service', [])
 	}
 
 	services.validateCheckPhone = function(info) {
-		
+
 		var error = [];
-		
+
 		var q = $q.defer();
 
 		try {
@@ -130,7 +163,7 @@ angular.module('app.authentication.doctor.service', [])
 				error.push({field:"UserName",message:"required"});
 				// toastr.error('UserName is required');
 			}
-			
+
 			//validate FirstName
 			if(info.FirstName){
 				if(info.FirstName.length < 0 || info.FirstName.length > 50){
@@ -331,7 +364,7 @@ angular.module('app.authentication.doctor.service', [])
 					}
 				}
 			}
-			
+
 			//validate Occupation
 			if('Occupation' in info){
 				if(info.Occupation){

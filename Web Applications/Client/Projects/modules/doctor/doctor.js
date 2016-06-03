@@ -3,7 +3,10 @@ angular.module('app.authentication.doctor',[
 	'app.authentication.doctor.controller',
 	'app.authentication.doctor.directive.list',
 	'app.authentication.doctor.directive.create',
-	'app.authentication.doctor.directive.detail'
+	'app.authentication.doctor.directive.detail',
+	'app.authentication.doctor.directive.group',
+	'app.authentication.doctor.directive.group.create',
+	'app.authentication.doctor.directive.group.detail'
 ])
 
 .config(function($stateProvider, $urlRouterProvider){
@@ -38,5 +41,18 @@ angular.module('app.authentication.doctor',[
 			data: {title: 'Doctor Profile', pageTitle: 'Doctor Profile'},
 			templateUrl: 'modules/doctor/views/doctorProfile.html',
 			controller: 'doctorProfileCtrl'
-		});
+		})
+		.state('authentication.doctor.group', {
+			url:'/group',
+			data: {title: 'Doctor Group', pageTitle: 'Doctor Group'},
+			templateUrl: 'modules/doctor/views/doctorGroup.html',
+			controller: 'doctorGroupCtrl'
+		})
+		.state('authentication.doctor.groupDetail', {
+			url:'/group/detail/:uid',
+			data: {title: 'Doctor Group Detail', pageTitle: 'Doctor Group Detail'},
+			templateUrl: 'modules/doctor/views/doctorGroupDetail.html',
+			controller: 'doctorGroupDetailCtrl'
+		})
+		;
 })

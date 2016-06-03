@@ -9,11 +9,9 @@ import java.util.List;
  */
 public interface ITrackingView {
 
-    void onLoadToolbar();
-
     void onLoadError(String msg);
 
-    void onLoadDataTracking(List<Appointment> data);
+//    void onLoadDataTracking();
 
     void onSetProgressBarVisibility(int visibility);
 

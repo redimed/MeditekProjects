@@ -246,7 +246,7 @@ module.exports = {
                 }
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
-                if (data.HomePhoneNumber != undefined && data.HomePhoneNumber) {
+                if (data.HomePhoneNumber != undefined && data.HomePhoneNumber.length > 0) {
                     var auHomePhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                     var HomePhone = data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                     if (!auHomePhoneNumberPattern.test(HomePhone)) {
@@ -257,7 +257,7 @@ module.exports = {
                 }
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
-                if (data.WorkPhoneNumber != undefined && data.WorkPhoneNumber) {
+                if (data.WorkPhoneNumber != undefined && data.WorkPhoneNumber.length > 0) {
                     var auWorkPhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                     var WorkPhoneNumber = data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                     if (!auWorkPhoneNumberPattern.test(WorkPhoneNumber)) {
@@ -458,7 +458,7 @@ module.exports = {
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
                 if ('HomePhoneNumber' in data) {
-                    if (data.HomePhoneNumber) {
+                    if (data.HomePhoneNumber.length > 0) {
                         var auHomePhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                         var HomePhone = data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                         if (!auHomePhoneNumberPattern.test(HomePhone)) {
@@ -471,7 +471,7 @@ module.exports = {
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
                 if ('WorkPhoneNumber' in data) {
-                    if (data.WorkPhoneNumber) {
+                    if (data.WorkPhoneNumber.length > 0) {
                         var auWorkPhoneNumberPattern = new RegExp(check.regexPattern.auHomePhoneNumber);
                         var WorkPhoneNumber = data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars, '');
                         if (!auWorkPhoneNumberPattern.test(WorkPhoneNumber)) {
@@ -504,7 +504,7 @@ module.exports = {
                             "FirstName":"asvasv",.....
                         }
                     }
-        output : if porperty has existed in table Patient, it will defined 
+        output : if porperty has existed in table Patient, it will defined
     */
     whereClause: function(data) {
         // define whereClause's data
@@ -636,7 +636,7 @@ module.exports = {
     /*
         CreatePatient : service create patient
         input: Patient's information
-        output: insert Patient's information into table Patient 
+        output: insert Patient's information into table Patient
     */
     CreatePatient: function(data, other, transaction) {
         var PatientDetail = {};
@@ -662,6 +662,7 @@ module.exports = {
             Suburb: data.Suburb,
             Postcode: data.Postcode,
             Email1: data.Email1,
+            Email2: data.Email2,
             UID: UUIDService.Create(),
             Address1: data.Address1,
             Address2: data.Address2,
@@ -674,36 +675,36 @@ module.exports = {
                     .then(function(success) {
                         if (data.Email && data.PhoneNumber) {
                             isCreateByPhoneAndEmail = true;
-                            userInfo.UserName = check.parseAuMobilePhone(data.PhoneNumber);
+                            userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
                             userInfo.PhoneNumber = data.PhoneNumber;
                             userInfo.Email = data.Email;
-                            return Services.UserAccount.GetUserAccountDetails(data, null, t);
+                            return success;
                         } else if (data.Email) {
                             isCreateByEmail = true;
-                            userInfo.UserName = data.Email;
+                            userInfo.UserName = data.UserName?data.UserName:data.Email;
                             userInfo.Email = data.Email;
-                            return Services.UserAccount.GetUserAccountDetails(data, null, t);
+                            return success;
                         } else if (data.PhoneNumber) {
                             isCreateByPhoneNumber = true;
-                            userInfo.UserName = check.parseAuMobilePhone(data.PhoneNumber);
+                            userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
                             userInfo.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
-                            return Services.UserAccount.GetUserAccountDetails(data, null, t);
+                            return success;
                         } else {
                             isCreateByName = true;
-                            userInfo.UserName = data.FirstName + "." + data.LastName + "." + generatePassword(4, false);
+                            userInfo.UserName = data.UserName?data.UserName:data.FirstName + "." + data.LastName + "." + generatePassword(4, false);
                             return success;
                         }
                     }, function(err) {
                         // t.rollback();
                         throw err;
                     })
-                    .then(function(got_user) {
-                        if (got_user == '' || got_user == null) {
+                    .then(function(validated) {
+                        if (validated && validated.status == 'success') {
                             userInfo.Password = generatePassword(12, false);
                             userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
                             return Services.UserAccount.CreateUserAccount(userInfo, t);
                         } else {
-                            return got_user;
+                            return validated;
                         }
                     }, function(err) {
                         throw err;
@@ -976,38 +977,105 @@ module.exports = {
                             throw err;
                         })
                         .then(function(user) {
-                            if (data.EnableUser != undefined && data.EnableUser != null && data.EnableUser != "") {
-                                return UserAccount.update({
-                                    Enable: data.EnableUser
-                                }, {
-                                    where: {
-                                        UID: data.UserAccountUID
-                                    },
-                                    transaction: t
-                                });
-                            } else {
-                                if (data.Email && data.Email != null && data.Email != '') {
-                                    var EmailPattern = new RegExp(check.regexPattern.email);
+                            if(data.Email || data.EnableUser || data.Activated){
+                                var UserWhereClause = {};
+                                var UserData = {};
+                                if(data.UserAccountUID) {
+                                    UserWhereClause.UID = data.UserAccountUID;
+                                }
+                                else if(data.UserAccountID) {
+                                    UserWhereClause.ID = data.UserAccountID;
+                                }
+                                if(data.Email) {
+                                    console.log("data.Email ", data.Email);
                                     if (!EmailPattern.test(data.Email)) {
                                         t.rollback();
                                         var err = new Error("UpdatePatient.Error");
                                         err.pushError("invalid.Email");
                                         throw err;
-                                    } else {
-                                        return UserAccount.update({
-                                            Email: data.Email
-                                        }, {
-                                            where: {
-                                                UID: data.UserAccountUID
-                                            },
-                                            transaction: t
-                                        });
                                     }
-                                } else
-                                    return user;
+                                    else {
+                                        UserData.Email = data.Email;
+                                    }
+                                }
+                                console.log("Activated ",data.Activated);
+                                if(data.EnableUser) UserData.Enable = data.EnableUser;
+                                if(data.Activated) UserData.Activated = data.Activated;
+                                return UserAccount.update(UserData,{
+                                    where: UserWhereClause,
+                                    transaction:t
+                                });
                             }
+                            else {
+                                return user;
+                            }
+                            // if (data.EnableUser != undefined && data.EnableUser != null && data.EnableUser != "") {
+                            //     var UserWhereClause = {};
+                            //     if(data.UserAccountUID) {
+                            //         UserWhereClause.UID = data.UserAccountUID;
+                            //     }
+                            //     else if(data.UserAccountID) {
+                            //         UserWhereClause.ID = data.UserAccountID;
+                            //     }
+                            //     return UserAccount.update({
+                            //         Enable: data.EnableUser
+                            //     }, {
+                            //         where: UserWhereClause,
+                            //         transaction: t
+                            //     });
+                            // } else {
+                            //     if (data.Email && data.Email != null && data.Email != '') {
+                            //         var EmailPattern = new RegExp(check.regexPattern.email);
+                            //         if (!EmailPattern.test(data.Email)) {
+                            //             t.rollback();
+                            //             var err = new Error("UpdatePatient.Error");
+                            //             err.pushError("invalid.Email");
+                            //             throw err;
+                            //         } else {
+                            //             var UserWhereClause = {};
+                            //             if(data.UserAccountUID) {
+                            //                 UserWhereClause.UID = data.UserAccountUID;
+                            //             }
+                            //             else if(data.UserAccountID) {
+                            //                 UserWhereClause.ID = data.UserAccountID;
+                            //             }
+                            //             return UserAccount.update({
+                            //                 Email: data.Email
+                            //             }, {
+                            //                 where: UserWhereClause,
+                            //                 transaction: t
+                            //             });
+                            //         }
+                            //     } else
+                            //         return user;
+                            // }
                         }, function(err) {
                             t.rollback();
+                            throw err;
+                        })
+                        .then(function(updated_user) {
+                            if(data.PinNumber && data.PinNumber != null && data.PinNumber != '') {
+                                var PinNumberRegExp = /^[0-9]{6}$/;
+                                if (!PinNumberRegExp.test(data.PinNumber)) {
+                                    var err = new Error("UpdatePatient.Error");
+                                    err.pushError("PinNumber must 6 digits.");
+                                    throw err;
+                                } else {
+                                    return UserAccount.update({
+                                        PinNumber: data.PinNumber
+                                    }, {
+                                        where: {
+                                            ID: data.UserAccountID
+                                        },
+                                        transaction: t
+                                    });
+                                }
+
+                            }
+                            else {
+                                return updated_user;
+                            }
+                        }, function(err) {
                             throw err;
                         })
                         //update 4 bang patient tai day
@@ -1391,7 +1459,7 @@ module.exports = {
                     //                     attributes: ['ID','UID','FileType'],
                     //                     required: false,
                     //                     where:{
-                    //                         FileType:{$in: ['ProfileImage', 'Signature']},  
+                    //                         FileType:{$in: ['ProfileImage', 'Signature']},
                     //                         Enable:'Y'
                     //                     },
                     //                     // order:['CreatedDate ASC']
@@ -1460,7 +1528,7 @@ module.exports = {
 
                 include: [{
                     model: UserAccount,
-                    attributes: ['PhoneNumber', 'Email', 'ID', 'UID', 'Enable'],
+                    attributes: ['PhoneNumber', 'Email', 'ID', 'UID', 'Enable','Activated'],
                     required: true,
                     include: [{
                         model: RelUserRole,
@@ -1473,6 +1541,12 @@ module.exports = {
                     attributes: ['ShortName'],
                     required: false
 
+                }, {
+                    model: Company,
+                    through:{
+                        where:{Active:'Y'}
+                    },
+                    required:false
                 }]
             })
             .then(function(result) {
@@ -1487,8 +1561,10 @@ module.exports = {
                 throw err;
             })
             .then(function(success) {
-                if (success != null && success != "" && success.length != 0)
+                if (success != null && success != "" && success.length != 0){
                     returnData[0].dataValues.TeleUID = success ? success[0].UID : null;
+                    returnData[0].dataValues.TeleID = success ? success[0].ID : null;
+                }
                 return returnData;
             }, function(err) {
                 throw err;
@@ -1572,7 +1648,7 @@ module.exports = {
     /*
         CheckPatient : service check patient has created ?
         input  : patient's PhoneNumber
-        output : return object that contain information patient 
+        output : return object that contain information patient
                  is created or not created
     */
     CheckPatient: function(data, transaction) {
@@ -1659,43 +1735,6 @@ module.exports = {
                 }, function(err) {
                     throw err;
                 })
-                // return Services.UserAccount.GetUserAccountDetails(data,null,transaction)
-                // .then(function(user){
-                //     if(check.checkData(user)){
-                //         info.Email = user.Email;
-                //         info.PhoneNumber = user.PhoneNumber;
-                //         return Patient.findAll({
-                //                 where :{
-                //                     UserAccountID : user.ID
-                //                 },
-                //                 transaction:transaction
-                //             });
-
-            //     }
-            //     else
-            //         return ({
-            //             isCreated:false
-            //         });
-            // },function(err){
-            //     throw err;
-            // })
-            // .then(function(result){
-            //     if(check.checkData(result) && result.isCreated!==false){
-            //         return ({
-            //             isCreated:true
-            //         });
-            //     }
-            //     else
-            //         return ({
-            //             isCreated:false,
-            //             data: {
-            //                 Email : info.Email,
-            //                 PhoneNumber: info.PhoneNumber
-            //             }
-            //         });
-            // },function(err){
-            //     throw err;
-            // });
         } else if (check.checkData(data.PhoneNumber)) {
             // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
             return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber, transaction)
@@ -1739,11 +1778,11 @@ module.exports = {
             return Services.UserAccount.GetUserAccountDetails(data, null, transaction)
                 .then(function(user) {
                     if (check.checkData(user)) {
-                        info.Email = user[0].Email;
-                        info.PhoneNumber = user[0].PhoneNumber;
+                        info.Email = user.Email;
+                        info.PhoneNumber = user.PhoneNumber;
                         return Patient.findAll({
                             where: {
-                                UserAccountID: user[0].ID
+                                UserAccountID: user.ID
                             },
                             transaction: transaction
                         });
@@ -1777,15 +1816,12 @@ module.exports = {
             error.pushErrors("invalid.params");
             throw error;
         }
-        // },function(err){
-        // throw err;
-        // })
     },
 
 
     /*
         getfileUID : service get patient's fileUID
-        input  : data like 
+        input  : data like
                     "data": {
                         "UserAccountID":"000",
                         "FileType":"aaa"
@@ -1928,20 +1964,23 @@ module.exports = {
                 } else {
                     return sequelize.Promise.each(data.model, function(modelName, index) {
                             return sequelize.models[modelName].findAll({
-                                    where: {
-                                        $and: data.where ? data.where : null,
-                                        PatientID: got_patient.ID,
-                                    },
-                                    limit: data.limit ? data.limit : null,
-                                    offset: data.offset ? data.offset : null,
-                                })
-                                .then(function(got_model) {
-                                    postData[modelName] = got_model;
-                                }, function(err) {
-                                    throw err;
-                                });
+                                where: {
+                                    $and: data.where ? data.where : null,
+                                    PatientID: got_patient.ID,
+                                },
+                                limit: data.limit ? data.limit : null,
+                                offset: data.offset ? data.offset : null,
+                            })
+                            .then(function(got_model) {
+                                postData[modelName] = got_model;
+                            }, function(err) {
+                                throw err;
+                            });
                         })
-                        .then(function(result) {}, function(err) {
+                        .then(function(result) {
+                            return result;
+                        }, function(err) {
+                            throw err;
                             console.log(err);
                         })
                 }

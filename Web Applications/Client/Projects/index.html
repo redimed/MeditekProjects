@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5
 Version: 4.5.0
 Author: KeenThemes
@@ -32,6 +32,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="./theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
     <link href="./theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js">
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/foundation-datepicker-master/css/foundation-datepicker.min.css">
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <!-- muti select -->
@@ -89,6 +90,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END THEME LAYOUT STYLES -->
     <link href="./theme/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico" />
+    <!-- Opentok whiteboard -->
+    <link rel="stylesheet" type="text/css" href="./theme/assets/global/libs/opentok-whiteboard/opentok-whiteboard.css">
+    <!-- Opentok whiteboard -->
 </head>
 <!-- END HEAD -->
 <!-- <body class="page-header-fixed page-quick-sidebar-over-content"> -->
@@ -106,6 +110,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="common/config/config.js"></script>
     <script src="./theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/foundation-datepicker-master/js/foundation-datepicker.min.js" type="text/javascript"></script>
     <script src="./theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="./theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
     <script src="./theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -159,7 +164,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script type="text/javascript" src="./theme/assets/global/libs/lodash/lodash.min.js"></script>
     <script type="text/javascript" src="./theme/assets/global/libs/moment/moment.js"></script>
     <!-- END DEPENDENCIES -->
-    <!-- BEGIN OPENTOK -->
+    <!-- BEGIN OPENTOK v2.8.0 -->
     <script src="./theme/assets/global/libs/opentok/opentok.min.js" type="text/javascript"></script>
     <!-- END OPENTOK -->
     <!-- BEGIN socket -->
@@ -227,6 +232,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="modules/blank/services/blankServices.js"></script>
     <script src="modules/blank/directives/blankDirective.js"></script>
     <script src="modules/blank/directives/blankRegisterPatientDirective.js"></script>
+    <script src="modules/blank/directives/opentok-angular.js"></script>
+    <script src="modules/blank/directives/opentok-whiteboard.js"></script>
+    <script src="./theme/assets/global/libs/opentok-whiteboard/paper-core.min.js"></script>
     <!-- END MODULE blank -->
     <!-- BEGIN MODULE home -->
     <script src="modules/home/home.js"></script>
@@ -273,9 +281,14 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="modules/doctor/controllers/doctorListCtrl.js"></script>
     <script src="modules/doctor/controllers/doctorCreateCtrl.js"></script>
     <script src="modules/doctor/controllers/doctorProfileCtrl.js"></script>
+    <script src="modules/doctor/controllers/doctorGroupCtrl.js"></script>
+    <script src="modules/doctor/controllers/doctorGroupDetailCtrl.js"></script>
     <script src="modules/doctor/directives/listDirective.js"></script>
     <script src="modules/doctor/directives/createDirective.js"></script>
     <script src="modules/doctor/directives/detailDirective.js"></script>
+    <script src="modules/doctor/directives/groupDirective.js"></script>
+    <script src="modules/doctor/directives/groupcreateDirective.js"></script>
+    <script src="modules/doctor/directives/groupdetailDirective.js"></script>
     <!-- END MODULE doctor -->
     <!-- BEGIN MODULE patient -->
     <script src="modules/patient/patient.js"></script>
@@ -328,6 +341,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="modules/consultation/directives/listPatientConsultation.js"></script>
     <script src="modules/consultation/directives/listAdmissionPatientDirectives.js"></script>
     <script src="modules/consultation/js/Consultation_helper.js"></script>
+    <script src="modules/consultation/controllers/EFormPatientCtrl.js"></script>
     <!-- END MODULE consultation -->
     <!-- BEGIN MODULE eForms -->
     <script src="modules/eForm/eForm.js"></script>
@@ -466,6 +480,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="theme/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <!-- bootstrap switch -->
+    <script src="theme/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="theme/assets/global/scripts/app.js" type="text/javascript"></script>
@@ -528,6 +544,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.contextMenu.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.contextMenu.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.1.0/jquery.ui.position.min.js"></script>
+    <!-- bootstrap switch -->
+    <script src="theme/assets/pages/scripts/components-bootstrap-switch.min.js" type="text/javascript"></script>
+
     <!-- END PAGE LEVEL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
     <script src="theme/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
@@ -535,11 +554,12 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="theme/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
     <!-- END THEME LAYOUT SCRIPTS -->
     <!-- END APP LEVEL JQUERY SCRIPTS -->
+    <script src="./theme/assets/global/libs/opentok/opentok-layout.js" charset="utf-8"></script>
     <script type="text/javascript">
     $(document).ready(function() {
-        // App.init(); 
+        // App.init();
         // App.initComponents(); // init core components
-        App.setAssetsPath('theme/assets/'); // Set the assets folder path 
+        App.setAssetsPath('theme/assets/'); // Set the assets folder path
 
     });
     </script>

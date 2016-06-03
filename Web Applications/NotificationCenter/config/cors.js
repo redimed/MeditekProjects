@@ -25,9 +25,7 @@
  *  http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.cors.html
  *
  */
-
-module.exports.cors = {
-
+var corsConfig = {
   /***************************************************************************
   *                                                                          *
   * Allow CORS on all routes by default? If not, you must enable CORS on a   *
@@ -49,8 +47,9 @@ module.exports.cors = {
 
   origin: 'http://localhost:3004, http://localhost:3006, '+
           'https://localhost:3004, https://localhost:3006 '+
-          'http://192.168.1.215:3004, http://192.168.1.215:3006 '+
-          'https://192.168.1.215:3004, https://192.168.1.215:3006',
+          'http://192.168.1.247:3004, http://192.168.1.247:3006 '+
+          'http://192.168.1.216:3004, http://192.168.1.216:3006 '+
+          'https://192.168.1.83:3004, https://192.168.1.83:3006',
 
   /***************************************************************************
   *                                                                          *
@@ -79,5 +78,12 @@ module.exports.cors = {
   headers: 'content-type, authorization, systemtype, deviceid, appid',
 
   securityLevel: 1,
+}
 
-};
+if (process.argv.indexOf("--allowcors") >= 0) {
+    console.log("||||||||||||||||||||||| CORS: Allow all domain");
+    corsConfig.origin = "*";
+} 
+
+module.exports.cors = corsConfig;
+

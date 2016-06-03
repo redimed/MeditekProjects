@@ -36,10 +36,10 @@ module.exports = function(data, userInfo) {
                                             HelperService.CheckExistData(valueRoster.ToTime)) {
                                             var objFilterTemp = {
                                                 FromTime: {
-                                                    $gte: valueRoster.FromTime
+                                                    $gte: moment(valueRoster.FromTime, 'YYYY-MM-DD HH:mm:ss Z').toDate()
                                                 },
                                                 ToTime: {
-                                                    $lte: valueRoster.ToTime
+                                                    $lte: moment(valueRoster.ToTime,'YYYY-MM-DD HH:mm:ss Z').toDate()
                                                 }
                                             };
                                             arrWhereClauseRoster.push(objFilterTemp);

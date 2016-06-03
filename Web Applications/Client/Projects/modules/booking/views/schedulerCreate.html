@@ -1,3 +1,4 @@
+
 <form name="form" ng-submit="submit()">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" 
@@ -6,58 +7,84 @@
 			<i class="glyphicon glyphicon-calendar"></i> Slot Time </h4>
 	</div>
 	<div class="modal-body">
-		<div class="col-md-6 col-sm-6 form-group">
-			<label class="control-label">Doctor</label>
-			<br/>
-			<b>{{formData.Doctor.FirstName+' '+formData.Doctor.LastName}}</b>
-		</div>
-		<div class="col-md-6 col-sm-6 form-group">
-			<label class="control-label">Select Patient</label>
-			<br/>
-			<span><b>{{formData.Patient.FirstName}} {{formData.Patient.LastName}}</b></span>
-			<a style="float:right" class="btn btn-primary btn-large" ng-click="choosePatientDialog()">Choose</a>
-		</div>
-		<div class="col-md-4 col-sm-4 form-group">
-			<label class="control-label">Selection Date</label>
-			<b>{{formData.date}}</b>
-		</div>
-		<div class="col-md-4 col-sm-4 form-group">
-			<label class="control-label">From Time</label>
-			<input type="text" class="form-control timepicker timepicker-24" data-default-time='' 
-				ng-model="formData.fromTime">
-		</div>
-		<div class="col-md-4 col-sm-4 form-group">
-			<label class="control-label">To Time</label>
-			<input type="text" class="form-control timepicker timepicker-24" data-default-time=''
-				ng-model="formData.toTime">
-		</div>
-		<div class="col-md-12 col-sm-12 form-group">
-			<label class="control-label">Appointment Type</label>
-			<select class="form-control"
-				ng-options="item.code as item.name for item in listTypes"
-				ng-model="formData.type">
-			</select>
-		</div>
-		<div class="col-md-6 col-sm-6">
-			<label class="control-label">Service Name</label><br/>
-			<b>{{formData.service.ServiceName}}</b>
-			<!--<select class="form-control"
-				ng-options="item.ServiceName for item in listServices track by item.UID"
-				ng-model="formData.service">
-			</select>-->
-		</div>
-		<div class="col-md-6 col-sm-6 form-group">
-			<label class="control-label">Site</label>
-			<select class="form-control"
-				ng-options="item.SiteName for item in listSites track by item.UID"
-				ng-model="formData.site">
-			</select>
+		<div class="form-body">
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="form-group">
+						<label class="control-label">Doctor</label></br>
+						<p class="form-control-static bold" data-display="">{{formData.Doctor.FirstName+' '+formData.Doctor.LastName}}</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="form-group">
+						<label class="control-label">Select Patient</label></br>
+						<p class="form-control-static bold" data-display="">&nbsp;{{formData.Patient.FirstName}} {{formData.Patient.LastName}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<label class="control-label">Selection Date</label></br>
+						<p class="form-control-static bold" data-display="">&nbsp;{{formData.date}}</p>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<label class="control-label">From Time</label>
+						<input type="text" class="form-control timepicker timepicker-24" data-default-time='' 
+							ng-model="formData.fromTime">
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class=" form-group">
+						<label class="control-label">To Time</label>
+						<input type="text" class="form-control timepicker timepicker-24" data-default-time=''
+							ng-model="formData.toTime">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="form-group">
+						<label class="control-label">Appointment Type</label>
+						<select class="form-control"
+							ng-options="item.code as item.name for item in listTypes"
+							ng-model="formData.type">
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="form-group">
+						<label class="control-label">Service Name</label></br>
+						<p class="form-control-static bold" data-display="">{{formData.service.ServiceName}}</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="form-group">
+						<label class="control-label">Site</label>
+						<select class="form-control"
+							ng-options="item.SiteName for item in listSites track by item.UID"
+							ng-model="formData.site">
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" ng-if="!formData.Patient">
+					<patient-list on-item="items" on-limit="5" on-select="true" appointment="patient" ></patient-list>
+				</div>
+			</div>
 		</div>
 	</div>
-	<center style="margin-bottom: 10px;">
-		<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
-			ng-click="cancel()">Cancel</button>
-		<button type="submit" class="btn btn-lg red">
-			<i class="glyphicon glyphicon-save"></i> Submit</button>
-	</center>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+				ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+			<button type="submit" class="btn btn-lg red">
+				Submit <i class="glyphicon glyphicon-save"></i></button>
+		</div>
+	</div>
 </form>

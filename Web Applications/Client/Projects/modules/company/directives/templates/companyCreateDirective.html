@@ -1,8 +1,8 @@
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" 
+        <button type="button" class="close" data-dismiss="modal"
             aria-hidden="true" ng-click="cancel()"></button>
         <h4 class="modal-title uppercase bold font-red">
-            <i class="icon-settings"></i> Company create new</h4>
+            <i class="icon-settings"></i> Create new company</h4>
     </div>
     <div class="modal-body">
         <div class="form-body">
@@ -57,16 +57,22 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Country</label>
-                                <input type="text" class="form-control" ng-model="info.CompanySiteCountry" ng-change="erlist.CompanySiteCountry ='';checkDataNull('CompanySiteCountry')" ng-style="erlist.CompanySiteCountry.style" />
-                                <span style="color:red;">{{erlist.CompanySiteCountry.msg}}</span>
+                                <label class="control-label">State</label>
+                                <!-- <input type="text" class="form-control" ng-model="info.CompanySiteState" ng-change="erlist.CompanySiteState ='';checkDataNull('CompanySiteState')" ng-style="erlist.CompanySiteState.style" /> -->
+                                <select class="form-control" ng-model="info.CompanySiteState"ng-options="s.code as s.name for s in state" ng-change="erlist.CompanySiteState ='';checkDataNull('CompanySiteState')" ng-style="erlist.CompanySiteState.style" >
+                                    <option value="">Select State</option>
+                                </select>
+                                <span style="color:red;">{{erlist.CompanySiteState.msg}}</span>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">State</label>
-                                <input type="text" class="form-control" ng-model="info.CompanySiteState" ng-change="erlist.CompanySiteState ='';checkDataNull('CompanySiteState')" ng-style="erlist.CompanySiteState.style" />
-                                <span style="color:red;">{{erlist.CompanySiteState.msg}}</span>
+                                <label class="control-label">Country</label>
+                                <!-- <input type="text" class="form-control" ng-model="info.CompanySiteCountry" ng-change="erlist.CompanySiteCountry ='';checkDataNull('CompanySiteCountry')" ng-style="erlist.CompanySiteCountry.style" /> -->
+                                <select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="info.CompanySiteCountry" ng-change="erlist.CompanySiteCountry ='';checkDataNull('CompanySiteCountry')" ng-style="erlist.CompanySiteCountry.style" >
+                                    <option value="">Select Country</option>
+                                </select>
+                                <span style="color:red;">{{erlist.CompanySiteCountry.msg}}</span>
                             </div>
                         </div>
                     </div>
@@ -92,7 +98,7 @@
     </div>
     <div class="modal-footer">
         <div class="form-actions right">
-            <button class="btn btn-lg dark" data-dismiss="modal" 
+            <button class="btn btn-lg dark" data-dismiss="modal"
                 ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
             <button class="btn btn-lg red"
                 ng-click="save()">Submit <i class="glyphicon glyphicon-save"></i></button>

@@ -21,7 +21,6 @@ module.exports = React.createClass({
     _onComponentFormCreateSave: function(){
         this.refs.modalAddForm.hide();
         this.refs.formList.refresh();
-        swal("Success!", "Your e-form template module has been created.", "success");
     },
     _onComponentFormListUpdate: function(item){
         this.refs.modalUpdateForm.show();

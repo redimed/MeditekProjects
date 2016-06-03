@@ -69,14 +69,49 @@ module.exports = {
        */
     GetDetailWAAppointment: function(req, res) {
         var UID = req.params.UID;
-        Services.GetDetailWAAppointment(UID)
+        var UserUID = req.params.UserUID;
+        var result = {};
+        Services.GetDetailWAAppointment(UID, UserUID)
         .then(function(success) {
-            success.dataValues.Patient = success.dataValues.Patients[0];
-            success.dataValues.UserAccount = success.dataValues.Patients[0].UserAccount;
-            success.dataValues.Doctor = success.dataValues.Doctors[0];
-            delete success.dataValues.Patients;
-            delete success.dataValues.Doctors;
-            res.ok({data: success});
+            result = success;
+            result.dataValues.Appointment = {
+                Code: success.dataValues.Code,
+                SiteID: success.dataValues.SiteID,
+                FromTime: success.dataValues.FromTime,
+                ToTime: success.dataValues.ToTime,
+                RequestDate: success.dataValues.RequestDate,
+                ApprovalDate: success.dataValues.ApprovalDate,
+                Status: success.dataValues.Status,
+                CreatedDate: success.dataValues.CreatedDate,
+                Type: success.dataValues.Type
+            }
+            result.dataValues.Patient = result.dataValues.Patients[0] || null;
+            result.dataValues.UserAccount = result.dataValues.Patients[0]
+                                            && result.dataValues.Patients[0].UserAccount?
+                                            result.dataValues.Patients[0].UserAccount:null;
+            // result.dataValues.Doctor = result.dataValues.Doctors[0] || null;
+            result.dataValues.Doctor = null;
+            if(result.dataValues.Doctors[0]
+                && result.dataValues.Doctors[0].UserAccount
+                && result.dataValues.Doctors[0].UserAccount.RelUserRoles
+                && result.dataValues.Doctors[0].UserAccount.RelUserRoles.length>0)
+                result.dataValues.Doctor = result.dataValues.Doctors[0];
+            delete result.dataValues.Patients;
+            delete result.dataValues.Doctors;
+            if(result.dataValues.ID && result.dataValues.Patient && result.dataValues.Patient.ID)
+            {
+                return Services.GetCompanyInfo(result.dataValues.Patient.ID, result.dataValues.ID);
+            } else {
+                return null;
+            }
+
+        })
+        .then(function(data){
+            if(data) {
+                result.dataValues.Company = data.company;
+                result.dataValues.CompanySite = data.companySite;
+            }
+            res.ok({data:result});
         }, function(err) {
             if (HelperService.CheckExistData(err) &&
                 HelperService.CheckExistData(err.transaction) &&
@@ -86,7 +121,7 @@ module.exports = {
             } else {
                 res.serverError(ErrorWrap(err));
             }
-        });
+        })
         /*var UID = req.params.UID;
         Appointment.findOne({
             where: {UID: UID},

@@ -6,43 +6,73 @@
 	<dict>
 		<key>Alamofire.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ObjectMapper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-Telehealth.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Realm.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RealmSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Socket.IO-Client-Swift.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>16BD320C1B1DB71AFB09954984DAF80F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>295BF3E8CDAF794B4EA886396AF53385</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD59EB536B84C71C102B98B0042AAABB</key>
+		<key>44BCA2CDB9DDCD14AD3421978F10EF3F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7764345448C0FB3BEA1FCD19A55D36A6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7B473F66B96B62B7B1B11C2371BDE438</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B1DFEC304AE7AE4844FE572E8F748A5F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B69F68490444543770698BD8DE4FE5CF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E82421CBEE4F9A6C8D5D9FEC459CE24A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

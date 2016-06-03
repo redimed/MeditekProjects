@@ -3,11 +3,12 @@ angular.module('app.authentication.patient.services',[])
 	var PatientService = {};
 	var api = Restangular.all("api");
 	var characterRegex = /^[a-zA-Z0-9\s]{0,255}$/;
+	var userRegex = /^[a-zA-Z0-9\.]{0,255}$/;
 	var addressRegex = /^[a-zA-Z0-9\s,'-\/]{0,255}$/;
 	var postcodeRegex = /^[0-9]{4}$/;
 	var postData ={};
 
-	
+
 PatientService.validate = function(info) {
 		var error = [];
 		var q = $q.defer();
@@ -148,6 +149,15 @@ PatientService.validate = function(info) {
 				}
 			}
 
+			if('Email2' in info){
+				if(info.Email2){
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
+					if(!EmailPattern.test(info.Email2)){
+						error.push({field:"Email2",message:"invalid email"});
+					}
+				}
+			}
+
 			//validate Occupation
 			if('Occupation' in info){
 				if(info.Occupation){
@@ -219,10 +229,25 @@ PatientService.validate = function(info) {
 		return q.promise;
 	};
 
-	PatientService.validateCheckPhone = function(info) {
+	PatientService.validateCheckPhone = function(info, isHaveUser) {
 		var error = [];
 		var q = $q.defer();
 		try {
+			//validate UserName
+			if(isHaveUser == true) {
+				if(info.UserName){
+					if(info.UserName.length < 0 || info.UserName.length > 50){
+						error.push({field:"UserName",message:"max length"});
+					}
+					if(!userRegex.test(info.UserName)){
+						error.push({field:"UserName",message:"invalid value"});
+					}
+				}
+				else {
+					error.push({field:"UserName",message:"required"});
+				}
+			}
+
 			//validate FirstName
 			if(info.FirstName){
 				if(info.FirstName.length < 0 || info.FirstName.length > 50){
@@ -280,6 +305,24 @@ PatientService.validate = function(info) {
 				}
 			}
 
+			//validate HomePhone
+			if(info.HomePhoneNumber){
+				var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
+				var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
+				if(!auHomePhoneNumberPattern.test(HomePhone)){
+					error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
+				}
+			}
+
+			//validate WorkPhone
+			if(info.WorkPhoneNumber){
+				var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
+				var WorkPhone=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
+				if(!auWorkPhoneNumberPattern.test(WorkPhone)){
+					error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
+				}
+			}
+
 			if(error.length>0){
 				throw error;
 			}
@@ -306,32 +349,42 @@ PatientService.validate = function(info) {
 	PatientService.getDatatoDirective = function(){
 
 		var returnData = {};
-		var info = {
-			FirstName:postData.data.FirstName,
-			MiddleName:postData.data.MiddleName,
-			Title:postData.data.Title,
-			LastName:postData.data.LastName,
-			PhoneNumber:postData.data.PhoneNumber,
-			DOB:postData.data.DOB,
-			Address1:postData.data.Address1,
-			Address2:postData.data.Address2,
-			State:postData.data.State,
-			Email1:postData.data.Email1,
-			HomePhoneNumber:postData.data.HomePhoneNumber,
-			Gender:postData.data.Gender,
-			Suburb:postData.data.Suburb,
-			Postcode:postData.data.Postcode
-		};
-
-		returnData.data = info;
-		if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
-		if(postData.otherData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
-		if(postData.otherData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;
-		if(postData.otherData.hasOwnProperty('PatientFund')== true) returnData.PatientFund = postData.PatientFund;
-		if(postData.otherData.hasOwnProperty('PatientKin')== true) returnData.PatientKin = postData.PatientKin;
-		if(postData.otherData.hasOwnProperty('PatientGP')== true) returnData.PatientGP = postData.PatientGP;
-		console.log('returnData',returnData);
-		return returnData;
+		if(_.isEmpty(postData) == false){
+			// var info = {
+			// 	FirstName:postData.data.FirstName,
+			// 	MiddleName:postData.data.MiddleName,
+			// 	Title:postData.data.Title,
+			// 	LastName:postData.data.LastName,
+			// 	PhoneNumber:postData.data.PhoneNumber,
+			// 	DOB:postData.data.DOB,
+			// 	Address1:postData.data.Address1,
+			// 	Address2:postData.data.Address2,
+			// 	State:postData.data.State,
+			// 	Email1:postData.data.Email1,
+			// 	Email:postData.data.Email1,
+			// 	HomePhoneNumber:postData.data.HomePhoneNumber,
+			// 	WorkPhoneNumber:postData.data.WorkPhoneNumber,
+			// 	Gender:postData.data.Gender,
+			// 	Suburb:postData.data.Suburb,
+			// 	Postcode:postData.data.Postcode,
+			// 	SiteID:postData.data.Postcode,
+			// 	SiteIDRefer:postData.data.SiteIDRefer,
+			// };
+			postData.data.Email = postData.data.Email1;
+			var info = postData.data;
+			returnData.data = info;
+			if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
+			if(postData.otherData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
+			if(postData.otherData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;
+			if(postData.otherData.hasOwnProperty('PatientFund')== true) returnData.PatientFund = postData.PatientFund;
+			if(postData.otherData.hasOwnProperty('PatientKin')== true) returnData.PatientKin = postData.PatientKin;
+			if(postData.otherData.hasOwnProperty('PatientGP')== true) returnData.PatientGP = postData.PatientGP;
+			console.log('returnData',returnData);
+			return returnData;
+		}
+		else {
+			return returnData;
+		}
 	}
 
 	PatientService.detailPatient = function(data){

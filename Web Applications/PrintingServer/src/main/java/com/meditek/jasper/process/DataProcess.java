@@ -7,11 +7,17 @@ package com.meditek.jasper.process;
 
 import com.lowagie.text.Image;
 import com.meditek.jasper.model.FormDataModel;
+import com.meditek.jasper.model.DynamicFormModuleDefinitionModel;
+
+
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 
 import java.util.Hashtable;
@@ -50,6 +56,7 @@ public class DataProcess {
                         parsedData.put(d.getName().toLowerCase(), imageRes);
                     }
                     catch (Exception ex){
+			System.out.println(ex);
                         imageRes=null;
                     } 
                 }
@@ -59,16 +66,33 @@ public class DataProcess {
                         parsedData.put(d.getName().toLowerCase(), imageRes);
                     }
                     catch (Exception ex){
+			System.out.println(ex);
                         imageRes=null;
                     }                    
                 }                
             }
-            else if(d.getType().equals("eform_input_date")){
+            else if(d.getType().equals("eform_input_date") && (d.getValue().split("/").length)==3){
                 String dateString = d.getValue().toString();
                 parsedData.put(d.getName().toLowerCase()+"_date", (dateString.split("/"))[0]);
                 parsedData.put(d.getName().toLowerCase()+"_month", (dateString.split("/"))[1]);
                 parsedData.put(d.getName().toLowerCase()+"_year", (dateString.split("/"))[2]);
                 parsedData.put(d.getName().toLowerCase(), dateString);
+            }
+            else if(d.getName().split("#").length > 1){
+                String[] splStr = d.getName().split("#");
+                int indexStart=0;
+                String fillData = d.getValue().toString();
+                for (int i = 1; i<splStr.length; i++){
+                    try{
+                        int numOfChar=Integer.parseInt(splStr[i]);
+                        parsedData.put(splStr[0]+"_row"+i, fillData);
+                        indexStart=indexStart+numOfChar;
+                        fillData=fillData.substring(indexStart);
+                    }
+                    catch (Exception e){
+                        break;
+                    }
+                }
             }
             else if(d.getType().equals("break")) continue;
             else parsedData.put(d.getName().toLowerCase(), d.getValue());
@@ -122,6 +146,7 @@ public class DataProcess {
                         parsedData.put(d.getName().toLowerCase(), image);
                     }
                     catch(Exception e){
+			System.out.println(e);
                         // Do nothing
                     }
                 }
@@ -135,6 +160,98 @@ public class DataProcess {
                     }
                 }
                 else parsedData.put(d.getName().toLowerCase(), d.getValue());
+            }
+        }
+        return parsedData;
+    }
+    
+    public Hashtable dynamicJasperDataParse(List<FormDataModel> data, String baseUrl) throws Exception{
+        Hashtable parsedData= new Hashtable();
+        //init params
+        List<String> tableRefs = new ArrayList<String>();
+        List<FormDataModel> tableIdentity = new ArrayList<FormDataModel>();
+        String[] needNameResolve = new DynamicFormModuleDefinitionModel().getModulesNeedsRadioResolve();
+        // find all table in data and put all the ref into tableRefs list
+        for(FormDataModel d : data){
+            if (d.getType().equals("table")){
+                tableRefs.add(d.getRef());
+                tableIdentity.add(d);
+            }
+        }
+        //add tables populate here later if needed
+        //HERE!
+        //add tables populate here later if needed
+        //populate remaining data (non-table)
+        Object dataObj=null;
+        for (FormDataModel d : data){
+            //Get data object
+            if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
+                if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("_image") || d.getType().equals("eform_input_signature")){
+//                    if(d.getValue().equals("") || d.getValue()==null){
+//                    byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
+//                    try {
+//                        imageRes=com.itextpdf.text.Image.getInstance(imgBytes);
+//                        parsedData.put(d.getName().toLowerCase(), imageRes);
+//                    }
+//                    catch (Exception ex){
+//			System.out.println(ex);
+//                        imageRes=null;
+//                    } 
+//                }
+//                else {
+//                    try{
+//                        imageRes=com.itextpdf.text.Image.getInstance(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()));
+//                        parsedData.put(d.getName().toLowerCase(), imageRes);
+//                    }
+//                    catch (Exception ex){
+//			System.out.println(ex);
+//                        imageRes=null;
+//                    }                    
+//                }     
+                    if(d.getValue().equals("") || d.getValue()==null){
+                        try{
+                            byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
+                            InputStream is = new ByteArrayInputStream(imgBytes);
+                            dataObj=is;
+                        }
+                        catch (Exception e){
+                            dataObj=null;
+                        }
+                    }
+                    else{
+                         try{
+                            BufferedImage image = ImageIO.read(new URL(baseUrl+"/api/downloadFileWithoutLogin/"+d.getValue()).openStream());
+                            dataObj=image;
+                        }
+                        catch(Exception e){
+                            dataObj=null;
+                        }
+                    }
+                }
+                else if(d.getType().equals("eform_input_check_radio")) {
+                    if(d.getChecked()==Boolean.TRUE){
+                        System.out.println("run true");
+                        dataObj=d.getValue();
+                    }
+                    else{
+                        System.out.println("run false");
+                        dataObj=null;
+                    }
+                }
+                else dataObj=d.getValue();
+            }
+            if(parsedData.get(d.getModuleID())==null){
+                parsedData.put(d.getModuleID(), new Hashtable());
+            }
+            if(dataObj!=null){
+                System.out.println("crash here: " + d.getName() + "---" + d.getValue());
+                if(d.getType().equals("eform_input_check_radio") && Arrays.asList(needNameResolve).contains(d.getModuleID())){
+                    ((Hashtable)parsedData.get(d.getModuleID())).put((d.getName().split("_"))[1].toLowerCase(),dataObj);
+                }
+                else{
+                    ((Hashtable)parsedData.get(d.getModuleID())).put(d.getName().toLowerCase(),dataObj);
+                }
+                
             }
         }
         return parsedData;

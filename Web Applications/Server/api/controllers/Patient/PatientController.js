@@ -1,20 +1,17 @@
+var _ = require('lodash');
 module.exports = {
     /*
         CreatePatient : create a new patient
         input: Patient's information
-        output: insert Patient's information into table Patient 
+        output: insert Patient's information into table Patient
     */
     CreatePatient: function(req, res) {
         var data = req.body.data;
         var otherData = req.body.otherData ? req.body.otherData : null;
-        // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
-        // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
-        // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
-        // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
         Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
-                    if (data.rolecompany == false) {
+                    if (data.rolecompany == false && data.hasOwnProperty('SiteID') == false && data.hasOwnProperty('SiteIDRefer') == false ) {
                         patient.transaction.commit();
                         var info = {
                             UID: patient.UID,
@@ -29,6 +26,112 @@ module.exports = {
                             status: 200,
                             message: "success",
                             data: info
+                        });
+                    } else if(data.SiteID && data.SiteID != 0 && data.SiteID != "0") {
+                        return CompanySite.findOne({
+                            where:{
+                                ID : data.SiteID
+                            },
+                            transaction: patient.transaction
+                        })
+                        .then(function(got_site) {
+                            if(_.isEmpty(got_site)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('Site.notFound');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                return RelCompanyPatient.create({
+                                    CompanyID : got_site.CompanyID,
+                                    PatientID : patient.ID,
+                                    Active    : 'Y',
+                                },{transaction:patient.transaction});
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
+                        })
+                        .then(function(created_relcompanypatient) {
+                            if(_.isEmpty(created_relcompanypatient)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('AddCompany.queryerror');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                patient.transaction.commit();
+                                var info = {
+                                    UID: patient.UID,
+                                    FirstName: patient.FirstName,
+                                    LastName: patient.LastName,
+                                    DOB: patient.DOB,
+                                    Address1: patient.Address1,
+                                    Address2: patient.Address2,
+                                    UserAccountUID: patient.UserAccountUID
+                                };
+                                return res.ok({
+                                    status: 200,
+                                    message: "success",
+                                    data: info
+                                });
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
+                        });
+                    } else if(data.SiteIDRefer) {
+                        return CompanySite.findOne({
+                            where:{
+                                SiteIDRefer : data.SiteIDRefer
+                            },
+                            transaction: patient.transaction
+                        })
+                        .then(function(got_site) {
+                            if(_.isEmpty(got_site)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('Site.notFound');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                return RelCompanyPatient.create({
+                                    CompanyID : got_site.CompanyID,
+                                    PatientID : patient.ID,
+                                    Active    : 'Y',
+                                },{transaction:patient.transaction});
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
+                        })
+                        .then(function(created_relcompanypatient) {
+                            if(_.isEmpty(created_relcompanypatient)) {
+                                patient.transaction.rollback();
+                                var err = new Error('CreatePatient.error');
+                                err.pushError('AddCompany.queryerror');
+                                return res.serverError(ErrorWrap(err));
+                            }
+                            else {
+                                patient.transaction.commit();
+                                var info = {
+                                    UID: patient.UID,
+                                    FirstName: patient.FirstName,
+                                    LastName: patient.LastName,
+                                    DOB: patient.DOB,
+                                    Address1: patient.Address1,
+                                    Address2: patient.Address2,
+                                    UserAccountUID: patient.UserAccountUID
+                                };
+                                return res.ok({
+                                    status: 200,
+                                    message: "success",
+                                    data: info
+                                });
+                            }
+                        },function(err) {
+                            patient.transaction.rollback();
+                            res.serverError(ErrorWrap(err));
                         });
                     } else {
                         if(data.RoleId){
@@ -142,7 +245,7 @@ module.exports = {
                 err.transaction.rollback();
                 res.serverError({
                     status: 500,
-                    message: ErrorWrap(err)
+                    message: ErrorWrap(err.err)
                 });
             });
     },
@@ -217,7 +320,7 @@ module.exports = {
                 err.transaction.rollback();
                 res.serverError({
                     status: 500,
-                    message: ErrorWrap(err)
+                    message: ErrorWrap(err.err)
                 });
 
             });
@@ -225,7 +328,7 @@ module.exports = {
     /*
         SearchPatient : find patient with condition
         input: Patient's name or PhoneNumber
-        output: get patient's list which was found in client 
+        output: get patient's list which was found in client
     */
     SearchPatient: function(req, res) {
         var data = req.body.data;
@@ -286,7 +389,7 @@ module.exports = {
     /*
         UpdatePatient : update patient's information
         input: patient's information updated
-        output: update patient'infomation into table Patient 
+        output: update patient'infomation into table Patient
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
@@ -362,7 +465,7 @@ module.exports = {
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.ok({
+                    res.serverError({
                         message: ErrorWrap(err)
                     });
                 }
@@ -398,9 +501,9 @@ module.exports = {
                         .then(function(success) {
                             if (success !== undefined && success !== null && success !== '' && success.length !== 0) {
                                 for (var i = 0; i < success.length; i++) {
-                                    // if(info[0].dataValuesFileType == "ProfileImage") 
+                                    // if(info[0].dataValuesFileType == "ProfileImage")
                                     info[0].dataValues.ProfileImage = success[i].FileType == 'ProfileImage' ? success[i].UID : null;
-                                    // if(info[0].dataValuesFileType == "Signature") 
+                                    // if(info[0].dataValuesFileType == "Signature")
                                     info[0].dataValues.Signature = success[i].FileType == 'Signature' ? success[i].UID : null;
                                 }
                                 info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
@@ -449,7 +552,7 @@ module.exports = {
     /*
         DeletePatient : disable patient who was deleted.
         input: Patient's ID
-        output: attribute Enable of Patient will receive value "N" in table Patient 
+        output: attribute Enable of Patient will receive value "N" in table Patient
     */
     DeletePatient: function(req, res) {
         var ID = req.body.data;
@@ -528,11 +631,56 @@ module.exports = {
         Services.Patient.CheckPatient(data)
             .then(function(result) {
                 if (result !== undefined && result !== null) {
-                    res.ok({
-                        status: 200,
-                        message: "success",
-                        data: result
-                    });
+                    // res.ok({
+                    //     status: 200,
+                    //     message: "success",
+                    //     data: result
+                    // });
+                    if(!data.UserName) {
+                        res.ok({
+                            status: 200,
+                            message: "success",
+                            data: result
+                        });
+                    }
+                    else {
+                        return UserAccount.findOne({
+                            where:{
+                                UserName: data.UserName
+                            }
+                        })
+                        .then(function(got_user) {
+                            if(got_user !== undefined && got_user !== null) {
+                                if(result.isCreated == false) {
+                                    result.isCreated = true;
+                                    result.field = {};
+                                    result.field.UserName = true;
+                                    res.ok({
+                                        status: 200,
+                                        message:"success",
+                                        data: result
+                                    });
+                                }
+                                else {
+                                    result.field.UserName = true;
+                                    res.ok({
+                                        status: 200,
+                                        message:"success",
+                                        data: result
+                                    });
+                                }
+                            }
+                            else {
+                                res.ok({
+                                    status: 200,
+                                    message: "success",
+                                    data: result
+                                });
+                            }
+                        },function(err) {
+                            res.serverError(ErrorWrap(err));
+                        });
+                    }
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");

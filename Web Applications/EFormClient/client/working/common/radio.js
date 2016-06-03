@@ -29,6 +29,10 @@ module.exports = React.createClass({
             cursor: true,
             radioClass: 'iradio_square-green'
         })
+        $(this.refs.input).on('ifChecked', function(event){
+            if(typeof self.props.onChange !== 'undefined')
+                self.props.onChange(self.value);
+        })
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
@@ -65,7 +69,38 @@ module.exports = React.createClass({
     isChecked: function(){
         return $(this.refs.input).prop('checked');
     },
-    getValue: function(){
+    onCount: function(countRef){
+        var self = this;
+        $('input[name='+this.props.name+']').on('ifClicked', function(){
+            var count = $('#'+countRef).val() || 0;
+            if(self.value !== this.value){
+                if(count > 0)
+                    count--; 
+            }else{
+                count++;
+            }
+            $('#'+countRef).val(count);
+        })
+    },
+    onBelongsGroup: function(group){
+        var self = this;
+        $('input[name='+group+']').on('ifClicked', function(event){
+            var value = event.target.value;
+            if(isNaN(value))
+                value = 0;
+            var radios = $('input[name='+self.props.name+']');
+            radios.filter(function(){
+                var id = $(this).attr('id');
+                var id_value = $('#'+id).val();
+                if(parseInt(value) === parseInt(id_value)){
+                    $('#'+id).iCheck('check');
+                }else{
+                    $('#'+id).iCheck('uncheck');
+                }
+            })
+        })
+    },
+    getValue: function(){        
         return this.props.value;
     },
     getName: function(){
@@ -82,6 +117,9 @@ module.exports = React.createClass({
     },
     getPreCal: function(){
         return this.props.preCal;
+    },
+    getCal: function(){
+        return this.props.cal;
     },
     getRoles: function(){
         return this.props.roles;
@@ -100,7 +138,7 @@ module.exports = React.createClass({
         switch(type){
             case 'default':
                 html = (
-                    <input type="radio" className="icheck" name={this.props.name} id={this.props.id} ref="input"/>
+                    <input type="radio" className="icheck" name={this.props.name} id={this.props.id} ref="input" value={this.props.value}/>
                 )
                 break;
             case 'eform_input_check_radio':
@@ -112,7 +150,8 @@ module.exports = React.createClass({
                                 <div className="icheck-inline">
                                     <label>
                                         <input type="radio" className="icheck" name={this.props.name} ref="input" title={this.props.name}
-                                            value={this.props.value}/>
+                                            value={this.props.value} id={this.props.refTemp}
+                                            id={this.props.refTemp}/>
                                         &nbsp;
                                         {this.props.label}
                                     </label>

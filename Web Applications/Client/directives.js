@@ -65,9 +65,21 @@ app.directive('dropdownMenuHover', function() {
 });
 
 // Datepicker
-app.directive('datePicker', function($timeout) {
+app.directive('conGa', function($timeout) {
     return {
+        restrict: 'A',
+        controller: function($scope){
+            $('#inputDate').datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                format:'dd/mm/yyyy',
+                startDate: this.props.startDate,
+                autoclose: !0,
+            });
+        },
         link: function(scope, elem, attrs) {
+            alert("cihoiahoiwehigoiwh");
+            console.log("elem ",elem);
             $timeout(function () {
                 ComponentsDateTimePickers.init();
             });
@@ -77,6 +89,7 @@ app.directive('datePicker', function($timeout) {
             elem.attr('type','text');
             elem.attr('placeholder','dd/mm/yyyy');
         },
+        
     };
 });
 // Timepicker
@@ -92,6 +105,9 @@ app.directive('timePickerNoSeconds', function($timeout) {
             elem.attr('readonly',true);
             elem.attr('type','text');
             elem.attr('placeholder','hh:mm');
+        },
+        controller: function($scope, elem, attrs){
+            
         },
     };
 });

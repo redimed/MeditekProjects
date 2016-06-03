@@ -29,7 +29,7 @@ class TelehealthAPI : TokenAPI{
                         "HomePhoneNumber" : HomePhoneNumber,
                         "Suburb" : Suburd,
                         "DOB" : DOB,
-                        "Email" : Email
+                        "Email1" : Email
                 ],
                 "AppointmentData": [[
                     "Section": "Telehealth",

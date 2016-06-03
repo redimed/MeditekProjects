@@ -51,7 +51,6 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
     var pickOption = ["","Telehealth", "Onsite"]
     var userUID : String!
     var AppointmentSignatureUID : String = ""
-    let alertView = UIAlertView()
     override func viewDidLoad() {
         super.viewDidLoad()
         if let uid = defaults.valueForKey("userUID") as? String {
@@ -167,7 +166,7 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
         // Adds the buttons
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
-            target: view, action: Selector("endEditing:"))
+            target: view, action: #selector(UIView.endEditing(_:)))
         //        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
         toolBar.setItems([spaceButton,doneBarButton], animated: false)
         toolBar.userInteractionEnabled = true
@@ -225,9 +224,9 @@ class RequestTelehealthViewController: BaseViewController ,UITextViewDelegate {
         toolBar.sizeToFit()
         
         // Adds the buttons
-        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "doneClick")
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(RequestTelehealthViewController.doneClick))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClick")
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(RequestTelehealthViewController.cancelClick))
         toolBar.setItems([cancelButton,spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         

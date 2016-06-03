@@ -1,7 +1,7 @@
 module.exports = {
     Appointment: function() {
-        return ['UID', 'SiteID', 'FromTime', 'ToTime', 'RequestDate',
-            'ApprovalDate', 'Status', 'CreatedDate', 'Type'
+        return ['ID', 'UID', 'SiteID', 'FromTime', 'ToTime', 'RequestDate',
+            'ApprovalDate', 'Status', 'CreatedDate', 'Type', 'Code'
         ];
     },
     TelehealthAppointment: function() {
@@ -46,7 +46,7 @@ module.exports = {
         return ['UID', 'DepartmentCode', 'DepartmentName', 'Description'];
     },
     Patient: function() {
-        return ['UID', 'Title', 'FirstName', 'MiddleName', 'LastName',
+        return ['ID', 'UID', 'Title', 'FirstName', 'MiddleName', 'LastName',
             'PreferredName', 'PreviousName', 'DOB', 'Gender', 'Indigenous',
             'Occupation', 'Address1', 'Address2', 'Postcode', 'Suburb',
             'State', 'Email1', 'Email2', 'HomePhoneNumber', 'WorkPhoneNumber',
@@ -73,5 +73,13 @@ module.exports = {
         return ['UID', 'UserAccountID', 'FileName', 'FileLocation', 'FileType',
             'FileExtension', 'Description'
         ];
+    },
+    
+    Company: function() {
+        return ['UID', 'CompanyName', 'Description']
+    },
+
+    CompanySite: function() {
+        return ['UID', 'SiteName', 'Address1', 'Addresss2', 'Suburb', 'ContactName', 'ContactNumber']
     }
 };

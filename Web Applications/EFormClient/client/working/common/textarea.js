@@ -70,6 +70,9 @@ module.exports = React.createClass({
     getPreCal: function(){
         return this.props.preCal;
     },
+    getCal: function(){
+        return this.props.cal;
+    },
     getRoles: function(){
         return this.props.roles;
     },
@@ -96,7 +99,8 @@ module.exports = React.createClass({
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <textarea title={this.props.name} className={this.props.className} 
+                                <textarea title={this.props.name} className={this.props.className}
+                                    id={this.props.refTemp}
                                     name={this.props.name} ref="input" placeholder={this.props.placeholder}
                                     rows={this.props.rows}/>
                             </div>

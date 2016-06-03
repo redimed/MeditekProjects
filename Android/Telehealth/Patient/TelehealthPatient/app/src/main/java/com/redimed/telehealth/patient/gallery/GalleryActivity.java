@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,20 +25,13 @@ import butterknife.ButterKnife;
 
 public class GalleryActivity extends AppCompatActivity implements IGalleryView, View.OnClickListener {
 
-    private IGalleryPresenter iGalleryPresenter;
-    private String TAG = "=====GALLERY_ACTIVITY=====";
-
     private Handler handler;
     private AdapterGallery adapterGallery;
+    private IGalleryPresenter iGalleryPresenter;
+    private static final String TAG = "=====GALLERY_ACTIVITY=====";
 
-    /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
-    @Bind(R.id.lblTitle)
-    TextView lblTitle;
-    @Bind(R.id.btnBack)
-    Button btnBack;
-
     @Bind(R.id.gridGallery)
     GridView gridGallery;
     @Bind(R.id.btnGalleryOk)
@@ -55,27 +50,13 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
         init();
     }
 
-    @Override
-    public void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = this;
-        appCompatActivity.setSupportActionBar(toolBar);
-
-        //Set text  and icon title appointment details
-        lblTitle.setText(getResources().getString(R.string.title_gallery));
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
     private void init() {
-        iGalleryPresenter = new GalleryPresenter(this, this);
+        iGalleryPresenter = new GalleryPresenter(this, this, this);
+        iGalleryPresenter.initToolbar(toolBar);
 
         adapterGallery = new AdapterGallery(this);
         adapterGallery.setMultiplePick(true);
+
         gridGallery.setAdapter(adapterGallery);
 
         handler = new Handler();
@@ -90,10 +71,10 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
                     }
                 });
                 Looper.loop();
-            };
+            }
         }.start();
 
-        //action
+        // action
         gridGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,8 +85,30 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+         /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
+            so long as you specify a parent activity in AndroidManifest.xml.
+        */
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnGalleryOk:
                 iGalleryPresenter.selectedImages(adapterGallery);
                 break;

@@ -1,53 +1,50 @@
-<div class="portlet portlet-fit box red">
+<div class="portlet light bordered">
     <div class="portlet-title">
-        <div class="caption">
+        <div class="caption font-red">
             <span class="caption-subject uppercase bold">
-                <i class="glyphicon glyphicon-heart"></i> Medicare & Fund</span>
+                <i class="glyphicon glyphicon-heart font-red margin-right-10"></i> Medicare & Fund
+            </span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse"> </a>
         </div>
     </div>
     <div class="portlet-body">
-        <div class="table-scrollable">
-            <table class="table table-hover">
-                <tr>
-                    <td>Medicare Eligible</td>
-                    <td>
-                        <i class="glyphicon glyphicon-ok font-green" ng-if="patientTelehealth.MedicareNumber && patientTelehealth.MedicareNumber != null && patientTelehealth.MedicareEligible == 'Y'"></i>
-                        <i class="glyphicon glyphicon-ok font-green" ng-if="patientTelehealth.MedicareNumber && patientTelehealth.MedicareNumber != null && patientTelehealth.MedicareEligible == 'N'"></i>
-                        <span ng-if="!patientTelehealth.MedicareNumber || patientTelehealth.MedicareNumber == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Medicare Number</td>
-                    <td>
-                        <span ng-if="patientTelehealth.MedicareNumber && patientTelehealth.MedicareNumber != null">{{patientTelehealth.MedicareNumber}}</span>
-                        <span ng-if="!patientTelehealth.MedicareNumber || patientTelehealth.MedicareNumber == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Medicare Reference Number</td>
-                    <td>
-                        <span ng-if="patientTelehealth.MedicareReferenceNumber && patientTelehealth.MedicareReferenceNumber != null">{{patientTelehealth.MedicareReferenceNumber}}</span>
-                        <span ng-if="!patientTelehealth.MedicareReferenceNumber || patientTelehealth.MedicareReferenceNumber == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Expiry Date</td>
-                    <td>
-                        <span ng-if="patientTelehealth.ExpiryDate && patientTelehealth.ExpiryDate != null">{{patientTelehealth.ExpiryDate}}</span>
-                        <span ng-if="!patientTelehealth.ExpiryDate || patientTelehealth.ExpiryDate == null">N/A</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>DVA Number</td>
-                    <td>
-                        <span ng-if="patientTelehealth.DVANumber && patientTelehealth.DVANumber != null">{{patientTelehealth.DVANumber}}</span>
-                        <span ng-if="!patientTelehealth.DVANumber || patientTelehealth.DVANumber == null">N/A</span>
-                    </td>
-                </tr>
-            </table>
+        <div class="profile-desc-link margin-top-10">
+            <i><small>Medicare Eligible:</small></i>
+            <a href="">
+                <i class="glyphicon glyphicon-ok font-green" ng-if="patientTelehealth.MedicareNumber && patientTelehealth.MedicareNumber != null && patientTelehealth.MedicareEligible == 'Y'"></i>
+                <i class="glyphicon glyphicon-ok font-green" ng-if="patientTelehealth.MedicareNumber && patientTelehealth.MedicareNumber != null && patientTelehealth.MedicareEligible == 'N'"></i>
+                <span ng-if="!patientTelehealth.MedicareNumber || patientTelehealth.MedicareNumber == null">N/A</span>
+            </a>
+        </div>
+        <div class="profile-desc-link margin-top-10">
+            <i><small>Medicare Number:</small></i>
+            <a href="">
+                <span ng-if="patientTelehealth.MedicareNumber && patientTelehealth.MedicareNumber != null">{{patientTelehealth.MedicareNumber}}</span>
+                <span ng-if="!patientTelehealth.MedicareNumber || patientTelehealth.MedicareNumber == null">N/A</span>
+            </a>
+        </div>
+        <div class="profile-desc-link margin-top-10">
+            <i><small>Medicare Reference Number:</small></i>
+            <a href="">
+                <span ng-if="patientTelehealth.MedicareReferenceNumber && patientTelehealth.MedicareReferenceNumber != null">{{patientTelehealth.MedicareReferenceNumber}}</span>
+                <span ng-if="!patientTelehealth.MedicareReferenceNumber || patientTelehealth.MedicareReferenceNumber == null">N/A</span>
+            </a>
+        </div>
+        <div class="profile-desc-link margin-top-10">
+            <i><small>Expiry Date:</small></i>
+            <a href="">
+                <span ng-if="patientTelehealth.ExpiryDate && patientTelehealth.ExpiryDate != null">{{patientTelehealth.ExpiryDate}}</span>
+                <span ng-if="!patientTelehealth.ExpiryDate || patientTelehealth.ExpiryDate == null">N/A</span>
+            </a>
+        </div>
+        <div class="profile-desc-link margin-top-10">
+            <i><small>DVA Number:</small></i>
+            <a href="">
+                <span ng-if="patientTelehealth.DVANumber && patientTelehealth.DVANumber != null">{{patientTelehealth.DVANumber}}</span>
+                <span ng-if="!patientTelehealth.DVANumber || patientTelehealth.DVANumber == null">N/A</span>
+            </a>
         </div>
     </div>
 </div>

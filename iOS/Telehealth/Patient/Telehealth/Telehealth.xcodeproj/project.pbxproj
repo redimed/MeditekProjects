@@ -8,9 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		3F2EEDD91CB75C2500516422 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2EEDD81CB75C2500516422 /* Context.swift */; };
+		3FB8BFDF1CE377D500A6E500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */; };
+		3FD192101CE479FF00379364 /* ChangePinNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */; };
+		3FD192121CE47A5E00379364 /* UpdatePinNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */; };
 		3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */; };
 		3FF87B4C1CA390E60068866C /* Country.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FF87B4B1CA390E60068866C /* Country.json */; };
 		3FF87B4E1CA3C50E0068866C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */; };
+		3FFAAE601CD2F64F0045D2CD /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE5F1CD2F64F0045D2CD /* BaseModel.swift */; };
+		3FFAAE621CD2F6580045D2CD /* RequestVerify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE611CD2F6580045D2CD /* RequestVerify.swift */; };
+		3FFAAE641CD2F6920045D2CD /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE631CD2F6920045D2CD /* RequestFactory.swift */; };
+		3FFAAE661CD2F69B0045D2CD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE651CD2F69B0045D2CD /* UserService.swift */; };
+		3FFAAE691CD2F6BE0045D2CD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE681CD2F6BE0045D2CD /* Constants.swift */; };
+		3FFAAE6B1CD2F7B90045D2CD /* RefreshCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE6A1CD2F7B90045D2CD /* RefreshCode.swift */; };
+		3FFAAE6E1CD2F93A0045D2CD /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE6D1CD2F93A0045D2CD /* LoginModel.swift */; };
+		3FFAAE701CD2F97E0045D2CD /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE6F1CD2F97E0045D2CD /* ErrorModel.swift */; };
+		3FFAAE731CD2FAE90045D2CD /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE721CD2FAE90045D2CD /* UIViewControllerExtension.swift */; };
+		3FFAAE751CD2FB050045D2CD /* TelehealthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAAE741CD2FB050045D2CD /* TelehealthUserModel.swift */; };
 		3FFBDF411C9BBB1F006F041B /* DTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */; };
 		3FFBDF441C9BBBDE006F041B /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF431C9BBBDE006F041B /* Define.swift */; };
 		3FFBDF461C9BBC95006F041B /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */; };
@@ -162,9 +175,22 @@
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
 		3F2EEDD81CB75C2500516422 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePinNumberViewController.swift; sourceTree = "<group>"; };
+		3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatePinNumber.swift; sourceTree = "<group>"; };
 		3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		3FF87B4B1CA390E60068866C /* Country.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Country.json; sourceTree = "<group>"; };
 		3FF87B4D1CA3C50E0068866C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3FFAAE5F1CD2F64F0045D2CD /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		3FFAAE611CD2F6580045D2CD /* RequestVerify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestVerify.swift; sourceTree = "<group>"; };
+		3FFAAE631CD2F6920045D2CD /* RequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
+		3FFAAE651CD2F69B0045D2CD /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		3FFAAE681CD2F6BE0045D2CD /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3FFAAE6A1CD2F7B90045D2CD /* RefreshCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshCode.swift; sourceTree = "<group>"; };
+		3FFAAE6D1CD2F93A0045D2CD /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		3FFAAE6F1CD2F97E0045D2CD /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		3FFAAE721CD2FAE90045D2CD /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		3FFAAE741CD2FB050045D2CD /* TelehealthUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelehealthUserModel.swift; sourceTree = "<group>"; };
 		3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAlertView.swift; sourceTree = "<group>"; };
 		3FFBDF431C9BBBDE006F041B /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -365,6 +391,39 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		3FFAAE671CD2F6B20045D2CD /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				3F2EEDD81CB75C2500516422 /* Context.swift */,
+				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
+				3FFAAE681CD2F6BE0045D2CD /* Constants.swift */,
+			);
+			name = Commons;
+			sourceTree = "<group>";
+		};
+		3FFAAE6C1CD2F7F20045D2CD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */,
+				3FFAAE6F1CD2F97E0045D2CD /* ErrorModel.swift */,
+				3FFAAE6D1CD2F93A0045D2CD /* LoginModel.swift */,
+				3FFAAE5F1CD2F64F0045D2CD /* BaseModel.swift */,
+				3FFAAE611CD2F6580045D2CD /* RequestVerify.swift */,
+				3FFAAE631CD2F6920045D2CD /* RequestFactory.swift */,
+				3FFAAE651CD2F69B0045D2CD /* UserService.swift */,
+				3FFAAE6A1CD2F7B90045D2CD /* RefreshCode.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3FFAAE711CD2FA6F0045D2CD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3FFAAE721CD2FAE90045D2CD /* UIViewControllerExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		3FFBDF3F1C9BBAE0006F041B /* DTAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,15 +470,6 @@
 				AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */,
 			);
 			name = API;
-			sourceTree = "<group>";
-		};
-		AF4498A71BDF1141005A905E /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				3F2EEDD81CB75C2500516422 /* Context.swift */,
-				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
-			);
-			name = Other;
 			sourceTree = "<group>";
 		};
 		AF4498A81BDF115B005A905E /* Layout */ = {
@@ -510,6 +560,7 @@
 		AF9440181BBA79AF003F3B07 /* Supporting File */ = {
 			isa = PBXGroup;
 			children = (
+				3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */,
 				AFEE34E51BB0413600471592 /* Info.plist */,
 				AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */,
 			);
@@ -563,7 +614,8 @@
 		AFEE34D51BB0413600471592 /* Telehealth */ = {
 			isa = PBXGroup;
 			children = (
-				AF4498A71BDF1141005A905E /* Other */,
+				3FFAAE711CD2FA6F0045D2CD /* Extensions */,
+				3FFAAE671CD2F6B20045D2CD /* Commons */,
 				AF78A2F61BC36807003E4E98 /* Resources */,
 				AFF27DFA1BB39C6600B325E8 /* Utilities */,
 				AFF27DF91BB39C5500B325E8 /* Library */,
@@ -681,6 +733,7 @@
 				AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */,
 				AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */,
 				AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */,
+				3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */,
 				AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */,
 				AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */,
 				AF3391721C841EBC00483F36 /* UpdateProfileViewController.swift */,
@@ -692,6 +745,8 @@
 		AFF27DF81BB39C4600B325E8 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				3FFAAE741CD2FB050045D2CD /* TelehealthUserModel.swift */,
+				3FFAAE6C1CD2F7F20045D2CD /* Model */,
 				AF4498A91BDF11CE005A905E /* PatientService.swift */,
 				AF4498AB1BDF11FE005A905E /* AppointmentService.swift */,
 				AFE642341C473305001F0524 /* CallService.swift */,
@@ -851,6 +906,7 @@
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
 				AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */,
+				3FB8BFDF1CE377D500A6E500 /* GoogleService-Info.plist in Resources */,
 				AF73C84D1C7BF9030015A625 /* DKImagePickerController.bundle in Resources */,
 				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
@@ -929,9 +985,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FFAAE641CD2F6920045D2CD /* RequestFactory.swift in Sources */,
 				AFEE352C1BB0415D00471592 /* DesignableLabel.swift in Sources */,
 				AFEE353B1BB0415D00471592 /* SpringImageView.swift in Sources */,
 				AF73C8511C7BF9030015A625 /* DKAssetGroupDetailVC.swift in Sources */,
+				3FFAAE6B1CD2F7B90045D2CD /* RefreshCode.swift in Sources */,
 				AFEE35281BB0415D00471592 /* AutoTextView.swift in Sources */,
 				AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */,
 				AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */,
@@ -971,10 +1029,13 @@
 				AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */,
 				AFEE35401BB0415D00471592 /* TransitionManager.swift in Sources */,
 				AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */,
+				3FFAAE751CD2FB050045D2CD /* TelehealthUserModel.swift in Sources */,
 				3FFBDF411C9BBB1F006F041B /* DTAlertView.swift in Sources */,
 				AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */,
 				AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */,
+				3FFAAE731CD2FAE90045D2CD /* UIViewControllerExtension.swift in Sources */,
 				3F2EEDD91CB75C2500516422 /* Context.swift in Sources */,
+				3FFAAE6E1CD2F93A0045D2CD /* LoginModel.swift in Sources */,
 				AF73C8491C7BF9030015A625 /* DKGroupDataManager.swift in Sources */,
 				AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */,
 				AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */,
@@ -996,6 +1057,7 @@
 				AFE642291C463EB9001F0524 /* PatientContainer.swift in Sources */,
 				AFEE353F1BB0415D00471592 /* SpringView.swift in Sources */,
 				AF99A5C51C4C7B83006DA3E2 /* SettingNavigationViewController.swift in Sources */,
+				3FFAAE701CD2F97E0045D2CD /* ErrorModel.swift in Sources */,
 				AFEE353E1BB0415D00471592 /* SpringTextView.swift in Sources */,
 				AFE642371C4733FC001F0524 /* VerifyService.swift in Sources */,
 				AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */,
@@ -1004,11 +1066,14 @@
 				AF73C84C1C7BF9030015A625 /* DKImageManager.swift in Sources */,
 				AFC603D01C4FEBB800DEFD2C /* TelehealthAPI.swift in Sources */,
 				AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */,
+				3FFAAE661CD2F69B0045D2CD /* UserService.swift in Sources */,
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
+				3FD192121CE47A5E00379364 /* UpdatePinNumber.swift in Sources */,
 				AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */,
 				AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */,
 				AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */,
 				AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */,
+				3FD192101CE479FF00379364 /* ChangePinNumberViewController.swift in Sources */,
 				AF4498AC1BDF11FE005A905E /* AppointmentService.swift in Sources */,
 				AFE6422F1C4650EC001F0524 /* VerifyPhoneAPI.swift in Sources */,
 				AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */,
@@ -1017,11 +1082,14 @@
 				AFB2FEEB1C4F2E1200B41BDA /* TelehealthContainer.swift in Sources */,
 				AFA33C971C4CD4C6001E2F7E /* RequestTelehealthViewController.swift in Sources */,
 				AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */,
+				3FFAAE691CD2F6BE0045D2CD /* Constants.swift in Sources */,
 				AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */,
+				3FFAAE601CD2F64F0045D2CD /* BaseModel.swift in Sources */,
 				AFF10DB21BB241DA005E9838 /* InformationViewController.swift in Sources */,
 				AFE6422B1C46444E001F0524 /* PatientAPI.swift in Sources */,
 				AF73C8501C7BF9030015A625 /* DKPopoverViewController.swift in Sources */,
+				3FFAAE621CD2F6580045D2CD /* RequestVerify.swift in Sources */,
 				AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */,
 				AFE642351C473305001F0524 /* CallService.swift in Sources */,
 				AF73C8521C7BF9030015A625 /* DKAssetGroupGridLayout.swift in Sources */,

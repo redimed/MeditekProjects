@@ -63,4 +63,8 @@ _.extend(policies, patientPolicies);
 var consultationPolicies = require('./policies/consultationPolicies');
 _.extend(policies, consultationPolicies);
 //End module Consultation
+//Begin module Company
+var companyPolicies = require('./policies/companyPolicies');
+_.extend(policies,companyPolicies);
+//End module Company
 module.exports.policies = policies;

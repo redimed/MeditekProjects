@@ -1,23 +1,25 @@
 package com.redimed.telehealth.patient.appointment.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.appointment.view.IAppointmentView;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
@@ -48,28 +50,27 @@ public class AppointmentPresenter implements IAppointmentPresenter {
 
     private Gson gson;
     private Context context;
+    private Fragment fragment;
     private List<String> listUrl;
     private List<String> listImage;
     private RegisterApi registerApi;
-    private SharedPreferences spTelehealth;
+    private FragmentActivity activity;
     private IMainPresenter iMainPresenter;
+    private SharedPreferences spTelehealth;
     private IAppointmentView iAppointmentView;
+    private String apptStatus, apptTime, apptUID;
 
-    private Uri fileUri;
-    private static final int RESULT_PHOTO = 1;
-    private static final int RESULT_CAMERA = 2;
-    private static final int RESULT_RELOAD = 3;
     private static final int MEDIA_TYPE_IMAGE = 1;
-    private String TAG = "APPT_PRESENTER";
+    private static final String TAG = "===APPT_PRESENTER===";
 
     public AppointmentPresenter(Context context, IAppointmentView iAppointmentView, FragmentActivity activity) {
         this.context = context;
+        this.activity = activity;
         this.iAppointmentView = iAppointmentView;
 
         gson = new Gson();
-        iAppointmentView.onLoadToolbar();
-        listUrl = new ArrayList<String>();
-        listImage = new ArrayList<String>();
+        listUrl = new ArrayList<>();
+        listImage = new ArrayList<>();
         registerApi = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
         spTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
@@ -80,7 +81,18 @@ public class AppointmentPresenter implements IAppointmentPresenter {
         registerApi.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                iAppointmentView.onLoadAppointment(jsonObject);
+                if (jsonObject != null) {
+                    apptUID = jsonObject.get("data").getAsJsonObject().get("UID").isJsonNull() ?
+                            "NONE" : jsonObject.get("data").getAsJsonObject().get("UID").getAsString();
+
+                    apptTime = jsonObject.get("data").getAsJsonObject().get("FromTime").isJsonNull() ?
+                            "NONE" : jsonObject.get("data").getAsJsonObject().get("FromTime").getAsString();
+
+                    apptStatus = jsonObject.get("data").getAsJsonObject().get("Status").isJsonNull() ?
+                            "NONE" : jsonObject.get("data").getAsJsonObject().get("Status").getAsString();
+                    iAppointmentView.onLoadAppointment(jsonObject);
+
+                }
             }
 
             @Override
@@ -94,6 +106,29 @@ public class AppointmentPresenter implements IAppointmentPresenter {
     public void changeFragment(Fragment fragment) {
         if (fragment != null) {
             iMainPresenter.replaceFragment(fragment);
+        }
+    }
+
+    @Override
+    public void initToolbar(Toolbar toolbar) {
+        //init toolbar
+        AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+        appCompatActivity.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle(context.getResources().getString(R.string.appt_title));
+
+            actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+            actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+
+            // Change color image back, set a custom icon for the default home button
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+            actionBar.setHomeAsUpIndicator(upArrow);
         }
     }
 
@@ -128,7 +163,6 @@ public class AppointmentPresenter implements IAppointmentPresenter {
 
     @Override
     public void getListImage(JsonObject jsonObject) {
-
         //Get image from ClinicalDetails
         String strClinicDetail = jsonObject.get("data").getAsJsonObject().get("TelehealthAppointment").getAsJsonObject().get("ClinicalDetails").toString();
         ClinicalDetails[] clinicalDetails = gson.fromJson(strClinicDetail, ClinicalDetails[].class);
@@ -156,16 +190,16 @@ public class AppointmentPresenter implements IAppointmentPresenter {
     }
 
     @Override
-    public void viewStatus(String status, String apptTime) {
-        if (status != null) {
-            Bundle bundle = new Bundle();
-            bundle.putString("statusAppt", status);
-            bundle.putString("timeAppt", apptTime);
-            Fragment fragment = new StatusFragment();
-            fragment.setArguments(bundle);
-            iMainPresenter.replaceFragment(fragment);
-        }
+    public void viewStatus() {
+        Bundle bundle = new Bundle();
+        bundle.putString("apptUID", apptUID);
+        bundle.putString("timeAppt", apptTime);
+        bundle.putString("statusAppt", apptStatus);
 
+
+        fragment = new StatusFragment();
+        fragment.setArguments(bundle);
+        iMainPresenter.replaceFragment(fragment);
     }
 
     //Add data url to list

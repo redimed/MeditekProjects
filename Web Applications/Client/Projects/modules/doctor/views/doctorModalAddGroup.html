@@ -1,0 +1,35 @@
+<form name="form" ng-submit="submit()">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true" ng-click="cancel()"></button>
+		<h4 class="modal-title uppercase bold font-red">
+			<i class="icon-settings"></i> Title</h4>
+	</div>
+	<div class="modal-body">
+		<div class="form-body">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<div class="form-group">
+						<label class="control-label">Label 1</label>
+						<input type="text" class="form-control">
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="form-group">
+						<label class="control-label">Label 2</label>
+						<input type="text" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+				ng-click="cancel()">
+					<i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+			<button type="submit" class="btn btn-lg red">
+				Submit <i class="glyphicon glyphicon-save"></i></button>
+		</div>
+	</div>
+</form>

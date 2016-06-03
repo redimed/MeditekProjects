@@ -1,5 +1,6 @@
 var winston = require('winston');
-var graylog2 = require('winston-graylog2');
+require('winston-logstash');
+var util = require('util');
 var fs = require('fs');
 if (!fs.existsSync('./logs')) {
     fs.mkdirSync('./logs');
@@ -47,18 +48,29 @@ var customLogger = new winston.Logger({
             formatter: true,
             filename: './logs/log'
         }),
-	// transport to graylog2
-	new graylog2({
-		name:'Graylog2',
-		level:'debug',
-		graylog:{
-			servers:[{host:'192.168.1.2', port:12201}]			
-		}
-	})
     ],
     levels: config.levels,
     colors: config.colors
 });
+
+var logstashLogger = new winston.Logger({
+    transports : [
+        new winston.transports.Logstash ({
+            port : 3005,
+            node_name : "core_3005_log",
+            host: "172.19.0.8",
+            level: 'verbose',
+            colorize: false,
+        }),
+	    new winston.transports.Console({
+            level: 'verbose',
+            colorize: true,
+            prettyPrint: true,
+        }),
+    ],
+    levels: config.levels,
+    colors: config.colors
+})
 
 customLogger.add(Mail, {
     host: "smtp.gmail.com",
@@ -66,33 +78,26 @@ customLogger.add(Mail, {
     ssl: true,
     username: 'meditek.manage.system@gmail.com',
     password: 'meditek123456',
-    subject: 'Debug Production 3005',
+    subject: 'Debug Production Server 3005',
     from: 'Meditek Production <meditek.manage.system@gmail.com>',
     to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>, MinhDevOps <minhnguyen@telehealthvietnam.com.vn>',
     level: 'error'
 });
-/*customLogger.on('logging', function(transport, level, msg, meta) {
-    switch (transport.name) {
-        case 'mail':
-            var callback = function(err) {
-                if (err) {
-                    sails.log.error(err);
-                }
-            };
-            var data = {
-                phone: '+840939097759',
-                content: 'Server error please check your mail to fix it!'
-            }
-            SendSMSService.Send(data, callback);
-            break;
-        default:
-            break;
-    }
-});*/
+
 var log = {};
 if (process.env.NODE_ENV === 'production') {
     log['custom'] = customLogger;
 } else {
-    log['level'] = 'verbose';
+    log['custom'] = logstashLogger;
 }
+
+// Override console.log. All console.log is now treated at debug level of winston log.
+function formatArgs(args){
+    return [util.format.apply(util.format, Array.prototype.slice.call(args))];
+}
+
+console.log = function(){
+    logstashLogger.debug.apply(logstashLogger, formatArgs(arguments));
+}
+
 module.exports.log = log;

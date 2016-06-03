@@ -36,7 +36,7 @@ var defaultAtrributes = [
 	];
 
 module.exports = {
-	
+
 	/*
 		validation : validate input from client post into server
 		input: Doctor's information
@@ -174,7 +174,7 @@ module.exports = {
 						err.pushErrors(error);
 					}
 				}
-				
+
 				//validate Occupation
 				if(info.Occupation!=undefined && info.Occupation){
 					if(info.Occupation.length < 0 || info.Occupation.length > 255){
@@ -459,7 +459,7 @@ module.exports = {
 						}
 					}
 				}
-				
+
 				//validate Occupation
 				if('Occupation' in info){
 					if(info.Occupation){
@@ -650,7 +650,7 @@ module.exports = {
 					// toastr.error('UserName is required');
 				}
 			}
-			
+
 			//validate FirstName
 			if('FirstName' in info){
 				if(info.FirstName){
@@ -741,16 +741,74 @@ module.exports = {
 		return q.promise;
 	},
 
+	validationDoctorGroup : function(data) {
+		var characterRegex = /^[a-zA-Z0-9\s]{0,255}$/;
+		var textRegex = /^[a-zA-Z0-9\s]*$/;
+
+		var error = [];
+		var err = new Error("ERRORS");
+		var q = $q.defer();
+		try {
+
+			//validate FirstName
+			if(data.GroupName){
+				if(data.GroupName.length < 0 || data.GroupName.length > 50){
+					error.push({field:"GroupName",message:"max length"});
+					err.pushErrors(error);
+				}
+				if(!characterRegex.test(data.GroupName)){
+					error.push({field:"GroupName",message:"invalid value"});
+					err.pushErrors(error);
+				}
+			}
+			// else{
+			// 	error.push({field:"GroupName",message:"required"});
+			// }
+
+			if(data.GroupCode) {
+				if(!characterRegex.test(data.GroupCode)){
+					error.push({field:"GroupCode",message:"invalid value"});
+					err.pushErrors(error);
+				}
+			}
+			else{
+				error.push({field:"GroupCode",message:"required"});
+				err.pushErrors(error);
+			}
+
+			if(data.Description){
+				if(!textRegex.test(data.Description)){
+					error.push({field:"Description",message:"invalid value"});
+					err.pushErrors(error);
+				}
+			}
+
+			if(error.length>0){
+				throw err;
+			}
+			else{
+				q.resolve({status:'success'});
+			}
+
+		}
+		catch(err){
+			q.reject(err);
+		}
+		return q.promise;
+
+	},
+
 	whereClause : function(data) {
 		var whereClause = {};
 		whereClause.Doctor = {};
 		whereClause.UserAccount ={};
 		whereClause.Role = {};
+		whereClause.Department = {};
 		if(check.checkData(data.Search)){
 			if(data.Search.FirstName){
 				whereClause.Doctor.FirstName={
 					like:'%'+data.Search.FirstName+'%'
-				} 
+				}
 			}
 			if(data.Search.MiddleName){
 				whereClause.Doctor.MiddleName = {
@@ -795,6 +853,12 @@ module.exports = {
 					like:'%'+data.Search.RoleName+'%'
 				}
 			}
+			if(data.Search.DepartmentName)
+			{
+				whereClause.Department.DepartmentName = {
+					like: '%'+data.Search.DepartmentName+'%'
+				}
+			}
 		}
 		return whereClause;
 	},
@@ -832,7 +896,7 @@ module.exports = {
 						whereClause.Doctor,
 						isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"),' ', Sequelize.col("LastName")), {
 			    	   	like: '%'+FirstName+' '+LastName+'%'}):null,
-					]			
+					]
 				},
 				transaction:transaction
 			});
@@ -874,20 +938,20 @@ module.exports = {
 						whereClause.Doctor,
 						isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"),' ', Sequelize.col("LastName")), {
 			    	   	like: '%'+FirstName+' '+LastName+'%'}):null,
-					]			
+					]
 				},
 				transaction:transaction
 			});
 		}
 	},
 
-	/* 
-		LoadlistDoctor: Get all data	
+	/*
+		LoadlistDoctor: Get all data comment
 	*/
 	LoadlistDoctor: function(data, transaction) {
 		var isAvatar = data.isAvatar?data.isAvatar:false;
 		var include_data = [];
-		var Role_Arr = [4,5];
+		var Role_Arr = [check.const.rolesID.externalPractitioner, check.const.rolesID.internalPractitioner];
 		if(data.RoleID) {
 			Role_Arr = data.RoleID;
 		}
@@ -895,6 +959,8 @@ module.exports = {
 		var attributes = [];
 		var isConcat = false;
 		var whereClause = Services.Doctor.whereClause(data);
+		console.log(data);
+		console.log(whereClause);
 		var FullName;
 		if(data.Search){
 			FullName = data.Search.FullName?data.Search.FullName:null;
@@ -914,6 +980,7 @@ module.exports = {
 			};
 			attributes.push("UID");
 			attributes.push("Enable");
+			attributes.push("DepartmentID");
 		}
 		else{
 			attributes = defaultAtrributes;
@@ -935,7 +1002,7 @@ module.exports = {
 		include_data.push({
 			model: TelehealthUser,
 		    required: false,
-		    attributes:['UID']
+		    attributes:['ID','UID']
 		});
 
 		include_data.push({
@@ -944,7 +1011,7 @@ module.exports = {
 					model: Role,
 				    attributes: ['RoleName','RoleCode'],
 				    where:{
-				       	$or: whereClause.Role
+				       	$or: check.sqlParam(whereClause.Role)
 				   	},
 				    required: true,
 				}
@@ -965,39 +1032,51 @@ module.exports = {
 		var order = [];
 		// order.push(['CreatedDate', 'ASC']);
 		if(data.order) {
-			order.push(data.order);
+			if(data.order.length==3)
+			{
+				order.push([sequelize.models[data.order[0]], data.order[1], data.order[2] ])
+			}
+			else {
+				order.push(data.order);
+			}
 		}
 		else {
 			order.push(['CreatedDate', 'ASC']);
 		}
-
 		return Doctor.findAndCountAll({
 			include:[
 				{
 					include:include_data,
 		       		model: UserAccount,
-		      		attributes: ['PhoneNumber','Enable', 'UID'],
+		      		attributes: ['ID','PhoneNumber','Enable', 'UID'],
 			  		where:{
-			   			$or: whereClause.UserAccount,
+			   			$or: check.sqlParam(whereClause.UserAccount),
 			   			Enable:'Y'
 			   		},
 			   		required: true,
 		    	},
+				{
+					model: Department,
+					attributes:['ID', 'UID', 'SiteID', 'DepartmentCode', 'DepartmentName'],
+					where:{
+						$or: check.sqlParam(whereClause.Department)
+					},
+					required:!_.isEmpty(whereClause.Department)?true:false
+				}
 			],
 			attributes : attributes,
 			limit      : data.limit,
 			offset     : data.offset,
 			order      : order,
-			// subQuery   : false,
+			subQuery   : false,
 			where: {
-				Enable:'Y',
 				$and: [
-					whereClause.Doctor,
+					check.sqlParam(whereClause.Doctor),
 					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
 		    	   	like: '%'+FirstName+' '+LastName+'%'}):null,
 		    	   	FullName?Sequelize.where(Sequelize.fn("concat", Sequelize.col("Doctor.FirstName"),' ', Sequelize.col("Doctor.LastName")), {
 		    	   	like: '%'+FullName+'%'}):null,
-				]			
+				]
 			},
 			transaction:transaction
 		}).
@@ -1147,7 +1226,7 @@ module.exports = {
 				throw err;
 			})
 			.then(function(result){
-				if(data.RoleId!=undefined && data.RoleId!=null 
+				if(data.RoleId!=undefined && data.RoleId!=null
 				&& data.RoleId!="" && (data.RoleId==4 || data.RoleId==5)){
 					isHaveRole = true;
 					return Services.Doctor.checkUserRole(data.UserAccountID,t);
@@ -1287,7 +1366,7 @@ module.exports = {
 			else {
 				whereClause.PhoneNumber = data.PhoneNumber;
 			}
-			
+
 		}
 		return UserAccount.findAll({
 			attributes:['ID','UserName','Email','PhoneNumber'],
@@ -1380,7 +1459,10 @@ module.exports = {
 			.then(function(got_checkuser) {
 				if (got_checkuser == '' || got_checkuser == null) {
                     userInfo.Password = generatePassword(12, false);
-                    userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false);
+                    userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
+					userInfo.Activated = 'Y';
+					userInfo.Enable    = 'Y';
+					userInfo.ExpiryPin = 5;
                     return Services.UserAccount.CreateUserAccount(userInfo, t);
                 } else {
                     return got_checkuser;
@@ -1559,14 +1641,14 @@ module.exports = {
 		DoctorIDAppointment: Get doctor according to ID
 	*/
 	DoctorIDAppointment: function(data) {
-		
+
 		return Doctor
 					.findAll({
 						where: {
 							UID: data.UID
 						}
 					});
-	
+
 	},
 	/*
 		GetAllDepartment: Get all data of Department
@@ -1692,6 +1774,460 @@ module.exports = {
 						},
 						Enable: 'Y'
 					});
-	}
+	},
+
+	CreateGroup: function(data) {
+		//check groupcode
+		if(!data.GroupCode) {
+			var err = new Error('CreateGroup.error');
+			err.pushError('GroupCode.notFound');
+			throw err;
+		}
+		return sequelize.transaction()
+		.then(function(t) {
+			return Services.Doctor.validationDoctorGroup(data)
+			.then(function(result) {
+				data.UID    = UUIDService.Create();
+				data.Enable = 'Y';
+				return DoctorGroup.create(data,{transaction:t})
+			},function(err) {
+				throw err;
+			})
+			.then(function(created) {
+				if(_.isEmpty(created)) {
+					t.rollback();
+					var err = new Error('CreateGroup.error');
+					err.pushError('create.queryError');
+					throw err;
+				}
+				else {
+					t.commit();
+					return created;
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+		},function(err) {
+			throw err;
+		});
+	},
+
+	LoadListGroup: function(data) {
+		var whereClause = {};
+		if(data.search && _.isEmpty(data.search) == false) {
+			for(var key in data.search) {
+				whereClause[key] = {
+					like:'%'+data.search[key]+'%'
+				};
+			}
+		}
+		var include = null;
+		if(data.include) {
+			if(data.include.Doctor) {
+				include = {
+					model: Doctor,
+					through: {
+						attributes: []
+					},
+					attributes: data.include.Doctor.attributes,
+					required:true,
+					include: data.include.Department?
+							{
+								model: Department,
+								attribute: ['DepartmentName'],
+								required: false
+							}:null
+				}
+			}
+		}
+		return DoctorGroup.findAndCountAll({
+			where : whereClause,
+			limit : data.limit,
+			offset: data.offset,
+			order : data.order,
+			include: include,
+			// include: {
+			// 	model: Doctor,
+			// 	through: {
+			// 		attributes:[]
+			// 	},
+			// 	attributes: ['FirstName', 'LastName']
+			// },
+		})
+		.then(function(got_list) {
+			if(_.isEmpty(got_list)) {
+				var err = new Error('LoadListGroup.error');
+				err.pushError('loadlist.queryError');
+				throw err;
+			}
+			else {
+				return got_list;
+			}
+		},function(err) {
+			throw err;
+		})
+	},
+
+	GetDetailGroup : function(data) {
+		if(!data.UID){
+			var err = new Error('GetDetailGroup.error');
+			err.pushError('UID.invalidParams');
+			throw err;
+		}
+		return DoctorGroup.findOne({
+			where:{
+				UID : data.UID
+			}
+		})
+		.then(function(result) {
+			if(_.isEmpty(result)) {
+				var err = new Error('GetDetailGroup.error');
+				err.pushError('Group.notFound');
+				throw err;
+			}
+			else {
+				return result;
+			}
+		},function(err) {
+			throw err;
+		})
+	},
+
+	AddDoctorGroup: function(data) {
+		var doctor,group;
+		if(!data.doctorUID) {
+			var err = new Error('AddDoctorGroup.error');
+			err.pushError('doctorUID.invalid');
+			throw err;
+		}
+		if(!data.doctorGroupUID) {
+			var err = new Error('AddDoctorGroup.error');
+			err.pushError('doctorGroupUID.invalid');
+			throw err;
+		}
+		return sequelize.transaction()
+		.then(function(t) {
+			return Doctor.findOne({
+				include:[
+					{
+						model:UserAccount,
+						attributes:['PhoneNumber','Email','ID','UID'],
+						required:true,
+						include:[
+							{
+								model:Role,
+								required:true,
+							}
+						]
+					}
+				],
+				where: {
+					UID : data.doctorUID,
+					Enable:'Y'
+				},
+				transaction : t
+			})
+			.then(function(got_doctor) {
+				console.log("UserAccount ",got_doctor.UserAccount);
+				if(_.isEmpty(got_doctor)) {
+					var err = new Error('AddDoctorGroup.error');
+					err.pushError('Doctor.notFound');
+					throw err;
+				}
+				else {
+					var isInternal = false;
+					doctor = got_doctor;
+					for(var i = 0; i < doctor.UserAccount.Roles.length; i++) {
+						if(doctor.UserAccount.Roles[i].ID == '5') {
+							isInternal = true;
+						}
+					}
+					if(isInternal == true){
+						return DoctorGroup.findOne({
+							where:{
+								UID : data.doctorGroupUID,
+								Enable : 'Y',
+							},
+							transaction: t
+						});
+					}
+					else {
+						var err = new Error('AddDoctorGroup.error');
+						err.pushError('Not.Internal');
+						throw err;
+					}
+				}
+			},function(err) {
+				throw err;
+			})
+			.then(function(got_group) {
+				if(_.isEmpty(got_group)) {
+					var err = new Error('AddDoctorGroup.error');
+					err.pushError('Group.notFound');
+					throw err;
+				}
+				else {
+					group = got_group;
+					return RelDoctorGroup.findOne({
+						where:{
+							DoctorID: doctor.ID,
+							DoctorGroupID: group.ID,
+						},
+						transaction: t,
+					});
+				}
+			},function(err) {
+				throw err;
+			})
+			.then(function(got_rel) {
+				if(_.isEmpty(got_rel) == false) {
+					var err = new Error('AddDoctorGroup.error');
+					err.pushError('Doctor.Added.Group');
+					throw err;
+				}
+				else {
+					return RelDoctorGroup.create({
+						DoctorID      : doctor.ID,
+						DoctorGroupID : group.ID,
+					},{transaction:t});
+				}
+			},function(err) {
+				throw err;
+			})
+			.then(function(created){
+				if(_.isEmpty(created)) {
+					t.rollback();
+					var err = new Error('AddDoctorGroup.error');
+					err.pushError('Create.queryError');
+					throw err;
+				}
+				else {
+					t.commit();
+					return created;
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			});
+		},function(err) {
+			throw err;
+		});
+	},
+
+	LoadListDoctorfromGroup: function(data) {
+		if(!data.doctorGroupUID) {
+			var err = new Error('LoadListDoctorfromGroup.error');
+			err.pushError('doctorGroupUID.invalid');
+			throw err;
+		}
+		return DoctorGroup.findOne({
+			where:{
+				UID: data.doctorGroupUID
+			}
+		})
+		.then(function(got_group) {
+			if(_.isEmpty(got_group)) {
+				var err = new Error('LoadListDoctorfromGroup.error');
+				err.pushError('Group.notFound');
+				throw err;
+			}
+			else {
+				return got_group.getDoctors({
+					include:[
+						{
+							model:UserAccount,
+							attributes:['PhoneNumber','Email','ID','UID'],
+							required:true,
+							include:[
+								{
+									model:Role,
+									required:true,
+								}
+							],
+						}
+					]
+				});
+			}
+		},function(err) {
+			throw err;
+		})
+		.then(function(got_doctor) {
+			return got_doctor;
+		},function(err) {
+			throw err;
+		})
+	},
+
+	DeleteDoctorfromGroup: function(data) {
+		if(!data.doctorID) {
+			var err = new Error('DeleteDoctorfromGroup.error');
+			err.pushError('doctorID.invalid');
+			throw err;
+		}
+		if(!data.doctorGroupID) {
+			var err = new Error('DeleteDoctorfromGroup.error');
+			err.pushError('doctorGroupID.invalid');
+			throw err;
+		}
+		return sequelize.transaction()
+		.then(function(t) {
+			return RelDoctorGroup.findOne({
+				where:{
+					DoctorID      : data.doctorID,
+					DoctorGroupID : data.doctorGroupID,
+				},
+				transaction: t
+			})
+			.then(function(got_rel) {
+				if(_.isEmpty(got_rel)) {
+					var err = new Error('DeleteDoctorfromGroup.error');
+					err.pushError('notFound.Rel');
+					throw err;
+				}
+				else {
+					return RelDoctorGroup.destroy({
+						where:{
+							DoctorID      : data.doctorID,
+							DoctorGroupID : data.doctorGroupID,
+						},
+						transaction: t
+					});
+				}
+			},function(err) {
+				throw err;
+			})
+			.then(function(deleted) {
+				console.log("deleted ",deleted);
+				if(deleted == null || deleted == "") {
+					t.rollback();
+					var err = new Error('DeleteDoctorfromGroup.error');
+					err.pushError('Delete.queryError');
+					throw err;
+				}
+				else {
+					t.commit();
+					return deleted;
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+		},function(err) {
+			throw err;
+		})
+	},
+
+	UpdateGroup: function(data) {
+		return sequelize.transaction()
+		.then(function(t) {
+			return Services.Doctor.validationDoctorGroup(data)
+			.then(function(result) {
+				return DoctorGroup.findOne({
+					where:{
+						UID    : data.UID,
+						Enable : 'Y',
+					},
+					transaction: t
+				});
+			},function(err) {
+				throw err;
+			})
+			.then(function(got_group) {
+				if(_.isEmpty(got_group)) {
+					var err = new Error('UpdateGroup.error');
+					err.pushError('Group.notFound');
+					throw err;
+				}
+				else {
+					var updateData = {
+						GroupCode   : data.GroupCode,
+						GroupName   : data.GroupName,
+						Description : data.Description
+					};
+					return DoctorGroup.update(updateData,{
+						where:{
+							UID : data.UID
+						},
+						transaction : t
+					});
+				}
+			},function(err) {
+				throw err;
+			})
+			.then(function(updated) {
+				if(updated == null || updated == '') {
+					t.rollback();
+					var err = new Error('UpdateGroup.error');
+					err.pushError('update.queryError');
+					throw err;
+				}
+				else {
+					t.commit();
+					return updated;
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			})
+		},function(err) {
+			throw err;
+		});
+	},
+
+	ChangeStatusGroup: function(data) {
+		if(!data.UID) {
+			var err = new Error('ChangeStatusGroup.error');
+			err.pushError('UID.notFound');
+			throw err;
+		}
+		return sequelize.transaction()
+		.then(function(t){
+			return DoctorGroup.findOne({
+				where:{
+					UID : data.UID
+				},
+				transaction: t
+			})
+			.then(function(got_group) {
+				if(_.isEmpty(got_group)) {
+					var err = new Error('ChangeStatusGroup.error');
+					err.pushError('Group.notFound');
+					throw err;
+				}
+				else {
+					return DoctorGroup.update({
+						Enable : data.Enable,
+					},{
+						where:{
+							UID : data.UID,
+						},
+						transaction: t
+					});
+				}
+			},function(err) {
+				throw err;
+			})
+			.then(function(changed) {
+				if(changed == null || changed == '') {
+					t.rollback();
+					var err = new Error('ChangeStatusGroup.error');
+					err.pushError('change.queryError');
+					throw err;
+				}
+				else {
+					t.commit();
+					return changed;
+				}
+			},function(err) {
+				t.rollback();
+				throw err;
+			});
+		},function(err) {
+			throw err;
+		});
+	},
+
+	//chi co doctor role = 5 moi dc add vao 1 group con role = 4 thi k duoc add
 
 }

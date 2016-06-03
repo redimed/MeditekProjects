@@ -24,14 +24,20 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
+        var self = this;
         $(this.refs.input).datepicker({
-            autoclose: false,
+            autoclose: !0,
             format: 'dd/mm/yyyy',
+            clearBtn:true,
+        }).on('changeDate',function() {
+            if(typeof self.props.onChange !== 'undefined'){
+                self.props.onChange();
+            }
         });
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
-                before: function(e, element, target) {                    
+                before: function(e, element, target) {
                     e.preventDefault();
                     return true;
                 },
@@ -45,7 +51,8 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        //value = Config.setDate(value);
+        if(value.indexOf('+') > -1)
+            value = moment(value).format('DD/MM/YYYY');
         $(this.refs.input).datepicker("update", value);
     },
     setDisplay: function(type){
@@ -58,6 +65,11 @@ module.exports = React.createClass({
     getValue: function(){
         var value = $(this.refs.input).val();
         return Config.getDateTimeZone(value);
+    },
+    getValuePrint: function(){
+        var value = $(this.refs.input).val();
+        console.log(value);
+        return value;
     },
     getText: function(){
         var value = $(this.refs.input).val();
@@ -78,6 +90,9 @@ module.exports = React.createClass({
     getPreCal: function(){
         return this.props.preCal;
     },
+    getCal: function(){
+        return this.props.cal;
+    },
     getRoles: function(){
         return this.props.roles;
     },
@@ -92,6 +107,10 @@ module.exports = React.createClass({
                 </div>
             )
         }
+        var inputStyle = {
+            paddingLeft: '1px',
+            paddingRight:'1px'
+        }
         switch(type){
             case 'default':
                 html = (
@@ -104,10 +123,17 @@ module.exports = React.createClass({
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <input title={this.props.name} type="text" className={this.props.className} name={this.props.name} ref="input" placeholder={this.props.placeholder}/>
+                                <input title={this.props.name} type="text" className={this.props.className} style={inputStyle} name={this.props.name} ref="input" placeholder={this.props.placeholder}
+                                    id={this.props.refTemp}/>
                             </div>
                         </div>
                     </div>
+                )
+                break;
+            case 'd':
+                html = (
+                    <input type="text" className={this.props.className} style={inputStyle} name={this.props.name} ref="input" placeholder={this.props.placeholder}
+                        id={this.props.refTemp}/>
                 )
                 break;
         }

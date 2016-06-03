@@ -79,6 +79,8 @@ passport.use(new LocalStrategy({
             where: whereClause,
             include: [{
                 model: RelUserRole,
+                where: {Enable:'Y'},
+                required: false,
                 attributes: ['ID', 'UserAccountId', 'RoleId', 'SiteId'],
                 include: {
                     model: Role,
@@ -118,7 +120,6 @@ passport.use(new LocalStrategy({
         })
         .then(function(user) {
             //Chuẩn bị thông tin trả về
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",user.RelUserRoles);
             var listRoles = [];
             _.each(user.RelUserRoles, function(item) {
                 if (HelperService.CheckExistData(item) &&
@@ -151,21 +152,41 @@ passport.use(new LocalStrategy({
                         //Pin chưa expired
                         if (user.PinNumber == loginInfo.PinNumber) {
                             //Pin hợp lệ
-                            console.log("Login via PinNumber success");
-                            return done(null, returnUser, {
-                                message: 'Logged In via PinNumber Successfully'
-                            });
+                            if(user.Activated!="Y")
+                            {
+                                user.updateAttributes({Activated : "Y"})
+                                .then(function(userUpdated){
+                                    console.log("Login via PinNumber success");
+                                    returnUser.Activated = "Y";
+                                    return done(null, returnUser, {
+                                        message: 'Logged In via PinNumber Successfully'
+                                    });
+                                },function(err){
+                                    o.exlog(err);
+                                    var error = new Error("UserAccount.updateActivatedError");
+                                    return done(error);
+                                })
+                            }
+                            else {
+                                console.log("Login via PinNumber success");
+                                return done(null, returnUser, {
+                                    message: 'Logged In via PinNumber Successfully'
+                                });
+                            }
+
                         } else {
                             //Pin không hợp lệ
                             //Cập nhật lại Pin Expiry
                             var currentExpiryPin = user.ExpiryPin;
                             user.updateAttributes({ ExpiryPin: currentExpiryPin - 1 })
-                                .then(function(userUpdated) {
-                                    var err = new Error("PinNumber.Invalid");
-                                    return done(null, false, err);
-                                }, function(err) {
-                                    return done(err);
-                                })
+                            .then(function(userUpdated) {
+                                var err = new Error("PinNumber.Invalid");
+                                return done(null, false, err);
+                            }, function(err) {
+                                o.exlog(err);
+                                var error = new Error("UserAccount.updateExpiryPinError");
+                                return done(error);
+                            })
                         }
                     } else {
                         if (isNaN(user.ExpiryPin))

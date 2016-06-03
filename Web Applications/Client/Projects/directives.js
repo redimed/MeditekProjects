@@ -67,13 +67,43 @@ app.directive('dropdownMenuHover', function() {
 // Datepicker
 app.directive('datePicker', function($timeout) {
     return {
+        restrict: "A",
+        scope: {
+            // startDate: '=startDate',
+            setDate: '=setDate',
+        },
+        controller: function($scope) {
+            /*$('#inputDate').datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                // format: 'mm/dd/yyyy',
+                startDate: $scope.startDate,
+                autoclose: !0,
+            });*/
+
+        },
         link: function(scope, elem, attrs) {
-            $timeout(function() {
-                ComponentsDateTimePickers.init();
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..............");
+            console.log(elem);
+            console.log(attrs);
+            elem.datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                // format: 'mm/dd/yyyy', // ko co tac dung
+                // startDate: scope.startDate,
+                autoclose: !0,
             });
-            elem.addClass('form-control date-picker');
-            elem.attr('data-date-format', 'dd/mm/yyyy');
-            elem.attr('readonly', true);
+            scope.$watch('setDate', function(oldVal, newVal) {
+                elem.datepicker('setDate', oldVal);
+            });
+            // $timeout(function(){
+            //     elem.datepicker('setDate', scope.setDate);
+            //     console.log('.................',scope.setDate);
+            // },0);
+
+            elem.addClass('form-control');
+            // elem.attr('data-date-format', 'dd/mm/yyyy');
+            // elem.attr('readonly', true);
             elem.attr('type', 'text');
             elem.attr('placeholder', 'dd/mm/yyyy');
             // elem.attr('data-date-start-date',"20/11/2015");
@@ -82,16 +112,25 @@ app.directive('datePicker', function($timeout) {
     };
 });
 // Timepicker
-app.directive('timePickerNoSeconds', function($timeout) {
+app.directive('timePicker', function($timeout) {
     return {
+        scope: {
+            setTime: '=setTime',
+        },
         link: function(scope, elem, attrs) {
-            $timeout(function() {
-                ComponentsDateTimePickers.init();
+            elem.timepicker({
+                autoclose: false,
+                minuteStep: 1, // cach nhau bao nhieu phut
+                showSeconds: false, //ko show giay
+                showMeridian: false, // khong su dung kieu format AM PM
             });
-            elem.addClass('form-control timepicker timepicker-no-seconds');
-            elem.attr('data-format', 'hh:mm A');
+            scope.$watch('setTime', function(oldVal, newVal) {
+                elem.timepicker('setTime', oldVal);
+            });
+            elem.addClass('form-control');
+            // elem.attr('data-format', 'hh:mm A');
             elem.attr('data-default-time', '');
-            elem.attr('readonly', true);
+            // elem.attr('readonly', true);
             elem.attr('type', 'text');
             elem.attr('placeholder', 'hh:mm');
         },
@@ -117,36 +156,61 @@ app.directive('patientDetailDirective', function() {
     return {
         restrict: 'E',
         scope: {
-            apptuid: "="
+            info: "="
         },
         templateUrl: 'common/views/patientDetailDirective.html',
         controller: function($scope, WAAppointmentService) {
-            if ($scope.apptuid) {
-                WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                    if (data.data != null) {
-                        $scope.patientInfo = data.data.Patients[0];
+            $scope.info.setDataPatientDetail = function(data) {
+                console.log("patientDetailDirective", data);
+                $scope.apptdetail = data;
+                if ($scope.apptdetail != null) {
+                    if ($scope.apptdetail.Patients.length > 0) {
+                        $scope.patientInfo = $scope.apptdetail.Patients[0];
                         console.log('$scope.patientInfo', $scope.patientInfo);
-                    };
-                }, function(error) {});
-            };
+                    } else if ($scope.apptdetail.PatientAppointments.length > 0) {
+                        $scope.patientInfo = $scope.apptdetail.PatientAppointments[0];
+                        console.log('$scope.patientInfo', $scope.patientInfo);
+                    } else if ($scope.apptdetail.TelehealthAppointment != null) {
+                        $scope.patientInfo = $scope.apptdetail.TelehealthAppointment.PatientAppointment;
+                        console.log('$scope.patientInfo', $scope.patientInfo);
+                    }
+                };
+            }
         },
     };
 });
 app.directive('medicareDirective', function() {
     return {
         scope: {
-            apptuid: "="
+            info: "="
         },
         restrict: 'E',
         templateUrl: 'common/views/medicareDirective.html',
-        controller: function($scope, WAAppointmentService) {
-            if ($scope.apptuid) {
-                WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                    if (data.data != null) {
-                        $scope.patientTelehealth = data.data.TelehealthAppointment.PatientAppointment;
-                        console.log('$scope.patientTelehealth', $scope.patientTelehealth);
-                    };
-                }, function(error) {});
+        controller: function($scope, WAAppointmentService, PatientService) {
+            $scope.info.setDataMedicare = function(data) {
+                console.log("medicareDirective", data);
+                if (data != null) {
+                    if (data.Patients.length > 0) {
+                        PatientService.detailChildPatient({ UID: data.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA'] }).then(function(response) {
+                            console.log("PatientMedicare ", response.data)
+                            if (response.data) {
+                                if (response.data.PatientMedicare.length > 0) {
+                                    $scope.patientTelehealth = response.data.PatientMedicare[0];
+                                }
+                                if (response.data.PatientDVA.length > 0) {
+                                    $scope.patientTelehealth.DVANumber = response.data.PatientDVA[0].DVANumber;
+                                }
+                            }
+                        }, function(err) {
+                            console.log(err);
+                        })
+                    } else if (data.PatientAppointments.length > 0) {
+                        $scope.patientTelehealth = data.PatientAppointments[0];
+                        console.log("medicare Directive", $scope.patientTelehealth);
+                    } else if (data.TelehealthAppointment != null) {
+                        $scope.patientTelehealth = data.TelehealthAppointment.PatientAppointment;
+                    }
+                }
             }
         },
     };
@@ -155,27 +219,28 @@ app.directive('appointmentDetailDirective', function() {
     return {
         restrict: 'E',
         scope: {
-            apptuid: "="
+            info: "="
         },
         templateUrl: 'common/views/appointmentDetailDirective.html',
         controller: function($scope, WAAppointmentService, AuthenticationService, $cookies, $state, toastr) {
-            WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                if (data.data != null) {
-                    $scope.appointmentInfo = data.data;
-                    $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).format('DD/MM/YYYY') : 'N/A';
-                    $scope.apptTime = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).format('HH:mm') : 'N/A';
+            $scope.info.setDataApptDetail = function(data) {
+                console.log("appointmentDetailDirective", data);
+                $scope.apptdetail = data;
+                if ($scope.apptdetail != null) {
+                    $scope.apptDate = ($scope.apptdetail.FromTime != null) ? moment($scope.apptdetail.FromTime).format('DD/MM/YYYY') : 'N/A';
+                    $scope.apptTime = ($scope.apptdetail.FromTime != null) ? moment($scope.apptdetail.FromTime).format('HH:mm') : 'N/A';
                 };
-            }, function(error) {});
+            }
 
             var userInfo = $cookies.getObject('userInfo');
-            ioSocket.getRoomOpentok.then(function (data) {
+            ioSocket.getRoomOpentok.then(function(data) {
                 $scope.Opentok = data.data;
-                console.log("$scope.Opentok",$scope.Opentok);
+                console.log("$scope.Opentok", $scope.Opentok);
             })
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
                 WAAppointmentService.GetDetailPatientByUid({
-                    UID: $scope.appointmentInfo.Patients[0].UID
+                    UID: $scope.apptdetail.Patients[0].UID
                 }).then(function(data) {
                     console.log(data);
                     if (data.data[0].TeleUID != null) {

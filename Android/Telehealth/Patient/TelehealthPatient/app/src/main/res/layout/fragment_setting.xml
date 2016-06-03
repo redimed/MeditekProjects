@@ -5,7 +5,9 @@
     android:orientation="vertical"
     tools:context="com.redimed.telehealth.patient.setting.SettingFragment">
 
-    <include layout="@layout/custom_toolbar" />
+    <include
+        android:id="@+id/toolBar"
+        layout="@layout/custom_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="30dp"
+            android:paddingEnd="0dp"
             android:paddingLeft="12dp"
+            android:paddingRight="0dp"
+            android:paddingStart="12dp"
             android:text="@string/setting_account"
             android:textColor="@color/greyFont" />
 
@@ -56,7 +61,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="20dp"
+            android:paddingEnd="0dp"
             android:paddingLeft="12dp"
+            android:paddingRight="0dp"
+            android:paddingStart="12dp"
             android:text="@string/setting_profile"
             android:textColor="@color/greyFont" />
 
@@ -93,32 +101,33 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"
-                    android:background="@color/colorLine"/>
+                    android:background="@color/colorLine" />
 
             </LinearLayout>
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@drawable/setting_next_icon"
-                android:padding="12dp"
+                android:layout_gravity="end"
                 android:layout_marginTop="-35dp"
-                android:layout_gravity="right"/>
+                android:background="@drawable/setting_next_icon"
+                android:padding="12dp" />
 
             <RelativeLayout
+                android:id="@+id/layoutChangePin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
-                    android:id="@+id/btnAddNew"
+                    android:id="@+id/txtAddNew"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
-                    android:text="@string/add_new"
-                    android:textColor="@color/blueFont"
-                    android:layout_centerVertical="true"/>
+                    android:text="@string/change_pin"
+                    android:textColor="@color/blueFont" />
 
                 <ImageView
                     android:layout_width="30dp"
@@ -136,8 +145,8 @@
             android:id="@+id/layoutAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_border"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:background="@drawable/custom_border">
 
             <com.redimed.telehealth.patient.font.RobotoTextView
                 android:id="@+id/lblAbout"
@@ -152,9 +161,9 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/setting_next_icon" />
 
         </RelativeLayout>

@@ -89,10 +89,32 @@ var modules=[
 	// },
 	{
 		uid:'6',
-		state:'authentication.doctor.list',
+		state:'',
 		name:'Doctor',
 		parent:'root',
 		order:'7',
+		roles:[
+			'ADMIN',
+			'INTERNAL_PRACTITIONER'
+		]
+	},
+	{
+		uid:'17',
+		state:'authentication.doctor.list',
+		name:'Doctor List',
+		parent:'6',
+		order:'1',
+		roles:[
+			'ADMIN',
+			'INTERNAL_PRACTITIONER'
+		]
+	},
+	{
+		uid:'18',
+		state:'authentication.doctor.group',
+		name:'Doctor Group',
+		parent:'6',
+		order:'2',
 		roles:[
 			'ADMIN',
 			'INTERNAL_PRACTITIONER'
@@ -129,6 +151,16 @@ var modules=[
 		roles:[
 			'ADMIN',
 			'INTERNAL_PRACTITIONER',
+		]
+	},
+	{
+		uid:'16',
+		state:'authentication.company.list',
+		name:'Company',
+		parent:'root',
+		order:'11',
+		roles:[
+			'ADMIN',
 		]
 	},
 	

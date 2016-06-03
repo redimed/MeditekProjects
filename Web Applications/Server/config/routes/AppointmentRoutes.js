@@ -58,5 +58,29 @@ module.exports = {
     'post /api/appointment-wa-list/consultation': {
         controller: 'Appointment/WAAppointmentController',
         action: 'GetListWAAppointmentConsultation'
+    },
+    'post /api/appointment-wa-request/patient-onlinebooking': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'RequestWAAppointmentPatientOnlineBooking'
+    },
+    'post /api/appointment-wa-request/company': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'RequestAppointmentCompany'
+    },
+    'post /api/onlinebooking/appointment-request': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'RequestAppointmentMedicalBooking'
+    },
+    'post /api/appointment-wa-request/patient-new': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'RequestWAAppointmentPatientNew'
+    },
+    'post /api/appointment-wa-update/company': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'UpdateRequestWAAppointmentCompany'
+    }, 
+    'post /api/appointment-link-patient': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'LinkAppointmentPatient'
     }
 };

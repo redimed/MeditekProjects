@@ -506,13 +506,41 @@ module.exports = {
         });
 
         //association EFormTemplate - Role
-        EFormTemplate.belongsToMany(Role,{
+        EFormTemplate.belongsToMany(Role, {
             through: 'RelEFormTemplateRole',
             foreignKey: 'EFormTemplateID'
         });
-        Role.belongsToMany(EFormTemplate,{
+        Role.belongsToMany(EFormTemplate, {
             through: 'RelEFormTemplateRole',
             foreignKey: 'RoleID'
+        });
+
+        //association Patient - RelCompanyPatient
+        Patient.hasMany(RelCompanyPatient, {
+            foreignKey: 'PatientID'
+        });
+        RelCompanyPatient.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+
+        //association Doctor - DoctorGroup
+        Doctor.belongsToMany(DoctorGroup, {
+            through: 'RelDoctorGroup',
+            foreignKey: 'DoctorID'
+        });
+        DoctorGroup.belongsToMany(Doctor, {
+            through: 'RelDoctorGroup',
+            foreignKey: 'DoctorGroupID'
+        });
+
+        //association Appointment - PatientAppointment
+        Appointment.belongsToMany(PatientAppointment, {
+            through: 'RelAppointmentPatientAppointment',
+            foreignKey: 'AppointmentID'
+        });
+        PatientAppointment.belongsToMany(Appointment, {
+            through: 'RelAppointmentPatientAppointment',
+            foreignKey: 'PatientAppointmentID'
         });
     }
 };

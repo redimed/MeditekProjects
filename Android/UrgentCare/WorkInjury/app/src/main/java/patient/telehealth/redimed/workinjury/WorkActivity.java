@@ -8,14 +8,16 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -44,8 +47,11 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import patient.telehealth.redimed.workinjury.api.UrgentRequest;
-import patient.telehealth.redimed.workinjury.model.UrgentRequestModel;
+import patient.telehealth.redimed.workinjury.model.AppointmentDataModel;
+import patient.telehealth.redimed.workinjury.model.AppointmentModel;
+import patient.telehealth.redimed.workinjury.model.PatientAppointmentModel;
+import patient.telehealth.redimed.workinjury.model.SiteModel;
+import patient.telehealth.redimed.workinjury.model.StaffModel;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.utils.TypefaceUtil;
 import retrofit.Callback;
@@ -57,8 +63,6 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG = "WORK";
     private DatePickerDialog birthdayPickerDialog;
     private SimpleDateFormat dateFormat;
-    private UrgentRequest urgentRequestApi;
-    private UrgentRequestModel objectUrgentRequest;
     private Gson gson;
     private String[] suburb;
     private List<EditText> arrEditText;
@@ -67,62 +71,58 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
     private String urgentType;
     private File f;
     private SweetAlertDialog dialog;
+    private SharedPreferences workinjury;
+    private boolean isAuthenticated;
+    private boolean isTypeCompany;
+    private String apptType;
 
-    @Bind(R.id.txtFirstName)
-    EditText txtFirstName;
-    @Bind(R.id.txtLastName)
-    EditText txtLastName;
-    @Bind(R.id.txtContactPhone)
-    EditText txtContactPhone;
-    @Bind(R.id.txtDOB)
-    EditText txtDOB;
-    @Bind(R.id.txtEmail)
-    EditText txtEmail;
-    @Bind(R.id.txtDescription)
-    EditText txtDescription;
-    @Bind(R.id.autoCompleteSuburb)
-    AutoCompleteTextView autoCompleteSuburb;
-    @Bind(R.id.btnWorkInjury)
-    Button btnWorkInjury;
-    @Bind(R.id.btnBack)
-    Button btnBack;
-    @Bind(R.id.txtTitle)
-    TextView txtTitle;
-    @Bind(R.id.lblFNRequire)
-    TextView lblFNRequire;
-    @Bind(R.id.lblLNRequire)
-    TextView lblLNRequire;
-    @Bind(R.id.lblPhoneRequire)
-    TextView lblPhoneRequire;
-    @Bind(R.id.lblCTRequire)
-    TextView lblCTRequire;
-    @Bind(R.id.lblCNRequire)
-    TextView lblCNRequire;
-    @Bind(R.id.txtCompanyName)
-    EditText txtCompanyName;
-    @Bind(R.id.txtContactPerson)
-    EditText txtContactPerson;
-    @Bind(R.id.txtCompanyPhone)
-    EditText txtCompanyPhone;
-    @Bind(R.id.radioGroupGPReferral)
-    RadioGroup radioGroupGPReferral;
-    @Bind(R.id.relativeLayoutGPReferral)
-    RelativeLayout relativeLayoutGPReferral;
-    @Bind(R.id.radioY)
-    RadioButton radioY;
-    @Bind(R.id.relativeLayoutTreatment)
-    RelativeLayout relativeLayoutTreatment;
-    @Bind(R.id.radioGroupTypeTreatment)
-    RadioGroup radioGroupTypeTreatment;
+    @Bind(R.id.txtFirstName) EditText txtFirstName;
+    @Bind(R.id.txtLastName) EditText txtLastName;
+    @Bind(R.id.txtContactPhone) EditText txtContactPhone;
+    @Bind(R.id.txtDOB) EditText txtDOB;
+    @Bind(R.id.txtEmail) EditText txtEmail;
+    @Bind(R.id.txtDescription) EditText txtDescription;
+    @Bind(R.id.autoCompleteSuburb) AutoCompleteTextView autoCompleteSuburb;
+    @Bind(R.id.btnWorkInjury) Button btnWorkInjury;
+    @Bind(R.id.btnSelectStaff) Button btnSelectStaff;
+    @Bind(R.id.btnSelectSite) Button btnSelectSite;
+    @Bind(R.id.lblFNRequire) TextView lblFNRequire;
+    @Bind(R.id.lblLNRequire) TextView lblLNRequire;
+    @Bind(R.id.lblPhoneRequire) TextView lblPhoneRequire;
+    @Bind(R.id.lblCTRequire) TextView lblCTRequire;
+    @Bind(R.id.lblCNRequire) TextView lblCNRequire;
+    @Bind(R.id.txtCompanyName) EditText txtCompanyName;
+    @Bind(R.id.txtContactPerson) EditText txtContactPerson;
+    @Bind(R.id.txtCompanyPhone) EditText txtCompanyPhone;
+    @Bind(R.id.radioGroupGPReferral) RadioGroup radioGroupGPReferral;
+    @Bind(R.id.relativeLayoutGPReferral) RelativeLayout relativeLayoutGPReferral;
+    @Bind(R.id.radioY) RadioButton radioY;
+    @Bind(R.id.relativeLayoutTreatment) RelativeLayout relativeLayoutTreatment;
+    @Bind(R.id.radioGroupTypeTreatment) RadioGroup radioGroupTypeTreatment;
+    @Bind(R.id.spinnerAppointmentType) Spinner spinnerAppointmentType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
-
         TypefaceUtil.applyFont(this, findViewById(R.id.workActivity), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
-        urgentRequestApi = RESTClient.getRegisterApi();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        workinjury = getSharedPreferences("WorkInjury", MODE_PRIVATE);
+        isAuthenticated = workinjury.getBoolean("isAuthenticated", false);
+        isTypeCompany = workinjury.getBoolean("isTypeCompany", false);
+        if (!isTypeCompany){
+            txtCompanyName.setText(workinjury.getString("companyName",""));
+            btnSelectStaff.setVisibility(View.GONE);
+            btnSelectSite.setVisibility(View.GONE);
+        }
         f = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/InformationUrgent.xml");
         gson = new Gson();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -141,7 +141,19 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         });
         radioY.setChecked(true);
         btnWorkInjury.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
+        btnSelectStaff.setOnClickListener(this);
+        btnSelectSite.setOnClickListener(this);
+        spinnerAppointmentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                apptType = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         LoadJsonData();
         GetDataURType();
@@ -164,18 +176,19 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         i = getIntent();
         if (i != null) {
             switch (i.getStringExtra("URType")) {
-                case "tre":
+                case "rehab":
                     relativeLayoutTreatment.setVisibility(View.VISIBLE);
-                    txtTitle.setText(getResources().getText(R.string.green_btn));
-                    urgentType = "tre";
+                    getSupportActionBar().setTitle(getResources().getText(R.string.green_btn));
+                    urgentType = "rehab";
                     break;
-                case "spec":
-                    txtTitle.setText(getResources().getText(R.string.blue_btn));
-                    urgentType = "spec";
+                case "specialist":
+                    getSupportActionBar().setTitle(getResources().getText(R.string.blue_btn));
+
+                    urgentType = "specialist";
                     break;
                 case "gp":
                     relativeLayoutGPReferral.setVisibility(View.GONE);
-                    txtTitle.setText(getResources().getText(R.string.red_btn));
+                    getSupportActionBar().setTitle(getResources().getText(R.string.red_btn));
                     urgentType = "gp";
                     break;
             }
@@ -257,13 +270,37 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
                 arrEditText.add(txtContactPhone);
                 arrEditText.add(txtCompanyName);
                 arrEditText.add(txtContactPerson);
-                MakeAppointment(arrEditText);
+                if (isAuthenticated){
+
+                }else {
+                    MakeAppointment(arrEditText);
+                }
                 break;
             case R.id.btnBack:
                 onBackPressed();
                 break;
+            case  R.id.btnSelectStaff:
+                Intent intent = new Intent(this, StaffListActivity.class);
+                intent.putExtra("work",true);
+                startActivity(intent);
+                break;
+            case R.id.btnSelectSite:
+                Intent intent1 = new Intent(this, SiteListActivity.class);
+                intent1.putExtra("work",true);
+                startActivity(intent1);
+                break;
         }
     }
+
+    private AppointmentDataModel setAppointmentData(String name, String value) {
+        AppointmentDataModel dataModel  = new AppointmentDataModel();
+        dataModel.setName(name);
+        dataModel.setType("RequestPatient");
+        dataModel.setCategory("Appointment");
+        dataModel.setSection("Telehealth");
+        dataModel.setValue(value);
+        return dataModel;
+    };
 
     private void MakeAppointment(List<EditText> arr) {
         if (!CheckValidateFrom(arr)) {
@@ -274,53 +311,89 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
             dialog.show();
             return;
         }
-        objectUrgentRequest = new UrgentRequestModel();
-        objectUrgentRequest.setFirstName(txtFirstName.getText().toString());
-        objectUrgentRequest.setLastName(txtLastName.getText().toString());
-        objectUrgentRequest.setContactPhone(CheckContactNo(txtContactPhone.getText().toString()));
-        objectUrgentRequest.setSuburb(autoCompleteSuburb.getText().toString());
-        objectUrgentRequest.setDOB(txtDOB.getText().toString());
-        objectUrgentRequest.setEmail(txtEmail.getText().toString());
-        objectUrgentRequest.setDescription(txtDescription.getText().toString());
-        objectUrgentRequest.setCompanyName(txtCompanyName.getText().toString());
-        objectUrgentRequest.setContactPerson(txtContactPerson.getText().toString());
-        objectUrgentRequest.setCompanyPhone(txtCompanyPhone.getText().toString());
-        objectUrgentRequest.setUrgentRequestType("WorkInjury");
-        objectUrgentRequest.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
-        objectUrgentRequest.setRehab(urgentType == "tre" ? "Y" : "N");
-        objectUrgentRequest.setSpecialList(urgentType == "spec" ? "Y" : "N");
-        objectUrgentRequest.setGeneralClinic(urgentType == "gp" ? "Y" : "N");
-        if (!urgentType.equalsIgnoreCase("gp")) {
-            objectUrgentRequest.setGPReferral((radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
-        }
-        if (urgentType.equalsIgnoreCase("tre")) {
+
+        /*patientAppointmentModel*/
+        PatientAppointmentModel patientAppointmentModel = new PatientAppointmentModel();
+        patientAppointmentModel.setFirstName(txtFirstName.getText().toString());
+        patientAppointmentModel.setLastName(txtLastName.getText().toString());
+        patientAppointmentModel.setPhoneNumber(txtContactPhone.getText().toString());
+        patientAppointmentModel.setDOB(txtDOB.getText().toString());
+        patientAppointmentModel.setEmail1(txtEmail.getText().toString());
+        patientAppointmentModel.setSuburb(autoCompleteSuburb.getText().toString());
+        patientAppointmentModel.setHomePhoneNumber("");
+
+
+        /*appointmentDataModels*/
+        List<AppointmentDataModel> dataModels = new ArrayList<AppointmentDataModel>();
+        dataModels.add(setAppointmentData("companyName", txtCompanyName.getText().toString()));
+        dataModels.add(setAppointmentData("companyPhoneNumber", txtCompanyPhone.getText().toString()));
+        dataModels.add(setAppointmentData("contactPerson", txtContactPerson.getText().toString()));
+
+
+        /*rehab*/
+        if (urgentType.equalsIgnoreCase("rehab")){
+            dataModels.add(setAppointmentData("rehab", "Y"));
+            dataModels.add(setAppointmentData("specialist", "N"));
+            dataModels.add(setAppointmentData("GP", "N"));
+            dataModels.add(setAppointmentData("GPReferral",(radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString()));
             String typeTreatment = (radioGroupTypeTreatment.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupTypeTreatment.getCheckedRadioButtonId())).getHint().toString();
             if (typeTreatment != null) {
                 switch (typeTreatment) {
                     case "0":
-                        objectUrgentRequest.setPhysioTherapy("Y");
+                        dataModels.add(setAppointmentData("physiotherapy","Y"));
+                        dataModels.add(setAppointmentData("exerciseRehab","N"));
+                        dataModels.add(setAppointmentData("handTherapy","N"));
                         break;
                     case "1":
-                        objectUrgentRequest.setExerciseRehab("Y");
+                        dataModels.add(setAppointmentData("physiotherapy","N"));
+                        dataModels.add(setAppointmentData("exerciseRehab","Y"));
+                        dataModels.add(setAppointmentData("handTherapy","N"));
                         break;
                     case "2":
-                        objectUrgentRequest.setHandTherapy("Y");
+                        dataModels.add(setAppointmentData("physiotherapy","N"));
+                        dataModels.add(setAppointmentData("exerciseRehab","N"));
+                        dataModels.add(setAppointmentData("handTherapy","Y"));
                         break;
                 }
             }
         }
-        JsonObject urgentJson = new JsonObject();
-        urgentJson.addProperty("data", gson.toJson(objectUrgentRequest));
+
+        /*specialist*/
+        if (urgentType.equalsIgnoreCase("specialist")){
+            dataModels.add(setAppointmentData("rehab", "N"));
+            dataModels.add(setAppointmentData("specialist", "Y"));
+            dataModels.add(setAppointmentData("GP", "N"));
+            dataModels.add(setAppointmentData("GPReferral",(radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString()));
+        }
+
+        /*gp*/
+        if (urgentType.equalsIgnoreCase("gp")){
+            dataModels.add(setAppointmentData("rehab", "N"));
+            dataModels.add(setAppointmentData("specialist", "N"));
+            dataModels.add(setAppointmentData("GP", "Y"));
+        }
+
+        /*AppointmentModel*/
+        AppointmentModel appointmentModel = new AppointmentModel();
+        appointmentModel.setType(apptType);
+        appointmentModel.setPatientAppointment(gson.toJson(patientAppointmentModel));
+        appointmentModel.setFileUploads("[]");
+        appointmentModel.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
+        appointmentModel.setDescription(txtDescription.getText().toString());
+        appointmentModel.setAppointmentData(gson.toJson(dataModels));
+
+        JsonObject appt = new JsonObject();
+        appt.addProperty("data",gson.toJson(appointmentModel));
         dialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         dialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         dialog.setTitleText(getResources().getString(R.string.progressMakeAppointmentContent));
         dialog.setCancelable(false);
         dialog.show();
 
-        urgentRequestApi.sendUrgentRequest(urgentJson, new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().sendAppointment(appt, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                String data = jsonObject.get("data").getAsString();
+                String data = jsonObject.get("status").getAsString();
                 dialog.dismissWithAnimation();
                 if (data.equalsIgnoreCase("success")) {
                     SharedPreferences infoUrgent = getSharedPreferences("InformationUrgent", MODE_PRIVATE);
@@ -342,7 +415,6 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
                     dialog.show();
                 }
             }
-
             @Override
             public void failure(RetrofitError error) {
                 dialog.dismissWithAnimation();
@@ -518,7 +590,49 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, HomeActivity111.class));
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+
+        StaffModel staffModel = intent.getExtras().getParcelable("staff"+"");
+        SiteModel siteModel = intent.getExtras().getParcelable("site"+"");
+        Log.d("Resume", String.valueOf(staffModel));
+        if (staffModel != null){
+            Log.d("intent",staffModel.getFirstName()+"");
+            txtFirstName.setText(staffModel.getFirstName());
+            txtLastName.setText(staffModel.getLastName());
+            txtContactPhone.setText(staffModel.getHomePhoneNumber());
+            autoCompleteSuburb.setText(staffModel.getSuburb());
+            txtDOB.setText(staffModel.getDOB());
+            txtEmail.setText(staffModel.getEmail1());
+        }
+        if (siteModel != null){
+            Log.d("intent",siteModel.getSiteName()+"");
+            txtContactPerson.setText(siteModel.getContactName());
+            txtCompanyPhone.setText(siteModel.getHomePhoneNumber());
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(this, HomeActivity111.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

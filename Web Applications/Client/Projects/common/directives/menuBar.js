@@ -6,8 +6,11 @@ angular.module('app.common.menuBar',[])
 
 		},
 		templateUrl:'common/directives/menuBar.html',
+		controller: function(){
+			Layout.initSidebar(); // init sidebar
+		},
 		link:function(scope,element,attrs){
-
+			
 			var api = Restangular.all("api");
 			var result = api.one("module/GetModulesForUser");
 			result.get()

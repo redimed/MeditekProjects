@@ -1,6 +1,7 @@
 package com.redimed.telehealth.patient.setting.presenter;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 
 import com.redimed.telehealth.patient.models.Patient;
 
@@ -13,10 +14,14 @@ public interface ISettingPresenter {
 
     void logout(String uid);
 
-    void displayInfoPatient(String teleUID);
+    void displayPin(String uid);
+
+    void initToolbar(Toolbar toolBar);
+
+    void getInfoPatient(String teleUID);
 
     void changeFragment(Fragment fragment);
 
-    void getInfoPatient(String dataPatient);
+    void displayInfoPatient(String teleUID);
 
 }

@@ -1,16 +1,16 @@
 //DIRECTIVE PATIENT LIST MODAL : show patient info
-// <patient-listmodal 
+// <patient-listmodal
 // 		on-uid="patientUID"       : patient UID was added in this to get data patient from this UID
 // 		on-showfull="false"       : this attribute allow you to show full template of this directive
 //									(true or false), if this attribute not require default is true
-// 		on-listshow="list"        : array list to show some columms in this directive 
+// 		on-listshow="list"        : array list to show some columms in this directive
 //                            		list={columm1 : true,columm2 : false,columm3 : true};
-//									if list not require, this directive will show 3 columm default 
+//									if list not require, this directive will show 3 columm default
 // 		ng-if="patientUID!=null"> : this attribute allow you to show this directive when patientUID exists
 // </patient-listmodal>
 
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $rootScope, $timeout, $cookies, CommonService, $http, $uibModal, $compile){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $rootScope, $timeout, $cookies, CommonService, $http, $uibModal, $compile, companyService){
 	return{
 		restrict: 'EA',
         scope: {
@@ -30,7 +30,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					img.onload = function(){
 					    canvasimg.width = width;
 				        canvasimg.height = height;
-					    ctximg.drawImage(img,0,0,width,height);
+					    ctximg.drawImage(img,0,0, width, height);
 					};
 					img.src = event.target.result;
 				}
@@ -101,7 +101,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		link: function(scope, elem, attrs){
 			scope.changeoption = false;
 			scope.typeShow;
-			console.log(scope.activeUser);
 			scope.isHaveKins;
 			scope.isHaveGPs;
 			scope.isHaveFunds;
@@ -109,6 +108,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			scope.isHavePensions;
 			scope.isHaveMedicares;
 			scope.isChoseAvatar = false;
+			scope.historyData = [];
 			var data = {};
 			scope.er ={};
 			scope.ermsg ={};
@@ -132,7 +132,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientKin = angular.copy(data);;
+						scope.info.PatientKin = angular.copy(data);
 						console.log(scope.info.PatientKin);
 					}
 					else if (scope.isHaveKins == data) {
@@ -140,7 +140,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						scope.isHaveKins = null;
 						delete scope.info['PatientKin'];
 					}
-				} 
+				}
 				else if(model == 'GP'){
 					scope.callData(scope.typeShow,scope.chooseItem,true);
 					console.log(scope.isHaveGPs);
@@ -172,7 +172,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
-						scope.info.PatientFund = angular.copy(data);;
+						scope.info.PatientFund = angular.copy(data);
 						console.log(scope.info.PatientFund);
 					}
 					else if (scope.isHaveFunds == data) {
@@ -193,7 +193,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientPension = angular.copy(data);;
+						scope.info.PatientPension = angular.copy(data);
 						console.log(scope.info.PatientPension);
 					}
 					else if (scope.isHavePensions == data) {
@@ -213,7 +213,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientMedicare'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientDVA = angular.copy(data);;
+						scope.info.PatientDVA = angular.copy(data);
 						console.log(scope.info.PatientDVA);
 					}
 					else if (scope.isHaveDVAs == data) {
@@ -234,7 +234,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						delete scope.info['PatientDVA'];
 						delete scope.info['PatientKin'];
 						delete scope.info['PatientFund'];
-						scope.info.PatientMedicare = angular.copy(data);;
+						scope.info.PatientMedicare = angular.copy(data);
 						console.log(scope.info.PatientMedicare);
 					}
 					else if (scope.isHaveMedicares == data) {
@@ -265,7 +265,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				PatientService.detailChildPatient({ UID: scope.info.UID , model: [model], where:{Enable:'Y'} })
 				.then(function(response) {
 					scope.info[model+'s'] = response.data[model];
-					console.log(scope.chooseItem);
 					if(scope.chooseItem == true && ischangeview == false) {
 						scope.typeShow = model;
 						scope.info[scope.typeShow] = scope.info[model+'s'][scope.info[model+'s'].length-1];
@@ -313,6 +312,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				PatientService.detailPatient(data).then(function(response){
 					if(response.message=="success"){
 						scope.info = response.data[0];
+						scope.ActivatedUser = scope.info.UserAccount.Activated;
 						//scope.info.PatientKins = {};
 						scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
 						scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
@@ -344,7 +344,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 			scope.imgDelete;
 			var oriInfo,clearInfo;
-			
+
 			scope.infoChanged = function() {
 		        return angular.equals(oriInfo, scope.info);
 		    };
@@ -429,7 +429,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				var flag ="";
 				obj = scope.addProperty(array,obj,flag, value);
 				return obj;
-				
+
 			};
 
 			//func parse string A.B.C to array ['A','B','C']
@@ -488,7 +488,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						}
 						else {
 							break;
-						}	
+						}
 					}
 					else {
 						break;
@@ -503,6 +503,9 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	console.log(Enable);
 		    };
 
+		    scope.changeActivated = function(Activated){
+		    	scope.info.ActivatedUser = Activated;
+		    }
 		    scope.savechange = function(){
 		    	if(_.isEmpty(scope.style) == false) {
 		    		toastr.error('Please check information','Error');
@@ -522,6 +525,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			    	scope.updatedata.CountryID1    = scope.info.CountryID1;
 			    	scope.updatedata.UserAccountID = scope.info.UserAccountID;
 					scope.updatedata.UID           = scope.info.UID;
+					scope.updatedata.EnableUser    = scope.info.EnableUser;
+					scope.updatedata.Activated     = scope.info.ActivatedUser;
 			    	console.log(scope.updatedata);
 			    	if(scope.info.PatientKin != null && scope.info.PatientKin != '') scope.updatedata.PatientKin = scope.info.PatientKin;
 			    	if(scope.info.PatientGP != null && scope.info.PatientGP != '') scope.updatedata.PatientGP = scope.info.PatientGP;
@@ -614,15 +619,15 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 	                        blank.width = canvas.width;
 	                        blank.height = canvas.height;
 	                        if(canvas.toDataURL() == blank.toDataURL()) {
-	                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+	                            scope.buildImg(imageAvatar, canvas, ctx, e, 300, 300);
 	                        }
 	                        else {
 	                            ctx.clearRect(0, 0, 350, 350);
-	                            scope.buildImg(imageAvatar, canvas, ctx, e, 350, 350);
+	                            scope.buildImg(imageAvatar, canvas, ctx, e, 300, 300);
 	                        }
 							// scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
 					    }, false);
-					
+
 				}
 			};
 
@@ -640,7 +645,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				}
 			}
 
-			
+
 
 			AuthenticationService.getListCountry().then(function(result){
 				scope.countries = result.data;
@@ -683,7 +688,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 								else{
 									if(model == null || model == ''){
 										toastr.error("Please choose tab","error");
-									} 
+									}
 									else{
 										console.log(data);
 										data[model] = $scope.insertData[model];
@@ -754,7 +759,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				// var parseData = JSON.parse(data);
 				if(data == null || data == ''){
 					toastr.error("Please input information","error");
-				} 
+				}
 				else{
 					var postData = {
 						ID     : data,
@@ -772,7 +777,72 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						toastr.error("Please check data again.","ERROR");
 					});
 				}
-			}
+			};
+
+			scope.getSite = function(companyuid) {
+				companyService.getDetailChild({UID:companyuid,model:'CompanySites'})
+				.then(function(data) {
+					// scope.info.CompanySites = data.data;
+					// console.log(data);
+					companyService.getHistoryCompanyList({patientUID:scope.info.UID})
+					.then(function(response) {
+						// console.log(response);
+						scope.info.CompanySites = data.data;
+						scope.historyData = response.data;
+					}, function(err) {
+						console.log(err);
+					});
+				},function(err) {
+					console.log(err);
+				});
+			};
+
+			scope.linkOldCompany = function(company) {
+				companyService.createStaff({CompanyUID:company.UID,patientUID:scope.info.UID})
+				.then(function(response) {
+					toastr.success('Link Company success');
+					scope.info.Companies[0] = company;
+					scope.getSite(company.UID);
+				}, function(err) {
+					console.log(err);
+				});
+			};
+
+			scope.linkcompany = function() {
+                var patientuid = scope.info.UID;
+                var companyinfo = scope.info.Companies[0];
+                var returnData;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'LinkCompanyModal',
+                    controller: function($scope,$modalInstance){
+                        $scope.patientuid  = patientuid;
+                        $scope.info = companyinfo;
+                        $scope.cancel = function(data){
+                            console.log("link success ",data);
+                            returnData = data;
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    // size: 'lg',
+                    windowClass: 'app-modal-window'
+                }).result.finally(function(){
+                    if(returnData) {
+                    	toastr.success('Link Success.');
+                        scope.info.Companies[0] = returnData.company;
+                        scope.getSite(returnData.company.UID);
+                    }
+                });
+            };
+
+            scope.isIframe = false;
+            scope.getEForm = function() {
+            	scope.isIframe = true;
+            	var userUID = scope.info.UserAccount.UID;
+		        var eFormBaseUrl = o.const.eFormBaseUrl;
+		        var patientUID = scope.info.UID;
+		        var contentHeight = $('.page-content').height()-80;
+		        $('#EForm').attr('src', eFormBaseUrl+'/#/eform/patient?patientUID='+patientUID+'&userUID='+userUID);
+            };
 
 			scope.insurers = [
 				{name: 'Insurer Company'},

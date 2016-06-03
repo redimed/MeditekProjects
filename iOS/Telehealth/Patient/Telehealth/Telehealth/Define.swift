@@ -11,17 +11,63 @@ import Foundation
 import UIKit
 
 #if DEBUG
-    func DLog(message: String, filename: String = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
+    func DLog(message: String, filename: String = #file, function: String = #function, line: Int = #line) {
         NSLog("[\(filename.componentsSeparatedByString("/").last):\(line)] \(function) - \(message)")
     }
 #else
-    func DLog(message: String, filename: String = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
+    func DLog(message: String, filename: String = #file, function: String = #function, line: Int = #line) {
     }
 #endif
 
 class Define: NSObject {
     
     static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    static let versionBuild = "UIApplication.sharedApplication().versionBuild()"
+    
+    static let LogoutFunction = "LogoutFunction"
+    
+    struct keyNSDefaults {
+        static let DeviceID = "deviceID"
+        static let Appid = "appid"
+        static let pastUrls = "pastUrls"
+        
+        static let Authorization = "Authorization"
+        static let userInfor = "userInfor"
+        static let Cookie = "Set-Cookie"
+        static let userLogin = "userLogin"
+        static let companyInfor = "companyInfor"
+        static let UIDLogoutFail = "UIDLogoutFail"
+        static let userUID = "userUID"
+        static let RefreshCode = "refreshCode"
+        static let IsCompanyAccount = "IsCompanyAccount"
+        static let PatientUID = "patientUID"
+        
+        static let DetailStaff = "DetailStaff"
+        static let DeviceToken = "DeviceToken"
+        static let DetailStaffCheck = "DetailStaffCheck"
+        static let DetailSite = "DetailSite"
+        static let DetailSiteCheck = "DetailSiteCheck"
+    }
+    
+    struct MessageString {
+        static let required = "Required"
+        static let PleaseWait = "Please wait..."
+        
+    }
+    struct PushNotification{
+        static let PushChangePassword = "PushChangePassword"
+    }
+    struct  forHTTPHeaderField {
+        static let ContentType = "Content-type"
+        static let Authorization = "Authorization"
+        static let Cookie = "Cookie"
+        static let DeviceId = "deviceId"
+        static let Appid = "appid"
+        static let ApplicationJson = "application/json"
+        static let IOS = "IOS"
+        static let SystemType = "systemType"
+        static let Requireupdatetoken = "requireupdatetoken"
+    }
     
     enum UIUserInterfaceIdiom : Int
     {

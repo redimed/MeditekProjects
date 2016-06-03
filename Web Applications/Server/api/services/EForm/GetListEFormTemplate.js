@@ -5,7 +5,7 @@ module.exports = function(data, userInfo) {
     EFormTemplate.findAndCountAll({
             attributes: Services.AttributesEForm.EFormTemplate(),
             include: [{
-                attributes: ['ID'],
+                attributes: ['ID', 'Status', 'Enable'],
                 model: EForm,
                 include: [{
                     attributes: ['ID', 'UID'],

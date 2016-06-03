@@ -1,34 +1,12 @@
 var CommonModal = require('common/modal');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
+var ComponentFormUpdateViewType = require('modules/eform/eformTemplateDetail/formUpdateViewType');
 var ComponentRow = require('modules/eform/eformTemplateDetail/row');
 var CommonInput = require('common/inputText');
+var CommonRadio = require('common/radio');
 
 module.exports = React.createClass({
-    propTypes: {
-        code: React.PropTypes.number,
-        type: React.PropTypes.string,
-        page: React.PropTypes.number,
-        rows: React.PropTypes.object,
-        refTemp: React.PropTypes.string,
-        permission: React.PropTypes.string,
-        onUpdateSection: React.PropTypes.func,
-        onRemoveSection: React.PropTypes.func,
-        onDragSection: React.PropTypes.func,
-        onDragRow: React.PropTypes.func,
-        onCreateRow: React.PropTypes.func,
-        onRemoveRow: React.PropTypes.func,
-        onSelectField: React.PropTypes.func,
-        onSaveFieldDetail: React.PropTypes.func,
-        onRemoveField: React.PropTypes.func,
-        onRemoveTableColumn: React.PropTypes.func,
-        onCreateTableColumn: React.PropTypes.func,
-        onCreateTableRow: React.PropTypes.func,
-        onRemoveTableRow: React.PropTypes.func,
-        onUpdateTableColumn: React.PropTypes.func,
-        onChangePage: React.PropTypes.func,
-        onOrderSection: React.PropTypes.func,
-        onOrderRow: React.PropTypes.func
-    },
+    viewTypeDynamic: undefined,
     getCode: function(){
         return this.props.code;
     },
@@ -44,197 +22,84 @@ module.exports = React.createClass({
     getPage: function(){
         return this.props.page;
     },
+    checkShowHide: function(value){
+        if(value !== ''){
+            this.viewTypeDynamic === 'show';
+            this.refs.radio_show.setChecked(true);
+            this.refs.radio_hide.setChecked(false);
+            this._onChangeViewType('yes');
+        }
+
+    },
     componentDidMount: function() {
         if (this.props.permission === 'eformDev') {
-            this.refs.inputOrder.setValue(this.props.code);
             var self = this;
-            //this._dragAndDropSections();
-            //this._dragAndDropRows();
-
-            $(this.refs.page).val(this.props.page);
-            $(this.refs.page).keypress(function(event){
+            this.refs.inputOrder.setValue(this.props.code);
+            $(this.refs.tempRef).on('keypress', function(event){
                 if(event.which == 13){
-                    self.props.onChangePage(self.props.code, event.target.value);
+                    self.props.onChangeRef(self.props.code, event.target.value);
+                    return false;
                 }
-            });
+            })
+            $(this.refs.page).on('keypress', function(event){
+                if(event.which == 13){
+                    self.props.onChangePage(self.props.code, event.target.value)
+                }
+            })
+        }else{
+            if(this.props.viewType === 'dynamic'){
+                $(this.refs.section).css('display', 'none');
+                if(typeof this.viewTypeDynamic !== 'undefined' && this.viewTypeDynamic !== 'show'){
+                    this.refs.radio_show.setChecked(false);
+                    this.refs.radio_hide.setChecked(true);
+                }else if(this.viewTypeDynamic === 'show'){
+                    this.refs.radio_show.setChecked(true);
+                    this.refs.radio_hide.setChecked(false);
+                }else{
+                    this.refs.radio_show.setChecked(false);
+                    this.refs.radio_hide.setChecked(true);
+                }
+            }
         }
     },
     componentDidUpdate: function(prevProps, prevState) {
         if (this.props.permission === 'eformDev') {
-            //this.drakeSection.destroy();
-            //this.drakeRow.destroy();
-            //this._dragAndDropSections();
-            //this._dragAndDropRows();
         }
     },
-    _dragAndDropSections: function() {
-        var self = this;
-        this.drakeSection = dragula([].slice.apply(document.querySelectorAll('.dragSection')), {
-            copy: false,
-            revertOnSpill: true,
-            moves: function(el, container, handle) {
-                return handle.className.indexOf('dragSectionHandler') > -1;
-            }
-        });
-        this.drakeSection.on('drop', function(el, target, source, sibling) {
-            if (el.parentNode == target) {
-                target.removeChild(el)
-            }
-            var fromEl = el.id
-            var targetArray = $(target).find('.portlet')
-            $.each(targetArray, function(index, value) {
-                var tempId = $(value).attr('id')
-                if (tempId !== fromEl) {
-                    var fromArr = fromEl.split('_')
-                    var toArr = tempId.split('_')
-                    var fromObj = { codeSection: fromArr[1] }
-                    var toObj = { codeSection: toArr[1] };
-                    self.props.onDragSection(fromObj, toObj);
-                    return false;
-                }
-            })
-            /*swal({
-                title: 'Are you sure?',
-                text: 'You will change this section',
-                type: 'warning',
-                showCancelButton: true,
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-                    var fromEl = el.id
-                    var targetArray = $(target).find('.portlet')
-                    $.each(targetArray, function(index, value) {
-                        var tempId = $(value).attr('id')
-                        if (tempId !== fromEl) {
-                            var fromArr = fromEl.split('_')
-                            var toArr = tempId.split('_')
-                            var fromObj = { codeSection: fromArr[1] }
-                            var toObj = { codeSection: toArr[1] };
-                            self.props.onDragSection(fromObj, toObj);
-                            return false;
-                        }
-                    })
-                } else {
-                    swal("No change", "Form will refresh.", "success")
-                }
-            })*/
-            var fromEl = el.id
-            var targetArray = $(target).find('.portlet')
-            $.each(targetArray, function(index, value) {
-                var tempId = $(value).attr('id')
-                if (tempId !== fromEl) {
-                    var fromArr = fromEl.split('_')
-                    var toArr = tempId.split('_')
-                    var fromObj = { codeSection: fromArr[1] }
-                    var toObj = { codeSection: toArr[1] };
-                    self.props.onDragSection(fromObj, toObj);
-                    return false;
-                }
-            })//end each
-        })
-    },
-    _dragAndDropRows: function() {        
-        var self = this;
-        this.drakeRow = dragula([].slice.apply(document.querySelectorAll('.dragRow')), {
-            copy: true,
-            revertOnSpill: true, // spilling will put the element back where it was dragged from, if this is true
-            removeOnSpill: true,
-            moves: function(el, container, handle) {
-                return handle.className.indexOf('dragRowHandler') > -1;
-            }
-        });
-        this.drakeRow.on('drop', function(el, target, source, sibling) {
-            if (el.parentNode == target) {
-                target.removeChild(el)
-            }
-            swal({
-                title: 'Are you sure?',
-                text: 'You will change this row',
-                type: 'warning',
-                showCancelButton: true,
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-                    var fromEl = el.id;
-                    var targetArray = $(target).find('.form-group')
-                    $.each(targetArray, function(index, value) {
-                        var tempId = $(value).attr('id')
-                        if (tempId !== fromEl) {
-                            var fromArr = fromEl.split('_')
-                            var toArr = tempId.split('_')
-                            var fromObj = { codeSection: fromArr[1], codeRow: fromArr[2] }
-                            var toObj = { codeSection: toArr[1], codeRow: toArr[2] }
-                            self.props.onDragRow(fromObj, toObj);
-                            return false;
-                        }
-                    })
-                } else {
-                    swal("No change", "Form will refresh.", "success")
-                }
-            })
-        })
-    },
     _onCreateRow: function(){
-        var self = this;
-        self.props.onCreateRow(self.props.code, self.props.refTemp);
-        /*self.props.onCreateRow(self.props.code, self.props.refTemp);
-        swal({
-            title: 'Are you sure?',
-            text: 'You will create new row',
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.props.onCreateRow(self.props.code, self.props.refTemp);
-        })*/
+        this.props.onCreateRow(this.props.code, this.props.refTemp);
     },
     _onUpdateSection: function() {
-        this.refs.modalUpdateSection.show();
+        $(this.refs.modalUpdateSection).css({display: 'block'});
+        this.refs.formUpdateSection.init();
     },
     _onRemoveSection: function() {
-        var self = this;
-        self.props.onRemoveSection(self.props.code);
-        /*swal({
-            title: 'Are you sure?',
-            text: 'You will delete section ' + this.props.name,
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.props.onRemoveSection(self.props.code);
-        })*/
+        this.props.onRemoveSection(this.props.code);
     },
     _onSaveUpdateSection: function() {
         var name = this.refs.formUpdateSection.getName();
-        var self = this;
-        self.refs.modalUpdateSection.hide();
-        self.props.onUpdateSection(self.props.code, name);
-        /*swal({
-            title: 'Are you sure?',
-            text: 'You will update section ' + this.props.name,
-            type: 'warning',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            allowOutsideClick: true
-        }, function() {
-            self.refs.modalUpdateSection.hide();
-            self.props.onUpdateSection(self.props.code, name);
-        })*/
+        $(this.refs.modalUpdateSection).css({display: 'none'});
+        this.props.onUpdateSection(this.props.code, name);
+    },
+    _onSaveUpdateViewType: function(){
+        var viewType = this.refs.formUpdateViewType.getViewType();
+        $(this.refs.modalUpdateViewType).css({display: 'none'})
+        this.props.onUpdateViewType(this.props.code, viewType);
     },
     _onOrderSection: function(){
-        this.refs.modalOrderSection.show();
+        $(this.refs.modalOrderSection).css({display: 'block'});
     },
     _onSaveInputOrder: function(){
         var value = this.refs.inputOrder.getValue();
-        this.refs.modalOrderSection.hide();
+        $(this.refs.modalOrderSection).css({display: 'none'});
         this.props.onOrderSection(this.props.code, value);
     },
     _onSelectField: function(codeSection, codeRow, refRow, type){
         this.props.onSelectField(codeSection, codeRow, this.props.refTemp, refRow, type);
+    },
+    _onUpdateViewType: function(){
+        $(this.refs.modalUpdateViewType).css({display: 'block'});
+
     },
     setValue: function(refRow, fieldRef, value){
         if(typeof this.refs[refRow] !== 'undefined')
@@ -252,24 +117,87 @@ module.exports = React.createClass({
         if(typeof this.refs[refRow] !== 'undefined')
             this.refs[refRow].setValueForTable(fieldRef, fieldRefChild, value);
     },
+    setValueForChart: function(refRow, fieldRef, field, chartType){
+        if(typeof this.refs[refRow] !== 'undefined'){
+                this.refs[refRow].setValueForChart(fieldRef, field, chartType);
+        }
+    },
+    addRowForDynamicTable: function(field){
+        if(typeof this.refs[field.fields[0].refRow] !== 'undefined')
+            this.refs[field.fields[0].refRow].addRowForDynamicTable(field);
+    },
     getAllFieldValueWithValidation: function(stringType){
         var rows = this.props.rows.toJS();
         var fields = [];
-        for(var i = 0; i < rows.length; i++){
-            var row = rows[i];
-            var rowRef = row.ref;
-            var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
-            tempFields.map(function(field, index){
-                fields.push(field);
-            })
+        if(this.viewTypeDynamic !== 'hide'){
+            for(var i = 0; i < rows.length; i++){
+                var row = rows[i];
+                var rowRef = row.ref;
+                var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
+                tempFields.map(function(field, index){
+                    fields.push(field);
+                })
+            }
+        }else{
+            if(stringType !== 'print'){
+                for(var i = 0; i < rows.length; i++){
+                    var row = rows[i];
+                    var rowRef = row.ref;
+                    var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
+                    tempFields.map(function(field, index){
+                        if(field.type === 'eform_input_check_radio')
+                            field.checked = false;
+                        else
+                            field.value = '';
+                        fields.push(field);
+                    })
+                }
+            }
         }
         return fields;
     },
+    _onChangeViewType: function(value){
+        if(this.props.viewType !== 'static'){
+            if(value === 'yes'){
+                this.viewTypeDynamic = 'show';
+                $(this.refs.section).css({display: 'block'});
+            }else{
+                this.viewTypeDynamic = 'hide';
+                $(this.refs.section).css({display: 'none'});
+            }
+        }
+    },
+    preCalSum: function(rowRef, fieldRef, sumRef){
+        if(typeof this.refs[rowRef] !== 'undefined')
+            this.refs[rowRef].preCalSum(fieldRef, sumRef);
+    },
+    preCalCount: function(rowRef, fieldRef, sumRef){
+        this.refs[rowRef].preCalCount(fieldRef, sumRef);
+    },
+    preCalBelongsGroup(rowRef, fieldRef, group){
+        if(typeof this.refs[rowRef] !== 'undefined')
+            this.refs[rowRef].preCalBelongsGroup(fieldRef, group);
+    },
     render: function(){
         var displayPermission = (this.props.permission === 'eformDev')?'inline-block':'none';
+        var displayViewType = (this.props.viewType !== 'static' && this.props.permission !== 'eformDev')?'inline-block':'none';
+        if(typeof this.props.viewType === 'undefined') displayViewType = 'none';
         return (
                 <div className="row">
-                    <CommonModal ref="modalUpdateSection">
+                    <div ref="modalUpdateSection" className = "eform-dialog-fixed">
+                        <div className="header">
+                            <h4>Update Section</h4>
+                        </div>
+                        <div className="content">
+                            <ComponentFormUpdateSection ref="formUpdateSection" name={this.props.name}/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){$(this.refs.modalUpdateSection).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateSection}>Save</button>
+                        </div>
+                    </div>
+
+                    {/*<CommonModal ref="modalUpdateSection">
                         <div className="header">
                             <h4>Update Section</h4>
                         </div>
@@ -280,8 +208,23 @@ module.exports = React.createClass({
                             <button type="button" onClick={function(){this.refs.modalUpdateSection.hide()}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateSection}>Save</button>
                         </div>
-                    </CommonModal>
-                    <CommonModal ref="modalOrderSection">
+                    </CommonModal>*/}
+
+
+                    <div ref="modalUpdateViewType" className = "eform-dialog-fixed">
+                        <div className="header">
+                            <h4>Update View Type</h4>
+                        </div>
+                        <div className="content">
+                            <ComponentFormUpdateViewType ref="formUpdateViewType" viewType={this.props.viewType}/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){$(this.refs.modalUpdateViewType).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveUpdateViewType}>Save</button>
+                        </div>
+                    </div>
+
+                    <div ref="modalOrderSection" className = "eform-dialog-fixed">
                         <div className="header">
                             <h4>Order Section</h4>
                         </div>
@@ -289,12 +232,21 @@ module.exports = React.createClass({
                             <CommonInput ref="inputOrder"/>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={function(){this.refs.modalOrderSection.hide()}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" onClick={function(){$(this.refs.modalOrderSection).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
                             <button type="button" className="btn btn-primary" onClick={this._onSaveInputOrder}>Save</button>
                         </div>
-                    </CommonModal>
-                    <div className="col-md-12 dragSection">
-                        <div className="portlet box green" id={"dragSection_"+this.props.code}>
+                    </div>
+
+                    <div className="col-md-12">
+                        <div style={{display: displayViewType, marginBottom: '10px'}}>
+                           <CommonRadio ref="radio_show" name={this.props.refTemp+'_viewType'} value="yes"
+                                onChange={this._onChangeViewType}/> Show
+                            &nbsp;
+                           <CommonRadio ref="radio_hide" name={this.props.refTemp+'_viewType'} value="no"
+                                onChange={this._onChangeViewType}/> Hide
+                            &nbsp; <b>{this.props.name}</b>
+                        </div>
+                        <div className="portlet box green" ref="section">
                             <div className="portlet-title">
                                 <div className="caption">
                                         {this.props.name}
@@ -308,17 +260,27 @@ module.exports = React.createClass({
                                         <a className="collapse"></a>
                                     </div>
                                     <div className="actions" style={{display: displayPermission}}>
+
+                                        <a className="btn green btn-sm" onClick={this._onCreateRow}>
+                                            <i className="fa fa-plus"></i> Add Row
+                                        </a>&nbsp;
+                                        
                                         <div className="btn-group">
+
                                             <a className="btn btn-default btn-sm" data-toggle="dropdown">
                                                 Action&nbsp;
                                                 <i className="fa fa-angle-down"></i>
-                                            </a>                                            
+                                            </a>
+
                                             <ul className="dropdown-menu pull-right">
+                                                {/*
                                                 <li>
                                                     <a onClick={this._onCreateRow}>
                                                         <i className="fa fa-plus"></i> Add Row
                                                     </a>
                                                 </li>
+                                                 */}
+
                                                 <li>
                                                     <a onClick={this._onOrderSection}>
                                                         <i className="fa fa-sort"></i> Order Section
@@ -326,7 +288,7 @@ module.exports = React.createClass({
                                                 </li>
                                                 <li>
                                                     <a>
-                                                        <input type="text" ref="page"/>
+                                                        <input type="text" ref="tempRef" defaultValue={this.props.refTemp}/>
                                                     </a>
                                                 </li>
                                                 <li className="divider"/>
@@ -336,8 +298,19 @@ module.exports = React.createClass({
                                                     </a>
                                                 </li>
                                                 <li>
+                                                    <a onClick={this._onUpdateViewType}>
+                                                        <i className="fa fa-pencil"></i>Change View Type
+                                                    </a>
+                                                </li>
+                                                <li>
                                                     <a onClick={this._onRemoveSection}>
                                                         <i className="fa fa-trash-o"></i> Remove Section
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a>
+                                                        Page&nbsp;&nbsp;
+                                                        <input type="text" ref="page" defaultValue={this.props.page}/>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -353,6 +326,7 @@ module.exports = React.createClass({
                                                             key={index}
                                                             code={index}
                                                             codeSection={this.props.code}
+                                                            moduleID={this.props.moduleID}
                                                             ref={row.get('ref')}
                                                             size={row.get('size')}
                                                             refTemp={row.get('ref')}
@@ -368,7 +342,14 @@ module.exports = React.createClass({
                                                             onCreateTableColumn={this.props.onCreateTableColumn}
                                                             onCreateTableRow={this.props.onCreateTableRow}
                                                             onRemoveTableRow={this.props.onRemoveTableRow}
-                                                            onOrderRow={this.props.onOrderRow}/>
+                                                            onSaveTableDynamicRow={this.props.onSaveTableDynamicRow}
+                                                            onEditTableDynamicRow={this.props.onEditTableDynamicRow}
+                                                            onRemoveTableDynamicRow={this.props.onRemoveTableDynamicRow}
+                                                            onChangeRefRow={this.props.onChangeRefRow}
+                                                            onOrderRow={this.props.onOrderRow}
+                                                            handleReloadDoctor = {this.props.handleReloadDoctor}
+                                                            onOrderField = {this.props.onOrderField}
+                                            />
                                         }, this)
                                     }
                                 </div>

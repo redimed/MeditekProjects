@@ -13,7 +13,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
             onCancel: '='
 		},
 		controller:function($scope, FileUploader) {
-			var data = {};
+			$scope.data = {};
 
 			$scope.buildImg = function(imageType,canvasimg,ctximg,e, width, height) {
 				var reader = new FileReader();
@@ -31,54 +31,24 @@ angular.module('app.authentication.doctor.directive.detail', [])
 			};
 
 			$scope.updateProfile = function() {
-				if($scope.info!=undefined && $scope.info!=null){
-					if($scope.info.UID!=undefined && $scope.info.UID!=null && $scope.info.UID!=''){
-						data.UID = $scope.info.UID;
-						data.UserAccountID = $scope.info.UserAccountID;
-						$scope.doctorUID =  $scope.info.UserAccountID;
-						if($scope.info.Speciality == null || $scope.info.Speciality=='' || $scope.info.Speciality.length ==0) {
-							delete $scope.info['Speciality'];
-						}
-						delete $scope.info['UID'];
-						data.info = $scope.info;
-						data.RoleId = $scope.info.UserAccount.RelUserRoles.length!=0?$scope.info.UserAccount.RelUserRoles[0].RoleId:null;
-					}
-				}
-		    	doctorService.validate(data.info)
-		    	.then(function(result){
-		    		$scope.er ='';
-		    		doctorService.updateDoctor(data)
-		    		.then(function(response){
-		    			if(response.message=="success"){
-		    				toastr.success("Update Successfully!","Success!!");
-		    				console.log($scope.uploader.queue);
-		    				console.log($scope.onCancel);
-		    				if($scope.onCancel != undefined)
-		    					$scope.onCancel();
-		    			}
-		    		},function(err){
-		    			console.log(err);
-		    			toastr.error("Data error, check data again","Error!!!");
-			    		$scope.er ={};
-						$scope.ermsg ={};
-						if(err.data.message.ErrorsList && err.data.message.ErrorsList.length >0){
-							for(var i = 0; i < err.data.message.ErrorsList.length; i++){
-								$scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
-								$scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
-							}
-						}
-		    		});
+				doctorService.updateDoctor($scope.data)
+		    	.then(function(response){
+		    		if(response.message=="success"){
+		    			toastr.success("Update Successfully!","Success!!");
+		    			console.log($scope.uploader.queue);
+		    			console.log($scope.onCancel);
+		    			if($scope.onCancel != undefined)
+		    				$scope.onCancel();
+		    		}
 		    	},function(err){
-		    			console.log(err);
+		    		console.log(err);
 		    		toastr.error("Data error, check data again","Error!!!");
-		    		$scope.er ={};
+			    	$scope.er ={};
 					$scope.ermsg ={};
-					for(var i = 0; i < err.length; i++){
-						$scope.er[err[i].field] = {};
-						$scope.er[err[i].field].css ={'border': '2px solid #DCA7B0'};
-						$scope.er[err[i].field].msg = err[i].message;
-						if(err[i].field == "Speciality"){
-							$(".select2-selection").css("border","2px solid #DCA7B0");
+					if(err.data.message.ErrorsList && err.data.message.ErrorsList.length >0){
+						for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+							$scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+							$scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
 						}
 					}
 		    	});
@@ -135,7 +105,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
 		        console.info('onCompleteItem', fileItem, response, status, headers);
 		        if(fileItem.formData[0].fileType == 'Signature') {
-		        	data.Signature = response.fileUID;
+		        	$scope.data.Signature = response.fileUID;
 		        }
 		        if(Boolean(headers.requireupdatetoken)===true)
 		        {
@@ -262,113 +232,69 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    		scope.info[name] = null;
 		    };
 
-		    scope.save = function() {
-		    	if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
+			scope.save = function() {
+				if(scope.info!=undefined && scope.info!=null){
+					if(scope.info.UID!=undefined && scope.info.UID!=null && scope.info.UID!=''){
+						scope.data.UID = scope.info.UID;
+						scope.data.UserAccountID = scope.info.UserAccountID;
+						scope.doctorUID =  scope.info.UserAccountID;
+						if(scope.info.Speciality == null || scope.info.Speciality=='' || scope.info.Speciality.length ==0) {
+							delete scope.info['Speciality'];
+						}
+						delete scope.info['UID'];
+						scope.data.info = scope.info;
+						scope.data.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?scope.info.UserAccount.RelUserRoles[0].RoleId:null;
+					}
+				}
+		    	doctorService.validate(scope.data.info)
+		    	.then(function(result){
+		    		scope.er ='';
+		    		
+		    		if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 				   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-				   	//viet lai phan disable file
-					var postData = {};
-					postData.UserAccountID = scope.info.UserAccountID;
-					postData.Enable="N";
-					postData.FileType = [];
-				   	for(var i = 0; i < scope.uploader.queue.length; i++) {
-				   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
-				   		scope.uploader.queue[i].headers.userUID = scope.info.UserAccount.UID;
-				   		scope.uploader.queue[i].headers.fileType = scope.uploader.queue[i].formData[0].fileType;
-				   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
-				   	}
-				   	doctorService.changeStatusFile(postData)
-				   	.then(function(result){
-				   		console.log(result);
-				  		scope.uploader.uploadAll();
-				   	},function(err){
-				   		console.log(err);
-				   		if(err.data.errors[0] == "FileType.Null"){
-				   			// console.log("FileType.Null");
-				   			scope.uploader.uploadAll();
-				   		}
-				   	});
-				   //end
-				}
-				else {
-					scope.updateProfile();
-				}
-		    };
+					   	//viet lai phan disable file
+						var postData = {};
+						postData.UserAccountID = scope.info.UserAccountID;
+						postData.Enable="N";
+						postData.FileType = [];
+					   	for(var i = 0; i < scope.uploader.queue.length; i++) {
+					   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
+					   		scope.uploader.queue[i].headers.userUID = scope.info.UserAccount.UID;
+					   		scope.uploader.queue[i].headers.fileType = scope.uploader.queue[i].formData[0].fileType;
+					   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
+					   	}
+					   	doctorService.changeStatusFile(postData)
+					   	.then(function(result){
+					   		console.log(result);
+					  		scope.uploader.uploadAll();
+					   	},function(err){
+					   		console.log(err);
+					   		if(err.data.errors[0] == "FileType.Null"){
+					   			// console.log("FileType.Null");
+					   			scope.uploader.uploadAll();
+					   		}
+					   	});
+					   //end
+					}
+					else {
+						scope.updateProfile();
+					}
 
-		  //   scope.save = function() {
-		  //   	if(scope.info!=undefined && scope.info!=null){
-				// 	if(scope.info.UID!=undefined && scope.info.UID!=null && scope.info.UID!=''){
-				// 		data.UID = scope.info.UID;
-				// 		data.UserAccountID = scope.info.UserAccountID;
-				// 		scope.doctorUID =  scope.info.UserAccountID;
-				// 		delete scope.info['UID'];
-				// 		data.info = scope.info;
-				// 		data.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?scope.info.UserAccount.RelUserRoles[0].RoleId:null;
-				// 	}
-				// }
-		  //   	doctorService.validate(data.info)
-		  //   	.then(function(result){
-		  //   		scope.er ='';
-		  //   		doctorService.updateDoctor(data)
-		  //   		.then(function(response){
-		  //   			if(response.message=="success"){
-		  //   				if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
-				// 			   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-				// 			   	//viet lai phan disable file
-				// 				var postData = {};
-				// 				postData.UserAccountID = scope.info.UserAccountID;
-				// 				postData.Enable="N";
-				// 				postData.FileType = [];
-				// 			   	for(var i = 0; i < scope.uploader.queue.length; i++) {
-				// 			   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
-				// 			   		scope.uploader.queue[i].headers.userUID = scope.info.UserAccount.UID;
-				// 			   		scope.uploader.queue[i].headers.fileType = scope.uploader.queue[i].formData[0].fileType;
-				// 			   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
-				// 			   	}
-				// 			   	doctorService.changeStatusFile(postData)
-				// 			   	.then(function(result){
-				// 			   		console.log(result);
-				// 			   		scope.uploader.uploadAll();
-				// 			   	},function(err){
-				// 			   		console.log(err);
-				// 			   		if(err.data.errors[0] == "FileType.Null"){
-				// 			   			// console.log("FileType.Null");
-				// 			   			scope.uploader.uploadAll();
-				// 			   		}
-				// 			   	});
-				// 			   //end
-				// 			}
-		  //   				toastr.success("Update Successfully!","Success!!");
-		  //   				console.log(scope.uploader.queue);
-		  //   				console.log(scope.onCancel);
-		  //   				scope.onCancel();
-		  //   			}
-		  //   		},function(err){
-		  //   			console.log(err);
-		  //   			toastr.error("Data error, check data again","Error!!!");
-			 //    		scope.er ={};
-				// 		scope.ermsg ={};
-				// 		if(err.data.message.ErrorsList && err.data.message.ErrorsList.length >0){
-				// 			for(var i = 0; i < err.data.message.ErrorsList.length; i++){
-				// 				scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
-				// 				scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
-				// 			}
-				// 		}
-		  //   		})
-		  //   	},function(err){
-		  //   			console.log(err);
-		  //   		toastr.error("Data error, check data again","Error!!!");
-		  //   		scope.er ={};
-				// 	scope.ermsg ={};
-				// 	for(var i = 0; i < err.length; i++){
-				// 		scope.er[err[i].field] = {};
-				// 		scope.er[err[i].field].css ={'border': '2px solid #DCA7B0'};
-				// 		scope.er[err[i].field].msg = err[i].message;
-				// 		if(err[i].field == "Speciality"){
-				// 			$(".select2-selection").css("border","2px solid #DCA7B0");
-				// 		}
-				// 	}
-		  //   	});
-		  //   };
+		    	},function(err){
+		    		console.log(err);
+		    		toastr.error("Data error, check data again","Error!!!");
+		    		scope.er ={};
+					scope.ermsg ={};
+					for(var i = 0; i < err.length; i++){
+						scope.er[err[i].field] = {};
+						scope.er[err[i].field].css ={'border': '2px solid #DCA7B0'};
+						scope.er[err[i].field].msg = err[i].message;
+						if(err[i].field == "Speciality"){
+							$(".select2-selection").css("border","2px solid #DCA7B0");
+						}
+					}
+		    	});
+			};
 
 		    scope.typeFile;
 			scope.setType = function(value){

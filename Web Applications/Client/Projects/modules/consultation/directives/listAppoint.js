@@ -102,9 +102,36 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
 
             scope.LoadData = function() {
-                console.log(scope.info.data);
+                //console.log(scope.info.data);
                 WAAppointmentService.loadListWAAppointmentConsultation(scope.info.data).then(function(data) {
-                    console.log(data);
+                    console.log('aaaaaaaa', data);
+                    for (var i = 0; i < data.rows.length; i++) {
+                        if(!_.isEmpty(data.rows[i].Doctors))
+                        {
+                            var name='';
+                            for (var j = 0; j < data.rows[i].Doctors.length; j++) {
+                                var doctor = data.rows[i].Doctors[j];
+                                if(doctor.Title)
+                                {
+                                    name = name + doctor.Title + ' ';
+                                }
+                                if(doctor.FirstName)
+                                {
+                                    name = name + doctor.FirstName + ' ';
+                                }
+                                if(doctor.LastName)
+                                {
+                                    name = name + doctor.LastName;
+                                }
+                                if(j < data.rows[i].Doctors.length-1)
+                                {
+                                    name = name + '; '
+                                }
+
+                            }
+                            data.rows[i].DoctorsName = name;
+                        }
+                    }
                     scope.info.listWaapointment = data;
                 });
             };
@@ -116,7 +143,17 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 (scope.fromCreateDate && scope.fromCreateDate !== null) ? scope.info.data.Filter[0].Appointment.CreatedDate = moment(scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): scope.info.data.Filter[0].Appointment.CreatedDate = null;
                 console.log('scope.info.data', scope.info.data);
                 scope.LoadData();
-            }
+            };
+            scope.ClearSearch = function(){
+                scope.info.data.Filter[0].Appointment.Code = null;
+                scope.info.data.Search[0].Patient.FullName = null;
+                scope.info.data.Search[1].Doctor.FullName = null;
+                scope.info.data.Filter[0].Appointment.Type = null;
+                scope.info.data.Filter[0].Appointment.CreatedDate = null
+                scope.fromCreateDate=null;
+                scope.info.data.Filter[0].Appointment.Status = null;
+                scope.LoadData();
+            };
         }
     };
 })

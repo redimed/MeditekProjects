@@ -19,15 +19,6 @@ module.exports = React.createClass({
             },
 	_onAddNewSection: function(){
                     this.props.onAddNewSection();
-                	/*swal({
-                		title: 'Are you sure?',
-                		text: 'You will create new Section for this E-Form',
-                		type: 'warning',
-                		showCancelButton: true,
-                		closeOnConfirm: false,
-                		allowOutsideClick: true
-                	}, function(){
-                	})*/
 	},
 	_onSaveForm: function(){
                          this.props.onSaveForm();

@@ -349,10 +349,41 @@ angular.module("app.common.CommonService", [])
 
         commonService.openImageInNewTab=function(fileUID,size)
         {
+            Window = window.open("about:blank", "", "_blank");
+            // Window = window.open("");
             return getFile(fileUID,size,'image/jpg')
             .then(function(file){
                 var objectUrl = URL.createObjectURL(file.blob);
-                window.open(objectUrl);
+                // window.open(objectUrl);
+                setTimeout(function() {
+                    Window.location.href = objectUrl;
+                   /*var html = $("<div></div>");
+                    var buttonClose = $("<button onclick='window.close()'>Close</button>");
+                    buttonClose.css({
+                        width:"30%",
+                        height:"5%",
+                        "font-size":"4vh"
+                    })
+                    var divImg = $("<div></div>");
+                   /!* divImg.css({
+                        overflow: 'auto'
+                    });*!/
+                    var img = $("<img/>");
+                    img.attr('src', objectUrl);
+                    divImg.append(img);
+                    html.append(buttonClose,$("<br/>"), divImg);
+                    Window.document.write($("<div>").append(html.clone()).html());*/
+                    var buttonClose = $("<button onclick='window.close()'>Close</button>");
+                    buttonClose.css({
+                        width:"30%",
+                        height:"5%",
+                        "font-size":"4vh"
+                    })
+                    setTimeout(function(){
+                        // $(Window.document.documentElement).prepend(buttonClose,$("<br/>"));// documentElement-> lay html element
+                        $(Window.document).find("body").prepend(buttonClose,$("<br/>"));
+                    },100);
+                }, 100);
                 return {status:'success'};
             },function(err){
                 throw err;

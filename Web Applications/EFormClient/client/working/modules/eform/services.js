@@ -8,7 +8,7 @@ module.exports = {
 				url: Config.apiUrl+'eformtemplate/saveRoles',
 				data: data,
 				success: resolve
-			})	
+			})
 		});
 		return p;
 	},
@@ -18,7 +18,7 @@ module.exports = {
 				type: 'GET',
 				url: Config.apiUrl+'eformtemplate/getUserRoles',
 				success: resolve
-			})	
+			})
 		});
 		return p;
 	},
@@ -28,7 +28,7 @@ module.exports = {
 				type: 'GET',
 				url: Config.apiUrl+'api/user-role/GetRolesOfUser?UID='+data.UID,
 				success: resolve
-			})	
+			})
 		});
 		return p;
 	},
@@ -36,9 +36,9 @@ module.exports = {
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'GET',
-				headers: { 
+				headers: {
 				        'Accept': 'application/json',
-				        'Content-Type': 'application/json' 
+				        'Content-Type': 'application/json'
 				},
 				responseType:'arraybuffer',
 				url: Config.apiServerUrl+'api/downloadFileWithoutLogin/'+data.UID,
@@ -52,9 +52,9 @@ module.exports = {
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
-				headers: { 
+				headers: {
 				        'Accept': 'application/json',
-				        'Content-Type': 'application/json' 
+				        'Content-Type': 'application/json'
 				},
 				responseType:'arraybuffer',
 				url: Config.apiPDFUrl+'print',
@@ -73,7 +73,7 @@ module.exports = {
 				url: Config.apiUrl+'eform/historyDetail',
 				data: data,
 				success: resolve
-			})	
+			})
 		});
 		return p;
 	},
@@ -84,17 +84,18 @@ module.exports = {
 				url: Config.apiUrl+'eformgroup/create',
 				data: data,
 				success: resolve
-			})	
+			})
 		});
 		return p;
 	},
-	eformGroupList: function(){
+	eformGroupList: function(dataFilter){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
-				type: 'GET',
+				type: 'POST',
 				url: Config.apiUrl+'eformgroup/list',
+				data: dataFilter,
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -105,7 +106,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformgroup/update',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -116,7 +117,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformgroup/remove',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -127,7 +128,7 @@ module.exports = {
 				url: Config.apiUrl+'eformtemplate/create',
 				data: data,
 				success: resolve
-			})	
+			})
 		});
 		return p;
 	},
@@ -137,7 +138,7 @@ module.exports = {
 				type: 'GET',
 				url: Config.apiUrl+'eformtemplate/list',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -148,7 +149,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformtemplate/save',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -159,7 +160,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformtemplate/detail',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -170,7 +171,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformtemplate/update',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -181,7 +182,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformtemplate/updatePrintType',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -200,7 +201,7 @@ module.exports = {
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'GET',
-				url: Config.apiUrl+'api/appointment-wa-detail/'+data.UID,
+				url: Config.apiUrl+'api/appointment-wa-detail/'+data.UID+'/'+data.UserUID,
 				success: resolve
 			})
 		})
@@ -213,7 +214,29 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eform/save',
 				success: resolve
-			})	
+			})
+		})
+		return p;
+	},
+	formSaveInit: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eform/saveInit',
+				success: resolve
+			})
+		})
+		return p;
+	},
+	formSaveStep: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'eform/saveStep',
+				success: resolve
+			})
 		})
 		return p;
 	},
@@ -224,7 +247,7 @@ module.exports = {
 				url: Config.apiUrl+'eform/list',
 				data: data,
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -235,7 +258,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eform/remove',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -246,7 +269,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eform/checkDetail',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -259,7 +282,7 @@ module.exports = {
 				success: resolve
 			})
 		})
-		return p;	
+		return p;
 	},
 	formUpdate: function(data){
 		var p = new Promise(function(resolve, reject){
@@ -268,7 +291,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eform/update',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -279,7 +302,7 @@ module.exports = {
 				url: Config.apiUrl+'eformtemplatemodule/create',
 				data: data,
 				success: resolve
-			})	
+			})
 		});
 		return p;
 	},
@@ -289,7 +312,7 @@ module.exports = {
 				type: 'GET',
 				url: Config.apiUrl+'eformtemplatemodule/list',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -300,7 +323,7 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformtemplatemodule/update',
 				success: resolve
-			})	
+			})
 		})
 		return p;
 	},
@@ -333,8 +356,39 @@ module.exports = {
 				data: data,
 				url: Config.apiUrl+'eformtemplatemodule/save',
 				success: resolve
-			})	
+			})
 		})
 		return p;
-	}
+	},
+	eformTemplateListFilter: function(dataFilter){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eformtemplate/list-filter',
+				data: dataFilter,
+				success: resolve
+			})
+		})
+		return p;
+	},
+	eformGetListByPatient: function(dataFilter){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				dataType: "json",
+   				contentType: "application/json",
+				url: Config.apiUrl+'eform/get-list-eform-by-patient',
+				data: JSON.stringify({
+					limit      : dataFilter.limit,
+					offset     : dataFilter.offset,
+					patientUID : dataFilter.patientUID,
+					search     : dataFilter.search,
+					order      : dataFilter.order,
+				}),
+				processData: false,
+				success: resolve
+			})
+		})
+		return p;
+	},
 }

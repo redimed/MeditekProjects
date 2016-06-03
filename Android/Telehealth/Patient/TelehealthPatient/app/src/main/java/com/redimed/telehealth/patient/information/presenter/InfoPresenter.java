@@ -9,19 +9,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.text.LoginFilter;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -38,10 +41,8 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.information.view.IInfoView;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
-import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.utlis.UploadFile;
 import com.redimed.telehealth.patient.views.SignaturePad;
 
 import java.io.File;
@@ -67,12 +68,13 @@ import retrofit.client.Response;
 public class InfoPresenter implements IInfoPresenter {
 
     private Gson gson;
-    private String pathSign;
     private Context context;
     private Patient[] patients;
     private IInfoView iInfoView;
     private ArrayAdapter adapter;
+    private String pathSign = null;
     private RegisterApi restClient;
+    private FragmentActivity activity;
     private SimpleDateFormat dateFormat;
     private IMainPresenter iMainPresenter;
     private static final int MEDIA_TYPE_IMAGE = 1;
@@ -81,10 +83,10 @@ public class InfoPresenter implements IInfoPresenter {
 
     public InfoPresenter(IInfoView iInfoView, Context context, FragmentActivity activity) {
         this.context = context;
+        this.activity = activity;
         this.iInfoView = iInfoView;
 
         gson = new Gson();
-        iInfoView.onLoadToolbar();
         restClient = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
@@ -111,6 +113,29 @@ public class InfoPresenter implements IInfoPresenter {
     }
 
     @Override
+    public void initToolbar(Toolbar toolbar) {
+        //init toolbar
+        AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+        appCompatActivity.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle(context.getResources().getString(R.string.setting_title));
+
+            actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+            actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+
+            // Change color image back, set a custom icon for the default home button
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+            actionBar.setHomeAsUpIndicator(upArrow);
+        }
+    }
+
+    @Override
     public ArrayAdapter loadJsonSuburb() {
         try {
             File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" + context.getResources().getString(R.string.fileSuburb));
@@ -134,7 +159,7 @@ public class InfoPresenter implements IInfoPresenter {
     }
 
     @Override
-    public ArrayAdapter loadJsonCountry(){
+    public ArrayAdapter loadJsonCountry() {
         try {
             File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" + context.getResources().getString(R.string.fileCountry));
             if (file.exists()) {
@@ -201,14 +226,14 @@ public class InfoPresenter implements IInfoPresenter {
 
     @Override
     public void changeFragment(Fragment fragment) {
-        if (fragment != null){
+        if (fragment != null) {
             iMainPresenter.replaceFragment(fragment);
         }
     }
 
     @Override
     public void updateProfile(ArrayList<EditText> arrEditText, String suburb, String country) {
-        for (EditText editText : arrEditText){
+        for (EditText editText : arrEditText) {
             switch (editText.getId()) {
                 case R.id.txtFirstName:
                     firstName = editText.getText().toString();
@@ -237,7 +262,7 @@ public class InfoPresenter implements IInfoPresenter {
             }
         }
 
-        if (isValidateForm(arrEditText)){
+        if (isValidateForm(arrEditText)) {
             Patient patient = new Patient();
             patient.setFirstName(firstName);
             patient.setMiddleName(midName);
@@ -280,7 +305,7 @@ public class InfoPresenter implements IInfoPresenter {
         boolean isValid = true;
         // Validation Edit Text
         for (EditText editText : arr) {
-            if (isRequiredData(editText)){
+            if (isRequiredData(editText)) {
                 isValid = false;
                 iInfoView.onResultField(editText);
             }
@@ -347,13 +372,13 @@ public class InfoPresenter implements IInfoPresenter {
                 .into(new SimpleTarget<Bitmap>(myWidth, myHeight) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                        iInfoView.onResultSignature(resource);
+                        iInfoView.onLoadSignature(resource, null);
                     }
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         Bitmap errorBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_error_image);
-                        iInfoView.onResultSignature(errorBitmap);
+                        iInfoView.onLoadSignature(errorBitmap, null);
                     }
                 });
     }

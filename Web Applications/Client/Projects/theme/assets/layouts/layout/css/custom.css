@@ -347,11 +347,13 @@ ul.my-ul {
             vertical-align: middle;
             text-align: center;
             /*background-color: #aec3d0;*/
+            color: #777;
             display: table-cell;
             border: 1px solid #ddd;
         }
         .tab-vertical-custom>.nav>li.active>a>i {
             background-color: #1f5374;
+            color: white;
         }
         .tab-vertical-custom>.nav>li>a>span {
             display: table-cell;

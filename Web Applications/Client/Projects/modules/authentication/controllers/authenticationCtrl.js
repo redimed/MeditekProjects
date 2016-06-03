@@ -2,6 +2,8 @@ var app = angular.module('app.authentication.controller', [
 
 ]);
 
+
+
 app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cookies, AuthenticationService, toastr, CommonService, $q) {
     // Chinh kich thuoc man hinh khi su dung ipad mini
     var w = $(window).width();
@@ -10,6 +12,16 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     } else {
         document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white";
     }
+
+    $scope.$on('$includeContentLoaded', function() {
+        // Layout.initHeader(); // init header
+        // Layout.initSidebar(); // init sidebar
+        setTimeout(function() {
+            QuickSidebar.init(); // init quick sidebar        
+        }, 2000);
+        // Demo.init(); // init theme panel
+        // Layout.initFooter(); // init footer
+    });
 
     $scope.info = {};
     $scope.logout = function() {
@@ -91,19 +103,19 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
 
     $rootScope.insurers = [{
-        name: 'Insurer Company'
-    }, {
-        name: 'Mineral Resources'
-    }, {
-        name: 'Mesa Minerals'
-    }];
+            name: 'Insurer Company'
+        }, {
+            name: 'Mineral Resources'
+        }, {
+            name: 'Mesa Minerals'
+        }];
     $rootScope.Account_types = [{
-        name: 'Titanium Privilege Account'
-    }, {
-        name: '3-in-1 Account'
-    }, {
-        name: 'Silver Savings Account'
-    }];
+            name: 'Titanium Privilege Account'
+        }, {
+            name: '3-in-1 Account'
+        }, {
+            name: 'Silver Savings Account'
+        }];
 
     //phan quoc chien
     $scope.loadListDoctor = function(fullname) {
@@ -249,3 +261,39 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         });
     }
 });
+
+
+/* Setup Layout Part - Header */
+// app.controller('HeaderController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Layout.initHeader(); // init header
+//     });
+// }]);
+/* Setup Layout Part - Sidebar */
+// app.controller('SidebarController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Layout.initSidebar(); // init sidebar
+//     });
+// }]);
+/* Setup Layout Part - Quick Sidebar */
+// app.controller('QuickSidebarController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         setTimeout(function() {
+//             QuickSidebar.init(); // init quick sidebar        
+//         }, 2000)
+//     });
+// }]);
+
+/* Setup Layout Part - Theme Panel */
+// app.controller('ThemePanelController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Demo.init(); // init theme panel
+//     });
+// }])
+
+/* Setup Layout Part - Footer */
+// app.controller('FooterController', ['$scope', function($scope) {
+//     $scope.$on('$includeContentLoaded', function() {
+//         Layout.initFooter(); // init footer
+//     });
+// }])

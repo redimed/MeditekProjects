@@ -19,6 +19,7 @@ import com.meditek.jasper.model.FormModuleModel;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -76,8 +77,8 @@ public class PrintingProcess {
     public ByteArrayOutputStream iTextPrinting(List<FormDataModel> formData, String formUID, String baseUrl) throws Exception{
         try {
             // init params
-            String basePath = "com/meditek/itexttemplate/";
-            String pdfTemplateFile = "/"+basePath+formUID+".pdf";
+            String basePath = "reportTemplate/itext/";
+            String pdfTemplateFile = basePath+formUID+".pdf";
             // Get populated data
             Hashtable data = dataParsing.iTextDataParse(formData, baseUrl);
             for (Enumeration data1 = data.keys(); data1.hasMoreElements();){
@@ -126,9 +127,8 @@ public class PrintingProcess {
                 String key= (String)data.nextElement();
                 System.out.println("Key: "+key+"                    Value: "+ parsedData.get(key));
             }
-            String realPath = "com/meditek/jaspertemplate/";
-            InputStream templateFile = this.getClass().getResourceAsStream("/"+realPath+formUID+".jasper");
-            
+            String realPath = "reportTemplate/jasper/";
+            InputStream templateFile = new FileInputStream(realPath+formUID+".jasper");
             HashMap params = new HashMap();
             params.put("data", parsedData);
             params.put("realPath", realPath);
@@ -199,7 +199,7 @@ public class PrintingProcess {
             JRDesignSubreport sub = new JRDesignSubreport(jasperDesign);
             sub.setWidth(555);
             JRDesignExpression expression = new JRDesignExpression();
-            expression.setText("\"com/meditek/dynamicjaspertemplate/"+module.getTemplateFileName()+"\"");
+            expression.setText("\"reportTemplate/dynamicjasper/"+module.getTemplateFileName()+"\"");
             sub.setExpression(expression);
             JRDesignSubreportParameter subparam = new JRDesignSubreportParameter();
             subparam.setName("data");
@@ -247,7 +247,7 @@ public class PrintingProcess {
         
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
         HashMap params = new HashMap();
-        String realPath = "com/meditek/dynamicjaspertemplate/";
+        String realPath = "reportTemplate/dynamicjasper/";
         params.put("data", parsedData);
         params.put("real_path", realPath);
         System.out.println("this is parsed data: " + parsedData.toString());

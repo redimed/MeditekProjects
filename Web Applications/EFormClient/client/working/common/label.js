@@ -6,7 +6,7 @@ module.exports = React.createClass({
         groupId: React.PropTypes.string,
         type: React.PropTypes.string,
         context: React.PropTypes.string,
-        onRightClickItem: React.PropTypes.func
+        onRightClickItem: React.PropTypes.func,
     },
     getDefaultProps: function(){
         return {
@@ -43,6 +43,24 @@ module.exports = React.createClass({
     getRoles: function(){
         return this.props.roles;
     },
+    isSelected: false,
+    setSelection: function(value) {
+        this.isSelected = value;
+    },
+    getIsSelected: function() {
+        return this.isSelected;
+    },
+    selection: function () {
+        if(!this.isSelected)
+        {
+            this.isSelected = true;
+            $(this.refs.label).addClass('eform-selection-field');
+        } else {
+            this.isSelected = false;
+            $(this.refs.label).removeClass('eform-selection-field');
+        }
+
+    },
     render: function(){
         var type = this.props.type;
         var html = null;
@@ -58,9 +76,10 @@ module.exports = React.createClass({
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-md-12">
                                 <span className="form-control-static"
-                                    dangerouslySetInnerHTML={{__html: this.props.label}}/>
+                                    dangerouslySetInnerHTML={{__html: this.props.label}} ref="label" onDoubleClick = {this.selection}/>
                             </div>
                         </div>
+
                     </div>
                 )
                 break;
@@ -69,7 +88,7 @@ module.exports = React.createClass({
                     <div className={"dragula col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <span className="form-control-static">
+                                <span className="form-control-static" ref="label"  onDoubleClick = {this.selection}>
                                     {this.props.label}
                                 </span>
                             </div>

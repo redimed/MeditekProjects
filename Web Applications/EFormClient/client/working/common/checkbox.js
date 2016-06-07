@@ -105,6 +105,21 @@ module.exports = React.createClass({
     getRoles: function(){
         return this.props.roles;
     },
+    isSelected: false,
+    getIsSelected: function() {
+        return this.isSelected;
+    },
+    selection: function () {
+        if(!this.isSelected)
+        {
+            this.isSelected = true;
+            $(this.refs.label_checkbox).addClass('eform-selection-field');
+        } else {
+            this.isSelected = false;
+            $(this.refs.label_checkbox).removeClass('eform-selection-field');
+        }
+
+    },
     render: function(){
         var type = this.props.type
         var html = null;
@@ -129,9 +144,9 @@ module.exports = React.createClass({
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <div className="icheck-inline">
-                                    <label>
+                                    <label ref="label_checkbox" onDoubleClick = {this.selection}>
                                         <input type="checkbox" className="icheck" 
-                                            id={this.props.refTemp} name={this.props.name} ref="input" title={this.props.name}/>
+                                            id={this.props.refTemp} name={this.props.name} ref="input" title={this.props.name} />
                                         &nbsp;
                                         {this.props.label}
                                     </label>

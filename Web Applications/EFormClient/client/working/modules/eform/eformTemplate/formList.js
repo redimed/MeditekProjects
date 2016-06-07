@@ -167,7 +167,7 @@ module.exports = React.createClass({
                             </div>
                         </div>
                     </Modal>
-                    <div className="col-md-12">
+                    <div className="col-md-12 table-responsive">
                         {table}
                     </div>
                 </div>

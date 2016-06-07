@@ -178,6 +178,41 @@ module.exports = React.createClass({
         if(typeof this.refs[rowRef] !== 'undefined')
             this.refs[rowRef].preCalBelongsGroup(fieldRef, group);
     },
+    selectedFields: [],
+    _onSetFieldsProperties: function () {
+        $(this.refs.modalSetFieldsProperties).css({display: 'block'});
+        // this._onSaveFieldsProperties();
+
+    },
+    _onSaveFieldsProperties: function () {
+        var name = this.refs.fieldsName.getValue();
+        var size = this.refs.fieldsSize.getValue();
+        var codeSection = this.getCode();
+
+        this.selectedFields = [];
+        var rows = this.props.rows.toJS();
+        for (var i =0; i< rows.length; i++) {
+            var row = rows[i];
+            var rowRef = row.ref;
+            var tempFields = this.refs[rowRef].getFieldsSelection();
+            this.selectedFields.push.apply(this.selectedFields, tempFields);
+        }
+        console.log(this.selectedFields);
+        this.props.onSaveFieldsProperties(codeSection, this.selectedFields, {name: name, size: size});
+    },
+
+    _onUnselectFields: function () {
+        var rows = this.props.rows.toJS();
+        for (var i =0; i< rows.length; i++) {
+            var row = rows[i];
+            var rowRef = row.ref;
+            if(this.refs[rowRef] && this.refs[rowRef].unSelectFields)
+                this.refs[rowRef].unSelectFields();
+        }
+    },
+
+
+
     render: function(){
         var displayPermission = (this.props.permission === 'eformDev')?'inline-block':'none';
         var displayViewType = (this.props.viewType !== 'static' && this.props.permission !== 'eformDev')?'inline-block':'none';
@@ -237,6 +272,30 @@ module.exports = React.createClass({
                         </div>
                     </div>
 
+                    <div ref="modalSetFieldsProperties" className = "eform-dialog-fixed">
+                        <div className="header">
+                            <h4>Set Fields Properties</h4>
+                        </div>
+                        <div className="content">
+                            <form>
+                                <div className="form-body">
+                                    <div className="form-group">
+                                        <label>Name</label>
+                                        <CommonInput placeholder="Name" ref="fieldsName"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Size</label>
+                                        <CommonInput placeholder="Name" ref="fieldsSize"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={function(){$(this.refs.modalSetFieldsProperties).css({display: 'none'})}.bind(this)} className="btn btn-default">Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSaveFieldsProperties}>Save</button>
+                        </div>
+                    </div>
+
                     <div className="col-md-12">
                         <div style={{display: displayViewType, marginBottom: '10px'}}>
                            <CommonRadio ref="radio_show" name={this.props.refTemp+'_viewType'} value="yes"
@@ -264,7 +323,15 @@ module.exports = React.createClass({
                                         <a className="btn green btn-sm" onClick={this._onCreateRow}>
                                             <i className="fa fa-plus"></i> Add Row
                                         </a>&nbsp;
-                                        
+
+                                        <a className="btn green btn-sm" onClick={this._onSetFieldsProperties}>
+                                            <i className="fa fa-plus"></i>Set Fields Properties
+                                        </a>&nbsp;
+
+                                        <a className="btn green btn-sm" onClick={this._onUnselectFields}>
+                                            <i className="fa fa-plus"></i>Unselect Fields
+                                        </a>&nbsp;
+
                                         <div className="btn-group">
 
                                             <a className="btn btn-default btn-sm" data-toggle="dropdown">
@@ -317,8 +384,9 @@ module.exports = React.createClass({
                                         </div>
                                     </div>
                        </div>
-                       <div className="portlet-body form flip-scroll">
-                            <div className="form-horizontal">
+                        {/*<div className="portlet-body form flip-scroll">*/}
+                       <div className="portlet-body form">
+                       <div className="form-horizontal">
                                 <div className="form-body">
                                     {
                                         this.props.rows.map(function(row, index){

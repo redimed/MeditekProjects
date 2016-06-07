@@ -126,6 +126,21 @@ module.exports = React.createClass({
     getLabelSuffix: function() {
         return this.props.labelSuffix;
     },
+    isSelected: false,
+    getIsSelected: function() {
+        return this.isSelected;
+    },
+    selection: function () {
+        if(!this.isSelected)
+        {
+            this.isSelected = true;
+            $(this.refs.input).addClass('eform-selection-field');
+        } else {
+            this.isSelected = false;
+            $(this.refs.input).removeClass('eform-selection-field');
+        }
+
+    },
     render: function(){
         var type = this.props.type;
         var html = null;
@@ -191,14 +206,14 @@ module.exports = React.createClass({
                                             :null
                                         }
 
-                                        <input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp}/>
+                                        <input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp} onDoubleClick = {this.selection}/>
                                         {this.props.labelSuffix?
                                             <span className="input-group-addon" style={labelSuffixStyle}>{this.props.labelSuffix}</span>
                                             :null
                                         }
 
                                     </div>
-                                    :<input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp}/>
+                                    :<input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp} onDoubleClick = {this.selection}/>
                                 }
 
                             </div>

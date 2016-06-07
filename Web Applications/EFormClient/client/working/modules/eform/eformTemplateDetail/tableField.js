@@ -167,7 +167,7 @@ module.exports = React.createClass({
                     </div>
                 </CommonModal>
                 <div className="form-group" id={this.props.groupId}>
-                    <div className="col-md-12">
+                    <div className="col-md-12 table-responsive">
                         <table className="table table-bordered table-striped table-condensed flip-content">
                             <thead className="flip-content">
                                 <tr>

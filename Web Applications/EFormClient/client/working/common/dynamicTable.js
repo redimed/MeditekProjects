@@ -183,8 +183,8 @@ module.exports = React.createClass({
                         <button className="btn btn-primary" onClick={this._onAddTableRow}>Add Row</button>
                     </div>
                 </div>
-                <div className="form-group" id={this.props.groupId}>
-                    <div className="col-md-12">
+                <div className="form-group table-responsive" id={this.props.groupId}>
+                    <div className="col-md-12 table-responsive">
                         <table className="table table-bordered table-striped table-condensed flip-content">
                             <thead className="flip-content">
                                 <tr>

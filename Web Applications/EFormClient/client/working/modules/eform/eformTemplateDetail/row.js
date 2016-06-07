@@ -337,6 +337,41 @@ module.exports = React.createClass({
         }
         return results;
     },
+
+    //tannv.dts@gmail.com
+    getFieldsSelection: function () {
+        var fields = this.props.fields.toJS();
+        var results = [];
+        var self = this;
+        for(var i = 0; i < fields.length; i++) {
+            var field = fields[i];
+            var fieldRef = field.ref;
+            if(typeof this.refs[fieldRef] !== 'undefined'){
+                if(this.refs[fieldRef].getIsSelected && this.refs[fieldRef].getIsSelected() == true) {
+                    results.push({
+                        codeField: this.refs[fieldRef].props.code,
+                        codeRow: this.getCode()
+                    })
+                }
+            }
+        }
+        return results;
+    },
+
+    unSelectFields: function () {
+        var fields = this.props.fields.toJS();
+        for(var i = 0; i < fields.length; i++) {
+            var field = fields[i];
+            var fieldRef = field.ref;
+            if(this.refs[fieldRef] && this.refs[fieldRef].getIsSelected && this.refs[fieldRef].getIsSelected()){
+                if(this.refs[fieldRef].selection)
+                    this.refs[fieldRef].selection();
+            }
+        }
+    },
+
+
+
     _onSaveInputOrder: function(){
         var value = this.refs.inputOrder.getValue();
         $(this.refs.modalOrderRow).css({display: 'none'});
@@ -502,7 +537,8 @@ module.exports = React.createClass({
                                             </div>
                                         </div>
                            </div>
-                           <div className="portlet-body form flip-scroll">
+                            {/*<div className="portlet-body form flip-scroll">*/}
+                            <div className="portlet-body form">
                                 <div className="form-horizontal">
                                     <div className="form-body">
                                         <div className="row">
@@ -814,7 +850,7 @@ module.exports = React.createClass({
                                             ref={field.get('ref')}
                                             refTemp={field.get('ref')}
                                             code={index}
-                                            onRightClickItem={this._onRightClickItem}                                            
+                                            onRightClickItem={this._onRightClickItem}
                                             label={field.get('label')}/>
                                 else if(type === 'table')
                                         return <CommonTable key={index} type={type}

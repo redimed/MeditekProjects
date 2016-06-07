@@ -11,58 +11,37 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PushbuttonField;
-import com.itextpdf.text.pdf.RandomAccessFileOrArray;
-import com.itextpdf.text.pdf.codec.JBIG2Image;
 import com.meditek.jasper.model.DynamicFormModuleDefinitionModel;
 import com.meditek.jasper.model.FormDataModel;
 import com.meditek.jasper.model.FormModuleModel;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.io.OutputStream;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRParameter;
-import net.sf.jasperreports.engine.JRReport;
-import net.sf.jasperreports.engine.JRSubreport;
-import net.sf.jasperreports.engine.JRSubreportParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.base.JRBaseParameter;
-import net.sf.jasperreports.engine.base.JRBasePropertyExpression;
 import net.sf.jasperreports.engine.design.JRDesignBand;
 import net.sf.jasperreports.engine.design.JRDesignExpression;
-import net.sf.jasperreports.engine.design.JRDesignGroup;
 import net.sf.jasperreports.engine.design.JRDesignParameter;
 import net.sf.jasperreports.engine.design.JRDesignSection;
 import net.sf.jasperreports.engine.design.JRDesignStyle;
 import net.sf.jasperreports.engine.design.JRDesignSubreport;
 import net.sf.jasperreports.engine.design.JRDesignSubreportParameter;
 import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.type.OrientationEnum;
-import net.sf.jasperreports.engine.type.PositionTypeEnum;
 import net.sf.jasperreports.engine.type.PrintOrderEnum;
 import net.sf.jasperreports.engine.type.SplitTypeEnum;
-import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 /**
  *
  * @author rockmanexe1994
@@ -74,13 +53,13 @@ public class PrintingProcess {
     public PrintingProcess() {
     }
     
-    public ByteArrayOutputStream iTextPrinting(List<FormDataModel> formData, String formUID, String baseUrl) throws Exception{
+    public ByteArrayOutputStream iTextPrinting(List<FormDataModel> formData, String formUID, String baseUrl, String printMethod) throws Exception{
         try {
             // init params
             String basePath = "reportTemplate/itext/";
             String pdfTemplateFile = basePath+formUID+".pdf";
             // Get populated data
-            Hashtable data = dataParsing.iTextDataParse(formData, baseUrl);
+            Hashtable data = dataParsing.dataParse(formData, baseUrl, printMethod);
             for (Enumeration data1 = data.keys(); data1.hasMoreElements();){
                 String key= (String)data1.nextElement();
                 System.out.println("Key: "+key+" Value: "+ data.get(key));
@@ -120,9 +99,9 @@ public class PrintingProcess {
         }
     }
     
-    public ByteArrayOutputStream jasperPrinting(List<FormDataModel> formData, String formUID, String baseUrl) throws Exception{
+    public ByteArrayOutputStream jasperPrinting(List<FormDataModel> formData, String formUID, String baseUrl, String printMethod) throws Exception{
         try {
-            Hashtable parsedData = dataParsing.jasperDataParse(formData, baseUrl);
+            Hashtable parsedData = dataParsing.dataParse(formData, baseUrl, printMethod);
             for (Enumeration data = parsedData.keys(); data.hasMoreElements();){
                 String key= (String)data.nextElement();
                 System.out.println("Key: "+key+"                    Value: "+ parsedData.get(key));
@@ -144,9 +123,9 @@ public class PrintingProcess {
         }
     }
     
-    public ByteArrayOutputStream dynamicJasperPrinting(List<FormDataModel> data, String baseUrl) throws Exception {
+    public ByteArrayOutputStream dynamicJasperPrinting(List<FormDataModel> data, String baseUrl, String printMethod) throws Exception {
         //init some params first
-        Hashtable parsedData = dataParsing.dynamicJasperDataParse(data, baseUrl);
+        Hashtable parsedData = dataParsing.dataParse(data, baseUrl, printMethod);
         JRDesignBand newBand;
         Hashtable preDefinedModules = new DynamicFormModuleDefinitionModel().getModulesDef();
         // Make a list of the module ID needed
@@ -225,25 +204,6 @@ public class PrintingProcess {
             else if(module.getIsHeader()==true) jasperDesign.setPageHeader(band);
             else ((JRDesignSection)jasperDesign.getDetailSection()).addBand(band);
          }
-                
-//         SubReport 1
-//        JRDesignBand band = new JRDesignBand();
-//        JRDesignSubreport sub = new JRDesignSubreport(jasperDesign);
-//        sub.setWidth(555);
-//        sub.setX(0);
-//        sub.setY(0);
-//        sub.setPositionType(PositionTypeEnum.FLOAT);
-//        JRDesignExpression expression = new JRDesignExpression();
-//        expression.setText("\"/home/rockmanexe1994/Projects/JasperReportWorkspace/MyReports/FunctionalAssessment_Summary_RiskRating.jasper\"");
-//        sub.setExpression(expression);
-//        expression = new JRDesignExpression();
-//        expression.setText("new net.sf.jasperreports.engine.JREmptyDataSource()");
-//        sub.setDataSourceExpression(expression);
-//        System.out.println("exp:" + sub);
-//        band.addElement(sub);          
-//        jasperDesign.setPageHeader(band);
-        
-//        params.put("subreportParameter", jr);
         
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
         HashMap params = new HashMap();

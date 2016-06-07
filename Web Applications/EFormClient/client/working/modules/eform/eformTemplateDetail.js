@@ -211,6 +211,36 @@ module.exports = React.createClass({
         })
         //swal("Deleted!", "Delete field successfully.", "success");
     },
+
+    _onSaveFieldsProperties: function(codeSection, fields,  dataValues) {
+        var updateSection = this.state.sections.get(codeSection);
+        for (var i = 0; i < fields.length; i++) {
+            if(dataValues.name) {
+                var name = dataValues.name;
+                if(name =='(null)')
+                    name = "";
+                updateSection = updateSection.updateIn(['rows', fields[i].codeRow, 'fields', fields[i].codeField], val =>
+                    val.set('name', name)
+                )
+            }
+
+            if(dataValues.size) {
+                updateSection = updateSection.updateIn(['rows', fields[i].codeRow, 'fields', fields[i].codeField], val =>
+                    val.set('size', dataValues.size)
+                )
+            }
+            /*updateSection = updateSection.updateIn(['rows', fields[i].codeRow, 'fields', fields[i].codeField], val =>
+                val.set('name', dataValues.name)
+                    .set('size', dataValues.size)
+            )*/
+        }
+        this.setState(function(prevState) {
+            return {
+                sections: prevState.sections.updateIn([codeSection], val => updateSection)
+            }
+        });
+    },
+
     _onComponentSectionSaveFieldDetail: function(codeSection, codeRow, dataField) {
         if(Config.getPrefixField(dataField.type, 'eform_input') > -1){
             this.setState(function(prevState) {
@@ -670,6 +700,7 @@ module.exports = React.createClass({
                                                  onDragField={this._onComponentSectionDragField}
                                                  onRemoveField={this._onComponentSectionRemoveField}
                                                  onSaveFieldDetail={this._onComponentSectionSaveFieldDetail}
+                                                 onSaveFieldsProperties={this._onSaveFieldsProperties}
                                                  onCreateTableRow={this._onComponentSectionCreateTableRow}
                                                  onRemoveTableRow={this._onComponentSectionRemoveTableRow}
                                                  onCreateTableColumn={this._onComponentSectionCreateTableColumn}

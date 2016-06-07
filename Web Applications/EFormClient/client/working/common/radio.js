@@ -124,6 +124,21 @@ module.exports = React.createClass({
     getRoles: function(){
         return this.props.roles;
     },
+    isSelected: false,
+    getIsSelected: function() {
+        return this.isSelected;
+    },
+    selection: function () {
+        if(!this.isSelected)
+        {
+            this.isSelected = true;
+            $(this.refs.label_radio).addClass('eform-selection-field');
+        } else {
+            this.isSelected = false;
+            $(this.refs.label_radio).removeClass('eform-selection-field');
+        }
+
+    },
     render: function(){
         var type = this.props.type;
         var html = null;
@@ -148,10 +163,10 @@ module.exports = React.createClass({
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <div className="icheck-inline">
-                                    <label>
+                                    <label ref="label_radio" onDoubleClick = {this.selection}>
                                         <input type="radio" className="icheck" name={this.props.name} ref="input" title={this.props.name}
                                             value={this.props.value} id={this.props.refTemp}
-                                            id={this.props.refTemp}/>
+                                            id={this.props.refTemp} />
                                         &nbsp;
                                         {this.props.label}
                                     </label>

@@ -96,6 +96,21 @@ module.exports = React.createClass({
     getRoles: function(){
         return this.props.roles;
     },
+    isSelected: false,
+    getIsSelected: function() {
+        return this.isSelected;
+    },
+    selection: function () {
+        if(!this.isSelected)
+        {
+            this.isSelected = true;
+            $(this.refs.input).addClass('eform-selection-field');
+        } else {
+            this.isSelected = false;
+            $(this.refs.input).removeClass('eform-selection-field');
+        }
+
+    },
     render: function(){
         var type = this.props.type;
         var html = null;
@@ -124,7 +139,7 @@ module.exports = React.createClass({
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
                                 <input title={this.props.name} type="text" className={this.props.className} style={inputStyle} name={this.props.name} ref="input" placeholder={this.props.placeholder}
-                                    id={this.props.refTemp}/>
+                                    id={this.props.refTemp} onDoubleClick = {this.selection}/>
                             </div>
                         </div>
                     </div>

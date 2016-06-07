@@ -4,13 +4,11 @@
  * and open the template in the editor.
  */
 package com.meditek.jasper.model;
-
-import java.util.Base64;
-
 /**
  *
  * @author rockmanexe1994
  */
+
 public class FormDataModel {
     String name;
     String value;

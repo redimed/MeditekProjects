@@ -3,7 +3,8 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     /* THAO */
     var PREVIOUS_SURGERY_PROCEDURES = [];
     var MEDICATIONS = [];
-
+    var GPid;
+    var flagGP = false;
     function setValue() {
         //thao
         ($scope.admissionDetail.cardiovascular_triglycerides) ? $scope.admissionDetail.cardiovascular_triglycerides: $scope.admissionDetail.cardiovascular_triglycerides = 'N';
@@ -46,7 +47,8 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
         //giang
         $scope.admissionDetail.DoctorDateChoose = moment().format('DD/MM/YYYY');
         if ($scope.wainformation) {
-
+            console.log("admissionDetail ",$scope.admissionDetail);
+            
             if ($scope.wainformation.Doctors.length > 0) {
                 if ($scope.wainformation.Doctors[0].FirstName || $scope.wainformation.Doctors[0].LastName) {
                     $scope.admissionDetail.DoctorFullName = $scope.admissionDetail.DoctorFullName ? $scope.admissionDetail.DoctorFullName : $scope.wainformation.Doctors[0].FirstName + ' ' + $scope.wainformation.Doctors[0].LastName;
@@ -62,7 +64,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                 $scope.admissionDetail.LastName = $scope.wainformation.Patients[0].LastName ? $scope.wainformation.Patients[0].LastName : '';
                 $scope.admissionDetail.DOB = $scope.wainformation.Patients[0].DOB ? $scope.wainformation.Patients[0].DOB : '';
                 $scope.admissionDetail.Gender = $scope.wainformation.Patients[0].Gender ? $scope.wainformation.Patients[0].Gender : '';
-                PatientService.detailChildPatient({ UID: $scope.wainformation.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA', 'PatientKin'] }).then(function(response) {
+                PatientService.detailChildPatient({ UID: $scope.wainformation.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA', 'PatientKin', 'PatientGP'] }).then(function(response) {
                     if (response.data) {
                         if (response.data.PatientMedicare.length > 0) {
                             $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : response.data.PatientMedicare[0].MedicareEligible ? response.data.PatientMedicare[0].MedicareEligible : '';
@@ -81,6 +83,46 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                             $scope.admissionDetail.Relationship = $scope.admissionDetail.Relationship ? $scope.admissionDetail.Relationship : response.data.PatientKin[0].Relationship ? response.data.PatientKin[0].Relationship : '';
                             $scope.admissionDetail.MobilePhoneNumber = $scope.admissionDetail.MobilePhoneNumber ? $scope.admissionDetail.MobilePhoneNumber : response.data.PatientKin[0].MobilePhoneNumber ? response.data.PatientKin[0].MobilePhoneNumber : '';
                             console.log("PatientKin ", response.data.PatientKin[0]);
+                        }
+                        if (response.data.PatientGP.length > 0) {                            
+                            for(var key in $scope.admissionDetail) {
+                                if(key == 'GPFirstName') {                                    
+                                    flagGP =true;
+                                }
+                                if(key == 'GPLastName') {
+                                    flagGP =true;
+                                }
+                                if (key == 'HealthLink') {
+                                    flagGP =true;
+                                }
+                                if (key == 'ProviderNumber') {
+                                    flagGP =true;
+                                }
+                                if (key == 'Email') {
+                                    flagGP =true;
+                                }
+                                if (key == 'PhoneNumber') {
+                                    flagGP =true;
+                                }
+                                if (key == 'HomePhoneNumber') {
+                                    flagGP =true;
+                                }
+                                if (key == 'WorkPhoneNumber') {
+                                    flagGP =true;
+                                }
+                            }
+                            if(flagGP == false) {
+                                GPid = response.data.PatientGP[0].ID;
+                            }
+                            $scope.admissionDetail.GPFirstName = $scope.admissionDetail.GPFirstName ? $scope.admissionDetail.GPFirstName : response.data.PatientGP[0].FirstName ? response.data.PatientGP[0].FirstName: '';
+                            $scope.admissionDetail.GPLastName = $scope.admissionDetail.GPLastName ? $scope.admissionDetail.GPLastName : response.data.PatientGP[0].LastName ? response.data.PatientGP[0].LastName: '';
+                            $scope.admissionDetail.HealthLink = $scope.admissionDetail.HealthLink ? $scope.admissionDetail.HealthLink: response.data.PatientGP[0].HealthLink ? response.data.PatientGP[0].HealthLink: '';
+                            $scope.admissionDetail.ProviderNumber = $scope.admissionDetail.ProviderNumber ? $scope.admissionDetail.ProviderNumber : response.data.PatientGP[0].ProviderNumber ? response.data.PatientGP[0].ProviderNumber: '';
+                            $scope.admissionDetail.Email = $scope.admissionDetail.Email ? $scope.admissionDetail.Email : response.data.PatientGP[0].Email ? response.data.PatientGP[0].Email: '';
+                            $scope.admissionDetail.PhoneNumber = $scope.admissionDetail.PhoneNumber ? $scope.admissionDetail.PhoneNumber : response.data.PatientGP[0].PhoneNumber ? response.data.PatientGP[0].PhoneNumber: '';
+                            $scope.admissionDetail.HomePhoneNumber = $scope.admissionDetail.HomePhoneNumber ? $scope.admissionDetail.HomePhoneNumber : response.data.PatientGP[0].HomePhoneNumber ? response.data.PatientGP[0].HomePhoneNumber: '';
+                            $scope.admissionDetail.WorkPhoneNumber = $scope.admissionDetail.WorkPhoneNumber ? $scope.admissionDetail.WorkPhoneNumber : response.data.PatientGP[0].WorkPhoneNumber ? response.data.PatientGP[0].WorkPhoneNumber: '';
+                            console.log(">>>>>>>>PatientGP", response.data.PatientGP[0]);
                         }
                     }
                 }, function(err) {
@@ -209,7 +251,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
         }
     };
 
-
+    
 
 
     /* END THAO */
@@ -322,7 +364,6 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
             flag = isRadioYesNo('respiratory_emphysema', ['respiratory_emphysema_comment']);
         if (flag === false)
             flag = isRadioYesNo('respiratory_inclines', ['respiratory_inclines_comment']);
-        //alert(flag);
         if (flag) {
             //xuat thong bao
             toastr.error("You haven't entered enough information", "Error");
@@ -359,8 +400,49 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
 
                 });
                 console.log("admission update ne", $scope.admission);
+                console.log("$scope.wainformation", $scope.wainformation);                
                 AdmissionService.UpdateAdmission($scope.admission).then(function(data) {
-                    swal("Update success!", "", "success");
+                    // swal("Update success!", "", "success");
+                    if(flagGP ==false) {
+                        var obj = {};
+                        if($scope.admissionDetail['GPFirstName']) {
+                            obj['GPFirstName'] = $scope.admissionDetail['GPFirstName'];
+                        }
+                        if ($scope.admissionDetail['GPLastName']) {
+                            obj['GPLastName'] = $scope.admissionDetail['GPLastName'];
+                        }
+                        if ($scope.admissionDetail['HealthLink']) {
+                            obj['HealthLink'] = $scope.admissionDetail['HealthLink'];
+                        }
+                        if ($scope.admissionDetail['ProviderNumber']) {
+                            obj['ProviderNumber'] = $scope.admissionDetail['ProviderNumber'];
+                        }
+                        if ($scope.admissionDetail['Email']) {
+                            obj['Email'] = $scope.admissionDetail['Email'];
+                        }
+                        if ($scope.admissionDetail['PhoneNumber']) {
+                            obj['PhoneNumber'] = $scope.admissionDetail['PhoneNumber'];
+                        }
+                        if ($scope.admissionDetail['HomePhoneNumber']) {
+                            obj['HomePhoneNumber'] = $scope.admissionDetail['HomePhoneNumber'];
+                        }
+                        if ($scope.admissionDetail['WorkPhoneNumber']) {
+                            obj['WorkPhoneNumber'] = $scope.admissionDetail['WorkPhoneNumber'];
+                        }
+                        obj.ID = GPid;
+                        var patientInfo = {
+                            PatientGP:obj,
+                            UID: $stateParams.patientUID                                                                            
+                        }
+                        PatientService.updatePatient(patientInfo).then(function(response){
+                            swal("Update success!", "", "success");
+                        }, function(error){
+                            swal("Update error!", "", "error");
+                        });
+                    }
+                    else {
+                        swal("Update success!", "", "success");
+                    }
                 }, function(error) {
                     swal("Update error!", "", "error");
                 });

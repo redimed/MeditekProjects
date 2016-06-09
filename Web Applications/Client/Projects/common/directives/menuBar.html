@@ -4,7 +4,7 @@
 	<a ng-if="node.state" href="javascript:;" ui-sref="{{node.state||null}}" class="nav-link nav-toggle">
         <i class="fa fa-circle"></i>
         <span class="title">{{node.name}}</span>
-        <span class="arrow"></span>
+        
     </a>
 
     <a ng-if="!node.state" href="javascript:;" class="nav-link nav-toggle">
@@ -15,7 +15,7 @@
 		
 	
     <ul ng-if="node.nodes" class="sub-menu">
-        <li class="nav-item"  ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'" finish-render>
+        <li class=""  ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'" finish-render>
         </li>
     </ul>
 </script>
@@ -28,21 +28,21 @@
         </div>
         <!-- END SIDEBAR TOGGLER BUTTON -->
     </li>
-	<li class="nav-item start active open">
+	<li class="nav-item start">
 		<a href="javascript:;" ui-sref="authentication.home.list">
     		<i class="icon-home"></i>
     		<span class="title">Homepage</span>
-    		<span class="selected"></span>
-    		<span class="arrow open"></span>
+    		<!-- <span class="selected"></span> -->
+    		<!-- <span class="arrow"></span> -->
 		</a>
 	</li>
     <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render>
     </li>
     <li class="nav-item" >
-    	<a href="javascript:;" ui-sref="authentication.user.profile" class="nav-link">
+    	<a href="javascript:;" ui-sref="authentication.user.profile">
             <i class="glyphicon glyphicon-user"></i>
             <span class="title">User Profile</span>
-            <span class="arrow"></span>
+            <!-- <span class="arrow"></span> -->
         </a>
     </li>
 </ul>

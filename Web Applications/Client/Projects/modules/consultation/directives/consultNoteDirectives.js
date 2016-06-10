@@ -7,6 +7,30 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         },
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
+            $scope.relevantGroup = {
+                0: {name: 0},
+                // 1: {name: 1}
+            };
+            $scope.addRelevantGroup = function () {
+                var maxKey = 0;
+                for(key in $scope.relevantGroup) {
+                    if(parseInt(key) > maxKey)
+                        maxKey = parseInt(key);
+                }
+                $scope.relevantGroup[maxKey+1] = {
+                    name: maxKey+1
+                };
+            };
+            $scope.parseInt = parseInt;
+            $scope.setCurrentRelevantGroup = function(key) {
+                //Key cua consultationData FileUpload
+                $scope.currentRelevantFileUploadKey = 'Consultation__Details.Appointment.Relevant.FileUploads.'+key;
+                //index cua relevant group
+                $scope.currentRelevantGroupKey = key;
+            }
+            $scope.selectImage = function(key) {
+                $scope.setCurrentRelevantGroup(key);
+            };
             $scope.checkRoleUpdate = true;
             $scope.DataPrintPDF = null;
             var Window;
@@ -20,12 +44,17 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.requestInfo = {
                 UID: $stateParams.UID,
                 Consultations: [{
-                    FileUploads: [],
+                    // FileUploads: [],// tan comment
                     ConsultationData: []
                 }],
 
             }
             $scope.FileUploads = [];
+            //tan custom
+            //Chi dung cho viec hien thi file va drawing dung vi tri
+            $scope.relevantFileUploads = {
+                //0: [],
+            }
             $scope.requestOther = {};
             $scope.CheckUpdate = true;
             $timeout(function() {
@@ -50,7 +79,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 //console.info('onWhenAddingFileFailed', item, filter, options);
             };
             uploader.onAfterAddingFile = function(fileItem) {
-                //console.info('onAfterAddingFile', fileItem);
+                fileItem.relevantGroupKey = $scope.currentRelevantGroupKey;
+                fileItem.relevantFileUploadKey = $scope.currentRelevantFileUploadKey;
+                console.info('onAfterAddingFile', fileItem);
             };
             uploader.onAfterAddingAll = function(addedFileItems) {
                 //console.info('onAfterAddingAll', addedFileItems);
@@ -89,12 +120,27 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     $rootScope.getNewToken();
                 }
                 if (response.status == 'success') {
-                    if (!$scope.requestInfo.Consultations[0].FileUploads) {
+                    //Tan comment
+                    /*if (!$scope.requestInfo.Consultations[0].FileUploads) {
                         $scope.requestInfo.Consultations[0].FileUploads = [];
                     };
                     $scope.requestInfo.Consultations[0].FileUploads.push({
                         UID: response.fileUID
+                    });*/
+                    
+                    //tan custom
+                    if(!$scope.requestInfo.Consultations[0].ConsultationData[fileItem.relevantFileUploadKey]) {
+                        $scope.requestInfo.Consultations[0].ConsultationData[fileItem.relevantFileUploadKey] = {
+                            FileUploads: [],
+                            Value: 0
+                        };
+                    }
+                    $scope.requestInfo.Consultations[0].ConsultationData[fileItem.relevantFileUploadKey].FileUploads.push({
+                       UID: response.fileUID
                     });
+                    $scope.requestInfo.Consultations[0].ConsultationData[fileItem.relevantFileUploadKey].FileUploads.Value = $scope.requestInfo.Consultations[0].ConsultationData[fileItem.relevantFileUploadKey].FileUploads.length;
+
+                    console.log( ' fileupload:onCompleteItem: $scope.requestInfo.Consultations[0].ConsultationData',  $scope.requestInfo.Consultations[0].ConsultationData);
                 };
             };
             uploader.onCompleteAll = function() {
@@ -231,11 +277,14 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 });
             }
             $scope.loadData = function(data) {
+                console.log("loadData:data", data);
                 $timeout(function() {
                     $.uniform.update();
                 }, 0);
                 $scope.CheckUpdate = false;
                 $scope.FileUploads = angular.copy(data.FileUploads);
+                //tan custom
+                $scope.relevantFileUploads = {};
                 $scope.requestInfo = {
                     UID: $stateParams.UID,
                     Consultations: [{
@@ -244,11 +293,22 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     }]
                 }
                 $scope.Temp = angular.copy(data.ConsultationData);
+                $scope.relevantGroup = {};
                 $scope.Temp.forEach(function(valueRes, indexRes) {
                     if (valueRes != null && valueRes != undefined) {
-                        var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
+                        //tan custom
+                        if(valueRes.Type == 'Relevant')
+                        {
+                            var desc = valueRes.Description?valueRes.Description:0;
+                            $scope.relevantGroup[desc] = {name: desc};
+                            if(valueRes.Name == 'FileUploads') {
+                                $scope.relevantFileUploads[desc] = angular.copy(valueRes.FileUploads);
+                            }
+                        }
+
+                        var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name + '.' + (valueRes.Description?valueRes.Description:0);
                         keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
-                        var keyOther = valueRes.Type + valueRes.Name;
+                        var keyOther = valueRes.Type + valueRes.Name + (valueRes.Description?valueRes.Description:0);
                         if (keyOther != 0) {
                             keyOther = keyOther.split(" ").join("");
                         }
@@ -269,7 +329,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     }
                 })
                 $scope.ConsultationData = data.ConsultationData;
-                $scope.requestInfo.Consultations[0].FileUploads = $scope.FileUploads;
+                console.log("loadData: result $scope.requestInfo.Consultations[0]", $scope.requestInfo.Consultations[0]);
+                //$scope.requestInfo.Consultations[0].FileUploads = $scope.FileUploads; //Tan comment
             }
 
             $scope.Create = function() {
@@ -281,7 +342,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.createConsultation = function() {
                 $scope.ConsultationDataCreate();
                 if ($scope.requestInfo.Consultations[0].ConsultationData.length !== 0 || $scope.requestInfo.Consultations[0].FileUploads.length !== 0) {
-                    if ($scope.requestInfo.Consultations[0].FileUploads.length !== 0 && $scope.requestInfo.Consultations[0].ConsultationData.length == 0) {
+                    //tan comment
+                    /*if ($scope.requestInfo.Consultations[0].FileUploads.length !== 0 && $scope.requestInfo.Consultations[0].ConsultationData.length == 0) {
                         var FileUploads = {
                             Category: "Appointment",
                             FileUploads: null,
@@ -291,7 +353,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                             Value: $scope.requestInfo.Consultations[0].FileUploads.length
                         }
                         $scope.requestInfo.Consultations[0].ConsultationData.push(FileUploads);
-                    }
+                    }*/
                     console.log('$scope.requestInfo', $scope.requestInfo)
                     o.loadingPage(true);
                     consultationServices.createConsultation($scope.requestInfo).then(function(response) {
@@ -353,16 +415,18 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 });
             }
             $scope.ConsultationDataCreate = function() {
+                console.log("$scope.requestInfo.Consultations[0].ConsultationData>>>>>>>>>>>", $scope.requestInfo.Consultations[0].ConsultationData);
                 var ConsultationDataTemp = [];
                 for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");
-                    var otherkey = res[2] + res[3] + 'Other';
+                    var otherkey = res[2] + res[3] +res[4] + + 'Other';
                     var object = {
                         Section: res[0],
                         Category: res[1],
                         Type: res[2],
                         Name: res[3],
+                        Description: res[4],
                         Value: ($scope.requestInfo.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : $scope.requestInfo.Consultations[0].ConsultationData[key].Value,
                         FileUploads: $scope.requestInfo.Consultations[0].ConsultationData[key].FileUploads
                     };
@@ -373,7 +437,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                             if (valueTemp.Section == object.Section &&
                                 valueTemp.Category == object.Category &&
                                 valueTemp.Type == object.Type &&
-                                valueTemp.Name == object.Name) {
+                                valueTemp.Name == object.Name &&
+                                valueTemp.Description == object.Description) {
                                 isExist = true;
                             }
                         } else {
@@ -387,19 +452,21 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     };
                 };
                 $scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTemp;
-                $scope.requestInfo.Consultations[0].FileUploads = $scope.requestInfo.Consultations[0].FileUploads.concat($scope.FileUploads);
+                // $scope.requestInfo.Consultations[0].FileUploads = $scope.requestInfo.Consultations[0].FileUploads.concat($scope.FileUploads);// Tan comment
             }
             $scope.ConsultationUpdate = function() {
                 var ConsultationDataTemp = [];
+                console.log("ConsultationUpdate: $scope.requestInfo.Consultations[0].ConsultationData", $scope.requestInfo.Consultations[0].ConsultationData);
                 for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");
-                    var otherkey = res[2] + res[3] + 'Other';
+                    var otherkey = res[2] + res[3] + res[4] + 'Other';
                     var object = {
                         Section: res[0],
                         Category: res[1],
                         Type: res[2],
                         Name: res[3],
+                        Description: res[4],
                         Value: ($scope.requestInfo.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : $scope.requestInfo.Consultations[0].ConsultationData[key].Value,
                         FileUploads: $scope.requestInfo.Consultations[0].ConsultationData[key].FileUploads
                     };
@@ -408,7 +475,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         if (valueTemp.Section == object.Section &&
                             valueTemp.Category == object.Category &&
                             valueTemp.Type == object.Type &&
-                            valueTemp.Name == object.Name) {
+                            valueTemp.Name == object.Name &&
+                            valueTemp.Description == object.Description) {
                             if (object.Value !== null) {
                                 valueTemp.Value = object.Value;
                                 valueTemp.FileUploads = object.FileUploads;
@@ -423,7 +491,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                             if (valueTemp.Section == object.Section &&
                                 valueTemp.Category == object.Category &&
                                 valueTemp.Type == object.Type &&
-                                valueTemp.Name == object.Name) {
+                                valueTemp.Name == object.Name &&
+                                valueTemp.Description == object.Description) {
                                 valueTemp.Value = object.Value;
                                 isExist = true;
                             };
@@ -438,6 +507,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     };
                 };
                 $scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTemp;
+                console.log("update:$scope.requestInfo.Consultations[0].ConsultationData",$scope.requestInfo.Consultations[0].ConsultationData)
             }
             $scope.cancel = function() {
                 $state.go("authentication.consultation.detail", {
@@ -474,15 +544,44 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     $modalInstance.close('err');
                 });
             };
+            $scope.showFilePreUpload = function(uploader, filePreUpload) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'showFilePreUpload',
+                    controller: function($scope, uploader ,filePreUpload){
+                        $scope.uploader = uploader;
+                        $scope.item = filePreUpload;
+                    },
+                    windowClass: 'app-modal-window-full',
+                    resolve: {
+                        uploader: function() {
+                            return uploader;
+                        },
+                        filePreUpload: function() {
+                            return filePreUpload;
+                        }
+                    }
+                });
+                modalInstance.result.then(function(data) {
+                    $modalInstance.close('err');
+                });
+            }
+
             $scope.closeWindow = function(fileInfo) {
                 Window.close();
             }
             $scope.RemoveDrawing = function(index) {
                 $scope.FileUploads.splice(index, 1);
             }
-            $scope.AddDrawing = function(data) {
+            $scope.AddDrawing = function(key) {
+                
+                /*$scope.currentRelevantFileUploadKey = 'Consultation__Details.Appointment.Relevant.FileUploads.'+key;
+                $scope.currentRelevantGroupKey = key;*/
+                $scope.setCurrentRelevantGroup(key);
+
                 if (typeof(Window) == 'undefined' || Window.closed) {
                     window.refreshCode = $rootScope.refreshCode;
+                    window.relevantFileUploadKey = $scope.currentRelevantFileUploadKey;
+                    window.relevantGroupKey = $scope.currentRelevantGroupKey;
                     Window = window.open($state.href("blank.drawing.home"), "", "fullscreen=0");
                 } else {
                     Window.focus();

@@ -3,6 +3,42 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     /* THAO */
     var PREVIOUS_SURGERY_PROCEDURES = [];
     var MEDICATIONS = [];
+    var GPid;
+    var flagGP = false;
+    var flag = false;
+    var RadioComment = [
+        { radio: 'anti_inflammatory', comment: ['anti_inflammatory_comment'] },
+        { radio: 'herbal_supplements', comment: ['herbal_supplements_comment'] },
+        { radio: 'allergies_alerts_hyperthermia', comment: ['allergies_alerts_details_reaction'] },
+        { radio: 'allergies_alerts_substances', comment: ['allergies_alerts_substances_list'] },
+        { radio: 'lifestyle_smoked', comment: ['lifestyle_smoked_daily_amount', 'lifestyle_smoked_ceased'] },
+        { radio: 'lifestyle_alcohol', comment: ['lifestyle_alcohol_daily_amount'] },
+        { radio: 'lifestyle_drugs', comment: ['lifestyle_drugs_daily_amount', 'lifestyle_drugs_type'] },
+        { radio: 'cardiovascular_triglycerides', comment: ['cardiovascular_triglycerides_comment'] },
+        { radio: 'cardiovascular_hypertension', comment: ['cardiovascular_hypertension_comment'] },
+        { radio: 'cardiovascular_angina', comment: ['cardiovascular_angina_comment'] },
+        { radio: 'cardiovascular_fibrillation', comment: ['cardiovascular_fibrillation_comment'] },
+        { radio: 'cardiovascular_condition', comment: ['cardiovascular_condition_comment'] },
+        { radio: 'cardiovascular_disease', comment: ['cardiovascular_disease_comment'] },
+        { radio: 'cardiovascular_cardiac_disease', comment: ['cardiovascular_cardiac_disease_comment'] },
+        { radio: 'endocrinology_diabetes', comment: ['endocrinology_diabetes_comment'] },
+        { radio: 'endocrinology_blood_glucose', comment: ['endocrinology_blood_glucose_comment'] },
+        { radio: 'endocrinology_goitre', comment: ['endocrinology_goitre_comment'] },
+        { radio: 'gastrointestinal_reflux', comment: ['gastrointestinal_reflux_comment'] },
+        { radio: 'gastrointestinal_jaundice', comment: ['gastrointestinal_jaundice_comment'] },
+        { radio: 'gastrointestinal_ibs', comment: ['gastrointestinal_ibs_comment'] },
+        { radio: 'bleeding_disorders_lungs', comment: ['bleeding_disorders_lungs_comment'] },
+        { radio: 'bleeding_disorders_anaemia', comment: ['bleeding_disorders_anaemia_comment'] },
+        { radio: 'bleeding_disorders_problems', comment: ['bleeding_disorders_problems_comment'] },
+        { radio: 'musculoskeletal_osteoarthritis', comment: ['musculoskeletal_osteoarthritis_comment'] },
+        { radio: 'musculoskeletal_problems', comment: ['musculoskeletal_problems_comment'] },
+        { radio: 'neurology_dystrophies', comment: ['neurology_dystrophies_comment'] },
+        { radio: 'neurology_tia', comment: ['neurology_tia_comment'] },
+        { radio: 'neurology_weakness', comment: ['neurology_weakness_comment'] },
+        { radio: 'neurology_turns', comment: ['neurology_turns_comment'] },
+        { radio: 'respiratory_emphysema', comment: ['respiratory_emphysema_comment'] },
+        { radio: 'respiratory_inclines', comment: ['respiratory_inclines_comment'] }
+    ]
 
     function setValue() {
         //thao
@@ -46,6 +82,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
         //giang
         $scope.admissionDetail.DoctorDateChoose = moment().format('DD/MM/YYYY');
         if ($scope.wainformation) {
+            console.log("admissionDetail ", $scope.admissionDetail);
 
             if ($scope.wainformation.Doctors.length > 0) {
                 if ($scope.wainformation.Doctors[0].FirstName || $scope.wainformation.Doctors[0].LastName) {
@@ -62,7 +99,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                 $scope.admissionDetail.LastName = $scope.wainformation.Patients[0].LastName ? $scope.wainformation.Patients[0].LastName : '';
                 $scope.admissionDetail.DOB = $scope.wainformation.Patients[0].DOB ? $scope.wainformation.Patients[0].DOB : '';
                 $scope.admissionDetail.Gender = $scope.wainformation.Patients[0].Gender ? $scope.wainformation.Patients[0].Gender : '';
-                PatientService.detailChildPatient({ UID: $scope.wainformation.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA', 'PatientKin'] }).then(function(response) {
+                PatientService.detailChildPatient({ UID: $scope.wainformation.Patients[0].UID, model: ['PatientMedicare', 'PatientDVA', 'PatientKin', 'PatientGP'] }).then(function(response) {
                     if (response.data) {
                         if (response.data.PatientMedicare.length > 0) {
                             $scope.admissionDetail.MedicareEligible = $scope.admissionDetail.MedicareEligible ? $scope.admissionDetail.MedicareEligible : response.data.PatientMedicare[0].MedicareEligible ? response.data.PatientMedicare[0].MedicareEligible : '';
@@ -81,6 +118,25 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                             $scope.admissionDetail.Relationship = $scope.admissionDetail.Relationship ? $scope.admissionDetail.Relationship : response.data.PatientKin[0].Relationship ? response.data.PatientKin[0].Relationship : '';
                             $scope.admissionDetail.MobilePhoneNumber = $scope.admissionDetail.MobilePhoneNumber ? $scope.admissionDetail.MobilePhoneNumber : response.data.PatientKin[0].MobilePhoneNumber ? response.data.PatientKin[0].MobilePhoneNumber : '';
                             console.log("PatientKin ", response.data.PatientKin[0]);
+                        }
+                        if (response.data.PatientGP.length > 0) {
+                            for (var key in $scope.admissionDetail) {
+                                if (key == 'GPFirstName' || key == 'GPLastName' || key == 'HealthLink' || key == 'ProviderNumber' || key == 'Email' || key == 'PhoneNumber' || key == 'HomePhoneNumber' || key == 'WorkPhoneNumber') {
+                                    flagGP = true;
+                                }
+                            }
+                            if (flagGP == false) {
+                                GPid = response.data.PatientGP[0].ID;
+                            }
+                            $scope.admissionDetail.GPFirstName = $scope.admissionDetail.GPFirstName ? $scope.admissionDetail.GPFirstName : response.data.PatientGP[0].FirstName ? response.data.PatientGP[0].FirstName : '';
+                            $scope.admissionDetail.GPLastName = $scope.admissionDetail.GPLastName ? $scope.admissionDetail.GPLastName : response.data.PatientGP[0].LastName ? response.data.PatientGP[0].LastName : '';
+                            $scope.admissionDetail.HealthLink = $scope.admissionDetail.HealthLink ? $scope.admissionDetail.HealthLink : response.data.PatientGP[0].HealthLink ? response.data.PatientGP[0].HealthLink : '';
+                            $scope.admissionDetail.ProviderNumber = $scope.admissionDetail.ProviderNumber ? $scope.admissionDetail.ProviderNumber : response.data.PatientGP[0].ProviderNumber ? response.data.PatientGP[0].ProviderNumber : '';
+                            $scope.admissionDetail.Email = $scope.admissionDetail.Email ? $scope.admissionDetail.Email : response.data.PatientGP[0].Email ? response.data.PatientGP[0].Email : '';
+                            $scope.admissionDetail.PhoneNumber = $scope.admissionDetail.PhoneNumber ? $scope.admissionDetail.PhoneNumber : response.data.PatientGP[0].PhoneNumber ? response.data.PatientGP[0].PhoneNumber : '';
+                            $scope.admissionDetail.HomePhoneNumber = $scope.admissionDetail.HomePhoneNumber ? $scope.admissionDetail.HomePhoneNumber : response.data.PatientGP[0].HomePhoneNumber ? response.data.PatientGP[0].HomePhoneNumber : '';
+                            $scope.admissionDetail.WorkPhoneNumber = $scope.admissionDetail.WorkPhoneNumber ? $scope.admissionDetail.WorkPhoneNumber : response.data.PatientGP[0].WorkPhoneNumber ? response.data.PatientGP[0].WorkPhoneNumber : '';
+                            console.log(">>>>>>>>PatientGP", response.data.PatientGP[0]);
                         }
                     }
                 }, function(err) {
@@ -209,7 +265,12 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
         }
     };
 
+    flag = isRadioYesNoN('anti_coagulant_still_to_take', ['anti_coagulant_date_to_cease']);
+    $scope.checkYesNo = function(nameRadio, nameComment) {
+        if (flag === false)
+            flag = isRadioYesNo(nameRadio, [nameComment]);
 
+    }
 
 
     /* END THAO */
@@ -256,73 +317,12 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
     console.log("$stateParams", $stateParams);
 
     $scope.UpdateAdmission = function() {
-
         //THAO
-        var flag = false;
         flag = isRadioYesNoN('anti_coagulant_still_to_take', ['anti_coagulant_date_to_cease']);
-        if (flag === false)
-            flag = isRadioYesNo('anti_inflammatory', ['anti_inflammatory_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('herbal_supplements', ['herbal_supplements_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('allergies_alerts_hyperthermia', ['allergies_alerts_details_reaction']);
-        if (flag === false)
-            flag = isRadioYesNo('allergies_alerts_substances', ['allergies_alerts_substances_list']);
-        if (flag === false)
-            flag = isRadioYesNo('lifestyle_smoked', ['lifestyle_smoked_daily_amount', 'lifestyle_smoked_ceased']);
-        if (flag === false)
-            flag = isRadioYesNo('lifestyle_alcohol', ['lifestyle_alcohol_daily_amount']);
-        if (flag === false)
-            flag = isRadioYesNo('lifestyle_drugs', ['lifestyle_drugs_daily_amount', 'lifestyle_drugs_type']);
-        if (flag === false)
-            flag = isRadioYesNo('cardiovascular_triglycerides', ['cardiovascular_triglycerides_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('cardiovascular_hypertension', ['cardiovascular_hypertension_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('cardiovascular_angina', ['cardiovascular_angina_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('cardiovascular_fibrillation', ['cardiovascular_fibrillation_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('cardiovascular_condition', ['cardiovascular_condition_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('cardiovascular_disease', ['cardiovascular_disease_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('cardiovascular_cardiac_disease', ['cardiovascular_cardiac_disease_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('endocrinology_diabetes', ['endocrinology_diabetes_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('endocrinology_blood_glucose', ['endocrinology_blood_glucose_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('endocrinology_goitre', ['endocrinology_goitre_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('gastrointestinal_reflux', ['gastrointestinal_reflux_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('gastrointestinal_jaundice', ['gastrointestinal_jaundice_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('gastrointestinal_ibs', ['gastrointestinal_ibs_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('bleeding_disorders_lungs', ['bleeding_disorders_lungs_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('bleeding_disorders_anaemia', ['bleeding_disorders_anaemia_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('bleeding_disorders_problems', ['bleeding_disorders_problems_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('musculoskeletal_osteoarthritis', ['musculoskeletal_osteoarthritis_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('musculoskeletal_problems', ['musculoskeletal_problems_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('neurology_dystrophies', ['neurology_dystrophies_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('neurology_tia', ['neurology_tia_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('neurology_weakness', ['neurology_weakness_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('neurology_turns', ['neurology_turns_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('respiratory_emphysema', ['respiratory_emphysema_comment']);
-        if (flag === false)
-            flag = isRadioYesNo('respiratory_inclines', ['respiratory_inclines_comment']);
-        //alert(flag);
+        for(var i = 0; i < RadioComment.length; i++) {
+            if (flag === false)
+                flag = isRadioYesNo(RadioComment[i].radio, RadioComment[i].comment);
+        }        
         if (flag) {
             //xuat thong bao
             toastr.error("You haven't entered enough information", "Error");
@@ -359,8 +359,48 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
 
                 });
                 console.log("admission update ne", $scope.admission);
+                console.log("$scope.wainformation", $scope.wainformation);
                 AdmissionService.UpdateAdmission($scope.admission).then(function(data) {
-                    swal("Update success!", "", "success");
+                    // swal("Update success!", "", "success");
+                    if (flagGP == false) {
+                        var obj = {};
+                        if ($scope.admissionDetail['GPFirstName']) {
+                            obj['FirstName'] = $scope.admissionDetail['GPFirstName'];
+                        }
+                        if ($scope.admissionDetail['GPLastName']) {
+                            obj['LastName'] = $scope.admissionDetail['GPLastName'];
+                        }
+                        if ($scope.admissionDetail['HealthLink']) {
+                            obj['HealthLink'] = $scope.admissionDetail['HealthLink'];
+                        }
+                        if ($scope.admissionDetail['ProviderNumber']) {
+                            obj['ProviderNumber'] = $scope.admissionDetail['ProviderNumber'];
+                        }
+                        if ($scope.admissionDetail['Email']) {
+                            obj['Email'] = $scope.admissionDetail['Email'];
+                        }
+                        if ($scope.admissionDetail['PhoneNumber']) {
+                            obj['PhoneNumber'] = $scope.admissionDetail['PhoneNumber'];
+                        }
+                        if ($scope.admissionDetail['HomePhoneNumber']) {
+                            obj['HomePhoneNumber'] = $scope.admissionDetail['HomePhoneNumber'];
+                        }
+                        if ($scope.admissionDetail['WorkPhoneNumber']) {
+                            obj['WorkPhoneNumber'] = $scope.admissionDetail['WorkPhoneNumber'];
+                        }
+                        obj.ID = GPid;
+                        var patientInfo = {
+                            PatientGP: obj,
+                            UID: $stateParams.patientUID
+                        }
+                        PatientService.updatePatient(patientInfo).then(function(response) {
+                            swal("Update success!", "", "success");
+                        }, function(error) {
+                            swal("Update error!", "", "error");
+                        });
+                    } else {
+                        swal("Update success!", "", "success");
+                    }
                 }, function(error) {
                     swal("Update error!", "", "error");
                 });

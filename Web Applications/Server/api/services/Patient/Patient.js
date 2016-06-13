@@ -118,10 +118,11 @@ module.exports = {
                         errors.push({ field: "Gender", message: "invalid value" });
                         err.pushErrors(errors);
                     }
-                } else {
-                    errors.push({ field: "Gender", message: "required" });
-                    err.pushErrors(errors);
-                }
+                } 
+                // else {
+                //     errors.push({ field: "Gender", message: "required" });
+                //     err.pushErrors(errors);
+                // }
 
                 //validate Address1
                 if (data.Address1 != undefined && data.Address1) {
@@ -133,10 +134,11 @@ module.exports = {
                         errors.push({ field: "Address1", message: "invalid value" });
                         err.pushErrors(errors);
                     }
-                } else {
-                    errors.push({ field: "Address1", message: "required" });
-                    err.pushErrors(errors);
-                }
+                } 
+                // else {
+                //     errors.push({ field: "Address1", message: "required" });
+                //     err.pushErrors(errors);
+                // }
 
                 //validate Address2
                 if (data.Address2 != undefined && data.Address2) {
@@ -193,10 +195,11 @@ module.exports = {
                         errors.push({ field: "Postcode", message: "invalid value" });
                         err.pushErrors(errors);
                     }
-                } else {
-                    errors.push({ field: "Postcode", message: "required" });
-                    err.pushErrors(errors);
-                }
+                } 
+                // else {
+                //     errors.push({ field: "Postcode", message: "required" });
+                //     err.pushErrors(errors);
+                // }
 
                 //validate Email1
                 if (data.Email1 != undefined && data.Email1) {
@@ -228,10 +231,11 @@ module.exports = {
                         errors.push({ field: "State", message: "invalid value" });
                         err.pushErrors(errors);
                     }
-                } else {
-                    errors.push({ field: "State", message: "required" });
-                    err.pushErrors(errors);
-                }
+                } 
+                // else {
+                //     errors.push({ field: "State", message: "required" });
+                //     err.pushErrors(errors);
+                // }
 
                 if (data.Title != undefined && data.Title) {
                     if (data.Title != 'Dr' && data.Title != 'Ms' &&
@@ -240,10 +244,11 @@ module.exports = {
                         errors.push({ field: "Title", message: "invalid value" });
                         err.pushErrors(errors);
                     }
-                } else {
-                    errors.push({ field: "Title", message: "required" });
-                    err.pushErrors(errors);
-                }
+                } 
+                // else {
+                //     errors.push({ field: "Title", message: "required" });
+                //     err.pushErrors(errors);
+                // }
 
                 //validate HomePhoneNumber? hoi a Tan su dung exception
                 if (data.HomePhoneNumber != undefined && data.HomePhoneNumber.length > 0) {
@@ -1602,7 +1607,7 @@ module.exports = {
         return Patient.findAndCountAll({
                 include: [{
                     model: UserAccount,
-                    attributes: ['PhoneNumber', 'Enable'],
+                    attributes: ['PhoneNumber', 'Enable','Activated'],
                     required: true,
                     include: [{
                         include: [{

@@ -52,7 +52,7 @@
 				<tbody>
 					<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn && p.UID!==undefined && p.UID!==null && p.UID!==''}" id="{{p.UID}}">
 						<td>
-							<a ng-click="clickOpen(p.UID,p.UserAccount.Enable)" class=" btn blue btn-xs" >
+							<a ng-click="clickOpen(p.UID,p.UserAccount.Enable, p.UserAccount.Activated)" class=" btn blue btn-xs" >
 								<i class="glyphicon glyphicon-search"></i>
 							</a>
 						</td>
@@ -95,7 +95,7 @@
 </div>
 <!-- end content page -->
 <script type="text/ng-template " id="patientListmodal">
-    <patient-listmodal on-uid="ID" action="action" on-cancel="close" on-active="enable" ></patient-listmodal>
+    <patient-listmodal on-uid="ID" action="action" on-cancel="close" on-enable="enable" on-active="active" ></patient-listmodal>
 </script>
 <script type="text/ng-template " id="patientCreatemodal">
     <patient-create appointment="appointment" on-item="true" on-staff="staff" on-compid="compid" role-company="role" on-roleid="roleid"  is-have-username="check" is-company-create="iscompanycreate" on-create-type="company" ></patient-create>

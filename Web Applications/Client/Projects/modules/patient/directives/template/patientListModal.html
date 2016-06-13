@@ -129,34 +129,18 @@
                                             <div class="row margin-top-30">
                                                 <div class="col-sm-4 col-xs-12">
                                                     <div class="form-group" ng-hide="isShowFull==false">
-                                                        <label class="control-label">Enable</label>
-                                                        <input type="checkbox" 
-                                                            class="make-switch"
-                                                            ng-model="activeUser"
-                                                            ng-true-value="'Y'" 
-                                                            ng-false-value="'N'" 
-                                                            ng-change="changeEnable(activeUser)"
-                                                            data-on-text="<i class='fa fa-check'></i>" 
-                                                            data-off-text="<i class='fa fa-times'></i>" /> 
-                                                    </div>
-                                                    <!-- <div class="form-group" ng-hide="isShowFull==false">
                                                         <div class="checkbox-list">
                                                             <label class="checkbox-inline">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)"/>Enable</label>
+                                                                <input type="checkbox" class="regular-checkbox" ng-model="info.UserAccount.Enable" ng-true-value="'Y'" ng-false-value="'N'"/>Enable</label>
                                                         </div>
-                                                    </div>  --> 
+                                                    </div>  
                                                 </div>
                                                 <div class="col-sm-4 col-xs-12">
                                                     <div class="form-group" ng-hide="isShowFull==false">
-                                                        <label class="control-label">Activated</label>
-                                                        <input type="checkbox" g
-                                                            class="make-switch"
-                                                            ng-model="ActivatedUser"
-                                                            ng-click="changeActivated(ActivatedUser)"
-                                                            ng-true-value="'Y'" 
-                                                            ng-false-value="'N'" 
-                                                            data-on-text="<i class='fa fa-check'></i>" 
-                                                            data-off-text="<i class='fa fa-times'></i>" /> 
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" class="regular-checkbox" ng-model="info.UserAccount.Activated" ng-true-value="'Y'" ng-false-value="'N'" />Activated</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

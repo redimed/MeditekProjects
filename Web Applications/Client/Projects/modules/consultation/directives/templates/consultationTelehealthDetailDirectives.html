@@ -439,7 +439,7 @@
                                                 <label class="control-label col-lg-4 col-md-4">Contact number (M)</label>
                                                 <div class="col-lg-8 col-md-8">
                                                     <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="ShowData.patient.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" ng-disabled="ShowData.isLinkPatient">
-                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
+                                                    <!-- <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p> -->
                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
                                                 </div>
                                             </div>
@@ -471,10 +471,10 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{'has-error': userForm.Address1.$invalid && submited} ">
-                                                <label class="control-label col-lg-4 col-md-4">Address1<span class="required"> * </span></label>
+                                                <label class="control-label col-lg-4 col-md-4">Address1<!-- <span class="required"> * </span> --></label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Address1" name="Address1" required ng-disabled="ShowData.isLinkPatient">
-                                                    <p ng-show="userForm.Address1.$invalid && submited" class="help-block">Address1 name is required</p>
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Address1" name="Address1" ng-disabled="ShowData.isLinkPatient">
+                                                    <!-- <p ng-show="userForm.Address1.$invalid && submited" class="help-block">Address1 name is required</p> -->
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -484,23 +484,23 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{'has-error': userForm.Suburb.$invalid && submited} ">
-                                                <label class="control-label col-lg-4 col-md-4">Suburb<span class="required"> * </span></label>
+                                                <label class="control-label col-lg-4 col-md-4">Suburb<!-- <span class="required"> * </span> --></label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" required ng-disabled="ShowData.isLinkPatient">
-                                                    <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p>
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" ng-disabled="ShowData.isLinkPatient">
+                                                    <!-- <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p> -->
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{'has-error': userForm.Postcode.$invalid && submited}">
-                                                <label class="control-label col-lg-4 col-md-4">Postcode<span class="required"> * </span></label>
+                                                <label class="control-label col-lg-4 col-md-4">Postcode<!-- <span class="required"> * </span> --></label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Postcode" name="Postcode" required ng-disabled="ShowData.isLinkPatient">
-                                                    <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p>
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Postcode" name="Postcode" ng-disabled="ShowData.isLinkPatient">
+                                                    <!-- <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p> -->
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{'has-error': userForm.State.$invalid && submited} ">
-                                                <label class="control-label col-lg-4 col-md-4">State<span class="required"> * </span></label>
+                                                <label class="control-label col-lg-4 col-md-4">State<!-- <span class="required"> * </span> --></label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <select class="form-control edited" ng-model="ShowData.patient.State" required name="State" ng-disabled="ShowData.isLinkPatient">
+                                                    <select class="form-control edited" ng-model="ShowData.patient.State" name="State" ng-disabled="ShowData.isLinkPatient">
                                                         <option value=""></option>
                                                         <option value="WA">Western Australia</option>
                                                         <option value="VIC">Victoria</option>
@@ -510,7 +510,7 @@
                                                         <option value="NT">Northern Territory</option>
                                                         <option value="ACT">Australian Capital Territory</option>
                                                     </select>
-                                                    <p ng-show="userForm.State.$invalid && submited" class="help-block">State name is required</p>
+                                                    <!-- <p ng-show="userForm.State.$invalid && submited" class="help-block">State name is required</p> -->
                                                 </div>
                                             </div>
                                             <div class="form-group">

@@ -23,9 +23,9 @@ PatientService.validate = function(info) {
 					error.push({field:"Title",message:"invalid value"});
 				}
 			}
-			else{
-				error.push({field:"Title",message:"required"});
-			}
+			// else{
+			// 	error.push({field:"Title",message:"required"});
+			// }
 
 			//validate Gender
 			if('Gender' in info)
@@ -34,9 +34,9 @@ PatientService.validate = function(info) {
 					error.push({field:"Gender",message:"invalid value"});
 				}
 			}
-			else{
-				error.push({field:"Gender",message:"required"});
-			}
+			// else{
+			// 	error.push({field:"Gender",message:"required"});
+			// }
 
 			//validate FirstName
 			if('FirstName' in info){
@@ -95,9 +95,9 @@ PatientService.validate = function(info) {
 						error.push({field:"Address1",message:"invalid value"});
 					}
 				}
-				else {
-					error.push({field:"Address1",message:"required"});
-				}
+				// else {
+				// 	error.push({field:"Address1",message:"required"});
+				// }
 			}
 
 			//validate Address2
@@ -119,9 +119,9 @@ PatientService.validate = function(info) {
 						error.push({field:"Suburb",message:"max length"});
 					}
 				}
-				else {
-					error.push({field:"Suburb",message:"required"});
-				}
+				// else {
+				// 	error.push({field:"Suburb",message:"required"});
+				// }
 			}
 
 			//validate Postcode
@@ -134,9 +134,9 @@ PatientService.validate = function(info) {
 						error.push({field:"Postcode",message:"Postcode is a 4 digits number"});
 					}
 				}
-				else{
-					error.push({field:"Postcode",message:"required"});
-				}
+				// else{
+				// 	error.push({field:"Postcode",message:"required"});
+				// }
 			}
 
 			// validate Email? hoi a Tan su dung exception
@@ -203,17 +203,17 @@ PatientService.validate = function(info) {
 						error.push({field:"State",message:"invalid value"});
 					}
 				}
-				else {
-						error.push({field:"State",message:"required"});
-				}
+				// else {
+				// 		error.push({field:"State",message:"required"});
+				// }
 			}
 
 			//validate Country
-			if('CountryID1' in info){
-				if(info.CountryID1==null){
-					error.push({field:"CountryID1",message:"required"});
-				}
-			}
+			// if('CountryID1' in info){
+			// 	if(info.CountryID1==null){
+			// 		error.push({field:"CountryID1",message:"required"});
+			// 	}
+			// }
 
 			if(error.length>0){
 				throw error;

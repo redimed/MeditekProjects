@@ -211,8 +211,8 @@ module.exports = React.createClass({
                                 if(Config.getPrefixField(cal, 'BMI(') > -1){
                                     if(cal !== ''){
                                         var calRes = Config.getArrayPrecal(4, cal);
-                                        //if(typeof self.refs[sectionRefField] !== 'undefined')
-                                            //self.refs[sectionRefField].bmi(rowRefField, field.ref, calRes);
+                                        if(typeof self.refs[section.ref] !== 'undefined')
+                                            self.refs[section.ref].bmi(row.ref, field.ref, calRes);
                                     }
                                 }
                                 /* END BMI */
@@ -395,7 +395,9 @@ module.exports = React.createClass({
                     if(typeof self.refs[section_ref] !== 'undefined'){
                         if(typeof field.refChild === 'undefined'){
                             if(Config.getPrefixField(field.type, 'radio') > -1 || Config.getPrefixField(field.type, 'checkbox') > -1){
-                                self.refs[section_ref].setValueForRadio(row_ref, field_ref, field.checked);
+                                if(Config.getPrefixField(field.name, 'bmi') === -1){
+                                    self.refs[section_ref].setValueForRadio(row_ref, field_ref, field.checked);
+                                }
                             }else{
                                 if(field.type === 'line_chart'){
                                     self.refs[section_ref].setValueForChart(row_ref, field_ref, field, 'line');

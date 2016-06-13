@@ -119,12 +119,17 @@ module.exports = React.createClass({
     },
     setValueForChart: function(refRow, fieldRef, field, chartType){
         if(typeof this.refs[refRow] !== 'undefined'){
-                this.refs[refRow].setValueForChart(fieldRef, field, chartType);
+            this.refs[refRow].setValueForChart(fieldRef, field, chartType);
         }
     },
     addRowForDynamicTable: function(field){
         if(typeof this.refs[field.fields[0].refRow] !== 'undefined')
             this.refs[field.fields[0].refRow].addRowForDynamicTable(field);
+    },
+    bmi: function(refRow, refField, calRes){
+       if(typeof this.refs[refRow] !== 'undefined'){
+            this.refs[refRow].bmi(refField, calRes);
+        } 
     },
     getAllFieldValueWithValidation: function(stringType){
         var rows = this.props.rows.toJS();

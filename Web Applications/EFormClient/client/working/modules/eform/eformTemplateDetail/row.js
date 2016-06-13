@@ -397,6 +397,10 @@ module.exports = React.createClass({
         $(this.refs.modalCreateFieldSection).css({display: 'block'});
         this.refs.listField.init(this.props.fields);
     },
+    bmi: function(fieldRef, calRes){
+        if(typeof this.refs[fieldRef] !== 'undefined')
+            this.refs[fieldRef].bmi(calRes);
+    },
     preCalSum: function(fieldRef, sumRef){
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].onSum(sumRef);

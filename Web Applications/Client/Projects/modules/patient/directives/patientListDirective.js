@@ -105,12 +105,13 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 	            scope.loadList(scope.searchObjectMap);
 	        };
 
-			scope.clickOpen = function(patientUID,Enable){
+			scope.clickOpen = function(patientUID,Enable, Actived){
 				var modalInstance = $uibModal.open({
 					templateUrl: 'patientListmodal',
 					controller: function($scope){
 						$scope.ID = patientUID;
 						$scope.enable = Enable;
+						$scope.active = Actived;
 						$scope.close = function() {
 							scope.loadList(scope.searchObjectMap);
 							modalInstance.close();

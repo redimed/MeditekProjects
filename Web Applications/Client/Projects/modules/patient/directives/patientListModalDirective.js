@@ -19,7 +19,9 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             listShow:'=onListshow',
             onCancel: '=',
             disable :'=onDisabled',
-            activeUser: '=onActive'
+            enableUser: '=onEnable',
+            activedUser: '=onActive',
+
         },
         controller:function($scope, FileUploader) {
         	$scope.disable == true?true:false;
@@ -312,20 +314,19 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				PatientService.detailPatient(data).then(function(response){
 					if(response.message=="success"){
 						scope.info = response.data[0];
-						scope.ActivatedUser = scope.info.UserAccount.Activated;
 						//scope.info.PatientKins = {};
 						scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
 						scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
 						scope.info.InterperterLanguage = parseInt(scope.info.InterperterLanguage);
 						scope.info.img_change = null;
 						// scope.info.PatientMedicare.ExpiryDate = moment(scope.info.PatientMedicare.ExpiryDate,'YYYY-MM-DD').format('DD/MM/YYYY');
-						if(scope.info.PatientMedicare != null){
+						if(scope.info.PatientMedicare){
 							if(scope.info.PatientMedicare != null && scope.info.PatientMedicare != ""){
 								var date = new Date(scope.info.PatientMedicare.ExpiryDate);
 								scope.info.PatientMedicare.ExpiryDate = moment(date).format('DD/MM/YYYY');
 							}
 						}
-						if(scope.info.PatientPension != null){
+						if(scope.info.PatientPension){
 							if(scope.info.PatientPension.ExpiryDate != null && scope.info.PatientPension.ExpiryDate != ""){
 								var date = new Date(scope.info.PatientPension.ExpiryDate);
 								scope.info.PatientPension.ExpiryDate = moment(date).format('DD/MM/YYYY');
@@ -525,8 +526,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			    	scope.updatedata.CountryID1    = scope.info.CountryID1;
 			    	scope.updatedata.UserAccountID = scope.info.UserAccountID;
 					scope.updatedata.UID           = scope.info.UID;
-					scope.updatedata.EnableUser    = scope.info.EnableUser;
-					scope.updatedata.Activated     = scope.info.ActivatedUser;
+					scope.updatedata.Activated     = scope.info.UserAccount.Activated;
+					scope.updatedata.EnableUser    = scope.info.UserAccount.Enable;
 			    	console.log(scope.updatedata);
 			    	if(scope.info.PatientKin != null && scope.info.PatientKin != '') scope.updatedata.PatientKin = scope.info.PatientKin;
 			    	if(scope.info.PatientGP != null && scope.info.PatientGP != '') scope.updatedata.PatientGP = scope.info.PatientGP;
@@ -644,7 +645,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					scope.isChoseAvatar = false;
 				}
 			}
-
 
 
 			AuthenticationService.getListCountry().then(function(result){

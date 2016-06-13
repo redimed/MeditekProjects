@@ -19,6 +19,7 @@ module.exports = React.createClass({
     maxPage : 0,
     allFields: [],
     calculation: [],
+    field_age: [],
     getInitialState: function(){
         return {
             name: '',
@@ -285,7 +286,34 @@ module.exports = React.createClass({
                                         if(self.refs[section.ref]) {
                                             self.refs[section.ref].setValue(row.ref, field.ref, value);
                                         }
+                                    }
+                                }
+                                if(Config.getPrefixField(preCal,'AGE') > -1){
+                                    if(preCal !== ''){
+                                        var preCalRes = Config.getArrayPrecal(4, preCal);
+                                        var preCalResItemArr = preCalRes[0].split('.');
+                                        var responseTemp = null;
+                                        var preCalResItemTemp = '';
+                                        var res = '';
+                                        if(preCalResItemArr.length > 1){
+                                            responseTemp = response.data[preCalResItemArr[0]];
+                                            preCalResItemTemp = preCalResItemArr[1];
+                                        }else{
+                                            responseTemp = response.data;
+                                            preCalResItemTemp = preCalRes[0];
+                                        }
+                                        for(var key in responseTemp){
+                                            if(key === preCalResItemTemp){
+                                                res = self._getAge(responseTemp[key]);
+                                                break;
+                                            }
+                                        }//end for
 
+                                        objRef[field.ref] = {refRow: row.ref, value: value};
+                                        if(self.refs[section.ref]) {
+                                            self.refs[section.ref].setValue(row.ref, field.ref, res);
+                                            self.field_age.push(field.name);
+                                        }
                                     }
                                 }
                                 /* END CONCAT PREFIX */
@@ -316,6 +344,18 @@ module.exports = React.createClass({
                 self._checkServerEFormDetail();
             })
         })
+    },
+    _getAge(birthday){
+        var split_b = birthday.split('/');
+        var real_birthday = split_b[2]+'-'+split_b[1]+'-'+split_b[0]+' 00:00:00';
+        var real_birthday = moment(real_birthday).toDate();
+        var today = new Date();
+        var age = today.getFullYear() - real_birthday.getFullYear();
+        var m = today.getMonth() - real_birthday.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < real_birthday.getDate())) {
+            age--;
+        }
+        return age;
     },
     _checkServerEFormDetail: function(){
         var self = this;
@@ -353,8 +393,12 @@ module.exports = React.createClass({
                                     self.refs[section_ref].setValueForChart(row_ref, field_ref, field, 'line');
                                 }
                                 else if(field.type !== 'eform_input_image_doctor'){
-                                    if(typeof self.refs[section_ref] !== 'undefined')
-                                        self.refs[section_ref].setValue(row_ref, field_ref, field.value);
+                                    if(typeof self.refs[section_ref] !== 'undefined'){
+                                        self.field_age.map(function(f){
+                                            if(f !== field.name)
+                                                self.refs[section_ref].setValue(row_ref, field_ref, field.value);
+                                        })
+                                    }
                                 }
                             }
                         }else{
@@ -366,47 +410,7 @@ module.exports = React.createClass({
                     }
                 })
                 if(self.calculation.length > 0){
-                    /*self.calculation.map(function(cal){
-                        if(cal.type === 'SUMP'){
-                            var total = 0;
-                            cal.cal.map(function(name){
-                                for(var i = 0; i < EFormDataContent.length; i++){
-                                    if(EFormDataContent[i].name === name){
-                                        if(!isNaN(parseInt(EFormDataContent[i].value)))
-                                            total = parseInt(total)+parseInt(EFormDataContent[i].value);
-                                    }
-                                }
-                            })
-                            if(typeof self.refs[cal.section_ref] !== 'undefined'){
-                                if(!isNaN(total)){
-                                    self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, total);
-                                }
-                            }
-                        }else if(cal.type === 'EQUALP'){
-                            cal.cal.map(function(name){
-                               for(var i = 0; i < EFormDataContent.length; i++){
-                                    if(EFormDataContent[i].name === name && EFormDataContent[i].checked){
-                                        if(cal.field.type  === 'eform_input_text'){
-                                            if(typeof self.refs[cal.section_ref] !== 'undefined')
-                                                self.refs[cal.section_ref].setValue(cal.row_ref, cal.field_ref, EFormDataContent[i].value);
-                                        }
-                                        if(EFormDataContent[i].value === cal.field.value){
-                                            if(typeof self.refs[cal.section_ref] !== 'undefined')
-                                                self.refs[cal.section_ref].setValueForRadio(cal.row_ref, cal.field_ref, EFormDataContent[i].checked);
-                                        }else{
-                                            if(cal.field.value === '1'){
-                                                if(isNaN(EFormDataContent[i].value)){
-                                                    if(typeof self.refs[cal.section_ref] !== 'undefined'){
-                                                        self.refs[cal.section_ref].setValueForRadio(cal.row_ref, cal.field_ref, EFormDataContent[i].checked);
-                                                    }
-                                                }
-                                            }
-                                        }//end else
-                                    }
-                                } 
-                            })
-                        }
-                    })*/
+                    
                 }
             }else{
                 var tempData = JSON.stringify(self.allFields);
@@ -448,7 +452,7 @@ module.exports = React.createClass({
                 else if (self.page >= self.maxPage)
                     $(self.refs['page_index_next']).addClass('disabled');
                 self.allFields = content.objects;
-		//tannv.dts@gmail.com comment
+        //tannv.dts@gmail.com comment
                 // self._serverPreFormDetail(page_content);
                 self._serverPreFormDetail(content.sections);
             })

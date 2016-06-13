@@ -204,10 +204,18 @@ module.exports = React.createClass({
                                             if(typeof self.refs[sectionRefField] !== 'undefined')
                                                 self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
                                         })
-                                        //self.calculation.push({type: 'SUM', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
                                     }
                                 }
                                 /* END SUM PREFIX */
+                                /* BMI */
+                                if(Config.getPrefixField(cal, 'BMI(') > -1){
+                                    if(cal !== ''){
+                                        var calRes = Config.getArrayPrecal(4, cal);
+                                        //if(typeof self.refs[sectionRefField] !== 'undefined')
+                                            //self.refs[sectionRefField].bmi(rowRefField, field.ref, calRes);
+                                    }
+                                }
+                                /* END BMI */
                                 /* COUNT PREFIX */
                                 if(Config.getPrefixField(cal, 'COUNT') > -1){
                                     if(cal !== ''){
@@ -312,7 +320,7 @@ module.exports = React.createClass({
                                         objRef[field.ref] = {refRow: row.ref, value: value};
                                         if(self.refs[section.ref]) {
                                             self.refs[section.ref].setValue(row.ref, field.ref, res);
-                                            self.field_age.push(field.name);
+                                            self.field_age.push({name: field.name, res: res});
                                         }
                                     }
                                 }
@@ -394,9 +402,10 @@ module.exports = React.createClass({
                                 }
                                 else if(field.type !== 'eform_input_image_doctor'){
                                     if(typeof self.refs[section_ref] !== 'undefined'){
+                                        self.refs[section_ref].setValue(row_ref, field_ref, field.value);
                                         self.field_age.map(function(f){
-                                            if(f !== field.name)
-                                                self.refs[section_ref].setValue(row_ref, field_ref, field.value);
+                                            if(f.name === field.name)
+                                                self.refs[section_ref].setValue(row_ref, field_ref, f.res);
                                         })
                                     }
                                 }

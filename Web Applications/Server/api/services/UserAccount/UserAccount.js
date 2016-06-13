@@ -1150,8 +1150,8 @@ module.exports = {
 				throw err;
 			} else {
 				user = got_user;
-				password = generatePassword(12, false);
-				return UserAccount.update({Password:password},{
+				password = generatePassword(6, true, /[A-Za-z0-9]/);
+				return UserAccount.update({Password:password,Actived:'Y'},{
 					where:{
 						UID : data.UID
 					},

@@ -165,6 +165,7 @@ module.exports = React.createClass({
                                 <div className="icheck-inline">
                                     <label ref="label_radio" onDoubleClick = {this.selection}>
                                         <input type="radio" className="icheck" name={this.props.name} ref="input" title={this.props.name}
+                                            tabIndex="-1"
                                             value={this.props.value} id={this.props.refTemp}
                                             id={this.props.refTemp} />
                                         &nbsp;

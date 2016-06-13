@@ -58,6 +58,34 @@ module.exports = React.createClass({
     componentWillReceiveProps: function(nextProps){
         $(this.refs.input).val(nextProps.defaultValue);
     },
+    bmi: function(calRes){
+        var self = this;
+        $(this.refs.input).on('change', function(event){
+            var width = $('#'+calRes[0]).val();
+            var height = $('#'+calRes[1]).val();
+
+            if(width != '' && height != ''){
+                var bmi_cal = (width/Math.pow(height, 2));
+                var calResArray = calRes[3].split('-');
+                var res = calResArray[0];
+                calResArray.map(function(cal, cal_index){
+                    if(cal <= bmi_cal)
+                        res = cal;
+                })
+                var radios = $('input[name='+calRes[2]+']');
+                radios.filter(function(){
+                    var id = $(this).attr('id');
+                    var id_value = $('#'+id).val();
+
+                    if(parseFloat(res) === parseFloat(id_value)){
+                        $('#'+id).iCheck('check');
+                    }else{
+                        $('#'+id).iCheck('uncheck');
+                    }
+                })
+            }
+        })
+    },
     onSum: function(sumRef){
         var self = this;
         $(this.refs.input).on('change', function(event){

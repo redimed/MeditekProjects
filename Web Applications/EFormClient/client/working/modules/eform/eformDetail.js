@@ -500,7 +500,7 @@ module.exports = React.createClass({
                 }else{
                     if(item.refChild === obj_large[i].refChild && obj_large[i].ref === item.ref){
                         temp_obj[i] = item;
-                        break;  
+                        break;
                     }
                 }
             }
@@ -572,6 +572,10 @@ module.exports = React.createClass({
                         })
                         content[field_index].value = value;
                         content[field_index].checked = checked;
+                        if(value.length > 1){
+                            if(value[0] === '0')
+                                content[field_index].value = value.substring(1);
+                        }
                         if(checked !== ''){
                             if(isNaN(value))
                                 content[field_index].value = '1';
@@ -621,10 +625,13 @@ module.exports = React.createClass({
                                 self.allFields.map(function(field){
                                     if(content_field.ref === field.ref){
                                         var temp_value = '';
-                                        if(field.type === 'eform_input_check_radio')
-                                            temp_value = (field.checked)?'yes':'';
-                                        else
+                                        if(field.type === 'eform_input_check_radio'){
+                                            temp_value = (field.checked)?'yes':'no';
+                                        }else
                                             temp_value = field.value;
+                                        if(field.type === 'eform_input_check_checkbox'){
+                                            field.value = (field.checked)?'yes':'no';
+                                        }
                                         if(temp_value !== '')
                                             fields.push(field);
                                     }
@@ -634,6 +641,9 @@ module.exports = React.createClass({
                     }
                 }else{
                     self.allFields.map(function(field){
+                        if(field.type === 'eform_input_check_checkbox'){
+                            field.value = (field.checked)?'yes':'no';
+                        }
                         var split = field.ref.split('_');
                         var section_ref = "section_"+split[1];
                         if(section_ref === section.ref){
@@ -651,6 +661,9 @@ module.exports = React.createClass({
                 }
             }else{
                 self.allFields.map(function(field){
+                    if(field.type === 'eform_input_check_checkbox'){
+                        field.value = (field.checked)?'yes':'no';
+                    }
                     var split = field.ref.split('_');
                     var section_ref = "section_"+split[1];
                     if(section_ref === section.ref){
@@ -674,6 +687,8 @@ module.exports = React.createClass({
             data: fields,
             templateUID: self.templateUID
         }
+
+        console.log(JSON.stringify(data));
 
         EFormService.createPDFForm(data)
         .then(function(response){
@@ -783,6 +798,10 @@ module.exports = React.createClass({
                         })
                         content[field_index].value = value;
                         content[field_index].checked = checked;
+                        if(value.length > 1){
+                            if(value[0] === '0')
+                                content[field_index].value = value.substring(1);
+                        }
                         if(checked !== ''){
                             if(isNaN(value))
                                 content[field_index].value = '1';

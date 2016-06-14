@@ -24,7 +24,6 @@ module.exports = React.createClass({
         if(this.props.permission === 'eformDev'){
             this.refs.inputOrder.setValue(this.props.code);
             $(this.refs.tempRef).on('keypress', function(event){
-
                 if(event.which == 13){
                     self.props.onChangeRefRow(self.props.codeSection, self.props.code, event.target.value);
                     return false;
@@ -48,8 +47,10 @@ module.exports = React.createClass({
         return this.props.size;
     },
     setValue: function(fieldRef, value){
-        if(typeof this.refs[fieldRef] !== 'undefined')
+        if(typeof this.refs[fieldRef] !== 'undefined'){
+            if(typeof this.refs[fieldRef].setValue !== 'undefined')
             this.refs[fieldRef].setValue(value);
+        }
     },
     setDisplay: function(fieldRef, type){
         if(typeof this.refs[fieldRef] !== 'undefined'){
@@ -291,6 +292,12 @@ module.exports = React.createClass({
                     var isChecked = this.refs[fieldRef].isChecked();
                     var value = this.refs[fieldRef].getValue();
                     var name = this.refs[fieldRef].getName();
+                    if(Config.getPrefixField(type, 'radio') === -1){
+                        if(isChecked === true)
+                            value = 'yes';
+                        else
+                            value = 'no';
+                    }
                     results.push({value: value, name: name, ref: fieldRef, type: type, checked: isChecked, refRow: this.props.refTemp, moduleID: this.props.moduleID});
                 }else if(Config.getPrefixField(type, 'date') > -1){
                     var value = this.refs[fieldRef].getText();

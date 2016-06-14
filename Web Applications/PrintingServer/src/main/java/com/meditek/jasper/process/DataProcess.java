@@ -157,6 +157,12 @@ public class DataProcess {
                         }
                     }
                 }
+                //Checkbox
+                else if(d.getType().equals("eform_input_check_checkbox")){
+                    if(d.getChecked()==Boolean.TRUE){
+                        dataObj=d.getValue();
+                    }
+                }
                 // Radio button
                 else if(d.getType().equals("eform_input_check_radio")) {
                     if(d.getChecked()==Boolean.TRUE){

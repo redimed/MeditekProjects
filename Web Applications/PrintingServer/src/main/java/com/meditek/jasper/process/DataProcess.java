@@ -107,6 +107,8 @@ public class DataProcess {
         // Populate other data (non-table data)
         Object dataObj = null;
         for (FormDataModel d : data){
+            // Reset dataObj to null
+            dataObj = null;
             if(!(d.getType().equals("table") || tableRefs.contains(d.getRef()))){
                 // Populate image
                 if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("image") || d.getType().equals("eform_input_signature") || d.getType().equals("eform_input_image_doctor")){

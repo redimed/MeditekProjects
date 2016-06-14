@@ -160,8 +160,9 @@ public class DataProcess {
                 //Checkbox
                 else if(d.getType().equals("eform_input_check_checkbox")){
                     if(d.getChecked()==Boolean.TRUE){
-                        dataObj=d.getValue();
+                        dataObj="yes";
                     }
+                    else dataObj="no";
                 }
                 // Radio button
                 else if(d.getType().equals("eform_input_check_radio")) {

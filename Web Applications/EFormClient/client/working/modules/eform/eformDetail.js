@@ -655,26 +655,45 @@ module.exports = React.createClass({
                             }
                             if(field.value === 'TODAY')
                                 field_temp.value = moment().format('DD/MM/YYYY');
+                            if(field.type === 'table'){
+                                if(field.typeChild === 'd'){
+                                    if(field.value !== ''){
+                                        var value = field.value.split(' ');
+                                        value = value[0].split('-');
+                                        field.value = value[2]+'/'+value[1]+'/'+value[0];
+                                    }
+                                }
+                            }
                             fields.push(field_temp);
                         }
                     })
                 }
             }else{
                 self.allFields.map(function(field){
+                    var f = $.extend({}, field);
                     if(field.type === 'eform_input_check_checkbox'){
-                        field.value = (field.checked)?'yes':'no';
+                        f.value = (field.checked)?'yes':'no';
                     }
                     var split = field.ref.split('_');
                     var section_ref = "section_"+split[1];
                     if(section_ref === section.ref){
                         if(field.type === 'eform_input_signature'){
                             if(field.value)
-                                field.base64Data = field.value.sub;
-                            field.value = null;
+                                f.base64Data = field.value.sub;
+                            f.value = null;
                         }
                         if(field.value === 'TODAY')
-                            field.value = moment().format('DD/MM/YYYY');
-                        fields.push(field);
+                            f.value = moment().format('DD/MM/YYYY');
+                        if(field.type === 'table'){
+                            if(field.typeChild === 'd'){
+                                if(field.value !== ''){
+                                    var value = field.value.split(' ');
+                                    value = value[0].split('-');
+                                    f.value = value[2]+'/'+value[1]+'/'+value[0];
+                                }
+                            }
+                        }
+                        fields.push(f);
                     }
                 })
             }

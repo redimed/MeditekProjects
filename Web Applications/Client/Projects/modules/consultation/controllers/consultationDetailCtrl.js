@@ -86,7 +86,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     }
                 }
             }
-            return (check) ? 'green-jungle' : 'blue-steel';
+            return (check) ? 'green-jungle' : 'blue';
         }
         /* END EFORM */
         //

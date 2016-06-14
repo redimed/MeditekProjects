@@ -135,10 +135,10 @@ app
         // supported languages
         var settings = {
             layout: {
-                pageSidebarClosed: false, // sidebar menu state
+                // pageSidebarClosed: false, // sidebar menu state
                 pageContentWhite: true, // set page content layout
                 pageBodySolid: false, // solid body color state
-                pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
+                // pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
             },
             assetsPath: './theme/assets',
             globalPath: './theme/assets/global',
@@ -213,6 +213,15 @@ app
                 $("body").css("overflow", "hidden");
             }else{
                 $("body").css("overflow", "auto");
+                // $('body').on({
+                //     'mousewheel': function(e) {
+                //         if (e.target.id == 'el') return;
+                //         e.preventDefault();
+                //         e.stopPropagation();
+                //     }
+                // })
+
+
             }
             if (!$cookies.get("userInfo")) {
                 // if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation" && toState.name !== "unAuthentication.forgot" && toState.name !== "unAuthentication.changepass" && toState.name !== "unAuthentication.loginPatient" && toState.name !== "unAuthentication.registerPatient" && toState.name !== "unAuthentication.searchPatient" && && toState.name !== "blank") {

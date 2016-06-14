@@ -171,50 +171,64 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     });
                 };
             });
+
             $scope.dataPrintType = {
-                    'Consultation__Details.Appointment.History.immunosuppressionValue': 'radio',
-                    'Consultation__Details.Appointment.History.immunosuppression': 'string',
-                    'Consultation__Details.Appointment.History.Melanoma': 'radio',
-                    'Consultation__Details.Appointment.History.CellAquamous': 'radio',
-                    'Consultation__Details.Appointment.History.ConcernedAbout': 'radio',
-                    'Consultation__Details.Appointment.History.ConcernedAboutValue': 'string',
-                    'Consultation__Details.Appointment.History.HaditChanged': 'radio',
-                    'Consultation__Details.Appointment.History.PleaseDescribe': 'string',
-                    'Consultation__Details.Appointment.History.SkinCancer': 'radio',
-                    'Consultation__Details.Appointment.History.IfYesMelanoma': 'radio',
-                    'Consultation__Details.Appointment.Relevant.Biopsiedproven': 'radio',
-                    'Consultation__Details.Appointment.Relevant.Site':'string',
-                    'Consultation__Details.Appointment.Relevant.Dimension':'string',
-                    'Consultation__Details.Appointment.Relevant.Colour':'string',
-                    'Consultation__Details.Appointment.Relevant.Border':'string',
-                    'Consultation__Details.Appointment.Relevant.ULCERATION':'radio',
-                    'Consultation__Details.Appointment.Relevant.Satellite_Lesion':'radio',
-                    'Consultation__Details.Appointment.Relevant.Perineural_Symptoms':'radio',
-                    'Consultation__Details.Appointment.Relevant.Relevantother':'checkbox',
-                    'Consultation__Details.Appointment.Relevant.RelevantotherValue':'string',
-                    'Consultation__Details.Appointment.Relevant.DDX_BCC':'checkbox',
-                    'Consultation__Details.Appointment.Relevant.DDX_SCC':'checkbox',
-                    'Consultation__Details.Appointment.Relevant.DDX_DdxMelanoma':'checkbox',
-                    'Consultation__Details.Appointment.Relevant.DDX_Merkel':'checkbox',
-                    'Consultation__Details.Appointment.Relevant.DDX_Ddxother':'checkbox',
-                    'Consultation__Details.Appointment.Relevant.DDX_DdxotherValue':'string',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Biopsy':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Effudex__/__Aldara':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Cryotherapy':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Laser__ablation':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Surgical__excision':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Risk__complication':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Flap':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.Graft':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.SSG':'checkbox',
-                    'Consultation__Details.Appointment.RECOMMENDATIONS.FTSG':'checkbox',
-                    'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',
-                    'Consultation__Details.Appointment.Suithble__for.SpecialistValue':'string',
-                    'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',
-                    'Consultation__Details.Appointment.Suithble__for.TelehealthValue':'string',
-                    'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'
+                'Consultation__Details.Appointment.History.immunosuppressionValue': 'radio',//immunosuppressionvalue
+                'Consultation__Details.Appointment.History.immunosuppression': 'string',//immunosuppression
+                'Consultation__Details.Appointment.History.Melanoma': 'radio',//melanoma
+                'Consultation__Details.Appointment.History.CellAquamous': 'radio',//cellaquamous
+                'Consultation__Details.Appointment.History.ConcernedAbout': 'radio',//concernedabout
+                'Consultation__Details.Appointment.History.ConcernedAboutValue': 'string',//concernedaboutvalue
+                'Consultation__Details.Appointment.History.HaditChanged': 'radio',//haditchanged
+                'Consultation__Details.Appointment.History.PleaseDescribe': 'string',//pleasedescribe
+                'Consultation__Details.Appointment.History.SkinCancer': 'radio',//skincancer
+                'Consultation__Details.Appointment.History.IfYesMelanoma': 'radio',//ifyesmelanoma
+                'Consultation__Details.Appointment.Relevant.Biopsiedproven': 'radio',//biopsiedproven
+                'Consultation__Details.Appointment.Relevant.Site':'string',//site
+                'Consultation__Details.Appointment.Relevant.Dimension':'string',//dimension
+                'Consultation__Details.Appointment.Relevant.Colour':'string',//colour
+                'Consultation__Details.Appointment.Relevant.Border':'string',//border
+                'Consultation__Details.Appointment.Relevant.ULCERATION':'radio',//ulceration
+                'Consultation__Details.Appointment.Relevant.Satellite_Lesion':'radio',//satellite_lesion
+                'Consultation__Details.Appointment.Relevant.Perineural_Symptoms':'radio',//perineural_symptoms
+                'Consultation__Details.Appointment.Relevant.Relevantother':'checkbox',//
+                'Consultation__Details.Appointment.Relevant.RelevantotherValue':'string',//relevantothervalue
+                'Consultation__Details.Appointment.Relevant.DDX_BCC':'checkbox',//bcc
+                'Consultation__Details.Appointment.Relevant.DDX_SCC':'checkbox',//scc
+                'Consultation__Details.Appointment.Relevant.DDX_DdxMelanoma':'checkbox',//ddxmelanoma
+                'Consultation__Details.Appointment.Relevant.DDX_Merkel':'checkbox',//merkel
+                'Consultation__Details.Appointment.Relevant.DDX_Ddxother':'checkbox',//ddxother
+                'Consultation__Details.Appointment.Relevant.DDX_DdxotherValue':'string',//ddxothervalue
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Biopsy':'checkbox',//biopsy
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Effudex__/__Aldara':'checkbox',//effudex / aldara
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Cryotherapy':'checkbox',//cryotherapy
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Laser__ablation':'checkbox',//laser ablation
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Surgical__excision':'checkbox',//surgical excision
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Risk__complication':'checkbox',//risk complication
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Flap':'checkbox',//flap
+                'Consultation__Details.Appointment.RECOMMENDATIONS.Graft':'checkbox',//graft
+                'Consultation__Details.Appointment.RECOMMENDATIONS.SSG':'checkbox',//ssg
+                'Consultation__Details.Appointment.RECOMMENDATIONS.FTSG':'checkbox',//ftsg
+                'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',//specialist
+                'Consultation__Details.Appointment.Suithble__for.SpecialistValue':'string',//specialistvalue
+                'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',//telehealth
+                'Consultation__Details.Appointment.Suithble__for.TelehealthValue':'string',//telehealthvalue
+                'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'//consult_note_image
             };
+            $scope.swapName = function (name) {
+                var newName = name.split("__").join(" ");
+                var res = newName.split('.');
+                var result = res[res.length-1];
+                if (result.indexOf("DDX_") >=0) {
+                    result= result.split("DDX_")[1];
+                }
+                result = result.toLowerCase();
+                if(result == 'fileuploads')
+                    result = 'consult_note_image';
+                return result;
+            }
             $scope.arrayNames = ["Consultation__Details.Appointment.Relevant"];
+
 
             $scope.dataPrintResultStep0 = {};
             $scope.dataPrintResultStep1 = {};
@@ -352,7 +366,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                                 var arrItem = [];
                                 for(var itemKey in $scope.dataPrintResultStep1[key][subkey]) {
                                     var item = {
-                                        name: itemKey,
+                                        name: $scope.swapName(itemKey),
                                         type: $scope.dataPrintResultStep1[key][subkey][itemKey].type,
                                         value: $scope.dataPrintResultStep1[key][subkey][itemKey].value,
                                     }
@@ -362,14 +376,14 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
 
                             }
                             $scope.dataPrintResultStep2.push({
-                                name: key,
+                                name: $scope.swapName(key),
                                 type: 'repeat',
                                 value: arr
                             })
                         }
                         else {
                             var item = {
-                                name: key,
+                                name: $scope.swapName(key),
                                 type: $scope.dataPrintResultStep1[key].type,
                                 value: $scope.dataPrintResultStep1[key].value,
                             }
@@ -443,7 +457,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     }
                     postData.push(lastname)
                     var DOB = {
-                        name: "DOB",
+                        name: "dob",
                         value: response.data[0].DOB,
                         type: 'string'
                     }

@@ -347,6 +347,26 @@ angular.module("app.common.CommonService", [])
             })
         };
 
+        //Review Image File Upload In New Tab
+        commonService.previewImageFileUpload = function (objectUrl) {
+            Window = window.open("about:blank", "", "_blank");
+            setTimeout(function() {
+                Window.location.href = objectUrl;
+                var buttonClose = $("<button onclick='window.close()'>Close</button>");
+                buttonClose.css({
+                    width:"30%",
+                    height:"5%",
+                    "font-size":"4vh"
+                })
+                setTimeout(function(){
+                    // $(Window.document).find("body").css({
+                    //    float:'left'
+                    // });
+                    $(Window.document).find("body").prepend(buttonClose,$("<br/>"));
+                },100);
+            }, 100);
+        },
+
         commonService.openImageInNewTab=function(fileUID,size)
         {
             Window = window.open("about:blank", "", "_blank");

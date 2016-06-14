@@ -171,14 +171,326 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     });
                 };
             });
+            $scope.dataPrintType = {
+                    'Consultation__Details.Appointment.History.immunosuppressionValue': 'radio',
+                    'Consultation__Details.Appointment.History.immunosuppression': 'string',
+                    'Consultation__Details.Appointment.History.Melanoma': 'radio',
+                    'Consultation__Details.Appointment.History.CellAquamous': 'radio',
+                    'Consultation__Details.Appointment.History.ConcernedAbout': 'radio',
+                    'Consultation__Details.Appointment.History.ConcernedAboutValue': 'string',
+                    'Consultation__Details.Appointment.History.HaditChanged': 'radio',
+                    'Consultation__Details.Appointment.History.PleaseDescribe': 'string',
+                    'Consultation__Details.Appointment.History.SkinCancer': 'radio',
+                    'Consultation__Details.Appointment.History.IfYesMelanoma': 'radio',
+                    'Consultation__Details.Appointment.Relevant.Biopsiedproven': 'radio',
+                    'Consultation__Details.Appointment.Relevant.Site':'string',
+                    'Consultation__Details.Appointment.Relevant.Dimension':'string',
+                    'Consultation__Details.Appointment.Relevant.Colour':'string',
+                    'Consultation__Details.Appointment.Relevant.Border':'string',
+                    'Consultation__Details.Appointment.Relevant.ULCERATION':'radio',
+                    'Consultation__Details.Appointment.Relevant.Satellite_Lesion':'radio',
+                    'Consultation__Details.Appointment.Relevant.Perineural_Symptoms':'radio',
+                    'Consultation__Details.Appointment.Relevant.Relevantother':'checkbox',
+                    'Consultation__Details.Appointment.Relevant.RelevantotherValue':'string',
+                    'Consultation__Details.Appointment.Relevant.DDX_BCC':'checkbox',
+                    'Consultation__Details.Appointment.Relevant.DDX_SCC':'checkbox',
+                    'Consultation__Details.Appointment.Relevant.DDX_DdxMelanoma':'checkbox',
+                    'Consultation__Details.Appointment.Relevant.DDX_Merkel':'checkbox',
+                    'Consultation__Details.Appointment.Relevant.DDX_Ddxother':'checkbox',
+                    'Consultation__Details.Appointment.Relevant.DDX_DdxotherValue':'string',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Biopsy':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Effudex__/__Aldara':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Cryotherapy':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Laser__ablation':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Surgical__excision':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Risk__complication':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Flap':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.Graft':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.SSG':'checkbox',
+                    'Consultation__Details.Appointment.RECOMMENDATIONS.FTSG':'checkbox',
+                    'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',
+                    'Consultation__Details.Appointment.Suithble__for.SpecialistValue':'string',
+                    'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',
+                    'Consultation__Details.Appointment.Suithble__for.TelehealthValue':'string',
+                    'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'
+            };
+            $scope.arrayNames = ["Consultation__Details.Appointment.Relevant"];
+
+            $scope.dataPrintResultStep0 = {};
+            $scope.dataPrintResultStep1 = {};
+            $scope.dataPrintResultStep2 = [];
+
+            $scope.mapName = function (object) {
+                for (var key in $scope.dataPrintType) {
+                    if(object.dataKey.indexOf(key) >= 0) {
+                        if(!$scope.dataPrintResultStep0[key])
+                            $scope.dataPrintResultStep0[key] = {};
+                        if(!$scope.dataPrintResultStep0[key][object.Description])
+                            $scope.dataPrintResultStep0[key][object.Description] = {
+                                Name: key,
+                                Type: $scope.dataPrintType[key]
+                            };
+                        if(key == 'Consultation__Details.Appointment.Relevant.FileUploads') {
+                            if(object.FileUploads && object.FileUploads[0])
+                                $scope.dataPrintResultStep0[key][object.Description].Value = object.FileUploads[0].UID;
+                            else
+                                $scope.dataPrintResultStep0[key][object.Description].Value = null;
+                        }
+                        else {
+                            $scope.dataPrintResultStep0[key][object.Description].Value = object.Value;
+                        }
+                    }
+                }
+            };
+
+            /**
+             * Parse data mapping voi $scope.dataPrintType
+             * {
+             *      ...,
+             *      Consultation__Details.Appointment.Relevant.Biopsiedproven: {
+             *          0: {
+             *              Name:
+             *              Type:
+             *              Value
+             *          },
+             *          1: {
+             *
+             *          },
+             *          ...
+             *      },
+             *      ...
+             * }
+             * image: https://drive.google.com/open?id=0Bz29ZPfG4pnHb2V4OE5MSHRlM2M
+             *
+             */
+            $scope.parsePrintDataStep0 = function (ConsultationDataTemp) {
+                for(var i = 0; i < ConsultationDataTemp.length; i++) {
+                    $scope.mapName(ConsultationDataTemp[i]);
+                }
+            }
+
+            /**
+             * Parse Data ve dang giong array:
+             * {
+             *      ...
+             *      Consultation__Details.Appointment.Relevant: {
+             *          0: {
+             *              Consultation__Details.Appointment.Relevant.Biopsiedproven: {
+             *                  name:
+             *                  value:
+             *                  type:
+             *
+             *              },
+             *              ...
+             *          },
+             *          ...
+             *      },
+             *      ...
+             *
+             * }
+             *
+             * image: https://drive.google.com/open?id=0Bz29ZPfG4pnHQW1pZC1jWVdVVmc
+             */
+            $scope.parsePrintDataStep1 = function () {
+
+                for (var key in $scope.dataPrintResultStep0) {
+                    var check = false;
+
+                    for (var i = 0; i < $scope.arrayNames.length; i++) {
+                        if(key.indexOf($scope.arrayNames[i]) >= 0) {
+                            check = true;
+                            var name = key.substring($scope.arrayNames[i].length+1,key.length);
+                            if(!$scope.dataPrintResultStep1[$scope.arrayNames[i]]) { //$scope.dataPrintResultStep1[Consultation__Details.Appointment.Relevant]
+                                $scope.dataPrintResultStep1[$scope.arrayNames[i]] = {
+
+                                }
+                            }
+
+                            for (var subkey in $scope.dataPrintResultStep0[key]) { //$scope.dataPrintResultStep0[Consultation__Details.Appointment.Relevant.0 .1 .2]
+                                if(!$scope.dataPrintResultStep1[$scope.arrayNames[i]][subkey])
+                                    $scope.dataPrintResultStep1[$scope.arrayNames[i]][subkey] = {};
+                                $scope.dataPrintResultStep1[$scope.arrayNames[i]][subkey][key] = {
+                                    name: key,
+                                    type: $scope.dataPrintResultStep0[key][subkey].Type,
+                                    value: $scope.dataPrintResultStep0[key][subkey].Value
+                                };
+                            }
+                        }
+                    }
+                    if(!check) {
+                        for (var subkey in $scope.dataPrintResultStep0[key]) {
+                            $scope.dataPrintResultStep1[key] = {
+                                name: key,
+                                type: $scope.dataPrintResultStep0[key][subkey].Type,
+                                value: $scope.dataPrintResultStep0[key][subkey].Value
+                            }
+                            break;
+                        }
+                    }
+                }
+            };
+
+            /**
+             * Parse print data ve array:
+             * [
+             *      ...,
+             *      {
+             *          name:
+             *          type:
+             *          value:
+             *      },
+             *      ...
+             * ]
+             * image : https://drive.google.com/file/d/0Bz29ZPfG4pnHUXBMUkQzY2d4bTA/view?usp=sharing
+             */
+            $scope.parsePrintDataStep2 = function () {
+                for (var key in $scope.dataPrintResultStep1) {
+                    for (var i = 0; i < $scope.arrayNames.length; i++) {
+                        if (key.indexOf($scope.arrayNames[i]) >= 0) {
+                            var arr = [];
+                            for (var subkey in $scope.dataPrintResultStep1[key]) {
+                                var arrItem = [];
+                                for(var itemKey in $scope.dataPrintResultStep1[key][subkey]) {
+                                    var item = {
+                                        name: itemKey,
+                                        type: $scope.dataPrintResultStep1[key][subkey][itemKey].type,
+                                        value: $scope.dataPrintResultStep1[key][subkey][itemKey].value,
+                                    }
+                                    arrItem.push(item);
+                                }
+                                arr.push(arrItem);
+
+                            }
+                            $scope.dataPrintResultStep2.push({
+                                name: key,
+                                type: 'repeat',
+                                value: arr
+                            })
+                        }
+                        else {
+                            var item = {
+                                name: key,
+                                type: $scope.dataPrintResultStep1[key].type,
+                                value: $scope.dataPrintResultStep1[key].value,
+                            }
+                            $scope.dataPrintResultStep2.push(item);
+                        }
+                    }
+                }
+            }
+
+
             $scope.PrintPDF = function() {
                 o.loadingPage(true);
                 var ConsultationDataTemp = [];
-                
                 for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");
-                    var otherkey = res[2] + res[3] + 'Other';
+                    var otherkey = res[2] + res[3]  + res[4]?res[4]:0 + 'Other';
+                    var object = {
+                        dataKey: key,
+                        Section: res[0],
+                        Category: res[1],
+                        Type: res[2],
+                        Name: res[3],
+                        Description: res[4]?res[4]:0,
+                        Value: ($scope.requestInfo.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : $scope.requestInfo.Consultations[0].ConsultationData[key].Value,
+                        FileUploads: $scope.requestInfo.Consultations[0].ConsultationData[key].FileUploads
+                    };
+                    var isExist = false;
+
+                    ConsultationDataTemp.forEach(function(valueTemp, keyTemp) {
+                        if (object.Value !== null) {
+                            if (valueTemp.Section == object.Section &&
+                                valueTemp.Category == object.Category &&
+                                valueTemp.Type == object.Type &&
+                                valueTemp.Name == object.Name &&
+                                valueTemp.Description == object.Description) {
+                                isExist = true;
+                            }
+                        } else {
+                            isExist = true;
+                        };
+                    });
+                    if (!isExist) {
+                        if (object.Value !== null && object.Value !== "") {
+                            ConsultationDataTemp.push(object);
+                        };
+                    };
+                };
+                $scope.parsePrintDataStep0(ConsultationDataTemp);
+                console.log("parsePrintDataStep0", $scope.dataPrintResultStep0);
+                $scope.parsePrintDataStep1();
+                console.log("parsePrintDataStep1", $scope.dataPrintResultStep1);
+                $scope.parsePrintDataStep2();
+                console.log("parsePrintDataStep2", $scope.dataPrintResultStep2);
+
+
+                consultationServices.getPatientDetail($stateParams.UIDPatient).then(function(response) {
+                    var PDFData = null;
+                    var postData = angular.copy($scope.dataPrintResultStep2);
+
+                    var firstname = {
+                        name: "firstname",
+                        value: response.data[0].FirstName,
+                        type: 'string'
+                    }
+                    postData.push(firstname)
+                    var lastname = {
+                        name: "lastname",
+                        value: response.data[0].LastName,
+                        type: 'string'
+                    }
+                    postData.push(lastname)
+                    var DOB = {
+                        name: "DOB",
+                        value: response.data[0].DOB,
+                        type: 'string'
+                    }
+                    postData.push(DOB)
+                    var gender = {
+                        name: "gender",
+                        value: response.data[0].Gender,
+                        type: 'string'
+                    }
+                    postData.push(gender)
+                    var consultationdate = {
+                        name: "consultation_date",
+                        value: moment().format('DD/MM/YYYY'),
+                        type: 'string'
+                    }
+                    postData.push(consultationdate)
+                    var dataPost = {
+                        printMethod: "jasper",
+                        templateUID: "consult_note",
+                        data: postData
+                    }
+                    console.log(">>>>>>>>>>>>>>>>final make data:", dataPost);
+                    consultationServices.PrintPDF(dataPost).then(function(responsePrintPDF) {
+                        o.loadingPage(false);
+                        console.log(responsePrintPDF)
+                        var blob = new Blob([responsePrintPDF.data], {
+                            type: 'application/pdf'
+                        });
+                        saveAs(blob, "ConsultationNote_" + response.data[0].FirstName + response.data[0].LastName);
+                    }, function(err) {
+                        o.loadingPage(false);
+                        toastr.error("Print PDF Fail");
+                    });
+                }, function(err) {
+                    o.loadingPage(false);
+                    toastr.error("Print PDF Fail");
+                });
+
+                //-----------------------------------------------------------------------------------------------------------------------------
+
+
+
+                
+                /*for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
+                    var newkey = key.split("__").join(" ");
+                    var res = newkey.split(".");
+                    var otherkey = res[2] + res[3]  + 'Other';
                     var object = {
                         Section: res[0],
                         Category: res[1],
@@ -269,7 +581,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 }, function(err) {
                     o.loadingPage(false);
                     toastr.error("Print PDF Fail");
-                });
+                });*/
             }
             $scope.Reset = function() {
                 $state.go("authentication.consultation.detail.consultNote", {}, {
@@ -544,18 +856,23 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     $modalInstance.close('err');
                 });
             };
-            $scope.showFilePreUpload = function(uploader, filePreUpload) {
+            $scope.previewImageFileUpload = function(filePreUpload) {
                 var modalInstance = $modal.open({
-                    templateUrl: 'showFilePreUpload',
-                    controller: function($scope, uploader ,filePreUpload){
-                        $scope.uploader = uploader;
+                    templateUrl: 'modalPreviewImageFileUpload',
+                    controller: function($scope ,filePreUpload, CommonService, $modalInstance){
                         $scope.item = filePreUpload;
+                        $scope.getBlobUrl = function(objectUrl) {
+                            $scope.objectUrl = objectUrl;
+                        }
+                        $scope.viewFull = function () {
+                            CommonService.previewImageFileUpload($scope.objectUrl);
+                        }
+                        $scope.cancel = function() {
+                            $modalInstance.dismiss('cancel');
+                        };
                     },
                     windowClass: 'app-modal-window-full',
                     resolve: {
-                        uploader: function() {
-                            return uploader;
-                        },
                         filePreUpload: function() {
                             return filePreUpload;
                         }

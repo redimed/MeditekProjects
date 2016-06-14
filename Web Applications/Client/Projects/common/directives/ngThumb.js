@@ -34,7 +34,7 @@ angular.module("app.common.ngThumb",[])
 
                 reader.onload = onLoadFile;
                 reader.readAsDataURL(params.file);
-
+                var objectUrl= URL.createObjectURL(params.file);
                 function onLoadFile(event) {
                     var img = new Image();
                     img.onload = onLoadImage;

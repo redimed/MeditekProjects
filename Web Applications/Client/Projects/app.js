@@ -12,6 +12,7 @@ var app = angular.module('app', [
     'app.common.msgDialog',
     'app.common.menuBar',
     'app.common.dimage',
+    'app.common.rimage',
     'app.common.drawing',
     'app.common.ngThumb',
     'app.common.finishRender',

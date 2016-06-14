@@ -10,7 +10,7 @@ app.controller('drawingHomeCtrl', function($scope,$cookies,$stateParams,$rootSco
     };
 
     $scope.drawingAction = function(fileInfo) {
-        // parentScope.closeWindow(fileInfo);
+        parentScope.closeWindow(fileInfo);
         parentScope.FileUploads.push(fileInfo);
         //Phan hien thi file theo tung group xac dinh
         console.log("first",angular.copy(parentScope.relevantFileUploads[window.opener.relevantGroupKey]));

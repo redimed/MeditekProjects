@@ -30,15 +30,15 @@
                         <div class="col-lg-2 col-md-2">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="immunosuppression" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue'].Value"> No
+                                    <input type="radio" class="regular-radio" name="immunosuppression" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue.0'].Value"> No
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="immunosuppression" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue'].Value"> Yes
+                                    <input type="radio" class="regular-radio" name="immunosuppression" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue.0'].Value"> Yes
                                 </label>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4">
-                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppression'].Value" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue'].Value == 'Y'">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppression.0'].Value" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.immunosuppressionValue.0'].Value == 'Y'">
                         </div>
                     </div>
                     <div class="form-group">
@@ -46,10 +46,10 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="Melanoma" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma'].Value"> No
+                                    <input type="radio" class="regular-radio" name="Melanoma" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma.0'].Value"> No
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="Melanoma" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma'].Value"> Yes
+                                    <input type="radio" class="regular-radio" name="Melanoma" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma.0'].Value"> Yes
                                 </label>
                             </div>
                         </div>
@@ -59,10 +59,10 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="CellAquamous" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.CellAquamous'].Value"> No
+                                    <input type="radio" class="regular-radio" name="CellAquamous" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.CellAquamous.0'].Value"> No
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="CellAquamous" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.CellAquamous'].Value"> Yes
+                                    <input type="radio" class="regular-radio" name="CellAquamous" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.CellAquamous.0'].Value"> Yes
                                 </label>
                             </div>
                         </div>
@@ -72,10 +72,10 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="ConcernedAbout" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAbout'].Value"> No
+                                    <input type="radio" class="regular-radio" name="ConcernedAbout" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAbout.0'].Value"> No
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="ConcernedAbout" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAbout'].Value"> Yes
+                                    <input type="radio" class="regular-radio" name="ConcernedAbout" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAbout.0'].Value"> Yes
                                 </label>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-5 col-sm-5">If YES, where ?</label>
                         <div class="col-md-6 col-sm-6">
-                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAboutValue'].Value">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.ConcernedAboutValue.0'].Value">
                         </div>
                     </div>
                     <div class="form-group">
@@ -91,10 +91,10 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="HaditChanged" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.HaditChanged'].Value"> No
+                                    <input type="radio" class="regular-radio" name="HaditChanged" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.HaditChanged.0'].Value"> No
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="HaditChanged" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.HaditChanged'].Value"> Yes
+                                    <input type="radio" class="regular-radio" name="HaditChanged" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.HaditChanged.0'].Value"> Yes
                                 </label>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-5 col-sm-5">If YES, please describe (eg. darker, larger, changed shape, itch).</label>
                         <div class="col-md-6 col-sm-6">
-                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.PleaseDescribe'].Value">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.PleaseDescribe.0'].Value">
                         </div>
                     </div>
                     <div class="form-group">
@@ -110,10 +110,10 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="SkinCancer" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.SkinCancer'].Value"> No
+                                    <input type="radio" class="regular-radio" name="SkinCancer" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.SkinCancer.0'].Value"> No
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="SkinCancer" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.SkinCancer'].Value"> Yes
+                                    <input type="radio" class="regular-radio" name="SkinCancer" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.SkinCancer.0'].Value"> Yes
                                 </label>
                             </div>
                         </div>
@@ -123,27 +123,30 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="IfYesMelanoma" value="Melanoma" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.IfYesMelanoma'].Value"> Melanoma
+                                    <input type="radio" class="regular-radio" name="IfYesMelanoma" value="Melanoma" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.IfYesMelanoma.0'].Value"> Melanoma
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="regular-radio" name="IfYesMelanoma" value="Non Melanoma" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.IfYesMelanoma'].Value"> Non Melanoma
+                                    <input type="radio" class="regular-radio" name="IfYesMelanoma" value="Non Melanoma" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.IfYesMelanoma.0'].Value"> Non Melanoma
                                 </label>
                             </div>
                         </div>
                     </div>
                     <hr/>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <h4 class="bold">RELEVANT CLINICAL FEATURES OF LESION (S)</h4>
+                    <!--tannv.dts.@gmail.com begin edit-->
+
+                    <h4 class="bold">RELEVANT CLINICAL FEATURES OF LESION (S)</h4>
+                    <div class="row" ng-repeat ="(relevantKey, value) in relevantGroup">
+                        <div class="col-lg-6 col-md-12" >
+                            <h4 class="bold">LESION {{parseInt(relevantKey) + 1}}</h4>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4">Biopsied proven</label>
                                 <div class="col-md-8 col-sm-8">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="Biopsied_proven" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Biopsiedproven'].Value"> No
+                                            <input type="radio" class="regular-radio" name="{{'Biopsied_proven.'.concat(relevantKey)}}" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Biopsiedproven.'.concat(relevantKey)].Value"> No
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="Biopsied_proven" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Biopsiedproven'].Value"> Yes
+                                            <input type="radio" class="regular-radio" name="{{'Biopsied_proven.'.concat(relevantKey)}}" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Biopsiedproven.'.concat(relevantKey)].Value"> Yes
                                         </label>
                                         <label class="radio-inline">
                                             Which pathology provider
@@ -154,25 +157,25 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4">SITE</label>
                                 <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Site'].Value">
+                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Site.'.concat(relevantKey)].Value">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4">DIMENSION</label>
                                 <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Dimension'].Value">
+                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Dimension.'.concat(relevantKey)].Value">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4">COLOUR</label>
                                 <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Colour'].Value">
+                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Colour.'.concat(relevantKey)].Value">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4">BORDER</label>
                                 <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Border'].Value">
+                                    <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Border.'.concat(relevantKey)].Value">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -180,10 +183,10 @@
                                 <div class="col-md-8 col-sm-8">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="ULCERATION" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.ULCERATION'].Value"> Yes
+                                            <input type="radio" class="regular-radio" name="{{ 'ULCERATION.'.concat(relevantKey) }}" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.ULCERATION.'.concat(relevantKey)].Value"> Yes
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="ULCERATION" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.ULCERATION'].Value"> No
+                                            <input type="radio" class="regular-radio" name="{{ 'ULCERATION.'.concat(relevantKey) }}" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.ULCERATION.'.concat(relevantKey)].Value"> No
                                         </label>
                                     </div>
                                 </div>
@@ -193,10 +196,10 @@
                                 <div class="col-md-8 col-sm-8">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="SATELLITE_LESION" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Satellite_Lesion'].Value"> Yes
+                                            <input type="radio" class="regular-radio" name="{{ 'SATELLITE_LESION.'.concat(relevantKey) }}" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Satellite_Lesion.'.concat(relevantKey)].Value"> Yes
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="SATELLITE_LESION" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Satellite_Lesion'].Value"> No
+                                            <input type="radio" class="regular-radio" name="{{ 'SATELLITE_LESION.'.concat(relevantKey) }}" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Satellite_Lesion.'.concat(relevantKey)].Value"> No
                                         </label>
                                     </div>
                                 </div>
@@ -206,10 +209,10 @@
                                 <div class="col-md-8 col-sm-8">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="PERINEURAL_SYMPTOMS" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Perineural_Symptoms'].Value"> Yes
+                                            <input type="radio" class="regular-radio" name="{{ 'PERINEURAL_SYMPTOMS.'.concat(relevantKey) }}" value="Y" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Perineural_Symptoms.'.concat(relevantKey)].Value"> Yes
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" class="regular-radio" name="PERINEURAL_SYMPTOMS" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Perineural_Symptoms'].Value"> No
+                                            <input type="radio" class="regular-radio" name="{{ 'PERINEURAL_SYMPTOMS.'.concat(relevantKey) }}" value="N" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Perineural_Symptoms.'.concat(relevantKey)].Value"> No
                                         </label>
                                     </div>
                                 </div>
@@ -219,15 +222,44 @@
                                 <div class="col-md-8 col-sm-8">
                                     <div class="checkbox-list">
                                         <label class="checkbox-inline">
-                                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother'].Value"> OTHER
+                                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother.'.concat(relevantKey)].Value"> OTHER
                                         </label>
                                     </div>
-                                    <div ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother'].Value=='Y'">
-                                        <input type="text" style="width:90%" class="form-control margin-top-20 margin-left-20" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.RelevantotherValue'].Value">
+                                    <div ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Relevantother.'.concat(relevantKey)].Value=='Y'">
+                                        <input type="text" style="width:90%" class="form-control margin-top-20 margin-left-20" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.RelevantotherValue.'.concat(relevantKey)].Value">
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 bold">DDX</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="checkbox-list">
+                                        <label class="checkbox bold">
+                                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.DDX_BCC.'.concat(relevantKey)].Value"> BCC
+                                        </label>
+                                        <label class="checkbox bold">
+                                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.DDX_SCC.'.concat(relevantKey)].Value"> SCC
+                                        </label>
+                                        <label class="checkbox bold">
+                                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.DDX_DdxMelanoma.'.concat(relevantKey)].Value">Melanoma
+                                        </label>
+                                        <label class="checkbox bold">
+                                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.DDX_Merkel.'.concat(relevantKey)].Value"> Merkel
+                                        </label>
+                                        <label class="checkbox bold margin-bottom-10">
+                                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.DDX_Ddxother.'.concat(relevantKey)].Value"> Other
+                                        </label>
+                                        <div class="" style="margin-left:-30px" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.DDX_Ddxother.'.concat(relevantKey)].Value == 'Y'">
+                                            <input type="text" class="form-control margin-top-10" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.DDX_DdxotherValue.'.concat(relevantKey)].Value">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+                        <!--tannv.dts.@gmail.com end edit-->
+
                         <div class="col-lg-6 col-md-12">
                             <div class="thumbnail">
                                 <div class="table-scrollable table-scrollable-borderless">
@@ -241,8 +273,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="item in uploader.queue">
-                                                <td><strong>{{ item.file.name }}</strong></td>
+                                            <tr ng-repeat="item in uploader.queue" ng-show="item.relevantGroupKey == relevantKey" ng-click="previewImageFileUpload(item)">
+                                                <td>
+                                                    <strong>{{ item.file.name }}</strong>
+                                                </td>
                                                 <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                                 <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                                 <td>
@@ -256,12 +290,12 @@
                                         <span class="btn green btn-file">
                                             <i class="fa fa-file-image-o"></i>
                                         <span class="fileinput-new">Select Image</span>
-                                        <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                                        <input type="file" nv-file-select="" uploader="uploader" multiple ng-click="selectImage(relevantKey)"/>
                                         </span>
                                         <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
                                             <span class="glyphicon glyphicon-trash"></span> Remove all
                                         </button>
-                                        <button type="button" class="btn btn-default" ng-click="AddDrawing('data')">
+                                        <button type="button" class="btn btn-default" ng-click="AddDrawing(relevantKey)">
                                             <span class="glyphicon glyphicon-plus"></span> Add Drawing
                                         </button>
                                     </div>
@@ -278,19 +312,26 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="item in FileUploads track by $id($index)">
+                                           <!-- <tr ng-repeat="item in FileUploads track by $id($index)">
                                                 <td>{{$index+1}}</td>
                                                 <td ng-click="showImage(item.UID)"><strong>{{ item.FileName }}</strong></td>
                                                 <td ng-click="showImage(item.UID)">{{ item.FileType}}</td>
                                                 <td><a class="btn red-thunderbird" ng-click="RemoveDrawing($index)">Remove</a></td>
-                                            </tr>
+                                            </tr>-->
+                                           <tr ng-repeat="item in relevantFileUploads[relevantKey] track by $id($index)">
+                                               <td>{{$index+1}}</td>
+                                               <td ng-click="showImage(item.UID)"><strong>{{ item.FileName }}</strong></td>
+                                               <td ng-click="showImage(item.UID)">{{ item.FileType}}</td>
+                                               <td><a class="btn red-thunderbird" ng-click="RemoveDrawing($index)">Remove</a></td>
+                                           </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <a class="btn btn-lg blue-soft uppercase bold" ng-click="addRelevantGroup()">Add Lesion</a>
+                    <!--<div class="form-group">
                         <label class="control-label col-lg-2 col-md-2 bold">DDX</label>
                         <div class="col-lg-9 col-md-9">
                             <div class="checkbox-list">
@@ -314,7 +355,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <hr/>
                     <h4 class="bold">RECOMMENDATIONS</h4>
                     <div class="row margin-top-20">
@@ -324,22 +365,22 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Biopsy'].Value"> Biopsy
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Biopsy.0'].Value"> Biopsy
                                             </label>
                                         </div>
                                         <div class="col-lg-3 col-md-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Effudex__/__Aldara'].Value"> Effudex/Aldara
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Effudex__/__Aldara.0'].Value"> Effudex/Aldara
                                             </label>
                                         </div>
                                         <div class="col-lg-3 col-md-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Cryotherapy'].Value"> Cryotherapy
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Cryotherapy.0'].Value"> Cryotherapy
                                             </label>
                                         </div>
                                         <div class="col-lg-3 col-md-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Laser__ablation'].Value"> Laser ablation
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Laser__ablation.0'].Value"> Laser ablation
                                             </label>
                                         </div>
                                     </div>
@@ -351,12 +392,12 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Surgical__excision'].Value"> Surgical excision
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Surgical__excision.0'].Value"> Surgical excision
                                             </label>
                                         </div>
                                         <div class="col-lg-6 col-md-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Risk__complication'].Value"> Risk and complication explained
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Risk__complication.0'].Value"> Risk and complication explained
                                             </label>
                                         </div>
                                     </div>
@@ -368,7 +409,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Flap'].Value"> Flap
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Flap.0'].Value"> Flap
                                             </label>
                                         </div>
                                     </div>
@@ -380,17 +421,17 @@
                                     <div class="row">
                                         <div class="col-md-3 col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Graft'].Value"> Graft
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Graft.0'].Value"> Graft
                                             </label>
                                         </div>
                                         <div class="col-md-3 col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.SSG'].Value"> SSG
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.SSG.0'].Value"> SSG
                                             </label>
                                         </div>
                                         <div class="col-md-3 col-sm-3">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.FTSG'].Value"> FTSG
+                                                <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.FTSG.0'].Value"> FTSG
                                             </label>
                                         </div>
                                     </div>
@@ -620,18 +661,18 @@
                     <h5 class="bold">Suitable :</h5>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 margin-left-30">
-                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Specialist'].Value"> Refer to specialist :
+                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Specialist.0'].Value"> Refer to specialist :
                         </label>
                         <div class="col-md-8 col-sm-8">
-                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.SpecialistValue'].Value">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.SpecialistValue.0'].Value">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 margin-left-30">
-                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Telehealth'].Value"> Suitable to telehealth :
+                            <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Telehealth.0'].Value"> Suitable to telehealth :
                         </label>
                         <div class="col-md-8 col-sm-8">
-                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue'].Value">
+                            <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue.0'].Value">
                         </div>
                     </div>
                     <!--  <div class="form-group">5
@@ -721,5 +762,21 @@
     </div>
     <div class="modal-footer">
         <button class="btn green" ng-click="Vieww(LinkUID)">View Full</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="modalPreviewImageFileUpload">
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body" style="align:center">
+        <!--<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 300 }"></div>-->
+        <!--fixed width and height -->
+        <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+        <img class="img-responsive" rimage file="item._file" get-blob-url="getBlobUrl">
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn green" ng-click="viewFull()">View Full</button>
     </div>
 </script>

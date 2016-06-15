@@ -8,22 +8,22 @@ module.exports = {
         UID: {
             type: Sequelize.STRING
         },
-        UserAccountID: {
+        FromUserAccountID: {
             type: Sequelize.INTEGER
         },
-        FirstName: {
-            type: Sequelize.STRING
+        ToUserAccountID: {
+            type: Sequelize.INTEGER
         },
-        LastName: {
-            type: Sequelize.STRING
-        },
-        DOB: {
+        StartTime: {
             type: Sequelize.DATE
         },
-        Address1: {
+        EndTime: {
+            type: Sequelize.DATE
+        },
+        Status: {
             type: Sequelize.STRING
         },
-        Address2: {
+        NetWorkSpeed: {
             type: Sequelize.STRING
         },
         CreatedDate: {
@@ -37,26 +37,18 @@ module.exports = {
         },
         ModifiedBy: {
             type: Sequelize.INTEGER
-        },
-        Status: {
-            type: Sequelize.STRING
         }
     },
-    associations: function() {
-        TelehealthUser.belongsTo(UserAccount, {
-            foreignKey: 'UserAccountID'
-        });
-    },
     options: {
-        tableName: 'TelehealthUser',
+        tableName: 'TelehealthCall',
         timestamps: false,
         hooks: {
-            beforeCreate: function(telehealthuser, options, callback) {
-                telehealthuser.CreatedDate = new Date();
+            beforeCreate: function(telehealthcall, options, callback) {
+                telehealthcall.CreatedDate = new Date();
                 callback();
             },
-            beforeUpdate: function(telehealthuser, options, callback) {
-                telehealthuser.ModifiedDate = new Date();
+            beforeUpdate: function(telehealthcall, options, callback) {
+                telehealthcall.ModifiedDate = new Date();
                 callback();
             }
         }

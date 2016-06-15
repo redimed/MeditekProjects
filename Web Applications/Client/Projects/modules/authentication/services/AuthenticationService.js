@@ -30,5 +30,11 @@ angular.module('app.authentication.service', [])
             return apiTelehealth.one('telehealth/socket/generateSession').get();
         };
 
+        services.CallToReceiver = function(info) {
+            return apiTelehealth.all('telehealth/socket/callToReceiver').post({
+                info: info
+            });
+        };
+
         return services;
     })

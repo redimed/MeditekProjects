@@ -93,9 +93,9 @@ module.exports.routes = {
         controller: 'SocketController',
         action: 'Logout'
     },
-    '/api/telehealth/socket/addDoctor': {
+    '/api/telehealth/socket/joinroomcall': {
         controller: 'SocketController',
-        action: 'AddDoctor'
+        action: 'JoinRoomCall'
     },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',

@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "colors": "^1.1.2",
     "connect-redis": "^1.4.5",
     "ejs": "https://registry.npmjs.org/ejs/-/ejs-0.8.8.tgz",
     "email-templates": "^2.0.1",
@@ -37,7 +38,7 @@
     "twilio": "^2.8.0",
     "winston": "^0.8.3",
     "winston-logstash": "^0.2.11",
-    "winston-mail": "^1.2.0"
+    "winston-mail": "https://registry.npmjs.org/winston-mail/-/winston-mail-1.2.0.tgz"
   },
   "scripts": {
     "debug": "node debug app.js",

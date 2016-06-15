@@ -13,12 +13,16 @@ ot-layout {
     right: 0;
     bottom: 0;
 }
+
+.OT_video-poster {
+    z-index: 0;
+}
 </style>
 <div class="my-skype">
     <div class="my-header">
         <div class="row margin-left-right-0 padding-10">
             <div class="col-md-3 col-sm-3 col-xs-3 pull-left">
-                <h1 class="page-title">{{userName}}</h1>
+                <h1 class="page-title">{{callName}}</h1>
                 <h2 class="page-title">{{counter|formatTimer}}</h2>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 pull-right padding-0">
@@ -39,13 +43,14 @@ ot-layout {
     <div class="actions" ng-if="streams.length > 0">
         <div class="row">
             <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-                <img src="theme/assets/global/images/E-call_17.png" class="my-button">
+                <!-- <img src="theme/assets/global/images/E-call_17.png" class="my-button"> -->
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <img src="theme/assets/global/images/E-call_13.png" class="my-button" ng-click="toggleWhiteboard()">
+                <!-- <img src="theme/assets/global/images/E-call_13.png" class="my-button" ng-click="toggleWhiteboard()"> -->
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <img src="theme/assets/global/images/E-call_06.png" class="my-button" ng-click="EnAudio()">
+                <img src="theme/assets/global/images/E-call_06.png" ng-show="audio === true" class="my-button" ng-click="closeAudio()">
+                <img src="theme/assets/global/images/E-stop-call_06.png" ng-show="audio === false" class="my-button" ng-click="closeAudio()">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 call-plus">
                 <img src="theme/assets/global/images/E-call_22.png" class="my-button" ng-click="listUser()">
@@ -68,7 +73,7 @@ ot-layout {
                                 <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
                                 <div class="media-body">
                                     <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                    <div class="media-heading-sub font-green">Offline</div>
+                                    <!-- <div class="media-heading-sub font-green">Offline</div> -->
                                 </div>
                             </li>
                             <li class="media" ng-repeat="doctor in listDoctorExternal">
@@ -79,7 +84,7 @@ ot-layout {
                                 <img src="theme/assets/global/images/no_person.jpg" width="50" class="media-image" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID">
                                 <div class="media-body">
                                     <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                    <div class="media-heading-sub font-green">Offline</div>
+                                    <!-- <div class="media-heading-sub font-green">Offline</div> -->
                                 </div>
                             </li>
                         </ul>
@@ -91,10 +96,10 @@ ot-layout {
                 <img src="theme/assets/global/images/E-call_18.png" class="my-button" ng-click="EndCall()">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-                <img src="theme/assets/global/images/E-call_23.png" class="my-button">
+                <!-- <img src="theme/assets/global/images/E-call_23.png" class="my-button"> -->
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <img src="theme/assets/global/images/E-call_14.png" class="my-button">
+                <!-- <img src="theme/assets/global/images/E-call_14.png" class="my-button"> -->
             </div>
         </div>
     </div>
@@ -105,9 +110,12 @@ ot-layout {
             </div>
         </div>
     </div>
+    <div ng-show="callFail" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40%;height:50%;z-index:1;text-align: center;">
+        <h1>{{callStatus}}</h1>
+        <p>Please Call Back Later ...</p>
+    </div>
     <ot-layout props="{animate:true,maxRatio: 2/3,bigFixedRatio:true}" style="background-color: white;">
-        <ot-subscriber ng-repeat="stream in streams" stream="stream" props="{style: {nameDisplayMode: 'off'} ,width:'100%', height:'100%'}" 
-         ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}" ng-dblclick="$emit('changeSize',stream)">
+        <ot-subscriber ng-repeat="stream in streams" stream="stream" props="{style: {nameDisplayMode: 'off'} ,width:'100%', height:'100%'}" ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}" ng-dblclick="$emit('changeSize',stream)">
         </ot-subscriber>
     </ot-layout>
 </div>

@@ -6,6 +6,6 @@ module.exports = {
         'listRoomSocket': true,
         'TotalUserInRoom': true,
         'Logout': true,
-        'AddDoctor': true,
+        'JoinRoomCall': true,
     }
 }

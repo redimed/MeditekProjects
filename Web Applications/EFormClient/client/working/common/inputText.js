@@ -69,14 +69,15 @@ module.exports = React.createClass({
                 var calResArray = calRes[4].split('-');
                 var res = calResArray[0];
                 calResArray.map(function(cal, cal_index){
+                    console.log("tinh",res,cal,bmi_cal);
                     if(cal <= bmi_cal)
                         res = cal;
                 })
+                console.log('res', res);
                 var radios = $('input[name='+calRes[2]+']');
                 radios.filter(function(){
                     var id = $(this).attr('id');
                     var id_value = $('#'+id).val();
-                    console.log("id_value", id_value);
 
                     if(parseFloat(res) === parseFloat(id_value)){
                         $('#'+id).iCheck('check');

@@ -420,6 +420,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.PrintPDF = function() {
                 o.loadingPage(true);
                 var ConsultationDataTemp = [];
+                $scope.dataPrintResultStep0 = {};
+                $scope.dataPrintResultStep1 = {};
+                $scope.dataPrintResultStep2 = [];
                 for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");

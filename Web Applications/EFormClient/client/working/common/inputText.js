@@ -62,11 +62,11 @@ module.exports = React.createClass({
         var self = this;
         $(this.refs.input).on('change', function(event){
             var width = $('#'+calRes[0]).val();
-            var height = $('#'+calRes[1]).val();
+            var height = $('#'+calRes[1]).val()/100;
 
             if(width != '' && height != ''){
-                var bmi_cal = (width/Math.pow(height, 2));
-                var calResArray = calRes[3].split('-');
+                var bmi_cal = (width/Math.pow(height, 2)).toFixed(1);
+                var calResArray = calRes[4].split('-');
                 var res = calResArray[0];
                 calResArray.map(function(cal, cal_index){
                     if(cal <= bmi_cal)
@@ -76,6 +76,7 @@ module.exports = React.createClass({
                 radios.filter(function(){
                     var id = $(this).attr('id');
                     var id_value = $('#'+id).val();
+                    console.log("id_value", id_value);
 
                     if(parseFloat(res) === parseFloat(id_value)){
                         $('#'+id).iCheck('check');
@@ -83,6 +84,13 @@ module.exports = React.createClass({
                         $('#'+id).iCheck('uncheck');
                     }
                 })
+                var inputs = $("input[name="+calRes[3]+"]");
+                console.log(inputs);
+                if(inputs.length>0) {
+                    console.log(inputs[0])
+                    $(inputs[0]).val(bmi_cal);
+                }
+                
             }
         })
     },
@@ -199,14 +207,14 @@ module.exports = React.createClass({
         switch(type){
             case 'default':
                 html = (
-                    <input type="text" className={this.props.className} ref="input" placeholder={this.props.placeholder}
+                    <input type="text" name={this.props.name} className={this.props.className} ref="input" placeholder={this.props.placeholder}
                         defaultValue={this.props.defaultValue} style={this.props.style}
                         onBlur={this.props.onBlur} onChange={this.props.onChange}/>
                 )
                 break;
             case 'it':
                 html = (
-                    <input type="text" className="form-control" ref="input"/>
+                    <input type="text" name={this.props.name} className="form-control" ref="input"/>
                 )
                 break;
             {/*case 'eform_input_text':
@@ -234,14 +242,14 @@ module.exports = React.createClass({
                                             :null
                                         }
 
-                                        <input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp} onDoubleClick = {this.selection}/>
+                                        <input type="text" name={this.props.name} className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp} onDoubleClick = {this.selection}/>
                                         {this.props.labelSuffix?
                                             <span className="input-group-addon" style={labelSuffixStyle}>{this.props.labelSuffix}</span>
                                             :null
                                         }
 
                                     </div>
-                                    :<input type="text" className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp} onDoubleClick = {this.selection}/>
+                                    :<input type="text" name={this.props.name} className={this.props.className} style={inputStyle} ref="input" placeholder={this.props.placeholder} id={this.props.refTemp} onDoubleClick = {this.selection}/>
                                 }
 
                             </div>

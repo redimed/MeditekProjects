@@ -172,6 +172,25 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 };
             });
 
+            $scope.dataRelation = {
+                'immunosuppression':'Consultation__Details.Appointment.History.immunosuppression',
+                'Relevantother':'Consultation__Details.Appointment.Relevant.RelevantotherValue',
+                'DDX_Ddxother':'Consultation__Details.Appointment.Relevant.DDX_DdxotherValue',
+            }
+            $scope.dataRelationMapping = function(name, relevantKey) {
+                for (var key in $scope.dataRelation) {
+                    if(key == name) {
+                        var modelName = $scope.dataRelation[key] + "."+relevantKey;
+                        /*console.log(modelName);
+                        console.log($scope.requestInfo.Consultations[0].ConsultationData);*/
+                        if(!$scope.requestInfo.Consultations[0].ConsultationData[modelName])
+                            $scope.requestInfo.Consultations[0].ConsultationData[modelName] = {};
+                        $scope.requestInfo.Consultations[0].ConsultationData[modelName].Value = null;
+                        break;
+                    }
+                }
+            };
+
             $scope.dataPrintType = {
                 'Consultation__Details.Appointment.History.immunosuppressionValue': 'radio',//immunosuppressionvalue
                 'Consultation__Details.Appointment.History.immunosuppression': 'string',//immunosuppression
@@ -904,8 +923,27 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.closeWindow = function(fileInfo) {
                 Window.close();
             }
-            $scope.RemoveDrawing = function(index) {
-                $scope.FileUploads.splice(index, 1);
+            $scope.RemoveDrawing = function(relevantKey, index) {
+                $scope.setCurrentRelevantGroup(relevantKey);
+                var removeFile = angular.copy($scope.relevantFileUploads[relevantKey][index]);
+                console.log("removeFile",removeFile);
+                $scope.relevantFileUploads[relevantKey].splice(index,1);
+
+                if($scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey]) {
+                    for (var i = 0; i< $scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey].FileUploads.length; i++) {
+                        var fileItem = $scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey].FileUploads[i];
+                        if(fileItem.UID == removeFile.UID)
+                        {
+                            $scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey].FileUploads.splice(i,1);
+                            $scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey].Value =
+                                $scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey].FileUploads.length;
+                        }
+                    }
+                }
+
+
+                // $scope.FileUploads.splice(index, 1);
+                
             }
             $scope.AddDrawing = function(key) {
                 

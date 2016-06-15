@@ -142,7 +142,7 @@ app.factory('OT', function() {
                         streamCreated: function(event) {
                             scope.$emit('otStreamCreated', event);
                         },
-                        streamDestroyed: function() {
+                        streamDestroyed: function(event) {
                             scope.$emit('otStreamDestroyed');
                         }
                     });
@@ -193,9 +193,6 @@ app.factory('OT', function() {
                     angular.element(element).append(oldChildren);
                     scope.$on('$destroy', function() {
                         OTSession.session.unsubscribe(subscriber);
-                    });
-                    scope.$on('$mute', function() {
-                        subscriber.subscribeToAudio(false);
                     });
                 }
             };

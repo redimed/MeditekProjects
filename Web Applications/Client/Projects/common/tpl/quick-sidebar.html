@@ -18,7 +18,7 @@
                             <input type="text" class="form-control " placeholder="Search.." style="background:#34495e; color: white;" ng-model="fullname" ng-enter="loadListDoctor(fullname)" />
                         </div>
                     </div>
-                    <h3 class="list-heading">Doctor External</h3>
+                    <h3 class="list-heading">Doctor Internal</h3>
                     <ul class="media-list list-items">
                         <li class="media" ng-repeat="doctor in listDoctorInternal">
                             <div class="media-status">
@@ -28,11 +28,11 @@
                             <img class="media-object" src="theme/assets/global/images/no_person.jpg" ng-if="!doctor.UserAccount.FileUploads[0].UID" alt="...">
                             <div class="media-body">
                                 <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                <div class="media-heading-sub font-green">Online</div>
+                                <!-- <div class="media-heading-sub font-green">Online</div> -->
                             </div>
                         </li>
                     </ul>
-                    <h3 class="list-heading">Doctor Internal</h3>
+                    <h3 class="list-heading">Doctor External</h3>
                     <ul class="media-list list-items">
                         <li class="media" ng-repeat="doctor in listDoctorExternal">
                             <div class="media-status">
@@ -42,7 +42,7 @@
                             <img class="media-object" src="theme/assets/global/images/no_person.jpg" ng-if="!doctor.UserAccount.FileUploads[0].UID" alt="...">
                             <div class="media-body">
                                 <h4 class="media-heading">{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</h4>
-                                <div class="media-heading-sub font-green">Online</div>
+                                <!-- <div class="media-heading-sub font-green">Online</div> -->
                             </div>
                         </li>
                     </ul>

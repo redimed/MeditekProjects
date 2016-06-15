@@ -38,7 +38,7 @@ module.exports = {
         ModifiedBy: {
             type: Sequelize.INTEGER
         },
-        Status1: {
+        Status: {
             type: Sequelize.STRING
         }
     },

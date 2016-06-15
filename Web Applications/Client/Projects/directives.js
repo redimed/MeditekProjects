@@ -230,45 +230,30 @@ app.directive('appointmentDetailDirective', function() {
                     $scope.apptDate = ($scope.apptdetail.FromTime != null) ? moment($scope.apptdetail.FromTime).format('DD/MM/YYYY') : 'N/A';
                     $scope.apptTime = ($scope.apptdetail.FromTime != null) ? moment($scope.apptdetail.FromTime).format('HH:mm') : 'N/A';
                 };
-            }
-
+            };
             var CallerInfo = $cookies.getObject('userInfo');
-
             $scope.AuthCall = CallerInfo.roles[CallerInfo.roles.length - 1].RoleCode;
-
             $scope.funCallOpentok = function() {
                 console.log(ioSocket.telehealthOpentok);
                 WAAppointmentService.GetDetailPatientByUid({
                     UID: $scope.apptdetail.Patients[0].UID
                 }).then(function(data) {
-                    console.log("Info Call", data);
+                    console.log("Info Call", data.data[0]);
                     if (data.data[0].TeleUID != null) {
-                        var info = {
-                            CallerInfo: CallerInfo,
-                            ReceiverName: data.data[0].FirstName + " " + data.data[0].LastName,
-                            ReceiverTeleUID: data.data[0].TeleUID,
-                            ReceiverTeleID: data.data[0].TeleID,
-                            ReceiverID: data.data[0].UserAccountID
+                        var receiverInfo = {
+                            UID: data.data[0].UserAccount.UID,
+                            TelehealthUser: {
+                                UID: data.data[0].TeleUID
+                            }
                         };
-
-                        AuthenticationService.CallToReceiver(info).then(function(argument) {
-                            if (argument.message === 'Offline') {
-                                swal("Receiver Offline", "Please Call Back Later");
-                            } else if (argument.message === 'Busy') {
-                                swal("Receiver Busy", "Please Call Back Later");
-                            } else if (argument.message === 'Success') {
-                                console.log("Success", argument);
-                                ioSocket.telehealthDoctorCallWindow = window.open($state.href("blank.call", {
-                                    apiKey: argument.data.apiKey,
-                                    sessionId: argument.data.sessionId,
-                                    token: argument.data.token,
-                                    teleCallUID: argument.data.teleCallUID,
-                                    teleCallID: argument.data.teleCallID,
-                                    receiverName: info.ReceiverName, //userName
-                                    receiverUID: info.ReceiverTeleUID, //uidCall
-                                    callerUID: info.CallerInfo.TelehealthUser.UID, //uidUser
-                                }), "CAll", { directories: "no" });
-                            };
+                        var info = {
+                            message: "startcall",
+                            callerInfo: CallerInfo,
+                            receiverInfo: receiverInfo,
+                            callName: CallerInfo.UserName + ", " + data.data[0].FirstName + " " + data.data[0].LastName
+                        };
+                        socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
+                            console.log("send call", data);
                         });
                     } else {
                         toastr.error("Patient Is Not Exist", "Error");

@@ -31,6 +31,7 @@
     "jsonwebtoken": "^5.4.0",
     "lodash": "^3.10.1",
     "md5": "^2.0.0",
+    "meditek_library": "git+https://83426e95d4e8541abe35d0c12d63b513e69a8a07:x-oauth-basic@github.com/redimed/MeditekLibrary.git",
     "mkdirp": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz",
     "moment": "^2.12.0",
     "mysql": "^2.9.0",
@@ -80,6 +81,6 @@
   "author": "anonymous node/sails user",
   "license": "",
   "devDependencies": {
-    "meditek_library": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master"
+    "meditek_library": "git+https://83426e95d4e8541abe35d0c12d63b513e69a8a07:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master"
   }
 }

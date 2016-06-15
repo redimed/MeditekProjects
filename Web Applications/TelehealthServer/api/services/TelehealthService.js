@@ -253,17 +253,15 @@ module.exports = {
     UpdateStatusTelehealthUser: function(TeleUID, status) {
         var $q = require('q');
         var defer = $q.defer();
-        console.log("UpdateStatusTelehealthUser ", TeleUID, status);
         if (!TeleUID || !status) {
             defer.reject({
                 message: 'Deficient'
             });
         } else {
-            console.log("UpdateStatusTelehealthUser ", TelehealthUser);
             TelehealthUser.find({ where: { UID: TeleUID } }).then(function(teleUser) {
                 if (teleUser) { // if the record exists in the db
                     teleUser.updateAttributes({
-                        Status1: status
+                        Status: status
                     }).then(function(success) {
                         defer.resolve({
                             message: 'Success'
@@ -285,18 +283,20 @@ module.exports = {
     UpdateStatusTelehealthCall: function(TeleUID, status) {
         var $q = require('q');
         var defer = $q.defer();
-        console.log("UpdateStatusTelehealthCall ", TeleUID, status);
         if (!TeleUID || !status) {
             defer.reject({
                 message: 'Deficient'
             });
         } else {
-            console.log("UpdateStatusTelehealthCall ", TeleUID);
             TelehealthCall.find({ where: { UID: TeleUID } }).then(function(teleCall) {
                 if (teleCall) { // if the record exists in the db
-                    teleCall.updateAttributes({
+                    var update = {
                         Status: status
-                    }).then(function(success) {
+                    };
+                    if (status === "EndCall" || status === "Busy" || status === "Offline") {
+                        update.EndTime = new Date();
+                    };
+                    teleCall.updateAttributes(update).then(function(success) {
                         defer.resolve({
                             message: 'Success'
                         });
@@ -315,46 +315,79 @@ module.exports = {
         return defer.promise;
     },
     CreateTelehealthCall: function(InfoCall, CallerID, CallerTeleID, ReceiverTeleID) {
-        var $q = require('q');
-        var defer = $q.defer();
-        var TeleCallUID = "";
-        var TeleCallID = "";
-        sequelize.transaction().then(function(t) {
-            return TelehealthCall.create({
-                UID: UUIDService.Create(),
-                FromUserAccountID: InfoCall.FromUserAccountID,
-                ToUserAccountID: InfoCall.ToUserAccountID,
-                StartTime: new Date(),
-                Status: InfoCall.Status,
-                CreatedBy: InfoCall.FromUserAccountID
-            }, { transaction: t }).then(function(teleCall) {
-                TeleCallUID = teleCall.UID;
-                TeleCallID = teleCall.ID;
-                var InfoUser = [{
-                    TelehealthCallID: teleCall.dataValues.ID,
-                    TelehealthUserID: CallerTeleID,
-                    CreatedBy: CallerID
-                }, {
-                    TelehealthCallID: teleCall.dataValues.ID,
-                    TelehealthUserID: ReceiverTeleID,
-                    CreatedBy: CallerID
-                }];
-                return TelehealthCallUser.bulkCreate(InfoUser, { transaction: t }).then(function(teleCallUser) {
-                    console.log("Create Telehealth Call User success");
+        try {
+            var $q = require('q');
+            var defer = $q.defer();
+            var TeleCallUID = "";
+            var TeleCallID = "";
+            sequelize.transaction().then(function(t) {
+                return TelehealthCall.create({
+                    UID: UUIDService.Create(),
+                    FromUserAccountID: InfoCall.FromUserAccountID,
+                    ToUserAccountID: InfoCall.ToUserAccountID,
+                    StartTime: new Date(),
+                    Status: InfoCall.Status,
+                    CreatedBy: InfoCall.FromUserAccountID
+                }, { transaction: t }).then(function(teleCall) {
+                    TeleCallUID = teleCall.UID;
+                    TeleCallID = teleCall.ID;
+                    var InfoUser = [{
+                        TelehealthCallID: teleCall.dataValues.ID,
+                        TelehealthUserID: CallerTeleID,
+                        CreatedBy: CallerID
+                    }, {
+                        TelehealthCallID: teleCall.dataValues.ID,
+                        TelehealthUserID: ReceiverTeleID,
+                        CreatedBy: CallerID
+                    }];
+                    return TelehealthCallUser.bulkCreate(InfoUser, { transaction: t }).then(function(teleCallUser) {
+                        console.log("Create Telehealth Call User success");
+                    });
+                }).then(function(result) {
+                    defer.resolve({
+                        TeleCallUID: TeleCallUID,
+                        TeleCallID: TeleCallID,
+                        transaction: t
+                    });
+                }, function(err) {
+                    console.log("Error", err);
+                    defer.reject({
+                        transaction: t
+                    });
                 });
-            }).then(function(result) {
+            });
+            return defer.promise;
+        } catch (err) {
+            console.log("CreateTelehealthCall", err);
+        }
+    },
+    CreateTelehealthCall: function(infoCall) {
+        try {
+            var $q = require('q');
+            var defer = $q.defer();
+            TelehealthCall.create({
+                UID: UUIDService.Create(),
+                FromUserAccountID: infoCall.FromUserAccountID,
+                ToUserAccountID: infoCall.ToUserAccountID,
+                StartTime: new Date(),
+                Status: infoCall.Status,
+                CreatedBy: infoCall.FromUserAccountID
+            }).then(function(teleCall) {
                 defer.resolve({
-                    TeleCallUID: TeleCallUID,
-                    TeleCallID: TeleCallID,
-                    transaction: t
+                    message: "success",
+                    teleCallUID: teleCall.UID,
+                    teleCallID: teleCall.ID
                 });
             }, function(err) {
                 defer.reject({
-                    transaction: t
+                    message: "error",
+                    error: err
                 });
             });
-        });
-        return defer.promise;
+            return defer.promise;
+        } catch (err) {
+            console.log("CreateTelehealthCall", err);
+        }
     },
     CreateTelehealthCallUser: function(teleCallID, CallerTeleID, CallerID) {
         console.log("----- CreateTelehealthCallUser -----");
@@ -389,7 +422,8 @@ module.exports = {
         var defer = $q.defer();
         var Devices = {
             iosDevices: [],
-            androidDevices: []
+            androidDevices: [],
+            tokens: []
         };
         TelehealthService.FindByUID(TeleUID).then(function(teleUser) {
             if (teleUser) {
@@ -402,12 +436,16 @@ module.exports = {
                 }).then(function(devices) {
                     if (devices) {
                         for (var i = 0; i < devices.length; i++) {
-                            if (devices[i].DeviceToken != null) {
-                                console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", devices[i].DeviceToken);
-                                if (devices[i].Type == 'IOS')
-                                    Devices.iosDevices.push(devices[i].DeviceToken);
-                                else
-                                    Devices.androidDevices.push(devices[i].DeviceToken);
+                            if (devices[i].Appid == config.WorkinjuryAppid) {
+                                if (devices[i].DeviceToken != null)
+                                    Devices.tokens.push(devices[i].DeviceToken);
+                            } else {
+                                if (devices[i].DeviceToken != null) {
+                                    if (devices[i].Type == 'IOS')
+                                        Devices.iosDevices.push(devices[i].DeviceToken);
+                                    else
+                                        Devices.androidDevices.push(devices[i].DeviceToken);
+                                }
                             }
                         }
                     }
@@ -422,6 +460,58 @@ module.exports = {
                     });
                 })
             }
+        });
+        return defer.promise;
+    },
+    FindUserByUID: function(uid) {
+        return UserAccount.find({
+            where: {
+                UID: uid
+            }
+        });
+    },
+    FindTelehealthUserByUIDs: function(callerTeleUID, receiverTeleUID) {
+        console.log("FindTelehealthUserByUIDs");
+        var $q = require('q');
+        var defer = $q.defer();
+        sequelize.query('SELECT * FROM telehealthuser WHERE UID = :callerTeleUID UNION SELECT * FROM telehealthuser WHERE UID = :receiverTeleUID', {
+            replacements: {
+                callerTeleUID: callerTeleUID,
+                receiverTeleUID: receiverTeleUID
+            },
+            type: sequelize.QueryTypes.SELECT
+        }).then(function(projects) {
+            defer.resolve({
+                message: 'success',
+                data: projects
+            });
+        }, function(err) {
+            defer.reject({
+                message: 'error',
+                err: err
+            });
+        });
+        return defer.promise;
+    },
+    FindUserByUIDs: function(callerUID, receiverUID) {
+        var $q = require('q');
+        var defer = $q.defer();
+        sequelize.query('(SELECT * FROM useraccount WHERE UID = :callerUID) UNION (SELECT * FROM useraccount WHERE UID = :receiverUID)', {
+            replacements: {
+                callerUID: callerUID,
+                receiverUID: receiverUID
+            },
+            type: sequelize.QueryTypes.SELECT
+        }).then(function(projects) {
+            defer.resolve({
+                message: 'success',
+                data: projects
+            });
+        }, function(err) {
+            defer.reject({
+                message: 'error',
+                err: err
+            });
         });
         return defer.promise;
     }

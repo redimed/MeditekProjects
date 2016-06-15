@@ -768,7 +768,6 @@ ul.my-ul {
         position: absolute;
         bottom: 120px;
         max-height: 500px;
-        overflow: auto;
     }
 
     .list-call-wrapper .list-call-header {
@@ -777,7 +776,10 @@ ul.my-ul {
         border-bottom: 2px solid rgba(243, 86, 93, .3);
     }
 
-    .list-call-body {}
+    .list-call-body {
+        height: 448px; 
+        overflow: auto;
+    }
 
     .list-call-body .search {
         margin: 10px 20px 20px 10px;

@@ -93,17 +93,9 @@ module.exports.routes = {
         controller: 'SocketController',
         action: 'Logout'
     },
-    '/api/telehealth/socket/addDoctor': {
-        controller: 'SocketController',
-        action: 'AddDoctor'
-    },
     '/api/telehealth/socket/joinroomcall': {
         controller: 'SocketController',
         action: 'JoinRoomCall'
-    },
-    '/api/telehealth/socket/addcallmessage': {
-        controller: 'SocketController',
-        action: 'AddCallMessage'
     },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',
@@ -116,10 +108,6 @@ module.exports.routes = {
     'POST /api/telehealth/socket/totalUserInRoom': {
         controller: 'SocketController',
         action: 'TotalUserInRoom'
-    },
-    'POST /api/telehealth/socket/callToReceiver': {
-        controller: 'SocketController',
-        action: 'CallToReceiver'
     },
     //=================Telehealth Appointment============================
     'POST /api/telehealth/appointment/updateFile': {

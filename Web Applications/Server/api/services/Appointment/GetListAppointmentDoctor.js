@@ -2,29 +2,38 @@ module.exports = function(data, userInfo, objRequired) {
     var $q = require('q');
     var defer = $q.defer();
     var pagination = PaginationService(data, Appointment);
-    Appointment.findAll({
+    var arrayPromise = [];
+    arrayPromise.push(Appointment.findAll({
+        attributes: ['ID'],
+        include: [{
             attributes: ['ID'],
-            include: [{
-                attributes: ['ID'],
-                model: Doctor,
-                required: false
-            }],
+            model: Doctor,
+            required: true,
             where: {
-                $or: [{
-                        CreatedBy: userInfo.ID
-                    },
-                    sequelize.where(sequelize.col('Doctors.UserAccountID'), userInfo.ID)
-                ]
+                UserAccountID: userInfo.ID
             }
-        })
-        .then(function(appointmentRoleList) {
-            appointmentRoleList = _.map(appointmentRoleList, 'ID');
+        }],
+        raw: true
+    }));
+    arrayPromise.push(Appointment.findAll({
+        attributes: ['ID'],
+        where: {
+            CreatedBy: userInfo.ID
+        },
+        raw: true
+    }));
+    $q.all(arrayPromise)
+        .then(function(arrAppt) {
+            var arrApptTreatingDoctor = _.map(arrAppt[0], 'ID');
+            var arrApptCreatedBy = _.map(arrAppt[1], 'ID');
+            var arrWhereClase = arrApptTreatingDoctor.concat(arrApptCreatedBy);
+            arrWhereClase = _.uniq(arrWhereClase);
             if (!HelperService.CheckExistData(pagination.Appointment)) {
                 pagination.Appointment = [];
             }
             pagination.Appointment.push({
                 ID: {
-                    $in: appointmentRoleList
+                    $in: arrWhereClase
                 }
             });
             return Appointment.findAndCountAll({

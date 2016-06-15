@@ -5,7 +5,9 @@
  */
 package com.meditek.jasper.controller;
 
+import com.meditek.jasper.model.NewRequestDataModel;
 import com.meditek.jasper.model.RequestDataModel;
+import com.meditek.jasper.process.NewPrintingMethod;
 import com.meditek.jasper.process.PrintingProcess;
 
 import java.io.ByteArrayOutputStream;
@@ -62,6 +64,30 @@ public class JasperReportController {
             res.addHeader("Content-Disposition","inline");
             res.setContentLength(baos.toByteArray().length);
             res.getOutputStream().write(baos.toByteArray());           
+    }
+    
+    @CrossOrigin("*")
+    @RequestMapping(value="/newprint", method=RequestMethod.POST)
+    public void newPrint(HttpServletRequest req, HttpServletResponse res, @RequestBody NewRequestDataModel requestData) throws Exception{
+        String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
+        String printMethod = requestData.getPrintMethod();
+        //Filling pdf file
+        ByteArrayOutputStream baos;
+        switch (printMethod){
+            case "jasper":
+                System.out.println("runhere");
+                baos = NewPrintingMethod.printJasper(requestData.getData(), requestData.getTemplateUID(), baseUrl, printMethod);
+                break;
+            default :
+                System.out.println("runhere default");
+                baos=null;
+                break;
+        }
+        //Return the filled pdf file.
+        res.setContentType("application/pdf");
+        res.addHeader("Content-Disposition","inline");
+        res.setContentLength(baos.toByteArray().length);
+        res.getOutputStream().write(baos.toByteArray());   
     }
     
 }

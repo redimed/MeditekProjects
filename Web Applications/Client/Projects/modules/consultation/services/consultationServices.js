@@ -5,7 +5,7 @@ angular.module("app.authentication.consultation.services", [])
         var apiFile = FileRestangular.all("api");
 
         services.PrintPDF = function(data) {
-            var apiPDF = PDFFormUrlRestangular.all('print')
+            var apiPDF = PDFFormUrlRestangular.all('newprint')
             apiPDF.withHttpConfig({
                  responseType: 'arraybuffer'
             })

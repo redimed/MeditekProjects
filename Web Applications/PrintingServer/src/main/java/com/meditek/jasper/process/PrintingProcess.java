@@ -166,6 +166,10 @@ public class PrintingProcess {
          parameter.setName("real_path");
          parameter.setValueClass(String.class);
          jasperDesign.addParameter(parameter);
+         parameter = new JRDesignParameter();
+         parameter.setName("module_list");
+         parameter.setValueClass(ArrayList.class);
+         jasperDesign.addParameter(parameter);
 
          //Add sub reports
         for(String moduleUID:moduleUIDList){
@@ -192,6 +196,14 @@ public class PrintingProcess {
             expression.setText("$P{real_path}");
             subparam.setExpression(expression);
             sub.addParameter(subparam);
+            if(moduleUID.equals("42")){
+                subparam = new JRDesignSubreportParameter();
+                subparam.setName("module_list");
+                expression = new JRDesignExpression();
+                expression.setText("$P{module_list}");
+                subparam.setExpression(expression);
+                sub.addParameter(subparam);
+            }
             expression = new JRDesignExpression();
             expression.setText("new net.sf.jasperreports.engine.JREmptyDataSource()");
             sub.setDataSourceExpression(expression);
@@ -203,13 +215,13 @@ public class PrintingProcess {
             }
             else if(module.getIsHeader()==true) jasperDesign.setPageHeader(band);
             else ((JRDesignSection)jasperDesign.getDetailSection()).addBand(band);
-         }
-        
+        }
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
         HashMap params = new HashMap();
         String realPath = "reportTemplate/dynamicjasper/";
         params.put("data", parsedData);
         params.put("real_path", realPath);
+        params.put("module_list", moduleUIDList);
         System.out.println("this is parsed data: " + parsedData.toString());
         JasperPrint print = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -177,8 +177,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 'Consultation__Details.Appointment.History.immunosuppression': 'string',//immunosuppression
                 'Consultation__Details.Appointment.History.Melanoma': 'radio',//melanoma
                 'Consultation__Details.Appointment.History.CellAquamous': 'radio',//cellaquamous
-                'Consultation__Details.Appointment.History.ConcernedAbout': 'radio',//concernedabout
                 'Consultation__Details.Appointment.History.ConcernedAboutValue': 'string',//concernedaboutvalue
+                'Consultation__Details.Appointment.History.ConcernedAbout': 'radio',//concernedabout
                 'Consultation__Details.Appointment.History.HaditChanged': 'radio',//haditchanged
                 'Consultation__Details.Appointment.History.PleaseDescribe': 'string',//pleasedescribe
                 'Consultation__Details.Appointment.History.SkinCancer': 'radio',//skincancer
@@ -191,14 +191,14 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 'Consultation__Details.Appointment.Relevant.ULCERATION':'radio',//ulceration
                 'Consultation__Details.Appointment.Relevant.Satellite_Lesion':'radio',//satellite_lesion
                 'Consultation__Details.Appointment.Relevant.Perineural_Symptoms':'radio',//perineural_symptoms
-                'Consultation__Details.Appointment.Relevant.Relevantother':'checkbox',//
                 'Consultation__Details.Appointment.Relevant.RelevantotherValue':'string',//relevantothervalue
+                'Consultation__Details.Appointment.Relevant.Relevantother':'checkbox',//
                 'Consultation__Details.Appointment.Relevant.DDX_BCC':'checkbox',//bcc
                 'Consultation__Details.Appointment.Relevant.DDX_SCC':'checkbox',//scc
                 'Consultation__Details.Appointment.Relevant.DDX_DdxMelanoma':'checkbox',//ddxmelanoma
                 'Consultation__Details.Appointment.Relevant.DDX_Merkel':'checkbox',//merkel
-                'Consultation__Details.Appointment.Relevant.DDX_Ddxother':'checkbox',//ddxother
                 'Consultation__Details.Appointment.Relevant.DDX_DdxotherValue':'string',//ddxothervalue
+                'Consultation__Details.Appointment.Relevant.DDX_Ddxother':'checkbox',//ddxother
                 'Consultation__Details.Appointment.RECOMMENDATIONS.Biopsy':'checkbox',//biopsy
                 'Consultation__Details.Appointment.RECOMMENDATIONS.Effudex__/__Aldara':'checkbox',//effudex / aldara
                 'Consultation__Details.Appointment.RECOMMENDATIONS.Cryotherapy':'checkbox',//cryotherapy
@@ -209,10 +209,10 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 'Consultation__Details.Appointment.RECOMMENDATIONS.Graft':'checkbox',//graft
                 'Consultation__Details.Appointment.RECOMMENDATIONS.SSG':'checkbox',//ssg
                 'Consultation__Details.Appointment.RECOMMENDATIONS.FTSG':'checkbox',//ftsg
-                'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',//specialist
                 'Consultation__Details.Appointment.Suithble__for.SpecialistValue':'string',//specialistvalue
-                'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',//telehealth
+                'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',//specialist
                 'Consultation__Details.Appointment.Suithble__for.TelehealthValue':'string',//telehealthvalue
+                'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',//telehealth
                 'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'//consult_note_image
             };
             $scope.swapName = function (name) {
@@ -235,6 +235,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.dataPrintResultStep2 = [];
 
             $scope.mapName = function (object) {
+                var mapped = false;
                 for (var key in $scope.dataPrintType) {
                     if(object.dataKey.indexOf(key) >= 0) {
                         if(!$scope.dataPrintResultStep0[key])
@@ -253,8 +254,11 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         else {
                             $scope.dataPrintResultStep0[key][object.Description].Value = object.Value;
                         }
+                        mapped = true;
+                        break;
                     }
                 }
+                return mapped;
             };
 
             /**

@@ -22,19 +22,13 @@ socketJoinRoom = function(server, api, obj) {
     });
 }
 
-messageTransfer = function(caller, receiver, message, receiverName, teleCallUID, data) {
-    var info = {
-        callerTeleUID: caller,
-        receiverTeleUID: receiver,
-        message: message,
-        receiverName: receiverName,
-        teleCallUID: teleCallUID,
-    };
-    if (message === "waiting") {
-        info.callerInfo = data;
-    }
-    socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(msg) {
-        console.log("send call", msg);
+messageTransfer = function(from, to, message) {
+    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        from: from,
+        to: to,
+        message: message
+    }, function(data) {
+        console.log("send call", data);
     });
 }
 
@@ -51,9 +45,9 @@ socketAuth.on('testmessage', function(msg) {
     console.log(JSON.stringify("aa" + msg));
 });
 socketAuth.on('UpdateRequestWAAppointmentCompany_DM', function(msg) {
-        console.log('UpdateRequestWAAppointmentCompany_DM', msg);
-    })
-    /* end socket 3006 */
+    console.log('UpdateRequestWAAppointmentCompany_DM', msg);
+})
+/* end socket 3006 */
 
 
 
@@ -70,97 +64,63 @@ function createSocketConnectRest() {
     socketRest.on('testmessage', function(msg) {
         console.log(JSON.stringify("b" + msg));
     })
-    socketRest.on('testaaa', function(msg) {
-        console.log("testaaa", msg);
+    socketRest.on('testaaa', function(msg){
+        console.log("testaaa",msg);
     })
 }
 /* begin socket 3005 */
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
 
-var num = 0;
+
+
 /* begin socket 3009 */
 function createSocketConnectTelehealth() {
     //====connect 3016
-    if (num === 0) {
-        socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
-        socketTelehealth.on('connect', function() {
-            connectedNc();
-            if (getCookie("userInfo")) {
-                socketJoinRoom(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: JSON.parse(decodeURIComponent(getCookie("userInfo"))).TelehealthUser.UID });
-            };
-        });
+    socketTelehealth = io.sails.connect(o.const.telehealthBaseURL);
+    socketTelehealth.on('connect', function() {
+        createSocketConnectNC();
+        console.log("telehealth connect socket");
+        if (ioSocket.telehealthConnect) {
+            ioSocket.telehealthConnect();
+        }
+    });
+    socketTelehealth.on('testmessage', function(msg) {
+        console.log(JSON.stringify("d" + msg));
+    });
 
-        socketTelehealth.on('disconnect', function() {
-            console.log("socketTelehealth disconnect");
-        });
-        // socketTelehealth.on('testmessage', function(msg) {
-        //     console.log(JSON.stringify("d" + msg));
-        // });
 
-        socketTelehealth.on('receiveMessage', function(msg) {
-            switch (msg.message) {
-                case "startcall":
-                    if (ioSocket.telehealthStartCall) {
-                        console.log("receiveMessage startcall");
-                        ioSocket.telehealthStartCall(msg);
-                    }
-                    break;
-                case "call":
-                    if (ioSocket.telehealthCall) {
-                        console.log("receiveMessage call");
-                        ioSocket.telehealthCall(msg);
-                    }
-                    break;
-                case "answer":
-                    if (ioSocket.telehealthAnswer) {
-                        console.log("receiveMessage Answer");
-                        ioSocket.telehealthAnswer(msg);
-                    }
-                    break;
-                case "destroy":
-                    if (ioSocket.telehealthDestroy) {
-                        console.log("receiveMessage Destroy");
-                        ioSocket.telehealthDestroy(msg);
-                    }
-                    break;
-                case "issue":
-                    if (ioSocket.telehealthIssue) {
-                        console.log("receiveMessage issue");
-                        ioSocket.telehealthIssue(msg);
-                    }
-                    break;
-                case "waiting":
-                    if (ioSocket.telehealthWaiting) {
-                        console.log("receiveMessage waiting");
-                        ioSocket.telehealthWaiting(msg);
-                    }
-                    break;
-                case "misscall":
-                    if (ioSocket.telehealthMisscall) {
-                        console.log("receiveMessage misscall");
-                        ioSocket.telehealthMisscall(msg.data);
-                    }
-                    break;
-                default:
-                    console.log("default");
-            };
-        });
-        num++;
-    };
+    socketTelehealth.on('receiveMessage', function(msg) {
+        switch (msg.message) {
+            case "decline":
+                if (ioSocket.telehealthDecline)
+                    ioSocket.telehealthDecline(msg);
+                else
+                    ioSocket.telehealthMesageDecline = msg;
+                break;
+            case "call":
+                if (ioSocket.telehealthCall)
+                    ioSocket.telehealthCall(msg);
+                else
+                    ioSocket.telehealthMesageCall = msg;
+                break;
+            case "cancel":
+                if (ioSocket.telehealthCancel)
+                    ioSocket.telehealthCancel(msg);
+                else
+                    ioSocket.telehealthMesageCancel = msg;
+                break;
+            case "misscall":
+                if (ioSocket.telehealthMisscall)
+                    ioSocket.telehealthMisscall(msg);
+                else
+                    ioSocket.telehealthMesageMisscall = msg;
+                break;
+            case "addDoctor":
+                if (ioSocket.telehealthCall)
+                    ioSocket.telehealthCall(msg);
+                break;
+        };
+    });
 }
 /* begin socket 3009 */
 

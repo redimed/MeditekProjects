@@ -139,10 +139,10 @@ app.factory('OT', function() {
                         loaded: function() {
                             scope.$emit('otLayout');
                         },
-                        streamCreated: function(event) {
-                            scope.$emit('otStreamCreated', event);
+                        streamCreated: function() {
+                            scope.$emit('otStreamCreated');
                         },
-                        streamDestroyed: function(event) {
+                        streamDestroyed: function() {
                             scope.$emit('otStreamDestroyed');
                         }
                     });
@@ -187,6 +187,7 @@ app.factory('OT', function() {
                         }
                     });
                     subscriber.on('loaded', function() {
+                        scope.$emit('runtime');
                         scope.$emit('otLayout');
                     });
                     // Make transcluding work manually by putting the children back in there

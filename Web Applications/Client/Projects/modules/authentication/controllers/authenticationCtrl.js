@@ -12,6 +12,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     } else {
         document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white";
     }
+
     $scope.$on('$includeContentLoaded', function() {
         // Layout.initHeader(); // init header
         // Layout.initSidebar(); // init sidebar
@@ -21,10 +22,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         // Demo.init(); // init theme panel
         // Layout.initFooter(); // init footer
     });
-
-    var UserInfo = $cookies.getObject('userInfo');
-    $scope.Role = UserInfo.roles[UserInfo.roles.length - 1].RoleCode;
-    console.log("User Info ", $cookies.getObject('userInfo'));
 
     $scope.info = {};
     $scope.logout = function() {
@@ -106,236 +103,67 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
 
     $rootScope.insurers = [{
-        name: 'Insurer Company'
-    }, {
-        name: 'Mineral Resources'
-    }, {
-        name: 'Mesa Minerals'
-    }];
+            name: 'Insurer Company'
+        }, {
+            name: 'Mineral Resources'
+        }, {
+            name: 'Mesa Minerals'
+        }];
     $rootScope.Account_types = [{
-        name: 'Titanium Privilege Account'
-    }, {
-        name: '3-in-1 Account'
-    }, {
-        name: 'Silver Savings Account'
-    }];
+            name: 'Titanium Privilege Account'
+        }, {
+            name: '3-in-1 Account'
+        }, {
+            name: 'Silver Savings Account'
+        }];
 
     //phan quoc chien
-
-    var clickDoctor = true;
-
     $scope.loadListDoctor = function(fullname) {
-        if (clickDoctor === true) {
-            //EXTERNAL
-            AuthenticationService.getListDoctor({
-                Search: {
-                    FullName: (fullname) ? fullname : null
-                },
-                attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
-                isAvatar: true,
-                RoleID: [4]
-            }).then(function(data) {
-                $scope.listDoctorExternal = data.data;
-            });
+        //INTERNAL
+        AuthenticationService.getListDoctor({
+            Search: {
+                FullName: (fullname) ? fullname : null
+            },
+            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+            isAvatar: true,
+            RoleID: [4]
+        }).then(function(data) {
+            $scope.listDoctorInternal = data.data;
+        });
 
-            //INTERNAL  
-            AuthenticationService.getListDoctor({
-                Search: {
-                    FullName: (fullname) ? fullname : null
-                },
-                attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
-                isAvatar: true,
-                RoleID: [5]
-            }).then(function(data) {
-                $scope.listDoctorInternal = data.data;
-            });
-
-            clickDoctor = false;
-        } else {
-            clickDoctor = true;
-        }
+        //EXTERNAL 
+        AuthenticationService.getListDoctor({
+            Search: {
+                FullName: (fullname) ? fullname : null
+            },
+            attributes: [{ "field": "FirstName" }, { "field": "LastName" }, { "field": "MiddleName" }],
+            isAvatar: true,
+            RoleID: [5]
+        }).then(function(data) {
+            $scope.listDoctorExternal = data.data;
+        });
     };
 
     $scope.loadListDoctor();
 
     $scope.callDoctor = function(data) {
-        console.log("Start Call Doctor !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        var info = {
-            message: "startcall",
-            callerInfo: UserInfo,
-            receiverInfo: data.UserAccount,
-            callName: UserInfo.UserName + ", " + ((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName)
-        };
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
-            console.log("send call", data);
-        });
-    };
-
-    ioSocket.telehealthStartCall = function(msg) {
+        console.log(data);
+        console.log(data.UserAccount.TelehealthUser.UID);
+        console.log(ioSocket.telehealthOpentok);
+        console.log(((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName));
+        var userInfo = $cookies.getObject('userInfo');
+        var userName = ((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName);
+        var userCall = data.UserAccount.TelehealthUser.UID;
         ioSocket.telehealthDoctorCallWindow = window.open($state.href("blank.call", {
-            apiKey: msg.data.apiKey,
-            sessionId: msg.data.sessionId,
-            token: msg.data.token,
-            teleCallUID: msg.data.teleCallUID,
-            teleCallID: msg.data.teleCallID,
-            callName: msg.data.callName,
-            receiverUID: msg.data.receiverUID,
-            receiverTeleUID: msg.data.receiverTeleUID,
-            callerTeleUID: UserInfo.TelehealthUser.UID
+            apiKey: ioSocket.telehealthOpentok.apiKey,
+            sessionId: ioSocket.telehealthOpentok.sessionId,
+            token: ioSocket.telehealthOpentok.token,
+            userName: userName,
+            uidCall: userCall,
+            uidUser: userInfo.TelehealthUser.UID,
         }), "CAll", { directories: "no" });
-    };
-
-    ioSocket.telehealthCall = function(msg) {
-        console.log("msg ", msg);
-        swal({
-            title: msg.callerName,
-            imageUrl: "theme/assets/global/images/E-call_33.png",
-            timer: 10000,
-            html: "<img src='theme/assets/global/img/loading.gif' />",
-            showCancelButton: true,
-            confirmButtonColor: "#26C281",
-            confirmButtonText: "Answer",
-            cancelButtonText: "Cancel",
-            cancelButtonColor: "#D91E18",
-            allowOutsideClick: false,
-            allowEscapeKey: false
-        }, function(isConfirm) {
-            if (isConfirm === true) {
-                console.log("Message MSG");
-                ioSocket.telehealthReceiveWindow = window.open($state.href("blank.receive", {
-                    apiKey: msg.apiKey,
-                    sessionId: msg.sessionId,
-                    token: msg.token,
-                    teleCallUID: msg.teleCallUID,
-                    teleCallID: msg.teleCallID,
-                    callName: msg.callName,
-                    receiverTeleUID: msg.receiverTeleUID,
-                    callerTeleUID: msg.callerTeleUID
-                }), "CAll", { directories: "no" });
-                // When receiver choose anwer
-                messageTransfer(msg.callerTeleUID, msg.receiverTeleUID, "answer", msg.receiverName, msg.teleCallUID, null);
-                swal.close();
-            } else if (isConfirm === false) {
-                // When receiver choose cancel
-                console.log("callerTeleUID", msg.callerTeleUID);
-                messageTransfer(msg.callerTeleUID, msg.receiverTeleUID, "decline", msg.receiverName, msg.teleCallUID, null);
-                swal.close();
-            } else if (isConfirm === null) {
-                // When receiver no choose and waiting timer
-                console.log("teleCallUID waiting ", msg.teleCallUID);
-                messageTransfer(msg.callerTeleUID, msg.receiverTeleUID, "waiting", msg.receiverName, msg.teleCallUID, msg.callerInfo);
-
-            }
-            o.audio.pause();
-        });
-        o.audio.loop = true;
-        o.audio.play();
-    };
-
-    ioSocket.telehealthConnect = function() {
-        console.log("reconnect socketTelehealth");
-        socketJoinRoom(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
-    };
-
-    ioSocket.socketAuthReconnect = function() {
-        console.log("reconnect socketAuth-> makeUserOwnRoom");
-        socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
-    };
-
-    ioSocket.telehealthCancel = function(msg) {
-        console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);
-        if (ioSocket.telehealthDoctorCallWindow) {
-            ioSocket.telehealthDoctorCallWindow.close();
-        }
-        if (ioSocket.telehealthReceiveWindow) {
-            ioSocket.telehealthReceiveWindow.close();
-        }
-        swal.close();
-        o.audio.pause();
     }
 
-    ioSocket.telehealthDecline = function(msg) {
-        console.log("declineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
-        if (ioSocket.telehealthPatientCallWindow) {
-            ioSocket.telehealthPatientCallWindow.close();
-        }
-        if (ioSocket.telehealthDoctorCallWindow) {
-            ioSocket.telehealthDoctorCallWindow.close();
-        }
-        swal("Receiver Busy", "Please Call Back Later");
-        o.audio.pause();
-    };
-
-    ioSocket.telehealthMisscall = function(msg) {
-        if (msg.length > 0) {
-            var q = _.uniq(msg, 'ID');
-            var CallerName = "";
-            for (var i = 0; i < q.length; i++) {
-                if (i === q.length - 1) {
-                    CallerName = CallerName + q[i].UserName;
-                } else {
-                    CallerName = CallerName + q[i].UserName + " ,";
-                }
-            }
-            swal({
-                title: "Miss Call",
-                text: "You have " + msg.length + " miss call from " + CallerName,
-                imageUrl: "theme/assets/global/images/E-call_18.png",
-                showCancelButton: false,
-                confirmButtonText: "OK"
-            }, function(isConfirm) {
-                if (isConfirm === true) {
-                    // when user confirm go to server and delete misscall in redis
-                    console.log("CallerInfo UID", UserInfo.TelehealthUser.UID);
-                    messageTransfer("null", UserInfo.TelehealthUser.UID, "delmisscall");
-                }
-            });
-        }
-    };
-
-    ioSocket.telehealthIssue = function(msg) {
-        console.log("Issueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", msg);
-        if (ioSocket.telehealthDoctorCallWindow && ioSocket.telehealthDoctorCallWindow != null) {
-            ioSocket.telehealthDoctorCallWindow.close();
-            ioSocket.telehealthDoctorCallWindow = null;
-        }
-        if (ioSocket.telehealthReceiveWindow && ioSocket.telehealthReceiveWindow != null) {
-            ioSocket.telehealthReceiveWindow.close();
-            ioSocket.telehealthReceiveWindow = null;
-        }
-        // swal.close();
-        o.audio.pause();
-        // if (msg.noissue === UserInfo.TelehealthUser.UID) {
-        //     swal("Device issue", "Please Call Back Later");
-        // } else {
-        swal("Device issue", "Please Check Again System and Call Back Later");
-        // };
-    };
-
-    ioSocket.telehealthWaiting = function(msg) {
-        console.log("Waitinggggggggggggggggggggggggggggggggggggggggg", msg);
-        if (msg.misscall) {
-            ioSocket.telehealthMisscall(msg.misscall);
-        } else {
-            if (ioSocket.telehealthDoctorCallWindow && ioSocket.telehealthDoctorCallWindow != null) {
-                ioSocket.telehealthDoctorCallWindow.close();
-                ioSocket.telehealthDoctorCallWindow = null;
-            };
-            o.audio.pause();
-            swal("Receiver Waiting", "Please Call Back Later");
-        };
-    };
-
-    ioSocket.telehealthDestroy = function(msg) {
-        swal("Destroy", "Please Call Back Later");
-    };
-
-    ioSocket.telehealthAnswer = function(msg) {
-        o.audio.pause();
-        swal.close();
-    };
-
-    // No using
     function getRoomOpentok() {
         return $q(function(resolve, reject) {
             AuthenticationService.CreateRoomInOpentok().then(function(data) {
@@ -355,7 +183,83 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                 reject({ message: "error", error: error });
             });
         });
+    }
+
+    ioSocket.getRoomOpentok = getRoomOpentok();
+
+    ioSocket.telehealthCall = function(msg) {
+        swal({
+            title: msg.fromName,
+            imageUrl: "theme/assets/global/images/E-call_33.png",
+            timer: 30000,
+            html: "<img src='theme/assets/global/img/loading.gif' />",
+            showCancelButton: true,
+            confirmButtonColor: "#26C281",
+            confirmButtonText: "Answer",
+            cancelButtonText: "Cancel",
+            cancelButtonColor: "#D91E18",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        }, function(isConfirm) {
+            if (isConfirm) {
+                ioSocket.telehealthReceiveWindow = window.open($state.href("blank.receive", {
+                    apiKey: msg.apiKey,
+                    sessionId: msg.sessionId,
+                    token: msg.token,
+                    userName: msg.fromName
+                }), "CAll", { directories: "no" });
+                messageTransfer(msg.to, msg.from, "answer");
+            } else {
+                messageTransfer(msg.to, msg.from, "decline");
+            };
+            o.audio.pause();
+            swal.close();
+        });
+        o.audio.loop = true;
+        o.audio.play();
     };
+
+    ioSocket.telehealthConnect = function() {
+        console.log("reconnect socketTelehealth");
+        socketJoinRoom(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: $cookies.getObject('userInfo').TelehealthUser.UID });
+    }
+
+    ioSocket.socketAuthReconnect = function() {
+        console.log("reconnect socketAuth-> makeUserOwnRoom");
+        socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
+    }
+
+    ioSocket.telehealthCancel = function(msg) {
+        console.log(ioSocket.telehealthSwalCall);
+        swal.close();
+        o.audio.pause();
+    }
+
+    ioSocket.telehealthDecline = function(msg) {
+        if (ioSocket.telehealthPatientCallWindow) {
+            ioSocket.telehealthPatientCallWindow.close();
+        }
+        if (ioSocket.telehealthDoctorCallWindow) {
+            ioSocket.telehealthDoctorCallWindow.close();
+        }
+        swal.close();
+        o.audio.pause();
+    }
+
+    ioSocket.telehealthMisscall = function(msg) {
+        swal({
+            title: "Miss Call From " + msg.fromName,
+            imageUrl: "theme/assets/global/images/E-call_18.png",
+            timer: 30000,
+            html: "<img src='theme/assets/global/img/loading.gif' />",
+            showCancelButton: false,
+            confirmButtonColor: "#26C281",
+            confirmButtonText: "OK",
+            cancelButtonColor: "#D91E18",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
+    }
 });
 
 

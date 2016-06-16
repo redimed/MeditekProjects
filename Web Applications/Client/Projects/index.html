@@ -182,9 +182,12 @@ License: You must have a valid license purchased only from themeforest(the above
     <script type="text/javascript" src="./theme/assets/global/libs/ladda-angular/dist/ladda-angular.js"></script>
     <!-- END ANGULAR PROGRESS BUTTON -->
     <script src="app.js" type="text/javascript"></script>
-    <!-- BEGIN Sails Socket IO v 0.13.7 -->
-    <script src="./theme/assets/global/libs/sails.io.js/sails.io.js" autoConnect="false"></script>
-    <!-- END Sails Socket IO v 0.13.7 -->
+    <!-- BEGIN socket -->
+    <script src="./theme/assets/global/libs/sails.io.js/sails.io.js" type="text/javascript"></script>
+    <!-- END socket -->
+    <script type="text/javascript">
+    io.sails.autoConnect = false;
+    </script>
     <script src="directives.js" type="text/javascript"></script>
     <!--BEGIN COMMON SERVICE-->
     <script src="common/services/CommonService.js"></script>

@@ -64,16 +64,15 @@ module.exports = React.createClass({
             var width = $('#'+calRes[0]).val();
             var height = $('#'+calRes[1]).val()/100;
 
-            if(width != '' && height != ''){
+            if(width  && height){
                 var bmi_cal = (width/Math.pow(height, 2)).toFixed(1);
                 var calResArray = calRes[4].split('-');
-                var res = calResArray[0];
-                calResArray.map(function(cal, cal_index){
-                    console.log("tinh",res,cal,bmi_cal);
+                var res = parseFloat(calResArray[0]);
+                calResArray.map(function(calStr, cal_index){
+                    var cal = parseFloat(calStr);
                     if(cal <= bmi_cal)
                         res = cal;
                 })
-                console.log('res', res);
                 var radios = $('input[name='+calRes[2]+']');
                 radios.filter(function(){
                     var id = $(this).attr('id');
@@ -86,15 +85,86 @@ module.exports = React.createClass({
                     }
                 })
                 var inputs = $("input[name="+calRes[3]+"]");
-                console.log(inputs);
                 if(inputs.length>0) {
-                    console.log(inputs[0])
                     $(inputs[0]).val(bmi_cal);
                 }
                 
+            } else {
+                var radios = $('input[name='+calRes[2]+']');
+                radios.filter(function(){
+                    var id = $(this).attr('id');
+                    $('#'+id).iCheck('uncheck');
+                });
+                var inputs = $("input[name="+calRes[3]+"]");
+                if(inputs.length>0) {
+                    $(inputs[0]).val(null);
+                }
             }
         })
     },
+    // cal expression: WHR(field_1_0_5,field_1_0_7,whr_class,whr,0-0.85-0.96,0-0.75-0.86,gender)
+    whr: function(calRes) {
+        var self = this;
+        $(this.refs.input).on('change', function (event) {
+            var radioGender = $("input[name="+calRes[6]+"]:checked");
+            var gender = null;
+            if(radioGender.length>0) {
+                gender = radioGender.val();
+            }
+            console.log("WHR ->>>>>>>>>>>> Gender:", gender);
+            var waist = $('#' + calRes[0]).val();
+            var hip = $('#' + calRes[1]).val();
+            if(waist && hip) {
+                var whr_value = (waist/hip).toFixed(2);
+                var calExpArr = [];
+                if (gender == 'Male')
+                    calExpArr = calRes[4].split('-');
+                else
+                    calExpArr = calRes[5].split('-');
+                var res = parseFloat(calExpArr[0]);
+                calExpArr.map(function(expStr, expIndex){
+                    var exp = parseFloat(expStr);
+                    if(whr_value >= exp)
+                    {
+                        res = exp;
+                    }
+                });
+                var radios = $("input[name=" + calRes[2] + "]");
+                radios.filter(function(){
+                    var id = $(this).attr('id');
+                    var radioValueStr = $('#'+id).val();
+                    var radioValueArr = radioValueStr.split('-');
+                    var radioValue = null;
+                    if (gender == 'Male')
+                        radioValue = radioValueArr[0];
+                    else
+                        radioValue = radioValueArr[1];
+                    if (res === parseFloat(radioValue))
+                        $('#' + id).iCheck('check');
+                    else
+                        $('#' + id).iCheck('uncheck');
+                    var inputs = $('input[name=' + calRes[3] + ']');
+                    if(inputs.length > 0) {
+                        $(inputs[0]).val(whr_value);
+                    }
+
+                })
+
+            } else {
+                var radios = $("input[name=" + calRes[2] + "]");
+                radios.filter(function(){
+                    var id = $(this).attr('id');
+                    $('#' + id).iCheck('uncheck');
+                });
+                var inputs = $('input[name=' + calRes[3] + ']');
+                if(inputs.length > 0) {
+                    $(inputs[0]).val(null);
+                }
+            }
+
+        })
+    },
+
     onSum: function(sumRef){
         var self = this;
         $(this.refs.input).on('change', function(event){

@@ -131,6 +131,11 @@ module.exports = React.createClass({
             this.refs[refRow].bmi(refField, calRes);
         } 
     },
+    whr: function(refRow, refField, calRes) {
+        if(this.refs[refRow]) {
+            this.refs[refRow].whr(refField, calRes);
+        }  
+    },
     getAllFieldValueWithValidation: function(stringType){
         var rows = this.props.rows.toJS();
         var fields = [];

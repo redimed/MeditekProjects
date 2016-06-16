@@ -35,7 +35,7 @@
         <div class="profile-desc-link margin-top-10">
             <i><small>Expiry Date:</small></i>
             <a href="">
-                <span ng-if="patientTelehealth.ExpiryDate && patientTelehealth.ExpiryDate != null">{{patientTelehealth.ExpiryDate}}</span>
+                <span ng-if="patientTelehealth.ExpiryDate && patientTelehealth.ExpiryDate != null">{{patientTelehealth.ExpiryDate  | date:'dd-MM-yyyy'}}</span>
                 <span ng-if="!patientTelehealth.ExpiryDate || patientTelehealth.ExpiryDate == null">N/A</span>
             </a>
         </div>

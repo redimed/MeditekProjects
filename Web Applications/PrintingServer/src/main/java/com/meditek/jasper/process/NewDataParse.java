@@ -54,6 +54,9 @@ public final class NewDataParse {
             case "repeat":
                 parsedObj=repeatParsing(obj.getValue(), baseUrl, printMethod);
                 break;
+            case "image_array":
+                parsedObj=imageArrayParsing(obj.getValue(), baseUrl, printMethod);
+                break;
             default:
                 parsedObj=obj.getValue();
                 break;
@@ -97,6 +100,25 @@ public final class NewDataParse {
                 break;
         }
         return parsedImg;
+    }
+    
+    // Parse an array of images based on print method
+    // Input: an object image UID, baseUrl and print method
+    // Output: an object contain parsed image array.
+    private static Object imageArrayParsing(Object dataObj, String baseUrl, String printMethod){
+        List<HashMap> imageArray = (List<HashMap>)dataObj;
+        ArrayList<Hashtable> parsedImgArr = new ArrayList<Hashtable>();
+        if (imageArray==null) return parsedImgArr;
+        for(HashMap image : imageArray){
+            System.out.println("this is image: " + image.toString());
+            Hashtable parsedHash = new Hashtable();
+            Object parsedImg = imageNormalParsing(image.get("value"), "https://meditek.redimed.com.au:3005", printMethod);
+            if (parsedImg != null){
+                parsedHash.put("value", parsedImg);
+            }
+                parsedImgArr.add(parsedHash);
+        }
+        return parsedImgArr;
     }
     
     // Parse data for a section that repeat continuously many times in the report (not for module that appear multiple times)

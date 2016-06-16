@@ -77,7 +77,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 	        };
 
 			scope.Search = function(data,e){
-
+				// console.log("search data", data);
 				if(e==13){
 					scope.searchObjectMap.Search = data;
 					scope.loadList(scope.searchObjectMap);

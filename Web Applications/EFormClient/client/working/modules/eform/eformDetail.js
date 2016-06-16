@@ -611,6 +611,7 @@ module.exports = React.createClass({
         var self = this;
 
         var fields = [];
+
         this.content.sections.map(function(section){
             if(typeof section.viewType !== 'undefined'){
                 if(section.viewType === 'dynamic'){
@@ -626,14 +627,21 @@ module.exports = React.createClass({
                                     if(content_field.ref === field.ref){
                                         var temp_value = '';
                                         if(field.type === 'eform_input_check_radio'){
-                                            temp_value = (field.checked)?'yes':'no';
+                                            if(field.checked === true)
+                                                temp_value = 'yes';
+                                            else if(field.checked === false)
+                                                temp_value === 'no'
                                         }else
                                             temp_value = field.value;
                                         if(field.type === 'eform_input_check_checkbox'){
-                                            field.value = (field.checked)?'yes':'no';
+                                            if(field.checked === true)
+                                                temp_value = 'yes';
+                                            else if(field.checked === false)
+                                                temp_value === 'no'
                                         }
-                                        if(temp_value !== '')
-                                            fields.push(field);
+                                        if(temp_value !== '' && temp_value !== null){
+                                            fields.push(field); 
+                                        }
                                     }
                                 })
                             })
@@ -641,30 +649,30 @@ module.exports = React.createClass({
                     }
                 }else{
                     self.allFields.map(function(field){
+                        var f = $.extend({}, field);
                         if(field.type === 'eform_input_check_checkbox'){
-                            field.value = (field.checked)?'yes':'no';
+                            f.value = (field.checked)?'yes':'no';
                         }
                         var split = field.ref.split('_');
                         var section_ref = "section_"+split[1];
                         if(section_ref === section.ref){
-                            var field_temp = $.extend({}, field);
                             if(field.type === 'eform_input_signature'){
                                 if(field.value)
-                                    field_temp.base64Data = field.value.sub;
-                                field_temp.value = null;
+                                    f.base64Data = field.value.sub;
+                                f.value = null;
                             }
                             if(field.value === 'TODAY')
-                                field_temp.value = moment().format('DD/MM/YYYY');
+                                f.value = moment().format('DD/MM/YYYY');
                             if(field.type === 'table'){
                                 if(field.typeChild === 'd'){
                                     if(field.value !== ''){
                                         var value = field.value.split(' ');
                                         value = value[0].split('-');
-                                        field.value = value[2]+'/'+value[1]+'/'+value[0];
+                                        f.value = value[2]+'/'+value[1]+'/'+value[0];
                                     }
                                 }
                             }
-                            fields.push(field_temp);
+                            fields.push(f);
                         }
                     })
                 }
@@ -707,7 +715,7 @@ module.exports = React.createClass({
             templateUID: self.templateUID
         }
 
-        console.log(JSON.stringify(data));
+        console.log(JSON.stringify(fields));
 
         EFormService.createPDFForm(data)
         .then(function(response){
@@ -717,7 +725,7 @@ module.exports = React.createClass({
             });
             var filesaver = saveAs(blob, fileName);
             setTimeout(function(){
-                window.location.reload();
+                //window.location.reload();
             }, 1000)
         }, function(error){
 

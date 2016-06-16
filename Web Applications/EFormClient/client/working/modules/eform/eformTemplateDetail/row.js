@@ -285,7 +285,7 @@ module.exports = React.createClass({
                         var tableFields = this.refs[fieldRef].getAllValue('normal');
                     tableFields.map(function(tableField, index){
                         tableField.refRow = self.props.refTemp;
-                        tableField.moduleID = self.props.moduleID
+                        tableField.moduleID = self.props.moduleID;
                         results.push(tableField);
                     })
                 }else if(Config.getPrefixField(type, 'checkbox') > -1 || Config.getPrefixField(type, 'radio') > -1){

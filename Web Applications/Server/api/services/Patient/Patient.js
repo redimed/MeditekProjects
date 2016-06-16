@@ -705,7 +705,7 @@ module.exports = {
                     })
                     .then(function(validated) {
                         if (validated && validated.status == 'success') {
-                            userInfo.Password = generatePassword(12, false);
+                            userInfo.Password = generatePassword(6, false,/[\w\d]/);
                             userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
                             return Services.UserAccount.CreateUserAccount(userInfo, t);
                         } else {

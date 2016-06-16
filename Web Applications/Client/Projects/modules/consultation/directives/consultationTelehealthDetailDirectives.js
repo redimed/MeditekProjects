@@ -734,6 +734,28 @@ app.directive('telehealthDetail', function(doctorService) {
                 };
 
                 $scope.selectPatient = function() {
+                    var info = {};
+                    for(var key in $scope.ShowData.patient) {
+                        if(key == 'FirstName') {
+                            info[key] = $scope.ShowData.patient[key];
+                        }
+                        else if (key == 'LastName') {
+                            info[key] = $scope.ShowData.patient[key];
+                        }
+                        else if (key == 'LastName') {
+                            info[key] = $scope.ShowData.patient[key];
+                        }
+                        else if (key == 'Gender') {
+                            info[key] = $scope.ShowData.patient[key];
+                        }
+                        else if (key == 'Email1') {
+                            info[key] = $scope.ShowData.patient[key];
+                        }
+                        else if (key == 'PhoneNumber') {
+                            info['UserAccount'] = $scope.ShowData.patient[key];
+                        }
+                    }
+                    console.log("?????? hehe");
                     var PatientAppointment = angular.copy($scope.ShowData.patient)
                     var postData = {
                         "data": {
@@ -784,6 +806,7 @@ app.directive('telehealthDetail', function(doctorService) {
                         animation: true,
                         templateUrl: '../modules/appointment/views/appointmentSelectPatientModal.html',
                         controller: function($scope, $modalInstance) {
+                            $scope.info = info;
                             $scope.patient = {
                                 runIfSuccess: function(data) {
                                     $modalInstance.close({

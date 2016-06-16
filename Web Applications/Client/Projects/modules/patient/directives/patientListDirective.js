@@ -14,6 +14,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			ishaveusername:'=isHaveUsername',
 			iscompanycreate:'=isCompanyCreate',
 			company:'=onCompany',
+			autofilter:'=onAutofilter',
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
@@ -59,6 +60,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				if(['ASSISTANT','ADMIN'].indexOf(role.RoleCode)>=0)
 					scope.enableCreate=true;
 			})
+
 			scope.loadList = function(info){
 				PatientService.loadlistPatient(info).then(function(response){
 					if(response.message=="success"){
@@ -289,9 +291,14 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				}else{
 					$state.go('authentication.patient.create');
 				}
-			}
+			};
 
 			scope.init();
+
+			if(scope.autofilter) {
+				scope.search = scope.autofilter;
+				scope.Search(scope.search, 13);
+			}
 		},
 		templateUrl:"modules/patient/directives/template/patientList.html"
 	};

@@ -239,8 +239,8 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     ioSocket.socketAuthReconnect = function() {
         console.log("reconnect socketAuth-> makeUserOwnRoom");
-        socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID }); << << << < 5 be7bc44df21cdaf5814dd72e9ec593fa885e2b8
-    }
+        socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: $cookies.getObject('userInfo').UID });
+    };
 
     ioSocket.telehealthCancel = function(msg) {
         console.log("Cancelllllllllllllllllllllllllllllllllllllllllllllllllll", msg);

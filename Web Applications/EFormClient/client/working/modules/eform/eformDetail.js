@@ -225,13 +225,23 @@ module.exports = React.createClass({
                                 if (Config.getPrefixField(cal, 'WHR(') > -1) {
                                     if (cal) {
                                         var calRes = Config.getArrayPrecal(4, cal);
-                                        console.log("TTTTTTTTTTTTTTT calRes", calRes);
                                         if (self.refs[section.ref]) {
                                             self.refs[section.ref].whr(row.ref, field.ref, calRes);
                                         }
                                     }
                                 }
                                 /* WHR END */
+
+                                /*TRIGGERCHANGE BEGIN*/
+                                if (Config.getPrefixField(cal, 'TRIGGERCHANGE(') > -1) {
+                                    if (cal) {
+                                        var calRes = Config.getArrayPrecal(14, cal);
+                                        if (self.refs[section.ref]) {
+                                            self.refs[section.ref].triggerChange(row.ref, field.ref, calRes);
+                                        }
+                                    }
+                                }
+                                /*TRIGGERCHANGE END*/
                                 /* COUNT PREFIX */
                                 if(Config.getPrefixField(cal, 'COUNT') > -1){
                                     if(cal !== ''){

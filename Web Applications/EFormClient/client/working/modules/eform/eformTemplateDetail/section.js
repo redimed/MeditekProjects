@@ -136,6 +136,11 @@ module.exports = React.createClass({
             this.refs[refRow].whr(refField, calRes);
         }  
     },
+    triggerChange: function (refRow, refField, calRes) {
+        if(this.refs[refRow]) {
+            this.refs[refRow].triggerChange(refField, calRes);
+        }
+    },
     getAllFieldValueWithValidation: function(stringType){
         var rows = this.props.rows.toJS();
         var fields = [];

@@ -140,12 +140,24 @@ module.exports = React.createClass({
 
     },
     triggerChange: function(calRes) {
-        calRes.map(function(expStr, index){
-            var element = $('#'+expStr);
-            element.fireEvent('onChange');
+        $(this.refs.input).on('ifChanged', function(event){
+            calRes.map(function(expStr, index){
+                var element = $('#'+expStr)[0];
+                if(element)
+                {
+                    if ("createEvent" in document) {
+                        var evt = document.createEvent("HTMLEvents");
+                        evt.initEvent("change", false, true);
+                        element.dispatchEvent(evt);
+                    } else {
+                        element.fireEvent("onchange");
+                    }
+                }
+            })
         })
     },
     render: function(){
+
         var type = this.props.type;
         var html = null;
         var display_name = null;

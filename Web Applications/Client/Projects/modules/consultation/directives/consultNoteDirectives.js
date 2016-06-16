@@ -270,7 +270,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                             {
                                 var file = [];
                                 for (var i = 0; i < object.FileUploads.length; i++) {
-                                    file.push(object.FileUploads[i].UID);
+
+                                    file.push({value:object.FileUploads[i].UID});
                                 }
                                 $scope.dataPrintResultStep0[key][object.Description].Value =file;
                                 // $scope.dataPrintResultStep0[key][object.Description].Value = object.FileUploads[0].UID;

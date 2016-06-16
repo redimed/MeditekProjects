@@ -605,7 +605,8 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                 postdata.data.push({ ref: key + '_table', name: key, rows: i, columns: col, type: 'table' });
             }
         }
-        consultationServices.PrintPDF(postdata).then(function(responsePrintPDF) {
+        //consultationServices.PrintPDF(postdata).then(function(responsePrintPDF) {
+        consultationServices.OldPrintPDF(postdata).then(function(responsePrintPDF) {
             //console.log(responsePrintPDF)
             var blob = new Blob([responsePrintPDF.data], {
                 type: 'application/pdf'

@@ -413,6 +413,11 @@ module.exports = React.createClass({
             this.refs[fieldRef].whr(calRes);
         }
     },
+    triggerChange: function (fieldRef, calRes) {
+        if(this.refs[fieldRef]) {
+            this.refs[fieldRef].triggerChange(calRes);
+        }
+    },
     preCalSum: function(fieldRef, sumRef){
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].onSum(sumRef);
@@ -424,9 +429,6 @@ module.exports = React.createClass({
     preCalBelongsGroup(fieldRef, group){
         if(typeof this.refs[fieldRef] !== 'undefined')
             this.refs[fieldRef].onBelongsGroup(group);
-    },
-    triggerChange: function (calRes) {
-
     },
     render: function(){        
         var displayContextMenu = (this.props.permission === 'eformDev')?'contextMenu':'none';

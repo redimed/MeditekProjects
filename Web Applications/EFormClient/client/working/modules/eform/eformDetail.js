@@ -8,6 +8,7 @@ module.exports = React.createClass({
     content: null,
     appointmentUID: null,
     patientUID: null,
+    patient: null,
     userUID: null,
     templateUID: null,
     formUID: null,
@@ -136,6 +137,9 @@ module.exports = React.createClass({
                     self.signatureDoctor = response.data.Doctor.FileUpload;
                 else
                     self.signatureDoctor = '';
+                if(response.data.Patient) {
+                    this.patient = response.data.Patient;
+                }
                 for(var section_index = 0; section_index < content.length; section_index++){
                     var section = content[section_index];
                     for(var row_index = 0; row_index < section.rows.length; row_index++){
@@ -216,6 +220,18 @@ module.exports = React.createClass({
                                     }
                                 }
                                 /* END BMI */
+
+                                /* WHR BEGIN */
+                                if (Config.getPrefixField(cal, 'WHR(') > -1) {
+                                    if (cal) {
+                                        var calRes = Config.getArrayPrecal(4, cal);
+                                        console.log("TTTTTTTTTTTTTTT calRes", calRes);
+                                        if (self.refs[section.ref]) {
+                                            self.refs[section.ref].whr(row.ref, field.ref, calRes);
+                                        }
+                                    }
+                                }
+                                /* WHR END */
                                 /* COUNT PREFIX */
                                 if(Config.getPrefixField(cal, 'COUNT') > -1){
                                     if(cal !== ''){

@@ -57,7 +57,7 @@ module.exports = React.createClass({
         if(checked === 'yes')
             $(this.refs.input).iCheck('check');
         else
-           $(this.refs.input).iCheck('uncheck'); 
+           $(this.refs.input).iCheck('uncheck');
     },
     setDisplay: function(type){
         if(type === 'disable'){
@@ -138,6 +138,12 @@ module.exports = React.createClass({
             $(this.refs.label_radio).removeClass('eform-selection-field');
         }
 
+    },
+    triggerChange: function(calRes) {
+        calRes.map(function(expStr, index){
+            var element = $('#'+expStr);
+            element.fireEvent('onChange');
+        })
     },
     render: function(){
         var type = this.props.type;

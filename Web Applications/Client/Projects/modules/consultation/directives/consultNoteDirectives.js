@@ -232,7 +232,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',//specialist
                 'Consultation__Details.Appointment.Suithble__for.TelehealthValue':'string',//telehealthvalue
                 'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',//telehealth
-                'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'//consult_note_image
+                // 'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'//consult_note_image
+                'Consultation__Details.Appointment.Relevant.FileUploads':'image_array'//consult_note_image
             };
             $scope.swapName = function (name) {
                 var newName = name.split("__").join(" ");
@@ -265,8 +266,15 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                                 Type: $scope.dataPrintType[key]
                             };
                         if(key == 'Consultation__Details.Appointment.Relevant.FileUploads') {
-                            if(object.FileUploads && object.FileUploads[0])
-                                $scope.dataPrintResultStep0[key][object.Description].Value = object.FileUploads[0].UID;
+                            if(object.FileUploads && object.FileUploads.length > 0)
+                            {
+                                var file = [];
+                                for (var i = 0; i < object.FileUploads.length; i++) {
+                                    file.push(object.FileUploads[i].UID);
+                                }
+                                $scope.dataPrintResultStep0[key][object.Description].Value =file;
+                                // $scope.dataPrintResultStep0[key][object.Description].Value = object.FileUploads[0].UID;
+                            }
                             else
                                 $scope.dataPrintResultStep0[key][object.Description].Value = null;
                         }

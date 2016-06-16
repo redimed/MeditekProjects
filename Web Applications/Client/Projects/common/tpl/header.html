@@ -36,11 +36,11 @@
         <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-            <!--  <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+           <!--  <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                     <i class="icon-call-end"></i> -->
-            <!-- <span class="badge badge-default"> 4 </span> -->
-            <!--  </a>
+                    <!-- <span class="badge badge-default"> 4 </span> -->
+               <!--  </a>
                 <ul class="dropdown-menu">
                     <li class="external">
                         <h3>
@@ -65,12 +65,12 @@
                                             <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
                                     <span class="subject">
                                             <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span> -->
-            <!-- <span class="time font-green-jungle">Online</span> -->
-            <!--  </span>
+                                    <!-- <span class="time font-green-jungle">Online</span> -->
+                                   <!--  </span>
                                     <span class="message">
                                             <br> -->
-            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-            <!--   <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
+                                            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
+                                  <!--   <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
                                     </span>
                                 </a>
                             </li>
@@ -81,12 +81,12 @@
                                             <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
                                     <span class="subject">
                                             <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span> -->
-            <!-- <span class="time font-green-jungle">Online</span> -->
-            <!--   </span>
+                                    <!-- <span class="time font-green-jungle">Online</span> -->
+                                  <!--   </span>
                                     <span class="message">
                                             <br> -->
-            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-            <!--      <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
+                                            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
+                               <!--      <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
                                     </span>
                                 </a>
                             </li>
@@ -96,12 +96,12 @@
             </li> -->
             <li class="dropdown dropdown-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <img alt="" dimage dimage-uid="info.fileupload[0].UID" dimage-size="'300'" class="img-circle" ng-if="info.fileupload.length > 0" />
-                    <img alt="" src="theme/assets/global/images/no_person.jpg" class="img-circle" ng-if="info.fileupload.length == 0">
-                    <span class="username username-hide-on-mobile">
-                    {{info.doctor?info.doctor.FirstName+' '+info.doctor.LastName:info.patient.FirstName+' '+info.patient.LastName}} </span>
-                    <i class="fa fa-angle-down"></i>
-                    </a>
+					<img alt="" dimage dimage-uid="info.fileupload[0].UID" dimage-size="'300'" class="img-circle" ng-if="info.fileupload.length > 0" />
+					<img alt="" src="theme/assets/global/images/no_person.jpg" class="img-circle" ng-if="info.fileupload.length == 0">
+					<span class="username username-hide-on-mobile">
+					{{info.doctor?info.doctor.FirstName+' '+info.doctor.LastName:info.patient.FirstName+' '+info.patient.LastName}} </span>
+					<i class="fa fa-angle-down"></i>
+					</a>
                 <ul class="dropdown-menu dropdown-menu-default">
                     <li>
                         <a href="javascript:;" ui-sref="authentication.user.profile">
@@ -120,11 +120,11 @@
             <!-- END USER LOGIN DROPDOWN -->
             <!-- BEGIN QUICK SIDEBAR TOGGLER -->
             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-            <li class="dropdown dropdown-quick-sidebar-toggler" ng-hide="Role === 'PATIENT'">
-                <a href="javascript:;" class="dropdown-toggle" ng-click="loadListDoctor()">
-                    <i class="icon-logout"></i>
-                </a>
-            </li>
+            <li class="dropdown dropdown-quick-sidebar-toggler">
+				<a href="javascript:;" class="dropdown-toggle">
+				<i class="icon-logout"></i>
+				</a>
+			</li>
             <!-- END QUICK SIDEBAR TOGGLER -->
         </ul>
     </div>

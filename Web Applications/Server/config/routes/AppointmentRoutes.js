@@ -43,7 +43,7 @@ module.exports = {
         controller: 'Appointment/WAAppointmentController',
         action: 'UpdateRequestWAAppointment'
     },
-    'post /api/appointment-wa-disable': {
+    'get /api/appointment/destroy/:UID': {
         controller: 'Appointment/WAAppointmentController',
         action: 'DisableWAAppointment'
     },

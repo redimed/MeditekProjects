@@ -112,7 +112,7 @@ public final class NewDataParse {
         for(HashMap image : imageArray){
             System.out.println("this is image: " + image.toString());
             Hashtable parsedHash = new Hashtable();
-            Object parsedImg = imageNormalParsing(image.get("value"), "https://meditek.redimed.com.au:3005", printMethod);
+            Object parsedImg = imageNormalParsing(image.get("value"), baseUrl, printMethod);
             if (parsedImg != null){
                 parsedHash.put("value", parsedImg);
             }

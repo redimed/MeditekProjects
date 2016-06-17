@@ -164,6 +164,20 @@ module.exports = React.createClass({
 
         })
     },
+    maxHR: function(calRes) {
+        var self = this;
+        $(this.refs.input).on('change', function (event){
+            var ageElement = $('input[name='+calRes[0]+']');
+            var age = null;
+            if(ageElement.length > 0)
+            {
+                age = parseInt(ageElement[0].val());
+                // if(age && )
+
+            }
+        });
+
+    },
 
     onSum: function(sumRef){
         var self = this;

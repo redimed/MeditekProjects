@@ -37,14 +37,13 @@ import retrofit.client.Response;
 public class RESTClient {
     private static Context context;
     private static SharedPreferences.Editor editor;
-    private static SharedPreferences spDevice, uidTelehealth;
+    private static SharedPreferences uidTelehealth;
     private static final String TAG = "=====REST_CLIENT=====";
     private static RestAdapter restAdapter, restAdapterCore, restAdapterLogin;
 
 
     public static void InitRESTClient(Context ctx) {
         context = ctx;
-        spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
 
         setupRestClient();
@@ -131,7 +130,7 @@ public class RESTClient {
     public static class SessionRequestInterceptor extends RequestInterceptor implements retrofit.RequestInterceptor {
         public void intercept(RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("SystemType", DefineKey.SystemType);
-            paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", ""));
+            paramRequestFacade.addHeader("DeviceID", uidTelehealth.getString("deviceID", ""));
             paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", ""));
             paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", ""));
             paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", ""));
@@ -203,7 +202,7 @@ public class RESTClient {
 
             com.squareup.okhttp.Request compressedRequest = originalRequest.newBuilder()
                     .header("SystemType", DefineKey.SystemType)
-                    .header("DeviceID", spDevice.getString("deviceID", ""))
+                    .header("DeviceID", uidTelehealth.getString("deviceID", ""))
                     .header("Authorization", "Bearer " + uidTelehealth.getString("token", ""))
                     .header("UserUID", uidTelehealth.getString("userUID", ""))
                     .header("Cookie", uidTelehealth.getString("cookie", ""))

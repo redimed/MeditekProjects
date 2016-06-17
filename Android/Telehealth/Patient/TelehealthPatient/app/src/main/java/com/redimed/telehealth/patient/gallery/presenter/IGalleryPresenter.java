@@ -3,7 +3,7 @@ package com.redimed.telehealth.patient.gallery.presenter;
 import android.support.v7.widget.Toolbar;
 
 import com.redimed.telehealth.patient.models.CustomGallery;
-import com.redimed.telehealth.patient.utlis.AdapterGallery;
+import com.redimed.telehealth.patient.adapter.GalleryAdapter;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public interface IGalleryPresenter {
 
     void initToolbar(Toolbar toolbar);
 
-    void selectedImages(AdapterGallery adapter);
+    void selectedImages(GalleryAdapter adapter);
 
     ArrayList<CustomGallery> getGalleryPhotos();
 

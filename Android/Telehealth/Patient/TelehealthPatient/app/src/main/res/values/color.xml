@@ -26,12 +26,12 @@
     <color name="foreignCallBtn">#1f78f3</color>
 
     <!-- Status Bar Color-->
-    <color name="colorPrimaryDark">#3c4f59</color>
-    <color name="colorPrimary">#2196f3</color>
+    <color name="colorPrimaryDark">#00756B</color>
+    <color name="colorPrimary">#009688</color> <!--2196f3-->
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#B42047</color>
+    <color name="colorAccent">#009688</color>
     <color name="colorToolbar">#5a000000</color>
 
     <!-- Dialog Alert Color-->

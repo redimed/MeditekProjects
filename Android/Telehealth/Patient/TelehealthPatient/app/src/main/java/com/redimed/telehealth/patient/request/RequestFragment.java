@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -16,13 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -42,13 +37,12 @@ import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.models.CustomGallery;
 import com.redimed.telehealth.patient.models.Patient;
-import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.request.presenter.IRequestPresenter;
 import com.redimed.telehealth.patient.request.presenter.RequestPresenter;
 import com.redimed.telehealth.patient.request.view.IRequestView;
-import com.redimed.telehealth.patient.utlis.AdapterImageRequest;
+import com.redimed.telehealth.patient.adapter.ImageRequestAdapter;
 import com.redimed.telehealth.patient.utlis.DeviceUtils;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
+import com.redimed.telehealth.patient.widget.DialogConnection;
 import com.redimed.telehealth.patient.utlis.PreCachingLayoutManager;
 import com.redimed.telehealth.patient.views.SignaturePad;
 
@@ -267,7 +261,7 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
             actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
 
             // Change color image back, set a custom icon for the default home button
-            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_material);
             upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }
@@ -412,14 +406,14 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
         if (customGalleries.size() > 0)
             lblImage.setVisibility(View.GONE);
 
-        AdapterImageRequest adapterImageRequest = new AdapterImageRequest(customGalleries, context);
+        ImageRequestAdapter imageRequestAdapter = new ImageRequestAdapter(customGalleries, context);
 
         PreCachingLayoutManager layoutManagerCategories = new PreCachingLayoutManager(context);
         layoutManagerCategories.setOrientation(LinearLayoutManager.HORIZONTAL);
         layoutManagerCategories.setExtraLayoutSpace(DeviceUtils.getScreenWidth(context));
 
         rvRequestImage.setLayoutManager(layoutManagerCategories);
-        rvRequestImage.setAdapter(adapterImageRequest);
+        rvRequestImage.setAdapter(imageRequestAdapter);
     }
 
     @Override

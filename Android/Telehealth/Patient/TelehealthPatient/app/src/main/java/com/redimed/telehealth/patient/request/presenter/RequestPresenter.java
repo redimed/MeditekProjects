@@ -272,8 +272,8 @@ public class RequestPresenter implements IRequestPresenter {
     //Get list Appointment Type
     @Override
     public ArrayAdapter<String> setDataApptType() {
-        final Boolean[] flag = {true};
-        List<String> apptType = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.appt__type_arrays)));
+        final Boolean[] flag = { true };
+        List<String> apptType = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.appt_type_arrays)));
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, apptType) {
             @Override
@@ -427,11 +427,6 @@ public class RequestPresenter implements IRequestPresenter {
         }
     }
 
-    @Override
-    public boolean isCheckPatientConsent(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3) {
-        return checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked();
-    }
-
     public File getAlbumStorageDir(String albumName) {
         // Get the directory for the user's public pictures directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), albumName);
@@ -468,6 +463,11 @@ public class RequestPresenter implements IRequestPresenter {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public boolean isCheckPatientConsent(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3) {
+        return checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked();
     }
 
     @Override

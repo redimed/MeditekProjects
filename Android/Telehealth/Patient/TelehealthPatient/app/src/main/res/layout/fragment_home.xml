@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/toolBar"
-        layout="@layout/custom_toolbar"/>
+        layout="@layout/custom_toolbar" />
 
     <com.redimed.telehealth.patient.font.RobotoTextView
         android:id="@+id/btnLogin"
@@ -19,15 +19,15 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:text="@string/login"
-        android:textColor="@color/blueFont"
+        android:textColor="@color/redFont"
         android:textSize="@dimen/size_title"
         android:textStyle="bold"
         android:visibility="visible" />
 
     <RelativeLayout
-        android:layout_below="@+id/toolBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolBar">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/slider"

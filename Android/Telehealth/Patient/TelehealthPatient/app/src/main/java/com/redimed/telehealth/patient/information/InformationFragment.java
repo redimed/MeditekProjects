@@ -16,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
@@ -29,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,20 +39,15 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.information.presenter.IInfoPresenter;
 import com.redimed.telehealth.patient.information.presenter.InfoPresenter;
 import com.redimed.telehealth.patient.information.view.IInfoView;
-import com.redimed.telehealth.patient.model.ModelActivity;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.setting.SettingFragment;
-import com.redimed.telehealth.patient.utlis.DialogAlert;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
+import com.redimed.telehealth.patient.widget.DialogConnection;
 import com.redimed.telehealth.patient.utlis.UploadFile;
 import com.redimed.telehealth.patient.views.SignaturePad;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;

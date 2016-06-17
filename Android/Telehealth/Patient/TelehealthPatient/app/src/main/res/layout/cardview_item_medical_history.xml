@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:id="@+id/layoutMedicalHistory"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <com.redimed.telehealth.patient.font.RobotoTextView
+        android:id="@+id/lblMedicalHistory"
+        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:layout_height="40dp"
+        android:paddingLeft="10.5dp"
+        android:paddingStart="10.5dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:gravity="center"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#979797"/>
+
+</LinearLayout>

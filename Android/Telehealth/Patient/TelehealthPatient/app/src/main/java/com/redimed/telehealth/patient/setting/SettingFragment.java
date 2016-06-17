@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,11 +19,12 @@ import android.widget.TextView;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.models.Patient;
-import com.redimed.telehealth.patient.pin.PinFragment;
+import com.redimed.telehealth.patient.redisite.injury.InjuryFragment;
+import com.redimed.telehealth.patient.redisite.patient.RedisiteFragment;
 import com.redimed.telehealth.patient.setting.presenter.ISettingPresenter;
 import com.redimed.telehealth.patient.setting.presenter.SettingPresenter;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
+import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,6 +54,10 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
     @Bind(R.id.layoutChangePin)
     RelativeLayout layoutChangePin;
 
+    // TODO: 6/7/16 REDISITE BUTTON
+    @Bind(R.id.layoutRedisite)
+    RelativeLayout layoutRedisite;
+
     /* Toolbar */
     @Bind(R.id.toolBar)
     Toolbar toolBar;
@@ -75,6 +78,8 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
         layoutAbout.setOnClickListener(this);
         layoutProfile.setOnClickListener(this);
         layoutChangePin.setOnClickListener(this);
+
+        layoutRedisite.setOnClickListener(this);
 
         return v;
     }
@@ -164,6 +169,8 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
             case R.id.layoutChangePin:
                 iSettingPresenter.displayPin(uid);
                 break;
+            case R.id.layoutRedisite:
+                iSettingPresenter.changeFragment(new RedisiteFragment());
         }
     }
 

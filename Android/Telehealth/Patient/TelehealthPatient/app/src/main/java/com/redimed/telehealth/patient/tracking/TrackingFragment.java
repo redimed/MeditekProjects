@@ -1,13 +1,11 @@
 package com.redimed.telehealth.patient.tracking;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,25 +17,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.models.Appointment;
-import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.tracking.presenter.ITrackingPresenter;
 import com.redimed.telehealth.patient.tracking.presenter.TrackingPresenter;
 import com.redimed.telehealth.patient.tracking.view.ITrackingView;
-import com.redimed.telehealth.patient.utlis.DialogAlert;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
-import com.redimed.telehealth.patient.utlis.AdapterAppointment;
+import com.redimed.telehealth.patient.widget.DialogConnection;
+import com.redimed.telehealth.patient.adapter.AppointmentAdapter;
 import com.redimed.telehealth.patient.utlis.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
@@ -46,9 +36,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,7 +46,7 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     private Context context;
     private Handler handler;
     private List<Appointment> listAppt;
-    private AdapterAppointment adapterAppointment;
+    private AppointmentAdapter appointmentAdapter;
     private ITrackingPresenter iTrackingPresenter;
     private LinearLayoutManager linearLayoutManager;
     private static final String TAG = "=====TRACKING=====";
@@ -117,28 +104,28 @@ public class TrackingFragment extends Fragment implements ITrackingView {
             }
         });
 
-        adapterAppointment = new AdapterAppointment(context, listAppt, getActivity(), rvListAppointment);
-        rvListAppointment.setAdapter(adapterAppointment);
-        adapterAppointment.setOnLoadMoreListener(new EndlessRecyclerOnScrollListener() {
+        appointmentAdapter = new AppointmentAdapter(context, listAppt, getActivity(), rvListAppointment);
+        rvListAppointment.setAdapter(appointmentAdapter);
+        appointmentAdapter.setOnLoadMoreListener(new EndlessRecyclerOnScrollListener() {
             @Override
             public void onLoadMore() {
                 listAppt.add(null);
-                adapterAppointment.notifyItemInserted(listAppt.size() - 1);
+                appointmentAdapter.notifyItemInserted(listAppt.size() - 1);
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         listAppt.remove(listAppt.size() - 1);
-                        adapterAppointment.notifyItemRemoved(listAppt.size());
+                        appointmentAdapter.notifyItemRemoved(listAppt.size());
 
                         int start = listAppt.size();
                         int end = start + 10;
                         Log.d(TAG, end + "");
                         for (int i = start + 1; i < end; i++) {
                             listAppt.addAll(iTrackingPresenter.getListAppointment(i));
-                            adapterAppointment.notifyItemInserted(listAppt.size());
+                            appointmentAdapter.notifyItemInserted(listAppt.size());
                         }
-                        adapterAppointment.setLoaded();
+                        appointmentAdapter.setLoaded();
                     }
                 }, 2000);
             }

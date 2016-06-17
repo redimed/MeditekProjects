@@ -128,25 +128,20 @@ module.exports = {
      - error: [transaction] updated Enable is 'N' WA Appointment, error message
      */
     DisableWAAppointment: function(req, res) {
-        var data = HelperService.CheckPostRequest(req);
-        if (data === false) {
-            res.serverError('data failed');
-        } else {
-            Services.DisableAppointment(data)
+        var UID = req.params.UID;
+        Services.DisableAppointment(UID)
                 .then(function(success) {
-                    success.transaction.commit();
                     res.ok('success');
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
                         err.transaction.rollback();
-                        res.serverError(ErrorWrap(err.error));
+                        res.serverError(err.error);
                     } else {
-                        res.serverError(ErrorWrap(err));
+                        res.serverError(err);
                     }
                 });
-        }
     },
     RequestWAAppointmentPatient: function(req, res) {
         var data = HelperService.CheckPostRequest(req);

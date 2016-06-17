@@ -31,6 +31,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 			};
 
 			$scope.updateProfile = function() {
+				$scope.data.info.Enable = $scope.data.info.UserAccount.Enable;
 				doctorService.updateDoctor($scope.data)
 		    	.then(function(response){
 		    		if(response.message=="success"){

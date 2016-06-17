@@ -239,7 +239,6 @@ app.directive('telehealthDetail', function(doctorService) {
                 $scope.searchObject = {};
                 $scope.searchObjectMap = {};
                 $scope.initListDoctor = function() {
-
                     $scope.searchObject.doctor = {
                         limit: 10,
                         offset: 0,
@@ -247,7 +246,8 @@ app.directive('telehealthDetail', function(doctorService) {
                         maxSize: 10,
                         attributes:$scope.items,
                         Search:{
-                            RoleAlias: 'Internal'
+                            RoleAlias: 'Internal',
+                            Enable: 'Y'
                         },
                         order: null,
                         RoleID: [5]

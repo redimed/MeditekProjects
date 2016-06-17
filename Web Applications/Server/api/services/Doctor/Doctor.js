@@ -836,7 +836,7 @@ module.exports = {
 				}
 			}
 			if(data.Search.Enable){
-				whereClause.UserAccount.Enable = {
+				whereClause.Doctor.Enable = {
 					like:'%'+data.Search.Enable+'%'
 				}
 			}
@@ -959,8 +959,8 @@ module.exports = {
 		var attributes = [];
 		var isConcat = false;
 		var whereClause = Services.Doctor.whereClause(data);
-		console.log(data);
-		console.log(whereClause);
+		console.log(">>>>>>>>>>>>>>>>>>>1",data);
+		console.log(">>>>>>>>>>>>>>>>>>>2",whereClause);
 		var FullName;
 		if(data.Search){
 			FullName = data.Search.FullName?data.Search.FullName:null;
@@ -1049,10 +1049,10 @@ module.exports = {
 					include:include_data,
 		       		model: UserAccount,
 		      		attributes: ['ID','PhoneNumber','Enable', 'UID'],
-			  		where:{
-			   			$or: check.sqlParam(whereClause.UserAccount),
-			   			Enable:'Y'
-			   		},
+			  		// where:{
+			   	// 		$or: check.sqlParam(whereClause.UserAccount),
+			   	// 		Enable: 'Y'
+			   	// 	},
 			   		required: true,
 		    	},
 				{

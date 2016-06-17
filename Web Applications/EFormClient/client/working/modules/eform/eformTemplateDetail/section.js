@@ -136,6 +136,16 @@ module.exports = React.createClass({
             this.refs[refRow].whr(refField, calRes);
         }  
     },
+    maxHR: function(refRow, refField, calRes) {
+        if(this.refs[refRow]) {
+            this.refs[refRow].maxHR(refField, calRes);
+        }
+    },
+    maxHR85: function(refRow, refField, calRes) {
+        if(this.refs[refRow]) {
+            this.refs[refRow].maxHR85(refField, calRes);
+        }
+    },
     triggerChange: function (refRow, refField, calRes) {
         if(this.refs[refRow]) {
             this.refs[refRow].triggerChange(refField, calRes);

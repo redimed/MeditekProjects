@@ -164,19 +164,51 @@ module.exports = React.createClass({
 
         })
     },
-    maxHR: function(calRes) {
+    maxHR: function (calRes) {
         var self = this;
         $(this.refs.input).on('change', function (event){
             var ageElement = $('input[name='+calRes[0]+']');
             var age = null;
-            if(ageElement.length > 0)
+            if( ageElement.length > 0 && Number.isInteger(parseInt($(ageElement[0]).val())) )
             {
-                age = parseInt(ageElement[0].val());
-                // if(age && )
-
+                age = parseInt($(ageElement[0]).val());
+                $(self.refs.input).val(220-age);
+            } else {
+                $(self.refs.input).val(null);
             }
         });
 
+    },
+    maxHR85: function (calRes) {
+        var self = this;
+        $(this.refs.input).on('change', function (event){
+            var ageElement = $('input[name='+calRes[0]+']');
+            var age = null;
+            console.log("maxhr85 ageelement:", ageElement);
+            if(ageElement.length > 0 && Number.isInteger(parseInt($(ageElement[0]).val()))) {
+                age = parseInt($(ageElement[0]).val());
+                $(self.refs.input).val( ((220-age)*85/100 ).toFixed(1));
+            } else {
+                $(self.refs.input).val(null);
+            }
+        });
+    },
+    triggerChange: function(calRes) {
+        $(this.refs.input).on('change', function(event){
+            calRes.map(function(expStr, index){
+                var element = $('#'+expStr)[0];
+                if(element)
+                {
+                    if ("createEvent" in document) {
+                        var evt = document.createEvent("HTMLEvents");
+                        evt.initEvent("change", false, true);
+                        element.dispatchEvent(evt);
+                    } else {
+                        element.fireEvent("onchange");
+                    }
+                }
+            })
+        })
     },
 
     onSum: function(sumRef){

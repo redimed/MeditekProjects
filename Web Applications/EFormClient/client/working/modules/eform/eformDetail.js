@@ -232,6 +232,28 @@ module.exports = React.createClass({
                                 }
                                 /* WHR END */
 
+                                /* MAXHR BEGIN */
+                                if (Config.getPrefixField(cal, 'MAXHR(') > -1) {
+                                    if (cal) {
+                                        var calRes = Config.getArrayPrecal(6, cal);
+                                        if(self.refs[section.ref]) {
+                                            self.refs[section.ref].maxHR(row.ref, field.ref, calRes);
+                                        }
+                                    }
+                                }
+                                /* MAXHR END */
+
+                                /* MAXHR BEGIN */
+                                if (Config.getPrefixField(cal, 'MAXHR85(') > -1) {
+                                    if (cal) {
+                                        var calRes = Config.getArrayPrecal(8, cal);
+                                        if(self.refs[section.ref]) {
+                                            self.refs[section.ref].maxHR85(row.ref, field.ref, calRes);
+                                        }
+                                    }
+                                }
+                                /* MAXHR END */
+
                                 /*TRIGGERCHANGE BEGIN*/
                                 if (Config.getPrefixField(cal, 'TRIGGERCHANGE(') > -1) {
                                     if (cal) {

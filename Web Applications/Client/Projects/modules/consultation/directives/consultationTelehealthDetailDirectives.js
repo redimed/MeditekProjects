@@ -8,6 +8,7 @@ app.directive('telehealthDetail', function(doctorService) {
         templateUrl: "modules/consultation/directives/templates/consultationTelehealthDetailDirectives.html",
         controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $uibModal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService, consultationServices) {
             o.loadingPage(true);
+            $scope.isShowBtnLink = true;
             $scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
 				{'code':'TAS', 'name':'Tasmania'},
@@ -1327,6 +1328,15 @@ app.directive('telehealthDetail', function(doctorService) {
                     })
                 } else{
                     toastr.warning('You need link Patient');
+                }
+            };
+
+            var userObj = $cookies.getObject('userInfo');
+            if(userObj && userObj.roles) {
+                for(var i = 0; i < userObj.roles.length; i++) {
+                    if(userObj.roles[i].RoleCode == CommonService.role_admin || userObj.roles[i].RoleCode == CommonService.role_assistant) {
+                        $scope.isShowBtnLink = false;
+                    }
                 }
             }
 

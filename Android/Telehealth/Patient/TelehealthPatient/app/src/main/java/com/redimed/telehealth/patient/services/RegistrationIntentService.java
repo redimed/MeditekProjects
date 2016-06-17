@@ -60,7 +60,7 @@ public class RegistrationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
-        editor = getSharedPreferences("DeviceInfo", MODE_PRIVATE).edit();
+        editor = uidTelehealth.edit();
         try {
             InstanceID instanceID = InstanceID.getInstance(this);
             String token = instanceID.getToken(Config.GCMSenderID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
@@ -139,7 +139,7 @@ public class RegistrationIntentService extends IntentService {
                         | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "INFO");
                 wakeLock.acquire();
             }
-            if (msg.get("message").toString().equalsIgnoreCase("cancel")){
+            if (msg.get("message").toString().equalsIgnoreCase("cancel")) {
                 notificationManager.cancel(0);
             }
         } catch (Exception e) {

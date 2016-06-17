@@ -3,24 +3,17 @@ package com.redimed.telehealth.patient.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,12 +26,10 @@ import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.presenter.HomePresenter;
 import com.redimed.telehealth.patient.home.presenter.IHomePresenter;
 import com.redimed.telehealth.patient.home.view.IHomeView;
-import com.redimed.telehealth.patient.utlis.DialogAlert;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
+import com.redimed.telehealth.patient.redisite.patient.RedisiteFragment;
+import com.redimed.telehealth.patient.widget.DialogConnection;
 import com.redimed.telehealth.patient.utlis.PageIndicator;
-import com.redimed.telehealth.patient.utlis.AdapterSlider;
-
-import java.io.File;
+import com.redimed.telehealth.patient.adapter.SliderAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,8 +50,6 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     Toolbar toolBar;
 
     /* Non Patient View */
-    @Bind(R.id.layoutNonPatient)
-    LinearLayout layoutNonPatient;
     @Bind(R.id.btnLogin)
     TextView btnLogin;
     @Bind(R.id.btnRequestNon)
@@ -128,14 +117,14 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     private void init() {
         iHomePresenter = new HomePresenter(this, context, getActivity());
         iHomePresenter.checkExistsPatient();
-        iHomePresenter.createdJsonDataSuburb();
+        //iHomePresenter.createdJsonDataSuburb();
         iHomePresenter.createdJsonDataCountry();
     }
 
     //Generation Slider Image
     private void initSlider() {
-        AdapterSlider adapterSlider = new AdapterSlider(context);
-        slider.setAdapter(adapterSlider);
+        SliderAdapter sliderAdapter = new SliderAdapter(context);
+        slider.setAdapter(sliderAdapter);
         circleIndicator.setViewPager(slider);
 
         final int totalPage = slider.getAdapter().getCount();

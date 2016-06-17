@@ -3,7 +3,7 @@
     style="@style/ToolBarStyle.Event"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/toolbar_bg">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/logo_work"

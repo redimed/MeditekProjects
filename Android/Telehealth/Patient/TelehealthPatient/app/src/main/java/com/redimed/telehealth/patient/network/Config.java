@@ -22,16 +22,16 @@ public class Config {
 
 
     /*Test App*/
-//    public static final String socketURL = "https://testapp.redimed.com.au:3009";
-//
-//    public static final String apiURL = "https://testapp.redimed.com.au:3009";
-//
-//    public static final String apiURLCore = "https://testapp.redimed.com.au:3005";
-//
-//    public static final String apiURLLogin = "https://testapp.redimed.com.au:3006";
-//
-//    public static final String apiURLDownload = "https://testapp.redimed.com.au:3005/api/downloadFile/";
-//
-//    public static final String apiURLImageResize = "https://testapp.redimed.com.au:3005/api/downloadFile/400/";
+/*    public static final String socketURL = "https://testapp.redimed.com.au:3009";
+
+    public static final String apiURL = "https://testapp.redimed.com.au:3009";
+
+    public static final String apiURLCore = "https://testapp.redimed.com.au:3005";
+
+    public static final String apiURLLogin = "https://testapp.redimed.com.au:3006";
+
+    public static final String apiURLDownload = "https://testapp.redimed.com.au:3005/api/downloadFile/";
+
+    public static final String apiURLImageResize = "https://testapp.redimed.com.au:3005/api/downloadFile/400/";*/
 
 }

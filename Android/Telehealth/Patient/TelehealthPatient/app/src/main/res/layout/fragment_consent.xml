@@ -1,0 +1,195 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lightBackground"
+    tools:context="com.redimed.telehealth.patient.redisite.consent.ConsentFragment">
+
+    <include
+        android:id="@+id/toolBar"
+        layout="@layout/custom_toolbar" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:orientation="vertical">
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:text="Confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18dp" />
+
+            <CheckBox
+                android:id="@+id/cbConsent1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="I, authorise any doctor who treats me (whether named in this certificate or not) to discuss my medical condition, in relation to my claim for workers' compensation and return to work options, with my employer and with their insurer." />
+
+            <CheckBox
+                android:id="@+id/cbConsent2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="If your claim is NOT ACCEPTED by the insurance company, or your accounts are not settled by your employer, you will be liable for any invoices issued during the course of your treatment. If your account is forwarded to the debt collector, you will be liable for all fees associated." />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/cbConsent3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="I, agree to having medic/supervisor present as a third party during a medical consult with REDiMED" />
+
+                <EditText
+                    android:id="@+id/txtSupervisor"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Supervisor's name" />
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cbConsent4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="I can confirm that all information provided to REDIMED is true and correct." />
+
+            <ViewFlipper
+                android:id="@+id/vfContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/layoutSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/signature_pad_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/confirm_sign"
+                        android:textColor="@android:color/darker_gray" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <RelativeLayout
+                        android:id="@+id/signature_pad_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#F2F2F2">
+
+                        <com.redimed.telehealth.patient.views.SignaturePad
+                            android:id="@+id/signaturePad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.redimed.telehealth.patient.font.RobotoTextView
+                            android:id="@+id/lblClear"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@color/colorPrimary"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:padding="15dp"
+                            android:text="@string/sign_clear"
+                            android:textColor="@color/lightFont" />
+
+                        <com.redimed.telehealth.patient.font.RobotoTextView
+                            android:id="@+id/lblSave"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimary"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:padding="15dp"
+                            android:text="@string/sign_save"
+                            android:textColor="@color/lightFont" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgSignature"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <com.redimed.telehealth.patient.font.RobotoTextView
+                            android:id="@+id/lblComplete"
+                            style="@android:style/Widget.Button"
+                            android:layout_width="280dp"
+                            android:layout_height="30dp"
+                            android:background="@color/colorPrimary"
+                            android:clickable="false"
+                            android:gravity="center"
+                            android:textColor="@color/lightFont"
+                            android:text="@string/confirm_complete" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ViewFlipper>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

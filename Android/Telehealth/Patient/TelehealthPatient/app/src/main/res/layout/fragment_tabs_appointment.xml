@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolBar"
+        layout="@layout/custom_toolbar" />
+
+    <com.redimed.telehealth.patient.widget.SlidingTabLayout
+        android:id="@+id/pagerSliding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="#33b5e5"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="#fff" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+        <!--<android.support.v4.view.PagerTabStrip-->
+        <!--android:id="@+id/pagerSliding"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="top"-->
+        <!--android:background="#33b5e5"-->
+        <!--android:textColor="#fff"-->
+        <!--android:paddingTop="5dp"-->
+        <!--android:paddingBottom="5dp" />-->
+
+</LinearLayout>

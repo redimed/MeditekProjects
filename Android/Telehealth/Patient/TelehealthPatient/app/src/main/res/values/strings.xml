@@ -206,7 +206,7 @@
     <string name="phone_format">Mobile Number wrong formatted</string>
     <string name="email_valid">Email address not valid</string>
 
-    <string-array name="appt__type_arrays">
+    <string-array name="appt_type_arrays">
         <item>Appointment Type *</item>
         <item>Onsite</item>
         <item>Telehealth</item>
@@ -252,4 +252,140 @@
     <string name="confirm_pin">Re-type new</string>
     <string name="error_pin">Please input your field is 6 characters</string>
 
+    <!-- Redisite -->
+    <string name="redisite_title">Redisite</string>
+
+    <string-array name="service_required_arrays">
+        <item>Trauma Consult</item>
+        <item>First Medical Certificate</item>
+        <item>Follow up in Perth</item>
+        <item>Fitness for work</item>
+        <item>Initial Telehealth Consult</item>
+        <item>Progress Telehealth Consult</item>
+        <item>Transport to/from Airport</item>
+    </string-array>
+
+    <string-array name="salutation_arrays">
+        <item>NONE</item>
+        <item>Mr</item>
+        <item>Mrs</item>
+        <item>Ms</item>
+        <item>Miss</item>
+        <item>Master</item>
+        <item>Dr</item>
+    </string-array>
+
+    <string-array name="injury_arrays">
+        <item>Sprain/Strain</item>
+        <item>Laceration</item>
+        <item>Crush</item>
+        <item>Fall</item>
+    </string-array>
+
+    <string-array name="body_parts_arrays">
+        <item>Left lower leg</item>     <!--Column I-->
+        <item>Left lower arm</item>     <!--Column II-->
+        <item>Left hand</item>          <!--Column III-->
+        <item>Abdomen</item>            <!--Column IV-->
+
+        <item>Right lower leg</item>    <!--Column I-->
+        <item>Right lower arm</item>    <!--Column II-->
+        <item>Right hand</item>         <!--Column III-->
+        <item>Chest</item>              <!--Column IV-->
+
+        <item>Left upper leg</item>     <!--Column I-->
+        <item>Left upper arm</item>     <!--Column II-->
+        <item>Left shoulder</item>      <!--Column III-->
+        <item>Lower back</item>         <!--Column IV-->
+
+        <item>Right upper leg</item>    <!--Column I-->
+        <item>Right upper arm</item>    <!--Column II-->
+        <item>Right shoulder</item>     <!--Column III-->
+    </string-array>
+
+    <string-array name="medical_history_arrays">
+        <item>Asthma</item>
+        <item>Epilepsy</item>
+        <item>Heart condition</item>
+        <item>High cholesterol</item>
+        <item>Diabetes type I</item>
+        <item>Diabetes type II</item>
+        <item>High blood pressure</item>
+        <item>Arthritis</item>
+        <item>Blood condition</item>
+    </string-array>
+
+    <string-array name="injury_symptoms_arrays">
+        <item>Open wound</item>
+        <item>Swelling</item>
+        <item>Redness</item>
+        <item>Reduced movement</item>
+    </string-array>
+
+    <string-array name="symptoms_arrays">
+        <item>Headache</item>
+        <item>Nausea</item>
+        <item>Fatigue</item>
+        <item>Fever</item>
+        <item>Sore throat</item>
+        <item>Cough</item>
+        <item>Sinus congestion</item>
+        <item>Body aches"</item>
+        <item>Vomiting</item>
+        <item>Light headedness</item>
+        <item>Diarrhea</item>
+        <item>Shortness of breath</item>
+        <item>Chest pain</item>
+        <item>Abdomen pain</item>
+        <item>Back pain</item>
+        <item>Ear pain</item>
+        <item>Low mood</item>
+        <item>Decreased appetite</item>
+        <item>Feeling depressed</item>
+        <item>Tooth pain</item>
+    </string-array>
+
+    <!--Redisite Patient-->
+    <string name="work">Work related</string>
+    <string name="not_work">Not work related</string>
+    <string name="service">Service requested:</string>
+    <string name="title_patient">Patient Details</string>
+    <string name="salutation">Salutation(*):</string>
+    <string name="claim">Claim No.</string>
+    <string name="name">Name(*)</string>
+    <string name="name_family">Family</string>
+    <string name="name_given">Given</string>
+    <string name="dob">DOB(*):</string>
+    <string name="occupation">Occupation(*):</string>
+    <string name="address">Address(*)</string>
+    <string name="address_suburb">Suburb</string>
+    <string name="address_postcode">Postcode</string>
+    <string name="telephone">Telephone(*):</string>
+    <string name="tele_home">Home</string>
+    <string name="tele_mobile">Mobile</string>
+    <string name="tele_work">Work</string>
+    <string name="nos">Next of skin:</string>
+    <string name="nos_tele">Telephone</string>
+    <string name="nos_email">Email</string>
+    <string name="title_health_insurance">Health Insurance Details</string>
+    <string name="medicare">Medicare</string>
+    <string name="medicare_number">Number</string>
+    <string name="medicare_position">Position number</string>
+    <string name="medicare_expiry">Expiry</string>
+    <string name="ques_insurance">Do you have private insurance>?</string>
+    <string name="insurance_fund">Health fund name</string>
+    <string name="insurance_membership">Membership member</string>
+    <string name="ques_hospital">Do you have hospital cover?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="hint_yes">Y</string>
+    <string name="hint_no">N</string>
+    <string name="ques_veteran">Veteran affairs number:</string>
+    <string name="card">Card holder:</string>
+    <string name="gold">Gold</string>
+    <string name="white">White</string>
+    <string name="hint_gold">gold</string>
+    <string name="hint_white">white</string>
+    <string name="injury">Injury</string>
+    <string name="illness">General illness</string>
 </resources>

@@ -46,7 +46,7 @@ public class LoginPresenter implements ILoginPresenter {
     private FragmentActivity activity;
     private IMainPresenter iMainPresenter;
     private SharedPreferences.Editor editor;
-    private SharedPreferences spDevice, spTele;
+    private SharedPreferences spTele;
     private RegisterApi registerApi, registerApiLogin;
     private static final String TAG = "=ACTIVATION_PRESENTER=";
 
@@ -60,7 +60,6 @@ public class LoginPresenter implements ILoginPresenter {
         registerApi = RESTClient.getRegisterApi();
         registerApiLogin = RESTClient.getRegisterApiLogin();
         iMainPresenter = new MainPresenter(context, activity);
-        spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         spTele = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
@@ -77,7 +76,7 @@ public class LoginPresenter implements ILoginPresenter {
         jsonLogin.addProperty("Password", "1");
         jsonLogin.addProperty("PinNumber", pinNumber);
         jsonLogin.addProperty("UserUID", spTele.getString("userUID", ""));
-        jsonLogin.addProperty("DeviceID", spDevice.getString("deviceID", ""));
+        jsonLogin.addProperty("DeviceID", spTele.getString("deviceID", ""));
         jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
         return jsonLogin;
     }
@@ -151,7 +150,7 @@ public class LoginPresenter implements ILoginPresenter {
             actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
 
             // Change color image back, set a custom icon for the default home button
-            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_material);
             upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }

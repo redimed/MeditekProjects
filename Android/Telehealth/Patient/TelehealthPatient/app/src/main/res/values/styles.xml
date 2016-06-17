@@ -4,7 +4,16 @@
 
         <item name="buttonStyle">@style/AppTheme.Button</item>
 
+        <!-- Button -->
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
+
+        <item name="android:spinnerItemStyle">@style/TextViewSpinnerItem</item>
+
+        <item name="android:dropDownItemStyle">@style/Widget.DropDownItemLight</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLight</item>
 
     </style>
 
@@ -61,24 +70,39 @@
         <item name="android:fadingEdgeLength">8dp</item>
     </style>
 
-   <style name="AppTheme.Button" parent="android:Widget.Button">
-        <item name="android:background">#2196f3</item>
-        <item name="android:textColor">@android:color/white</item>
+    <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <!--<item name="android:textColor">@android:color/white</item>-->
+        <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
+    <style name="ToolBarStyle" parent="ToolBarStyle.Base" />
 
     <style name="ToolBarStyle.Base" parent="">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
+
     <style name="ToolBarStyle.Event" parent="ToolBarStyle">
         <item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>
     </style>
+
     <style name="TextAppearance.Widget.Event.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <!--Any text styling can be done here-->
         <item name="android:textStyle">normal</item>
         <!--<item name="android:textSize">@dimen/event_title_text_size</item>-->
+    </style>
+
+    <style name="TextViewSpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
+    <style name="AutoCompleteTextViewLight" parent="@android:style/Widget.AutoCompleteTextView">
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+    <style name="Widget.DropDownItemLight" parent="@android:style/Widget.DropDownItem">
+        <item name="android:textColor">@android:color/primary_text_light</item>
     </style>
 
 </resources>

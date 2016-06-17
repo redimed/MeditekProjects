@@ -4,13 +4,8 @@ package com.redimed.telehealth.patient.pin;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
@@ -29,9 +23,7 @@ import com.redimed.telehealth.patient.pin.presenter.IPinPresenter;
 import com.redimed.telehealth.patient.pin.presenter.PinPresenter;
 import com.redimed.telehealth.patient.pin.view.IPinView;
 import com.redimed.telehealth.patient.setting.SettingFragment;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
-
-import java.util.ArrayList;
+import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -57,7 +57,7 @@ public class SignInPresenter implements ISignInPresenter {
         bundle = new Bundle();
         fragment = new LoginFragment();
         iMainPresenter = new MainPresenter(context, activity);
-        spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
+        spDevice = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
     //Validated phone number match 10-15 digit numbers
@@ -113,7 +113,7 @@ public class SignInPresenter implements ISignInPresenter {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
 
-                    editor = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE).edit();
+                    editor = spDevice.edit();
                     editor.putString("userUID", jsonObject.get("UserUID").isJsonNull() ? "" : jsonObject.get("UserUID").getAsString());
                     editor.putString("patientUID", jsonObject.get("PatientUID").isJsonNull() ? "" : jsonObject.get("PatientUID").getAsString());
                     editor.apply();

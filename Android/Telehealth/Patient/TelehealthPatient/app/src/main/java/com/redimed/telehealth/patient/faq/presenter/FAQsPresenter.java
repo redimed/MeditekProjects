@@ -51,6 +51,7 @@ public class FAQsPresenter implements IFAQsPresenter {
                     url = "file:///android_asset/FAQs.html";
                     break;
                 default:
+                    url = "file:///android_asset/FAQs.html";
                     break;
             }
         }

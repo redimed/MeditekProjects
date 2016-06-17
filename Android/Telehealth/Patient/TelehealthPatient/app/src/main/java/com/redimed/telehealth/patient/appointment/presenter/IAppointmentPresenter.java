@@ -11,15 +11,9 @@ import com.google.gson.JsonObject;
  */
 public interface IAppointmentPresenter {
 
-    Uri getOutputMediaFileUri(int type);
-
     void viewStatus();
 
-    void initToolbar(Toolbar toolbar);
-
     void changeFragment(Fragment fragment);
-
-    void getListImage(JsonObject jsonObject);
 
     void getAppointmentDetails(String appointmentUID);
 

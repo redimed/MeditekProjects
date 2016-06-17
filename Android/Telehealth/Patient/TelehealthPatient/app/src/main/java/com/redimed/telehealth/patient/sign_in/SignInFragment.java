@@ -10,8 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,18 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.main.MainActivity;
 import com.redimed.telehealth.patient.sign_in.presenter.ISignInPresenter;
 import com.redimed.telehealth.patient.sign_in.presenter.SignInPresenter;
 import com.redimed.telehealth.patient.sign_in.view.ISignInView;
-import com.redimed.telehealth.patient.utlis.DialogConnection;
-
-import java.util.ArrayList;
+import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -101,7 +95,7 @@ public class SignInFragment extends Fragment implements ISignInView, View.OnClic
             actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
 
             // Change color image back, set a custom icon for the default home button
-            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_material);
             upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }

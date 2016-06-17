@@ -12,13 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.gallery.presenter.GalleryPresenter;
 import com.redimed.telehealth.patient.gallery.presenter.IGalleryPresenter;
 import com.redimed.telehealth.patient.gallery.view.IGalleryView;
-import com.redimed.telehealth.patient.utlis.AdapterGallery;
+import com.redimed.telehealth.patient.adapter.GalleryAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
 public class GalleryActivity extends AppCompatActivity implements IGalleryView, View.OnClickListener {
 
     private Handler handler;
-    private AdapterGallery adapterGallery;
+    private GalleryAdapter galleryAdapter;
     private IGalleryPresenter iGalleryPresenter;
     private static final String TAG = "=====GALLERY_ACTIVITY=====";
 
@@ -54,10 +53,10 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
         iGalleryPresenter = new GalleryPresenter(this, this, this);
         iGalleryPresenter.initToolbar(toolBar);
 
-        adapterGallery = new AdapterGallery(this);
-        adapterGallery.setMultiplePick(true);
+        galleryAdapter = new GalleryAdapter(this);
+        galleryAdapter.setMultiplePick(true);
 
-        gridGallery.setAdapter(adapterGallery);
+        gridGallery.setAdapter(galleryAdapter);
 
         handler = new Handler();
         new Thread() {
@@ -67,7 +66,7 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        adapterGallery.addAll(iGalleryPresenter.getGalleryPhotos());
+                        galleryAdapter.addAll(iGalleryPresenter.getGalleryPhotos());
                     }
                 });
                 Looper.loop();
@@ -78,7 +77,7 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
         gridGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapterGallery.changeSelection(view, position);
+                galleryAdapter.changeSelection(view, position);
             }
         });
         btnSubmit.setOnClickListener(this);
@@ -110,7 +109,7 @@ public class GalleryActivity extends AppCompatActivity implements IGalleryView, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnGalleryOk:
-                iGalleryPresenter.selectedImages(adapterGallery);
+                iGalleryPresenter.selectedImages(galleryAdapter);
                 break;
         }
     }

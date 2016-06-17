@@ -16,7 +16,4 @@ public interface IAppointmentView {
     void onLoadError(String msg);
 
     void onLoadAppointment(JsonObject dataAppt);
-
-    void onLoadListImage(List<String> listImage, SharedPreferences spTelehealth);
-
 }

@@ -52,7 +52,7 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
         this.context = context;
         this.iCallView = iCallView;
 
-        streamOpenTok = new ArrayList<Stream>();
+        streamOpenTok = new ArrayList<>();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
             iCallView.onLoadNameCaller(bundle.getString("fromName", ""));
 
             if (bundle.getString("message", "").equalsIgnoreCase("answer")) {
-                Map<String, Object> params = new HashMap<String, Object>();
+                Map<String, Object> params = new HashMap<>();
                 params.put("from", bundle.getString("to", ""));
                 params.put("to", bundle.getString("from", ""));
                 params.put("message", "answer");
@@ -199,6 +199,7 @@ public class CallPresenter implements ICallPresenter, PublisherKit.PublisherList
         }
     }
 
+    // Manage list streams
     @Override
     public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
         if (SUBSCRIBE_TO_SELF) {

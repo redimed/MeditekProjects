@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.gallery.view.IGalleryView;
 import com.redimed.telehealth.patient.models.CustomGallery;
-import com.redimed.telehealth.patient.utlis.AdapterGallery;
+import com.redimed.telehealth.patient.adapter.GalleryAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,14 +80,14 @@ public class GalleryPresenter implements IGalleryPresenter {
             actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
 
             // Change color image back, set a custom icon for the default home button
-            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_material);
             upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }
     }
 
     @Override
-    public void selectedImages(AdapterGallery adapter) {
+    public void selectedImages(GalleryAdapter adapter) {
         ArrayList<CustomGallery> selected = adapter.getSelected();
         String[] allPath = new String[selected.size()];
         for (int i = 0; i < allPath.length; i++) {

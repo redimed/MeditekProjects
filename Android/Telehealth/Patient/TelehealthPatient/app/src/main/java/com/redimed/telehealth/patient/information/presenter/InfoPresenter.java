@@ -129,7 +129,7 @@ public class InfoPresenter implements IInfoPresenter {
             actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
 
             // Change color image back, set a custom icon for the default home button
-            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_ab_back_material);
             upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }

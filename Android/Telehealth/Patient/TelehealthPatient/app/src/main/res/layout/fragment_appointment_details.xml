@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".appointment.AppointmentFragment">
 
-    <include android:id="@+id/toolBar" layout="@layout/custom_toolbar" />
+    <!--<include android:id="@+id/toolBar" layout="@layout/custom_toolbar" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,6 +51,8 @@
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp"
                 android:showDividers="middle">
 
                 <LinearLayout
@@ -174,11 +176,11 @@
                     <com.redimed.telehealth.patient.font.RobotoTextView
                         android:id="@+id/lblViewStatus"
                         android:layout_width="100dp"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginEnd="50dp"
-                        android:layout_marginRight="50dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@android:color/holo_blue_dark"
                         android:gravity="center"
                         android:text="@string/sub_title"

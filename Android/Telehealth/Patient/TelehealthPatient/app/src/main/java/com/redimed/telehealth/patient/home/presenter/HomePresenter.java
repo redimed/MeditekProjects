@@ -46,7 +46,7 @@ public class HomePresenter implements IHomePresenter {
     private IHomeView iHomeView;
     private RegisterApi registerApi;
     private IMainPresenter iMainPresenter;
-    private SharedPreferences uidTelehealth, spDevice;
+    private SharedPreferences uidTelehealth;
     private static final String TAG = "===HOME_PRESENTER===";
 
     //Constructor
@@ -59,7 +59,6 @@ public class HomePresenter implements IHomePresenter {
         bundle = new Bundle();
         registerApi = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
-        spDevice = context.getSharedPreferences("DeviceInfo", Context.MODE_PRIVATE);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
@@ -142,7 +141,7 @@ public class HomePresenter implements IHomePresenter {
 
     public void updateToken() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("token", spDevice.getString("gcmToken", ""));
+        jsonObject.addProperty("token", uidTelehealth.getString("gcmToken", ""));
         jsonObject.addProperty("uid", uidTelehealth.getString("uid", ""));
         JsonObject dataJson = new JsonObject();
         dataJson.addProperty("data", gson.toJson(jsonObject));

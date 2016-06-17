@@ -413,6 +413,16 @@ module.exports = React.createClass({
             this.refs[fieldRef].whr(calRes);
         }
     },
+    maxHR: function(fieldRef, calRes) {
+        if(this.refs[fieldRef]) {
+            this.refs[fieldRef].maxHR(calRes);
+        }
+    },
+    maxHR85: function(fieldRef, calRes) {
+        if(this.refs[fieldRef]) {
+            this.refs[fieldRef].maxHR85(calRes);
+        }
+    },
     triggerChange: function (fieldRef, calRes) {
         if(this.refs[fieldRef]) {
             this.refs[fieldRef].triggerChange(calRes);

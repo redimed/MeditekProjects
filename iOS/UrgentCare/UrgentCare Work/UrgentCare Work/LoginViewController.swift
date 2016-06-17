@@ -13,6 +13,7 @@ class LoginViewController: BaseViewController {
     
     @IBOutlet weak var btnCompany: UIButton!
     @IBOutlet weak var btnPersonal: UIButton!
+    @IBOutlet weak var LoginStyle: UISegmentedControl!
     
     @IBOutlet weak var viewPersonal: UIView!
     @IBOutlet weak var viewCompany: UIView!
@@ -25,6 +26,7 @@ class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        LoginStyle.removeBorders()
         txtPhoneNumber.delegate = self
     }
     
@@ -36,8 +38,18 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction func actionLogin(sender: AnyObject) {
-        showloading(Define.MessageString.PleaseWait)
-        LoginUserNamePassword()
+        view.endEditing(true)
+        if (txtUserName.text == "" || txtPassword.text == ""){
+            animationView(viewLogin)
+            Context.borderTextFieldValid(txtUserName, color: colorCustom)
+            Context.borderTextFieldValid(txtPassword, color: colorCustom)
+        }
+        else{
+            txtUserName.layer.borderWidth = 0
+            txtPassword.layer.borderWidth = 0
+            showloading(Define.MessageString.PleaseWait)
+            LoginUserNamePassword()
+        }
     }
     @IBAction func actionContinue(sender: AnyObject) {
         
@@ -52,22 +64,6 @@ class LoginViewController: BaseViewController {
             requestPhoneNumberToServer()
         }
     }
-    @IBAction func ActionCompany(sender: AnyObject) {
-        viewCompany.hidden = false
-        viewPersonal.hidden = true
-        btnPersonal.titleLabel?.textColor = UIColor(hex:Define.ColorCustom.grayBack)
-        btnCompany.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        btnCompany.backgroundColor = UIColor(hex:Define.ColorCustom.grayBack)
-        btnPersonal.backgroundColor = UIColor.whiteColor()
-    }
-    @IBAction func ActionPersonal(sender: AnyObject) {
-        viewCompany.hidden = true
-        viewPersonal.hidden = false
-        btnCompany.backgroundColor = UIColor.whiteColor()
-        btnPersonal.backgroundColor = UIColor(hex:Define.ColorCustom.grayBack)
-        btnCompany.titleLabel?.textColor = UIColor(hex:Define.ColorCustom.grayBack)
-    }
-    
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         if(textField.tag == 101){
             let hashValue = string.hash
@@ -218,6 +214,15 @@ class LoginViewController: BaseViewController {
                 }
                 
             }
+        }
+    }
+    @IBAction func actionSelectLogin(sender: AnyObject) {
+        if(sender.selectedSegmentIndex == 1){
+            viewCompany.hidden = false
+            viewPersonal.hidden = true
+        }else{
+            viewCompany.hidden = true
+            viewPersonal.hidden = false
         }
     }
     @IBAction func backToHomeAction(sender: AnyObject) {

@@ -28,7 +28,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     let subscriptionTopic   = "/topics/global"
     let TAG: String         = "AppDelegate | "
     
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        if let rootViewController = self.topViewControllerWithRootViewController(window?.rootViewController) {
+            if (rootViewController.respondsToSelector(Selector("canRotate"))) {
+                // Unlock landscape view orientations for this view controller
+                return .AllButUpsideDown;
+            }
+        }
+        
+        // Only allow portrait (standard behaviour)
+        return .Portrait;
+    }
+    
+    private func topViewControllerWithRootViewController(rootViewController: UIViewController!) -> UIViewController? {
+        if (rootViewController == nil) { return nil }
+        if (rootViewController.isKindOfClass(UITabBarController)) {
+            return topViewControllerWithRootViewController((rootViewController as! UITabBarController).selectedViewController)
+        } else if (rootViewController.isKindOfClass(UINavigationController)) {
+            return topViewControllerWithRootViewController((rootViewController as! UINavigationController).visibleViewController)
+        } else if (rootViewController.presentedViewController != nil) {
+            return topViewControllerWithRootViewController(rootViewController.presentedViewController)
+        }
+        return rootViewController
+    }
+    
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        application.setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
         
         // [START register_for_remote_notifications]
         // Configure the Google context: parses the GoogleService-Info.plist, and initializes the services that have entries in the file
@@ -234,7 +260,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             
-            dict[NSUnderlyingErrorKey] = error as NSError
+            dict[NSUnderlyingErrorKey] = error as! NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             abort()
         }

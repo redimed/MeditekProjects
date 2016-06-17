@@ -85,7 +85,14 @@ class Define: NSObject {
         case Phone
         case Pad
     }
-    
+    struct imageName {
+        static let RadioOnWhite = "RadioOnWhite.png"
+        static let RadioOffGreen = "RadioOffGreen.png"
+        static let StarWhite = "StarWhite.png"
+        static let StarGreen = "StarGreen.png"
+        static let CheckedGreen = "checked.png"
+        static let UnCheckedGreen = "Uncheck.png"
+    }
     struct ScreenSize
     {
         static let SCREEN_WIDTH         = UIScreen.mainScreen().bounds.size.width
@@ -171,6 +178,11 @@ class Define: NSObject {
         static let colorCustomRed = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
         static let colorCustomBrow =  UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
         static let grayBack = "16204A"
+        static let greenBoldColor = "118076"
+        static let greenColor = "18A093"
+        static let greenBoderColor = "979797"
+        static let placehoderColor = "AAAAAA"
+
     }
     struct UrlAPISocket  {
         static let joinRoom : String = "/api/telehealth/socket/joinRoom?uid=%@"

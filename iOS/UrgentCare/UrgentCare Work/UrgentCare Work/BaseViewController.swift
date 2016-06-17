@@ -22,13 +22,15 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     let socketService = SocketService()
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         socketService.delegate = self
+        
         NSNotificationCenter.defaultCenter().removeObserver(self,name:Define.LogoutFunction, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.LogoutWhenIsAuthenticated), name: Define.LogoutFunction, object: nil)
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -16,14 +16,20 @@
 		3F4081A01CE03F9B0020E7BF /* ChangePinNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40819F1CE03F9B0020E7BF /* ChangePinNumberViewController.swift */; };
 		3F475AC31CDB2C4900967104 /* ForgetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F475AC21CDB2C4900967104 /* ForgetPin.swift */; };
 		3F475AC91CDB2D1F00967104 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F475AC81CDB2D1F00967104 /* Error.swift */; };
+		3F520B1A1D13E46200DB4E2B /* PassingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F520B191D13E46200DB4E2B /* PassingData.swift */; };
 		3F5B01AD1CC774C500E393E0 /* RequestAppoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B01AC1CC774C500E393E0 /* RequestAppoint.swift */; };
+		3F5B68D81D0FE248002CF043 /* InjuryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B68D71D0FE248002CF043 /* InjuryViewController.swift */; };
 		3F5C40C91CA4E578005703DC /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40C81CA4E578005703DC /* UITextFieldExtension.swift */; };
 		3F5C40CD1CA4E786005703DC /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40CC1CA4E786005703DC /* SettingViewController.swift */; };
 		3F5C40CF1CA521CC005703DC /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40CE1CA521CC005703DC /* CustomTableViewCell.swift */; };
 		3F5C40D11CA52D46005703DC /* CompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5C40D01CA52D46005703DC /* CompanyViewController.swift */; };
 		3F6C461F1CA53586002A936B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C461E1CA53586002A936B /* AccountViewController.swift */; };
+		3F74C2281D07B984004EA86F /* CustomPatientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F74C2261D07B984004EA86F /* CustomPatientCell.swift */; };
+		3F74C2291D07B984004EA86F /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F74C2271D07B984004EA86F /* CustomTableViewController.swift */; };
 		3F764AEF1CCE1C5A0006CBBA /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F764AEE1CCE1C5A0006CBBA /* CallViewController.swift */; };
 		3F80303F1CF6FE9F00204E98 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F80303E1CF6FE9F00204E98 /* LoginViewController.swift */; };
+		3F834B2E1D12A10C003B40A8 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F834B2D1D12A10C003B40A8 /* ConsentViewController.swift */; };
+		3F834B311D12A98A003B40A8 /* SignatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F834B301D12A98A003B40A8 /* SignatureView.swift */; };
 		3F87949A1CEDAEE200FB9684 /* AppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8794991CEDAEE200FB9684 /* AppointmentTableViewCell.swift */; };
 		3F8F6CB31CC8BDE600557056 /* StaffDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F6CB21CC8BDE600557056 /* StaffDetailViewController.swift */; };
 		3F99635B1CD9A2F40085FF71 /* CallContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F99635A1CD9A2F40085FF71 /* CallContainer.swift */; };
@@ -49,6 +55,7 @@
 		3FC8D5B21CB620830008B3DC /* VerifyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B11CB620830008B3DC /* VerifyCode.swift */; };
 		3FC8D5B41CB620AD0008B3DC /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B31CB620AD0008B3DC /* VerifyViewController.swift */; };
 		3FC8D5B61CB620B50008B3DC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D5B51CB620B50008B3DC /* RegisterViewController.swift */; };
+		3FD175131D114F31005F4D9F /* GeneralIllnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD175121D114F31005F4D9F /* GeneralIllnessViewController.swift */; };
 		3FD191FF1CE422DB00379364 /* CallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD191FE1CE422DB00379364 /* CallService.swift */; };
 		3FD192051CE4256200379364 /* UIVViewController-SLPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192011CE4256200379364 /* UIVViewController-SLPopup.swift */; };
 		3FD192061CE4256200379364 /* MAActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192021CE4256200379364 /* MAActivityIndicatorView.swift */; };
@@ -60,10 +67,14 @@
 		3FD68C0D1CBE5270008ACEF4 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD68C0C1CBE5270008ACEF4 /* ContentViewController.swift */; };
 		3FDC31241CEEFE110010F50F /* AppointmentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC31231CEEFE110010F50F /* AppointmentDetailsViewController.swift */; };
 		3FDC31261CEF0BA90010F50F /* TrackingRefferalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC31251CEF0BA90010F50F /* TrackingRefferalViewController.swift */; };
+		3FDF2DBD1D012CE70029617F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDF2DBC1D012CE70029617F /* CollectionViewCell.swift */; };
+		3FDF7DB61D13B79900C9AB7B /* Redisite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDF7DB51D13B79900C9AB7B /* Redisite.swift */; };
 		3FE0F52E1CD83DB10077D1F6 /* PatientInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE0F52D1CD83DB10077D1F6 /* PatientInformation.swift */; };
 		3FE3D4D91CBD055A00BF3E0A /* UserAccountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE3D4D81CBD055A00BF3E0A /* UserAccountDetail.swift */; };
 		3FF4F4121CBDEE7100ACCECA /* RequestAppointCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF4F4111CBDEE7100ACCECA /* RequestAppointCompany.swift */; };
 		3FF4F4141CBDFECA00ACCECA /* RefreshCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF4F4131CBDFECA00ACCECA /* RefreshCode.swift */; };
+		3FF510311D003E9400210167 /* PatientInforViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF510301D003E9400210167 /* PatientInforViewController.swift */; };
+		3FF510331D00407C00210167 /* AllCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF510321D00407C00210167 /* AllCollectionViewController.swift */; };
 		547640B51C857ECF00E90D69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 547640B41C857ECF00E90D69 /* Main.storyboard */; };
 		54EEAEC01C83F2DD0096CA1F /* DTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EEAEB21C83F2DD0096CA1F /* DTAlertView.swift */; };
 		54EEAEC11C83F2DD0096CA1F /* DotSpinningLikeSkype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EEAEB41C83F2DD0096CA1F /* DotSpinningLikeSkype.swift */; };
@@ -166,15 +177,21 @@
 		3F40819F1CE03F9B0020E7BF /* ChangePinNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePinNumberViewController.swift; sourceTree = "<group>"; };
 		3F475AC21CDB2C4900967104 /* ForgetPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPin.swift; sourceTree = "<group>"; };
 		3F475AC81CDB2D1F00967104 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		3F520B191D13E46200DB4E2B /* PassingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassingData.swift; sourceTree = "<group>"; };
 		3F5B01AC1CC774C500E393E0 /* RequestAppoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAppoint.swift; sourceTree = "<group>"; };
+		3F5B68D71D0FE248002CF043 /* InjuryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjuryViewController.swift; sourceTree = "<group>"; };
 		3F5C40C81CA4E578005703DC /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		3F5C40CC1CA4E786005703DC /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		3F5C40CE1CA521CC005703DC /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		3F5C40D01CA52D46005703DC /* CompanyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyViewController.swift; sourceTree = "<group>"; };
 		3F6C461E1CA53586002A936B /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		3F74C2261D07B984004EA86F /* CustomPatientCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPatientCell.swift; sourceTree = "<group>"; };
+		3F74C2271D07B984004EA86F /* CustomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
 		3F764AEA1CCE08AF0006CBBA /* UrgentCare Work-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UrgentCare Work-Bridging-Header.h"; sourceTree = "<group>"; };
 		3F764AEE1CCE1C5A0006CBBA /* CallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallViewController.swift; path = Call/CallViewController.swift; sourceTree = "<group>"; };
 		3F80303E1CF6FE9F00204E98 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3F834B2D1D12A10C003B40A8 /* ConsentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewController.swift; sourceTree = "<group>"; };
+		3F834B301D12A98A003B40A8 /* SignatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureView.swift; sourceTree = "<group>"; };
 		3F8794991CEDAEE200FB9684 /* AppointmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentTableViewCell.swift; sourceTree = "<group>"; };
 		3F8F6CB21CC8BDE600557056 /* StaffDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaffDetailViewController.swift; sourceTree = "<group>"; };
 		3F99635A1CD9A2F40085FF71 /* CallContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallContainer.swift; sourceTree = "<group>"; };
@@ -200,6 +217,7 @@
 		3FC8D5B11CB620830008B3DC /* VerifyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyCode.swift; sourceTree = "<group>"; };
 		3FC8D5B31CB620AD0008B3DC /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		3FC8D5B51CB620B50008B3DC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		3FD175121D114F31005F4D9F /* GeneralIllnessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralIllnessViewController.swift; sourceTree = "<group>"; };
 		3FD191FE1CE422DB00379364 /* CallService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallService.swift; sourceTree = "<group>"; };
 		3FD192011CE4256200379364 /* UIVViewController-SLPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIVViewController-SLPopup.swift"; sourceTree = "<group>"; };
 		3FD192021CE4256200379364 /* MAActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -211,10 +229,14 @@
 		3FD68C0C1CBE5270008ACEF4 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		3FDC31231CEEFE110010F50F /* AppointmentDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentDetailsViewController.swift; sourceTree = "<group>"; };
 		3FDC31251CEF0BA90010F50F /* TrackingRefferalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRefferalViewController.swift; sourceTree = "<group>"; };
+		3FDF2DBC1D012CE70029617F /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		3FDF7DB51D13B79900C9AB7B /* Redisite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Redisite.swift; sourceTree = "<group>"; };
 		3FE0F52D1CD83DB10077D1F6 /* PatientInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientInformation.swift; sourceTree = "<group>"; };
 		3FE3D4D81CBD055A00BF3E0A /* UserAccountDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountDetail.swift; sourceTree = "<group>"; };
 		3FF4F4111CBDEE7100ACCECA /* RequestAppointCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAppointCompany.swift; sourceTree = "<group>"; };
 		3FF4F4131CBDFECA00ACCECA /* RefreshCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshCode.swift; sourceTree = "<group>"; };
+		3FF510301D003E9400210167 /* PatientInforViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientInforViewController.swift; sourceTree = "<group>"; };
+		3FF510321D00407C00210167 /* AllCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllCollectionViewController.swift; sourceTree = "<group>"; };
 		547640B41C857ECF00E90D69 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		54EEAEB21C83F2DD0096CA1F /* DTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAlertView.swift; sourceTree = "<group>"; };
 		54EEAEB41C83F2DD0096CA1F /* DotSpinningLikeSkype.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotSpinningLikeSkype.swift; sourceTree = "<group>"; };
@@ -362,6 +384,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3F5B68D61D0FE210002CF043 /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				3FF510321D00407C00210167 /* AllCollectionViewController.swift */,
+				3FDF2DBC1D012CE70029617F /* CollectionViewCell.swift */,
+			);
+			name = Collection;
+			sourceTree = "<group>";
+		};
 		3F6C461D1CA5356B002A936B /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,12 +402,29 @@
 			name = Account;
 			sourceTree = "<group>";
 		};
+		3F74C2251D07B957004EA86F /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				3F74C2261D07B984004EA86F /* CustomPatientCell.swift */,
+				3F74C2271D07B984004EA86F /* CustomTableViewController.swift */,
+			);
+			name = Table;
+			sourceTree = "<group>";
+		};
 		3F764AED1CCE1C420006CBBA /* Call */ = {
 			isa = PBXGroup;
 			children = (
 				3F764AEE1CCE1C5A0006CBBA /* CallViewController.swift */,
 			);
 			name = Call;
+			sourceTree = "<group>";
+		};
+		3F834B2F1D12A954003B40A8 /* Signature */ = {
+			isa = PBXGroup;
+			children = (
+				3F834B301D12A98A003B40A8 /* SignatureView.swift */,
+			);
+			name = Signature;
 			sourceTree = "<group>";
 		};
 		3F9D447F1CF6F95100960E11 /* Login */ = {
@@ -434,6 +482,7 @@
 				3FB398A91CE981FB008A7BDC /* AppointmentListDataOrder.swift */,
 				3FB4E7F01CF2A53000AE83C4 /* DetailAppointment.swift */,
 				3FB4E7F41CF30F9E00AE83C4 /* UploadImage.swift */,
+				3FDF7DB51D13B79900C9AB7B /* Redisite.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -495,6 +544,21 @@
 				3FD68C0C1CBE5270008ACEF4 /* ContentViewController.swift */,
 			);
 			name = Content;
+			sourceTree = "<group>";
+		};
+		3FF5102F1D003E5E00210167 /* PatientInfomation */ = {
+			isa = PBXGroup;
+			children = (
+				3F834B2F1D12A954003B40A8 /* Signature */,
+				3F5B68D61D0FE210002CF043 /* Collection */,
+				3F74C2251D07B957004EA86F /* Table */,
+				3FF510301D003E9400210167 /* PatientInforViewController.swift */,
+				3F834B2D1D12A10C003B40A8 /* ConsentViewController.swift */,
+				3F5B68D71D0FE248002CF043 /* InjuryViewController.swift */,
+				3FD175121D114F31005F4D9F /* GeneralIllnessViewController.swift */,
+				3F520B191D13E46200DB4E2B /* PassingData.swift */,
+			);
+			name = PatientInfomation;
 			sourceTree = "<group>";
 		};
 		4E86AA009117C4CA32AAC81D /* Frameworks */ = {
@@ -610,6 +674,7 @@
 		54EEAEAB1C83F1130096CA1F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3FF5102F1D003E5E00210167 /* PatientInfomation */,
 				3F9D447F1CF6F95100960E11 /* Login */,
 				3FB398A21CE95EEA008A7BDC /* ListTracking */,
 				3FD192001CE4255000379364 /* Popup */,
@@ -1056,6 +1121,7 @@
 				54EEAEC51C83F2DD0096CA1F /* RotatingCircle.swift in Sources */,
 				3FC8D5B01CB6207E0008B3DC /* RequestVerify.swift in Sources */,
 				54EEAECA1C83F2DD0096CA1F /* SWRevealViewController.m in Sources */,
+				3F74C2281D07B984004EA86F /* CustomPatientCell.swift in Sources */,
 				AF26B2A61BEC8787006F37A4 /* DesignableTextView.swift in Sources */,
 				3FD192051CE4256200379364 /* UIVViewController-SLPopup.swift in Sources */,
 				AF26B2A01BEC8787006F37A4 /* BlurView.swift in Sources */,
@@ -1081,15 +1147,22 @@
 				AF26B29D1BEC8787006F37A4 /* AsyncButton.swift in Sources */,
 				54EEAED71C83F3420096CA1F /* UIImageViewExtension.swift in Sources */,
 				54EEAEC61C83F2DD0096CA1F /* RPLoadingAnimationDelegate.swift in Sources */,
+				3F834B311D12A98A003B40A8 /* SignatureView.swift in Sources */,
+				3F5B68D81D0FE248002CF043 /* InjuryViewController.swift in Sources */,
+				3FD175131D114F31005F4D9F /* GeneralIllnessViewController.swift in Sources */,
 				3F8F6CB31CC8BDE600557056 /* StaffDetailViewController.swift in Sources */,
+				3FF510311D003E9400210167 /* PatientInforViewController.swift in Sources */,
+				3F834B2E1D12A10C003B40A8 /* ConsentViewController.swift in Sources */,
 				3FC565DC1CA8C6E800706908 /* Base.swift in Sources */,
 				3FD1920E1CE4733200379364 /* UpdatePinNumber.swift in Sources */,
 				3FDC31241CEEFE110010F50F /* AppointmentDetailsViewController.swift in Sources */,
 				AF26B2BC1BEC8787006F37A4 /* FAQsViewController.swift in Sources */,
 				AF26B2971BEC8787006F37A4 /* TPKeyboardAvoidingTableView.m in Sources */,
 				3F80303F1CF6FE9F00204E98 /* LoginViewController.swift in Sources */,
+				3FF510331D00407C00210167 /* AllCollectionViewController.swift in Sources */,
 				AF26B2A51BEC8787006F37A4 /* DesignableTextField.swift in Sources */,
 				3F6C461F1CA53586002A936B /* AccountViewController.swift in Sources */,
+				3FDF2DBD1D012CE70029617F /* CollectionViewCell.swift in Sources */,
 				3FF4F4121CBDEE7100ACCECA /* RequestAppointCompany.swift in Sources */,
 				54EEAEDF1C83F3960096CA1F /* Alert.swift in Sources */,
 				3FD1920A1CE42A7000379364 /* ReceiveMessageData.swift in Sources */,
@@ -1125,6 +1198,7 @@
 				3F4081A01CE03F9B0020E7BF /* ChangePinNumberViewController.swift in Sources */,
 				3F475AC91CDB2D1F00967104 /* Error.swift in Sources */,
 				3F2EEDDB1CB79CC700516422 /* ListStaff.swift in Sources */,
+				3F74C2291D07B984004EA86F /* CustomTableViewController.swift in Sources */,
 				3FBCA4481CBCE05800AD431E /* ListContactPersonViewController.swift in Sources */,
 				AF26B2B01BEC8787006F37A4 /* SpringAnimation.swift in Sources */,
 				3FB4E7F31CF3095B00AE83C4 /* BodyUploadViewController.swift in Sources */,
@@ -1143,9 +1217,11 @@
 				54EEAEC31C83F2DD0096CA1F /* FunnyDotsA.swift in Sources */,
 				AF26B2A11BEC8787006F37A4 /* DesignableButton.swift in Sources */,
 				54EEAED41C83F3420096CA1F /* RequestExtension.swift in Sources */,
+				3F520B1A1D13E46200DB4E2B /* PassingData.swift in Sources */,
 				54EEAEE01C83F3960096CA1F /* Constants.swift in Sources */,
 				AF26B29F1BEC8787006F37A4 /* AutoTextView.swift in Sources */,
 				3FB398AC1CE9823B008A7BDC /* AppointmentListDataFilter.swift in Sources */,
+				3FDF7DB61D13B79900C9AB7B /* Redisite.swift in Sources */,
 				3FDC31261CEF0BA90010F50F /* TrackingRefferalViewController.swift in Sources */,
 				3F5B01AD1CC774C500E393E0 /* RequestAppoint.swift in Sources */,
 				54EEAED61C83F3420096CA1F /* UIColorExtension.swift in Sources */,

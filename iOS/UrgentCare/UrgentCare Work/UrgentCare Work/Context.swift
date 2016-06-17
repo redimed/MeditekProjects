@@ -10,6 +10,7 @@ import Foundation
 import SystemConfiguration
 var cookies :String = String()
 import UIKit
+import ObjectMapper
 
 struct FAIcon {
     static let volume_off : String = "\u{f026}"
@@ -203,5 +204,18 @@ class Context {
         default:
             return false
         }
+    }
+    
+    class func EformtData(value:String,name:String,ref:String,type:String,checked:String,refRow:String)-> EformData{
+        let eformData = EformData()
+        
+        eformData.name = name
+        eformData.value = value
+        eformData.ref = ref
+        eformData.type = type
+        eformData.checked = checked
+        eformData.refRow = refRow
+        
+        return eformData
     }
 }

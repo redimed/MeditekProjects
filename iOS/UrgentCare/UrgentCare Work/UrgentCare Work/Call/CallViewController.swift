@@ -252,7 +252,6 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
     func doSubscribe(stream : OTStream) {
         if let session = self.session {
             subscriber = OTSubscriber(stream: stream, delegate: self)
-            
             var maybeError : OTError?
             session.subscribe(subscriber, error: &maybeError)
             if let error = maybeError {
@@ -364,6 +363,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
     
     func publisher(publisher: OTPublisherKit, streamCreated stream: OTStream) {
         NSLog("publisher streamCreated %@", stream)
+        
         // Step 3b: (if YES == subscribeToSelf): Our own publisher is now visible to
         // all participants in the OpenTok session. We will attempt to subscribe to
         // our own stream. Expect to see a slight delay in the subscriber video and
@@ -399,7 +399,6 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
             print("Message",message)
         }
     }
-    //Giap: Func change icon
     func changeIconCallingView(button:DesignableButton,nameImg:String){
         button.setImage(UIImage(named: nameImg), forState: UIControlState.Normal)
     }

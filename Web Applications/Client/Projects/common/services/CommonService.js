@@ -268,6 +268,10 @@ angular.module("app.common.CommonService", [])
         commonService.API = "https://testapp.redimed.com.au:3005";
         // commonService.API = "http://telehealthvietnam.com.vn:3005";
         commonService.contentVerify = "Your REDiMED account verification code is";
+        //roleCode admin
+        commonService.role_admin     = 'ADMIN';
+        //roleCode assistant
+        commonService.role_assistant = 'ASSISTANT';
 
         commonService.DoctorUID = function(){
             var DoctorMeditek = "c2352016-3ca7-4d3a-a8dc-e8faacaca8cd";

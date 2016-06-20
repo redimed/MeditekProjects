@@ -51,6 +51,9 @@ angular.module("app.authentication.WAAppointment.services", [])
                 data:data
             });
         };
+        services.removeWAAppointmentByUid = function(data) {
+            return api.one("appointment/destroy/" + data.UID).get();
+        };
 
         return services;
     });

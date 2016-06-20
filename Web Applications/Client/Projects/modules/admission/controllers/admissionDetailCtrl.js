@@ -136,6 +136,7 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                             $scope.admissionDetail.PhoneNumber = $scope.admissionDetail.PhoneNumber ? $scope.admissionDetail.PhoneNumber : response.data.PatientGP[0].PhoneNumber ? response.data.PatientGP[0].PhoneNumber : '';
                             $scope.admissionDetail.HomePhoneNumber = $scope.admissionDetail.HomePhoneNumber ? $scope.admissionDetail.HomePhoneNumber : response.data.PatientGP[0].HomePhoneNumber ? response.data.PatientGP[0].HomePhoneNumber : '';
                             $scope.admissionDetail.WorkPhoneNumber = $scope.admissionDetail.WorkPhoneNumber ? $scope.admissionDetail.WorkPhoneNumber : response.data.PatientGP[0].WorkPhoneNumber ? response.data.PatientGP[0].WorkPhoneNumber : '';
+                            $scope.admissionDetail.Address1 = $scope.admissionDetail.Address1 ? $scope.admissionDetail.Address1 : response.data.PatientGP[0].Address1 ? response.data.PatientGP[0].Address1: '';
                             console.log(">>>>>>>>PatientGP", response.data.PatientGP[0]);
                         }
                     }
@@ -387,6 +388,9 @@ app.controller('admissionDetailCtrl', function($scope, $cookies, toastr, $timeou
                         }
                         if ($scope.admissionDetail['WorkPhoneNumber']) {
                             obj['WorkPhoneNumber'] = $scope.admissionDetail['WorkPhoneNumber'];
+                        }
+                        if ($scope.admissionDetail['Address1']) {
+                            obj['Address1'] = $scope.admissionDetail['Address1'];
                         }
                         obj.ID = GPid;
                         var patientInfo = {

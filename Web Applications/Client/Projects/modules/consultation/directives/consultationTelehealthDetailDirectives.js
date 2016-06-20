@@ -961,6 +961,30 @@ app.directive('telehealthDetail', function(doctorService) {
                 });
             };
 
+            $scope.removeAppointment = function(){
+                swal({
+                    title: 'Are you sure?',
+                    text: 'Appointment you want to delete!!!',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    allowOutsideClick: false,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function(){
+                    swal("Deleted!", "Your Appointment has been deleted.", "success");
+                    var UID = $scope.wainformation.UID;
+                    WAAppointmentService.removeWAAppointmentByUid({UID:UID})
+                        .then(function(response){
+                            $state.go('authentication.WAAppointment.list', {}, {reload: true});
+                        },function(err){
+                            
+                        })
+                })
+            }
+
             $scope.type_of_treatment = ['physiotherapy','exerciseRehab','handTherapy'];
             $scope._onChangeChecked = function(id, list_id) {
                 var filterArr;

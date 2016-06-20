@@ -137,121 +137,163 @@ module.exports = {
     Upload: function(req) {
         var uploadDir = rootPath + '/upload_files/';
         var defer = $q.defer();
-        mkdirp(uploadDir, function(err) {
-            if (err) defer.reject(err);
-            var params = req.params.all();
-            if (!params.userUID || !params.fileType) {
-                params.userUID = req.headers.useruid;
-                params.fileType = req.headers.filetype;
-            };
-            var maxFileSize = 15 * 1000 * 1000; //in MB
-            req.file('uploadFile').upload({
-                maxBytes: maxFileSize,
-                dirname: uploadDir
-            }, function whenDone(err, uploadedFiles) {
-                if (err) defer.reject(err);
-                if (uploadedFiles.length == 0) {
-                    var err = new Error("FileUpload.UploadFile.Error");
-                    err.pushError("No File Was Uploaded!");
-                    defer.reject(err);
+        try {
+            mkdirp(uploadDir, function(err) {
+                if (err) {
+                    //defer.reject(err);
+                    throw err;
                 }
-                if (!params.userUID || !params.fileType || !_.contains(constFileType, params.fileType)) {
-                    fs.access(uploadedFiles[0].fd, function(err) {
-                        if (!err) fs.unlink(uploadedFiles[0].fd);
-                    })
-                    var err = new Error("FileUpload.UploadFile.Error");
-                    err.pushError("Invalid Params!");
-                    defer.reject(err);
-                }
-                Services.UserAccount.GetUserAccountDetails({
-                    UID: params.userUID
-                }).then(function(data) {
-                    if (data) {
-                        var fileUID = UUIDService.Create();
-                        var fileName = decodeURIComponent(uploadedFiles[0].filename);
-                        var fileExt = uploadedFiles[0].filename.split('.')[uploadedFiles[0].filename.split('.').length - 1].toLowerCase();
-                        var fileType = params.fileType;
-                        if (!_.contains(constImgExt, fileExt)) fileType = constFileType.document;
-                        if (_.contains(constImgExt, fileExt) && fileType == constFileType.document) fileType = constFileType.image;
-                        HelperService.EncryptFile({
-                            inputFile: uploadedFiles[0].fd,
-                            outputFile: uploadDir + fileUID,
-                            password: fileUID
-                        }, function(err) {
-                            fs.access(uploadedFiles[0].fd, function(err) {
-                                if (!err) fs.unlink(uploadedFiles[0].fd);
-                            })
-                            if (err) defer.reject(err);
-                            return sequelize.transaction().then(function(t) {
-                                function medicalImageCheck(bodyPart, fileID) {
-                                    return MedicalImage.create({
-                                        FileUploadID: fileID,
-                                        BodyPart: bodyPart
-                                    }, {
-                                        transaction: t
-                                    })
-                                }
-
-                                function documentCheck(docType, fileID) {
-                                    return DocumentFile.create({
-                                        FileUploadID: fileID,
-                                        DocType: docType
-                                    }, {
-                                        transaction: t
-                                    })
-                                }
-                                var fileInfo = null;
-
-                                function startTransaction() {
-                                    return FileUpload.create({
-                                        UID: fileUID,
-                                        UserAccountID: data.ID,
-                                        Description: !params.description ? null : params.description,
-                                        FileName: fileName,
-                                        FileLocation: 'upload_files/' + fileUID,
-                                        FileType: fileType,
-                                        FileExtension: fileExt,
-                                        Enable: 'Y'
-                                    }, {
-                                        transaction: t
-                                    }).then(function(file) {
-                                        fileInfo = file;
-                                        if (fileType == constFileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
-                                        else if (fileType == constFileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
-                                    })
-                                }
-                                return startTransaction().then(function(data) {
-                                    t.commit();
-                                    defer.resolve({
-                                        status: 'success',
-                                        fileUID: fileUID,
-                                        fileInfo: fileInfo,
-                                    });
-                                }).catch(function(err) {
-                                    t.rollback();
-                                    fs.access(uploadDir + fileUID, function(err) {
-                                        if (!err) fs.unlink(uploadDir + fileUID);
-                                    })
-                                    defer.reject(err);
-                                })
-                            })
-                        })
-                    } else {
+                var params = req.params.all();
+                if (!params.userUID || !params.fileType) {
+                    params.userUID = req.headers.useruid;
+                    params.fileType = req.headers.filetype;
+                };
+                var maxFileSize = 15 * 1000 * 1000; //in MB
+                req.file('uploadFile').upload({
+                    maxBytes: maxFileSize,
+                    dirname: uploadDir
+                }, function whenDone(err, uploadedFiles) {
+                    if (err) {
+                        // defer.reject(err);
+                        throw err;
+                    }
+                    if (uploadedFiles.length == 0) {
+                        var err = new Error("FileUpload.UploadFile.Error");
+                        err.pushError("No File Was Uploaded!");
+                        // defer.reject(err);
+                        throw err;
+                    }
+                    console.log("||||||||||||||||||||||||FILE UPLOAD FD:",uploadedFiles[0].fd);
+                    if (!params.userUID || !params.fileType || !_.contains(constFileType, params.fileType)) {
                         fs.access(uploadedFiles[0].fd, function(err) {
-                            if (!err) fs.unlink(uploadedFiles[0].fd);
+                            if (!err) {
+                                fs.unlink(uploadedFiles[0].fd);
+                            } else {
+                                throw err;
+                            }
                         })
                         var err = new Error("FileUpload.UploadFile.Error");
-                        err.pushError("User Not Exist!");
-                        defer.reject(err);
+                        err.pushError("Invalid Params!");
+                        // defer.reject(err);
+                        throw err;
                     }
-                }).catch(function(err) {
-                    fs.access(uploadedFiles[0].fd, function(err) {
-                        if (!err) fs.unlink(uploadedFiles[0].fd);
+                    Services.UserAccount.GetUserAccountDetails({
+                        UID: params.userUID
+                    }).then(function(data) {
+                        if (data) {
+                            var fileUID = UUIDService.Create();
+                            var fileName = decodeURIComponent(uploadedFiles[0].filename);
+                            var fileExt = uploadedFiles[0].filename.split('.')[uploadedFiles[0].filename.split('.').length - 1].toLowerCase();
+                            var fileType = params.fileType;
+                            if (!_.contains(constImgExt, fileExt)) fileType = constFileType.document;
+                            if (_.contains(constImgExt, fileExt) && fileType == constFileType.document) fileType = constFileType.image;
+                            HelperService.EncryptFile({
+                                inputFile: uploadedFiles[0].fd,
+                                outputFile: uploadDir + fileUID,
+                                password: fileUID
+                            }, function(err) {
+                                fs.access(uploadedFiles[0].fd, function(err) {
+                                    if (!err)
+                                    {
+                                        fs.unlink(uploadedFiles[0].fd);
+                                    } else {
+                                        throw err;
+                                    }
+                                })
+                                if (err){
+                                    // defer.reject(err);
+                                    throw err;
+                                }
+                                return sequelize.transaction().then(function(t) {
+                                    function medicalImageCheck(bodyPart, fileID) {
+                                        return MedicalImage.create({
+                                            FileUploadID: fileID,
+                                            BodyPart: bodyPart
+                                        }, {
+                                            transaction: t
+                                        })
+                                    }
+
+                                    function documentCheck(docType, fileID) {
+                                        return DocumentFile.create({
+                                            FileUploadID: fileID,
+                                            DocType: docType
+                                        }, {
+                                            transaction: t
+                                        })
+                                    }
+                                    var fileInfo = null;
+
+                                    function startTransaction() {
+                                        return FileUpload.create({
+                                            UID: fileUID,
+                                            UserAccountID: data.ID,
+                                            Description: !params.description ? null : params.description,
+                                            FileName: fileName,
+                                            FileLocation: 'upload_files/' + fileUID,
+                                            FileType: fileType,
+                                            FileExtension: fileExt,
+                                            Enable: 'Y'
+                                        }, {
+                                            transaction: t
+                                        }).then(function(file) {
+                                            fileInfo = file;
+                                            if (fileType == constFileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
+                                            else if (fileType == constFileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
+                                        })
+                                    }
+                                    return startTransaction().then(function(data) {
+                                        t.commit();
+                                        defer.resolve({
+                                            status: 'success',
+                                            fileUID: fileUID,
+                                            fileInfo: fileInfo,
+                                        });
+                                    }).catch(function(err) {
+                                        t.rollback();
+                                        fs.access(uploadDir + fileUID, function(err) {
+                                            if (!err)
+                                            {
+                                                fs.unlink(uploadDir + fileUID);
+                                            } else {
+                                                throw  err;
+                                            }
+                                        })
+                                        // defer.reject(err);
+                                        throw err;
+                                    })
+                                })
+                            })
+                        } else {
+                            fs.access(uploadedFiles[0].fd, function(err) {
+                                if (!err) {
+                                    fs.unlink(uploadedFiles[0].fd);
+                                } else {
+                                    throw err;
+                                }
+                            })
+                            var err = new Error("FileUpload.UploadFile.Error");
+                            err.pushError("User Not Exist!");
+                            // defer.reject(err);
+                            throw err;
+                        }
+                    }).catch(function(err) {
+                        fs.access(uploadedFiles[0].fd, function(err) {
+                            if (!err) {
+                                fs.unlink(uploadedFiles[0].fd);
+                            } else {
+                                throw err;
+                            }
+                        })
+                        // defer.reject(err);
+                        throw err;
                     })
-                    defer.reject(err);
                 })
             })
-        })
+        } catch (catchError) {
+            defer.reject(catchError);
+        }
+
         return defer.promise;
     }
 }

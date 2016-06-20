@@ -281,9 +281,11 @@ module.exports = React.createClass({
                             })
 
                             var preCalArray = [];
+                            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>field.precal: ", field.preCal);
                             if(typeof field.preCal !== 'undefined'){
                                 preCalArray = field.preCal.split('|');
                             }
+                            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>preCalArray:", preCalArray);
                             preCalArray.map(function(preCal){
                                 /* EQUALP GROUP */
                                 if(Config.getPrefixField(preCal, 'EQUALP(') > -1){
@@ -372,6 +374,24 @@ module.exports = React.createClass({
                                         }
                                     }
                                 }
+
+                                /*if (Config.getPrefixField(preCal, 'DEAULTVALUE') > -1) {
+                                    var preCalRes = Config.getArrayPrecal(12, preCal);
+                                    var preCalResItemArr = preCalRes[0].split('.');
+                                    if(preCalResItemArr.length > 1){
+                                        responseTemp = response.data[preCalResItemArr[0]];
+                                        preCalResItemTemp = preCalResItemArr[1];
+                                    }else{
+                                        responseTemp = response.data;
+                                        preCalResItemTemp = preCalResItem;
+                                    }
+
+                                    objRef[field.ref] = {refRow: row.ref, value: value};
+                                    if(self.refs[section.ref]) {
+                                        self.refs[section.ref].setValue(row.ref, field.ref, res);
+                                    }
+
+                                }*/
                                 /* END CONCAT PREFIX */
                                 /* DEFAULT PREFIX */
                                 if(Config.getPrefixField(preCal,'DEFAULT') > -1){

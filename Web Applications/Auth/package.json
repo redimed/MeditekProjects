@@ -74,6 +74,6 @@
   "author": "anonymous node/sails user",
   "license": "",
   "devDependencies": {
-    "meditek_library": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master"
+    "meditek_library": "git+https://83426e95d4e8541abe35d0c12d63b513e69a8a07:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master"
   }
 }

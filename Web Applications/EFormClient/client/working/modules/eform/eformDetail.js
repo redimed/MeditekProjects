@@ -659,6 +659,7 @@ module.exports = React.createClass({
         var self = this;
 
         var fields = [];
+        var chart = false;
 
         this.content.sections.map(function(section){
             if(typeof section.viewType !== 'undefined'){
@@ -749,35 +750,76 @@ module.exports = React.createClass({
                                 }
                             }
                         }
+                        if(field.type === 'line_chart'){
+                            chart = true;
+                            var chart = $('#line_chart').highcharts();
+                            var svg = chart.getSVG();
+                            var image = new Image;
+                            var canvas = document.createElement('canvas');
+                            canvas.width = chart.chartWidth;
+                            canvas.height = chart.chartHeight;
+                            image.onload = function(){
+                                canvas.getContext('2d').drawImage(this, 0, 0, chart.chartWidth, chart.chartHeight);
+                                f.value = '';
+                                f.base64Data = canvas.toDataURL().replace('data:image/png;base64,','');
+                                fields.push(f);
+                                var appointmentUID = self.appointmentUID;
+                                var data = {
+                                    printMethod: self.EFormTemplate.PrintType,
+                                    data: fields,
+                                    templateUID: self.templateUID
+                                }
+
+                                EFormService.createPDFForm(data)
+                                .then(function(response){
+                                    var fileName = 'report_'+moment().format('X');
+                                    var blob = new Blob([response], {
+                                        type: 'application/pdf'
+                                    });
+                                    var filesaver = saveAs(blob, fileName);
+                                    setTimeout(function(){
+                                        //window.location.reload();
+                                    }, 1000)
+                                }, function(error){
+
+                                })
+                            }
+                            image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+                            /*html2canvas($(self.refs.header), {
+                                onrendered: function(canvas){
+                                    self.image_header = canvas.toDataURL();
+                                    self.image_header = self.image_header.replace('data:image/png;base64,','');
+                                }
+                            })*/
+                        }
                         fields.push(f);
                     }
                 })
             }
         })
 
-        var appointmentUID = self.appointmentUID;
+        if(!chart){
+            var appointmentUID = self.appointmentUID;
+            var data = {
+                printMethod: self.EFormTemplate.PrintType,
+                data: fields,
+                templateUID: self.templateUID
+            }
 
-        var data = {
-            printMethod: self.EFormTemplate.PrintType,
-            data: fields,
-            templateUID: self.templateUID
+            EFormService.createPDFForm(data)
+            .then(function(response){
+                var fileName = 'report_'+moment().format('X');
+                var blob = new Blob([response], {
+                    type: 'application/pdf'
+                });
+                var filesaver = saveAs(blob, fileName);
+                setTimeout(function(){
+                    window.location.reload();
+                }, 1000)
+            }, function(error){
+
+            })
         }
-
-        console.log(JSON.stringify(fields));
-
-        EFormService.createPDFForm(data)
-        .then(function(response){
-            var fileName = 'report_'+moment().format('X');
-            var blob = new Blob([response], {
-                type: 'application/pdf'
-            });
-            var filesaver = saveAs(blob, fileName);
-            setTimeout(function(){
-                //window.location.reload();
-            }, 1000)
-        }, function(error){
-
-        })
     },
     _onGoToHistory: function(history){
         var appointmentUID = history.Appointments[0].UID;

@@ -4,6 +4,7 @@ module.exports = React.createClass({
     image: null,
     image_header: null,
     componentDidMount: function(){
+        var self = this;
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
@@ -172,13 +173,15 @@ module.exports = React.createClass({
     setValue: function(field, chartType){
         var chart = $(this.refs.line_chart).highcharts();
         var self = this;
-        field.series.map(function(serie, index){
-            chart.series[index].update({
-                data: serie.data
-            }, true);
-            self._onUpdateBase64();
-        })
-        this.refs.inputAxisX.setSeries(field);
+        if(typeof field.series !== 'undefined' && field.series !== ''){
+            field.series.map(function(serie, index){
+                chart.series[index].update({
+                    data: serie.data
+                }, true);
+                self._onUpdateBase64();
+            })
+            this.refs.inputAxisX.setSeries(field);
+        }
     },
     render: function(){
         if(this.props.permission === 'eformDev'){
@@ -199,12 +202,12 @@ module.exports = React.createClass({
                             <button className="btn btn-primary btn-small" onClick={this._clickUpdateChart}>
                                 Update Chart
                             </button>
-                            <div ref="header">
+                            <div ref="header" id="line_chart_header">
                                 <InputAxisX ref="inputAxisX" onChangeInput={this._onChangeInput}/>
                                 <center><h2>{this.props.title}</h2></center>
                                 <center>{this.props.subtitle}</center>
                             </div>
-                            <div ref="line_chart"/>
+                            <div ref="line_chart" id="line_chart"/>
                         </div>
                     </div>
                 </div>

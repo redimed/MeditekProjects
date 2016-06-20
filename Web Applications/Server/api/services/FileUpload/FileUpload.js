@@ -140,8 +140,7 @@ module.exports = {
         try {
             mkdirp(uploadDir, function(err) {
                 if (err) {
-                    //defer.reject(err);
-                    throw err;
+                    return defer.reject(err);
                 }
                 var params = req.params.all();
                 if (!params.userUID || !params.fileType) {
@@ -154,14 +153,12 @@ module.exports = {
                     dirname: uploadDir
                 }, function whenDone(err, uploadedFiles) {
                     if (err) {
-                        // defer.reject(err);
-                        throw err;
+                        return defer.reject(err);
                     }
                     if (uploadedFiles.length == 0) {
                         var err = new Error("FileUpload.UploadFile.Error");
                         err.pushError("No File Was Uploaded!");
-                        // defer.reject(err);
-                        throw err;
+                        return defer.reject(err);
                     }
                     console.log("||||||||||||||||||||||||FILE UPLOAD FD:",uploadedFiles[0].fd);
                     if (!params.userUID || !params.fileType || !_.contains(constFileType, params.fileType)) {
@@ -169,13 +166,12 @@ module.exports = {
                             if (!err) {
                                 fs.unlink(uploadedFiles[0].fd);
                             } else {
-                                throw err;
+                                return defer.reject(err);
                             }
                         })
                         var err = new Error("FileUpload.UploadFile.Error");
                         err.pushError("Invalid Params!");
-                        // defer.reject(err);
-                        throw err;
+                        return defer.reject(err);
                     }
                     Services.UserAccount.GetUserAccountDetails({
                         UID: params.userUID
@@ -197,12 +193,11 @@ module.exports = {
                                     {
                                         fs.unlink(uploadedFiles[0].fd);
                                     } else {
-                                        throw err;
+                                        return defer.reject(err);
                                     }
                                 })
                                 if (err){
-                                    // defer.reject(err);
-                                    throw err;
+                                    return defer.reject(err);
                                 }
                                 return sequelize.transaction().then(function(t) {
                                     function medicalImageCheck(bodyPart, fileID) {
@@ -256,11 +251,10 @@ module.exports = {
                                             {
                                                 fs.unlink(uploadDir + fileUID);
                                             } else {
-                                                throw  err;
+                                                return defer.reject(err);
                                             }
                                         })
-                                        // defer.reject(err);
-                                        throw err;
+                                        return defer.reject(err);
                                     })
                                 })
                             })
@@ -269,24 +263,22 @@ module.exports = {
                                 if (!err) {
                                     fs.unlink(uploadedFiles[0].fd);
                                 } else {
-                                    throw err;
+                                    return defer.reject(err);
                                 }
                             })
                             var err = new Error("FileUpload.UploadFile.Error");
                             err.pushError("User Not Exist!");
-                            // defer.reject(err);
-                            throw err;
+                            return defer.reject(err);
                         }
                     }).catch(function(err) {
                         fs.access(uploadedFiles[0].fd, function(err) {
                             if (!err) {
                                 fs.unlink(uploadedFiles[0].fd);
                             } else {
-                                throw err;
+                                return defer.reject(err);
                             }
                         })
-                        // defer.reject(err);
-                        throw err;
+                        return defer.reject(err);
                     })
                 })
             })

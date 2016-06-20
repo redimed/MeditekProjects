@@ -375,9 +375,10 @@ module.exports = React.createClass({
                                     }
                                 }
 
-                                /*if (Config.getPrefixField(preCal, 'DEAULTVALUE') > -1) {
+                                if (Config.getPrefixField(preCal, 'DEAULTVALUE') > -1) {
                                     var preCalRes = Config.getArrayPrecal(12, preCal);
-                                    var preCalResItemArr = preCalRes[0].split('.');
+                                    
+                                    /*var preCalResItemArr = preCalRes[0].split('.');
                                     if(preCalResItemArr.length > 1){
                                         responseTemp = response.data[preCalResItemArr[0]];
                                         preCalResItemTemp = preCalResItemArr[1];
@@ -389,9 +390,9 @@ module.exports = React.createClass({
                                     objRef[field.ref] = {refRow: row.ref, value: value};
                                     if(self.refs[section.ref]) {
                                         self.refs[section.ref].setValue(row.ref, field.ref, res);
-                                    }
+                                    }*/
 
-                                }*/
+                                }
                                 /* END CONCAT PREFIX */
                                 /* DEFAULT PREFIX */
                                 if(Config.getPrefixField(preCal,'DEFAULT') > -1){

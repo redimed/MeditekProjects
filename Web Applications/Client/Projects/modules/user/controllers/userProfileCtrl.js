@@ -1,7 +1,7 @@
 var app = angular.module('app.authentication.user.profile.controller',[
 ]);
 
-app.controller('userProfileCtrl', function($scope, PatientService, doctorService, $cookies){
+app.controller('userProfileCtrl', function($scope, PatientService, doctorService, $cookies, $compile){
 	$scope.isShow=true;
 	$scope.listDoctor = {
 		columm2 : true,
@@ -30,6 +30,12 @@ app.controller('userProfileCtrl', function($scope, PatientService, doctorService
 		PatientService.getPatient(data).then(function(response){
 			if(response.message=="Success"){
 				$scope.patientUID = response.data[0].UID;
+				angular.element(document.getElementById('user-content'))
+				.append($compile("<div class='col-md-12'>"+
+								"<div class=' portlet light'>"+
+			"<patient-listmodal on-uid='patientUID' on-showfull='false'"+
+			" on-listshow='listPatient' ng-if='patientUID!=null' on-disabled='true' ></patient-listmodal>"+
+			"</div></div>")($scope));
 			}
 			else
 				$scope.patientUID = null;
@@ -49,6 +55,11 @@ app.controller('userProfileCtrl', function($scope, PatientService, doctorService
 			doctorService.getSpecialities()
 			.then(function(result){
 				$scope.special = angular.copy(result.data);
+				angular.element(document.getElementById('user-content'))
+				.append($compile("<div class='col-md-12'>"+
+					"<doctor-detail on-uid='uid' on-data='data' on-showfull='false' on-speciality='special' "+
+					"on-listshow='listDoctor' action='action' on-cancel='close'>"+
+					"</doctor-detail></div>")($scope));
 			},function(err){
 				console.log(err);
 			});

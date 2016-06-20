@@ -20,12 +20,22 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
     }
     $scope.Reset = function() {
         $state.go('blank.searchPatient',{},{reload:true});
-        // $scope.postData.data = {}
+        console.log("$scope.postData.data",$scope.postData.data)
+        $scope.postData.data = {}
+        console.log("$scope.postData.data",$scope.postData.data)
         // $scope.submitted = false;
     }
     $scope.next = function() {
         $scope.submitted = true;
         if ($scope.step1.$valid) {
+            console.log("$scope.postData.data",$scope.postData.data)
+            if($scope.postData.data.Email1 == ""){
+                delete $scope.postData.data.Email1
+            }
+            if($scope.postData.data.PhoneNumber == ""){
+                delete $scope.postData.data.PhoneNumber
+            }
+            console.log("$scope.postData.data",$scope.postData.data)
             blankServices.searchPatient($scope.postData.data).then(function(response) {
                 if (response.data.length != 0) {
                     toastr.success('success');

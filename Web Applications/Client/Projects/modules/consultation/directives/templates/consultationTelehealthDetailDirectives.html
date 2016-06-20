@@ -28,7 +28,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html#tab_company" data-toggle="tab" ng-click="getSiteFromAppData()" >
+                                <a href="index.html#tab_companys" data-toggle="tab" ng-click="getSiteFromAppData()" >
                                     <i class="fa fa-building"></i>
                                     <span>Company</span> 
                                 </a>
@@ -274,8 +274,11 @@
                                         <a class="btn btn-outline blue pull-right" ng-click="SelectDialogPassword()" style="margin-right: 2px;">
                                             <i class="fa fa-key"></i> Generate Password Patient
                                         </a>
-                                        <h3 class="font-red" ng-if="wainformation.Patients.length != 0">
-                                            PATIENT : <span class="font-red"> {{wainformation.Patients[0].UserAccount.UserName}}</span>
+                                        <h3 class="font-red" ng-if="wainformation.Patients.length != 0 && isShowTitle == false">
+                                            PATIENT : <span class="font-red"> {{wainformation.Patients[0].FirstName + ' ' + wainformation.Patients[0].LastName}}</span>
+                                        </h3>
+                                        <h3 class="font-red" ng-if="isShowTitle == true">
+                                            PATIENT : <span class="font-red"> {{ShowData.patient.FirstName + ' ' + ShowData.patient.LastName}}</span>
                                         </h3>
                                     </div>
                                 </div>
@@ -598,7 +601,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="tab_company">
+                            <div class="tab-pane" id="tab_companys">
                                 <div class="">
                                     <h3 class="form-section">
                                         Company Information

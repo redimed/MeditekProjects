@@ -9,6 +9,7 @@ app.directive('telehealthDetail', function(doctorService) {
         controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $uibModal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService, consultationServices) {
             o.loadingPage(true);
             $scope.isShowBtnLink = true;
+            $scope.isShowTitle = false;
             $scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
 				{'code':'TAS', 'name':'Tasmania'},
@@ -851,6 +852,7 @@ app.directive('telehealthDetail', function(doctorService) {
                                     console.log('patientInfomation', data.data[0]);
                                     console.log('$scope.wainformation.Patients', $scope.wainformation.Patients);
                                     $scope.ShowData.isLinkPatient = true;
+                                    $scope.isShowTitle = true;
                                     $scope.ShowData.patient = data.data[0];
                                     $scope.ShowData.patient.PhoneNumber = data.data[0].UserAccount.PhoneNumber;
                                     $scope.wainformation.Patients = [];

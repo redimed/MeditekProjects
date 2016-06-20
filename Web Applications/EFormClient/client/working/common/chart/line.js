@@ -204,7 +204,7 @@ module.exports = React.createClass({
                             </button>
                             <div ref="header" id="line_chart_header">
                                 <InputAxisX ref="inputAxisX" onChangeInput={this._onChangeInput}/>
-                                <center><h2>{this.props.title}</h2></center>
+                                <center><h5>{this.props.title}</h5></center>
                                 <center>{this.props.subtitle}</center>
                             </div>
                             <div ref="line_chart" id="line_chart"/>

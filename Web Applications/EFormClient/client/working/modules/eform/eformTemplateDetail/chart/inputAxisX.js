@@ -42,7 +42,7 @@ module.exports = React.createClass({
     },
     render: function(){
         return (
-            <div style={{width: '1000px'}}>
+            <div style={{width: '700px'}}>
                 <center><h4><b>Hearing Level dB (decibels)</b></h4></center>
                 <table className="table-bordered table-condensed table">
                     <thead>

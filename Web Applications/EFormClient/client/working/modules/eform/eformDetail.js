@@ -659,7 +659,7 @@ module.exports = React.createClass({
         var self = this;
 
         var fields = [];
-        var chart = false;
+        var chart_flag = false;
 
         this.content.sections.map(function(section){
             if(typeof section.viewType !== 'undefined'){
@@ -751,7 +751,7 @@ module.exports = React.createClass({
                             }
                         }
                         if(field.type === 'line_chart'){
-                            chart = true;
+                            chart_flag = true;
                             var chart = $('#line_chart').highcharts();
                             var svg = chart.getSVG();
                             var image = new Image;
@@ -763,25 +763,33 @@ module.exports = React.createClass({
                                 f.value = '';
                                 f.base64Data = canvas.toDataURL().replace('data:image/png;base64,','');
                                 fields.push(f);
-                                var appointmentUID = self.appointmentUID;
-                                var data = {
-                                    printMethod: self.EFormTemplate.PrintType,
-                                    data: fields,
-                                    templateUID: self.templateUID
-                                }
+                                html2canvas($('#line_chart_header'), {
+                                    onrendered: function(canvas){
+                                        var g = $.extend({}, f);
+                                        g.name = f.name+'_1';
+                                        g.base64Data = canvas.toDataURL().replace('data:image/png;base64,','');
+                                        fields.push(g);
+                                        var appointmentUID = self.appointmentUID;
+                                        var data = {
+                                            printMethod: self.EFormTemplate.PrintType,
+                                            data: fields,
+                                            templateUID: self.templateUID
+                                        }
 
-                                EFormService.createPDFForm(data)
-                                .then(function(response){
-                                    var fileName = 'report_'+moment().format('X');
-                                    var blob = new Blob([response], {
-                                        type: 'application/pdf'
-                                    });
-                                    var filesaver = saveAs(blob, fileName);
-                                    setTimeout(function(){
-                                        //window.location.reload();
-                                    }, 1000)
-                                }, function(error){
+                                        EFormService.createPDFForm(data)
+                                        .then(function(response){
+                                            var fileName = 'report_'+moment().format('X');
+                                            var blob = new Blob([response], {
+                                                type: 'application/pdf'
+                                            });
+                                            var filesaver = saveAs(blob, fileName);
+                                            setTimeout(function(){
+                                                window.location.reload();
+                                            }, 1000)
+                                        }, function(error){
 
+                                        })
+                                    }
                                 })
                             }
                             image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
@@ -798,7 +806,7 @@ module.exports = React.createClass({
             }
         })
 
-        if(!chart){
+        if(!chart_flag){
             var appointmentUID = self.appointmentUID;
             var data = {
                 printMethod: self.EFormTemplate.PrintType,

@@ -8,7 +8,8 @@ app.directive('onsiteAppointment', function(){
 		restrict: 'E',
 		templateUrl: 'modules/onsite/directives/templates/onsiteAppointmentDirective.html',
 		controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $modal, PatientService, CommonService, $stateParams,$timeout,$scope, $uibModal, companyService, doctorService){
-			$scope.state = [
+			$scope.isShowBtnLink = true;
+            $scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
 				{'code':'TAS', 'name':'Tasmania'},
 				{'code':'QLD', 'name':'Queensland'},
@@ -1264,6 +1265,15 @@ app.directive('onsiteAppointment', function(){
                 }
                 
             };
+
+            var userObj = $cookies.getObject('userInfo');
+            if(userObj && userObj.roles) {
+                for(var i = 0; i < userObj.roles.length; i++) {
+                    if(userObj.roles[i].RoleCode == CommonService.role_admin || userObj.roles[i].RoleCode == CommonService.role_assistant) {
+                        $scope.isShowBtnLink = false;
+                    }
+                }
+            }
 
 		},
 	};

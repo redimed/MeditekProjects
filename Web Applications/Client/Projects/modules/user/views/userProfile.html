@@ -14,23 +14,7 @@
 <!-- END PAGE HEADER-->
 <h3 class="page-title bold">User Profile</h3>
 
-<!-- DOCTOR PROFILE -->
-<div class="row" ng-if="user.doctor!=null">
-	<div class="col-md-12">
-		<doctor-detail on-uid="uid" on-data="data" on-showfull="false" on-speciality="special" on-listshow="listDoctor" action="action" on-cancel="close"></doctor-detail>
-	</div>
-</div>
-<!-- END DOCTOR PROFILE -->
-
-<!-- PATIENT PROFILE -->
-<div class="row" ng-if="user.patient!=null">
-	<div class="col-md-12">
-		<div class=" portlet light">
-			<patient-listmodal on-uid="patientUID" on-showfull="false" on-listshow="listPatient" ng-if="patientUID!=null" on-disabled="true" ></patient-listmodal>
-		</div>
-	</div>
-</div>
-<!-- END PATIENT PROFILE -->
+<div class="row" id="user-content"></div>
 
 <!-- test -->
 <!-- <auto-table on-item="listname" on-listfunction="listfunc"></auto-table> -->

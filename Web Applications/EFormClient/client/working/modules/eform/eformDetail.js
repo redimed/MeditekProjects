@@ -374,31 +374,22 @@ module.exports = React.createClass({
                                 }
 
                                 if (Config.getPrefixField(preCal, 'DEFAULTVALUE(') > -1) {
-                                        var preCalRes = Config.getArrayPrecal(13, preCal);
-                                        var value = null;
-                                        if(preCalRes.length>0) {
-                                            value = preCalRes[0];
-                                        }
-                                        objRef[field.ref] = {refRow: row.ref, value: value};
-                                        if(self.refs[section.ref]) {
-                                            if(Config.getPrefixField(field.type,'radio') > -1){
-                                                var radioElements = $('input[name='+field.name+']');
-                                                radioElements.filter(function(){
-                                                    var id = $(this).attr('id');
-                                                    var itemValue = $('#'+id).val();
-                                                    if(value == itemValue){
-                                                        $('#'+id).iCheck('check');
-                                                    }else{
-                                                        $('#'+id).iCheck('uncheck');
-                                                    }
-                                                })
-                                            } else {
-                                                self.refs[section.ref].setValue(row.ref, field.ref, value);
-                                            }
-
+                                    var preCalRes = Config.getArrayPrecal(13, preCal);
+                                    var value = null;
+                                    if(preCalRes.length>0) {
+                                        value = preCalRes[0];
+                                    }
+                                    objRef[field.ref] = {refRow: row.ref, value: value};
+                                    if(self.refs[section.ref]) {
+                                        if(Config.getPrefixField(field.type,'radio') > -1){
+                                            value = field.value;
+                                            var item = $('#'+field.ref);
+                                            item.iCheck('check');
+                                        } else {
+                                            self.refs[section.ref].setValue(row.ref, field.ref, value);
                                         }
 
-
+                                    }
                                 }
                                 /* END CONCAT PREFIX */
                                 /* DEFAULT PREFIX */

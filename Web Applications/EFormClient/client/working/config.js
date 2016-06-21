@@ -42,7 +42,7 @@ module.exports = {
 	},
 	getArrayDefault: function(defaultString){
 		var res = [];
-		var substring = defaultString.substring(9, defaultString.length-1);
+		var substring = defaultString.substring(8, defaultString.length-1);
 		var substringRes = substring.split(',');
 		for(var i = 0; i < substringRes.length; i++){
 			res.push(substringRes[i]);

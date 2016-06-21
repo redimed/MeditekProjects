@@ -379,13 +379,14 @@ module.exports = React.createClass({
                                     if(preCalRes.length>0) {
                                         value = preCalRes[0];
                                     }
-                                    objRef[field.ref] = {refRow: row.ref, value: value};
                                     if(self.refs[section.ref]) {
                                         if(Config.getPrefixField(field.type,'radio') > -1){
                                             value = field.value;
+                                            objRef[field.ref] = {refRow: row.ref, value: value, checked: true};
                                             var item = $('#'+field.ref);
                                             item.iCheck('check');
                                         } else {
+                                            objRef[field.ref] = {refRow: row.ref, value: value};
                                             self.refs[section.ref].setValue(row.ref, field.ref, value);
                                         }
 
@@ -414,8 +415,13 @@ module.exports = React.createClass({
                 for(var i =0; i <self.allFields.length; i++) {
                     if(objRef[self.allFields[i].ref]) {
                         self.allFields[i].value = objRef[self.allFields[i].ref].value;
+                        if(objRef[self.allFields[i].ref].checked!==undefined) {
+                            self.allFields[i].checked = objRef[self.allFields[i].ref].checked;
+                        }
                     }
                 }
+                console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||objRef:", objRef);
+                console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||self.allFields:", self.allFields);
                 self._checkServerEFormDetail();
             })
         })

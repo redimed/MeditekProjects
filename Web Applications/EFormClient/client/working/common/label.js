@@ -64,6 +64,9 @@ module.exports = React.createClass({
     render: function(){
         var type = this.props.type;
         var html = null;
+        var labelStyle = {
+            "white-space": "pre-wrap"
+        }
         switch(type){
             case 'default':
                 html = (
@@ -76,7 +79,7 @@ module.exports = React.createClass({
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-md-12">
                                 <span className="form-control-static"
-                                    dangerouslySetInnerHTML={{__html: this.props.label}} ref="label" onDoubleClick = {this.selection}/>
+                                    dangerouslySetInnerHTML={{__html: this.props.label}} ref="label" onDoubleClick = {this.selection} style = {labelStyle}/>
                             </div>
                         </div>
 
@@ -88,7 +91,7 @@ module.exports = React.createClass({
                     <div className={"dragula col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>
                             <div className="col-xs-12">
-                                <span className="form-control-static" ref="label"  onDoubleClick = {this.selection}>
+                                <span className="form-control-static" ref="label"  onDoubleClick = {this.selection} style = {labelStyle}>
                                     {this.props.label}
                                 </span>
                             </div>

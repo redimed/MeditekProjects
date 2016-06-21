@@ -375,27 +375,23 @@ module.exports = React.createClass({
                                     }
                                 }
 
-                                if (Config.getPrefixField(preCal, 'DEAULTVALUE') > -1) {
-                                    var preCalRes = Config.getArrayPrecal(12, preCal);
-                                    
-                                    /*var preCalResItemArr = preCalRes[0].split('.');
-                                    if(preCalResItemArr.length > 1){
-                                        responseTemp = response.data[preCalResItemArr[0]];
-                                        preCalResItemTemp = preCalResItemArr[1];
-                                    }else{
-                                        responseTemp = response.data;
-                                        preCalResItemTemp = preCalResItem;
-                                    }
+                                if (Config.getPrefixField(preCal, 'DEFAULTVALUE(') > -1) {
+                                        var preCalRes = Config.getArrayPrecal(14, preCal);
+                                        var value = null;
+                                        if(preCalRes.length>0) {
+                                            value = preCalRes[0];
+                                        }
 
-                                    objRef[field.ref] = {refRow: row.ref, value: value};
-                                    if(self.refs[section.ref]) {
-                                        self.refs[section.ref].setValue(row.ref, field.ref, res);
-                                    }*/
+                                        objRef[field.ref] = {refRow: row.ref, value: value};
+                                        if(self.refs[section.ref]) {
+                                            self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                        }
+
 
                                 }
                                 /* END CONCAT PREFIX */
                                 /* DEFAULT PREFIX */
-                                if(Config.getPrefixField(preCal,'DEFAULT') > -1){
+                                if(Config.getPrefixField(preCal,'DEFAULT(') > -1){
                                     if(preCal !== ''){
                                         var preCalRes = Config.getArrayDefault(preCal);
                                         var value = preCalRes[0];

@@ -770,6 +770,7 @@ module.exports = React.createClass({
                                     f.value = value[2]+'/'+value[1]+'/'+value[0];
                                 }
                             }
+                            f.refChild = f.refChild.replace(f.name+'_', '');
                         }
                         if(field.type === 'line_chart'){
                             chart_flag = true;
@@ -835,6 +836,8 @@ module.exports = React.createClass({
                 templateUID: self.templateUID
             }
 
+            console.log(JSON.stringify(fields));
+
             EFormService.createPDFForm(data)
             .then(function(response){
                 var fileName = 'report_'+moment().format('X');
@@ -843,7 +846,7 @@ module.exports = React.createClass({
                 });
                 var filesaver = saveAs(blob, fileName);
                 setTimeout(function(){
-                    window.location.reload();
+                    //window.location.reload();
                 }, 1000)
             }, function(error){
 

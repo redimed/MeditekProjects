@@ -308,6 +308,7 @@ module.exports = React.createClass({
                                     if(preCal !== ''){
                                         var preCalRes = Config.getArrayPrecal(7, preCal);
                                         var value = '';
+                                        var checked = null;
                                         preCalRes.map(function(preCalResItem){
                                             var preCalResItemArr = preCalResItem.split('.');
                                             var responseTemp = null;
@@ -319,16 +320,19 @@ module.exports = React.createClass({
                                                 responseTemp = response.data;
                                                 preCalResItemTemp = preCalResItem;
                                             }
+
                                             for(var key in responseTemp){
                                                 if(key === preCalResItemTemp){
                                                     if(Config.getPrefixField(field.type,'checkbox') > -1){
                                                         if(field.value === responseTemp[key]){
                                                             value = 'yes';
+                                                            checked = true;
                                                         }
                                                     }
                                                     else if(Config.getPrefixField(field.type,'radio') > -1){
                                                         if(field.value === responseTemp[key]){
                                                             value = 'yes';
+                                                            checked = true;
                                                         }
                                                     }else{
                                                         if(responseTemp[key] !== null)
@@ -339,6 +343,9 @@ module.exports = React.createClass({
                                             }
                                         })
                                         objRef[field.ref] = {refRow: row.ref, value: value};
+                                        if (checked!==null) {
+                                            objRef[field.ref].checked = checked;
+                                        }
                                         if(self.refs[section.ref]) {
                                             self.refs[section.ref].setValue(row.ref, field.ref, value);
                                         }

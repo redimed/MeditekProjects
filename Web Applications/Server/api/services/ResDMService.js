@@ -41,6 +41,9 @@ module.exports = {
             if(dmConfig.method === dmUtils.method.broadcast) {
                 if(sendto) {
                     if(dmConfig.eventName) {
+                        /*for( var i = 0 ;i< sendto.length; i++) {
+                            sails.sockets.broadcast(sendto[i], dmConfig.eventName, payload);
+                        }*/
                         sails.sockets.broadcast(sendto, dmConfig.eventName, payload);
                     } else {
                         error.pushError('broadcast.eventName.null');

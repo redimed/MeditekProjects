@@ -572,6 +572,10 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
+            req.dmObj = {
+                RoleCode: 'ADMIN',
+                apptUID: data.Appointment.UID,
+            };
             var role = HelperService.GetRole(req.user.roles);
             if (role.isInternalPractitioner ||
                 role.isAdmin ||

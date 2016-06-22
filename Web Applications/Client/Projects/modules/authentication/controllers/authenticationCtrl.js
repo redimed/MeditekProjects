@@ -93,19 +93,19 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
 
     $rootScope.insurers = [{
-            name: 'Insurer Company'
-        }, {
-            name: 'Mineral Resources'
-        }, {
-            name: 'Mesa Minerals'
-        }];
+        name: 'Insurer Company'
+    }, {
+        name: 'Mineral Resources'
+    }, {
+        name: 'Mesa Minerals'
+    }];
     $rootScope.Account_types = [{
-            name: 'Titanium Privilege Account'
-        }, {
-            name: '3-in-1 Account'
-        }, {
-            name: 'Silver Savings Account'
-        }];
+        name: 'Titanium Privilege Account'
+    }, {
+        name: '3-in-1 Account'
+    }, {
+        name: 'Silver Savings Account'
+    }];
 
     //phan quoc chien
     $scope.loadListDoctor = function(fullname) {
@@ -249,6 +249,10 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             allowOutsideClick: false,
             allowEscapeKey: false
         });
+    }
+
+    ioSocket.Notification = function(msg) {
+         toastr.success(msg.Code + " link to patient", "Notification");
     }
 });
 

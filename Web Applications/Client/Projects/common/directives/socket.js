@@ -46,7 +46,8 @@ socketAuth.on('testmessage', function(msg) {
 });
 socketAuth.on('UpdateRequestWAAppointmentCompany_DM', function(msg) {
     console.log('UpdateRequestWAAppointmentCompany_DM', msg);
-})
+});
+
 /* end socket 3006 */
 
 
@@ -64,8 +65,12 @@ function createSocketConnectRest() {
     socketRest.on('testmessage', function(msg) {
         console.log(JSON.stringify("b" + msg));
     })
-    socketRest.on('testaaa', function(msg){
-        console.log("testaaa",msg);
+    socketRest.on('ShowMessage', function(msg) {
+        console.log('ShowMessage', msg);
+        ioSocket.Notification(msg);
+    });
+    socketRest.on('testaaa', function(msg) {
+        console.log("testaaa", msg);
     })
 }
 /* begin socket 3005 */

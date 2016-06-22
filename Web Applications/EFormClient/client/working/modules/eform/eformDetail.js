@@ -857,7 +857,7 @@ module.exports = React.createClass({
                 });
                 var filesaver = saveAs(blob, fileName);
                 setTimeout(function(){
-                    //window.location.reload();
+                    window.location.reload();
                 }, 1000)
             }, function(error){
 

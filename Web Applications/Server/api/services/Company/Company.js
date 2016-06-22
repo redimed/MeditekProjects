@@ -1603,13 +1603,13 @@ module.exports = {
 						throw err;
 					}
 					else {
-						return CompanySite.create({
-							UID         : UUIDService.Create(),
-							CompanyID   : company.ID,
-							SiteIDRefer : data.companyId,
-							SiteName    : data.CompanyName,
-							Enable      : 'Y'
-						},{transaction:t});
+						var objCreate 		  = data.data ? data.data : {};
+						objCreate.UID 		  = UUIDService.Create();
+						objCreate.CompanyID   = company.ID;
+						objCreate.SiteIDRefer = data.companyId;
+						objCreate.SiteName    = data.CompanyName;
+						objCreate.Enable      = 'Y';
+						return CompanySite.create(objCreate,{transaction:t});
 					}
 				},function(err) {
 					throw err;
@@ -1646,13 +1646,13 @@ module.exports = {
 						throw err;
 					}
 					else {
-						return Company.create({
-							CompanyName : data.CompanyName,
-							UID         : UUIDService.Create(),
-							IDRefer     : data.companyId,
-							Enable      : 'Y',
-							Active      : 'Y',
-						},{transaction:t});
+						var objCreate 		  = data.data ? data.data : {};
+						objCreate.CompanyName = data.CompanyName;
+						objCreate.UID         = UUIDService.Create();
+						objCreate.IDRefer     = data.companyId;
+						objCreate.Enable      = 'Y';
+						objCreate.Active      = 'Y';
+						return Company.create(objCreate,{transaction:t});
 					}
 				},function(err) {
 					throw err;
@@ -1664,14 +1664,13 @@ module.exports = {
 						throw err;
 					}
 					else {
-						return CompanySite.create({
-							UID         : UUIDService.Create(),
-							SiteIDRefer : data.companyId,
-							SiteName    : data.CompanyName,
-							CompanyID   : created_company.ID,
-							Enable      : 'Y',
-
-						},{transaction:t});
+						var objCreate 		  = data.data ? data.data : {};
+						objCreate.UID         = UUIDService.Create();
+						objCreate.SiteIDRefer = data.companyId;
+						objCreate.SiteName    = data.CompanyName;
+						objCreate.CompanyID   = created_company.ID;
+						objCreate.Enable      = 'Y';
+						return CompanySite.create(objCreate,{transaction:t});
 					}
 				},function(err) {
 					throw err;

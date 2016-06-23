@@ -119,6 +119,16 @@ module.exports = {
                 }
             }
         },
+        PhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
         HomePhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true,
@@ -148,6 +158,40 @@ module.exports = {
                     msg: 'Too long!'
                 }
             }
+        },
+        SpecialNote: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        SpecialActivity: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        IMA: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Data: {
+            type: Sequelize.TEXT,
+            allowNull: true,
         },
         Enable: {
             type: Sequelize.STRING(1),

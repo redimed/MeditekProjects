@@ -829,8 +829,14 @@ app.directive('telehealthDetail', function(doctorService) {
                                         if($scope.wainformation.AppointmentData[i].Name == "SiteIDRefer") {
                                             postData.data.SiteIDRefer = $scope.wainformation.AppointmentData[i].Value;
                                         }
-                                        if($scope.wainformation.AppointmentData[i].Name == "SiteID") {
+                                        else if($scope.wainformation.AppointmentData[i].Name == "SiteID") {
                                             postData.data.SiteID = $scope.wainformation.AppointmentData[i].Value;
+                                        }
+                                        else if($scope.wainformation.AppointmentData[i].Name == "PatientSignatureID") {
+                                            postData.data.PatientSignatureID = $scope.wainformation.AppointmentData[i].Value;
+                                        }
+                                        else if($scope.wainformation.AppointmentData[i].Name == "PatientSignatureUID") {
+                                            postData.data.PatientSignatureUID = $scope.wainformation.AppointmentData[i].Value;
                                         }
                                     }
                                     callback();

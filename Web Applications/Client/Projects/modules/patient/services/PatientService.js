@@ -372,7 +372,12 @@ PatientService.validate = function(info) {
 			// };
 			postData.data.Email = postData.data.Email1;
 			var info = postData.data;
-			returnData.data = info;
+			returnData.data = {};
+			for(var key in info) {
+				if(info[key] != '' && info[key] != null && info[key] != undefined) {
+					returnData.data[key] = info[key];
+				}
+			}
 			if(postData.otherData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
 			if(postData.otherData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
 			if(postData.otherData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;

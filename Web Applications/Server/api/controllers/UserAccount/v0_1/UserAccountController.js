@@ -31,17 +31,8 @@ module.exports = {
 
 	TestPost:function(req,res)
 	{
-		var modifiedDateStr=req.body.modifiedDate;
-		var modifiedDate=moment(modifiedDateStr,"YYYY-MM-DD HH:mm:ss Z");
-		var addDate=modifiedDate.clone().add(1,'day');
-		UserAccount.findAll({
-			limit:1,
-		})
-		.then(function(data){
-			res.ok(data);
-		},function(err){
-			res.serverError(err);
-		})
+		req.dmObj = {apptUID:'6b493527-f19d-437d-9d43-065513875c8e'};
+		res.ok("Test Post");
 	},
 
 	/**

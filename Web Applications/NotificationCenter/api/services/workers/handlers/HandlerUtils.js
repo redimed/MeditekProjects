@@ -74,7 +74,7 @@ module.exports={
 		},function(err){
 			return QueueJobService.BuryQueueJob(jobdata.ID,ErrorWrap(err))
             .then(function(success){
-                return {status:'bury'};                       
+                return {status:'bury'};
             })
 		})
 	}

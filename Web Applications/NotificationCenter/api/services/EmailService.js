@@ -61,7 +61,7 @@ module.exports={
 	        }, function(err, info) {
 	            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",err);
 	            if (err) {
-	                throw err;
+	                q.reject(err);
 	            }
 	            q.resolve(info);
 	        });

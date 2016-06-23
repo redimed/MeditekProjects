@@ -1,6 +1,9 @@
 var app = angular.module('app.unAuthentication.forgot.controller',[]);
 
 app.controller('forgotCtrl', function($scope,UnauthenticatedService, toastr){
+	$('.forget-form').show();
+	$('.content').removeClass('sign-up');
+	
 	$scope.email;
 	$scope.errors = {};
 	$scope.emailError;

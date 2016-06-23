@@ -8,7 +8,23 @@ var app = angular.module('app.unAuthentication.controller', [
 ]);
 
 app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
+	// init background slide images
+    $.backstretch([
+        "theme/assets/pages/media/bg/1.jpg",
+        "theme/assets/pages/media/bg/2.jpg",
+        "theme/assets/pages/media/bg/3.jpg",
+        "theme/assets/pages/media/bg/4.jpg"
+        // "theme/assets/global/images/login/bg1.jpg",
+        // "theme/assets/global/images/login/bg2.png",
+        // "theme/assets/global/images/login/bg3.jpg",
+        // "theme/assets/global/images/login/bg4.jpg",
+        ], {
+          fade: 1000,
+          duration: 8000
+    	}
+	);
 
+	document.body.className = "login";
 	$scope.data = {};
 	var characterRegex = /^[a-zA-Z0-9\s]{0,255}$/;
 	var addressRegex = /^[a-zA-Z0-9\s,'-\/]{0,255}$/;

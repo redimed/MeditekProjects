@@ -2,6 +2,10 @@ var app = angular.module('app.unAuthentication.register.controller', [
 ]);
 
 app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $cookies, CommonService, doctorService, UnauthenticatedService){
+	$('.register-form').show();
+	$('.content').removeClass('sign-in');
+    $('.content').addClass('sign-up');
+
 	$scope.ermsg = {};
 	// List country
 	UnauthenticatedService.listCountry()
@@ -41,7 +45,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 					toastr.error("Please check data","Error");
 					for(var i = 0; i < err.data.ErrorsList.length; i++){
 						$scope.ermsg[err.data.ErrorsList[i].field] = {};
-						$scope.ermsg[err.data.ErrorsList[i].field].css = {'border': '2px solid #DCA7B0'};
+						$scope.ermsg[err.data.ErrorsList[i].field].css = {'border': '1px solid #e73d4a'};
 						$scope.ermsg[err.data.ErrorsList[i].field].msg = err.data.ErrorsList[i].message;
 					}
 				}); // end check
@@ -51,10 +55,10 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 				toastr.error("Password and RePassword does not match", "Error");
 				$scope.loadingpage = false;
 				$scope.ermsg['Password'] = {};
-				$scope.ermsg['Password'].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg['Password'].css = {'border': '1px solid #e73d4a'};
 				$scope.ermsg['Password'].msg = "does not match";
 				$scope.ermsg['RePassword'] = {};
-				$scope.ermsg['RePassword'].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg['RePassword'].css = {'border': '1px solid #e73d4a'};
 				$scope.ermsg['RePassword'].msg = "does not match";
 			}
 		},function(err){
@@ -64,7 +68,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 			toastr.error("Please check data","Error");
 			for(var i = 0; i < err.length; i++) {
 				$scope.ermsg[err[i].field] = {};
-				$scope.ermsg[err[i].field].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg[err[i].field].css = {'border': '1px solid #e73d4a'};
 				$scope.ermsg[err[i].field].msg = err[i].message;
 			}
 		});
@@ -103,7 +107,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
             	toastr.error("Please check data","Error");
 				for(var i = 0; i < err.data.ErrorsList.length; i++){
 					$scope.ermsg[err.data.ErrorsList[i].field] = {};
-					$scope.ermsg[err.data.ErrorsList[i].field].css = {'border': '2px solid #DCA7B0'};
+					$scope.ermsg[err.data.ErrorsList[i].field].css = {'border': '1px solid #e73d4a'};
 					$scope.ermsg[err.data.ErrorsList[i].field].msg = err.data.ErrorsList[i].message;
 					if(err.data.ErrorsList[i].field=="captcha"){
 						$('iframe').css("border","2px solid #DCA7B0");
@@ -115,7 +119,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
         	console.log(err);
         	for(var i = 0; i < err.length; i++) {
 				$scope.ermsg[err[i].field] = {};
-				$scope.ermsg[err[i].field].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg[err[i].field].css = {'border': '1px solid #e73d4a'};
 				$scope.ermsg[err[i].field].msg = err[i].message;
 				if(err[i].field=="captcha"){
 					$('iframe').css("border","2px solid #DCA7B0");

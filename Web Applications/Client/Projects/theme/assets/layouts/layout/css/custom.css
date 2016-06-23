@@ -1,18 +1,22 @@
 /* here you can put your own css to customize and override the theme */
 
+
+.sign-in {
+    width: 415px !important;
+}
+.sign-up {
+    width: 738px !important;
+}
+.login .content {
+    background-color: rgba(175,175,175,.5);
+}
 .page-content {
     margin-top: 0;
     padding: 0;
     background-color: #eef1f5;
 }
 
-.login {
-    background-color: #ccc !important;
-}
 
-.register-form {
-    display: block !important;
-}
 
 .patientContent {
     position: absolute;

@@ -11,16 +11,10 @@ var sendMailNonLoop=function(queueJob)
         console.log(sentInfo);
         return QueueJobService.FinishQueueJob(queueJob)
         .then(function(qj){
-            return QueueJobService.Requeue(queueJob)
-            .then(function(qj){
-                return {status:"success"};
-            },function(err){
-                throw err;
-            })
+          return {status:"success"};
         },function(err){
             throw err;
         })
-        
     })
 }
 

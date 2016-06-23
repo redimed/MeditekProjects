@@ -3,6 +3,7 @@ var $q = require('q');
 module.exports={
 	CreateQueueJob:function(queueJob,transaction)
 	{
+    console.log("||||||||||||||||||||||||||||||||||| CreateQueueJob")
 		var error=new Error('CreateQueueJob.Error');
 		function Validate()
 		{
@@ -28,13 +29,13 @@ module.exports={
 				var requiredFields={
 					Receiver:true,
 					ReceiverType:true,
-					ReceiverUID:true,
+					// ReceiverUID:true,
 					Queue:true,
 					MsgContent:true,
 					EventName:true,
 					SendFromServer:true,
-					SenderType:true,
-					SenderUID:true,
+					// SenderType:true,
+					// SenderUID:true,
 				}
 
 				queueJob=o.rationalizeObject(queueJob,fields);
@@ -60,7 +61,7 @@ module.exports={
 						throw error;
 					}
 				}
-				
+
 				q.resolve({status:'success'});
 			}
 			catch(err)
@@ -88,11 +89,12 @@ module.exports={
 		},function(err){
 			throw err;
 		})
-		
+
 	},
 
 	GetQueueJob:function(ID,transaction)
 	{
+    console.log("||||||||||||||||||||||||||||||||||| GetQueueJob")
 		var error=new Error("GetQueueJob.Error");
 		return QueueJob.findOne({
 			where:{
@@ -116,7 +118,9 @@ module.exports={
 	//LastedSentAt: thoi diem cuoi cung send message
 	Requeue:function(queueJob,transaction)
 	{
-		var error=new Error("Requeue.Error");
+    console.log("||||||||||||||||||||||||||||||||||| Requeue")
+
+    var error=new Error("Requeue.Error");
 		var Status=null;
 		ReleaseCount=null;
 		Status=(queueJob.ReleaseDelay && queueJob.ReleaseDelay)?'DELAY':'READY';
@@ -140,7 +144,9 @@ module.exports={
 
 	FinishQueueJob:function(queueJob)
 	{
-		var error=new Error("FinishQueueJob.Error");
+    console.log("||||||||||||||||||||||||||||||||||| FinishQueueJob")
+
+    var error=new Error("FinishQueueJob.Error");
 		/*return queueJob.updateAttributes({
 			Status:'HANDLED',
 			LastedSentAt:new Date(),
@@ -155,7 +161,6 @@ module.exports={
 			throw error;
 		})*/
 
-		console.log('FinishQueueJob>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',queueJob);
 		function updateStatus(qj)
 		{
 			return qj.updateAttributes({
@@ -194,7 +199,9 @@ module.exports={
 
 	BuryQueueJob:function(queueJob,log)
 	{
-		var error=new Error('BuryQueueJob.Error');
+    console.log("||||||||||||||||||||||||||||||||||| BuryQueueJob")
+
+    var error=new Error('BuryQueueJob.Error');
 		function updateStatus(qj)
 		{
 			return qj.updateAttributes({

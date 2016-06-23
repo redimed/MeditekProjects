@@ -2,7 +2,7 @@ module.exports={
 	'UserAccount/v0_1/UserAccountController':{
       // 'Test':['checkCookieToken'],
       'Test':true,
-	    'TestPost':['isAuthenticated'],
+	    'TestPost': true,
 	    'TestURL':'checkVersion',
 	    'CreateUserAccount':['isAuthenticated','isAdmin'],
 	    'DisableUserAccount':['isAuthenticated','isAdmin'],

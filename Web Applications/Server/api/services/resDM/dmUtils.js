@@ -12,6 +12,20 @@ module.exports = {
     },
     method: {
         blast: 'blast',
-        broadcast: 'broadcast'
+        broadcast: 'broadcast',
+        nc:'nc'
+    },
+    currentServer: '3006', //3005, 3006, 3009
+    ncSenderType: {
+        USER_ACCOUNT: 'USER_ACCOUNT',
+        DOCTOR: 'DOCTOR',
+        ADMIN: 'ADMIN',
+        PATIENT: 'PATIENT',
+        SERVER: 'SERVER'
+    },
+    ncQueue: {
+        EMAIL: 'EMAIL',
+        SMS: 'SMS',
+        NOTIFY: 'NOTIFY'
     }
 }

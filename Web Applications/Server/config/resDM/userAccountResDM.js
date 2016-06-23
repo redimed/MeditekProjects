@@ -5,6 +5,8 @@ var userAccountTestPayload = require('../../api/services/resDM/payload/TestPaylo
 var userAccountTestSendto = require('../../api/services/resDM/sendto/TestSendto');
 var doctorRoomsFromAppointmentSendto = require('../../api/services/resDM/sendto/DoctorRoomsFromAppointment');
 var appointmentInfoPayload = require('../../api/services/resDM/payload/AppointmentInfo');
+var ncSendto = require('../../api/services/resDM/sendto/NCSendto');
+var testPostNcPayload = require('../../api/services/resDM/ncPayload/TestPostNcPayload');
 var dmUtils = require('../../api/services/resDM/dmUtils');
 module.exports = {
     'UserAccount/v0_1/UserAccountController': {
@@ -23,5 +25,14 @@ module.exports = {
             payload: appointmentInfoPayload,
             sendto: doctorRoomsFromAppointmentSendto
         }
-    }
+    },
+
+    'UserAccount/v0_1/UserAccountController': {
+        'TestPost': {
+            eventName: 'nc',
+            method: dmUtils.method.nc, //blast, broadcast
+            payload: testPostNcPayload,
+            sendto: ncSendto
+        }
+    },
 }

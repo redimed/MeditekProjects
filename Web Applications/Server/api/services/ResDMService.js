@@ -38,7 +38,7 @@ module.exports = {
         .spread(function(payload, sendto){
             dmLog('payload:', payload);
             dmLog('sendto:', sendto);
-            if(dmConfig.method === 'broadcast') {
+            if(dmConfig.method === dmUtils.method.broadcast) {
                 if(sendto) {
                     if(dmConfig.eventName) {
                         sails.sockets.broadcast(sendto, dmConfig.eventName, payload);
@@ -48,11 +48,27 @@ module.exports = {
                 } else {
                     error.pushError('broadcast.sendto.empty');
                 }
-            } else if (dmConfig.method === 'blast'){
+            } else if (dmConfig.method === dmUtils.method.blast){
                 if(dmConfig.eventName) {
                     sails.sockets.blast(dmConfig.eventName, payload);
                 } else {
                     error.pushError("blast.eventName.null");
+                }
+            } else if (dmConfig.method === dmUtils.method.nc){
+                console.log("||||||||||||||||||||||||||||||||||||||||NC:");
+                for (var i = 0; i < payload.length; i++) {
+                    var item = payload [i];
+                    switch (item.Queue) {
+                        case dmUtils.ncQueue.EMAIL:
+                            NcService.pushEmail(item);
+                            break;
+                        case dmUtils.ncQueue.SMS:
+                            NcService.pushSMS(item);
+                            break;
+                        case dmUtils.ncQueue.NOTIFY:
+                            NcService.pushNotify(item)
+                            break;
+                    }
                 }
             } else {
                 error.pushError('dmMethod.invalid');

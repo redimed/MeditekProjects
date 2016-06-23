@@ -1,6 +1,9 @@
 var app = angular.module('app.unAuthentication.login.controller', []);
 app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, UnauthenticatedService, toastr, $timeout, $q) {
     console.log('login');
+
+    $('.content').addClass('sign-in');
+    $('.content').removeClass('sign-up');
     $timeout(function(){
         if(_.isEmpty($cookies.getObject('remember')) == false) {
             $scope.user = {};

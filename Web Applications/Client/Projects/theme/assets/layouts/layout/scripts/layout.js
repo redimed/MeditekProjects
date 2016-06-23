@@ -106,7 +106,9 @@ var Layout = function () {
         // end: handle active state
 
         el.parents('li').each(function () {
+
             $(this).addClass('active');
+
             $(this).find('> a > span.arrow').addClass('open');
 
             if ($(this).parent('ul.page-sidebar-menu').size() === 1) {

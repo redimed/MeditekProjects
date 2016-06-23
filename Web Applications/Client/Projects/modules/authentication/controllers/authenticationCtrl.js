@@ -5,6 +5,8 @@ var app = angular.module('app.authentication.controller', [
 
 
 app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cookies, AuthenticationService, toastr, CommonService, $q) {
+    $.backstretch("destroy");
+    $('body').removeClass("login");
     // Chinh kich thuoc man hinh khi su dung ipad mini
     var w = $(window).width();
     if (w <= 1024 && w >= 768) {

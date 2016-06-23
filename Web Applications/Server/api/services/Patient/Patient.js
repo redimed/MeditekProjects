@@ -672,6 +672,7 @@ module.exports = {
             Address1: data.Address1,
             Address2: data.Address2,
             State: data.State,
+            Signature: data.PatientSignatureID ? data.PatientSignatureID : null,
             Enable: "Y"
         };
         sequelize.transaction()
@@ -823,6 +824,44 @@ module.exports = {
                             if (PatientDetail.PatientPension != null && PatientDetail.PatientPension != '') {
                                 PatientDetail.PatientPension.Enable = 'Y';
                                 return PatientPension.create(PatientDetail.PatientPension, { transaction: t });
+                            }
+                        }
+                    }, function(err) {
+                        throw err;
+                    })
+                    .then(function(created_patientPension) {
+                        if(!data.fileUID) {
+                            return created_patientPension;
+                        }
+                        else {
+                            return FileUpload.findOne({
+                                where: {
+                                    UID : data.fileUID
+                                },
+                                transaction: t
+                            });
+                        }
+                    }, function(err) {
+                        throw err;
+                    })
+                    .then(function(found_file) {
+                        if(!data.fileUID) {
+                            return  ;
+                        }
+                        else {
+                            if(found_file == null || found_file == '') {
+                                return found_file;
+                            }
+                            else {
+                                return FileUpload.update({
+                                    UserAccountID : info.UserAccountID,
+                                    FileType      : 'Signature',
+                                },{
+                                    where:{
+                                        UID : data.PatientSignatureUID
+                                    },
+                                    transaction: t
+                                });
                             }
                         }
                     }, function(err) {

@@ -1607,8 +1607,11 @@ module.exports = {
 						objCreate.UID 		  = UUIDService.Create();
 						objCreate.CompanyID   = company.ID;
 						objCreate.SiteIDRefer = data.companyId;
-						objCreate.SiteName    = data.CompanyName;
+						// objCreate.SiteName    = data.CompanyName;
 						objCreate.Enable      = 'Y';
+						if(!data.data || !data.data.SiteName) {
+							objCreate.SiteName = data.CompanyName;
+						}
 						return CompanySite.create(objCreate,{transaction:t});
 					}
 				},function(err) {
@@ -1667,9 +1670,12 @@ module.exports = {
 						var objCreate 		  = data.data ? data.data : {};
 						objCreate.UID         = UUIDService.Create();
 						objCreate.SiteIDRefer = data.companyId;
-						objCreate.SiteName    = data.CompanyName;
+						// objCreate.SiteName    = data.CompanyName;
 						objCreate.CompanyID   = created_company.ID;
 						objCreate.Enable      = 'Y';
+						if(!data.data || !data.data.SiteName) {
+							objCreate.SiteName = data.CompanyName;
+						}
 						return CompanySite.create(objCreate,{transaction:t});
 					}
 				},function(err) {

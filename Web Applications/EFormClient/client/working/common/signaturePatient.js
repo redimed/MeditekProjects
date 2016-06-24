@@ -56,8 +56,8 @@ module.exports = React.createClass({
         return output;
     },
     setValue: function(value){
-        this.imageSignature = value;
-        if(this.imageSignature){
+        if(value !== ''){
+            this.imageSignature = value;
             var self = this;
             EFormService.getImage({size: 250, UID: value})
             .then(function(image){
@@ -69,7 +69,8 @@ module.exports = React.createClass({
         }
     },
     getValue: function(){
-        return (this.imageSignature)?this.imageSignature.UID:'';
+        console.log(this.imageSignature);
+        return (this.imageSignature)?this.imageSignature:'';
     },
     getName: function(){
         return this.props.name;

@@ -189,7 +189,7 @@ module.exports = React.createClass({
                                 if(field.type === 'eform_input_image_doctor' && self.refs[section.ref]){
                                     self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
                                 }
-                                if(field.type === 'eform_input_image_patient' && self.refs[section.ref]){
+                                else if(field.type === 'eform_input_image_patient' && self.refs[section.ref]){
                                     self.refs[section.ref].setValue(row.ref, field.ref, self.signaturePatient);
                                 }
                                 var calArray = [];
@@ -744,6 +744,10 @@ module.exports = React.createClass({
                         }
                         var split = field.ref.split('_');
                         var section_ref = "section_"+split[1];
+                        if(field.type === 'eform_input_image_patient'){
+                            var value = self.refs[section_ref].getValue(field.refRow, field.ref);
+                            f.value = value;
+                        }
                         if(section_ref === section.ref){
                             if(field.type === 'eform_input_signature'){
                                 if(field.value)
@@ -773,6 +777,10 @@ module.exports = React.createClass({
                     }
                     var split = field.ref.split('_');
                     var section_ref = "section_"+split[1];
+                    if(field.type === 'eform_input_image_patient'){
+                        var value = self.refs[section_ref].getValue(field.refRow, field.ref);
+                        f.value = value;
+                    }
                     if(section_ref === section.ref){
                         if(field.type === 'eform_input_signature'){
                             if(field.value)
@@ -854,8 +862,6 @@ module.exports = React.createClass({
                 data: fields,
                 templateUID: self.templateUID
             }
-
-            console.log(JSON.stringify(fields));
 
             EFormService.createPDFForm(data)
             .then(function(response){

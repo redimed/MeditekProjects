@@ -47,10 +47,16 @@ module.exports = React.createClass({
     getSize: function(){
         return this.props.size;
     },
+    getValue: function(fieldRef){
+       if(typeof this.refs[fieldRef] !== 'undefined'){
+            if(typeof this.refs[fieldRef].getValue !== 'undefined')
+                return this.refs[fieldRef].getValue(value);
+        } 
+    },
     setValue: function(fieldRef, value){
         if(typeof this.refs[fieldRef] !== 'undefined'){
             if(typeof this.refs[fieldRef].setValue !== 'undefined')
-            this.refs[fieldRef].setValue(value);
+                this.refs[fieldRef].setValue(value);
         }
     },
     setDisplay: function(fieldRef, type){

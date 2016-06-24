@@ -501,10 +501,14 @@ module.exports = {
                         .then(function(success) {
                             if (success !== undefined && success !== null && success !== '' && success.length !== 0) {
                                 for (var i = 0; i < success.length; i++) {
-                                    // if(info[0].dataValuesFileType == "ProfileImage")
-                                    info[0].dataValues.ProfileImage = success[i].FileType == 'ProfileImage' ? success[i].UID : null;
+                                     if(success[i].FileType == 'ProfileImage'){
+                                        info[0].dataValues.ProfileImage = success[i].UID ? success[i].UID : null;
+                                    }
+                                   
                                     // if(info[0].dataValuesFileType == "Signature")
-                                    info[0].dataValues.Signature = success[i].FileType == 'Signature' ? success[i].UID : null;
+                                    if(success[i].FileType == 'Signature') {
+                                        info[0].dataValues.Signature = success[i].UID ? success[i].UID : null;
+                                    }
                                 }
                                 info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
                                 delete info[0].dataValues['Country1'];

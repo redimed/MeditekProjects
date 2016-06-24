@@ -153,12 +153,33 @@ module.exports = {
 
     CreateFund : function(req, res) {
         var data = req.body.data;
-        Services.Company.CreateFund(data)
-        .then(function(result) {
-            res.ok({message:"success",data:result});
-        },function(err) {
+        if(!data.FundUID || data.FundUID == null || data.FundUID == '') {
+            var err = new Error("CreateFund.Error");
+            err.pushError("FundUID.invalid.params");
+            throw err;
+        }
+        if(!data.CompanyUID || data.CompanyUID == null || data.CompanyUID == '') {
+            var err = new Error("CreateFund.Error");
+            err.pushError("CompanyUID.invalid.params");
+            throw err;
+        }
+        data.whereClause = {
+            Company: { UID: data.CompanyUID},
+            Fund : {UID: data.FundUID}
+        };
+        sequelize.transaction()
+        .then(function(t) {
+            Services.Company.CreateFund(data, t)
+            .then(function(result) {
+                t.commit();
+                res.ok({message:"success",data:result});
+            },function(err) {
+                t.rollback();
+                res.serverError(ErrorWrap(err));
+            });
+        }, function(err) {
             res.serverError(ErrorWrap(err));
-        });
+        })
     },
 
     DetailCompanyByUser : function(req, res) {

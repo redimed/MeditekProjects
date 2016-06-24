@@ -99,7 +99,10 @@ module.exports = React.createClass({
     },
     _onUpdateViewType: function(){
         $(this.refs.modalUpdateViewType).css({display: 'block'});
-
+    },
+    getValue: function(refRow, fieldRef){
+        if(typeof this.refs[refRow] !== 'undefined')
+            return this.refs[refRow].getValue(fieldRef); 
     },
     setValue: function(refRow, fieldRef, value){
         if(typeof this.refs[refRow] !== 'undefined')
@@ -222,7 +225,6 @@ module.exports = React.createClass({
             var tempFields = this.refs[rowRef].getFieldsSelection();
             this.selectedFields.push.apply(this.selectedFields, tempFields);
         }
-        console.log(this.selectedFields);
         this.props.onSaveFieldsProperties(codeSection, this.selectedFields, {name: name, size: size});
     },
 

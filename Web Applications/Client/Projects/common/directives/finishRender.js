@@ -7,7 +7,7 @@ angular.module('app.common.finishRender',[])
 		            // alert("AAA");
                     // $('.page-sidebar-menu li').removeClass('start');
                     // $(this).addClass('start');
-                    $('.page-sidebar-menu li').removeClass('active');
+                    // $('.page-sidebar-menu li').removeClass('active');
                     // $(this).addClass('active open');
 		        });
             }

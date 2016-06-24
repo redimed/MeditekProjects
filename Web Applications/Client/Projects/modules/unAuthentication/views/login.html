@@ -57,17 +57,16 @@
     </div>
     <div class="login-options">
         <h4>Or login with</h4>
-        <a ui-sref="unAuthentication.register" class="btn red">For patient</a>
-        <a ui-sref="blank.welcomeCampaign" class="btn blue">For patient campaign (mole patrol)</a>
+        <a ui-sref="unAuthentication.register" class="btn btn-block red">For patient</a>
+        <a ui-sref="blank.welcomeCampaign" class="btn btn-block blue">For patient campaign (mole patrol)</a>
     </div>
     <div class="forget-password">
         <h4>Forgot your password ?</h4>
-        <p>no worries, click <a ui-sref="unAuthentication.forgot" id="forget-password"> here </a> to reset your password.</p>
+        <!-- <p>no worries, click <a ui-sref="unAuthentication.forgot" id="forget-password"> here </a> to reset your password.</p> -->
+        <p><a ui-sref="unAuthentication.forgot" id="forget-password" class="btn btn-block white">Forgot password</a></p>
     </div>
     <div class="create-account">
-        <p> Don't have an account yet ?&nbsp;
-            <a ui-sref="unAuthentication.register" id="register-btn"> Create GP account </a>
-        </p>
+        <a ui-sref="unAuthentication.register" id="register-btn" class="btn btn-block blue-chambray"> Create GP account </a>
     </div>
 
     <!-- <div class="create-account" style="padding:0 !important">

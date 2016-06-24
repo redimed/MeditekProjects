@@ -1372,6 +1372,8 @@ app.directive('telehealthDetail', function(doctorService) {
                 }
             }
 
+            
+
         }
     };
 });

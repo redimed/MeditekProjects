@@ -117,15 +117,15 @@ module.exports = function(appointmentUID, userUID) {
                 required: !_.isEmpty(filter.UserAccount),
                 include: [{
                     model: UserAccount,
-                    include: [{
+                    /*include: [{
                         attributes: Services.AttributesAppt.FileUpload(),
                         model: FileUpload,
                         required: false,
                         where: {
                             Enable: 'Y',
-                            FileType: 'ProfileImage'
+                            FileType: {$or:["ProfileImage","Signature"]}
                         }
-                    }],
+                    }],*/
                     attributes: Services.AttributesAppt.UserAccount(),
                     required: !_.isEmpty(filter.UserAccount),
                     where: o.sqlParam(filter.UserAccount)

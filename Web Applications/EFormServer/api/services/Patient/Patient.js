@@ -1114,138 +1114,150 @@ module.exports = {
         input:useraccount's UID
         output: get patient's information.
     */
-    GetPatient : function(data, transaction) {
-        var attributes=[];
-        if(data.attributes){
-            if(data.attributes.length > 0){
-                for(var i = 0; i < data.attributes.length; i++){
-                    attributes[i] = data.attributes[i].field;
-                };
-            }
-            else {
-                attributes = defaultAtrributes;
-            }
-        }
-        else{
-            attributes = defaultAtrributes;
-        }
-        return Services.UserAccount.GetUserAccountDetails(data)
-        .then(function(user){
-            //check if UserAccount is found in table UserAccount, get UserAccountID to find patient
-            if(check.checkData(user)){
-                return Patient.findAll({
-                    where: {
-                        UserAccountID : user.ID
-                    },
-                    transaction:transaction,
-                    attributes:attributes,
-                    include: [
-                         {
-                            model: UserAccount,
-                            attributes: ['PhoneNumber'],
-                            required: true,
-                            include: [
-                                {
-                                    model: FileUpload,
-                                    attributes: ['UID'],
-                                    required: false,
-                                    where:{
-                                        FileType:'ProfileImage',
-                                        Enable:'Y'
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            model:Country,
-                            attributes:['ShortName'],
-                            required:false
-                        }
-                    ]
-                });
-            }
-            else{
-                return null;
-            }
-        },function(err){
-            throw err;
-        });
-    },
+    GetPatient: function(data, transaction) {
+       var attributes = [];
+       if (data.attributes) {
+           if (data.attributes.length > 0) {
+               for (var i = 0; i < data.attributes.length; i++) {
+                   attributes[i] = data.attributes[i].field;
+               };
+           } else {
+               attributes = defaultAtrributes;
+           }
+       } else {
+           attributes = defaultAtrributes;
+       }
+       return Services.UserAccount.GetUserAccountDetails(data)
+           .then(function(user) {
+               //check if UserAccount is found in table UserAccount, get UserAccountID to find patient
+               if (check.checkData(user)) {
+                   // return Patient.findAll({
+                   //     where: {
+                   //         UserAccountID : user.ID
+                   //     },
+                   //     transaction:transaction,
+                   //     attributes:attributes,
+                   //     include: [
+                   //          {
+                   //             model: UserAccount,
+                   //             attributes: ['PhoneNumber','Email','ID','UID','Enable'],
+                   //             required: true,
+                   //             include: [
+                   //                 {
+                   //                     model: FileUpload,
+                   //                     attributes: ['ID','UID','FileType'],
+                   //                     required: false,
+                   //                     where:{
+                   //                         FileType:{$in: ['ProfileImage', 'Signature']},
+                   //                         Enable:'Y'
+                   //                     },
+                   //                     // order:['CreatedDate ASC']
+                   //                 }
+                   //             ],
+                   //             order:[[FileUpload,'CreatedDate','ASC']]
+                   //         },
+                   //         {
+                   //             model:Country,
+                   //             as:'Country1',
+                   //             attributes:['ShortName'],
+                   //             required:false
+                   //         }
+                   //     ],
+
+                   // });
+                   return UserAccount.findOne({
+                       where: {
+                           ID: user.ID
+                       },
+                       transaction: transaction,
+                       attributes: ['PhoneNumber', 'Email', 'ID', 'UID', 'Enable'],
+                       include: [{
+                           model: Patient,
+                           attributes: attributes,
+                           required: true,
+                           include: [{
+                               model: Country,
+                               as: 'Country1',
+                               attributes: ['ShortName'],
+                               required: false
+                           }]
+                       }, {
+                           model: FileUpload,
+                           attributes: ['ID', 'UID', 'FileType'],
+                           required: false,
+                           where: {
+                               FileType: { $in: ['ProfileImage', 'Signature'] },
+                               Enable: 'Y'
+                           },
+                           // order:['CreatedDate ASC']
+                       }],
+                       order: [
+                           [FileUpload, 'CreatedDate', 'DESC']
+                       ]
+                   });
+               } else {
+                   return null;
+               }
+           }, function(err) {
+               throw err;
+           });
+   },
     
     /*
         DetailPatient: service get patient detail by patient's UID
         input: Patient's UID
         output: get patient's detail
     */
-    DetailPatient : function(data) {
+    DetailPatient: function(data) {
         var returnData;
         return Patient.findAll({
-            where:{
-                UID : data.UID
-            },
-
-            include:[
-                {
-                    model: UserAccount,
-                    attributes: ['PhoneNumber','Email','ID','UID','Enable'],
-                    required: true,
-                    include:[
-                        {
-                            model:RelUserRole,
-                            attributes:['RoleId'],
-                            required: false
-                        }
-                    ]
+                where: {
+                    UID: data.UID
                 },
-                {
+
+                include: [{
+                    model: UserAccount,
+                    attributes: ['PhoneNumber', 'Email', 'ID', 'UID', 'Enable','Activated'],
+                    required: true,
+                    include: [{
+                        model: RelUserRole,
+                        attributes: ['RoleId'],
+                        required: false
+                    }]
+                }, {
                     model: Country,
+                    as: 'Country1',
                     attributes: ['ShortName'],
                     required: false
-                },
-                {
-                    model: PatientDVA,
-                    required: false
-                },
-                {
-                    model: PatientKin,
-                    required: false
-                },
-                {
-                    model: PatientMedicare,
-                    required: false
-                },
-                {
-                    model: PatientPension,
-                    required: false
-                },
-                {
-                    model: PatientGP,
-                    required: false
-                },
-                {
-                    model: PatientFund,
-                    required: false
+
+                }, {
+                    model: Company,
+                    through:{
+                        where:{Active:'Y'}
+                    },
+                    required:false
+                }]
+            })
+            .then(function(result) {
+                returnData = result;
+                return TelehealthUser.findAll({
+                    where: {
+                        UserAccountID: result[0].UserAccountID
+                    }
+                });
+                // return result;
+            }, function(err) {
+                throw err;
+            })
+            .then(function(success) {
+                if (success != null && success != "" && success.length != 0){
+                    returnData[0].dataValues.TeleUID = success ? success[0].UID : null;
+                    returnData[0].dataValues.TeleID = success ? success[0].ID : null;
                 }
-            ]
-        })
-        .then(function(result){
-            returnData = result;
-            return TelehealthUser.findAll({
-                where:{
-                    UserAccountID : result[0].UserAccountID
-                }
+                return returnData;
+            }, function(err) {
+                throw err;
             });
-            // return result;
-        },function(err){
-            throw err;
-        })
-        .then(function(success){
-            if(success!= null && success != "" && success.length != 0)
-                returnData[0].dataValues.TeleUID = success?success[0].UID:null;
-            return returnData;
-        },function(err){
-            throw err;
-        });
     },
 
     /*

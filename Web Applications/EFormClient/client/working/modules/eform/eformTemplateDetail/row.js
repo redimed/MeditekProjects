@@ -10,6 +10,7 @@ var CommonSignature = require('common/signature');
 var CommonTable = require('modules/eform/eformTemplateDetail/tableField');
 var CommonTableDynamic = require('common/dynamicTable');
 var CommonSignatureDoctor = require('common/signatureDoctor');
+var CommonSignaturePatient = require('common/signaturePatient');
 var CommonLineChart = require('common/chart/line');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
 var ComponentListField = require('modules/eform/eformTemplateDetail/listField');
@@ -750,6 +751,20 @@ module.exports = React.createClass({
                                                                 type={type}
                                                                 height={field.get('height')}
                                                                 onRightClickItem={this._onRightClickItem}/>
+                                                        else if(type === 'eform_input_image_patient')
+                                                            return <CommonSignaturePatient key={index} type={type}
+                                                                groupId={groupId}
+                                                                permission={this.props.permission}
+                                                                name={field.get('name')}
+                                                                size={field.get('size')}
+                                                                context={displayContextMenu}
+                                                                ref={field.get('ref')}
+                                                                refTemp={field.get('ref')}
+                                                                code={index}
+                                                                roles={field.get('roles')}
+                                                                type={type}
+                                                                height={field.get('height')}
+                                                                onRightClickItem={this._onRightClickItem}/>
                                                         else if(type === 'line_chart')
                                                             return <CommonLineChart key={index} type={type}
                                                                 groupId={groupId}
@@ -929,6 +944,19 @@ module.exports = React.createClass({
                                         onRightClickItem={this._onRightClickItem}/>
                                 else if(type === 'eform_input_image_doctor')
                                     return <CommonSignatureDoctor key={index} type={type}
+                                        groupId={groupId}
+                                        permission={this.props.permission}
+                                        name={field.get('name')}
+                                        size={field.get('size')}
+                                        context={displayContextMenu}
+                                        ref={field.get('ref')}
+                                        refTemp={field.get('ref')}
+                                        code={index}
+                                        type={type}
+                                        height={field.get('height')}
+                                        onRightClickItem={this._onRightClickItem}/>
+                                else if(type === 'eform_input_image_patient')
+                                    return <CommonSignaturePatient key={index} type={type}
                                         groupId={groupId}
                                         permission={this.props.permission}
                                         name={field.get('name')}

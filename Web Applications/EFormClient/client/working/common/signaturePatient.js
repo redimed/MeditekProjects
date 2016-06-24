@@ -55,11 +55,11 @@ module.exports = React.createClass({
         }
         return output;
     },
-    setValue: function(value){        
+    setValue: function(value){
         this.imageSignature = value;
         if(this.imageSignature){
             var self = this;
-            EFormService.getImage({size: 250, UID: value.UID})
+            EFormService.getImage({size: 250, UID: value})
             .then(function(image){
                 var bytes = new Uint8Array(image);
                 $(self.refs.canvas).attr('src', "data:image/jpg;base64,"+self.encode(bytes));
@@ -94,12 +94,12 @@ module.exports = React.createClass({
         var html = null;
         var htmlSignature = (this.imageSignature)?<img ref="sign"/>:'No signature';
         var display = (
-            <div className="col-xs-12" style={{border: '1px solid green'}}>
+            <div className="col-xs-12">
                 <img ref="canvas" width="100%" id={this.props.refTemp}/>
             </div>
         )
         switch(type){
-            case 'eform_input_image_doctor':
+            case 'eform_input_image_patient':
                 html = (
                     <div className={"dragField col-xs-"+this.props.size} ref="group">
                         <div className="form-group" id={this.props.groupId}>

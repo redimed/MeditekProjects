@@ -133,304 +133,312 @@ module.exports = React.createClass({
         .then(function(responseRoles){
             EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
             .then(function(response){
-                if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null)
+                if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null){
                     self.signatureDoctor = response.data.Doctor.FileUpload;
+                }
                 else
                     self.signatureDoctor = '';
-                if(response.data.Patient) {
-                    this.patient = response.data.Patient;
-                }
-                for(var section_index = 0; section_index < content.length; section_index++){
-                    var section = content[section_index];
-                    for(var row_index = 0; row_index < section.rows.length; row_index++){
-                        var row = section.rows[row_index];
-                        for(var field_index = 0; field_index < row.fields.length; field_index++){
-                            var field = row.fields[field_index];
-                            /* ROLES */
-                            if(typeof field.roles !== 'undefined'){
-                                var view_flag = false;
-                                var edit_flag = false;
-                                var view_option = field.roles.view.option;
-                                for(var role_id = 0; role_id < responseRoles.roles.length; role_id++){
-                                    var role = responseRoles.roles[role_id];
-                                    /* VIEW */
-                                    for(var role_field_id = 0; role_field_id < field.roles.view.list.length; role_field_id++){
-                                        var field_role = field.roles.view.list[role_field_id];
-                                        if(field_role.id === role.RoleId){
-                                            if(field_role.value === 'yes'){
-                                                view_flag = true;
-                                                break;
+                EFormService.eformGetPatient({data: {UID: self.patientUID} })
+                .then(function(responsePatient){
+                    self.signaturePatient = responsePatient.data[0].Signature;
+                    if(response.data.Patient) {
+                        self.patient = response.data.Patient;
+                    }
+                    for(var section_index = 0; section_index < content.length; section_index++){
+                        var section = content[section_index];
+                        for(var row_index = 0; row_index < section.rows.length; row_index++){
+                            var row = section.rows[row_index];
+                            for(var field_index = 0; field_index < row.fields.length; field_index++){
+                                var field = row.fields[field_index];
+                                /* ROLES */
+                                if(typeof field.roles !== 'undefined'){
+                                    var view_flag = false;
+                                    var edit_flag = false;
+                                    var view_option = field.roles.view.option;
+                                    for(var role_id = 0; role_id < responseRoles.roles.length; role_id++){
+                                        var role = responseRoles.roles[role_id];
+                                        /* VIEW */
+                                        for(var role_field_id = 0; role_field_id < field.roles.view.list.length; role_field_id++){
+                                            var field_role = field.roles.view.list[role_field_id];
+                                            if(field_role.id === role.RoleId){
+                                                if(field_role.value === 'yes'){
+                                                    view_flag = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        /* END VIEW */
+                                        /* EDIT */
+                                        for(var role_field_id = 0; role_field_id < field.roles.edit.length; role_field_id++){
+                                            var field_role = field.roles.edit[role_field_id];
+                                            if(field_role.id === role.RoleId){
+                                                if(field_role.value === 'yes'){
+                                                    edit_flag = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        /* END EDIT */
+                                    }
+                                    if(!edit_flag && self.refs[section.ref])
+                                        self.refs[section.ref].setDisplay(row.ref, field.ref, 'disable');
+                                    if(!view_flag && self.refs[section.ref])
+                                        self.refs[section.ref].setDisplay(row.ref, field.ref, 'hidden');
+                                }
+                                /* END ROLES */
+                                if(field.type === 'eform_input_image_doctor' && self.refs[section.ref]){
+                                    self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
+                                }
+                                if(field.type === 'eform_input_image_patient' && self.refs[section.ref]){
+                                    self.refs[section.ref].setValue(row.ref, field.ref, self.signaturePatient);
+                                }
+                                var calArray = [];
+                                if(typeof field.cal !== 'undefined')
+                                    calArray = field.cal.split('|');
+                                calArray.map(function(cal){
+                                    /* SUMP PREFIX */
+                                    if(Config.getPrefixField(cal, 'SUMP(') > -1){
+                                        if(cal !== ''){
+                                            var calRes = Config.getArrayPrecal(5, cal);
+                                            self.calculation.push({type: 'SUMP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
+                                        }
+                                    }
+                                    /* END SUMP PREFIX */
+                                    /* SUM PREFIX */
+                                    if(Config.getPrefixField(cal, 'SUM(') > -1){
+                                        if(cal !== ''){
+                                            var calRes = Config.getArrayPrecal(4, cal);
+                                            calRes.map(function(minorRef){
+                                                var splitMinorRef = minorRef.split('_');
+                                                var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
+                                                var sectionRefField = 'section_'+splitMinorRef[1];
+                                                if(typeof self.refs[sectionRefField] !== 'undefined')
+                                                    self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
+                                            })
+                                        }
+                                    }
+                                    /* END SUM PREFIX */
+                                    /* BMI */
+                                    if(Config.getPrefixField(cal, 'BMI(') > -1){
+                                        if(cal !== ''){
+                                            var calRes = Config.getArrayPrecal(4, cal);
+                                            if(typeof self.refs[section.ref] !== 'undefined')
+                                                self.refs[section.ref].bmi(row.ref, field.ref, calRes);
+                                        }
+                                    }
+                                    /* END BMI */
+
+                                    /* WHR BEGIN */
+                                    if (Config.getPrefixField(cal, 'WHR(') > -1) {
+                                        if (cal) {
+                                            var calRes = Config.getArrayPrecal(4, cal);
+                                            if (self.refs[section.ref]) {
+                                                self.refs[section.ref].whr(row.ref, field.ref, calRes);
                                             }
                                         }
                                     }
-                                    /* END VIEW */
-                                    /* EDIT */
-                                    for(var role_field_id = 0; role_field_id < field.roles.edit.length; role_field_id++){
-                                        var field_role = field.roles.edit[role_field_id];
-                                        if(field_role.id === role.RoleId){
-                                            if(field_role.value === 'yes'){
-                                                edit_flag = true;
-                                                break;
+                                    /* WHR END */
+
+                                    /* MAXHR BEGIN */
+                                    if (Config.getPrefixField(cal, 'MAXHR(') > -1) {
+                                        if (cal) {
+                                            var calRes = Config.getArrayPrecal(6, cal);
+                                            if(self.refs[section.ref]) {
+                                                self.refs[section.ref].maxHR(row.ref, field.ref, calRes);
                                             }
                                         }
                                     }
-                                    /* END EDIT */
-                                }
-                                if(!edit_flag && self.refs[section.ref])
-                                    self.refs[section.ref].setDisplay(row.ref, field.ref, 'disable');
-                                if(!view_flag && self.refs[section.ref])
-                                    self.refs[section.ref].setDisplay(row.ref, field.ref, 'hidden');
-                            }
-                            /* END ROLES */
-                            if(field.type === 'eform_input_image_doctor' && self.refs[section.ref]){
-                                self.refs[section.ref].setValue(row.ref, field.ref, self.signatureDoctor);
-                            }
-                            var calArray = [];
-                            if(typeof field.cal !== 'undefined')
-                                calArray = field.cal.split('|');
-                            calArray.map(function(cal){
-                                /* SUMP PREFIX */
-                                if(Config.getPrefixField(cal, 'SUMP(') > -1){
-                                    if(cal !== ''){
-                                        var calRes = Config.getArrayPrecal(5, cal);
-                                        self.calculation.push({type: 'SUMP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, cal: calRes});
-                                    }
-                                }
-                                /* END SUMP PREFIX */
-                                /* SUM PREFIX */
-                                if(Config.getPrefixField(cal, 'SUM(') > -1){
-                                    if(cal !== ''){
-                                        var calRes = Config.getArrayPrecal(4, cal);
-                                        calRes.map(function(minorRef){
-                                            var splitMinorRef = minorRef.split('_');
-                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
-                                            var sectionRefField = 'section_'+splitMinorRef[1];
-                                            if(typeof self.refs[sectionRefField] !== 'undefined')
-                                                self.refs[sectionRefField].preCalSum(rowRefField, minorRef, field.ref);
-                                        })
-                                    }
-                                }
-                                /* END SUM PREFIX */
-                                /* BMI */
-                                if(Config.getPrefixField(cal, 'BMI(') > -1){
-                                    if(cal !== ''){
-                                        var calRes = Config.getArrayPrecal(4, cal);
-                                        if(typeof self.refs[section.ref] !== 'undefined')
-                                            self.refs[section.ref].bmi(row.ref, field.ref, calRes);
-                                    }
-                                }
-                                /* END BMI */
+                                    /* MAXHR END */
 
-                                /* WHR BEGIN */
-                                if (Config.getPrefixField(cal, 'WHR(') > -1) {
-                                    if (cal) {
-                                        var calRes = Config.getArrayPrecal(4, cal);
-                                        if (self.refs[section.ref]) {
-                                            self.refs[section.ref].whr(row.ref, field.ref, calRes);
+                                    /* MAXHR BEGIN */
+                                    if (Config.getPrefixField(cal, 'MAXHR85(') > -1) {
+                                        if (cal) {
+                                            var calRes = Config.getArrayPrecal(8, cal);
+                                            if(self.refs[section.ref]) {
+                                                self.refs[section.ref].maxHR85(row.ref, field.ref, calRes);
+                                            }
                                         }
                                     }
-                                }
-                                /* WHR END */
+                                    /* MAXHR END */
 
-                                /* MAXHR BEGIN */
-                                if (Config.getPrefixField(cal, 'MAXHR(') > -1) {
-                                    if (cal) {
-                                        var calRes = Config.getArrayPrecal(6, cal);
-                                        if(self.refs[section.ref]) {
-                                            self.refs[section.ref].maxHR(row.ref, field.ref, calRes);
+                                    /*TRIGGERCHANGE BEGIN*/
+                                    if (Config.getPrefixField(cal, 'TRIGGERCHANGE(') > -1) {
+                                        if (cal) {
+                                            var calRes = Config.getArrayPrecal(14, cal);
+                                            if (self.refs[section.ref]) {
+                                                self.refs[section.ref].triggerChange(row.ref, field.ref, calRes);
+                                            }
                                         }
                                     }
-                                }
-                                /* MAXHR END */
-
-                                /* MAXHR BEGIN */
-                                if (Config.getPrefixField(cal, 'MAXHR85(') > -1) {
-                                    if (cal) {
-                                        var calRes = Config.getArrayPrecal(8, cal);
-                                        if(self.refs[section.ref]) {
-                                            self.refs[section.ref].maxHR85(row.ref, field.ref, calRes);
+                                    /*TRIGGERCHANGE END*/
+                                    /* COUNT PREFIX */
+                                    if(Config.getPrefixField(cal, 'COUNT') > -1){
+                                        if(cal !== ''){
+                                            var calRes = Config.getArrayPrecal(6, cal);
+                                            calRes.map(function(minorRef){
+                                                var splitMinorRef = minorRef.split('_');
+                                                var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
+                                                var sectionRefField = 'section_'+splitMinorRef[1];
+                                                if(self.refs[sectionRefField])
+                                                    self.refs[sectionRefField].preCalCount(rowRefField, minorRef, field.ref);
+                                            })
                                         }
                                     }
-                                }
-                                /* MAXHR END */
+                                    /* END COUNT PREFIX */
+                                })
 
-                                /*TRIGGERCHANGE BEGIN*/
-                                if (Config.getPrefixField(cal, 'TRIGGERCHANGE(') > -1) {
-                                    if (cal) {
-                                        var calRes = Config.getArrayPrecal(14, cal);
-                                        if (self.refs[section.ref]) {
-                                            self.refs[section.ref].triggerChange(row.ref, field.ref, calRes);
+                                var preCalArray = [];
+                                if(typeof field.preCal !== 'undefined'){
+                                    preCalArray = field.preCal.split('|');
+                                }
+                                preCalArray.map(function(preCal){
+                                    /* EQUALP GROUP */
+                                    if(Config.getPrefixField(preCal, 'EQUALP(') > -1){
+                                        if(preCal !== ''){
+                                            var preCalRes = Config.getArrayPrecal(7, preCal);
+                                            self.calculation.push({type: 'EQUALP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, field: field, cal: preCalRes});
                                         }
                                     }
-                                }
-                                /*TRIGGERCHANGE END*/
-                                /* COUNT PREFIX */
-                                if(Config.getPrefixField(cal, 'COUNT') > -1){
-                                    if(cal !== ''){
-                                        var calRes = Config.getArrayPrecal(6, cal);
-                                        calRes.map(function(minorRef){
-                                            var splitMinorRef = minorRef.split('_');
-                                            var rowRefField = 'row_'+splitMinorRef[1]+'_'+splitMinorRef[2];
-                                            var sectionRefField = 'section_'+splitMinorRef[1];
-                                            if(self.refs[sectionRefField])
-                                                self.refs[sectionRefField].preCalCount(rowRefField, minorRef, field.ref);
-                                        })
+                                    /* END EQUALP GROUP */
+                                    /* BELONGS GROUP PREFIX */
+                                    if(Config.getPrefixField(preCal,'EQUAL(') > -1){
+                                        if(preCal !== ''){
+                                           var preCalRes = Config.getArrayPrecal(6, preCal);
+                                           preCalRes = preCalRes[0];
+                                            if(self.refs[section.ref])
+                                                self.refs[section.ref].preCalBelongsGroup(row.ref, field.ref, preCalRes);
+                                        }
                                     }
-                                }
-                                /* END COUNT PREFIX */
-                            })
+                                    /* END BELONGS GROUP PREFIX */
+                                    /* CONCAT PREFIX */
+                                    if(Config.getPrefixField(preCal,'CONCAT') > -1){
+                                        if(preCal !== ''){
+                                            var preCalRes = Config.getArrayPrecal(7, preCal);
+                                            var value = '';
+                                            var checked = null;
+                                            preCalRes.map(function(preCalResItem){
+                                                var preCalResItemArr = preCalResItem.split('.');
+                                                var responseTemp = null;
+                                                var preCalResItemTemp = '';
+                                                if(preCalResItemArr.length > 1){
+                                                    responseTemp = response.data[preCalResItemArr[0]];
+                                                    preCalResItemTemp = preCalResItemArr[1];
+                                                }else{
+                                                    responseTemp = response.data;
+                                                    preCalResItemTemp = preCalResItem;
+                                                }
 
-                            var preCalArray = [];
-                            if(typeof field.preCal !== 'undefined'){
-                                preCalArray = field.preCal.split('|');
-                            }
-                            preCalArray.map(function(preCal){
-                                /* EQUALP GROUP */
-                                if(Config.getPrefixField(preCal, 'EQUALP(') > -1){
-                                    if(preCal !== ''){
-                                        var preCalRes = Config.getArrayPrecal(7, preCal);
-                                        self.calculation.push({type: 'EQUALP', section_ref: section.ref, row_ref: row.ref, field_ref: field.ref, field: field, cal: preCalRes});
+                                                for(var key in responseTemp){
+                                                    if(key === preCalResItemTemp){
+                                                        if(Config.getPrefixField(field.type,'checkbox') > -1){
+                                                            if(field.value === responseTemp[key]){
+                                                                value = 'yes';
+                                                                checked = true;
+                                                            }
+                                                        }
+                                                        else if(Config.getPrefixField(field.type,'radio') > -1){
+                                                            if(field.value === responseTemp[key]){
+                                                                value = 'yes';
+                                                                checked = true;
+                                                            }
+                                                        }else{
+                                                            if(responseTemp[key] !== null)
+                                                                value += responseTemp[key]+' ';
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            })
+                                            objRef[field.ref] = {refRow: row.ref, value: value};
+                                            if (checked!==null) {
+                                                objRef[field.ref].checked = checked;
+                                            }
+                                            if(self.refs[section.ref]) {
+                                                self.refs[section.ref].setValue(row.ref, field.ref, value);
+                                            }
+                                        }
                                     }
-                                }
-                                /* END EQUALP GROUP */
-                                /* BELONGS GROUP PREFIX */
-                                if(Config.getPrefixField(preCal,'EQUAL(') > -1){
-                                    if(preCal !== ''){
-                                       var preCalRes = Config.getArrayPrecal(6, preCal);
-                                       preCalRes = preCalRes[0];
-                                        if(self.refs[section.ref])
-                                            self.refs[section.ref].preCalBelongsGroup(row.ref, field.ref, preCalRes);
-                                    }
-                                }
-                                /* END BELONGS GROUP PREFIX */
-                                /* CONCAT PREFIX */
-                                if(Config.getPrefixField(preCal,'CONCAT') > -1){
-                                    if(preCal !== ''){
-                                        var preCalRes = Config.getArrayPrecal(7, preCal);
-                                        var value = '';
-                                        var checked = null;
-                                        preCalRes.map(function(preCalResItem){
-                                            var preCalResItemArr = preCalResItem.split('.');
+                                    if(Config.getPrefixField(preCal,'AGE') > -1){
+                                        if(preCal !== ''){
+                                            var preCalRes = Config.getArrayPrecal(4, preCal);
+                                            var preCalResItemArr = preCalRes[0].split('.');
                                             var responseTemp = null;
                                             var preCalResItemTemp = '';
+                                            var res = '';
                                             if(preCalResItemArr.length > 1){
                                                 responseTemp = response.data[preCalResItemArr[0]];
                                                 preCalResItemTemp = preCalResItemArr[1];
                                             }else{
                                                 responseTemp = response.data;
-                                                preCalResItemTemp = preCalResItem;
+                                                preCalResItemTemp = preCalRes[0];
                                             }
-
                                             for(var key in responseTemp){
                                                 if(key === preCalResItemTemp){
-                                                    if(Config.getPrefixField(field.type,'checkbox') > -1){
-                                                        if(field.value === responseTemp[key]){
-                                                            value = 'yes';
-                                                            checked = true;
-                                                        }
-                                                    }
-                                                    else if(Config.getPrefixField(field.type,'radio') > -1){
-                                                        if(field.value === responseTemp[key]){
-                                                            value = 'yes';
-                                                            checked = true;
-                                                        }
-                                                    }else{
-                                                        if(responseTemp[key] !== null)
-                                                            value += responseTemp[key]+' ';
-                                                    }
+                                                    res = self._getAge(responseTemp[key]);
                                                     break;
                                                 }
+                                            }//end for
+
+                                            objRef[field.ref] = {refRow: row.ref, value: value};
+                                            if(self.refs[section.ref]) {
+                                                self.refs[section.ref].setValue(row.ref, field.ref, res);
+                                                self.field_age.push({name: field.name, res: res});
                                             }
-                                        })
-                                        objRef[field.ref] = {refRow: row.ref, value: value};
-                                        if (checked!==null) {
-                                            objRef[field.ref].checked = checked;
+                                        }
+                                    }
+
+                                    if (Config.getPrefixField(preCal, 'DEFAULTVALUE(') > -1) {
+                                        var preCalRes = Config.getArrayPrecal(13, preCal);
+                                        var value = null;
+                                        if(preCalRes.length>0) {
+                                            value = preCalRes[0];
                                         }
                                         if(self.refs[section.ref]) {
-                                            self.refs[section.ref].setValue(row.ref, field.ref, value);
-                                        }
-                                    }
-                                }
-                                if(Config.getPrefixField(preCal,'AGE') > -1){
-                                    if(preCal !== ''){
-                                        var preCalRes = Config.getArrayPrecal(4, preCal);
-                                        var preCalResItemArr = preCalRes[0].split('.');
-                                        var responseTemp = null;
-                                        var preCalResItemTemp = '';
-                                        var res = '';
-                                        if(preCalResItemArr.length > 1){
-                                            responseTemp = response.data[preCalResItemArr[0]];
-                                            preCalResItemTemp = preCalResItemArr[1];
-                                        }else{
-                                            responseTemp = response.data;
-                                            preCalResItemTemp = preCalRes[0];
-                                        }
-                                        for(var key in responseTemp){
-                                            if(key === preCalResItemTemp){
-                                                res = self._getAge(responseTemp[key]);
-                                                break;
+                                            if(Config.getPrefixField(field.type,'radio') > -1){
+                                                value = field.value;
+                                                objRef[field.ref] = {refRow: row.ref, value: value, checked: true};
+                                                var item = $('#'+field.ref);
+                                                item.iCheck('check');
+                                            } else {
+                                                objRef[field.ref] = {refRow: row.ref, value: value};
+                                                self.refs[section.ref].setValue(row.ref, field.ref, value);
                                             }
-                                        }//end for
 
-                                        objRef[field.ref] = {refRow: row.ref, value: value};
-                                        if(self.refs[section.ref]) {
-                                            self.refs[section.ref].setValue(row.ref, field.ref, res);
-                                            self.field_age.push({name: field.name, res: res});
                                         }
                                     }
-                                }
+                                    /* END CONCAT PREFIX */
+                                    /* DEFAULT PREFIX */
+                                    if(Config.getPrefixField(preCal,'DEFAULT(') > -1){
+                                        if(preCal !== ''){
+                                            var preCalRes = Config.getArrayDefault(preCal);
+                                            var value = preCalRes[0];
 
-                                if (Config.getPrefixField(preCal, 'DEFAULTVALUE(') > -1) {
-                                    var preCalRes = Config.getArrayPrecal(13, preCal);
-                                    var value = null;
-                                    if(preCalRes.length>0) {
-                                        value = preCalRes[0];
-                                    }
-                                    if(self.refs[section.ref]) {
-                                        if(Config.getPrefixField(field.type,'radio') > -1){
-                                            value = field.value;
-                                            objRef[field.ref] = {refRow: row.ref, value: value, checked: true};
-                                            var item = $('#'+field.ref);
-                                            item.iCheck('check');
-                                        } else {
-                                            objRef[field.ref] = {refRow: row.ref, value: value};
-                                            self.refs[section.ref].setValue(row.ref, field.ref, value);
-                                        }
-
-                                    }
-                                }
-                                /* END CONCAT PREFIX */
-                                /* DEFAULT PREFIX */
-                                if(Config.getPrefixField(preCal,'DEFAULT(') > -1){
-                                    if(preCal !== ''){
-                                        var preCalRes = Config.getArrayDefault(preCal);
-                                        var value = preCalRes[0];
-
-                                        if(value === 'TODAY'){
-                                            objRef[field.ref] = {refRow: row.ref, value: value};
-                                            if(self.refs[section.ref])
-                                                self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                            if(value === 'TODAY'){
+                                                objRef[field.ref] = {refRow: row.ref, value: value};
+                                                if(self.refs[section.ref])
+                                                    self.refs[section.ref].setValue(row.ref, field.ref, moment().format('YYYY-MM-DD HH:mm:ss'));
+                                            }
                                         }
                                     }
-                                }
-                                /* END DEFAULT PREFIX */
-                            })//end pre cal array
+                                    /* END DEFAULT PREFIX */
+                                })//end pre cal array
+                            }
+                        }
+                    }//end for
+
+                    for(var i =0; i <self.allFields.length; i++) {
+                        if(objRef[self.allFields[i].ref]) {
+                            self.allFields[i].value = objRef[self.allFields[i].ref].value;
+                            if(objRef[self.allFields[i].ref].checked!==undefined) {
+                                self.allFields[i].checked = objRef[self.allFields[i].ref].checked;
+                            }
                         }
                     }
-                }//end for
-
-                for(var i =0; i <self.allFields.length; i++) {
-                    if(objRef[self.allFields[i].ref]) {
-                        self.allFields[i].value = objRef[self.allFields[i].ref].value;
-                        if(objRef[self.allFields[i].ref].checked!==undefined) {
-                            self.allFields[i].checked = objRef[self.allFields[i].ref].checked;
-                        }
-                    }
-                }
-                console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||objRef:", objRef);
-                console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||self.allFields:", self.allFields);
-                self._checkServerEFormDetail();
-            })
+                    //console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||objRef:", objRef);
+                    //console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||self.allFields:", self.allFields);
+                    self._checkServerEFormDetail();
+                })// END EFormGetPatient
+            })// END EFormGetUserRoles
         })
     },
     _getAge(birthday){
@@ -670,7 +678,7 @@ module.exports = React.createClass({
                 EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){
                     resolve();
-                    //window.location.reload();
+                    window.location.reload();
                 })
             }else{
                 EFormService.formUpdate({UID: self.formUID, content: content})

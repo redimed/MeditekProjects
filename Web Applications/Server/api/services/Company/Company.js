@@ -1018,29 +1018,20 @@ module.exports = {
 		});
 	},
 
-	CreateFund : function(data) {
+	CreateFund : function(data, transaction) {
 		var CompanyID,FundID;
-		if(!data.FundUID || data.FundUID == null || data.FundUID == '') {
-			var err = new Error("CreateFund.Error");
-			err.pushError("FundUID.invalid.params");
-			throw err;
-		}
-		if(!data.CompanyUID || data.CompanyUID == null || data.CompanyUID == '') {
-			var err = new Error("CreateFund.Error");
-			err.pushError("CompanyUID.invalid.params");
-			throw err;
-		}
-		return sequelize.transaction()
-		.then(function(t) {
+		
+		// return sequelize.transaction()
+		// .then(function(t) {
 			return Company.findOne({
-				where: {
-					UID : data.CompanyUID
-				},
-				transaction : t
+				// where: {
+				// 	UID : data.CompanyUID
+				// },
+				where: data.whereClause.Company,
+				transaction : transaction
 			})
 			.then(function(got_company) {
 				if(got_company == null || got_company == ''){
-					t.rollback();
 					var err = new Error("CreateFund.Error");
 					err.pushError("Company.notFound");
 					throw err;
@@ -1048,19 +1039,18 @@ module.exports = {
 				else {
 					CompanyID = got_company.ID;
 					return Fund.findOne({
-						where :{
-							UID : data.FundUID
-						},
-						transaction : t
+						// where :{
+						// 	UID : data.FundUID
+						// },
+						where: data.whereClause.Fund,
+						transaction : transaction
 					});
 				}
 			},function(err) {
-				t.rollback();
 				throw err;
 			})
 			.then(function(got_fund) {
 				if(got_fund == null || got_fund == ''){
-					t.rollback();
 					var err = new Error("CreateFund.Error");
 					err.pushError("Fund.notFound");
 					throw err;
@@ -1072,11 +1062,10 @@ module.exports = {
 							CompanyID : CompanyID,
 							FundID    : FundID
 						},
-						transaction :t
+						transaction :transaction
 					});
 				}
 			},function(err) {
-				t.rollback();
 				throw err;
 			})
 			.then(function(got_rel) {
@@ -1085,7 +1074,7 @@ module.exports = {
 						CompanyID : CompanyID,
 						FundID    : FundID,
 						Active    : 'Y'
-					},{transaction : t});
+					},{transaction : transaction});
 				}
 				else {
 					if(got_rel.Active == 'N') {
@@ -1096,37 +1085,33 @@ module.exports = {
 								CompanyID : CompanyID,
 								FundID    : FundID
 							},
-							transaction : t
+							transaction : transaction
 						});
 					}
 					else {
-						t.rollback();
 						var err = new Error("CreateFund.Error");
 						err.pushError("Company.HasAssociation.Fund");
 						throw err;
 					}
 				}
 			},function(err) {
-				t.rollback();
 				throw err;
 			})
 			.then(function(created) {
 				if(created == null || created == ''){
-					t.rollback();
 					var err = new Error("CreateFund.Error");
 					err.pushError("create.Queryerror");
 					throw err;
 				}
 				else {
-					t.commit();
 					return created;
 				}
 			},function(err) {
 				throw err;
 			});
-		},function(err) {
-			throw err;
-		})
+		// },function(err) {
+		// 	throw err;
+		// })
 	},
 
 	DetailCompanyByUser: function(data) {
@@ -1544,6 +1529,8 @@ module.exports = {
 	},
 
 	CreateCompanyForOnlineBooking: function(data) {
+		var returnData;
+		var isforRediSite = false;
 		if(!data) {
 			var err = new Error('CreateCompanyForOnlineBooking.error');
 			err.pushError('params.Invalid');
@@ -1560,6 +1547,9 @@ module.exports = {
 			var err = new Error('CreateCompanyForOnlineBooking.error');
 			err.pushError('CompanyName.Invalid');
 			throw err;
+		}
+		if(data.forRediSite && (data.forRediSite == true || data.forRediSite == false)) {
+			isforRediSite = data.forRediSite;
 		}
 
 		return sequelize.transaction()
@@ -1644,9 +1634,14 @@ module.exports = {
 				})
 				.then(function(got_company) {
 					if(got_company) {
-						var err = new Error('CreateCompanyForOnlineBooking.error');
-						err.pushError('Company.existed');
-						throw err;
+						if(isforRediSite == false) {
+							var err = new Error('CreateCompanyForOnlineBooking.error');
+							err.pushError('Company.existed');
+							throw err;
+						}
+						else {
+							return got_company;
+						}
 					}
 					else {
 						var objCreate 		  = data.data ? data.data : {};
@@ -1676,9 +1671,63 @@ module.exports = {
 						if(!data.data || !data.data.SiteName) {
 							objCreate.SiteName = data.CompanyName;
 						}
-						return CompanySite.create(objCreate,{transaction:t});
+						if(isforRediSite == false){
+							return CompanySite.create(objCreate,{transaction:t});
+						}
+						else {
+							
+							return CompanySite.findOne({
+								where: {
+									SiteIDRefer : data.companyId,
+								},
+								transaction : t,
+							})
+							.then(function(got_compsite) {
+								if(got_compsite) {
+									returnData = got_compsite;
+									delete objCreate['SiteIDRefer']; 
+									delete objCreate['UID'];
+									delete objCreate['CompanyID'];
+									if(!data.SiteName) delete objCreate['SiteName'];
+									return CompanySite.update(objCreate,{
+										where: {
+											SiteIDRefer : data.companyId,
+										},
+										transaction:t
+									});
+								}
+								else {
+									return CompanySite.create(objCreate,{transaction:t});
+								}
+							}, function(err) {
+								throw err;
+							});
+						}
 					}
 				},function(err) {
+					throw err;
+				})
+				.then(function(changed) {
+					if(!changed) {
+						var err = new Error('CreateCompanyForOnlineBooking.error');
+						err.pushError('ChangeCompanySite.queryError');
+						throw err;
+					}
+					else {
+						if(data.ATO) {
+							var whereClause = {
+								whereClause: {
+									Company: { IDRefer: data.companyId},
+            						Fund : {ATO: data.ATO}
+								}
+							};
+							return Services.Company.CreateFund(whereClause, t);
+						}
+						else {
+							return changed;
+						}
+					}
+				}, function(err) {
 					throw err;
 				})
 				.then(function(created_site) {
@@ -1690,9 +1739,13 @@ module.exports = {
 					}
 					else {
 						t.commit();
-						return created_site;
+						return returnData;
 					}
 				},function(err) {
+					if(err.errors[0] == 'Company.HasAssociation.Fund') {
+						t.commit();
+						return returnData;
+					}
 					t.rollback();
 					throw err;
 				});

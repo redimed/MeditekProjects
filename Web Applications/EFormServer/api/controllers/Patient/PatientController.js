@@ -188,37 +188,58 @@ module.exports = {
     	input:  UserAccount's UID
     	output: Patient's information of Patient's ID if patient has data.
     */
+     /*
+        GetPatient : service get a patient with condition
+        input:useraccount's UID
+        output: get patient's information.
+    */
     GetPatient: function(req, res) {
-        var data = req.body.data;
-        Services.Patient.GetPatient(data)
-            .then(function(info) {
+       var data = req.body.data;
+       Services.Patient.GetPatient(data)
+       .then(function(info) {
+           if (info != null && info != undefined && info != '') {
+               var responseData = [];
+               responseData.push(info.Patient);
+               responseData[0].dataValues.ProfileImage = null;
+               responseData[0].dataValues.Signature = null;
 
-                if (info != null && info != undefined && info != '') {
-                    info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0]?info[0].dataValues.UserAccount.FileUploads[0].UID:null;
-                    info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
-                    info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
-                    delete info[0].dataValues['UserAccount'];
-                    delete info[0].dataValues['Country'];
-                    res.ok({
-                        status: 200,
-                        message: "Success",
-                        data: info
-                    });
-                } else {
-                    var err = new Error("SERVER ERROR");
-                    err.pushError("No data result");
-                    res.ok({
-                        message: ErrorWrap(err)
-                    });
-                }
-            })
-            .catch(function(err) {
-                res.serverError({
-                    status: 500,
-                    message: ErrorWrap(err)
-                });
-            });
-    },
+               responseData[0].dataValues.PhoneNumber = info.PhoneNumber;
+               responseData[0].dataValues.Email = info.Email;
+               responseData[0].dataValues.CountryName = info.Patient.Country1.ShortName;
+               delete responseData[0].dataValues['Country1'];
+               for (var i = 0; i < info.dataValues.FileUploads.length; i++) {
+                   // info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i].FileType=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                   // info[0].dataValues.Signature = info[0].dataValues.UserAccount.FileUploads[i].FileType=='Signature'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
+                   if (responseData[0].dataValues.ProfileImage == null || responseData[0].dataValues.ProfileImage == '') {
+                       responseData[0].dataValues.ProfileImage = info.dataValues.FileUploads[i].FileType == 'ProfileImage' ? info.dataValues.FileUploads[i].UID : null;
+                   }
+                   if (responseData[0].dataValues.Signature == null || responseData[0].dataValues.Signature == '') {
+                       responseData[0].dataValues.Signature = info.dataValues.FileUploads[i].FileType == 'Signature' ? info.dataValues.FileUploads[i].UID : null;
+                   }
+
+               }
+               // delete info[0].dataValues['UserAccount'];
+
+               res.ok({
+                   status: 200,
+                   message: "Success",
+                   data: responseData
+               });
+           } else {
+               var err = new Error("SERVER ERROR");
+               err.pushError("No data result");
+               res.serverError({
+                   message: ErrorWrap(err)
+               });
+           }
+       })
+       .catch(function(err) {
+           res.serverError({
+               status: 500,
+               message: ErrorWrap(err)
+           });
+       });
+   },
 
     /*
     	DetailPatient: get detail patient with patient UID
@@ -236,22 +257,35 @@ module.exports = {
                     return FileUpload.findAll({
                             where: {
                                 UserAccountID: info[0].UserAccountID,
-                                FileType: 'ProfileImage',
+                                FileType: { $in: ['ProfileImage', 'Signature'] },
                                 Enable: 'Y'
                             }
                         })
                         .then(function(success) {
                             if (success !== undefined && success !== null && success !== '' && success.length !== 0) {
-                                info[0].dataValues.FileUID = success[0].UID ? success[0].UID : null;
-                                info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
-                                delete info[0].dataValues['Country'];
+                                for (var i = 0; i < success.length; i++) {
+                                     if(success[i].FileType == 'ProfileImage'){
+                                        info[0].dataValues.ProfileImage = success[i].UID ? success[i].UID : null;
+                                    }
+                                   
+                                    // if(info[0].dataValuesFileType == "Signature")
+                                    if(success[i].FileType == 'Signature') {
+                                        info[0].dataValues.Signature = success[i].UID ? success[i].UID : null;
+                                    }
+                                }
+                                info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
+                                delete info[0].dataValues['Country1'];
                                 return res.ok({
                                     status: 200,
                                     message: "success",
                                     data: info
                                 });
                             } else {
-                                info[0].dataValues.FileUID = null;
+
+                                info[0].dataValues.Signature = null;
+                                info[0].dataValues.ProfileImage = null;
+                                info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
+                                delete info[0].dataValues['Country1'];
                                 return res.ok({
                                     status: 200,
                                     message: "success",
@@ -273,39 +307,6 @@ module.exports = {
                         message: ErrorWrap(err)
                     });
                 }
-            })
-            .catch(function(err) {
-                res.serverError({
-                    status: 500,
-                    message: ErrorWrap(err)
-                });
-            });
-    },
-
-    /*
-    	DeletePatient : disable patient who was deleted.
-    	input: Patient's ID
-    	output: attribute Enable of Patient will receive value "N" in table Patient 
-    */
-    DeletePatient: function(req, res) {
-        var ID = req.body.data;
-        var patientInfo = {
-            ID: ID,
-            Enable: "N"
-        }
-        Services.Patient.UpdatePatient(patientInfo)
-            .then(function(result) {
-                if (result === 0) {
-                    var err = new Error("SERVER ERROR");
-                    err.pushError("No data result");
-                    res.ok({
-                        message: ErrorWrap(err)
-                    });
-                } else
-                    res.ok({
-                        status: 200,
-                        message: "success"
-                    });
             })
             .catch(function(err) {
                 res.serverError({

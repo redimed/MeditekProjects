@@ -176,22 +176,6 @@ module.exports = {
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
-        //Patient - Country
-        Country.hasOne(Patient, {
-            foreignKey: 'CountryID1'
-        });
-        Patient.belongsTo(Country, {
-            foreignKey: 'CountryID1',
-            as: 'Country1'
-        });
-        //Patient - Country
-        Country.hasOne(Patient, {
-            foreignKey: 'CountryID2'
-        });
-        Patient.belongsTo(Country, {
-            foreignKey: 'CountryID2',
-            as: 'Country2'
-        });
 
         /* Doctor */
         FileUpload.hasOne(Doctor, {
@@ -584,6 +568,23 @@ module.exports = {
         });
         EFormTemplateModuleData.belongsTo(EFormTemplateModule, {
             foreignKey: 'EFormTemplateModuleID',
+        });
+
+        //Patient - Country
+        Country.hasMany(Patient, {
+            foreignKey: 'CountryID1'
+        });
+        Patient.belongsTo(Country, {
+            foreignKey: 'CountryID1',
+            as: 'Country1'
+        });
+        //Patient - Country
+        Country.hasMany(Patient, {
+            foreignKey: 'CountryID2'
+        });
+        Patient.belongsTo(Country, {
+            foreignKey: 'CountryID2',
+            as: 'Country2'
         });
     }
 };

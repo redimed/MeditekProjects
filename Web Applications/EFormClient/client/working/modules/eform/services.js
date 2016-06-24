@@ -360,6 +360,17 @@ module.exports = {
 		})
 		return p;
 	},
+	eformGetPatient: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				data: data,
+				url: Config.apiUrl+'api/patient/detail-patient',
+				success: resolve
+			})
+		})
+		return p;
+	},
 	eformTemplateListFilter: function(dataFilter){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

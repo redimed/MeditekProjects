@@ -276,6 +276,109 @@ module.exports = {
             }
         })
     },
+    /*PARAMS
+        templateUID
+        userUID
+        name - name of Template
+        tempData - Data Template
+        patientUID
+        appointmentUID
+    */
+    PostSaveWithData: function(req, res){
+        var eform = null;
+        var userAccount = null;
+        var eformTemplate = null;
+        EFormTemplate.find({where:  {UID: req.body.templateUID}})
+        .then(function(EFormTemplate){
+            eformTemplate = EFormTemplate;
+            if(EFormTemplate){
+                return sequelize.transaction(function(t){
+                    return UserAccount.findOne({
+                        where: {UID: req.body.userUID},
+                        attributes: ['ID'],
+                        transaction: t
+                    })
+                    .then(function(UserAccount){
+                        userAccount = UserAccount;
+                        return EForm.create({
+                            Name: req.body.name,
+                            Status: 'saved',
+                            EFormTemplateID: eformTemplate.ID,
+                            CreatedBy: UserAccount.ID,
+                            ModifiedBy: UserAccount.ID
+                        }, {transaction: t})
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback();
+                    })
+                    .then(function(EForm){
+                        eform = EForm;
+                        return EFormData.create({
+                            EFormID: EForm.ID,
+                            FormData: req.body.tempData,
+                            TempData: req.body.tempData,
+                            CreatedBy: userAccount.ID,
+                            ModifiedBy: userAccount.ID
+                        }, {transaction: t})
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback();
+                    })
+                    .then(function(EFormData){
+                        return Patient.find(
+                            {
+                                attributes: ['ID'],
+                                where: {UID: req.body.patientUID},
+                                transaction: t
+                            }
+                        )
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback();
+                    })
+                    .then(function(patient){
+                        return eform.addPatient(patient.ID,{
+                                transaction: t
+                        })
+                    }, function(err){
+                       res.status(400).json({err: err});
+                        return t.rollback();
+                    })
+                    .then(function(){
+                        return Appointment.find(
+                            {
+                                attributes: ['ID'],
+                                where: {UID: req.body.appointmentUID},
+                                transaction: t
+                            }
+                        )
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback();
+                    })
+                    .then(function(appointment){
+                        return eform.addAppointment(appointment.ID,{
+                                transaction: t
+                        })
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback();
+                    })
+                    .then(function(){
+                        EForm.findOne({
+                            order: 'ID DESC'
+                        })
+                        .then(function(data){
+                            return res.json({data: data});
+                        })
+                    }, function(err){
+                        res.status(400).json({err: err});
+                        return t.rollback();
+                    })
+                })
+            }
+        })
+    },
     PostSaveInit: function(req, res){
         var eform = null;
         var userAccount = null;

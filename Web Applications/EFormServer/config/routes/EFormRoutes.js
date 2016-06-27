@@ -47,6 +47,10 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostSave'
     },
+    'post /eform/saveWithData': {
+        controller: 'EForm/EFormController',
+        action: 'PostSaveWithData'
+    },
     'post /eform/remove': {
         controller: 'EForm/EFormController',
         action: 'PostRemove'

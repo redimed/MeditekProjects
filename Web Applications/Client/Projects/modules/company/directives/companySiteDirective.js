@@ -37,6 +37,7 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 					console.log(response);
 					response.data.Country = parseInt(response.data.Country);
 					scope.data = response.data;
+					scope.data.data_medic = [];
 				},function(err) {
 					console.log(err);
 				});
@@ -98,6 +99,61 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 						console.log(err);
 						toastr.error("Delete Error","error");
 					});
+				}
+			};
+
+			scope.openModalMedic = function(type, data){
+				console.log(" data ", data)
+				var modalInstance = $uibModal.open({
+		            animation: true,
+		            size: 'md',
+		            templateUrl: 'modules/company/directives/templates/companyMedicDirective.html',
+		            resolve: {
+		                data_medic: function() {
+		                    return data;
+		                },
+		            },
+		            controller: function($scope, data_medic){
+		            	console.log("data_medic ", data_medic)
+		            	$scope.titleModal = type;
+		            	$scope.dataModal = {};
+		            	if(type == 'update'){
+		            		console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>data_medic', data_medic);
+		            		$scope.dataModal = angular.copy(data_medic);	        
+		            	}     	
+		            	$scope.cancel = function() {
+		            		closeModal();
+		            	};
+		            	$scope.submit = function(){
+		            		if(type == 'add') {
+		            			scope.data.data_medic.push({
+		            				medic:$scope.dataModal.medic,
+		            				contact_number_onsite:$scope.dataModal.contact_number_onsite
+		            			});
+		            			closeModal();
+		            		}
+		            		else if(type == 'update') {
+		            			console.log("index ",scope.data.data_medic.indexOf(data_medic));
+		            			var index = scope.data.data_medic.indexOf(data_medic);
+		            			if(index != -1) {
+		            				scope.data.data_medic[index] = $scope.dataModal;
+		            			}
+		            		}
+		            		closeModal();
+		            	};
+		            },
+		            
+		        });
+		        modalInstance.result
+		            .then(function(result) {
+		            	
+		                // scope.data.data_medic = result;
+		            }, function(result) {
+
+		                //
+		            });
+				function closeModal() {
+					modalInstance.close();
 				}
 			};
 

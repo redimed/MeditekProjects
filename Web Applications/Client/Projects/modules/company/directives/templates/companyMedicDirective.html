@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" 
+        aria-hidden="true" ng-click="cancel()"></button>
+    <h4 class="modal-type uppercase bold font-blue">
+        <i class="icon-settings"></i> {{titleModal}}
+    </h4>
+</div>
+<div class="modal-body">
+	<div class="form-horizontal">
+		<div class="form-group">
+        	<label class="control-label col-xs-4 text-right">Medic:</label>
+        	<div class="col-xs-8">
+        		<input type="text" class="form-control" ng-model="dataModal.medic"/>
+        	</div>
+        </div>
+        <div class="form-group">
+        	<label class="control-label col-xs-4 text-right">Contact number onsite:</label>
+        	<div class="col-xs-8">
+        		<input type="text" class="form-control" ng-model="dataModal.contact_number_onsite"/>
+        	</div>
+        </div>
+	</div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn dark" data-dismiss="modal" 
+        ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+    <button class="btn blue" ng-click="submit()" ng-if="type !='create'">
+        Submit <i class="glyphicon glyphicon-save"></i></button>
+</div>

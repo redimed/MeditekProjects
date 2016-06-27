@@ -137,15 +137,15 @@
                 <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Specical Activities</label>
                     <div class="col-md-10 col-sm-10 col-xs-9">
-                        <div class="radio-list">
-                            <label class="radio-inline">
-                                <input type="radio" name="special_activities" class="regular-radio" value="surface"> Surface
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="surface"> Surface
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="special_activities" class="regular-radio" value="underground"> Underground
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="underground"> Underground
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="special_activities" class="regular-radio" value="N/A"> N/A
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="N/A"> N/A
                             </label>
                         </div>
                     </div>
@@ -162,34 +162,29 @@
                             <tr class="uppercase">
                                 <th width="50%" class="text-center">Medic</th>
                                 <th width="50%" class="text-center">Contact number onsite</th>
+                                <th width="1"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><input type="text" class="form-control"/></td>
-                                <td><input type="text" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="form-control"/></td>
-                                <td><input type="text" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="form-control"/></td>
-                                <td><input type="text" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="form-control"/></td>
-                                <td><input type="text" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="form-control"/></td>
-                                <td><input type="text" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="form-control"/></td>
-                                <td><input type="text" class="form-control"/></td>
+                            <tr ng-repeat="d in data.data_medic">
+                                <td>{{d.medic}}</td>
+                                <td>{{d.contact_number_onsite}}</td>
+                                <td>
+                                    <a class="btn btn-circle btn-only-icon btn-icon-only yellow-crusta" ng-click="openModalMedic('update', d)">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-right">
+                                    <a ng-click="openModalMedic('add')" class="btn green">
+                                        <i class="fa fa-plus"></i> Add
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="form-group">
@@ -207,21 +202,21 @@
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-4">Mode of transfer used to transfer to hospital</label>
                     <div class="col-md-8 col-sm-8">
-                        <div class="radio-list">
-                            <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="road"> Road
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="road"> Road
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="rail"> Rail
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="rail"> Rail
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="Ambulance"> Ambulance
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Ambulance"> Ambulance
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="air"> Air
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="air"> Air
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="others"> Others
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="others"> Others
                             </label>
                         </div>
                     </div>

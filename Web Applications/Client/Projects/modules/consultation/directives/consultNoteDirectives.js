@@ -555,7 +555,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         data: postData
                     }
                     console.log(">>>>>>>>>>>>>>>>final make data:", dataPost);
-                    consultationServices.getPatientDetail(dataPost).then(function(responsePrintPDF) {
+                    consultationServices.PrintPDF(dataPost).then(function(responsePrintPDF) {
                         o.loadingPage(false);
                         console.log(responsePrintPDF)
                         var blob = new Blob([responsePrintPDF.data], {

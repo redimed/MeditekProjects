@@ -25,7 +25,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                             Value: doctorName
                         };
                         $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Date.0']={
-                            Value: new Date()
+                            Value: moment().format("DD/MM/YYYY")
                         };
                         $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Signature.0']={
                             Value: $scope.doctorInfo.FileUID_sign

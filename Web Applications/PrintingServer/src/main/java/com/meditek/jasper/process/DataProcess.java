@@ -113,7 +113,8 @@ public class DataProcess {
                 // Populate image
                 if(d.getName().toLowerCase().contains("signature") || d.getName().toLowerCase().contains("image") || d.getType().equals("eform_input_signature") || d.getType().equals("eform_input_image_doctor")){
                     //Base64 image
-                    if(d.getValue().equals("") || d.getValue()==null){
+                    if((d.getValue().equals("") || d.getValue()==null) && !(d.getBase64Data().equals("") || d.getBase64Data()==null)){
+                        System.out.println("this is base 64 image proccessing for key "+ d.getName());
                         if(printMethod.toLowerCase().equals("itext")){
                             byte[] imgBytes = Base64.getDecoder().decode(d.getBase64Data());
                             try {

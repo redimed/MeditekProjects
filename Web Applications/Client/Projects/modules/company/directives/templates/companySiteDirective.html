@@ -1,92 +1,318 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" 
             aria-hidden="true" ng-click="cancel()"></button>
-        <h4 class="modal-type uppercase bold font-red-thunderbird">
+        <h4 class="modal-type uppercase bold font-blue">
             <i class="icon-settings"></i> {{type=='create'?'Add':type==='update'?'Update':'Change'}}</h4>
     </div>
     <div class="modal-body">
-        <div class="form-body" ng-if="type != 'delete'">
-            <div class="form-group">
-                <label class="control-label">Site Name</label>
-                <input type="text" name="site_name" class="form-control" ng-model="data.SiteName" ng-style="erlist.SiteName.style" ng-change="erlist.SiteName = ''" />
-                <span style="color:red;">{{erlist.SiteName.msg}}</span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Address1</label>
-                <input type="text" name="address1" class="form-control" ng-model="data.Address1" ng-style="erlist.Address1.style" ng-change="erlist.Address1 = ''" />
-                <span style="color:red;">{{erlist.Address1.msg}}</span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Address2</label>
-                <input type="text" name="address2" class="form-control" ng-model="data.Address2" ng-style="erlist.Address2.style" ng-change="erlist.Address2 = ''" />
-                <span style="color:red;">{{erlist.Address2.msg}}</span>
-            </div>
-            <div class="row">
-                <div class="col-md-8 col-sm-8">
-                    <div class="form-group">
-                        <label class="control-label">Suburb</label>
-                        <input type="text" name="suburb" class="form-control" ng-model="data.Suburb" ng-style="erlist.Suburb.style" ng-change="erlist.Suburb = ''" />
-                        <span style="color:red;">{{erlist.Suburb.msg}}</span>
+        <div class="form-horizontal">
+            <div class="form-body" ng-if="type != 'delete'">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Site Name</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="site_name" class="form-control" ng-model="data.SiteName" ng-style="erlist.SiteName.style" ng-change="erlist.SiteName = ''" />
+                                <span style="color:red;">{{erlist.SiteName.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">IMA</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" class="form-control"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label">Postcode</label>
-                        <input type="text" name="postcode" class="form-control" ng-model="data.Postcode" ng-style="erlist.Postcode.style" ng-change="erlist.Postcode = ''" />
-                        <span style="color:red;">{{erlist.Postcode.msg}}</span>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Address1</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="address1" class="form-control" ng-model="data.Address1" ng-style="erlist.Address1.style" ng-change="erlist.Address1 = ''" />
+                                <span style="color:red;">{{erlist.Address1.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Address2</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="address2" class="form-control" ng-model="data.Address2" ng-style="erlist.Address2.style" ng-change="erlist.Address2 = ''" />
+                                <span style="color:red;">{{erlist.Address2.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Suburb</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="suburb" class="form-control" ng-model="data.Suburb" ng-style="erlist.Suburb.style" ng-change="erlist.Suburb = ''" />
+                                <span style="color:red;">{{erlist.Suburb.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Postcode</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="postcode" class="form-control" ng-model="data.Postcode" ng-style="erlist.Postcode.style" ng-change="erlist.Postcode = ''" />
+                                <span style="color:red;">{{erlist.Postcode.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">State</label>
+                            <!-- <input type="text" name="state" class="form-control" ng-model="data.State" /> -->
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <select class="form-control" ng-model="data.State"ng-options="s.code as s.name for s in state" ng-style="erlist.State.style" ng-change="erlist.State = ''" >
+                                    <option value="">Select State</option>
+                                </select>
+                                <span style="color:red;">{{erlist.State.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Country</label>
+                            <!-- <input type="text" name="country" class="form-control" ng-model="data.Country" /> -->
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="data.Country" ng-style="erlist.Country.style" ng-change="erlist.Country = ''" >
+                                    <option value="">Select Country</option>
+                                </select>
+                                <span style="color:red;">{{erlist.Country.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Contact Name</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="contact_name" class="form-control" ng-model="data.ContactName" ng-style="erlist.ContactName.style" ng-change="erlist.ContactName = ''" />
+                                <span style="color:red;">{{erlist.ContactName.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Contact Number</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="contact_number" class="form-control" ng-model="data.HomePhoneNumber" ng-style="erlist.HomePhoneNumber.style" ng-change="erlist.HomePhoneNumber = ''" />
+                                <span style="color:red;">{{erlist.HomePhoneNumber.msg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Contact Mobile</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="contact_mobile" class="form-control"/>
+                                <span style="color:red;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Email</label>
+                            <div class="col-md-8 col-sm-8 col-xs-9">
+                                <input type="text" name="contact_mobile" class="form-control"/>
+                                <span style="color:red;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Specical Activities</label>
+                    <div class="col-md-10 col-sm-10 col-xs-9">
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="surface"> Surface
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="underground"> Underground
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="N/A"> N/A
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Special Note</label>
+                    <div class="col-md-10 col-sm-10 col-xs-9">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-light">
+                        <thead>
+                            <tr class="uppercase">
+                                <th width="50%" class="text-center">Medic</th>
+                                <th width="50%" class="text-center">Contact number onsite</th>
+                                <th width="1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="d in data.data_medic">
+                                <td>{{d.medic}}</td>
+                                <td>{{d.contact_number_onsite}}</td>
+                                <td>
+                                    <a class="btn btn-circle btn-only-icon btn-icon-only yellow-crusta" ng-click="openModalMedic('update', d)">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-right">
+                                    <a ng-click="openModalMedic('add')" class="btn green">
+                                        <i class="fa fa-plus"></i> Add
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-4">Closest Medical Centre (GP)</label>
+                    <div class="col-md-8 col-sm-8">
+                        <input type="text" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-4">Closet hopital/Medical Centre</label>
+                    <div class="col-md-8 col-sm-8">
+                        <input type="text" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-4">Mode of transfer used to transfer to hospital</label>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="road"> Road
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="rail"> Rail
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Ambulance"> Ambulance
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="air"> Air
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="others"> Others
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Others</label>
+                    <div class="col-md-8 col-sm-8 col-xs-9">
+                        <input type="text" class="form-control" placeholder="Others"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-5 col-sm-5">Frequency of commercial aircraft in & out of site</label>
+                    <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-6 col-sm-6 col-xs-12">Do you have a physio on site? Or a physio that visits site?</label>
+                    <div class="col-md-3 col-sm-3 col-xs-4">
+                        <div class="radio-list margin-bottom-20">
+                            <label class="radio-inline">
+                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="road"> No
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="rail"> Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-8">
+                        <input type="text" class="form-control" placeholder="Others"/>
+                    </div>
+                </div>
+                <div class="well">
+                    <h5 class=""><i>Preferred local Pharmacy</i></h5>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Name</label>
+                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Phone</label>
+                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Fax</label>
+                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Email</label>
+                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-6 col-sm-6">What light duty options are available on your site/company?</label>
+                    <div class="col-md-6 col-sm-6">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Further Information</label>
+                    <div class="col-md-8 col-sm-8 col-xs-9">
+                        <textarea class="form-control"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label">State</label>
-                        <!-- <input type="text" name="state" class="form-control" ng-model="data.State" /> -->
-                        <select class="form-control" ng-model="data.State"ng-options="s.code as s.name for s in state" ng-style="erlist.State.style" ng-change="erlist.State = ''" >
-                            <option value="">Select State</option>
-                        </select>
-                        <span style="color:red;">{{erlist.State.msg}}</span>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label">Country</label>
-                        <!-- <input type="text" name="country" class="form-control" ng-model="data.Country" /> -->
-                        <select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="data.Country" ng-style="erlist.Country.style" ng-change="erlist.Country = ''" >
-                            <option value="">Select Country</option>
-                        </select>
-                        <span style="color:red;">{{erlist.Country.msg}}</span>
-                    </div>
-                </div>
+            <div class="form-body" ng-if="type == 'delete'">
+                <p>
+                    Do you want to change <b class="font-red-thunderbird"></b> ?
+                </p>
             </div>
-            <div class="row">
-                <div class="col-md-8 col-sm-8">
-                    <div class="form-group">
-                        <label class="control-label">Contact Name</label>
-                        <input type="text" name="contact_name" class="form-control" ng-model="data.ContactName" ng-style="erlist.ContactName.style" ng-change="erlist.ContactName = ''" />
-                        <span style="color:red;">{{erlist.ContactName.msg}}</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label">Contact Number</label>
-                        <input type="text" name="contact_number" class="form-control" ng-model="data.HomePhoneNumber" ng-style="erlist.HomePhoneNumber.style" ng-change="erlist.HomePhoneNumber = ''" />
-                        <span style="color:red;">{{erlist.HomePhoneNumber.msg}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-body" ng-if="type == 'delete'">
-            <p>
-                Do you want to change <b class="font-red-thunderbird"></b> ?
-            </p>
         </div>
     </div>
     <div class="modal-footer" style="background: #f5f5f5">
         <div class="form-actions right">
             <button type="button" class="btn btn-lg dark" data-dismiss="modal" 
                 ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
-            <button class="btn btn-lg red-thunderbird" ng-click="click()">
+            <button class="btn btn-lg blue" ng-click="click()">
                 {{type=='create'?'Add':type==='update'?'Update':'Change'}} <i class="glyphicon glyphicon-save"></i></button>
         </div>
     </div>

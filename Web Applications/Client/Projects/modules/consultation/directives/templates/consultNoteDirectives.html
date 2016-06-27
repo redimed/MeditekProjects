@@ -133,6 +133,21 @@
                             </div>
                         </div>
                     </div>
+
+                    <hr/>
+
+                    <div class="form-group">
+                        <div class="checkbox-list">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Suspicious_Lesions.0'].Value">  No suspicious lesions identified
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <hr/>
                     <!--tannv.dts.@gmail.com begin edit-->
 
@@ -681,6 +696,86 @@
                             <input type="text" class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.TelehealthValue.0'].Value">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="radio-list">
+                            <div class="row">
+                                <label class="control-label col-lg-3 col-md-12">Skin checkin:</label>
+                                <div class="col-lg-3 col-md-12">
+                                    <label class="radio-inline">
+                                        <input type="radio" class="regular-radio" name="skincheckin" value="3" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Skin_Checkin.0'].Value"> 3 Months
+                                    </label>
+                                </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <label class="radio-inline">
+                                        <input type="radio" class="regular-radio" name="skincheckin" value="6" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Skin_Checkin.0'].Value"> 6 Months
+                                    </label>
+                                </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <label class="radio-inline">
+                                        <input type="radio" class="regular-radio" name="skincheckin" value="12" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Skin_Checkin.0'].Value"> 12 Months
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--<div class="checkbox-list">
+                            <div class="row">
+                                <label class="control-label col-lg-3 col-md-12">Skin checkin:</label>
+                                <div class="col-lg-3 col-md-12">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.3months.0'].Value"> 3 months
+                                    </label>
+                                </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.6months.0'].Value"> 6 months
+                                    </label>
+                                </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.12months.0'].Value"> 12 months
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>-->
+                    </div>
+
+                    <hr/>
+
+                    <div class="row margin-top-20">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label >Signature</label>
+                                <!--<input type="email" class="form-control"  ng-model="doctorInfo.FirstName">-->
+                                <!--<img dimage dimage-uid="doctorInfo.FileUID_sign" class="thumbnail" dimage-size="'550'" ng-show="(info.FileUID_sign!=null && info.FileUID_sign!=undefined) && isChoseSignature==false">-->
+                                <img dimage dimage-uid="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Signature.0'].Value" class="thumbnail" dimage-size="'350'">
+                                <!--<img dimage dimage-uid="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.DoctorSign.0'].Value" class="thumbnail" dimage-size="'350'">-->
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label >Doctor Name:</label>
+                                <p>{{requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Name.0'].Value}}</p>
+                                <!--<input type="email" disabled class="form-control" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.Name.0'].Value" >-->
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label >Date:</label>
+                                <p>{{requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Date.0'].Value | date:'dd-MM-yyyy'}}</p>
+                                <!--<input type="email" disabled class="form-control" ng-model="" >-->
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
                     <!--  <div class="form-group">5
                     </div>
                     <div class="form-group">

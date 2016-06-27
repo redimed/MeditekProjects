@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.consultNoteDirectives', []);
-app.directive('consultNote', function(consultationServices, $modal, $cookies, $state, $stateParams, toastr, $timeout, FileUploader, $rootScope) {
+app.directive('consultNote', function(consultationServices, doctorService, $modal, $cookies, $state, $stateParams, toastr, $timeout, FileUploader, $rootScope) {
     return {
         restrict: 'E',
         scope: {
@@ -7,6 +7,37 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         },
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
+            var userInfo = $cookies.getObject('userInfo');
+            if(userInfo) {
+                doctorService.getDoctor({UID: userInfo.UID})
+                .then(function(response){
+                    if(response.data) {
+                        // FileUID_sign
+                        $scope.doctorInfo = response.data;
+                        var doctorName = $scope.doctorInfo.FirstName + ' ' + $scope.doctorInfo.LastName;
+                        if(!$scope.requestInfo) {
+                            $scope.requestInfo = {};
+                            $scope.requestInfo.Consultations = [];
+                            $scope.requestInfo.Consultations[0].ConsultationData = {};
+
+                        }
+                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Name.0']={
+                            Value: doctorName
+                        };
+                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Date.0']={
+                            Value: new Date()
+                        };
+                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Signature.0']={
+                            Value: $scope.doctorInfo.FileUID_sign
+                        };
+
+                    }
+                },function(err){
+                    console.log(err);
+                })
+            }
+
+
             $scope.relevantGroup = {
                 0: {name: 0},
                 // 1: {name: 1}
@@ -21,6 +52,10 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     name: maxKey+1
                 };
             };
+            $scope.removeRelevantGroup = function (relevantGroupKey) {
+                delete $scope.relevantGroup[relevantGroupKey];
+                
+            }
             $scope.parseInt = parseInt;
             $scope.setCurrentRelevantGroup = function(key) {
                 //Key cua consultationData FileUpload
@@ -202,6 +237,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 'Consultation__Details.Appointment.History.PleaseDescribe': 'string',//pleasedescribe
                 'Consultation__Details.Appointment.History.SkinCancer': 'radio',//skincancer
                 'Consultation__Details.Appointment.History.IfYesMelanoma': 'radio',//ifyesmelanoma
+                'Consultation__Details.Appointment.History.Suspicious_Lesions': 'checkbox', //suspicious_lesions
                 'Consultation__Details.Appointment.Relevant.Biopsiedproven': 'radio',//biopsiedproven
                 'Consultation__Details.Appointment.Relevant.Site':'string',//site
                 'Consultation__Details.Appointment.Relevant.Dimension':'string',//dimension
@@ -232,8 +268,12 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',//specialist
                 'Consultation__Details.Appointment.Suithble__for.TelehealthValue':'string',//telehealthvalue
                 'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',//telehealth
+                'Consultation__Details.Appointment.Suithble__for.Skin_Checkin': 'radio',
                 // 'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'//consult_note_image
-                'Consultation__Details.Appointment.Relevant.FileUploads':'image_array'//consult_note_image
+                'Consultation__Details.Appointment.Relevant.FileUploads':'image_array',//consult_note_image
+                'Consultation__Details.Appointment.DoctorInfo.D_Name': 'string',//d_name
+                'Consultation__Details.Appointment.DoctorInfo.D_Date': 'string',//d_date
+                'Consultation__Details.Appointment.DoctorInfo.D_Signature': 'normal_image'//d_signature:     d_signature/type: normal_image,
             };
             $scope.swapName = function (name) {
                 var newName = name.split("__").join(" ");
@@ -515,7 +555,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         data: postData
                     }
                     console.log(">>>>>>>>>>>>>>>>final make data:", dataPost);
-                    consultationServices.PrintPDF(dataPost).then(function(responsePrintPDF) {
+                    consultationServices.getPatientDetail(dataPost).then(function(responsePrintPDF) {
                         o.loadingPage(false);
                         console.log(responsePrintPDF)
                         var blob = new Blob([responsePrintPDF.data], {

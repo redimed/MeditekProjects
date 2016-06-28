@@ -1,77 +1,64 @@
 <!-- BEGIN PAGE HEADER-->
 <div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a href="javascript:;" ui-sref="authentication.home.list">
-                Home</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <a href="javascript:;" ui-sref="authentication.doctor.list">Doctor</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <a href="javascript:;" ui-sref="authentication.doctor.group">Doctor Group</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <b>Doctor Group Detail</b>
-        </li>
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i><a ui-sref="authentication.doctor.group">Doctor Group</a></li>
+        <li><i class="fa fa-circle"></i><span>Detail</span></li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
 
-<!-- <h3 class="page-title bold">Doctor Group Detail</h3> -->
-
 <!-- content page -->
-<div class="portlet light bordered">
+<div class="portlet portlet-fit light bordered">
 	<div class="portlet-title">
 		<div class="caption font-blue">
 			<i class="icon-list font-blue"></i>
 			<span class="caption-subject bold uppercase">Doctor Group Detail</span>
 		</div>
 		<div class="actions">
-
 		</div>
 	</div>
-	<div class="portlet-body form">
-		<form>
-            <div class="form-body" style="margin: 0 1em;">
-                <h4 class="form-section">
-                    Basic information
-                    <a href="javascript:;"
-                        class="btn btn-md blue pull-right"
-                        style="position: relative; bottom:13px"
-                        ng-click="updateInfo()">
-                            <i class="glyphicon glyphicon-plus"></i> Update
-                    </a>
-                </h4>
-                <div class="form-group">
-                    <label class="control-label">Group Name</label>
-                    <input type="text" class="form-control" ng-model="info.GroupName" readonly />
+	<div class="portlet-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="portlet sale-summary">
+                    <div class="portlet-title">
+                        <div class="caption font-red sbold"> Group info </div>
+                        <div class="tools">
+                            <a class="reload" href="javascript:;"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="sale-info"> Name
+                                    <i class="fa fa-img-up"></i>
+                                </span>
+                                <span class="sale-num"> {{info.GroupName}} </span>
+                            </li>
+                            <li>
+                                <span class="sale-info"> Code
+                                    <i class="fa fa-img-down"></i>
+                                </span>
+                                <span class="sale-num"> {{info.GroupCode}} </span>
+                            </li>
+                            <li>
+                                <span class="sale-info"> Description </span>
+                                <span class="sale-num"> {{info.Description}} </span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Group Code</label>
-                    <input type="text" class="form-control" ng-model="info.GroupCode" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Description</label>
-                    <textarea class="form-control" ng-model="info.Description" readonly></textarea>
-                </div>
-                <h4 class="form-section">
+            </div>
+            <div class="col-md-8 profile-info">
+                <h1 class="font-green">
                     Doctor List
-                    <a href="javascript:;"
-                        class="btn btn-md blue pull-right"
-                        style="position: relative; bottom:13px"
-                        ng-click="addDoctor()">
-                            <i class="glyphicon glyphicon-plus"></i> Add
-                    </a>
-                </h4>
-                <div class="table-scrollable margin-top-30">
-                    <table class="table table-bordered table-hover table-striped">
+                    <a class="btn btn-primary margin-left-20" ng-click="addDoctor()">Add</a>
+                </h1>
+                <div class="table-scrollable table-responsive dt-responsive margin-top-20">
+                    <table class="table table-light table-hover">
                         <thead>
-                            <tr style="width:100%;">
+                            <tr class="uppercase">
                                 <th width="1">#</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
@@ -93,7 +80,7 @@
                     </table>
                 </div>
             </div>
-        </form>
+        </div>
 	</div>
 </div>
 <script type="text/ng-template" id="linkDoctor">

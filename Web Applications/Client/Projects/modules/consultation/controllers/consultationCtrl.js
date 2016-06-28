@@ -10,6 +10,14 @@ var app = angular.module("app.authentication.consultation.controller",[
 	'app.authentication.consultation.patient.controller',
 ]);
 
-app.controller('consultationCtrl', function(){
+app.controller('consultationCtrl', function($rootScope, $scope){
+	$scope.$on('$viewContentLoaded', function() {   
+    	// initialize core components
+    	App.initAjax();
 
+    	// set default layout mode
+    	$rootScope.settings.layout.pageContentWhite = true;
+        $rootScope.settings.layout.pageBodySolid = false;
+        $rootScope.settings.layout.pageSidebarClosed = true;
+    });
 });

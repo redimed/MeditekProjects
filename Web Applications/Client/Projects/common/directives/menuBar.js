@@ -10,7 +10,6 @@ angular.module('app.common.menuBar',[])
 			
 		},
 		link:function(scope,element,attrs){
-			Layout.initSidebar(); // init sidebar
 			var api = Restangular.all("api");
 			var result = api.one("module/GetModulesForUser");
 			result.get()

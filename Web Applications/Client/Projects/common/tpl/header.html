@@ -1,15 +1,13 @@
-<!-- BEGIN HEADER -->
 <!-- BEGIN HEADER INNER -->
 <div class="page-header-inner">
     <!-- BEGIN LOGO -->
     <div class="page-logo">
-        <a href="javascript:;" ui-sref="loggedIn.home.list">
+        <a ui-sref="loggedIn.home.list">
             <img src="/{{settings.globalPath}}/images/logoRedimed-02.png" alt="logoRedimed-02" class="logo-default" width="100%" />
         </a>
-        <!-- <a class="menu-toggler sidebar-toggler"></a> -->
         <div class="menu-toggler sidebar-toggler">
-                        <span></span>
-                    </div>
+            <span></span>
+        </div>
     </div>
     <!-- END LOGO -->
     <!-- BEGIN HEADER SEARCH BOX -->
@@ -36,64 +34,105 @@
         <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-           <!--  <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+            <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="icon-call-end"></i> -->
-                    <!-- <span class="badge badge-default"> 4 </span> -->
-               <!--  </a>
+                    <i class="icon-bell"></i>
+                    <span class="badge badge-default"> 7 </span>
+                </a>
                 <ul class="dropdown-menu">
                     <li class="external">
                         <h3>
-                                <span class="bold">List of Doctor</span>
-                            </h3>
-                        <a href="#">{{(listDoctorInternal.length) + (listDoctorExternal.length)}} doctors</a>
+                            <span class="bold">12 pending</span> notifications</h3>
+                        <a href="page_user_profile_1.html">view all</a>
                     </li>
                     <li>
-                        <ul class="dropdown-menu-list scroller" style="height: 500px;" data-handle-color="#637283">
-                            <li class="text-center" style="padding-left:10px; padding-right:10px;">
-                                <form class="form-horizontal margin-top-10">
-                                    <div class="input-icon right">
-                                        <input type="text" class="form-control" placeholder="search" ng-model="fullname" ng-enter="loadListDoctor(fullname)">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </div>
-                                </form>
-                            </li>
-                            <li ng-repeat="doctor in listDoctorInternal">
-                                <a href="#">
-                                    <span class="photo">
-                                            <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" class="img-circle" alt="" ng-if="ddoctor.UserAccount.FileUploads[0].UID">
-                                            <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
-                                    <span class="subject">
-                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span> -->
-                                    <!-- <span class="time font-green-jungle">Online</span> -->
-                                   <!--  </span>
-                                    <span class="message">
-                                            <br> -->
-                                            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                                  <!--   <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
-                                    </span>
+                        <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">just now</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-success">
+                                            <i class="fa fa-plus"></i>
+                                        </span> New user registered. </span>
                                 </a>
                             </li>
-                            <li ng-repeat="doctor in listDoctorExternal">
-                                <a href="#">
-                                    <span class="photo">
-                                            <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" class="img-circle" alt="" ng-if="doctor.UserAccount.FileUploads[0].UID">
-                                            <img src="theme/assets/global/images/no_person.jpg" class="img-circle" alt="" ng-if="!doctor.UserAccount.FileUploads[0].UID"> </span>
-                                    <span class="subject">
-                                            <span class="from"> {{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}} </span> -->
-                                    <!-- <span class="time font-green-jungle">Online</span> -->
-                                  <!--   </span>
-                                    <span class="message">
-                                            <br> -->
-                                            <!-- <span class="btn btn-sm blue-madison"><i class="fa fa-comment"></i> Chat</span> -->
-                               <!--      <button class="btn btn-xs green-jungle" ng-click="callDoctor(doctor)" ng-disabled="doctor.UserAccount.TelehealthUser === null"><i class="fa fa-phone"></i> Call</button>
-                                    </span>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">3 mins</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-danger">
+                                            <i class="fa fa-bolt"></i>
+                                        </span> Server #12 overloaded. </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">10 mins</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-warning">
+                                            <i class="fa fa-bell-o"></i>
+                                        </span> Server #2 not responding. </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">14 hrs</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-info">
+                                            <i class="fa fa-bullhorn"></i>
+                                        </span> Application error. </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">2 days</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-danger">
+                                            <i class="fa fa-bolt"></i>
+                                        </span> Database overloaded 68%. </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">3 days</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-danger">
+                                            <i class="fa fa-bolt"></i>
+                                        </span> A user IP blocked. </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">4 days</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-warning">
+                                            <i class="fa fa-bell-o"></i>
+                                        </span> Storage Server #4 not responding dfdfdfd. </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">5 days</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-info">
+                                            <i class="fa fa-bullhorn"></i>
+                                        </span> System Error. </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="time">9 days</span>
+                                    <span class="details">
+                                        <span class="label label-sm label-icon label-danger">
+                                            <i class="fa fa-bolt"></i>
+                                        </span> Storage server failed. </span>
                                 </a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-            </li> -->
+            </li>
+            <!-- END NOTIFICATION DROPDOWN -->
             <li class="dropdown dropdown-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" dimage dimage-uid="info.fileupload[0].UID" dimage-size="'300'" class="img-circle" ng-if="info.fileupload.length > 0" />
@@ -131,7 +170,3 @@
     <!-- END TOP NAVIGATION MENU -->
 </div>
 <!-- END HEADER INNER -->
-<!-- END HEADER -->
-<script>
-// Layout.init(); // init current layout
-</script>

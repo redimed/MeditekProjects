@@ -16,7 +16,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 			url: '/list',
 			templateUrl: 'modules/home/views/homeList.html',
 			controller: 'homeListCtrl',
-			data: {pageTitle: 'Home List'},
+			data: {pageTitle: 'Home'},
 		})
 		.state('authentication.home.detail', {
 			url: '/detail',

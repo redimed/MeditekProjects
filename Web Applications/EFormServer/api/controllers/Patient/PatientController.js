@@ -284,7 +284,8 @@ module.exports = {
 
                                 info[0].dataValues.Signature = null;
                                 info[0].dataValues.ProfileImage = null;
-                                info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
+                                if(info[0].dataValues.Country1 !== null)
+                                    info[0].dataValues.CountryName = info[0].dataValues.Country1.ShortName;
                                 delete info[0].dataValues['Country1'];
                                 return res.ok({
                                     status: 200,

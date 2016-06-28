@@ -261,6 +261,18 @@ module.exports = React.createClass({
                                     }
                                     /* MAXHR END */
 
+                                    /* AVG BEGIN */
+                                    if (Config.getPrefixField(cal, 'AVG(') > -1) {
+                                        if (cal) {
+                                            var calRes = Config.getArrayPrecal(4, cal);
+                                            if(self.refs[section.ref]) {
+                                                self.refs[section.ref].avg(row.ref, field.ref, calRes);
+                                            }
+                                        }
+                                    }
+                                    /* AVG END */
+
+
                                     /*TRIGGERCHANGE BEGIN*/
                                     if (Config.getPrefixField(cal, 'TRIGGERCHANGE(') > -1) {
                                         if (cal) {

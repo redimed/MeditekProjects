@@ -193,6 +193,33 @@ module.exports = React.createClass({
             }
         });
     },
+    avg: function(calRes) {
+        var self = this;
+        $(this.refs.input).on('change', function(event) {
+            var values = [];
+            calRes.map(function(expStr, expIndex) {
+                var items = $('input[name='+expStr+']');
+                var item = null;
+                if(items[0])
+                {
+                    item = items[0];
+                    var value = parseFloat($(item).val());
+                    if (!isNaN(value)){
+                        values.push(value);
+                    }
+                }
+            })
+
+            if (values.length > 0) {
+                var sum = 0;
+                values.map(function(value){
+                    sum = sum + value;
+                })
+                var avg = sum/values.length;
+                $(self.refs.input).val(avg.toFixed(1));
+            }
+        })
+    },
     triggerChange: function(calRes) {
         $(this.refs.input).on('change', function(event){
             calRes.map(function(expStr, index){
@@ -242,6 +269,7 @@ module.exports = React.createClass({
         self.value = value;
         $(this.refs.input).val(value).change();
     },
+
     setDisplay: function(type){
         if(type === 'disable'){
             $(this.refs.input).attr('disabled', true);

@@ -85,4 +85,8 @@ _.extend(routes, EFormRoutes);
 var SystemSettingRoutes = require('./routes/SystemSettingRoutes');
 _.extend(routes, SystemSettingRoutes);
 //end module SystemSetting
+//begin module Language
+var LanguageRoutes = require('./routes/LanguageRoutes');
+_.extend(routes, LanguageRoutes);
+//end module Language
 module.exports.routes = routes;

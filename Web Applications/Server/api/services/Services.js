@@ -138,4 +138,7 @@ module.exports = {
     GetValueSetting: require('./SystemSetting/GetValueSetting'),
     AttributesSystem: require('./SystemSetting/AttributesSystem'),
     //end SystemSetting
+    //begin Language
+    GetListLanguage: require('./Language/GetListLanguage'),
+    //end Language
 };

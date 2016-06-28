@@ -5,10 +5,14 @@ module.exports = function(data, userInfo) {
     var appointmentObject = null;
     var dataResponse = [];
     if (!_.isEmpty(data) &&
-        !_.isEmpty(data.Appointments) &&
-        _.isArray(data.Appointments)) {
+        (!_.isEmpty(data.Appointments) &&
+        _.isArray(data.Appointments)) ||
+        _.isString(data.Appointments)) {
         sequelize.transaction()
             .then(function(t) {
+                if(_.isString(data.Appointments)) {
+                    data.Appointments = JSON.parse(data.Appointments)
+                 }
                     sequelize.Promise.each(data.Appointments, function(valueAppt, indexAppt) {
                             if (!_.isEmpty(valueAppt)) {
                                 var dataAppointment = Services.GetDataAppointment.AppointmentCreate(valueAppt);
@@ -25,7 +29,11 @@ module.exports = function(data, userInfo) {
                                     .then(function(apptCreated) {
                                         appointmentObject = apptCreated;
                                         if (!_.isEmpty(apptCreated) &&
-                                            !_.isEmpty(valueAppt.PatientAppointment)) {
+                                            (!_.isEmpty(valueAppt.PatientAppointment) ||
+                                             _.isString(valueAppt.PatientAppointment))) {
+                                            if(_.isString(valueAppt.PatientAppointment)) {
+                                                valueAppt.PatientAppointment = JSON.parse(valueAppt.PatientAppointment)
+                                            }
                                             var dataPatientAppt = valueAppt.PatientAppointment;
                                             dataPatientAppt.UID = UUIDService.Create();
                                             //create PatientAppointment
@@ -55,9 +63,13 @@ module.exports = function(data, userInfo) {
                                             dataResponse.push({
                                                 appointment: apptRes
                                             });
-                                            if (!_.isEmpty(valueAppt.AppointmentData) &&
+                                            if ((!_.isEmpty(valueAppt.AppointmentData) &&
                                                 !_.isEmpty(appointmentObject) &&
-                                                _.isArray(valueAppt.AppointmentData)) {
+                                                _.isArray(valueAppt.AppointmentData)) ||
+                                                _.isString(valueAppt.AppointmentData)) {
+                                                if(_.isString(valueAppt.AppointmentData)) {
+                                                    valueAppt.AppointmentData = JSON.parse(valueAppt.AppointmentData)
+                                                }
                                                 _.forEach(valueAppt.AppointmentData, function(valueApptData, indexApptData) {
                                                     valueAppt.AppointmentData[indexApptData].AppointmentID =
                                                         (!_.isEmpty(appointmentObject) &&
@@ -83,8 +95,12 @@ module.exports = function(data, userInfo) {
                                             throw error;
                                         })
                                     .then(function(apptDataCreated) {
-                                        if (!_.isEmpty(valueAppt.Patients) &&
+                                        if ((!_.isEmpty(valueAppt.Patients) || 
+                                            _.isString(valueAppt.Patients)) &&
                                             !_.isEmpty(appointmentObject)) {
+                                            if(_.isString(valueAppt.Patients)) {
+                                                valueAppt.Patients = JSON.parse(valueAppt.Patients)
+                                            }
                                             var objRelApptPatient = {
                                                 where: valueAppt.Patients,
                                                 appointmentObject: appointmentObject,
@@ -101,8 +117,12 @@ module.exports = function(data, userInfo) {
                                         throw error;
                                     })
                                     .then(function(relapptPatientCreated) {
-                                        if (!_.isEmpty(valueAppt.Doctors) &&
+                                        if ((!_.isEmpty(valueAppt.Doctors) ||
+                                            _.isString(valueAppt.Doctors)) &&
                                             !_.isEmpty(appointmentObject)) {
+                                            if(_.isString(valueAppt.Doctors)) {
+                                                valueAppt.Doctors = JSON.parse(valueAppt.Doctors)
+                                            }
                                             var objRelApptDoctor = {
                                                 where: valueAppt.Doctors,
                                                 appointmentObject: appointmentObject,
@@ -119,9 +139,13 @@ module.exports = function(data, userInfo) {
                                         throw error;
                                     })
                                     .then(function(relApptDoctorCreated) {
-                                        if (!_.isEmpty(valueAppt.FileUploads) &&
-                                            _.isArray(valueAppt.FileUploads) &&
+                                        if (((!_.isEmpty(valueAppt.FileUploads) &&
+                                            _.isArray(valueAppt.FileUploads)) ||
+                                            _.isString(valueAppt.FileUploads)) &&
                                             !_.isEmpty(appointmentObject)) {
+                                            if(_.isString(valueAppt.FileUploads)) {
+                                                valueAppt.FileUploads = JSON.parse(valueAppt.FileUploads)
+                                            }
                                             var arrayFileUploadsUnique = _.map(_.groupBy(valueAppt.FileUploads, function(FU) {
                                                 return FU.UID;
                                             }), function(subGrouped) {

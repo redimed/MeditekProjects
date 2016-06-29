@@ -19,7 +19,7 @@ app.config(function($stateProvider) {
         })
         .state('blank.call', {
             data: { pageTitle: 'Call' },
-            url: '/call/:apiKey/:sessionId/:token/:userName/:uidCall/:uidUser',
+            url: '/call/:apiKey/:sessionId/:token/:teleCallUID/:teleCallID/:callName/:receiverUID/:receiverTeleUID/:callerTeleUID',
             views: {
                 'blank': {
                     templateUrl: 'modules/blank/views/call.html',
@@ -29,7 +29,7 @@ app.config(function($stateProvider) {
         })
         .state('blank.receive', {
             data: { pageTitle: 'Receive Call' },
-            url: '/receive/:apiKey/:sessionId/:token/:userName',
+            url: '/receive/:apiKey/:sessionId/:token/:teleCallUID/:teleCallID/:callName/:receiverTeleUID/:callerTeleUID',
             views: {
                 'blank': {
                     templateUrl: 'modules/blank/views/receive.html',

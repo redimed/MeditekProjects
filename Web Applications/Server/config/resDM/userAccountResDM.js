@@ -4,7 +4,7 @@
 var userAccountTestPayload = require('../../api/services/resDM/payload/TestPayload');
 var userAccountTestSendto = require('../../api/services/resDM/sendto/TestSendto');
 var doctorRoomsFromAppointmentSendto = require('../../api/services/resDM/sendto/DoctorRoomsFromAppointment');
-var userByRoleSendto = require('../../api/services/resDM/sendto/GetUserByRoleSendto');
+var userByRolePayload = require('../../api/services/resDM/ncPayload/GetUserByRolePayload');
 var appointmentInfoPayload = require('../../api/services/resDM/payload/AppointmentInfo');
 var ncSendto = require('../../api/services/resDM/sendto/NCSendto');
 var testPostNcPayload = require('../../api/services/resDM/ncPayload/TestPostNcPayload');
@@ -40,10 +40,10 @@ module.exports = {
 
     'Appointment/WAAppointmentController': {
         'LinkAppointmentPatient': {
-            eventName: 'ShowMessage',
-            method: dmUtils.method.broadcast,
-            payload: appointmentInfoPayload,
-            sendto: userByRoleSendto
+            eventName: 'nc',
+            method: dmUtils.method.nc, //blast, broadcast, nc
+            payload: userByRolePayload,
+            sendto: ncSendto
         }
     }
 }

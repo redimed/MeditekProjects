@@ -57,6 +57,16 @@ module.exports.routes = {
     action:'BuryQueueJob'
   },
 
+  'post /api/queue/loadlistqueue':{
+    controller:'QueueJobController',
+    action:'LoadListQueue'
+  },
+
+  'post /api/queue/updatereadqueue':{
+    controller:'QueueJobController',
+    action:'UpdateReadQueueJob'
+  },
+
   
 
   /***************************************************************************

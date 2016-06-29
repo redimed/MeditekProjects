@@ -109,6 +109,11 @@ module.exports={
 	options: {
         tableName: 'QueueJob',
         timestamps: false,
+        hooks: {
+            beforeCreate: function(queuejob, options, callback) {
+                queuejob.CreatedDate = new Date();
+                callback();
+            }
+        }
     }
-
 }

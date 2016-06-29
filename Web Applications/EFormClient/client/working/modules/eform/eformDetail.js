@@ -129,10 +129,44 @@ module.exports = React.createClass({
     _serverPreFormDetail: function(content){
         var self = this;
         var objRef = {};
+        var asyncArr = [];
+        var EFormData = function (obj) {
+            var preCalRes = obj.preCalRes;
+            var refRow = obj.refRow;
+            var refField = obj.refField;
+            var refSection = obj.refSection;
+            var promise = new Promise(function (resolve, reject) {
+                setTimeout(function(refRow, refField, refSection){
+                    EFormService.eformCheckDetail({templateName: preCalRes[1], appointmentCode: preCalRes[2]})
+                        .then(function(eformRes){
+                            if(eformRes.data) {
+                                var formData = eformRes.data.EFormData.FormData?JSON.parse(eformRes.data.EFormData.FormData):null;
+                                for (var i = 0; i < formData.length; i++) {
+                                    var item = formData[i];
+                                    if (item.name == preCalRes[0]) {
+                                        objRef[refField] = {refRow: refRow, value: item.value};
+                                        self.refs[refSection].setValue(refRow, refField, item.value);
+                                        resolve({status: 'success', msg:'get value success'});
+                                        break;
+                                    }
+                                }
+                            } else {
+                                resolve({status: 'warning', msg: 'not found'});
+                            }
+                        }, function (err) {
+                            resolve({status:'error', msg: err});
+                        })
+                },0, refRow, refField, refSection);
+            });
+            return promise;
+
+        }
+
         EFormService.getUserRoles({UID: this.userUID})
         .then(function(responseRoles){
             EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
             .then(function(response){
+                var appointmentInfo = response.data.Appointment;
                 if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null){
                     self.signatureDoctor = response.data.Doctor.FileUpload;
                 }
@@ -418,6 +452,22 @@ module.exports = React.createClass({
 
                                         }
                                     }
+                                    //EFORMDATA(FieldName, EFormName, 0/AppointmentCode) //0: appointment hien tai
+                                    if (Config.getPrefixField(preCal, 'EFORMDATA(') > -1) {
+                                        var preCalRes = Config.getArrayPrecal(10, preCal);
+                                        if(preCalRes.length == 3 && self.refs[section.ref]) {
+                                            loadAsync = true;
+                                            if (preCalRes[2] == 0) {
+                                                preCalRes[2] = appointmentInfo.Code;
+                                            }
+                                            var refRow = row.ref;
+                                            var refField = field.ref;
+                                            var refSection = section.ref;
+                                            asyncArr.push(EFormData({preCalRes: preCalRes, refRow: refRow, refField: refField, refSection: refSection}));
+                                        }
+                                    }
+
+
                                     /* END CONCAT PREFIX */
                                     /* DEFAULT PREFIX */
                                     if(Config.getPrefixField(preCal,'DEFAULT(') > -1){
@@ -438,17 +488,21 @@ module.exports = React.createClass({
                         }
                     }//end for
 
-                    for(var i =0; i <self.allFields.length; i++) {
-                        if(objRef[self.allFields[i].ref]) {
-                            self.allFields[i].value = objRef[self.allFields[i].ref].value;
-                            if(objRef[self.allFields[i].ref].checked!==undefined) {
-                                self.allFields[i].checked = objRef[self.allFields[i].ref].checked;
+                    // self._checkServerEFormDetail();
+
+                    Promise.all(asyncArr)
+                    .then(function(values){
+                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> _serverPreFormDetail: asyncArr: exec: values: ", values);
+                        for(var i =0; i <self.allFields.length; i++) {
+                            if(objRef[self.allFields[i].ref]) {
+                                self.allFields[i].value = objRef[self.allFields[i].ref].value;
+                                if(objRef[self.allFields[i].ref].checked!==undefined) {
+                                    self.allFields[i].checked = objRef[self.allFields[i].ref].checked;
+                                }
                             }
                         }
-                    }
-                    //console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||objRef:", objRef);
-                    //console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||self.allFields:", self.allFields);
-                    self._checkServerEFormDetail();
+                        self._checkServerEFormDetail();
+                    })
                 })// END EFormGetPatient
             })// END EFormGetUserRoles
         })

@@ -129,18 +129,22 @@
                                             <div class="row margin-top-30">
                                                 <div class="col-sm-4 col-xs-12">
                                                     <div class="form-group" ng-hide="isShowFull==false">
-                                                        <div class="checkbox-list">
-                                                            <label class="checkbox-inline">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="info.UserAccount.Enable" ng-true-value="'Y'" ng-false-value="'N'"/>Enable</label>
-                                                        </div>
+                                                        <label class="mt-checkbox mt-checkbox-outline">
+                                                            <input type="checkbox" 
+                                                                ng-model="info.UserAccount.Enable" 
+                                                                ng-true-value="'Y'" 
+                                                                ng-false-value="'N'"/> Enable <span></span>
+                                                        </label>
                                                     </div>  
                                                 </div>
                                                 <div class="col-sm-4 col-xs-12">
                                                     <div class="form-group" ng-hide="isShowFull==false">
-                                                        <div class="checkbox-list">
-                                                            <label class="checkbox-inline">
-                                                                <input type="checkbox" class="regular-checkbox" ng-model="info.UserAccount.Activated" ng-true-value="'Y'" ng-false-value="'N'" />Activated</label>
-                                                        </div>
+                                                        <label class="mt-checkbox mt-checkbox-outline">
+                                                            <input type="checkbox" 
+                                                                ng-model="info.UserAccount.Activated" 
+                                                                ng-true-value="'Y'" 
+                                                                ng-false-value="'N'" /> Activated <span></span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>

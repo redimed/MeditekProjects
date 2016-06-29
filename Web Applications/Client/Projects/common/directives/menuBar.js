@@ -10,6 +10,7 @@ angular.module('app.common.menuBar',[])
 			
 		},
 		link:function(scope,element,attrs){
+
 			var api = Restangular.all("api");
 			var result = api.one("module/GetModulesForUser");
 			result.get()

@@ -41,23 +41,23 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3 col-md-4">Request Services </label>
                             <div class="col-lg-9 col-md-8">
-                                <div class="checkbox-list">
-                                    <label class="checkbox">
-                                        <input type="checkbox" class="regular-checkbox" ng-model="info.Physiotherapy" ng-true-value="'Y'" ng-false-value="'N'"> Physio Therapy
+                                <div class="mt-checkbox-list">
+                                    <label class="mt-checkbox">
+                                        <input type="checkbox" ng-model="info.Physiotherapy" ng-true-value="'Y'" ng-false-value="'N'"> Physio Therapy <span></span>
                                     </label>
-                                    <label class="checkbox">
-                                        <input type="checkbox" class="regular-checkbox" ng-model="info.ExerciseRehab" ng-true-value="'Y'" ng-false-value="'N'"> Exercise Rehab
+                                    <label class="mt-checkbox">
+                                        <input type="checkbox" ng-model="info.ExerciseRehab" ng-true-value="'Y'" ng-false-value="'N'"> Exercise Rehab <span></span>
                                     </label>
-                                    <label class="checkbox">
-                                        <input type="checkbox" class="regular-checkbox" ng-model="info.HandTherapy" ng-true-value="'Y'" ng-false-value="'N'"> Hand Therapy
+                                    <label class="mt-checkbox">
+                                        <input type="checkbox" ng-model="info.HandTherapy" ng-true-value="'Y'" ng-false-value="'N'"> Hand Therapy <span></span>
                                     </label>
-                                    <label class="checkbox">
-                                        <input type="checkbox" class="regular-checkbox" ng-model="info.GP" ng-true-value="'Y'" ng-false-value="'N'"> GP
+                                    <label class="mt-checkbox">
+                                        <input type="checkbox" ng-model="info.GP" ng-true-value="'Y'" ng-false-value="'N'"> GP <span></span>
                                     </label>
-                                    <label class="checkbox">
-                                        <input type="checkbox" class="regular-checkbox"
+                                    <label class="mt-checkbox">
+                                        <input type="checkbox"
                                             ng-model="info.Specialist" 
-                                            ng-true-value="'Y'" ng-false-value="'N'"> Specialist
+                                            ng-true-value="'Y'" ng-false-value="'N'"> Specialist <span></span>
                                     </label>
                                 </div>
                                 <input type="text" class="form-control" 
@@ -69,14 +69,17 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3 col-md-4">Has GP Referral</label>
                             <div class="col-lg-9 col-md-8">
-                                <div class="radio-list">
-                                    <label class="radio">
-                                        <input type="radio" class="regular-radio" name="GPReferral" ng-model="info.GPReferral" value="Y"> Yes
+                                <div class="mt-radio-inline">
+                                    <label class="mt-radio">
+                                        <input type="radio" class="" name="GPReferral" ng-model="info.GPReferral" value="Y">
+                                        Yes <span></span>
                                     </label>
-                                    <label class="radio">
-                                        <input type="radio" class="regular-radio" name="GPReferral" ng-model="info.GPReferral" value="N"> No
+                                    <label class="mt-radio">
+                                        <input type="radio" class="" name="GPReferral" ng-model="info.GPReferral" value="N">
+                                        No <span></span>
                                     </label>
                                 </div>
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -109,9 +112,13 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3 col-md-4">Gender</label>
                             <div class="col-lg-9 col-md-8">
-                                <div class="radio-list">
-                                    <label class="radio"><input type="radio" class="regular-radio" name="gender" ng-model="info.Gender" value="M"> Male</label>
-                                    <label class="radio"><input type="radio" class="regular-radio" name="gender" ng-model="info.Gender" value="F"> Female</label>
+                                <div class="mt-radio-inline">
+                                    <label class="mt-radio">
+                                        <input type="radio" name="gender" ng-model="info.Gender" value="M"> Male <span></span>
+                                    </label>
+                                    <label class="mt-radio">
+                                        <input type="radio" name="gender" ng-model="info.Gender" value="F"> Female <span></span>
+                                    </label>
                                 </div>
                             </div>
                         </div>

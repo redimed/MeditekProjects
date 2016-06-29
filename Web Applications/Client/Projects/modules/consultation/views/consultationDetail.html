@@ -1,21 +1,11 @@
 <div ui-view>
     <div class="page-bar margin-bottom-20">
         <ul class="page-breadcrumb">
-            <li>
-                <i class="fa fa-home"></i>
-                <a href="javascript:;" ui-sref="authentication.home.list">Home</a>
-            </li>
-            <li>
-                <i class="fa fa-angle-right"></i>
-                <a href="javascript:;" ui-sref="authentication.consultation.list">Consultation</a>
-            </li>
-            <li>
-                <i class="fa fa-angle-right"></i>
-                <b>Consultation Detail</b>
-            </li>
+            <li><a ui-sref="authentication.home.list">Homepage</a></li>
+            <li><i class="fa fa-circle"></i><a ui-sref="authentication.consultation.list">Consultation</a></li>
+            <li><i class="fa fa-circle"></i><span>Consultation Detail</span></li>
         </ul>
     </div>
-    <!-- <h3 class="page-title bold">Consultation Detail</h3> -->
     <div class="row">
         <div class="col-lg-9 col-md-8 col-xs-6" id="col9">
             <div class="portlet light bordered" ng-hide="HasRoleAdminOrPractitioner == false">
@@ -26,9 +16,9 @@
                         <span class="caption-helper">Consultation</span>
                     </div>
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-default btn-circle" ng-click="fullScreen()">
+                        <!-- <a href="javascript:;" class="btn btn-default btn-circle" ng-click="fullScreen()">
                             <span id="label_name">{{iconCol}}</span>
-                        </a>
+                        </a> -->
                         <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"> </a>
                     </div>
                 </div>

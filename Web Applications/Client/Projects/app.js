@@ -137,7 +137,7 @@ app
         // supported languages
         var settings = {
             layout: {
-                // pageSidebarClosed: false, // sidebar menu state
+                pageSidebarClosed: false, // sidebar menu state
                 pageContentWhite: true, // set page content layout
                 pageBodySolid: false, // solid body color state
                 // pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
@@ -145,7 +145,7 @@ app
             assetsPath: './theme/assets',
             globalPath: './theme/assets/global',
             layoutPath: './theme/assets/layouts/layout',
-            pagesPath: './theme/assets/pages',
+            pagesPath:  './theme/assets/pages',
         };
 
         $rootScope.settings = settings;
@@ -248,8 +248,8 @@ app
 
         $rootScope.$on('$viewContentLoaded', function() {
             // App.initAjax();
-            FormWizard.init(); // form step
-            ComponentsDateTimePickers.init(); // init todo page
+            // FormWizard.init(); // form step
+            // ComponentsDateTimePickers.init(); // init todo page
 
 
             //ComponentsSelect2.init(); // init todo page
@@ -257,8 +257,8 @@ app
         });
         $rootScope.$on('$includeContentLoaded', function() {
             // App.initAjax();
-            FormWizard.init(); // form step
-            ComponentsDateTimePickers.init(); // init todo page
+            // FormWizard.init(); // form step
+            // ComponentsDateTimePickers.init(); // init todo page
         });
         $rootScope.$on("$stateChangeStart", function() {});
 

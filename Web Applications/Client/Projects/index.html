@@ -97,7 +97,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END HEAD -->
 <!-- <body class="page-header-fixed page-quick-sidebar-over-content"> -->
 
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white">
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-on-load"
+    ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': settings.layout.pageSidebarClosed}">
     <!--- TIEN TASK -->
     <div id="loading">Loading</div>
     <!-- TIEN TASK -->

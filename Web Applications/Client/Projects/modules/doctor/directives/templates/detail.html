@@ -1,3 +1,396 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" aria-label="Close" ng-click="onCancel()">
+        	<span aria-hidden="true">&times;</span>
+        </a>
+        <h4 class="modal-title uppercase font-blue">doctor detail</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row profile">
+            <div class="col-md-4">
+                <!-- ProfileImage -->
+                <div ng-form name="checkInForm" novalidate>
+                    <div id="viewIMG">
+                        <canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
+                        <img dimage dimage-uid="info.FileUID_img" class="thumbnail" dimage-size="'250'" ng-show="(info.FileUID_img!=null && info.FileUID_img!=undefined) && isChoseAvatar==false">
+                        <img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.FileUID_img==null || info.FileUID_img==undefined) && isChoseAvatar==false" width="100%">
+                    </div>
+                    <div class="container">
+                        <label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+                            <span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
+                            <span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
+                            <input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
+                        </label> 
+                        <span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
+                    </div>
+                </div>
+                <!-- end ProfileImage -->
+            </div>
+            <div class="col-md-8">
+                <div class="tabbable-custom">
+                    <ul class="nav nav-tabs " id="tabtable">
+                        <li class="active" id="tab1">
+                            <a href="index.html#tab_UserAccount" data-toggle="tab"> User Account </a>
+                        </li>
+                        <li id="tab2" ng-if="listShow.columm2==true">
+                            <a href="index.html#tab_Basic" data-toggle="tab"> Basic Information </a>
+                        </li>
+                        <li id="tab3" ng-if="listShow.columm3==true">
+                            <a href="index.html#tab_Contact" data-toggle="tab"> Contact Information </a>
+                        </li>
+                        <li id="tab4" ng-if="listShow.columm4==true">
+                            <a href="index.html#tab_signature" data-toggle="tab"> Signature </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="tabtablecontent">
+                        <div class="tab-pane active" id="tab_UserAccount">
+                            <div class="form-horizontal">
+                                <div class="form-group margin-top-20">
+                                    <label class="control-label col-md-3 col-ms-3 col-xs-4 text-right">Username</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <p class="form-control-static">{{info.UserAccount.UserName}}</p>
+                                        <!-- <div class="input-icon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                            <input type="text" class="form-control" readonly="true" ng-model="info.UserAccount.UserName">
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label col-md-3 col-ms-3 col-xs-4 text-right">Email</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <p class="form-control-static">{{info.Email}}</p>
+                                        <!-- <div class="input-icon">
+                                            <i class="glyphicon glyphicon-envelope"></i>
+                                            <input type="text" class="form-control" readonly="true" ng-model="info.Email">
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-ms-3 col-xs-4 text-right">Mobile</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <p class="form-control-static">{{info.UserAccount.PhoneNumber}}</p>
+                                        <!-- <div class="input-icon">
+                                            <i class="glyphicon glyphicon-phone"></i>
+                                            <input type="text" class="form-control" readonly="true" ng-model="info.UserAccount.PhoneNumber">
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">&nbsp;</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <!-- <input type="checkbox" 
+                                            class="regular-checkbox" 
+                                            checked 
+                                            ng-model="info.UserAccount.Enable" 
+                                            ng-true-value="'Y'" 
+                                            ng-false-value="'N'"/> -->
+                                        <label class="mt-checkbox mt-checkbox-outline">
+                                            <input type="checkbox" class="" 
+                                                ng-model="info.UserAccount.Enable" 
+                                                ng-true-value="'Y'" 
+                                                ng-false-value="'N'"/> Enable <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group last">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">&nbsp;</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <div class="mt-radio-inline">
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" 
+                                                id="option1"
+                                                class="" 
+                                                name="Role" 
+                                                value="4"
+                                                ng-model="info.UserAccount.RelUserRoles[0].RoleId"/> 
+                                                    Extertal Practitioner <span></span>
+                                            </label>
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" 
+                                                class="" 
+                                                name="Role" 
+                                                value="5"
+                                                ng-model="info.UserAccount.RelUserRoles[0].RoleId"/> 
+                                                    Intertal Practitioner <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--   <div class="form-group margin-top-20">
+                                    <label for="option1" class="control-label col-md-3 col-sm-3">Extertal Practitioner</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="margin-bottom-10">
+                                            <input id="option1" 
+                                            	type="radio" 
+                                            	name="Role" 
+                                            	ng-value="4" 
+                                            	ng-model="info.UserAccount.RelUserRoles[0].RoleId"
+                                            	class="make-switch switch-radio1"/> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                	<label for="option2" class="control-label col-md-3 col-sm-3">Intertal Practitioner</label>
+                                		<div class="col-md-6 col-sm-6">
+                                    		<div class="margin-bottom-10">
+                                                <input id="option2" 
+                                                	type="radio" 
+                                                	name="Role" 
+                                                	ng-value="5"
+                                                	ng-model="info.UserAccount.RelUserRoles[0].RoleId"
+                                                	class="make-switch switch-radio1"/> 
+                                            </div>
+                                        </div>
+                                </div> -->
+                                <!-- <div class="form-group" ng-if="info.UserAccount.RelUserRoles[0].RoleId!=1 && info.UserAccount.RelUserRoles[0].RoleId!=2 && info.UserAccount.RelUserRoles[0].RoleId!=3">
+                                	<div class="col-md-6 col-sm-6 col-md-offset-3 col-ms-offset-3">
+                                		<input type="checkbox" 
+                                			class="make-switch" 
+                                			checked 
+                                			data-on-text="&nbsp;Extertal&nbsp;Practitioner&nbsp;" 
+                                			data-off-text="&nbsp;Intertal&nbsp;Practitioner&nbsp;"
+                                			data-on-color="primary" 
+                                			data-off-color="info"
+                                			ng-model="info.UserAccount.Enable" 
+                                        	ng-true-value="'Y'" 
+                                        	ng-false-value="'N'"/>
+                                	</div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_Basic" ng-if="listShow.columm2==true">
+                            <div class="form-horizontal margin-top-20">
+                                <!-- begin title -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Title</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title.css" ng-change="er.Title='';checkDataNull('Title')">
+                                            <option value=''>Select Title</option>
+                                        </select>
+                                        <span style="color:red;">{{er.Title.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end title -->
+                                <!-- Begin Firstname -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">FirstName</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Firstname" ng-model="info.FirstName" ng-style="er.FirstName.css" ng-change="er.FirstName='';checkDataNull('FirstName')" >
+                                        <span style="color:red;">{{er.FirstName.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- End Firstname -->
+                                <!-- Begin Middlename -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">MiddleName</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Middlename" ng-model="info.MiddleName" ng-style="er.MiddleName.css" ng-change="er.MiddleName='';checkDataNull('MiddleName')" >
+                                        <span style="color:red;">{{er.MiddleName.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- End Middlename -->
+                                <!-- Begin Surname -->
+                                <div class="form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">LastName</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Lastname" ng-model="info.LastName" ng-style="er.LastName.css" ng-change="er.LastName='';checkDataNull('LastName')" >
+                                        <span style="color:red;">{{er.LastName.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- End Surname -->
+                                <!-- begin DOB -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Date of Birth</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy"data-date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB.css" ng-change="er.DOB=''" />
+                                        <span style="color:red;">{{er.DOB.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end DOB -->
+                                <!-- Healthlink ID -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Healthlink ID</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" placeholder="Healthlink ID" class="form-control" ng-model="info.HealthLink" readonly="true">
+                                    </div>
+                                </div>
+                                <!-- End Healthlink ID -->
+                                <!--  Clinical Department-->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Clinical Department</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" disabled placeholder="Clinical Department" ng-model="info.Department.DepartmentName">
+                                    </div>
+                                </div>
+                                <!-- end Clinical Department -->
+                                <!-- Provider Number -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Provider Number</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" placeholder="Provider Number" class="form-control" ng-model="info.ProviderNumber" ng-style="er.ProviderNumber.css" ng-change="er.ProviderNumber='';checkDataNull('ProviderNumber')">
+                                        <span style="color:red;">{{er.ProviderNumber.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- Provider Number -->
+                                <!-- begin specialities -->
+								<div class="form-group">
+					            	<label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Specialities</label>
+					            	<div class="col-md-8 col-sm-8 col-xs-8">
+					            		<select id="Specialities" class="form-control select2-multiple" ng-model="info.Speciality"ng-style="er.Speciality" ng-options="t.ID as t.Name for t in specialities" multiple>
+					            		</select>
+					            		<span style="color:red;">{{er.Speciality.msg}}</span>
+					            	</div>
+					        	</div>
+								<!-- end specialities -->
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_Contact" ng-if="listShow.columm3==true">
+                        	<div class="form-horizontal margin-top-20">
+                        		<!-- begin Workphone -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">WorkPhone</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Workphone" maxlength="10" ng-model="info.WorkPhoneNumber" ng-style="er.WorkPhoneNumber.css" ng-change="er.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')">
+                                        <span style="color:red;">{{er.WorkPhoneNumber.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end Workphone -->
+                                <!-- begin Homephone -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">HomePhone</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Homephone" maxlength="10" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber.css" ng-change="er.HomePhoneNumber='';checkDataNull('HomePhoneNumber')">
+                                        <span style="color:red;">{{er.HomePhoneNumber.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end Homephone -->
+                                <!-- begin Email -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Email</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Email" readonly="true" ng-model="info.Email" ng-style="er.Email.css" ng-change="er.Email='';checkDataNull('Email')">
+                                        <span style="color:red;">{{er.Email.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end Email -->
+                                <!-- Begin Address1 -->
+                                <div class="form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Address1</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1.css" ng-change="er.Address1='';checkDataNull('Address1')">
+                                        <span style="color:red;">{{er.Address1.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- End Address1 -->
+                                <!-- Begin Address2 -->
+                                <div class="form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Address2</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2.css" ng-change="er.Address2='';checkDataNull('Address2')">
+                                        <span style="color:red;">{{er.Address2.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- End Address2 -->
+                                <!-- begin Postcode -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Postcode</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                    	<input type="text" maxlength="4" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode.css" ng-change="er.Postcode='';checkDataNull('Postcode')">
+                                    	<span style="color:red;">{{er.Postcode.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end Postcode -->
+                                <!-- begin Suburb -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Suburb</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                    	<input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb.css" ng-change="er.Suburb='';checkDataNull('Suburb')">
+                                    	<span style="color:red;">{{er.Suburb.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end Suburb -->
+                                <!-- begin State -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">State</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                		<select class="form-control" ng-model="info.State"ng-options="s.code as s.name for s in state" ng-style="er.State.css" ng-change="er.State='';checkDataNull('State')" >
+                                			<option value="">Select State</option>
+                                		</select>
+                                    	<!-- <input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State.css" ng-change="er.State='';checkDataNull('State')"> -->
+                                    	<span style="color:red;">{{er.State.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end State -->
+                                <!-- begin Country -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 text-right">Country</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="info.CountryID" ng-style="er.CountryID.css" ng-change="er.CountryID='';checkDataNull('CountryID')">
+                                            <option value="">Select Country</option>
+                                        </select>
+                                        <span style="color:red;">{{er.CountryID.msg}}</span>
+                                    </div>
+                                </div>
+                                <!-- end Country -->
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_signature" ng-if="listShow.columm4==true">
+                        	<!-- signature -->
+							<!-- <div class="form-group">
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+										<img ng-src="{{signature}}">
+									</div>
+									<div>
+										<span class="btn green btn-file">
+										<span class="fileinput-new">
+										Signature </span>
+										<span class="fileinput-exists">
+										Change </span>
+										<input type="file" nv-file-select uploader="uploader">
+										</span>
+										<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+										Remove </a>
+									</div>
+									<br>												
+								</div>
+								<div class="clearfix"></div>
+							</div> -->
+							<div class="row margin-top-20">
+								<div class="col-md-12 col-sm-12">
+									<div class="form-group">
+										<div ng-form name="checkInForm" novalidate>
+											<canvas id="imageSignatureCanvas" class="thumbnail" ng-show="isChoseSignature==true" ></canvas>
+											<img dimage dimage-uid="info.FileUID_sign" class="thumbnail" dimage-size="'350'" ng-show="(info.FileUID_sign!=null && info.FileUID_sign!=undefined) && isChoseSignature==false">
+											<img src="theme/assets/global/images/no_signature.png" class="thumbnail" ng-show="(info.FileUID_sign==null || info.FileUID_sign==undefined) && isChoseSignature==false" style="width:350px; height:280px; ">
+											<div class="container">
+												<label for="imageSignature" style="float:left; padding-right: 1%;"> 
+													<span class="btn blue" ng-if="isChoseSignature==false" style="width: 120px;">Select Image</span>
+													<span class="btn blue" ng-if="isChoseSignature==true" style="width: 120px;">Change</span>
+													<input type="file" id="imageSignature" ng-click="setType('Signature')" name="imageSignature" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
+												</label> 
+												<span class="btn red" ng-if="isChoseSignature==true"style="width: 120px; float:left" ng-click="Remove('Signature')">Remove</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- end signature -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="infoChanged()||!infoClear()">Submit</button>
+    </div>
+</div>
+<!-- /.modal-content -->
+
+<!-- 
 <div class="portlet light bordered" id="box" style="margin-bottom:0">
     <div class="portlet-title" ng-if="isShowFull!=false">
         <div class="caption bold uppercase font-blue">
@@ -11,391 +404,7 @@
     <div class="portlet-body form">
         <form>
             <div class="form-body">
-                <div class="row profile margin-bottom-40">
-                    <div class="col-md-3 col-sm-3">
-						<!-- ProfileImage -->
-						<div ng-form name="checkInForm" novalidate>
-							<div class="form-group">
-								<div id="viewIMG">
-									<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
-									<img dimage dimage-uid="info.FileUID_img" class="thumbnail" dimage-size="'350'" ng-show="(info.FileUID_img!=null && info.FileUID_img!=undefined) && isChoseAvatar==false">
-									<img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.FileUID_img==null || info.FileUID_img==undefined) && isChoseAvatar==false" width="100%">
-								</div>
-								<div class="container">
-									<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
-										<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
-										<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
-										<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
-									</label> 
-									<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
-								</div>
-							</div>
-						</div>
-						<!-- end ProfileImage -->
-                    </div>
-                    <div class="col-md-9">
-                        <div class="tabbable-custom">
-                            <ul class="nav nav-tabs " id="tabtable">
-                                <li class="active" id="tab1">
-                                    <a href="index.html#tab_UserAccount" data-toggle="tab"> User Account </a>
-                                </li>
-                                <li id="tab2" ng-if="listShow.columm2==true">
-                                    <a href="index.html#tab_Basic" data-toggle="tab"> Basic Information </a>
-                                </li>
-                                <li id="tab3" ng-if="listShow.columm3==true">
-                                    <a href="index.html#tab_Contact" data-toggle="tab"> Contact Information </a>
-                                </li>
-                                <li id="tab4" ng-if="listShow.columm4==true">
-                                    <a href="index.html#tab_signature" data-toggle="tab"> Signature </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="tabtablecontent">
-                                <div class="tab-pane active" id="tab_UserAccount">
-                                    <div class="form-horizontal">
-	                                    <div class="form-group margin-top-20">
-	                                        <label class="control-label col-md-3 col-ms-3">UserName</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                        	<p class="form-control-static">{{info.UserAccount.UserName}}</p>
-	                                            <!-- <div class="input-icon">
-	                                                <i class="glyphicon glyphicon-user"></i>
-	                                                <input type="text" class="form-control" readonly="true" ng-model="info.UserAccount.UserName">
-	                                            </div> -->
-	                                        </div>
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-ms-3">Email</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                        	<p class="form-control-static">{{info.Email}}</p>
-	                                            <!-- <div class="input-icon">
-	                                                <i class="glyphicon glyphicon-envelope"></i>
-	                                                <input type="text" class="form-control" readonly="true" ng-model="info.Email">
-	                                            </div> -->
-	                                        </div>
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-ms-3">Mobile</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                        	<p class="form-control-static">{{info.UserAccount.PhoneNumber}}</p>
-	                                            <!-- <div class="input-icon">
-	                                                <i class="glyphicon glyphicon-phone"></i>
-	                                                <input type="text" class="form-control" readonly="true" ng-model="info.UserAccount.PhoneNumber">
-	                                            </div> -->
-	                                        </div>
-	                                    </div>
-
-	                                    <div class="form-group">
-	                                    	<label class="control-label col-md-3 col-sm-3">&nbsp;</label>
-	                                    	<div class="col-md-6 col-sm-6">
-	                                    		<!-- <input type="checkbox" 
-	                                    			class="regular-checkbox" 
-	                                    			checked 
-	                                    			ng-model="info.UserAccount.Enable" 
-	                                            	ng-true-value="'Y'" 
-	                                            	ng-false-value="'N'"/> -->
-	                                    		<div class="checkbox-list">
-			                                        <label class="checkbox-inline">
-			                                            <input type="checkbox" class="regular-checkbox" 
-			                                            	ng-model="info.UserAccount.Enable" 
-			                                            	ng-true-value="'Y'" 
-			                                            	ng-false-value="'N'"> Enable
-			                                        </label>
-			                                    </div>
-	                                    	</div>
-	                                    </div>
-
-	                                    <div class="form-group">
-	                                    	<label class="control-label col-md-3 col-sm-3">&nbsp;</label>
-	                                    	<div class="col-md-9 col-sm-9">
-	                                    		<div class="radio-list">
-	                                    			<label class="radio-inline">
-	                                    				<input type="radio" 
-	                                    				id="option1"
-	                                    				class="regular-radio" 
-	                                    				name="Role" 
-	                                    				value="4"
-	                                    				ng-model="info.UserAccount.RelUserRoles[0].RoleId"/> Extertal Practitioner
-	                                    			</label>
-	                                    			<label class="radio-inline">
-	                                    				<input type="radio" 
-	                                    				class="regular-radio" 
-	                                    				name="Role" 
-	                                    				value="5"
-	                                    				ng-model="info.UserAccount.RelUserRoles[0].RoleId"/> Intertal Practitioner
-	                                    			</label>
-	                                    		</div>
-	                                    	</div>
-	                                    </div>
-	                                  <!--   <div class="form-group margin-top-20">
-	                                        <label for="option1" class="control-label col-md-3 col-sm-3">Extertal Practitioner</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <div class="margin-bottom-10">
-	                                                <input id="option1" 
-	                                                	type="radio" 
-	                                                	name="Role" 
-	                                                	ng-value="4" 
-	                                                	ng-model="info.UserAccount.RelUserRoles[0].RoleId"
-	                                                	class="make-switch switch-radio1"/> 
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="form-group">
-	                                    	<label for="option2" class="control-label col-md-3 col-sm-3">Intertal Practitioner</label>
-	                                    		<div class="col-md-6 col-sm-6">
-		                                    		<div class="margin-bottom-10">
-		                                                <input id="option2" 
-		                                                	type="radio" 
-		                                                	name="Role" 
-		                                                	ng-value="5"
-		                                                	ng-model="info.UserAccount.RelUserRoles[0].RoleId"
-		                                                	class="make-switch switch-radio1"/> 
-		                                            </div>
-		                                        </div>
-	                                    </div> -->
-
-	                                    <!-- <div class="form-group" ng-if="info.UserAccount.RelUserRoles[0].RoleId!=1 && info.UserAccount.RelUserRoles[0].RoleId!=2 && info.UserAccount.RelUserRoles[0].RoleId!=3">
-	                                    	<div class="col-md-6 col-sm-6 col-md-offset-3 col-ms-offset-3">
-	                                    		<input type="checkbox" 
-	                                    			class="make-switch" 
-	                                    			checked 
-	                                    			data-on-text="&nbsp;Extertal&nbsp;Practitioner&nbsp;" 
-	                                    			data-off-text="&nbsp;Intertal&nbsp;Practitioner&nbsp;"
-	                                    			data-on-color="primary" 
-	                                    			data-off-color="info"
-	                                    			ng-model="info.UserAccount.Enable" 
-	                                            	ng-true-value="'Y'" 
-	                                            	ng-false-value="'N'"/>
-	                                    	</div>
-                                        </div> -->
-	                                </div>
-                                </div>
-                                <div class="tab-pane" id="tab_Basic" ng-if="listShow.columm2==true">
-                                    <div class="form-horizontal margin-top-20">
-	                                    <!-- begin title -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Title</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title.css" ng-change="er.Title='';checkDataNull('Title')">
-	                                                <option value=''>Select Title</option>
-	                                            </select>
-	                                            <span style="color:red;">{{er.Title.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end title -->
-	                                    <!-- Begin Firstname -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">FirstName</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <input type="text" class="form-control" placeholder="Firstname" ng-model="info.FirstName" ng-style="er.FirstName.css" ng-change="er.FirstName='';checkDataNull('FirstName')" >
-	                                            <span style="color:red;">{{er.FirstName.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- End Firstname -->
-	                                    <!-- Begin Middlename -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">MiddleName</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <input type="text" class="form-control" placeholder="Middlename" ng-model="info.MiddleName" ng-style="er.MiddleName.css" ng-change="er.MiddleName='';checkDataNull('MiddleName')" >
-	                                            <span style="color:red;">{{er.MiddleName.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- End Middlename -->
-	                                    <!-- Begin Surname -->
-	                                    <div class="form-group ">
-	                                        <label class="control-label col-md-3 col-sm-3">LastName</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <input type="text" class="form-control" placeholder="Lastname" ng-model="info.LastName" ng-style="er.LastName.css" ng-change="er.LastName='';checkDataNull('LastName')" >
-	                                            <span style="color:red;">{{er.LastName.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- End Surname -->
-	                                    <!-- begin DOB -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Date of Birth</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy"data-date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB.css" ng-change="er.DOB=''" />
-	                                            <span style="color:red;">{{er.DOB.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end DOB -->
-	                                    <!-- Healthlink ID -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Healthlink ID</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <input type="text" placeholder="Healthlink ID" class="form-control" ng-model="info.HealthLink" readonly="true">
-	                                        </div>
-	                                    </div>
-	                                    <!-- End Healthlink ID -->
-	                                    <!--  Clinical Department-->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Clinical Department</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <input type="text" class="form-control" disabled placeholder="Clinical Department" ng-model="info.Department.DepartmentName">
-	                                        </div>
-	                                    </div>
-	                                    <!-- end Clinical Department -->
-	                                    <!-- Provider Number -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Provider Number</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <input type="text" placeholder="Provider Number" class="form-control" ng-model="info.ProviderNumber" ng-style="er.ProviderNumber.css" ng-change="er.ProviderNumber='';checkDataNull('ProviderNumber')">
-	                                            <span style="color:red;">{{er.ProviderNumber.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- Provider Number -->
-	                                    <!-- begin specialities -->
-										<div class="form-group">
-							            	<label class="control-label col-md-3 col-sm-3">Specialities</label>
-							            	<div class="col-md-6 col-sm-6">
-							            		<select id="Specialities" class="form-control select2-multiple" ng-model="info.Speciality"ng-style="er.Speciality" ng-options="t.ID as t.Name for t in specialities" multiple>
-							            		</select>
-							            		<span style="color:red;">{{er.Speciality.msg}}</span>
-							            	</div>
-							        	</div>
-										<!-- end specialities -->
-	                                </div>
-                                </div>
-                                <div class="tab-pane" id="tab_Contact" ng-if="listShow.columm3==true">
-                                	<div class="form-horizontal margin-top-20">
-                                		<!-- begin Workphone -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">WorkPhone</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                                <input type="text" class="form-control" placeholder="Workphone" maxlength="10" ng-model="info.WorkPhoneNumber" ng-style="er.WorkPhoneNumber.css" ng-change="er.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')">
-                                                <span style="color:red;">{{er.WorkPhoneNumber.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end Workphone -->
-	                                    <!-- begin Homephone -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">HomePhone</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                                <input type="text" class="form-control" placeholder="Homephone" maxlength="10" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber.css" ng-change="er.HomePhoneNumber='';checkDataNull('HomePhoneNumber')">
-                                                <span style="color:red;">{{er.HomePhoneNumber.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end Homephone -->
-	                                    <!-- begin Email -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Email</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                                <input type="text" class="form-control" placeholder="Email" readonly="true" ng-model="info.Email" ng-style="er.Email.css" ng-change="er.Email='';checkDataNull('Email')">
-                                                <span style="color:red;">{{er.Email.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end Email -->
-	                                    <!-- Begin Address1 -->
-	                                    <div class="form-group ">
-	                                        <label class="control-label col-md-3 col-sm-3">Address1</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                                <input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1.css" ng-change="er.Address1='';checkDataNull('Address1')">
-                                                <span style="color:red;">{{er.Address1.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- End Address1 -->
-	                                    <!-- Begin Address2 -->
-	                                    <div class="form-group ">
-	                                        <label class="control-label col-md-3 col-sm-3">Address2</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                                <input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2.css" ng-change="er.Address2='';checkDataNull('Address2')">
-                                                <span style="color:red;">{{er.Address2.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- End Address2 -->
-	                                    <!-- begin Postcode -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Postcode</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                            	<input type="text" maxlength="4" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode.css" ng-change="er.Postcode='';checkDataNull('Postcode')">
-                                            	<span style="color:red;">{{er.Postcode.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end Postcode -->
-	                                    <!-- begin Suburb -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Suburb</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                            	<input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb.css" ng-change="er.Suburb='';checkDataNull('Suburb')">
-                                            	<span style="color:red;">{{er.Suburb.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end Suburb -->
-	                                    <!-- begin State -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">State</label>
-	                                        <div class="col-md-6 col-sm-6">
-                                        		<select class="form-control" ng-model="info.State"ng-options="s.code as s.name for s in state" ng-style="er.State.css" ng-change="er.State='';checkDataNull('State')" >
-                                        			<option value="">Select State</option>
-                                        		</select>
-                                            	<!-- <input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State.css" ng-change="er.State='';checkDataNull('State')"> -->
-                                            	<span style="color:red;">{{er.State.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end State -->
-	                                    <!-- begin Country -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Country</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                            <select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="info.CountryID" ng-style="er.CountryID.css" ng-change="er.CountryID='';checkDataNull('CountryID')">
-	                                                <option value="">Select Country</option>
-	                                            </select>
-	                                            <span style="color:red;">{{er.CountryID.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- end Country -->
-	                                </div>
-                                </div>
-                                <div class="tab-pane" id="tab_signature" ng-if="listShow.columm4==true">
-                                	<!-- signature -->
-									<!-- <div class="form-group">
-										<div class="fileinput fileinput-new" data-provides="fileinput">
-											<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-												<img ng-src="{{signature}}">
-											</div>
-											<div>
-												<span class="btn green btn-file">
-												<span class="fileinput-new">
-												Signature </span>
-												<span class="fileinput-exists">
-												Change </span>
-												<input type="file" nv-file-select uploader="uploader">
-												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-												Remove </a>
-											</div>
-											<br>												
-										</div>
-										<div class="clearfix"></div>
-									</div> -->
-									<div class="row margin-top-20">
-										<div class="col-md-6 col-sm-6 col-offset-3 col-sm-offset-3">
-											<div class="form-group">
-												<div ng-form name="checkInForm" novalidate>
-													<div class="form-group">
-														<div>
-															<canvas id="imageSignatureCanvas" class="thumbnail" ng-show="isChoseSignature==true" ></canvas>
-															<img dimage dimage-uid="info.FileUID_sign" class="thumbnail" dimage-size="'550'" ng-show="(info.FileUID_sign!=null && info.FileUID_sign!=undefined) && isChoseSignature==false">
-															<img src="theme/assets/global/images/no_signature.png" class="thumbnail" ng-show="(info.FileUID_sign==null || info.FileUID_sign==undefined) && isChoseSignature==false" style="width:550px; height:280px; ">
-														</div>
-														<div class="container">
-															<label for="imageSignature" style="float:left; padding-right: 1%;"> 
-																<span class="btn blue" ng-if="isChoseSignature==false" style="width: 120px;">Select Image</span>
-																<span class="btn blue" ng-if="isChoseSignature==true" style="width: 120px;">Change</span>
-																<input type="file" id="imageSignature" ng-click="setType('Signature')" name="imageSignature" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
-															</label> 
-															<span class="btn red" ng-if="isChoseSignature==true"style="width: 120px; float:left" ng-click="Remove('Signature')">Remove</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									<!-- end signature -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <div class="form-actions right">
         		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()">
@@ -407,7 +416,7 @@
             </div>
         </form>
     </div>
-</div> 
+</div>  -->
 {{configpage()}}
 
 

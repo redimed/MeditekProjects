@@ -1,59 +1,46 @@
 <!-- BEGIN PAGE BAR -->
 <div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
-        <!-- <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="authentication.booking.home">Booking</a>
-        </li> -->
-        <li>
-            <!-- <i class="fa fa-angle-right"></i> -->
-            <i class="fa fa-home"></i>
-            <b>Scheduler</b>
-        </li>
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i><span>Scheduler</span></li>
     </ul>
 </div>
 <!-- END PAGE BAR -->
-<!-- BEGIN PAGE TITLE-->
-<!-- <h3 class="page-title bold">Scheduler</h3> -->
-<!-- END PAGE TITLE-->
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="portlet portlet-fit light bordered">
-            <div class="portlet-title">
-                <div class="caption font-blue">
-                    <i class="fa fa-calendar-plus-o font-blue"></i>
-                    <span class="caption-subject bold uppercase">Scheduler</span>
-                    <span class="caption-helper"></span>
-                </div>
-                <div class="actions">
-                    <!-- <a href="javascript:;" class="btn red" ng-click="addResource()">Add resource</a> -->
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse"> </a>
-                    <a href="javascript:;" class="fullscreen"> </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4 form-group">
-                        <label class="control-label">Search Site</label>
-                        <select class="form-control"
-                            ng-change="searchSite(search.site)"
-                            ng-options="item.UID as item.SiteName for item in listSites"
-                            ng-model="search.site">
-                            <option value="">All Sites</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 col-sm-4 form-group">
-                        <label class="control-label">Search Date</label>
-                        <input id="datepicker-inline" class="form-control" placeholder="Search Date">
-                    </div>
-                </div>
-                <div id='calendar'></div>
-            </div>
+<div class="portlet portlet-fit light bordered">
+    <div class="portlet-title">
+        <div class="caption font-blue">
+            <i class="fa fa-calendar-plus-o font-blue"></i>
+            <span class="caption-subject bold uppercase">Scheduler</span>
+            <span class="caption-helper"></span>
+        </div>
+        <div class="actions">
+            <!-- <a href="javascript:;" class="btn red" ng-click="addResource()">Add resource</a> -->
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="fullscreen"> </a>
         </div>
     </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 form-group">
+                <label class="control-label">Search Site</label>
+                <select class="form-control"
+                    ng-change="searchSite(search.site)"
+                    ng-options="item.UID as item.SiteName for item in listSites"
+                    ng-model="search.site">
+                    <option value="">All Sites</option>
+                </select>
+            </div>
+            <div class="col-md-4 col-sm-4 form-group">
+                <label class="control-label">Search Date</label>
+                <input id="datepicker-inline" class="form-control" placeholder="Search Date">
+            </div>
+        </div>
+        <div id='calendar'></div>
+    </div>
 </div>
+
 
 <style type="text/css">
     .fc td .fc-widget-content{

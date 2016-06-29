@@ -138,7 +138,8 @@ angular.module('app.authentication.doctor.directive.list', [])
 						    	return response.data;
 						    }
 			            },
-						windowClass: 'app-modal-window'
+						// windowClass: 'app-modal-window'
+						size: 'lg',
 					});
 
 				},function(err){

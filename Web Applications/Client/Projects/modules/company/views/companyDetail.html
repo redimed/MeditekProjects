@@ -1,23 +1,11 @@
 <!-- BEGIN PAGE HEADER-->
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="authentication.company.home">Company</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <a ui-sref="authentication.company.list">List</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <b>Detail</b>
-        </li>
+<div class="page-bar margin-bottom-20">
+    <ul class="page-breadcrumb ">
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i><a ui-sref="authentication.company.list">Company</a></li>
+        <li><i class="fa fa-circle"></i><span>Detail</span></li>
     </ul>
 </div>
-<br>
 <!-- END PAGE HEADER-->
-<!-- <h3 class="page-title bold">Company Detail</h3> -->
-<!-- content page -->
+
 <company-detail on-uid="uid"></company-detail>
-<!-- end content page -->

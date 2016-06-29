@@ -1,22 +1,10 @@
 <!-- BEGIN PAGE BAR -->
 <div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a href="javascript:;" ui-sref="authentication.home.list">Home</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <a ui-sref="authentication.consultation.list">Consultation</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <a ui-sref="authentication.consultation.detail" ui-sref-opts="{cache: false,reload:true}">Consultation Detail</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <b>Consult Note</b>
-        </li>
+        <li><a ui-sref="authentication.home.list">Home</a></li>
+        <li><i class="fa fa-circle"></i><a ui-sref="authentication.consultation.list">Consultation</a></li>
+        <li><i class="fa fa-circle"></i><a ui-sref="authentication.consultation.detail" ui-sref-opts="{cache: false,reload:true}">Consultation Detail</a></li>
+        <li><i class="fa fa-circle"></i><span>Consult Note</span></li>
     </ul>
 </div>
 <!-- END PAGE BAR -->

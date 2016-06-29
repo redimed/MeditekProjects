@@ -6,7 +6,7 @@ angular.module('app.common.finishRender',[])
                 $('.page-sidebar-menu li').click(function(){
 		            // alert("AAA");
                     // $('.page-sidebar-menu li').removeClass('start');
-                    // $(this).addClass('start');
+                    // $(this).addClass('start');git 
                     // $('.page-sidebar-menu li').removeClass('active');
                     // $(this).addClass('active open');
 		        });

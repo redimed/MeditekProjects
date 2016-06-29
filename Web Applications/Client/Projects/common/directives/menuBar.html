@@ -1,25 +1,22 @@
 <script type="text/ng-template" id="nodes_renderer.html">
-	
-	<a ng-if="node.state" ui-sref="{{node.state||null}}" class="nav-link nav-toggle" >
+	<a ng-if="node.state" ui-sref="{{node.state||null}}" ui-sref-opts="{reload: true}">
         <i class="fa fa-circle"></i>
         <span class="title">{{node.name}}</span>
-        <span class="selected"></span>
     </a>
 
-    <a ng-if="!node.state" class="nav-link nav-toggle" >
+    <a ng-if="!node.state" href="javascript:;" class="nav-link nav-toggle" >
         <i class="fa fa-circle"></i>
         <span class="title">{{node.name}}</span>
         <span class="arrow"></span>
     </a>
 		
-	
     <ul ng-if="node.nodes" class="sub-menu">
-        <li class="" ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'" finish-render>
+        <li class="" ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'">
         </li>
     </ul>
 </script>
 
-<ul class="page-sidebar-menu page-header-fixed page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" id="sidebar">
+<ul class="page-sidebar-menu page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" id="sidebar">
     <li class="sidebar-toggler-wrapper hide">
         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
         <div class="sidebar-toggler">
@@ -28,31 +25,21 @@
         <!-- END SIDEBAR TOGGLER BUTTON -->
     </li>
 	<li class="nav-item start">
-		<a ui-sref="authentication.home.list" ui-sref-opts="{reload:true, notify: true}">
+		<a ui-sref="authentication.home.list" ui-sref-opts="{reload:true}">
     		<i class="icon-home"></i>
     		<span class="title">Homepage</span>
-    		<!-- <span class="selected"></span> -->
-    		<!-- <span class="arrow"></span> -->
 		</a>
 	</li>
-    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render>
-    </li>
-    <li class="nav-item" >
-    	<a ui-sref="authentication.user.profile" ui-sref-opts="{reload:true, notify: true}">
+    <!-- <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render></li> -->
+    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'"></li>
+    <li class="nav-item">
+    	<a ui-sref="authentication.user.profile" ui-sref-opts="{reload:true}">
             <i class="glyphicon glyphicon-user"></i>
             <span class="title">User Profile</span>
             <!-- <span class="arrow"></span> -->
         </a>
     </li>
-    
 </ul>
-
 <!-- 
 <img dimage dimage-uid="'bb965155-2b92-41f8-aa78-aa072e70b452'" dimage-size="'30'" width:"400" height:'400'/>
-
 <button ng-click="test();">Test</button> -->
-
-<script>
-    
-	// Layout.init(); // init current layout
-</script>

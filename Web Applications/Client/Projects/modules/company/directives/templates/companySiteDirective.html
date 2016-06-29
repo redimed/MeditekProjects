@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">IMA</label>
                             <div class="col-md-8 col-sm-8 col-xs-9">
-                                <input type="text" class="form-control"/>
+                                <input type="text" class="form-control" ng-model="data.data.IMA"/>
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Contact Mobile</label>
                             <div class="col-md-8 col-sm-8 col-xs-9">
-                                <input type="text" name="contact_mobile" class="form-control"/>
+                                <input type="text" name="contact_mobile" class="form-control" ng-model="data.ContactMobile"/>
                                 <span style="color:red;"></span>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Email</label>
                             <div class="col-md-8 col-sm-8 col-xs-9">
-                                <input type="text" name="contact_mobile" class="form-control"/>
+                                <input type="text" name="contact_mobile" class="form-control" ng-model="data.Email"/>
                                 <span style="color:red;"></span>
                             </div>
                         </div>
@@ -139,13 +139,13 @@
                     <div class="col-md-10 col-sm-10 col-xs-9">
                         <div class="checkbox-list">
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="surface"> Surface
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="surface" ng-model="data.data.activities_Surface" /> Surface
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="underground"> Underground
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="underground" ng-model="data.data.activities_Underground"> Underground
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="N/A"> N/A
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="N/A" ng-model="data.data.activities_na"> N/A
                             </label>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Special Note</label>
                     <div class="col-md-10 col-sm-10 col-xs-9">
-                        <textarea class="form-control"></textarea>
+                        <textarea class="form-control" ng-model="data.data.SpecialNote"></textarea>
                     </div>
                 </div>
                 <div class="table-scrollable">
@@ -190,13 +190,13 @@
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-4">Closest Medical Centre (GP)</label>
                     <div class="col-md-8 col-sm-8">
-                        <input type="text" class="form-control"/>
+                        <input type="text" class="form-control" ng-model="data.data.Closest_Medical_Centre"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-4">Closet hopital/Medical Centre</label>
                     <div class="col-md-8 col-sm-8">
-                        <input type="text" class="form-control"/>
+                        <input type="text" class="form-control" ng-model="data.data.Closethopital_MedicalCentre"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -204,19 +204,19 @@
                     <div class="col-md-8 col-sm-8">
                         <div class="checkbox-list">
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="road"> Road
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="road" ng-model="data.data.mode_of_transfer_Road"> Road
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="rail"> Rail
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="rail" ng-model="data.data.mode_of_transfer_Rail"> Rail
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Ambulance"> Ambulance
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Ambulance" ng-model="data.data.mode_of_transfer_Ambulance"> Ambulance
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="air"> Air
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="air" ng-model="data.data.mode_of_transfer_Air"> Air
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="others"> Others
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="others" ng-model="data.data.mode_of_transfer_Others"> Others
                             </label>
                         </div>
                     </div>
@@ -224,13 +224,13 @@
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Others</label>
                     <div class="col-md-8 col-sm-8 col-xs-9">
-                        <input type="text" class="form-control" placeholder="Others"/>
+                        <input type="text" class="form-control" placeholder="Others" ng-model="data.data.Others"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-5 col-sm-5">Frequency of commercial aircraft in & out of site</label>
                     <div class="col-md-7 col-sm-7">
-                        <input type="text" class="form-control"/>
+                        <input type="text" class="form-control" ng-model="data.data.commercial_aircraft_out_of_site"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -238,15 +238,15 @@
                     <div class="col-md-3 col-sm-3 col-xs-4">
                         <div class="radio-list margin-bottom-20">
                             <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="road"> No
+                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="road" ng-model="data.data.physio_no"> No
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="rail"> Yes
+                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="rail" ng-model="data.data.physio_yes"> Yes
                             </label>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-8">
-                        <input type="text" class="form-control" placeholder="Others"/>
+                        <input type="text" class="form-control" placeholder="Others" ng-model="data.data.physio"/>
                     </div>
                 </div>
                 <div class="well">
@@ -256,7 +256,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Name</label>
                                 <div class="col-md-10 col-sm-10 col-xs-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="data.data.Name">
                                 </div>
                             </div>
                         </div>
@@ -264,7 +264,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Phone</label>
                                 <div class="col-md-10 col-sm-10 col-xs-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="data.data.Phone">
                                 </div>
                             </div>
                         </div>
@@ -274,7 +274,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Fax</label>
                                 <div class="col-md-10 col-sm-10 col-xs-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="data.data.Fax">
                                 </div>
                             </div>
                         </div>
@@ -282,7 +282,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Email</label>
                                 <div class="col-md-10 col-sm-10 col-xs-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="data.data.Email">
                                 </div>
                             </div>
                         </div>
@@ -291,13 +291,13 @@
                 <div class="form-group">
                     <label class="control-label col-md-6 col-sm-6">What light duty options are available on your site/company?</label>
                     <div class="col-md-6 col-sm-6">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="data.data.light_company">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Further Information</label>
                     <div class="col-md-8 col-sm-8 col-xs-9">
-                        <textarea class="form-control"></textarea>
+                        <textarea class="form-control" ng-model="data.data.FurtherInformation"></textarea>
                     </div>
                 </div>
             </div>

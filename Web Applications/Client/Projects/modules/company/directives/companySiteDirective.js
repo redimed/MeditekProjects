@@ -38,6 +38,8 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 					response.data.Country = parseInt(response.data.Country);
 					scope.data = response.data;
 					scope.data.data_medic = [];
+					scope.data.data = {};				
+
 				},function(err) {
 					console.log(err);
 				});
@@ -102,7 +104,7 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 				}
 			};
 
-			scope.openModalMedic = function(type, data){
+			scope.openModalMedic = function(type, data){				
 				console.log(" data ", data)
 				var modalInstance = $uibModal.open({
 		            animation: true,
@@ -147,7 +149,7 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 		        modalInstance.result
 		            .then(function(result) {
 		            	
-		                // scope.data.data_medic = result;
+		                // scope.data.data.data_medic = result;
 		            }, function(result) {
 
 		                //

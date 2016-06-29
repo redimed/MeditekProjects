@@ -15,7 +15,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
-        Layout.initSidebar(); // init sidebar
+        // Layout.initSidebar(); // init sidebar
         setTimeout(function() {
             QuickSidebar.init(); // init quick sidebar        
         }, 2000);

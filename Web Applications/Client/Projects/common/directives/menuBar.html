@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="nodes_renderer.html">
-	<a ng-if="node.state" ui-sref="{{node.state||null}}" ui-sref-opts="{reload: true}">
+	<a ng-if="node.state" ui-sref="{{node.state||null}}" >
         <i class="fa fa-circle"></i>
         <span class="title">{{node.name}}</span>
     </a>
@@ -11,7 +11,7 @@
     </a>
 		
     <ul ng-if="node.nodes" class="sub-menu">
-        <li class="" ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'">
+        <li class="" ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'" finish-render>
         </li>
     </ul>
 </script>
@@ -30,8 +30,8 @@
     		<span class="title">Homepage</span>
 		</a>
 	</li>
-    <!-- <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render></li> -->
-    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'"></li>
+    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render></li>
+    <!-- <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'"></li> -->
     <li class="nav-item">
     	<a ui-sref="authentication.user.profile" ui-sref-opts="{reload:true}">
             <i class="glyphicon glyphicon-user"></i>

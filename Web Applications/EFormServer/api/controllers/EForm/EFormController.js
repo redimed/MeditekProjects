@@ -1,3 +1,4 @@
+var o = require("../../services/HelperService");
 module.exports = {
     GetEFormUserRoles: function(req, res){
         Role.findAll({
@@ -536,12 +537,29 @@ module.exports = {
         })
     },
     PostCheckDetail: function(req, res){
+        var whereClause = {
+            appointment: {},
+            eformTemplate: {}
+        };
+        if (req.body.appointmentUID) {
+            whereClause.appointment.UID = req.body.appointmentUID;
+        };
+        if (req.body.appointmentCode) {
+            whereClause.appointment.Code = req.body.appointmentCode;
+        };
+        if (req.body.templateUID) {
+            whereClause.eformTemplate.UID = req.body.templateUID;
+        };
+        if (req.body.templateName) {
+            whereClause.eformTemplate.Name = req.body.templateName;
+        };
+
         Appointment.findOne({
-            where: {UID: req.body.appointmentUID}
+            where: o.sqlParam(whereClause.appointment)
         })
         .then(function(appointment){
             EFormTemplate.findOne({
-                where: {UID: req.body.templateUID}
+                where: o.sqlParam(whereClause.eformTemplate)
             })
             .then(function(eFormTemplate){
                 EForm.find({
@@ -562,6 +580,7 @@ module.exports = {
             })
         })
     },
+
     PostDetail: function(req, res){
         EForm.find({ where: {ID: req.body.id},
             include: [{

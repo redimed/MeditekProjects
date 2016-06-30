@@ -1,6 +1,8 @@
 var app = angular.module('app.unAuthentication.activation.controller', [])
 app.controller('activationCtrl', function($scope, $state, toastr, $cookies, UnauthenticatedService) {
-
+	$('.forget-form').show();
+	$('.content').removeClass('sign-up');
+	
 	$scope.is_hide = false;
 
 	// Back Button

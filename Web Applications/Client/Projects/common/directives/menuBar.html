@@ -16,7 +16,10 @@
     </ul>
 </script>
 
-<ul class="page-sidebar-menu page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" id="sidebar">
+<ul class="page-sidebar-menu page-sidebar-menu-closed" 
+    data-keep-expanded="false" data-auto-scroll="true" 
+    data-slide-speed="200" id="sidebar"
+    ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
     <li class="sidebar-toggler-wrapper hide">
         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
         <div class="sidebar-toggler">
@@ -25,18 +28,17 @@
         <!-- END SIDEBAR TOGGLER BUTTON -->
     </li>
 	<li class="nav-item start">
-		<a ui-sref="authentication.home.list" ui-sref-opts="{reload:true}">
+		<a ui-sref="authentication.home.list" >
     		<i class="icon-home"></i>
     		<span class="title">Homepage</span>
 		</a>
 	</li>
-    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render></li>
-    <!-- <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'"></li> -->
+    <li class="nav-item" ng-repeat="(key,node) in menus" ng-include="'nodes_renderer.html'" finish-render></li>
+    
     <li class="nav-item">
-    	<a ui-sref="authentication.user.profile" ui-sref-opts="{reload:true}">
+    	<a ui-sref="authentication.user.profile" >
             <i class="glyphicon glyphicon-user"></i>
             <span class="title">User Profile</span>
-            <!-- <span class="arrow"></span> -->
         </a>
     </li>
 </ul>

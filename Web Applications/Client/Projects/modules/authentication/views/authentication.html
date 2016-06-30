@@ -8,7 +8,7 @@
 
 
 <!-- BEGIN HEADER -->
-<div data-ng-include="'common/tpl/header.html'"  class="page-header navbar navbar-fixed-top">
+<div data-ng-include="'common/tpl/header.html'" data-ng-controller="HeaderController" class="page-header navbar navbar-fixed-top">
 </div>
 <!-- END HEADER -->
 
@@ -18,7 +18,7 @@
 <div class="page-container">
 
 	<!-- BEGIN SIDEBAR -->
-	<div data-ng-include="'common/tpl/sidebar.html'"  class="page-sidebar-wrapper">			
+	<div data-ng-include="'common/tpl/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper">			
 	</div>
 	<!-- END SIDEBAR -->
 
@@ -41,12 +41,12 @@
 	
 	<!-- BEGIN QUICK SIDEBAR -->
 	<a href="javascript:;" class="page-quick-sidebar-toggler"><i class="icon-close"></i></a>
-	<div data-ng-include="'common/tpl/quick-sidebar.html'" class="page-quick-sidebar-wrapper"></div>
+	<div data-ng-include="'common/tpl/quick-sidebar.html'" data-ng-controller="QuickSidebarController" class="page-quick-sidebar-wrapper"></div>
 	<!-- END QUICK SIDEBAR -->
 </div>
 <!-- END CONTAINER -->
 
 <!-- BEGIN FOOTER -->
-<div data-ng-include="'common/tpl/footer.html'" class="page-footer">
+<div data-ng-include="'common/tpl/footer.html'" data-ng-controller="FooterController" class="page-footer">
 </div>
 <!-- END FOOTER -->

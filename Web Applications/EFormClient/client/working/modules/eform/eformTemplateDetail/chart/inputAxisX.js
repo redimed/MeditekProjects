@@ -63,6 +63,8 @@ module.exports = React.createClass({
                                         <td><b>{serie.name} (db)</b></td>
                                         {
                                             serie.data.map(function(input, inputIndex){
+                                                if(input === 0)
+                                                    input = '';
                                                 return (
                                                     <td key={inputIndex}>
                                                         <CommonInputText ref={"serie_"+index+"_"+inputIndex}

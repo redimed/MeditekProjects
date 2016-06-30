@@ -329,9 +329,11 @@ app.directive('patientCreate', function(toastr, PatientService, $state, $timeout
                 //service check data
                 return PatientService.validate(data)
                     .then(function(result) {
-                        data.rolecompany = scope.rolecompany;
-                        data.compid      = scope.compid?scope.compid:null;
-                        data.RoleId      = scope.RoleId?scope.RoleId:null;
+                        data.rolecompany     = scope.rolecompany;
+                        data.compid          = scope.compid?scope.compid:null;
+                        data.RoleId          = scope.RoleId?scope.RoleId:null;
+                        if(data.HomePhoneNumber) data.HomePhoneNumber = data.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
+                        if(data.WorkPhoneNumber) data.WorkPhoneNumber = data.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
                         //service call API create patient
                         return PatientService.createPatient(data)
                             .then(function(success) {

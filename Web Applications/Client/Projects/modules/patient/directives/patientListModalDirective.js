@@ -528,6 +528,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					scope.updatedata.UID           = scope.info.UID;
 					scope.updatedata.Activated     = scope.info.UserAccount.Activated;
 					scope.updatedata.EnableUser    = scope.info.UserAccount.Enable;
+					if(scope.updatedata.WorkPhoneNumber) scope.updatedata.WorkPhoneNumber = scope.updatedata.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
+                    if(scope.updatedata.HomePhoneNumber) scope.updatedata.HomePhoneNumber = scope.updatedata.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 			    	console.log(scope.updatedata);
 			    	if(scope.info.PatientKin != null && scope.info.PatientKin != '') scope.updatedata.PatientKin = scope.info.PatientKin;
 			    	if(scope.info.PatientGP != null && scope.info.PatientGP != '') scope.updatedata.PatientGP = scope.info.PatientGP;

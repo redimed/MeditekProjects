@@ -174,9 +174,9 @@ PatientService.validate = function(info) {
 			//validate WorkPhone
 			if('WorkPhoneNumber' in info){
 				if(info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
-					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
-					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
+					var auWorkPhoneNumberPattern=new RegExp(/^[0-9\-\(\)\s]{0,20}$/);
+					// var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
+					if(!auWorkPhoneNumberPattern.test(info.WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
 					}
 				}
@@ -185,9 +185,9 @@ PatientService.validate = function(info) {
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if('HomePhoneNumber' in info){
 				if(info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
-					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
-					if(!auHomePhoneNumberPattern.test(HomePhone)){
+					var auHomePhoneNumberPattern=new RegExp(/^[0-9\-\(\)\s]{0,20}$/);
+					// var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
+					if(!auHomePhoneNumberPattern.test(info.HomePhoneNumber)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
 					}
 				}
@@ -307,18 +307,18 @@ PatientService.validate = function(info) {
 
 			//validate HomePhone
 			if(info.HomePhoneNumber){
-				var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
-				var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
-				if(!auHomePhoneNumberPattern.test(HomePhone)){
+				var auHomePhoneNumberPattern=new RegExp(/^[0-9\-\(\)\s]{0,20}$/);
+				// var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
+				if(!auHomePhoneNumberPattern.test(info.HomePhoneNumber)){
 					error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
 				}
 			}
 
 			//validate WorkPhone
 			if(info.WorkPhoneNumber){
-				var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
-				var WorkPhone=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
-				if(!auWorkPhoneNumberPattern.test(WorkPhone)){
+				var auWorkPhoneNumberPattern=new RegExp(/^[0-9\-\(\)\s]{0,20}$/);
+				// var WorkPhone=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
+				if(!auWorkPhoneNumberPattern.test(info.WorkPhoneNumber)){
 					error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
 				}
 			}

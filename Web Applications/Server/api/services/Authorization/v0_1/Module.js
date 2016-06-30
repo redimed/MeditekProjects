@@ -31,7 +31,7 @@ var modules=[
 		state:'authentication.WAAppointment.list',
 		link: 'Appointment/list',
 		name:'Appointment List',
-		icon:'fa fa-canlendar',
+		icon: 'fa fa-calendar',
 		parent:'3',
 		order:'3',
 		roles:[
@@ -45,7 +45,7 @@ var modules=[
 		state:'authentication.WAAppointment.list',
 		link: 'Appointment/list',
 		name:'Referral History',
-		icon:'fa fa-calendar',
+		icon: 'fa fa-calendar',
 		parent:'root',
 		order:'4',
 		roles:[

@@ -43,7 +43,7 @@
 <!-- END SIDEBAR -->
 
 <script type="text/ng-template" id="nodes_renderer.html">
-	<a ng-if="node.state" href="#/{{node.state||null}}" >
+	<a ng-if="node.state" href="#/{{node.link||null}}" >
         <i class="{{node.icon}}"></i>
         <span class="title">{{node.name}}</span>
     </a>

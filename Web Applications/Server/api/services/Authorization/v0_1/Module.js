@@ -16,7 +16,9 @@ var modules=[
 	{
 		uid:'3',
 		state:'',
+		link: '',
 		name:'Appointment',
+		icon: 'fa fa-calendar',
 		parent:'root',
 		order:'3',
 		roles:[
@@ -103,6 +105,7 @@ var modules=[
 		state:'',
 		link: '',
 		name:'Doctor',
+		icon: 'fa fa-user-md',
 		parent:'root',
 		order:'7',
 		roles:[
@@ -178,7 +181,7 @@ var modules=[
 	{
 		uid:'16',
 		state:'authentication.company.list',
-		link: 'company/link',
+		link: 'company/list',
 		name:'Company',
 		icon: 'fa fa-building',
 		parent:'root',

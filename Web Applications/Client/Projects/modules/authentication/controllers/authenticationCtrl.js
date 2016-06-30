@@ -257,19 +257,20 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 app.controller('HeaderController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
+
     });
 }]);
 /* Setup Layout Part - Sidebar */
 app.controller('SidebarController', function($scope, Restangular,$cookies,CommonService) {
     $scope.$on('$includeContentLoaded', function() {
-        Layout.initSidebar(); // init sidebar
+        // Layout.initSidebar(); // init sidebar
     });
 
     var api = Restangular.all("api");
     var result = api.one("module/GetModulesForUser");
     result.get()
     .then(function(data){
-        console.log('------------->>>>>>>>>>>>>>>>>>>>>',data.data.nodes);
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',data.data.nodes);
         $scope.menus=data.data.nodes;
     },function(err){
         

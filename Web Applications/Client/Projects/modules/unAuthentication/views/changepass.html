@@ -1,5 +1,5 @@
 <div ng-if="isCheck==true">
-    <form method="post" class="forget-form" novalidate name="changepassForm" style="display: block;">
+    <form method="post" class="forget-form" novalidate name="changepassForm">
         <h3 class="form-title font-green">Change Password </h3>
         <p>Enter your new password to reset your password.</p>
         <div class="form-group">
@@ -15,11 +15,8 @@
             <!--end validate-->
         </div>
         <div class="form-actions">
-            <button type="button" id="back-btn" ui-sref="unAuthentication.login" class="btn btn-default uppercase">
-                <i class="glyphicon glyphicon-arrow-left"></i> Back </button>
-            <button class="btn green uppercase pull-right" ng-click="changePass()">
-                Submit <i class="glyphicon glyphicon-arrow-right"></i>
-            </button>
+            <button type="button" id="back-btn" ui-sref="unAuthentication.login" class="btn red">Back </button>
+            <button class="btn green uppercase pull-right" ng-click="changePass()">Submit</button>
         </div>
     </form>
 </div>

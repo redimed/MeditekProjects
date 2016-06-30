@@ -13,16 +13,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         document.body.className = "page-header-fixed page-sidebar-closed-hide-logo page-content-white";
     }
 
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initHeader(); // init header
-        // Layout.initSidebar(); // init sidebar
-        setTimeout(function() {
-            QuickSidebar.init(); // init quick sidebar        
-        }, 2000);
-        Layout.initFooter(); // init footer
-    });
-
-
     $scope.info = {};
     $scope.logout = function() {
         AuthenticationService.logout().then(function() {
@@ -264,25 +254,37 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
 
 /* Setup Layout Part - Header */
-// app.controller('HeaderController', ['$scope', function($scope) {
-//     $scope.$on('$includeContentLoaded', function() {
-//         Layout.initHeader(); // init header
-//     });
-// }]);
+app.controller('HeaderController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Layout.initHeader(); // init header
+    });
+}]);
 /* Setup Layout Part - Sidebar */
-// app.controller('SidebarController', ['$scope', function($scope) {
-//     $scope.$on('$includeContentLoaded', function() {
-//         Layout.initSidebar(); // init sidebar
-//     });
-// }]);
+app.controller('SidebarController', function($scope, Restangular,$cookies,CommonService) {
+    $scope.$on('$includeContentLoaded', function() {
+        Layout.initSidebar(); // init sidebar
+    });
+
+    var api = Restangular.all("api");
+    var result = api.one("module/GetModulesForUser");
+    result.get()
+    .then(function(data){
+        console.log('------------->>>>>>>>>>>>>>>>>>>>>',data.data.nodes);
+        $scope.menus=data.data.nodes;
+    },function(err){
+        
+    });
+
+});
 /* Setup Layout Part - Quick Sidebar */
-// app.controller('QuickSidebarController', ['$scope', function($scope) {
-//     $scope.$on('$includeContentLoaded', function() {
-//         setTimeout(function() {
-//             QuickSidebar.init(); // init quick sidebar        
-//         }, 2000)
-//     });
-// }]);
+app.controller('QuickSidebarController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        setTimeout(function() {
+            QuickSidebar.init(); // init quick sidebar        
+        }, 2000)
+    });
+
+}]);
 
 /* Setup Layout Part - Theme Panel */
 // app.controller('ThemePanelController', ['$scope', function($scope) {
@@ -292,8 +294,8 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 // }])
 
 /* Setup Layout Part - Footer */
-// app.controller('FooterController', ['$scope', function($scope) {
-//     $scope.$on('$includeContentLoaded', function() {
-//         Layout.initFooter(); // init footer
-//     });
-// }])
+app.controller('FooterController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Layout.initFooter(); // init footer
+    });
+}])

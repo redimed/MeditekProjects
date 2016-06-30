@@ -1,5 +1,8 @@
 var app = angular.module('app.unAuthentication.changepass.controller', []);
 app.controller('changepassCtrl', function($scope,$rootScope, $q, $state, $cookies, UnauthenticatedService, toastr, $timeout) {
+	$('.forget-form').show();
+	$('.content').removeClass('sign-up');
+
 	$scope.data = {};
 	$scope.err  = {};
 	$scope.isCheck= false;

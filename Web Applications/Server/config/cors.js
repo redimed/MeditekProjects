@@ -50,7 +50,7 @@ var corsConfig = {
         'https://localhost:3001, https://localhost:3004, https://localhost:3006, https://localhost:3007, https://localhost:3009, ' +
         'http://192.168.1.200:3001, http://192.168.1.200:3004, http://192.168.1.200:3006, http://192.168.1.200:3007, http://192.168.1.200:3009, ' +
         'http://192.168.1.216:3001, http://192.168.1.216:3004, http://192.168.1.216:3006, http://192.168.1.216:3007, http://192.168.1.216:3009, ' +
-        'http://192.168.1.194:3001, http://192.168.1.194:3004, http://192.168.1.194:3006, http://192.168.1.194:3007, http://192.168.1.194:3009, ' +
+        'https://192.168.1.107:3001, https://192.168.1.107:3004, https://192.168.1.107:3006, https://192.168.1.107:3007, https://192.168.1.107:3009, ' +
         'https://192.168.1.215:3001, https://192.168.1.215:3004, https://192.168.1.215:3006, https://192.168.1.215:3007, https://192.168.1.215:3009',
     //For TestApp deployment
     //origin: 'http://testapp.redimed.com.au:3001, http://testapp.redimed.com.au:3004, http://testapp.redimed.com.au:3007, http://testapp.redimed.com.au:3009',

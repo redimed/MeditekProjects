@@ -81,7 +81,7 @@ module.exports.routes = {
         action: 'SendCoreServer'
     },
     //================Telehealth Socket Routes==========================
-    '/api/telehealth/socket/joinRoom': {
+     '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',
         action: 'JoinConferenceRoom'
     },
@@ -93,9 +93,9 @@ module.exports.routes = {
         controller: 'SocketController',
         action: 'Logout'
     },
-    '/api/telehealth/socket/joinroomcall': {
+    '/api/telehealth/socket/addDoctor': {
         controller: 'SocketController',
-        action: 'JoinRoomCall'
+        action: 'AddDoctor'
     },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',

@@ -152,6 +152,21 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     $scope.loadListDoctor();
 
+    $scope.timeCurrent = new Date();
+
+    Number.prototype.toHHMMSS = function() {
+        var seconds = Math.floor(this),
+            hours = Math.floor(seconds / 3600);
+        seconds -= hours * 3600;
+        var minutes = Math.floor(seconds / 60);
+        seconds -= minutes * 60;
+
+        if (hours < 10) { hours = "0" + hours; }
+        if (minutes < 10) { minutes = "0" + minutes; }
+        if (seconds < 10) { seconds = "0" + seconds; }
+        return hours + ':' + minutes + ':' + seconds;
+    };
+
     $scope.loadListNotify = function() {
         // var roles = UserInfo.roles;
         var userUID = UserInfo.UID;
@@ -164,6 +179,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         }).then(function(data) {
             for (var i = 0; i < data.data.length; i++) {
                 data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                data.data[i].CreatedDate = new Date(data.data[i].CreatedDate);
+                data.data[i].time = (Date.now() - data.data[i].CreatedDate).toHHMMSS();
+                // console.log(typeof data.data[i].time);
             };
             console.log("listNotify", data.data);
             console.log("listNotify", data.count);
@@ -173,19 +191,6 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     };
 
     $scope.loadListNotify();
-
-    $scope.callDoctor = function(data) {
-        console.log("Start Call Doctor !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        var info = {
-            message: "startcall",
-            callerInfo: UserInfo,
-            receiverInfo: data.UserAccount,
-            callName: UserInfo.UserName + ", " + ((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName)
-        };
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
-            console.log("send call", data);
-        });
-    };
 
     $scope.updateReadQueueJob = function() {
         if ($scope.UnReadCount > 0) {
@@ -202,6 +207,19 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                 console.log("updateReadQueueJob ", err);
             });
         };
+    };
+
+    $scope.callDoctor = function(data) {
+        console.log("Start Call Doctor !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        var info = {
+            message: "startcall",
+            callerInfo: UserInfo,
+            receiverInfo: data.UserAccount,
+            callName: UserInfo.UserName + ", " + ((data.FirstName === null) ? "" : data.FirstName) + " " + ((data.MiddleName === null) ? "" : data.MiddleName) + " " + ((data.LastName === null) ? "" : data.LastName)
+        };
+        socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(data) {
+            console.log("send call", data);
+        });
     };
 
     ioSocket.telehealthStartCall = function(msg) {

@@ -93,7 +93,7 @@ module.exports={
         },
 
         CreatedDate:{
-        	type:Sequelize.DATE,
+        	type:Sequelize.DATE
         },
 
         CreatedBy:{

@@ -103,6 +103,12 @@ app.directive('companySite', function($uibModal, $timeout, $state, companyServic
 					});
 				}
 			};
+			
+			scope.clearOther = function(text) {
+        		for (var i = 0; i < text.length; i++) {            	
+            		scope.data.data[text[i]] = '';
+       			}
+    		};
 
 			scope.openModalMedic = function(type, data){				
 				console.log(" data ", data)

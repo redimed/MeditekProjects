@@ -117,7 +117,8 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 				var toTime = moment(toTimeNoTz).format('YYYY-MM-DD HH:mm:ss Z');
 				var IsRecurrence = $scope.formData.IsReoccurance;
 				var UserUID = $stateParams.doctorId;
-				var endRecurrence = $scope.formData.endReoccurance;
+				// var endRecurrence = $scope.formData.endReoccurance;
+				var endRecurrence = null;				
 				var recurrenceType = $scope.formData.reoccuranceType;
 				var bookable = $scope.formData.service.Bookable;
 				if($scope.formData.IsReoccurance === 'Y'){

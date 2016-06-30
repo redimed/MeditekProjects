@@ -139,13 +139,13 @@
                     <div class="col-md-10 col-sm-10 col-xs-9">
                         <div class="checkbox-list">
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="surface" ng-model="data.data.activities_Surface" /> Surface
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="Y" ng-model="data.data.activities_Surface" /> Surface
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="underground" ng-model="data.data.activities_Underground"> Underground
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="Y" ng-model="data.data.activities_Underground"> Underground
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="N/A" ng-model="data.data.activities_na"> N/A
+                                <input type="checkbox" name="special_activities" class="regular-checkbox" value="Y" ng-model="data.data.activities_na"> N/A
                             </label>
                         </div>
                     </div>
@@ -204,19 +204,19 @@
                     <div class="col-md-8 col-sm-8">
                         <div class="checkbox-list">
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="road" ng-model="data.data.mode_of_transfer_Road"> Road
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="data.data.mode_of_transfer_Road"> Road
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="rail" ng-model="data.data.mode_of_transfer_Rail"> Rail
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="data.data.mode_of_transfer_Rail"> Rail
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Ambulance" ng-model="data.data.mode_of_transfer_Ambulance"> Ambulance
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="data.data.mode_of_transfer_Ambulance"> Ambulance
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="air" ng-model="data.data.mode_of_transfer_Air"> Air
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="data.data.mode_of_transfer_Air"> Air
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="others" ng-model="data.data.mode_of_transfer_Others"> Others
+                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="data.data.mode_of_transfer_Others" ng-click="clearOther(['Others'])"> Others
                             </label>
                         </div>
                     </div>
@@ -224,7 +224,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Others</label>
                     <div class="col-md-8 col-sm-8 col-xs-9">
-                        <input type="text" class="form-control" placeholder="Others" ng-model="data.data.Others"/>
+                        <input type="text" class="form-control" placeholder="Others" ng-model="data.data.Others" ng-disabled="!data.data.mode_of_transfer_Others"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -238,15 +238,15 @@
                     <div class="col-md-3 col-sm-3 col-xs-4">
                         <div class="radio-list margin-bottom-20">
                             <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="road" ng-model="data.data.physio_no"> No
+                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="road" ng-model="data.data.physio" ng-click="clearOther(['physio_other'])"> No
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="rail" ng-model="data.data.physio_yes"> Yes
+                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="rail" ng-model="data.data.physio"> Yes
                             </label>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-8">
-                        <input type="text" class="form-control" placeholder="Others" ng-model="data.data.physio"/>
+                        <input type="text" class="form-control" placeholder="Others" ng-model="data.data.physio_other" ng-disabled="data.data.physio === 'rail' ? false : true"/>
                     </div>
                 </div>
                 <div class="well">

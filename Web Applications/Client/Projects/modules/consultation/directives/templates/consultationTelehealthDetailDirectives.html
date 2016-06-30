@@ -467,6 +467,13 @@
                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
                                                 </div>
                                             </div>
+                                            <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email2.$invalid}">
+                                                <label class="control-label col-lg-4 col-md-4">Email 2</label>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <input type="email" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email2" name="TelehealthAppointment_PatientAppointment_Email2" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
+                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email2.$error.pattern" class="help-block">Please enter a valid email 2 address.</p>
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Fax number</label>
                                                 <div class="col-lg-8 col-md-8">
@@ -625,250 +632,234 @@
                                                     <textarea class="form-control" ng-model="wainformation.Company.Description" ></textarea>
                                                 </div>
                                             </div> -->
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Site Name</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="site_name" class="form-control" ng-model="wainformation.CompanySite.SiteName" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">IMA</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="site_name" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Address1</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="address1" class="form-control" ng-model="wainformation.CompanySite.Address1" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Address2</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="Address2" class="form-control" ng-model="wainformation.CompanySite.Address2" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Suburb</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="suburb" class="form-control" ng-model="wainformation.CompanySite.Suburb" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Postcode</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="postcode" class="form-control" ng-model="wainformation.CompanySite.Postcode" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">State</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <select class="form-control" ng-options="s.code as s.name for s in state" ng-model="wainformation.CompanySite.State">
-                                                        <option value="">Select State</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Country</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <select class="form-control" ng-options="c.ID as c.ShortName for c in ListContry" ng-model="wainformation.CompanySite.Country" >
-                                                        <option value="">Select Country</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Contact Name</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="contact_name" class="form-control" ng-model="wainformation.CompanySite.ContactName" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Contact Number</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="contact_number" class="form-control" ng-model="wainformation.CompanySite.HomePhoneNumber" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Contact Mobile</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="contact_mobile" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Email</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <input type="text" name="contact_mobile" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Special Activities</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <div class="checkbox-list">
-                                                        <label class="checkbox-inline"><input type="checkbox" name="special_activities" class="regular-checkbox" value="surface"> Surface</label>
-                                                        <label class="checkbox-inline"><input type="checkbox" name="special_activities" class="regular-checkbox" value="underground"> Underground</label>
-                                                        <label class="checkbox-inline"><input type="checkbox" name="special_activities" class="regular-checkbox" value="not_available"> N/A</label>
+                                            <fieldset disabled>                                                                                            
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Site Name</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="site_name" class="form-control" ng-model="wainformation.CompanySite.SiteName" />
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3 col-md-3">Special Notes</label>
-                                                <div class="col-lg-9 col-md-9">
-                                                    <textarea class="form-control"></textarea>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">IMA</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="ima" class="form-control" ng-model="wainformation.CompanySite.data.IMA"/>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Address1</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="address1" class="form-control" ng-model="wainformation.CompanySite.Address1" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Address2</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="Address2" class="form-control" ng-model="wainformation.CompanySite.Address2" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Suburb</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="suburb" class="form-control" ng-model="wainformation.CompanySite.Suburb" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Postcode</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="postcode" class="form-control" ng-model="wainformation.CompanySite.Postcode" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">State</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <select class="form-control" ng-options="s.code as s.name for s in state" ng-model="wainformation.CompanySite.State">
+                                                            <option value="">Select State</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Country</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <select class="form-control" ng-options="c.ID as c.ShortName for c in ListContry" ng-model="wainformation.CompanySite.Country" >
+                                                            <option value="">Select Country</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Contact Name</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="contact_name" class="form-control" ng-model="wainformation.CompanySite.ContactName" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Contact Number</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="contact_number" class="form-control" ng-model="wainformation.CompanySite.HomePhoneNumber" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Contact Mobile</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="contact_mobile" class="form-control" ng-model="wainformation.CompanySite.ContactMobile"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Email</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <input type="text" name="email" class="form-control" ng-model="wainformation.CompanySite.Email" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Special Activities</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox-inline"><input type="checkbox" name="special_activities" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.activities_Surface"> Surface</label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="special_activities" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.activities_Underground"> Underground</label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="special_activities" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.activities_na"> N/A</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-md-3">Special Notes</label>
+                                                    <div class="col-lg-9 col-md-9">
+                                                        <textarea class="form-control" ng-model="wainformation.CompanySite.data.SpecialNote"></textarea>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
                                         </div>
                                         <div class="tab-pane" id="tab_company_site_more">
                                             <h3 class="form-section">More Information</h3>
-                                            <div class="table-scrollable">
-                                                <table class="table table-light">
-                                                    <thead>
-                                                        <tr class="uppercase">
-                                                            <th width="50%" class="text-center">Medic</th>
-                                                            <th width="50%" class="text-center">Contact number onsite</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                            <td><input type="text" class="form-control"/></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-5 col-sm-5">Closest Medical Centre (GP)</label>
-                                                <div class="col-md-7 col-sm-7">
-                                                    <input type="text" class="form-control"/>
+                                            <fieldset disabled>                                                                                            
+                                                <div class="table-scrollable">
+                                                    <table class="table table-light">
+                                                        <thead>
+                                                            <tr class="uppercase">
+                                                                <th width="50%" class="text-center">Medic</th>
+                                                                <th width="50%" class="text-center">Contact number onsite</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="p in wainformation.CompanySite.data_medic">
+                                                                <td>{{p.medic}}</td>
+                                                                <td>p.contact_number_onsite</td>
+                                                            </tr>                                                        
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-5 col-sm-5">Closet hopital/Medical Centre</label>
-                                                <div class="col-md-7 col-sm-7">
-                                                    <input type="text" class="form-control"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">Mode of transfer used to transfer to hospital</label>
-                                                <div class="col-md-12">
-                                                    <div class="checkbox-list">
-                                                        <label class="checkbox-inline">
-                                                            <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="road"> Road
-                                                        </label>
-                                                        <label class="checkbox-inline">
-                                                            <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="rail"> Rail
-                                                        </label>
-                                                        <label class="checkbox-inline">
-                                                            <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Ambulance"> Ambulance
-                                                        </label>
-                                                        <label class="checkbox-inline">
-                                                            <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="air"> Air
-                                                        </label>
-                                                        <label class="checkbox-inline">
-                                                            <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="others"> Others
-                                                        </label>
+                                                <div class="form-group margin-top-40">
+                                                    <label class="control-label col-md-5 col-sm-5">Closest Medical Centre (GP)</label>
+                                                    <div class="col-md-7 col-sm-7">
+                                                        <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.Closest_Medical_Centre"/>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                
-                                                <div class="col-md-12">
-                                                    <input type="text" class="form-control" placeholder="Others"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">Frequency of commercial aircraft in & out of site</label>
-                                                <div class="col-md-12">
-                                                    <input type="text" class="form-control"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">Do you have a physio on site? Or a physio that visits site?</label>
-                                                <div class="col-md-5 col-sm-5 col-xs-5">
-                                                    <div class="radio-list margin-bottom-20">
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="mode_of_transfer" class="regular-radio" value="road"> No
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="mode_of_transfer" class="regular-radio" value="rail"> Yes
-                                                        </label>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-5">Closet hopital/Medical Centre</label>
+                                                    <div class="col-md-7 col-sm-7">
+                                                        <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.Closethopital_MedicalCentre"/>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-7 col-sm-7 col-xs-7">
-                                                    <input type="text" class="form-control" placeholder="Others"/>
-                                                </div>
-                                            </div>
-                                            <div class="well">
-                                                <h5 class=""><i>Preferred local Pharmacy</i></h5>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Name</label>
-                                                            <div class="col-md-10 col-sm-10 col-xs-8">
-                                                                <input type="text" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Phone</label>
-                                                            <div class="col-md-10 col-sm-10 col-xs-8">
-                                                                <input type="text" class="form-control">
-                                                            </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Mode of transfer used to transfer to hospital</label>
+                                                    <div class="col-md-12">
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.mode_of_transfer_Road"> Road
+                                                            </label>
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.mode_of_transfer_Rail"> Rail
+                                                            </label>
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.mode_of_transfer_Ambulance"> Ambulance
+                                                            </label>
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.mode_of_transfer_Air"> Air
+                                                            </label>
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" name="mode_of_transfer" class="regular-checkbox" value="Y" ng-model="wainformation.CompanySite.data.mode_of_transfer_Others"> Others
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Fax</label>
-                                                            <div class="col-md-10 col-sm-10 col-xs-8">
-                                                                <input type="text" class="form-control">
+                                                <div class="form-group">
+                                                    
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" placeholder="Others" ng-model="wainformation.CompanySite.data.Others"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Frequency of commercial aircraft in & out of site</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.commercial_aircraft_out_of_site"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Do you have a physio on site? Or a physio that visits site?</label>
+                                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                                        <div class="radio-list margin-bottom-20">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="N" ng-model="wainformation.CompanySite.data.physio"> No
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="mode_of_transfer" class="regular-radio" value="Y" ng-model="wainformation.CompanySite.data.physio"> Yes
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                                        <input type="text" class="form-control" placeholder="Others" ng-model="wainformation.CompanySite.data.physio_other"/>
+                                                    </div>
+                                                </div>
+                                                <div class="well">
+                                                    <h5 class=""><i>Preferred local Pharmacy</i></h5>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Name</label>
+                                                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                                                    <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.Name">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Phone</label>
+                                                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                                                    <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.Phone">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Email</label>
-                                                            <div class="col-md-10 col-sm-10 col-xs-8">
-                                                                <input type="text" class="form-control">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Fax</label>
+                                                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                                                    <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.Fax">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2 col-sm-2 col-xs-3 text-right">Email</label>
+                                                                <div class="col-md-10 col-sm-10 col-xs-8">
+                                                                    <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.Email">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">What light duty options are available on your site/company?</label>
-                                                <div class="col-md-12">
-                                                    <input type="text" class="form-control">
+                                                <div class="form-group">
+                                                    <label class="col-md-12">What light duty options are available on your site/company?</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" ng-model="wainformation.CompanySite.data.light_company">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Further Information</label>
-                                                <div class="col-md-8 col-sm-8 col-xs-9">
-                                                    <textarea class="form-control"></textarea>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4 col-sm-4 col-xs-3 text-right">Further Information</label>
+                                                    <div class="col-md-8 col-sm-8 col-xs-9">
+                                                        <textarea class="form-control" ng-model="wainformation.CompanySite.data.FurtherInformation"></textarea>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </fieldset>
                                         </div>
                                     </div>
                                 </div>

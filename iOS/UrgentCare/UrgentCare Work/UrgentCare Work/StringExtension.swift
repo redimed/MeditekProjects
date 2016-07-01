@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 extension String {
-    
+    var count: Int { return self.characters.count }
     var capitalizeFirst:String {
         var result = self
         result.replaceRange(startIndex...startIndex, with: String(self[startIndex]).capitalizedString)

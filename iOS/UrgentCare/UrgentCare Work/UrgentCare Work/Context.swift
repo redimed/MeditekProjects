@@ -205,7 +205,6 @@ class Context {
             return false
         }
     }
-    
     class func EformtData(value:String,name:String,ref:String,type:String,checked:String,refRow:String)-> EformData{
         let eformData = EformData()
         
@@ -218,4 +217,23 @@ class Context {
         
         return eformData
     }
+    
+    class func RadioGetData(selectData :String,title:[[String]]){
+        for (_,row) in title.enumerate(){
+            if(selectData == row[0]){
+                for general in AllRedisiteData.general {
+                    if(general.ref == row[1]){
+                        general.checked = "true"
+                    }
+                }
+            }else{
+                for general in AllRedisiteData.general {
+                    if(general.ref == row[1]){
+                        general.checked = "false"
+                    }
+                }
+            }
+        }
+    }
+
 }

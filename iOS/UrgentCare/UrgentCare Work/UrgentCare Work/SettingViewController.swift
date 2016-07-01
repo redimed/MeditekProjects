@@ -57,6 +57,9 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.navigationBar.topItem?.title = "Setting"
+        if (self.isMovingFromParentViewController()) {
+            UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
+        }
     }
     
     
@@ -125,9 +128,9 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     self.navigationController?.pushViewController(listSite, animated: true)
                 }
                 if(indexPath.row == 1 && indexPath.section == 2){
+            
                     let changPinNumber :PatientInforViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("PatientInforViewControllerID") as! PatientInforViewController
                     self.navigationController?.pushViewController(changPinNumber, animated: true)
-
 //                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
 //                    self.navigationController?.pushViewController(changPinNumber, animated: true)
                 }

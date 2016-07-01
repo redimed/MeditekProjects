@@ -597,7 +597,7 @@ extension RequestTelehealthViewController : UIViewControllerTransitioningDelegat
         let allowsLandscape = false
         let singleSelect = false
         
-        showImagePickerWithAssetType(
+         (
             assetType,
             allowMultipleType: allowMultipleType,
             sourceType: sourceType,

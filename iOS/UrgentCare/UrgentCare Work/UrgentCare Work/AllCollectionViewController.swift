@@ -12,11 +12,16 @@ let reuseIdentifier = "collCell"
 
 class AllCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     var Allsize = CGSize()
-    var titles = []
+    var titles : [[String]] = []
     var listID : Array<Int>! = []
-    var type  = ""
+    var typeOption  = ""
+    var type = ""
+    var OptionalBackground = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(type != ""){
+            self.view.backgroundColor = UIColor.whiteColor()
+        }
         self.automaticallyAdjustsScrollViewInsets = false
     }
     
@@ -26,9 +31,6 @@ class AllCollectionViewController: UICollectionViewController, UICollectionViewD
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
-//    override func shouldAutorotate() -> Bool {
-//        return false
-//    }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return titles.count
@@ -36,7 +38,11 @@ class AllCollectionViewController: UICollectionViewController, UICollectionViewD
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
-        cell.txtName.text = titles[indexPath.row] as? String
+        for (colum,row) in titles.enumerate() {
+            if(colum == indexPath.row){
+                cell.txtName.text = row[0]
+            }
+        }
         cell.txtName.backgroundColor = UIColor.whiteColor()
         cell.txtName.textColor = UIColor(hex: Define.ColorCustom.greenBoderColor)
         for i in 0 ..< listID.count {
@@ -48,15 +54,20 @@ class AllCollectionViewController: UICollectionViewController, UICollectionViewD
         return cell
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        var originalString: String = ""
+        for (colum,row) in titles.enumerate() {
+            if(colum == indexPath.row){
+                originalString = row[0]
+            }
+        }
         
-        let originalString: String = titles[indexPath.row] as! String
         let myString: NSString = originalString as NSString
         let size: CGSize = myString.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(17.0)])
         Allsize.width = Allsize.width + size.width + 5
         print(Allsize.width)
-        if(type == "DescrubeInjury"){
+        if(typeOption == "DescrubeInjury"){
             return CGSize(width: 120, height: collectionView.frame.size.height)
-        }else if(type == "InjurySymtomsSegue"){
+        }else if(typeOption == "InjurySymtomsSegue"){
             if(size.width < 120){
                 return CGSize(width: size.width + 5, height: collectionView.frame.size.height)
             }else{
@@ -80,6 +91,20 @@ class AllCollectionViewController: UICollectionViewController, UICollectionViewD
         return 0.0
     }
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        for (i,row) in titles.enumerate() {
+            if(i == indexPath.row){
+                for general in AllRedisiteData.general {
+                    if(general.ref == row[1]){
+                        if(general.checked == "true"){
+                            general.checked = "false"
+                        }else{
+                            general.checked = "true"
+                        }
+                    }
+                }
+            }
+        }
         var checkExits = 0
         for i in 0 ..< listID.count {
             if(i < listID.count){

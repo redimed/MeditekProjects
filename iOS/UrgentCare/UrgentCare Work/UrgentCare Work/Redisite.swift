@@ -11,18 +11,38 @@ import ObjectMapper
 import RealmSwift
 
 class Redisite: BaseModel {
-    dynamic var ErrorType = ""
+    dynamic var data : RedisiteData!
     
     required convenience init?(_ map: Map) {
         self.init()
     }
     
     override func mapping(map: Map) {
-        ErrorType    <- map["ErrorType"]
+        data    <- map["data"]
     }
     
 }
-
+class RedisiteData : BaseModel{
+    dynamic var templateUID = ""
+    dynamic var appointmentUID = ""
+    dynamic var tempData = ""
+    dynamic var name = ""
+    dynamic var patientUID = ""
+    dynamic var userUID = ""
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    override func mapping(map: Map) {
+        templateUID    <- map["templateUID"]
+        appointmentUID    <- map["appointmentUID"]
+        tempData    <- map["tempData"]
+        name    <- map["name"]
+        patientUID    <- map["patientUID"]
+        userUID    <- map["userUID"]
+    }
+    
+}
 class General: BaseModel {
     var general = [EformData]()
     
@@ -57,6 +77,47 @@ class EformData : Mappable{
         checked    <- map["checked"]
         refRow    <- map["refRow"]
         moduleID    <- map["moduleID"]
-    }  
+    }
 }
- var generalData = General()
+class ResponseEform : BaseModel {
+    dynamic var data : ResponseEformData!
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    override func mapping(map: Map) {
+        data    <- map["data"]
+    }
+    
+}
+class ResponseEformData : BaseModel{
+    dynamic var CreatedBy = 0
+    dynamic var CreatedDate = ""
+    dynamic var EFormTemplateID = 0
+    dynamic var Enable = ""
+    dynamic var ID = 0
+    dynamic var ModifiedDate = 0
+    dynamic var Name = ""
+    dynamic var Status = ""
+    dynamic var UID = ""
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    override func mapping(map: Map) {
+        CreatedBy    <- map["CreatedBy"]
+        CreatedDate    <- map["CreatedDate"]
+        EFormTemplateID    <- map["EFormTemplateID"]
+        Enable    <- map["Enable"]
+        ID    <- map["ID"]
+        ModifiedDate    <- map["ModifiedDate"]
+        Name    <- map["Name"]
+        Status    <- map["Status"]
+        UID    <- map["UID"]
+    }
+}
+var AllRedisiteData = General()
+var GeneralData = General()
+var PatientData = General()
+var InjuryData = General()
+var DataConsent = General()

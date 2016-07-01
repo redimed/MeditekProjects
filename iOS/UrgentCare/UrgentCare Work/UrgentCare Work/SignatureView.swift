@@ -1,74 +1,101 @@
+//
+//  PaintView.swift
+//  PaintingTest
+//
+//  Created by Rodrigo Pélissier on 11-04-15.
+//  Copyright (c) 2015 Rodrigo Pélissier. All rights reserved.
+//
 
 import UIKit
 
-@available(iOS 9.0, *)
-class SignatureUIView : UIView {
+struct Point {
+    var location: CGPoint
+    var magnitude: CGFloat
+}
+
+class SignatureUIView: UIView {
+    var drawImage: UIImage?
+    let path=UIBezierPath()
     
-    var drawImage : UIImage?
-    var samplePoints = [CGPoint]()
-    var path = UIBezierPath()
-    var shouldClear = false
+    var previousPoint:CGPoint = CGPoint.zero
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        backgroundColor = .whiteColor()
-        path.lineCapStyle = .Round
-        path.lineJoinStyle = .Round
-        path.lineWidth = 3
-    }
+    var strokeColor:UIColor?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func drawRect(rect: CGRect) {
+        
+        strokeColor = UIColor.blackColor()
+        strokeColor?.setStroke()
+        path.lineWidth = 2
+        path.stroke()
+        
+        //drawImage?.drawInRect(bounds)
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first
-        samplePoints.append((touch?.locationInView(self))!)
-    }
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first!
         
-        for coalesedTouch in event!.coalescedTouchesForTouch(touch)!{
-            samplePoints.append(coalesedTouch.locationInView(self))
-        }
-        setNeedsLayout()
+        let touch: AnyObject? = touches.first
+        let currentPoint = touch!.locationInView(self)
+        
+        path.moveToPoint(currentPoint)
+        previousPoint=currentPoint
+        self.setNeedsDisplay()
     }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch: AnyObject? = touches.first
+        let currentPoint = touch!.locationInView(self)
+        let midPoint = self.midPoint(previousPoint, p1: currentPoint)
+        
+        path.addQuadCurveToPoint(midPoint,controlPoint: previousPoint)
+        previousPoint=currentPoint
+        
+        self.setNeedsDisplay()
+        
+        path.moveToPoint(midPoint)
+    }
+    
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
         drawViewHierarchyInRect(bounds, afterScreenUpdates: true)
         drawImage = UIGraphicsGetImageFromCurrentImageContext()
+        
         UIGraphicsEndImageContext()
-        samplePoints.removeAll()
+        self.setNeedsDisplay()
     }
+    
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        touchesEnded(touches!, withEvent: event)
+        self.touchesEnded(touches!, withEvent: event)
     }
-    
-    func getMidPointFromPointA(a:CGPoint, andB b : CGPoint)-> CGPoint{
-        return CGPoint(x: (a.x + b.x)/2, y: (a.y + b.y)/2)
+    func SaveImage()->UIImage{
+        self.userInteractionEnabled = false
+        setNeedsDisplay()
+        return drawImage!
+        
     }
-    
-    override func drawRect(rect: CGRect) {
-        let ctx = UIGraphicsGetCurrentContext()
-        CGContextSetAllowsAntialiasing(ctx, true)
-        CGContextSetShouldAntialias(ctx, true)
-        
-        UIColor.blueColor().setStroke()
-        path.removeAllPoints()
-        
-        drawImage?.drawInRect(rect)
-        
-        if !samplePoints.isEmpty{
-            path.moveToPoint(samplePoints.first!)
-            path.addLineToPoint(getMidPointFromPointA(samplePoints.first!, andB: samplePoints[1]))
-            for idx in 1..<samplePoints.count - 1{
-                let midPoint = getMidPointFromPointA(samplePoints[idx], andB: samplePoints[idx+1])
-                path.addQuadCurveToPoint(midPoint, controlPoint: samplePoints[idx])
-            }
-            path.addLineToPoint(samplePoints.last!)
-            path.stroke()
+    func CheckDrawImageNil()->Bool{
+        if(drawImage != nil){
+            return false
+        }else{
+            return true
         }
     }
+    func Clear(){
+        self.userInteractionEnabled = true
+        drawImage = nil
+        path.removeAllPoints()
+        setNeedsDisplay()
+    }
+    
+    func midPoint(p0:CGPoint,p1:CGPoint)->CGPoint
+    {
+        let x=(p0.x+p1.x)/2
+        let y=(p0.y+p1.y)/2
+        return CGPoint(x: x, y: y)
+    }
+    
 }

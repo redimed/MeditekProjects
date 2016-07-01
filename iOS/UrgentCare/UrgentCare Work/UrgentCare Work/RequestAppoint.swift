@@ -18,7 +18,7 @@ class RequestAppointData: BaseModel {
     dynamic var Description = ""
     dynamic var patientAppointment : PatientAppointment!
     var appointmentData = [AppointmentData]()
-    var fileUploads = [FileUploads]()
+    var fileUploads = [FileUploadImage]()
     var patientsCompany = [PatientsCompany]()
     required convenience init?(_ map: Map) {
         self.init()
@@ -52,12 +52,19 @@ class RequestAppointPost: BaseModel {
 class PatientAppointment : BaseModel{
     
     dynamic var FirstName = ""
+    dynamic var Title = ""
     dynamic var LastName = ""
     dynamic var PhoneNumber = ""
     dynamic var HomePhoneNumber = ""
+    dynamic var WorkPhoneNumber = ""
     dynamic var Suburb = ""
     dynamic var DOB = ""
     dynamic var Email = ""
+    dynamic var Postcode = ""
+    dynamic var PatientKinMobilePhoneNumber = ""
+    dynamic var PatientKinFirstName = ""
+    dynamic var PatientKinLastName = ""
+    dynamic var Address1 = ""
     
     required convenience init?(_ map: Map) {
         self.init()
@@ -71,6 +78,13 @@ class PatientAppointment : BaseModel{
         Suburb    <- map["Suburb"]
         DOB    <- map["DOB"]
         Email    <- map["Email1"]
+        Postcode    <- map["Postcode"]
+        PatientKinMobilePhoneNumber <- map["PatientKinMobilePhoneNumber"]
+        Title <- map["Title"]
+        PatientKinFirstName <- map["PatientKinFirstName"]
+        PatientKinLastName <- map["PatientKinLastName"]
+        Address1 <- map["Address1"]
+
     }
 }
 
@@ -122,15 +136,59 @@ class FileUploads : Mappable{
     
 }
 
+class FileUploadImage : Mappable{
+    
+    dynamic var UID = ""
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    func mapping(map: Map) {
+        UID    <- map["UID"]
+    }
+    
+}
+
 class RequestAppointResponse : BaseModel{
     
     dynamic var status = ""
+    var data = [DataResPonseAppointment]()
     required convenience init?(_ map: Map) {
         self.init()
     }
     
     override func mapping(map: Map) {
         status    <- map["status"]
+        data    <- map["data"]
+    }
+    
+}
+class DataResPonseAppointment : Mappable{
+    
+    dynamic var appointment : DataResPonseAppointment_appointment!
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    func mapping(map: Map) {
+        appointment    <- map["appointment"]
+    }
+    
+}
+class DataResPonseAppointment_appointment : BaseModel{
+    
+    dynamic var ID = 0
+    dynamic var Code = ""
+    dynamic var UID = ""
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    override func mapping(map: Map) {
+        ID    <- map["ID"]
+        Code    <- map["Code"]
+        UID    <- map["UID"]
     }
     
 }

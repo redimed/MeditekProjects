@@ -12,7 +12,7 @@ import ObjectMapper
 class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    
+     var alertViewList = UIAlertView()
     var refreshControl: UIRefreshControl!
     var listStaff = ListStaff()
     var staff = Staff()
@@ -26,11 +26,20 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.title = "List Staff"
+        if (self.isMovingFromParentViewController()) {
+            UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
+        }
         if(CheckStaffInfor == true){
             self.navigationController?.navigationBarHidden = false
             self.navigationController?.navigationBar.topItem?.title = "Back"
             self.navigationItem.title = "List Staff"
         }
+    }
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    func canRotate() -> Void {
+        
     }
     func loadData(){
         
@@ -51,7 +60,7 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
                             }else{
                                 //self!.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
-                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                    self!.alertViewList.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                 }
                             }
                         }

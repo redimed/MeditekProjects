@@ -708,6 +708,7 @@ module.exports = {
                         if (validated && validated.status == 'success') {
                             userInfo.Password = generatePassword(6, false,/[\w\d]/);
                             userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
+                            userInfo.UserName = userInfo.UserName.replace(/[\s]/g,'');
                             return Services.UserAccount.CreateUserAccount(userInfo, t);
                         } else {
                             return validated;

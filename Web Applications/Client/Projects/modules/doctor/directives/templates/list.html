@@ -66,16 +66,16 @@
 							</span>
 						</td>
 					</tr>
-	                <tr ng-repeat="d in doctors" ng-click="linkDoctorGroup(d)" ng-show="islinkDoctorGroup == true" id="{{'tr'+d.stt}}" ng-class="{'is-Choose': d.UID === uidReturn && d.UID!==undefined && d.UID!==null && d.UID!==''}">
-						<td>{{d.stt}}</td>
-						<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
-						<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
-						<td>
+	                <tr ng-repeat="d in doctors" ng-show="islinkDoctorGroup == true" id="{{'tr'+d.stt}}" ng-class="{'is-Choose': d.UID === uidReturn && d.UID!==undefined && d.UID!==null && d.UID!==''}">
+						<td ng-click="linkDoctorGroup(d)">{{d.stt}}</td>
+						<td ng-click="linkDoctorGroup(d)" ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
+						<td ng-click="linkDoctorGroup(d)">{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
+						<td ng-click="linkDoctorGroup(d)">
 							<span ng-if="d.UserAccount.Enable != 'N'">
 								<i class="fa fa-check"></i>
 							</span>
 						</td>
-	                    <td style="width:10%; text-align:center;" >
+	                    <td ng-click="linkDoctorGroup(d)" style="width:10%; text-align:center;" >
 							<i style="font-size:150%;" ng-class="{'fa fa-check-square-o':d.UID == uidReturn,'fa fa-square-o':d.UID != uidReturn}" id="{{'check'+d.stt}}"></i>
 						</td>
 	                    <td> <button class="btn btn-info" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)"> View Detail </button> </td>

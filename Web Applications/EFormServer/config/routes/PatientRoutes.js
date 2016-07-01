@@ -31,10 +31,10 @@ module.exports={
 	    action :'GetPatient'
 	},
 
-	'post /api/patient/delete-patient': {
-	    controller: 'Patient/PatientController',
-	    action :'DeletePatient'
-	},
+	// 'post /api/patient/delete-patient': {
+	//     controller: 'Patient/PatientController',
+	//     action :'DeletePatient'
+	// },
 
 	'post /api/patient/loadlist-patient': {
 	    controller: 'Patient/PatientController',

@@ -88,7 +88,8 @@ var log = {};
 if (process.env.NODE_ENV === 'production') {
     log['custom'] = customLogger;
 } else {
-    log['custom'] = logstashLogger;
+    // log['custom'] = logstashLogger;
+    log['level'] = 'verbose';
 }
 
 // Override console.log. All console.log is now treated at debug level of winston log.

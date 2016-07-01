@@ -65,7 +65,9 @@ module.exports = {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
                             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                            return res.ok(response.getBody());
+                            var data = response.getBody();
+                            data.data[0].UserAccount = user.dataValues;
+                            return res.ok(data);
                         }, function(err) {
                             res.json(err.getCode(), err.getBody());
                         });
@@ -235,12 +237,18 @@ module.exports = {
                                 return teleDevice.update({
                                     DeviceToken: deviceToken
                                 }).then(function() {
-                                    res.ok({
-                                        message: "success",
-                                        data: {
-                                            TelehealthUser: teleUser,
-                                            TelehealthDevice: teleDevice
-                                        }
+                                    return TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
+                                        if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                                        res.ok({
+                                            message: "success",
+                                            data: {
+                                                TelehealthUser: teleUser,
+                                                TelehealthDevice: teleDevice,
+                                                PatientInfo: response.getBody().data[0]
+                                            }
+                                        });
+                                    }, function(err) {
+                                        res.json(err.getCode(), err.getBody());
                                     });
                                 }).catch(function(err) {
                                     res.serverError(ErrorWrap(err));

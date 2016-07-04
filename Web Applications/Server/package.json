@@ -62,7 +62,7 @@
     "sails-hook-sequelize": "^1.0.1",
     "sails-mysql": "^0.11.0",
     "sails.io.js": "^0.13.6",
-    "sequelize": "^3.14.2",
+    "sequelize": "3.14.2",
     "sequelize-mysql": "^1.7.0",
     "skipper-disk": "^0.5.4",
     "socket.io-client": "^1.4.3",

@@ -23,6 +23,7 @@
     "webpack": "^1.4.15"
   },
   "dependencies": {
+    "http": "0.0.0",
     "mysql": "^2.10.2"
   }
 }

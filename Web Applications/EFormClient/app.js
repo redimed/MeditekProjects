@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var https = require('https');
+var http = require('http');
 var fs = require('fs');
 
 var ssl_options = {
@@ -28,6 +29,14 @@ app.get('/', function(req, res){
 	res.render('index.ejs');
 });
 
-https.createServer(ssl_options, app).listen('3014', function() {
+if (process.argv.indexOf("--nossl") >= 0) {
+    console.log("============================== development");
+    http.createServer(app).listen('3014', function() {
+        console.log('Express server listening on port http 3014');
+    });
+} else {
+    console.log("============================== production");
+    https.createServer(ssl_options, app).listen('3014', function() {
         console.log('Express server listening on port https 3014');
-});
+    });
+}

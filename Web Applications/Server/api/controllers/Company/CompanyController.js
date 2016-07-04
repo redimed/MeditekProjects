@@ -49,6 +49,9 @@ module.exports = {
 
     loadDetail: function(req, res) {
         var data = req.body.data;
+        if (typeof(data) == 'string') {
+            data = JSON.parse(data);
+        }
         if(!data.model || data.model == null || data.model == ''){
             var err = new Error("loadDetail.error");
             err.pushError("model.invalidParams");

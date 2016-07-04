@@ -141,4 +141,7 @@ module.exports = {
     //begin Language
     GetListLanguage: require('./Language/GetListLanguage'),
     //end Language
+    //begin Staff
+    GetListStaff: require('./Staff/GetListStaff'),
+    //end Staff
 };

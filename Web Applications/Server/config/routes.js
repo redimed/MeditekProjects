@@ -89,4 +89,8 @@ _.extend(routes, SystemSettingRoutes);
 var LanguageRoutes = require('./routes/LanguageRoutes');
 _.extend(routes, LanguageRoutes);
 //end module Language
+//begin module Staff
+var StaffRoutes = require('./routes/StaffRoutes');
+_.extend(routes, StaffRoutes);
+//end module Staff
 module.exports.routes = routes;

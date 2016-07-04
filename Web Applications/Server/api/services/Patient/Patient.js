@@ -831,13 +831,13 @@ module.exports = {
                         throw err;
                     })
                     .then(function(created_patientPension) {
-                        if(!data.fileUID) {
+                        if(!data.PatientSignatureUID) {
                             return created_patientPension;
                         }
                         else {
                             return FileUpload.findOne({
                                 where: {
-                                    UID : data.fileUID
+                                    UID : data.PatientSignatureUID
                                 },
                                 transaction: t
                             });
@@ -846,7 +846,7 @@ module.exports = {
                         throw err;
                     })
                     .then(function(found_file) {
-                        if(!data.fileUID) {
+                        if(!data.PatientSignatureUID) {
                             return  ;
                         }
                         else {

@@ -18,6 +18,6 @@ app.controller('consultationCtrl', function($rootScope, $scope){
     	// set default layout mode
     	$rootScope.settings.layout.pageContentWhite = true;
         $rootScope.settings.layout.pageBodySolid = false;
-        $rootScope.settings.layout.pageSidebarClosed = true;
+        $rootScope.settings.layout.pageSidebarClosed = false;
     });
 });

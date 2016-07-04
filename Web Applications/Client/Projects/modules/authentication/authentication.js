@@ -19,6 +19,7 @@ var app = angular.module('app.authentication', [
 	'app.authentication.company',
 	'app.authentication.onsite',
 	'app.authentication.doctorCalling',
+	'app.authentication.notification',
 ]);
 
 app.config(function($stateProvider){

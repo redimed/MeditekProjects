@@ -254,12 +254,11 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
 
 /* Setup Layout Part - Header */
-app.controller('HeaderController', ['$scope', function($scope) {
+app.controller('HeaderController', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
-
     });
-}]);
+});
 /* Setup Layout Part - Sidebar */
 app.controller('SidebarController', function($scope, Restangular,$cookies,CommonService) {
     $scope.$on('$includeContentLoaded', function() {

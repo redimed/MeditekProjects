@@ -24,7 +24,8 @@ module.exports = function(data, userInfo) {
             limit: pagination.limit,
             offset: pagination.offset,
             order: pagination.order,
-            where: pagination.UserAccount
+            where: pagination.UserAccount,
+            subQuery: false
         })
         .then(function(listStaff) {
             defer.resolve({ data: listStaff });

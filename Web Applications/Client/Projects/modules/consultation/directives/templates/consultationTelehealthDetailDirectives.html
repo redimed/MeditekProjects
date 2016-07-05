@@ -270,14 +270,14 @@
                             <div class="tab-pane" id="tab_patient">
                                 <div class="row margin-bottom-10">
                                     <div class="col-lg-12">
-                                        <a class="btn btn-outline red pull-right" ng-click="selectPatient()" ng-hide="isShowBtnLink">
-                                            <i class="glyphicon glyphicon-plus"></i> Link Patient
+                                        <a class="btn btn-outline red pull-right" ng-click="sendMailWhenLinked()" ng-show="isLinked && wainformation.Type=='PreEmployment'">
+                                            <i class="glyphicon glyphicon-plus"></i> Send Health Screening Email
                                         </a>
                                         <a class="btn btn-outline blue pull-right" ng-click="SelectDialogPassword()" style="margin-right: 2px;">
                                             <i class="fa fa-key"></i> Generate Password Patient
                                         </a>
-                                        <a class="btn btn-outline red pull-right" ng-click="sendMailWhenLinked()" ng-show="isLinked">
-                                            <i class="glyphicon glyphicon-plus"></i> Send Mail
+                                        <a class="btn btn-outline red pull-right" ng-click="selectPatient()" ng-hide="isShowBtnLink">
+                                            <i class="glyphicon glyphicon-plus"></i> Link Patient
                                         </a>
                                         <h3 class="font-red" ng-if="wainformation.Patients.length != 0 && isShowTitle == false">
                                             PATIENT : <span class="font-red"> {{wainformation.Patients[0].FirstName + ' ' + wainformation.Patients[0].LastName}}</span>

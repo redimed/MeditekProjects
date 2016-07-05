@@ -1389,17 +1389,22 @@ app.directive('telehealthDetail', function(doctorService) {
                         email.push($scope.ShowData.patient[key]);
                     }
                 }
-                PatientService.sendEmailWhenLinked({ 
-                    to:email, 
-                    patientUID:$scope.ShowData.patient.UID, 
-                    type:$scope.wainformation.Type, 
-                    subject:'Confirm Linked Patient.'
-                }).then(function(result) {
-                    console.log("result ",result);
-                    toastr.success('Send successfully.');
-                }, function(err) {
-                    console.log("err ",err);
-                })
+                if(email.length > 0) {
+                    PatientService.sendEmailWhenLinked({ 
+                        to:email, 
+                        patientUID:$scope.ShowData.patient.UID, 
+                        type:$scope.wainformation.Type, 
+                        subject:'Confirm Linked Patient.'
+                    }).then(function(result) {
+                        console.log("result ",result);
+                        toastr.success('Send successfully.');
+                    }, function(err) {
+                        console.log("err ",err);
+                    })
+                }
+                else {
+                    toastr.error('Not found Email to send.');
+                }
             }
 
             var userObj = $cookies.getObject('userInfo');

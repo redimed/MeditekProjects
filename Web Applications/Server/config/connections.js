@@ -4,7 +4,7 @@ var connections = {
     }
 };
 if (process.argv.indexOf("--dblocal") >= 0) {
-    console.log("connections", "database local");
+    console.log("|||||||||||||||||||||||||||||| DATABASE LOCAL");
     connections.mysql = {
         dialect: 'mysql',
         host: 'localhost',
@@ -16,7 +16,7 @@ if (process.argv.indexOf("--dblocal") >= 0) {
         collation: 'utf8-general_ci'
     }
 } else {
-    console.log("connections", "database meditek");
+    console.log("|||||||||||||||||||||||||||||| DATABASE MEDITEK");
     connections.mysql = {
         adapter: 'sails-mysql',
         port: 3306,

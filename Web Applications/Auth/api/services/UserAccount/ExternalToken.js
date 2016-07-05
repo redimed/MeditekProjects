@@ -81,7 +81,8 @@ module.exports = {
                     return et.updateAttributes({
                         SecretKey: UUIDService.Create(),
                         SecretCreatedAt: new Date(),
-                        TokenExpired: 2 * 60 * 60
+                        // TokenExpired: 2 * 60 * 60
+                        TokenExpired: 1 * 60
                     }, {transaction: transaction})
                     .then(function(result) {
                         return result;
@@ -98,7 +99,8 @@ module.exports = {
                         SystemType: userAccess.SystemType,
                         SecretKey: UUIDService.Create(),
                         SecretCreatedAt: new Date(),
-                        TokenExpired: 2 * 60 * 60
+                        // TokenExpired: 2 * 60 * 60
+                        TokenExpired: 1 * 60
                     };
                     if (userAccess.SystemType != HelperService.const.systemType.website) {
                         insertInfo.DeviceID = userAccess.DeviceID;

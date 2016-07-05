@@ -53,7 +53,7 @@ app.controller('eFormLoadFormCtrl', function($scope, $stateParams, $cookies, $st
                 token: externalToken
             }, 'https://localhost:3014');
         })
-    }, 10 * 1000);
+    }, 45 * 1000);
 
     $scope.stopExternalTokenInterval = function () {
         alert("stopExternalTokenInterval");

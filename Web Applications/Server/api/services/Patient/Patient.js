@@ -698,7 +698,9 @@ module.exports = {
                             return success;
                         } else {
                             isCreateByName = true;
-                            userInfo.UserName = data.UserName?data.UserName:data.FirstName + "." + data.LastName + "." + generatePassword(4, false);
+                            var FirstName = data.FirstName.replace(/[\s]/g,'');
+                            var LastName = data.LastName.replace(/[\s]/g,'');
+                            userInfo.UserName = data.UserName?data.UserName: FirstName + "." + LastName + "." + generatePassword(4, false);
                             return success;
                         }
                     }, function(err) {

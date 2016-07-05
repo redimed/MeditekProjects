@@ -228,5 +228,8 @@ module.exports = {
             foreignKey: 'ID'
         });
 
+        UserAccount.hasMany(ExternalToken, {
+            foreignKey: 'UserAccountID'
+        })
     }
 };

@@ -192,6 +192,15 @@ module.exports = {
                 }  */
                 RedisService.removeUserConnect(connectInfo);
                 //------------------------------------------
+                var userAccessEForm = {
+                    UserUID: req.user.UID,
+                    ExternalName: 'EFORM',
+                    SystemType: req.headers.systemtype,
+                    DeviceID: req.headers.deviceid,
+                    AppID: req.headers.appid
+                }
+                //Services.ExternalToken.MakeExternalSecret(userAccessEForm);
+                //------------------------------------------
                 res.ok({ status: 'success' });
             }, function(err) {
                 res.serverError(ErrorWrap(err));

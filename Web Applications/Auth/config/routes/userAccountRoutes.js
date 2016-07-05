@@ -143,6 +143,21 @@ module.exports = {
         action: 'GetNewToken'
     },
 
+    'post /api/external-token/MakeExternalSecret': {
+        controller:  'UserAccount/v0_1/ExternalTokenController',
+        action: 'MakeExternalSecret'
+    },
+
+    'post /api/external-token/GetExternalSecret': {
+        controller:  'UserAccount/v0_1/ExternalTokenController',
+        action: 'GetExternalSecret'
+    },
+
+    'post /api/external-token/GetNewExternalToken': {
+        controller:  'UserAccount/v0_1/ExternalTokenController',
+        action: 'GetNewExternalToken'
+    },
+
     'post /api/user-account/get-DetailUser': {
         controller: 'UserAccount/v0_1/UserAccountController',
         action: 'getDetailUser'

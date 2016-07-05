@@ -285,12 +285,17 @@ module.exports = {
 		return p;
 	},
 	formUpdate: function(data){
+		//alert(JSON.stringify(window.userAccess));
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
 				data: data,
+				//headers: window.userAccess,
 				url: Config.apiUrl+'eform/update',
-				success: resolve
+				success: resolve,
+				/*beforeSend: function(xhr){
+					xhr.setRequestHeader('Authorization', window.userAccess.authorization);
+				},*/
 			})
 		})
 		return p;

@@ -79,7 +79,7 @@ var corsConfig = {
      *                                                                          *
      ***************************************************************************/
 
-    headers: 'content-type, authorization, systemtype, deviceid, appid, useruid, filetype',
+    headers: 'content-type, authorization, systemtype, deviceid, appid, useruid, filetype, externalname',
 
     // exposeHeaders:'filename,filetype', //TODO
 

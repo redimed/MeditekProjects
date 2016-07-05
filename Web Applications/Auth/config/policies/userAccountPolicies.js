@@ -23,6 +23,12 @@ module.exports={
   		'GetNewToken':true,
   	},
 
+	'UserAccount/v0_1/ExternalTokenController': {
+		'MakeExternalSecret': true,
+		'GetExternalSecret': true,
+		'GetNewExternalToken': true,
+	},
+
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
       'makeUserOwnRoom':true,

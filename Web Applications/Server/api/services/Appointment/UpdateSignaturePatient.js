@@ -40,7 +40,8 @@ module.exports = function(objUpdate) {
                         where: {
                             FileType: 'Signature',
                             UserAccountID: userAccountID
-                        }
+                        },
+                        transaction: objUpdate.transaction
                     });
                 }
             }, function(err) {
@@ -52,7 +53,8 @@ module.exports = function(objUpdate) {
                 }, {
                     where: {
                         ID: fileUploadID
-                    }
+                    },
+                    transaction: objUpdate.transaction
                 });
             }, function(err) {
                 defer.reject(err);

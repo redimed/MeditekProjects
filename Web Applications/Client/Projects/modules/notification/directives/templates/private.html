@@ -1,0 +1,61 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar margin-bottom-20">
+    <ul class="page-breadcrumb">
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i><span> Notification Private</span></li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="portlet portlet-fit light bordered">
+    <div class="portlet-title">
+        <div class="caption bold uppercase font-blue">
+            <i class="icon-list"></i>
+            <span class="caption-subject bold uppercase"> Notification Private</span>
+        </div>
+        <div class="actions">
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive">
+            <table class="table table-light table-hover table-striped">
+                <thead>
+                    <tr class="uppercase">
+                        <th width="1"></th>
+                        <th>Action</th>
+                        <th>Time</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="text" class="form-control" /></td>
+                        <td><input type="text" class="form-control" /></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="not in listNotify" ng-click="openDetail()">
+                        <td>{{$index + 1}}</td>
+                        <td>{{not.MsgContent.Appointment.Code}} {{not.MsgContent.action}}.</td>
+                        <td>{{not.CreatedDate}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <th colspan="3">
+                        <div class="dataTables_paginate paging_bootstrap_number" id="sample_3_paginate">
+                            <ul class="pagination" style="visibility: visible;">
+                                <li class="prev disabled"><a href="#" title="Prev"><i class="fa fa-angle-left"></i></a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li class="next"><a href="#" title="Next"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="dataTables_info" id="sample_3_info" role="status" aria-live="polite">Showing 1 to 10 of 100 entries</div>
+                    </th>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+

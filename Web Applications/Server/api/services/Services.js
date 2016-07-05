@@ -62,6 +62,7 @@ module.exports = {
     GetListAppointmentDoctor: require('./Appointment/GetListAppointmentDoctor'),
     GetListAppointmentOrganization: require('./Appointment/GetListAppointmentOrganization'),
     GetListAppointmentPatient: require('./Appointment/GetListAppointmentPatient'),
+    UpdateSignaturePatient: require('./Appointment/UpdateSignaturePatient'),
     //end Appointment
     Module: require('./Authorization/v0_1/Module'),
     Role: require('./Authorization/v0_1/Role'),

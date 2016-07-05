@@ -276,6 +276,9 @@
                                         <a class="btn btn-outline blue pull-right" ng-click="SelectDialogPassword()" style="margin-right: 2px;">
                                             <i class="fa fa-key"></i> Generate Password Patient
                                         </a>
+                                        <a class="btn btn-outline red pull-right" ng-click="sendMailWhenLinked()" ng-show="isLinked">
+                                            <i class="glyphicon glyphicon-plus"></i> Send Mail
+                                        </a>
                                         <h3 class="font-red" ng-if="wainformation.Patients.length != 0 && isShowTitle == false">
                                             PATIENT : <span class="font-red"> {{wainformation.Patients[0].FirstName + ' ' + wainformation.Patients[0].LastName}}</span>
                                         </h3>

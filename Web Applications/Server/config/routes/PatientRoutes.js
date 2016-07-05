@@ -71,5 +71,15 @@ module.exports={
 	'post /api/patient/detail-child-patient':{
 		controller: 'Patient/PatientController',
 		action:'DetailChild'
-	}
+	},
+
+	'post /api/patient/send-email-when-linked':{
+		controller: 'Patient/PatientController',
+		action: 'SendEmailWhenLinked'
+	},
+
+	'post /api/patient/update-signature':{
+		controller: 'Patient/PatientController',
+		action:'UpdateSignature'
+	},
 }

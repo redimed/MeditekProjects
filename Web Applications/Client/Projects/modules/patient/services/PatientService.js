@@ -446,10 +446,21 @@ PatientService.validate = function(info) {
 		var changeStatusChild = api.all('patient/change-status-child');
 		return changeStatusChild.post({data:data});
 	};
+
 	PatientService.detailChildPatient = function(data) {
 		var detailChildPatient = api.all('patient/detail-child-patient');
 		return detailChildPatient.post({data:data});
-	}
+	};
+
+	PatientService.updateSignature = function(data) {
+		var updateSignature = api.all('patient/update-signature');
+		return updateSignature.post({data:data});
+	};
+
+	PatientService.sendEmailWhenLinked = function(data) {
+		var sendEmailWhenLinked = api.all('patient/send-email-when-linked');
+		return sendEmailWhenLinked.post({data:data});
+	};
 
 	return PatientService;
 })

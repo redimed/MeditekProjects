@@ -8,6 +8,7 @@ app.directive('telehealthDetail', function(doctorService) {
         templateUrl: "modules/consultation/directives/templates/consultationTelehealthDetailDirectives.html",
         controller: function(AuthenticationService, $state, $cookies, WAAppointmentService, toastr, $uibModal, PatientService, CommonService, $stateParams,$scope,$timeout, $uibModal, companyService, consultationServices) {
             o.loadingPage(true);
+            $scope.isLinked = false;
             $scope.isShowBtnLink = true;
             $scope.isShowTitle = false;
             $scope.state = [
@@ -855,6 +856,7 @@ app.directive('telehealthDetail', function(doctorService) {
                                 UID: patientUid
                             }).then(function(data) {
                                 if (data.message == 'success') {
+
                                     console.log('patientInfomation', data.data[0]);
                                     console.log('$scope.wainformation.Patients', $scope.wainformation.Patients);
                                     $scope.ShowData.isLinkPatient = true;
@@ -862,16 +864,20 @@ app.directive('telehealthDetail', function(doctorService) {
                                     $scope.ShowData.patient = data.data[0];
                                     $scope.ShowData.patient.PhoneNumber = data.data[0].UserAccount.PhoneNumber;
                                     $scope.wainformation.Patients = [];
-                                    function loopArray(arr, callback) {
+                                    function loopArray(arr, objName, callback) {
                                         var ishaveCompany = false;
+                                        var data = {};
                                         for(var i = 0; i < arr.length; i++) {
-                                            if(arr[i].Name == 'CompanyName') {
-                                                if(arr[i].Value != null && arr[i].Value != ''){
-                                                    ishaveCompany = true;
+                                            for(var key in objName) {
+                                                if(arr[i].Name == objName[key]) {
+                                                    if(arr[i].Value != null && arr[i].Value != ''){
+                                                        ishaveCompany = true;
+                                                        data[key] = arr[i].Value;
+                                                    }
                                                 }
                                             }
                                         }
-                                        callback(ishaveCompany);
+                                        callback(ishaveCompany, data);
                                     }
                                     WAAppointmentService.linkPatient({
                                         Appointment: {
@@ -884,11 +890,24 @@ app.directive('telehealthDetail', function(doctorService) {
                                     })
                                     .then(function(result) {
                                         if(result == 'success') {
+                                            $scope.isLinked = true;
                                             $scope.wainformation.Patients.push({UID:patientUid});
-                                            loopArray($scope.wainformation.AppointmentData,function(isExist) {
+                                            loopArray($scope.wainformation.AppointmentData, {CompanyName:'CompanyName'}, function(isExist) {
                                                 console.log(isExist);
                                                 if(isExist == false) {
                                                     $scope.wainformation.Company = data.data[0].Companies[0];
+                                                }
+                                            });
+                                            loopArray($scope.wainformation.AppointmentData, {PatientSignatureUID:'PatientSignatureUID',PatientSignatureID:'PatientSignatureID'}, function(isExist, data) {
+                                                console.log(isExist);
+                                                if(isExist == true) {
+                                                    console.log("data ",data);
+                                                    PatientService.updateSignature({Signature:data.PatientSignatureID,FileUID:data.PatientSignatureUID,PatientUID:patientUid})
+                                                    .then(function(result) {
+                                                        console.log("result ",result);
+                                                    }, function(err) {
+                                                        console.log("err ",err);
+                                                    })
                                                 }
                                             });
                                             toastr.success("Select patient successfully!", "success");
@@ -1363,6 +1382,26 @@ app.directive('telehealthDetail', function(doctorService) {
                 }
             };
 
+            $scope.sendMailWhenLinked = function() {
+                var email = [];
+                for(var key in $scope.ShowData.patient) {
+                    if(key == 'Email1' || key == 'Email2' && $scope.ShowData.patient[key] != null && $scope.ShowData.patient[key] != '') {
+                        email.push($scope.ShowData.patient[key]);
+                    }
+                }
+                PatientService.sendEmailWhenLinked({ 
+                    to:email, 
+                    patientUID:$scope.ShowData.patient.UID, 
+                    type:$scope.wainformation.Type, 
+                    subject:'Confirm Linked Patient.'
+                }).then(function(result) {
+                    console.log("result ",result);
+                    toastr.success('Send successfully.');
+                }, function(err) {
+                    console.log("err ",err);
+                })
+            }
+
             var userObj = $cookies.getObject('userInfo');
             if(userObj && userObj.roles) {
                 for(var i = 0; i < userObj.roles.length; i++) {
@@ -1371,9 +1410,6 @@ app.directive('telehealthDetail', function(doctorService) {
                     }
                 }
             }
-
-            
-
         }
     };
 });

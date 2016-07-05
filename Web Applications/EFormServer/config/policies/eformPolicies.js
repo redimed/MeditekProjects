@@ -3,6 +3,6 @@
  */
 module.exports = {
     'EForm/EFormController': {
-        'PostUpdate': ['isAuthenticated']
+        'PostUpdate': true
     }
 }

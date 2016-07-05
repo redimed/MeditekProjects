@@ -119,8 +119,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 							modalInstance.close();
 						};
 					},
-					windowClass: 'app-modal-window'
-					//size: 'lg',
+					// windowClass: 'app-modal-window'
+					size: 'lg',
 				});
 			};
 

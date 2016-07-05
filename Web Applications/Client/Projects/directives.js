@@ -152,7 +152,7 @@ app.directive('autoComplete', function($timeout) {
     };
 });
 
-app.directive('patientDetailDirective', function() {
+app.directive('patientDetailDirective', function($uibModal) {
     return {
         restrict: 'E',
         scope: {
@@ -175,7 +175,24 @@ app.directive('patientDetailDirective', function() {
                         console.log('$scope.patientInfo', $scope.patientInfo);
                     }
                 };
-            }
+            };
+
+            $scope.sendEmail = function(){
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    size: 'lg',
+                    templateUrl: 'common/views/sendEmail.html',
+                    resolve: {
+                    },
+                    controller: function(){
+                        
+                    },
+                });
+                modalInstance.result
+                    .then(function(result) {
+                    }, function(result) {
+                    });
+            };
         },
     };
 });

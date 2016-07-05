@@ -4,40 +4,30 @@
         <h4 class="modal-title bold uppercase font-blue"><i class="icon-settings"></i> Patient Detail</h4>
     </div>
     <div class="modal-body" id="modalBody">
-        <form role="form" class="form">
-            <div class="form-body">
+        <div class="form">
+            <div class="form-horizontal">
                 <div class="tab-content" id="tabContent1">
                     <div class="tabbable-custom" id="tabBable">
                         <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
-                            </li>
-                            <li>
-                                <a href="index.html#tab_extraInfo" data-toggle="tab" aria-expanded="true">Extra Information</a>
-                            </li>
-                            <li>
-                                <a href="index.html#tab_fund" data-toggle="tab" aria-expanded="true">Fund / Payment</a>
-                            </li>
+                            <li class="active"><a href="@#Personal_info" data-toggle="tab" aria-expanded="true">Personal</a></li>
+                            <li><a href="@#tab_extraInfo" data-toggle="tab" aria-expanded="true">Extra</a></li>
+                            <li><a href="@#tab_fund" data-toggle="tab" aria-expanded="true">Fund/Payment</a></li>
                             <li ng-click="typeShow='PatientKin'">
-                                <a href="index.html#tab_kod" data-toggle="tab" aria-expanded="true" ng-click="callData('PatientKin')">Kin / Guardian / Family Members</a>
+                                <a href="@#tab_kod" data-toggle="tab" aria-expanded="true" ng-click="callData('PatientKin')">
+                                    Kin/Guardian/FamilyMembers
+                                </a>
                             </li>
-                            <li>
-                                <a href="index.html#tab_gp" data-toggle="tab" aria-expanded="true"  ng-click="callData('PatientGP')">GP / Clinical Information</a>
-                            </li>
-                            <li>
-                                <a href="index.html#tab_company" data-toggle="tab" aria-expanded="true" ng-click="getSite(info.Companies[0].UID)" >Company</a>
-                            </li>
-                            <li>
-                                <a href="index.html#tab_EForm" data-toggle="tab" aria-expanded="true" ng-click="getEForm()" >EForm</a>
-                            </li>
+                            <li><a href="@#tab_gp" data-toggle="tab" aria-expanded="true"  ng-click="callData('PatientGP')">GP/Clinical</a></li>
+                            <li><a href="@#tab_company" data-toggle="tab" aria-expanded="true" ng-click="getSite(info.Companies[0].UID)" >Company</a></li>
+                            <li><a href="@#tab_EForm" data-toggle="tab" aria-expanded="true" ng-click="getEForm()">EForm</a></li>
                         </ul>
                         <!-- content tab -->
                         <div class="tab-content" id="tabContent2">
                             <div class="tab-pane active" id="Personal_info">
-                                <div class="row margin-top-30">
-                                    <div class="col-xs-3" id="columm1" ng-if="listShow.columm1">
-                                        <div ng-form name="checkInForm" novalidate>
-                                            <div class="form-group">
+                                <div class="row margin-top-20">
+                                    <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
+                                        <div class="col-md-6" id="columm1" ng-if="listShow.columm1">
+                                            <div ng-form name="checkInForm" novalidate>
                                                 <div id="viewIMG">
                                                     <canvas id="imageAvatarCanvas" ng-show="isChoseAvatar==true"></canvas>
                                                     <img dimage dimage-uid="info.ProfileImage" dimage-size="'350'" ng-show="info.ProfileImage!=null && info.ProfileImage!=undefined && isChoseAvatar==false" width="100%">
@@ -54,221 +44,151 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-9">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div id="columm2" ng-if="listShow.columm2">
-                                            <h3 class="form-section">Personal Information</h3>
-                                            <div class="row">
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Title</label>
-                                                        <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
-                                                        <span style="color:red;">{{ermsg.Title}}</span>
-                                                    </div>
+                                            <h4 class="form-section">Personal Information</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Title</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
+                                                    <span style="color:red;">{{ermsg.Title}}</span>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">First Name</label>
-                                                        <input type="text" class="form-control" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')"><span style="color:red;">{{ermsg.FirstName}}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Middle Name</label>
-                                                        <input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"><span style="color:red;">{{ermsg.MiddleName}}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Last Name</label>
-                                                        <input type="text" class="form-control" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')"><span style="color:red;">{{ermsg.LastName}}</span>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">First Name</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')"><span style="color:red;">{{ermsg.FirstName}}</span>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Date of Birth</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-calendar"></i>
-                                                            <input date-picker 
-                                                                data-date-format="dd/mm/yyyy" 
-                                                                ng-model="info.DOB" 
-                                                                set-date="info.DOB"
-                                                                />
-                                                            <!-- <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" /> -->
-                                                            <span style="color:red;">{{ermsg.DOB}}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Gender</label>
-                                                        <div class="input-icon">
-                                                            <i class="fa fa-intersex"></i>
-                                                            <select class="form-control" ng-model="info.Gender" ng-change="checkDataNull('Gender')">
-                                                                <option value="Male">Male</option>
-                                                                <option value="Female">Female</option>
-                                                                <option value="Other">Other</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Occupation</label>
-                                                        <div class="input-icon">
-                                                            <i class="fa fa-odnoklassniki"></i>
-                                                            <input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
-                                                        </div>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Middle Name</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"><span style="color:red;">{{ermsg.MiddleName}}</span>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <div class="row margin-top-30">
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group" ng-hide="isShowFull==false">
-                                                        <label class="mt-checkbox mt-checkbox-outline">
-                                                            <input type="checkbox" 
-                                                                ng-model="info.UserAccount.Enable" 
-                                                                ng-true-value="'Y'" 
-                                                                ng-false-value="'N'"/> Enable <span></span>
-                                                        </label>
-                                                    </div>  
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Last Name</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')"><span style="color:red;">{{ermsg.LastName}}</span>
                                                 </div>
-                                                <div class="col-sm-4 col-xs-12">
-                                                    <div class="form-group" ng-hide="isShowFull==false">
-                                                        <label class="mt-checkbox mt-checkbox-outline">
-                                                            <input type="checkbox" 
-                                                                ng-model="info.UserAccount.Activated" 
-                                                                ng-true-value="'Y'" 
-                                                                ng-false-value="'N'" /> Activated <span></span>
-                                                        </label>
-                                                    </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Date of Birth</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input date-picker 
+                                                        data-date-format="dd/mm/yyyy" 
+                                                        ng-model="info.DOB" 
+                                                        set-date="info.DOB"
+                                                        />
+                                                    <!-- <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" /> -->
+                                                    <span style="color:red;">{{ermsg.DOB}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Gender</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <select class="form-control" ng-model="info.Gender" ng-change="checkDataNull('Gender')">
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Occupation</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-hide="isShowFull==false">
+                                                <label class="control-label col-md-4 col-xs-3"></label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <label class="mt-checkbox mt-checkbox-outline">
+                                                        <input type="checkbox" 
+                                                            ng-model="info.UserAccount.Enable" 
+                                                            ng-true-value="'Y'" 
+                                                            ng-false-value="'N'"/> Enable <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>  
+                                            <div class="form-group" ng-hide="isShowFull==false">
+                                                <label class="control-label col-md-4 col-xs-3"></label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <label class="mt-checkbox mt-checkbox-outline">
+                                                        <input type="checkbox" 
+                                                            ng-model="info.UserAccount.Activated" 
+                                                            ng-true-value="'Y'" 
+                                                            ng-false-value="'N'" /> Activated <span></span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div id="columm3" ng-if="listShow.columm3">
-                                            <h3 class="form-section">Contact Information</b></h3>
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <!-- Email -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Email</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-envelope"></i>
-                                                            <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.Email">
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Email -->
-                                                </div>
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Work Phone</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-phone-alt"></i>
-                                                            <input type="text" class="form-control" ng-model="info.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"><span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
-                                                        </div>
-                                                    </div>
+                                            <h4 class="form-section">Contact Information</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Email</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.Email">
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <!-- Home Phone -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Home Phone</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-phone-alt"></i>
-                                                            <input type="text" class="form-control" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Home Phone -->
-                                                </div>
-                                                <div class="col-md-6 col-sm-6">
-                                                    <!-- Mobile Phone -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Mobile Phone</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-phone"></i>
-                                                            <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Mobile Phone -->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Work Phone</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"><span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12">
-                                                    <!-- Address1 -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Address1</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-road"></i>
-                                                            <input type="text" class="form-control" ng-model="info.Address1" ng-style="er.Address1" ng-change="ermsg.Address1='';checkDataNull('Address1')"><span style="color:red;">{{ermsg.Address1}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Address1 -->
-                                                </div>
-                                                <div class="col-md-12 col-sm-12">
-                                                    <!-- Address2 -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Address2</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-road"></i>
-                                                            <input type="text" class="form-control" ng-model="info.Address2" ng-style="er.Address2" ng-change="ermsg.Address2='';checkDataNull('Address2')"><span style="color:red;">{{ermsg.Address2}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Address2 -->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Home Phone</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-8 col-sm-8">
-                                                    <!-- Suburb -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Suburb</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-tree-conifer"></i>
-                                                            <input type="text" class="form-control" ng-model="info.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb='';checkDataNull('Suburb')"><span style="color:red;">{{ermsg.Suburb}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Surburb -->
-                                                </div>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <!-- Postcode -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Postcode</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-map-marker"></i>
-                                                            <input type="text" class="form-control" ng-model="info.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode='';checkDataNull('Postcode')"><span style="color:red;">{{ermsg.Postcode}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Postcode -->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Mobile Phone</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <!-- State -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">State</label>
-                                                        <div class="input-icon">
-                                                            <i class="glyphicon glyphicon-globe"></i>
-                                                            <select class="form-control" ng-model="info.State" ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''">
-                                                            </select><span style="color:red;">{{ermsg.State}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end state -->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Address1</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.Address1" ng-style="er.Address1" ng-change="ermsg.Address1='';checkDataNull('Address1')"><span style="color:red;">{{ermsg.Address1}}</span>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6">
-                                                    <!-- Country -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Country</label>
-                                                        <div class="input-icon">
-                                                            <i class="fa fa-flag"></i>
-                                                            <select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries" ng-change="ermsg.CountryID1='';checkDataNull('CountryID1')">
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end Country -->
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Address2</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.Address2" ng-style="er.Address2" ng-change="ermsg.Address2='';checkDataNull('Address2')"><span style="color:red;">{{ermsg.Address2}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Suburb</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb='';checkDataNull('Suburb')"><span style="color:red;">{{ermsg.Suburb}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Postcode</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <input type="text" class="form-control" ng-model="info.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode='';checkDataNull('Postcode')"><span style="color:red;">{{ermsg.Postcode}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">State</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <select class="form-control" ng-model="info.State" ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''">
+                                                    </select><span style="color:red;">{{ermsg.State}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-3 text-right">Country</label>
+                                                <div class="col-md-8 col-xs-9">
+                                                    <select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries" ng-change="ermsg.CountryID1='';checkDataNull('CountryID1')">
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -276,136 +196,116 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_extraInfo">
-                                <div class="row margin-top-30">
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label class="control-label">Marital Status</label>
-                                            <select class="form-control" ng-model="info.MaritalStatus" ng-options="m.id as m.name for m in MarialList" ng-change="checkDataNull('MaritalStatus')">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Custom</label>
-											<input type="text" class="form-control" ng-model="info.Custom" ng-change="checkDataNull('Custom')" />
-										</div>
-									</div>
-									<div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Culture</label>
-											<select class="form-control" ng-model="info.Culture" ng-options="c.ID as c.ShortName for c in countries" ng-change="checkDataNull('Culture')">
-												<option></option>
-											</select>
-										</div>
-									</div> -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label class="control-label">Language</label>
-                                            <select class="form-control" ng-model="info.InterperterLanguage" ng-options="c.ID as c.ShortName for c in countries" ng-change="checkDataNull('InterperterLanguage')">
-                                                <option></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Fee Type</label>
-											<input type="text" class="form-control" ng-model="info.FeeType" ng-change="checkDataNull('FeeType')" />
-										</div>
-									</div> -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label class="control-label">Gradute</label>
-                                            <input type="text" class="form-control" ng-model="info.Education" ng-change="checkDataNull('Education')" />
-                                        </div>
+                                <h4 class="form-section">Extra Information</h4>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-xs-3 text-right">Marital Status</label>
+                                    <div class="col-md-8 col-xs-9">
+                                        <select class="form-control" ng-model="info.MaritalStatus" ng-options="m.id as m.name for m in MarialList" ng-change="checkDataNull('MaritalStatus')">
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <!-- <div class="col-md-4 col-sm-4">
-										<div class="form-group">
-											<label class="control-label">Driver License</label>
-											<input type="text" class="form-control" ng-model="info.DriverLicense" ng-change="checkDataNull('DriverLicense')" />
-										</div>
-									</div> -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-xs-3 text-right">Language</label>
+                                    <div class="col-md-8 col-xs-9">
+                                        <select class="form-control" ng-model="info.InterperterLanguage" ng-options="c.ID as c.ShortName for c in countries" ng-change="checkDataNull('InterperterLanguage')">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-xs-3 text-right">Gradute</label>
+                                    <div class="col-md-8 col-xs-9">
+                                        <input type="text" class="form-control" ng-model="info.Education" ng-change="checkDataNull('Education')" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_fund">
-                                <div class="row margin-top-30">
-                                    <div class="col-md-3 col-sm-3">
-                                        <div class="form-group">
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientFund');callData('PatientFund')">Fund</a>
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientPension');callData('PatientPension')">Pension</a>
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientDVA');callData('PatientDVA')">DVA</a>
-                                            <a href="javascript:;" class="btn btn-info" ng-click="selectType('PatientMedicare');callData('PatientMedicare')">Medicare</a>
+                                <div class="row margin-top-20">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="btn-group">
+                                            <a href="javascript:;" class="btn btn-sm btn-info" ng-click="selectType('PatientFund');callData('PatientFund')">Fund</a>
+                                            <a href="javascript:;" class="btn btn-sm btn-info" ng-click="selectType('PatientPension');callData('PatientPension')">Pension</a>
+                                            <a href="javascript:;" class="btn btn-sm btn-info" ng-click="selectType('PatientDVA');callData('PatientDVA')">DVA</a>
+                                            <a href="javascript:;" class="btn btn-sm btn-info" ng-click="selectType('PatientMedicare');callData('PatientMedicare')">Medicare</a>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">{{typeShow=='PatientFund'?'Fund List':typeShow=='PatientDVA'?'DVA List':typeShow=='PatientPension'?'Pension List':typeShow=='PatientMedicare'?'Medicare List':''}}</label>
-                                            <select class="form-control" size="10" ng-model="dataChoose" id="select1">
-                                                <option ng-repeat="s in info.PatientFunds" ng-click="view('Fund',s)" ng-if="typeShow=='PatientFund'" value="{{s.ID}}">{{'Fund'+($index+1)}}</option>
-                                                <option ng-repeat="s in info.PatientPensions" ng-click="view('Pension',s)" ng-if="typeShow=='PatientPension'" value="{{s.ID}}">{{'Pension'+($index+1)}}</option>
-                                                <option ng-repeat="s in info.PatientDVAs" ng-click="view('DVA',s)" ng-if="typeShow=='PatientDVA'" value="{{s.ID}}">{{'DVA'+($index+1)}}</option>
-                                                <option ng-repeat="s in info.PatientMedicares" ng-click="view('Medicare',s)" ng-if="typeShow=='PatientMedicare'" value="{{s.ID}}">{{'Medicare'+($index+1)}}</option>
-                                            </select>
+                                        <div class="form-group margin-top-20">
+                                            <label class="col-md-12">{{typeShow=='PatientFund'?'Fund List':typeShow=='PatientDVA'?'DVA List':typeShow=='PatientPension'?'Pension List':typeShow=='PatientMedicare'?'Medicare List':''}}</label>
+                                            <div class="col-md-12">
+                                                <select class="form-control" size="10" ng-model="dataChoose" id="select1">
+                                                    <option ng-repeat="s in info.PatientFunds" ng-click="view('Fund',s)" ng-if="typeShow=='PatientFund'" value="{{s.ID}}">{{'Fund'+($index+1)}}</option>
+                                                    <option ng-repeat="s in info.PatientPensions" ng-click="view('Pension',s)" ng-if="typeShow=='PatientPension'" value="{{s.ID}}">{{'Pension'+($index+1)}}</option>
+                                                    <option ng-repeat="s in info.PatientDVAs" ng-click="view('DVA',s)" ng-if="typeShow=='PatientDVA'" value="{{s.ID}}">{{'DVA'+($index+1)}}</option>
+                                                    <option ng-repeat="s in info.PatientMedicares" ng-click="view('Medicare',s)" ng-if="typeShow=='PatientMedicare'" value="{{s.ID}}">{{'Medicare'+($index+1)}}</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-success pull-right" ng-click="DisableChild(typeShow,dataChoose)" ng-show="chooseItem==true" id="remove1">Remove</button>
-                                        <button class="btn btn-success pull-right" ng-click="Add(typeShow,info)" id="add1" ng-show="typeShow!=null&&typeShow!=''">Add</button>
+                                        <button class="btn btn-success pull-right" 
+                                            ng-click="DisableChild(typeShow,dataChoose)" 
+                                            ng-show="chooseItem==true" id="remove1">Remove
+                                        </button>
+                                        <button class="btn btn-success pull-right" 
+                                            ng-click="Add(typeShow,info)" 
+                                            id="add1" 
+                                            ng-show="typeShow!=null&&typeShow!=''">Add
+                                        </button>
                                     </div>
-                                    <div class="col-md-9 col-sm-9" ng-show="chooseItem==true">
-                                        <div class="row" ng-show="typeShow=='PatientFund'">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Account Type</label>
+                                    <div class="col-md-8 col-sm-8" ng-show="chooseItem==true">
+                                        <div ng-show="typeShow=='PatientFund'">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-4 text-right">Account Type</label>
+                                                <div class="col-md-8 col-xs-8">
                                                     <input type="text" class="form-control" ng-model="info.PatientFund.AccountType" ng-change="checkDataNull('PatientFund.AccountType')" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Private Fund</label>
+                                        
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-4 text-right">Private Fund</label>
+                                                <div class="col-md-8 col-xs-8">
                                                     <input type="text" class="form-control" ng-model="info.PatientFund.PrivateFund" ng-change="checkDataNull('PatientFund.PrivateFund')" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">UPI</label>
+                                        
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-4 text-right">UPI</label>
+                                                <div class="col-md-8 col-xs-8">
                                                     <input type="text" class="form-control" ng-model="info.PatientFund.UPI" ng-change="checkDataNull('PatientFund.UPI')" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4" ng-show="typeShow=='PatientPension'">
-                                                <div class="form-group">
-                                                    <label class="control-label">HCC Pension Number</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientPension.HCCPensionNumber" ng-change="checkDataNull('PatientPension.HCCPensionNumber')" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4" ng-show="typeShow=='PatientPension'">
-                                                <div class="form-group">
-                                                    <label class="control-label">Pension Expire</label>
-                                                    <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" ng-model="info.PatientPension.ExpiryDate" id="ExpiryDate" ng-change="checkDataNull('PatientPension.ExpiryDate')" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4" ng-show="typeShow=='PatientDVA'">
-                                                <div class="form-group">
-                                                    <label class="control-label">DVA Number</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientDVA.DVANumber" ng-change="checkDataNull('PatientDVA.DVANumber')" />
-                                                </div>
+                                        <div class="form-group" ng-show="typeShow=='PatientPension'">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">HCC Pension Number</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientPension.HCCPensionNumber" ng-change="checkDataNull('PatientPension.HCCPensionNumber')" />
                                             </div>
                                         </div>
-                                        <div class="row" ng-show="typeShow=='PatientMedicare'">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Ref No</label>
+                                        <div class="form-group" ng-show="typeShow=='PatientPension'">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Pension Expire</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" ng-model="info.PatientPension.ExpiryDate" id="ExpiryDate" ng-change="checkDataNull('PatientPension.ExpiryDate')" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-show="typeShow=='PatientDVA'">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">DVA Number</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientDVA.DVANumber" ng-change="checkDataNull('PatientDVA.DVANumber')" />
+                                            </div>
+                                        </div>
+                                        <div ng-show="typeShow=='PatientMedicare'">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-4 text-right">Ref No</label>
+                                                <div class="col-md-8 col-xs-8">
                                                     <input type="text" class="form-control" ng-model="info.PatientMedicare.MedicareReferenceNumber" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Medicare Number</label>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-4 text-right">Medicare Number</label>
+                                                <div class="col-md-8 col-xs-8">
                                                     <input type="text" class="form-control" ng-model="info.PatientMedicare.MedicareNumber" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Medicare Expire</label>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-xs-4 text-right">Medicare Expire</label>
+                                                <div class="col-md-8 col-xs-8">
                                                     <input type="text" class="form-control date-picker" placeholder="dd/mm/yyyy" readonly data-date-format="dd/mm/yyyy" ng-model="info.PatientMedicare.ExpiryDate" />
                                                 </div>
                                             </div>
@@ -414,122 +314,123 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_kod">
-                                <div class="row margin-top-30">
+                                <div class="row margin-top-20">
                                     <div class="col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <label class="control-label">Kin/Guardian List</label>
-                                            <select class="form-control" size="25" ng-model="dataChoose">
-                                                <option ng-repeat="s in info.PatientKins" ng-click="view('Kin',s)" value="{{s.ID}}">{{((s.FirstName != null)?s.FirstName:"") +" "+((s.LastName != null)?s.LastName:"Kin"+($index+1))}}</option>
-                                            </select>
+                                            <label class="col-xs-12">Kin/Guardian List</label>
+                                            <div class="col-xs-12">
+                                                <select class="form-control" size="25" ng-model="dataChoose">
+                                                    <option ng-repeat="s in info.PatientKins" ng-click="view('Kin',s)" value="{{s.ID}}">{{((s.FirstName != null)?s.FirstName:"") +" "+((s.LastName != null)?s.LastName:"Kin"+($index+1))}}</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-success pull-right" ng-click="DisableChild('PatientKin',dataChoose)" id="remove2" ng-show="chooseItem==true">Remove</button>
-                                        <button class="btn btn-success pull-right" ng-click="Add('PatientKin',info)" id="add2">Add</button>
+                                        <div class="btn-group text-right">
+                                            <button class="btn btn-success" 
+                                                ng-click="DisableChild('PatientKin',dataChoose)" 
+                                                id="remove2" 
+                                                ng-show="chooseItem==true">Remove
+                                            </button>
+                                            <button class="btn btn-success" 
+                                                ng-click="Add('PatientKin',info)" 
+                                                id="add2">Add
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="col-md-9 col-sm-9" ng-show="chooseItem==true">
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">FirstName</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.FirstName" ng-change="validateChild('PatientKin','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css"/>
-                                                    <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">MiddleName</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.MiddleName" ng-change="validateChild('PatientKin','MiddleName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.MiddleName.css" />
-                                                    <p style="color:red;" ng-if="style.MiddleName != null && style.MiddleName != undefined">{{style.MiddleName.message}}.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">LastName</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.LastName" ng-change="validateChild('PatientKin','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
-                                                    <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">FirstName</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.FirstName" ng-change="validateChild('PatientKin','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css"/>
+                                                <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Relationship</label>
-                                                    <select class="form-control" ng-model="info.PatientKin.Relationship">
-                                                        <option value="">Select Relationship</option>
-                                                        <option value="parent">Parent</option>
-                                                        <option value="partner">Partner</option>
-                                                        <option value="siblings">Siblings</option>
-                                                        <option value="descendant">Descendant</option>
-                                                        <option value="other">Other</option>
-                                                    </select>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">MiddleName</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.MiddleName" ng-change="validateChild('PatientKin','MiddleName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.MiddleName.css" />
+                                                <p style="color:red;" ng-if="style.MiddleName != null && style.MiddleName != undefined">{{style.MiddleName.message}}.</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">HomePhone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.HomePhoneNumber" ng-change="validateChild('PatientKin','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.HomePhoneNumber.css" />
-                                                    <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">MobilePhone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.MobilePhoneNumber" ng-change="validateChild('PatientKin','MobilePhoneNumber','^04[0-9]{8}$','Phone Number is a 10 digits number. Eg: 04 xxxx xxxx')" ng-style="style.MobilePhoneNumber.css" />
-                                                    <p style="color:red;" ng-if="style.MobilePhoneNumber != null && style.MobilePhoneNumber != undefined">{{style.MobilePhoneNumber.message}}.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">WorkPhone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.WorkPhoneNumber" ng-change="validateChild('PatientKin','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.WorkPhoneNumber.css" />
-                                                    <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">LastName</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.LastName" ng-change="validateChild('PatientKin','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
+                                                <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Address1</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.Address1" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Address2</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.Address2" />
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Relationship</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <select class="form-control" ng-model="info.PatientKin.Relationship">
+                                                    <option value="">Select Relationship</option>
+                                                    <option value="parent">Parent</option>
+                                                    <option value="partner">Partner</option>
+                                                    <option value="siblings">Siblings</option>
+                                                    <option value="descendant">Descendant</option>
+                                                    <option value="other">Other</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-8 col-sm-8">
-                                                <div class="form-group">
-                                                    <label class="control-label">Suburb</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.Suburb" />
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">HomePhone</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.HomePhoneNumber" ng-change="validateChild('PatientKin','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.HomePhoneNumber.css" />
+                                                <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
                                             </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Postcode</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientKin.Postcode" ng-change="validateChild('PatientKin','Postcode','^[0-9]{4,10}$','Post code is a 4 digits number. Eg: xxxx.')" ng-style="style.Postcode.css" />
-                                                    <p style="color:red;" ng-if="style.Postcode != null && style.Postcode != undefined">{{style.Postcode.message}}.</p>
-                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">MobilePhone</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.MobilePhoneNumber" ng-change="validateChild('PatientKin','MobilePhoneNumber','^04[0-9]{8}$','Phone Number is a 10 digits number. Eg: 04 xxxx xxxx')" ng-style="style.MobilePhoneNumber.css" />
+                                                <p style="color:red;" ng-if="style.MobilePhoneNumber != null && style.MobilePhoneNumber != undefined">{{style.MobilePhoneNumber.message}}.</p>
                                             </div>
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">State</label>
-                                                    <select class="form-control" ng-model="info.PatientKin.State" ng-options="s.code as s.name for s in state" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">WorkPhone</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.WorkPhoneNumber" ng-change="validateChild('PatientKin','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx')" ng-style="style.WorkPhoneNumber.css" />
+                                                <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Address1</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.Address1" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Address2</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.Address2" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Suburb</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.Suburb" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Postcode</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.PatientKin.Postcode" ng-change="validateChild('PatientKin','Postcode','^[0-9]{4,10}$','Post code is a 4 digits number. Eg: xxxx.')" ng-style="style.Postcode.css" />
+                                                <p style="color:red;" ng-if="style.Postcode != null && style.Postcode != undefined">{{style.Postcode.message}}.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">State</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <select class="form-control" ng-model="info.PatientKin.State" ng-options="s.code as s.name for s in state" />
                                                     <option></option>
-                                                    </select>
-                                                </div>
+                                                </select>
                                             </div>
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Country</label>
-                                                    <select class="form-control" ng-model="info.PatientKin.CountryID" ng-options="c.ID as c.ShortName for c in countries">
-                                                        <option></option>
-                                                    </select>
-                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Country</label>
+                                            <div class="col-md-8 col-xs-8">
+                                                <select class="form-control" ng-model="info.PatientKin.CountryID" ng-options="c.ID as c.ShortName for c in countries">
+                                                    <option></option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -539,179 +440,173 @@
                                 <div class="row margin-top-30">
                                     <div class="col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <label class="control-label">GP/Clinical List</label>
-                                            <select class="form-control" size="13" ng-model="dataChoose">
-                                                <option ng-repeat="s in info.PatientGPs" ng-click="view('GP',s)" value="{{s.ID}}">{{((s.FirstName != null)?s.FirstName:"") +" "+((s.LastName != null)?s.LastName:"GP"+($index+1))}}</option>
-                                            </select>
+                                            <label class="col-xs-12">GP/Clinical List</label>
+                                            <div class="col-xs-12">
+                                                <select class="form-control" size="13" ng-model="dataChoose">
+                                                    <option ng-repeat="s in info.PatientGPs" ng-click="view('GP',s)" value="{{s.ID}}">{{((s.FirstName != null)?s.FirstName:"") +" "+((s.LastName != null)?s.LastName:"GP"+($index+1))}}</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-success pull-right" ng-click="DisableChild('PatientGP',dataChoose)" id="remove3" ng-show="chooseItem==true">Remove</button>
-                                        <button class="btn btn-success pull-right" ng-click="Add('PatientGP',info)" id="add3">Add</button>
+                                        <button class="btn btn-success pull-right" 
+                                            ng-click="DisableChild('PatientGP',dataChoose)" 
+                                            id="remove3" 
+                                            ng-show="chooseItem==true">Remove
+                                        </button>
+                                        <button class="btn btn-success pull-right" 
+                                            ng-click="Add('PatientGP',info)" 
+                                            id="add3">Add
+                                        </button>
                                     </div>
                                     <div class="col-md-9 col-sm-9" ng-show="chooseItem==true">
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">GP First Name</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.FirstName" ng-change="validateChild('PatientGP','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css" />
-                                                    <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">GP Last Name</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.LastName" ng-change="validateChild('PatientGP','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
-                                                    <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">GP First Name</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.FirstName" ng-change="validateChild('PatientGP','FirstName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.FirstName.css" />
+                                                <p style="color:red;" ng-if="style.FirstName != null && style.FirstName != undefined">{{style.FirstName.message}}.</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Health Link</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.HealthLink" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Provider Number</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.ProviderNumber" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Email</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.Email" ng-change="validateChild('PatientGP','Email','^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9]+\.[a-z]{2,4}')" ng-style="style.Email.css" />
-                                                    <p style="color:red;" ng-if="style.Email != null && style.Email != undefined">{{style.Email.message}}.</p>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">GP Last Name</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.LastName" ng-change="validateChild('PatientGP','LastName','^[a-zA-Z0-9\s]{0,255}$')" ng-style="style.LastName.css" />
+                                                <p style="color:red;" ng-if="style.LastName != null && style.LastName != undefined">{{style.LastName.message}}.</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Mobile</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.PhoneNumber" ng-change="validateChild('PatientGP','PhoneNumber','^04[0-9]{8}$','Mobile Phone is a 10 digits number. Eg: 04 xxxx xxxx.')" ng-style="style.PhoneNumber.css" />
-                                                    <p style="color:red;" ng-if="style.PhoneNumber != null && style.PhoneNumber != undefined">{{style.PhoneNumber.message}}.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Home Phone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.HomePhoneNumber" ng-change="validateChild('PatientGP','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.HomePhoneNumber.css" />
-                                                    <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">Work phone</label>
-                                                    <input type="text" class="form-control" ng-model="info.PatientGP.WorkPhoneNumber" ng-change="validateChild('PatientGP','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.WorkPhoneNumber.css" />
-                                                    <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Health Link</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.HealthLink" />
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Note</label>
-                                                    <textarea class="form-control" ng-model="info.PatientGP.Note" ng-change="checkDataNull('PatientGP.Note')"></textarea>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Provider Number</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.ProviderNumber" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Email</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.Email" ng-change="validateChild('PatientGP','Email','^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9]+\.[a-z]{2,4}')" ng-style="style.Email.css" />
+                                                <p style="color:red;" ng-if="style.Email != null && style.Email != undefined">{{style.Email.message}}.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Mobile</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.PhoneNumber" ng-change="validateChild('PatientGP','PhoneNumber','^04[0-9]{8}$','Mobile Phone is a 10 digits number. Eg: 04 xxxx xxxx.')" ng-style="style.PhoneNumber.css" />
+                                                <p style="color:red;" ng-if="style.PhoneNumber != null && style.PhoneNumber != undefined">{{style.PhoneNumber.message}}.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Home Phone</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.HomePhoneNumber" ng-change="validateChild('PatientGP','HomePhoneNumber','^04[0-9]{6,8}$','Home Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.HomePhoneNumber.css" />
+                                                <p style="color:red;" ng-if="style.HomePhoneNumber != null && style.HomePhoneNumber != undefined">{{style.HomePhoneNumber.message}}.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Work phone</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <input type="text" class="form-control" ng-model="info.PatientGP.WorkPhoneNumber" ng-change="validateChild('PatientGP','WorkPhoneNumber','^04[0-9]{6,8}$','Work Phone is a 8-10 digits number. Eg: 04 xxxx xxxx or 04 xx xxxx.')" ng-style="style.WorkPhoneNumber.css" />
+                                                <p style="color:red;" ng-if="style.WorkPhoneNumber != null && style.WorkPhoneNumber != undefined">{{style.WorkPhoneNumber.message}}.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-xs-4 text-right">Note</label>
+                                            <div class="col-md-8 col-xs-4">
+                                                <textarea class="form-control" ng-model="info.PatientGP.Note" ng-change="checkDataNull('PatientGP.Note')"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_company">
-                                <h3 class="form-section">
-                                    <a href="javascript:;"
-                                        class="btn btn-danger pull-right"
-                                        style="position: relative; bottom:8px"
-                                        ng-click="linkcompany()">
-                                        Link Company
-                                    </a>
-                                    Basic info
-                                </h3>
+                                <h4 class="form-section">
+                                    Basic info <a class="btn btn-danger margin-left-20" ng-click="linkcompany()">Link Company</a>
+                                </h4>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-3 col-sm-3">
-                                            <div class="table-scrollable margin-top-30">
-                                                <table class="table table-bordered table-hover table-striped">
-                                                    <thead>
-                                                        <tr style="width:100%;">
-                                                            <th width="1">#</th>
-                                                            <th>Company Name</th>
-                                                            <th>Active</th>
-                                                            <th>&nbsp;</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="t in historyData">
-                                                            <td>{{$index+1}}</td>
-                                                            <td>{{t.CompanyName}}</td>
-                                                            <td><i ng-class="{'glyphicon glyphicon-ok turquoisetype':t.RelCompanyPatient.Active==='Y','glyphicon glyphicon-remove redtype':t.RelCompanyPatient.Active==='N'}"></i></td>
-                                                            <td><button class="btn btn-info" ng-show="t.Active=='Y'&&t.Enable=='Y'&&t.RelCompanyPatient.Active=='N'" ng-click="linkOldCompany(t)"> set </button></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="table-scrollable">
+                                            <table class="table table-light table-hover">
+                                                <thead>
+                                                    <tr class="uppercase">
+                                                        <th>Company Name</th>
+                                                        <th>Active</th>
+                                                        <th>&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="t in historyData">
+                                                        <td><a class="primary-link">{{t.CompanyName}}</a></td>
+                                                        <td class="text-center">
+                                                            <i ng-class="{'fa fa-ok fa-2x turquoisetype':t.RelCompanyPatient.Active==='Y','fa fa-remove fa-2x redtype':t.RelCompanyPatient.Active==='N'}"></i>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-default btn-icon-only btn-circle" 
+                                                                ng-show="t.Active=='Y'&&t.Enable=='Y'&&t.RelCompanyPatient.Active=='N'" 
+                                                                ng-click="linkOldCompany(t)"> 
+                                                                    <i class="icon-settings"></i> 
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Company Name</label>
+                                            <div class="col-xs-8">
+                                                <input type="text" class="form-control" ng-model="info.Companies[0].CompanyName" />
                                             </div>
                                         </div>
-                                        <div class="col-md-9 col-sm-9">
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Company Name</label>
-                                                        <input type="text" class="form-control" ng-model="info.Companies[0].CompanyName" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label">Description</label>
-                                                        <textarea class="form-control" ng-model="info.Companies[0].Description" ></textarea>
-                                                    </div>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Description</label>
+                                            <div class="col-xs-8">
+                                                <textarea class="form-control" ng-model="info.Companies[0].Description" ></textarea>
                                             </div>
-                                            <h3 class="form-section bold">Site info</h3>
-                                            <div class="table-scrollable margin-top-30">
-                                                <table class="table table-bordered table-hover table-striped">
-                                                    <thead>
-                                                        <tr style="width:100%;">
-                                                            <th width="1">#</th>
-                                                            <th>Site Name</th>
-                                                            <th>Address</th>
-                                                            <th>Contact Name</th>
-                                                            <th>Contact Number</th>
-                                                            <th width="1">Enable</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="s in info.CompanySites">
-                                                            <td>{{$index+1}}</td>
-                                                            <td>{{s.SiteName}}</td>
-                                                            <td>{{s.Address1}}</td>
-                                                            <td>{{s.ContactName}}</td>
-                                                            <td>{{s.HomePhoneNumber}}</td>
-                                                            <td><i ng-class="{'glyphicon glyphicon-ok turquoisetype':s.Enable==='Y','glyphicon glyphicon-remove redtype':s.Enable==='N'}"></i></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        </div>
+                                        <h4 class="form-section">Site info</h4>
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-light">
+                                                <thead>
+                                                    <tr class="uppercase">
+                                                        <th width="1">#</th>
+                                                        <th>Site Name</th>
+                                                        <th>Address</th>
+                                                        <th>Contact Name</th>
+                                                        <th>Contact Number</th>
+                                                        <th width="1">Enable</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="s in info.CompanySites">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{s.SiteName}}</td>
+                                                        <td>{{s.Address1}}</td>
+                                                        <td>{{s.ContactName}}</td>
+                                                        <td>{{s.HomePhoneNumber}}</td>
+                                                        <td class="text-center">
+                                                            <i ng-class="{'fa fa-ok fa-2x turquoisetype':s.Enable==='Y','fa fa-remove fa-2x redtype':s.Enable==='N'}"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_EForm">
-                                <div class="row">
-                                    <a ng-click="getEForm()" class="btn blue margin-top-30 margin-left-10" ng-if="isIframe==true">Back</a>
-                                </div>
-                                <div class="row">&nbsp;</div>
-                                <div class="row">
-                                    <iframe width="100%" height="760" frameBorder="0" scrolling="yes" id="EForm"></iframe>
-                                </div>
+                                <a ng-click="getEForm()" class="btn blue margin-top-30 margin-left-10" ng-if="isIframe==true">Back</a>
+                                <iframe width="100%" height="760" frameBorder="0" scrolling="yes" id="EForm"></iframe>
                             </div>
                         </div>
                         <!-- end content tab -->
                     </div>
                 </div>
             </div>
-            <!-- <div class="form-actions">
-			</div> -->
-        </form>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn default" data-dismiss="modal" ng-click="onCancel()">

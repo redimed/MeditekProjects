@@ -791,6 +791,26 @@ module.exports = {
             }, function(err) {
                 res.serverError(ErrorWrap(err));
             });
-    }
+    },
+
+    SendEmailWhenLinked: function(req , res) {
+        var data = req.body.data;
+        Services.Patient.SendEmailWhenLinked(data)
+        .then(function(result) {
+            res.ok({message:'success',data : result});
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
+
+    UpdateSignature: function(req, res) {
+        var data = req.body.data;
+        Services.Patient.UpdateSignature(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
 
 };

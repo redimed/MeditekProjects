@@ -1,5 +1,6 @@
 var $q = require('q');
 var config = sails.config.myconf;
+var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 //moment
 var moment = require('moment');
@@ -697,7 +698,9 @@ module.exports = {
                             return success;
                         } else {
                             isCreateByName = true;
-                            userInfo.UserName = data.UserName?data.UserName:data.FirstName + "." + data.LastName + "." + generatePassword(4, false);
+                            var FirstName = data.FirstName.replace(/[\s]/g,'');
+                            var LastName = data.LastName.replace(/[\s]/g,'');
+                            userInfo.UserName = data.UserName?data.UserName: FirstName + "." + LastName + "." + generatePassword(4, false);
                             return success;
                         }
                     }, function(err) {
@@ -2038,6 +2041,251 @@ module.exports = {
             }, function(err) {
                 throw err;
             });
+    },
+
+    SendEmailWhenLinked: function(data) {
+        var patient, payload, token;
+        if(!data) {
+            var err = new Error("SendEmailWhenLinked.error");
+            err.pushError('notFoundParams');
+            throw err;
+        }
+
+        if(!data.patientUID) {
+            var err = new Error("SendEmailWhenLinked.error");
+            err.pushError('patientUID.invalid');
+            throw err;
+        }
+
+        if(!data.type) {
+            var err = new Error("SendEmailWhenLinked.error");
+            err.pushError('typeParams.notFound');
+            throw err;
+        }
+
+        if(!data.to) {
+            var err = new Error("SendEmailWhenLinked.error");
+            err.pushError('toParams.notFound');
+            throw err;
+        }
+
+        function CreatePromiseSendMail(type, data) {
+            var p1 = new Promise(function(a, b) {
+                SendMailService.SendMail(type, data, function(err, responseStatus, html, text) {
+                    console.log("err ",err);
+                    if(err) {
+                        b(err);
+                    }
+                    else {
+                        a({message:'success'});
+                    }
+                });
+            });
+            return p1;
+        }
+
+        var p = new Promise(function(a, b) {
+            sequelize.transaction()
+            .then(function(t) {
+                Patient.findOne({
+                    attributes:['ID','FirstName','LastName','Email1','Email2'],
+                    include:[
+                        {
+                            model:UserAccount,
+                            attributes:['ID','UID','UserName','Email','Password','PhoneNumber'],
+                            required:true,
+                        },
+                    ],
+                    where: {
+                        UID : data.patientUID,
+                    },
+                    transaction: t
+                })
+                .then(function(got_patient) {
+                    if(got_patient == null || got_patient == '') {
+                        var err = new Error('SendEmailWhenLinked.error');
+                        err.pushError('notFound.Patient');
+                        throw err;
+                    }
+                    else {
+                        patient = got_patient;
+                        payload = {
+                                UID : got_patient.UserAccount.UID
+                        };
+                        token = jwt.sign(
+                                        payload,
+                                        secret,
+                                        {expiresIn:2*60*60}
+                        );
+                        return UserForgot.create({
+                            UserAccountUID : got_patient.UserAccount.UID,
+                            Token          : token
+                        },{transaction: t});
+                    }
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(created_userForgot){
+                    if(created_userForgot == '' || created_userForgot == null) {
+                        var err = new Error('SendEmailWhenLinked.error');
+                        err.pushError('createUserForgot.queryError');
+                        throw err;
+                    }
+                    else {
+                        if(data.type == 'PreEmployment') {
+                            var promise_arr = [];
+                            for(var i = 0; i < data.to.length; i++) {
+                                var emailInfo = {
+                                    // from     : data.from,
+                                    from     : 'Redimed <giangvotest2511@gmail.com>',
+                                    userInfo : patient.UserAccount,
+                                    email    : data.to[i],
+                                    subject  : data.subject,
+                                    url      : config.url,
+                                    token    : token,
+                                };
+                                var promise = CreatePromiseSendMail(data.type, emailInfo);
+                                promise_arr.push(promise);
+                            }
+                            Promise.all(promise_arr)
+                            .then(function(values) {
+                                console.log('values ',values)
+                                t.commit();
+                                a(values);
+                            }, function(err) {
+                                t.rollback();
+                                b(err);
+                            });
+                        }
+                    }
+                },function(err){
+                    t.rollback();
+                    b(err);
+                });
+
+            }, function(err) {
+                b(err);
+            })
+        });
+
+        return p;
+        
+    },
+
+    UpdateSignature: function(data) {
+        if(!data) {
+            var err = new Error('UpdateSignature.error');
+            err.pushError('notFoundParams');
+            throw err;
+        }
+        if(!data.Signature) {
+            var err = new Error('UpdateSignature.error');
+            err.pushError('notFoundParams.Signature');
+            throw err;
+        }
+        if(!data.FileUID) {
+            var err = new Error('UpdateSignature.error');
+            err.pushError('notFoundParams.FileUID');
+            throw err;
+        }
+        if(!data.PatientUID) {
+            var err = new Error('UpdateSignature.error');
+            err.pushError('notFoundParams.PatientUID');
+            throw err;
+        }
+        var p = new Promise(function(a, b) {
+            var patient;
+            sequelize.transaction()
+            .then(function(t) {
+                Patient.findOne({
+                    attributes: ['ID','UID','FirstName','LastName'],
+                    include:[
+                        {
+                            model: UserAccount,
+                            attributes:['ID','UID','UserName'],
+                            required:true,
+                        },
+                    ],
+                    where: {
+                        UID : data.PatientUID,
+                        Enable: 'Y',
+                    },
+                    transaction: t,
+                })
+                .then(function(got_patient){
+                    if(got_patient == null || got_patient == '') {
+                        var err = new Error('UpdateSignature.error');
+                        err.pushError('notFound.Patient');
+                        throw err;
+                    }
+                    else {
+                        patient = got_patient;
+                        return Patient.update({Signature: data.Signature},{
+                            where: {
+                                UID: data.PatientUID,
+                                Enable: 'Y',
+                            },
+                            transaction: t,
+                        });
+                    }
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(updated_patient) {
+                    return FileUpload.update({Enable:'N'},{
+                        where: {
+                            UserAccountID: patient.UserAccount.ID,
+                            FileType:'Signature',
+                        },
+                        transaction: t,
+                    });
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(updated_fileUpload) {
+                    return FileUpload.findOne({
+                        attributes:['ID','UID','FileType'],
+                        where: {
+                            UID : data.FileUID,
+                        },
+                        transaction: t,
+                    });
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(found_file) {
+                    if(found_file == '' || found_file == null) {
+                        var err = new Error('UpdateSignature.error');
+                        err.pushError('notFound.Signature');
+                        throw err;
+                    }
+                    else {
+                        return FileUpload.update({
+                            UserAccountID : patient.UserAccount.ID,
+                            Enable: 'Y',
+                        },{
+                            where :{
+                                UID : data.FileUID
+                            },
+                            transaction: t
+                        });
+                    }
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(finish) {
+                    t.commit();
+                    a(finish);
+                }, function(err) {
+                    t.rollback();
+                    b(err);
+                })
+            }, function(err) {
+                b(err);  
+            })
+        });
+
+        return p;
     }
 
 

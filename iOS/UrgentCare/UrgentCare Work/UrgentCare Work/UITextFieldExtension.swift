@@ -31,4 +31,27 @@ extension UITextField {
         textField.layer.addSublayer(border)
         textField.layer.masksToBounds = true
     }
+    func txtError(textField:UITextField){
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.redColor().CGColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  1000, height: textField.frame.size.height)
+        if(textField.placeholder != nil){
+            textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes:[ NSForegroundColorAttributeName: UIColor(hex:Define.ColorCustom.placehoderColor)])
+        }
+        border.borderWidth = width
+        textField.layer.addSublayer(border)
+        textField.layer.masksToBounds = true
+    }
+    
+    func CheckTextFieldIsEmpty(textField:UITextField)->Bool{
+        if textField.text!.isEmpty {
+            textField.txtError(textField)
+            return true
+        }else{
+            textField.textFiledOnlyLine(textField)
+            return false
+        }
+    }
+
 }

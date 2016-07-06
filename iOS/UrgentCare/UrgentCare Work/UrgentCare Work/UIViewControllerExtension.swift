@@ -49,11 +49,12 @@ extension UIViewController {
     func hideLoading(){
         dismissViewControllerAnimated(true, completion: nil)
     }
-    func SequeCollectionView(segue: UIStoryboardSegue,titles:NSArray,listID:NSArray){
+    func SequeCollectionView(segue: UIStoryboardSegue,titles:[[String]],listID:NSArray,type:String){
         let AllCollection = segue.destinationViewController  as! AllCollectionViewController
         AllCollection.titles = titles
         AllCollection.listID = listID as! Array<Int>
-        AllCollection.type = segue.identifier!
+        AllCollection.typeOption = segue.identifier!
+        AllCollection.type = type
     }
     func SequeTableView(segue: UIStoryboardSegue,titles:[[String]],listID:NSArray,type:String){
         let CustomTable = segue.destinationViewController  as! CustomTableViewController

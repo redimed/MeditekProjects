@@ -90,4 +90,4 @@ class DoctorsCompany :Mappable{
     }
     
 }
-
+ var requestAppointPostCompany = RequestAppointPostCompany()

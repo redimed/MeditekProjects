@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import ObjectMapper
+import AVFoundation
 
 class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelegate,AVAudioPlayerDelegate,SocketDelegate,MyPopupViewControllerDelegate {
     
@@ -20,8 +21,6 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     var backMusic: AVAudioPlayer!
     let callService = CallService()
     let socketService = SocketService()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

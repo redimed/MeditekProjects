@@ -20,9 +20,6 @@ class CustomTableViewController: BaseViewController ,UITableViewDelegate, UITabl
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
-        print(generalData)
-        
         loadData()
     }
     func loadData() {
@@ -57,13 +54,13 @@ class CustomTableViewController: BaseViewController ,UITableViewDelegate, UITabl
         if(type == "radio"){
             for (i,row) in titles.enumerate() {
                 if(i == indexPath.row){
-                    for general in generalData.general {
+                    for general in AllRedisiteData.general {
                         if(general.ref == row[1]){
                             general.checked = "true"
                         }
                     }
                 }else{
-                    for general in generalData.general {
+                    for general in AllRedisiteData.general {
                         if(general.ref == row[1]){
                             general.checked = "false"
                         }
@@ -74,15 +71,17 @@ class CustomTableViewController: BaseViewController ,UITableViewDelegate, UITabl
         }else{
             for (i,row) in titles.enumerate() {
                 if(i == indexPath.row){
-                    for general in generalData.general {
+                    for general in AllRedisiteData.general {
                         if(general.ref == row[1]){
-                            general.checked = "true"
+                            if(general.checked == "true"){
+                                general.checked = "false"
+                            }else{
+                                general.checked = "true"
+                            }
                         }
                     }
                 }
             }
-            let jsonString = Mapper().toJSONString(generalData, prettyPrint: true)
-            print("jsonString",jsonString)
             didSelectRowAtIndexPathCheckBox(tableView, indexPath: indexPath)
         }
         tableView.reloadData()
@@ -112,7 +111,6 @@ class CustomTableViewController: BaseViewController ,UITableViewDelegate, UITabl
         cell.btCheck.setImage(UIImage(named: Define.imageName.RadioOffGreen), forState: UIControlState.Normal)
         
         for i in 0 ..< listID.count {
-            print(listID[i],indexPath.row)
             if(listID[i] == indexPath.row){
                 cell.lbInformation.textColor = UIColor.whiteColor()
                 cell.btCheck.setImage(UIImage(named: Define.imageName.RadioOnWhite), forState: UIControlState.Normal)
@@ -152,7 +150,6 @@ class CustomTableViewController: BaseViewController ,UITableViewDelegate, UITabl
         cell.btCheck.setImage(UIImage(named: Define.imageName.UnCheckedGreen), forState: UIControlState.Normal)
         
         for i in 0 ..< listID.count {
-            print(listID[i],indexPath.row)
             if(listID[i] == indexPath.row){
                 cell.lbInformation.textColor = UIColor.whiteColor()
                 cell.btCheck.setImage(UIImage(named: Define.imageName.CheckedGreen), forState: UIControlState.Normal)

@@ -11,31 +11,38 @@ import UIKit
 
 struct Constants {
     
-            struct Path {
-                static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
-                static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
-                static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
-                static let SandboxOption                                 = false
-            }
+    //            struct Path {
+    //                static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
+    //                static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
+    //                static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+    //                static let SERVICE_URL_3015                              = "https://testapp.redimed.com.au:3015"
+    //                static let SandboxOption                                 = false
+    //            }
     
-//    struct Path {
-//        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
-//        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
-//        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
-//        static let SandboxOption                                 = true
-//    }
+    struct Path {
+        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
+        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
+        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
+        static let SERVICE_URL_3015                              = "https://meditek.redimed.com.au:3015"
+        static let SandboxOption                                 = true
+        static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
+    }
     //    struct Path {
-    //        static let SERVICE_URL_3006                              = "http://192.168.1.102:3006"
-    //        static let SERVICE_URL_3005                              = "http://192.168.1.102:3005"
-    //        static let SERVICE_URL_3009                              = "http://192.168.1.102:3009"
+    //        static let SERVICE_URL_3006                              = "http://192.168.1.116:3006"
+    //        static let SERVICE_URL_3005                              = "http://192.168.1.116:3005"
+    //        static let SERVICE_URL_3009                              = "http://192.168.1.116:3009"
+    //        static let SERVICE_URL_3015                              = "http://192.168.1.116:3015"
     //        static let SandboxOption                                 = true
-     //   }
-//        struct Path {
-//            static let SERVICE_URL_3006                              = "http://192.168.1.247:3006"
-//            static let SERVICE_URL_3005                              = "http://192.168.1.247:3005"
-//            static let SERVICE_URL_3009                              = "http://192.168.1.247:3009"
-//            static let SandboxOption                                 = true
-//        }
+    //        static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
+    //    }
+    //    struct Path {
+    //        static let SERVICE_URL_3006                              = "http://192.168.1.247:3006"
+    //        static let SERVICE_URL_3005                              = "http://192.168.1.247:3005"
+    //        static let SERVICE_URL_3009                              = "http://192.168.1.247:3009"
+    //        static let SERVICE_URL_3015                              = "http://192.168.1.247:3015"
+    //
+    //        static let SandboxOption                                 = true
+    //    }
     struct KeyPushNotification {
         static let SandboxOption = Path.SandboxOption
         //True: using key develoment
@@ -66,6 +73,9 @@ struct Constants {
         static let URL_POST_APPOINTMENTLIST                      = Path.SERVICE_URL_3009 + "/api/telehealth/user/appointments"
         static let URL_GET_DETAILS_APPOINMENT                    = Path.SERVICE_URL_3009 + "/api/telehealth/user/WAAppointmentDetails"
         static let URL_POST_UPDATEFILE_TO_APPOINTMENT            = Path.SERVICE_URL_3009 + "/api/telehealth/appointment/updateFile"
+        
+        static let URL_POST_EORM_SAVEINIT                          = Path.SERVICE_URL_3015 + "/eform/saveWithData"
+        
     }
     
 }

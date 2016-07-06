@@ -54,6 +54,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
     }
     func getDetailsAppointment(AppointmentUID:String){
         UserService.getDetailAppointment(AppointmentUID) { [weak self] (response) in
+            print(response.result.value!["data"])
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
@@ -69,6 +70,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
                             self!.suburbLabel.text = Patients.Suburb
                             self!.emailLabel.text = Patients.Email1
                             self!.dobLabel.text = Patients.DOB
+                            self!.UIDApointment = detailAppointment.UID
                         }
                     }
                 } else {
@@ -248,6 +250,11 @@ func insertDataToCollectionView(){
     collectionView.insertItemsAtIndexPaths([indexPath])
 }
 
+    @IBAction func RedisiteForm(sender: AnyObject) {
+        let patientInfor :PatientInforViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("PatientInforViewControllerID") as! PatientInforViewController
+        patientInfor.AppointmentUID = UIDApointment
+        self.navigationController?.pushViewController(patientInfor, animated: true)
+    }
 
 
 }

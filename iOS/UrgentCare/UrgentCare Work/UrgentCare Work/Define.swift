@@ -45,6 +45,11 @@ class Define: NSObject {
         static let DetailSiteCheck = "DetailSiteCheck"
     }
     
+    struct Redisite {
+        static let templateUID_InjuryEFormUID = "e060e666-6c51-4a19-8523-708d9242a2c0"
+        static let templateUID_GeneralEFormUID = "e81b4ec9-0442-4abf-a76f-b0808101c3f6"
+    }
+    
     struct MessageString {
         
         static let required = "Required"
@@ -92,6 +97,7 @@ class Define: NSObject {
         static let StarGreen = "StarGreen.png"
         static let CheckedGreen = "checked.png"
         static let UnCheckedGreen = "Uncheck.png"
+        static let CheckedBox = "CheckedBox.png"
     }
     struct ScreenSize
     {
@@ -182,12 +188,15 @@ class Define: NSObject {
         static let greenColor = "18A093"
         static let greenBoderColor = "979797"
         static let placehoderColor = "AAAAAA"
-
+        
     }
     struct UrlAPISocket  {
         static let joinRoom : String = "/api/telehealth/socket/joinRoom?uid=%@"
         static let emit : String = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
     }
     
+}
+struct DKOption {
+    static let types: [DKImagePickerControllerAssetType] = [.AllAssets, .AllPhotos, .AllVideos, .AllAssets]
 }
 

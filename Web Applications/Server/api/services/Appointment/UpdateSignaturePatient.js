@@ -49,7 +49,8 @@ module.exports = function(objUpdate) {
             })
             .then(function(signatureDisabled) {
                 return FileUpload.update({
-                    UserAccountID: userAccountID
+                    UserAccountID: userAccountID,
+                    Enable: 'Y'
                 }, {
                     where: {
                         ID: fileUploadID

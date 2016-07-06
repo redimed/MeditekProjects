@@ -360,7 +360,12 @@ module.exports = {
                             Email2: candidateInfo.email2,
                             PhoneNumber: candidateInfo.mobile,
                             HomePhoneNumber: candidateInfo.homePhoneNumber,
-                            WorkPhoneNumber: candidateInfo.workPhoneNumber
+                            WorkPhoneNumber: candidateInfo.workPhoneNumber,
+                            Address1: candidateInfo.Address,
+                            Suburb: candidateInfo.Suburb,
+                            State: candidateInfo.State,
+                            Postcode: candidateInfo.Postcode,
+                            Occupation: candidateInfo.Occupation
                         },
                         AppointmentData: [{
                             Category: 'Appointment',
@@ -426,7 +431,7 @@ module.exports = {
                             Category: 'Appointment',
                             Section: 'MedicalBooking',
                             Type: 'BookingCandidate',
-                            Name: 'preferredToDate',
+                            Name: 'preferredSiteId',
                             Value: candidateInfo.preferredSiteId || null
                         }, {
                             Category: 'Appointment',
@@ -434,7 +439,37 @@ module.exports = {
                             Type: 'BookingCandidate',
                             Name: 'Notes',
                             Value: candidateInfo.Notes || null
-                        }, ]
+                        }, {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'Facetime',
+                            Value: candidateInfo.Facetime || null
+                        }, {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'Skype',
+                            Value: candidateInfo.Skype || null
+                        }, {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'Supervisor',
+                            Value: candidateInfo.Supervisor || null
+                        }, {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'EmailForDocument',
+                            Value: candidateInfo.EmailForDocument || null
+                        }, {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'AppointmentDescription',
+                            Value: candidateInfo.AppointmentDescription || null
+                        }]
 
                     }
                     data.Appointments.push(appointment);

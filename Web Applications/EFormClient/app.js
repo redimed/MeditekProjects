@@ -3,6 +3,7 @@ var app = express();
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
+var appconfig = require('./appconfig');
 
 var ssl_options = {
         key: fs.readFileSync('key/star_redimed_com_au.key'),
@@ -26,7 +27,7 @@ var favicon = require('serve-favicon');
 app.use(favicon(__dirname + '/client/favicon.ico'));
 
 app.get('/', function(req, res){
-	res.render('index.ejs');
+	res.render('index.ejs', {appconfig: appconfig});
 });
 
 if (process.argv.indexOf("--nossl") >= 0) {

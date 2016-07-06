@@ -89,7 +89,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     }
                 }
             }
-            return (check) ? 'green-jungle' : 'blue';
+            return (check) ? 'label-green' : 'label-info';
         }
         /* END EFORM */
         //
@@ -252,4 +252,67 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         }
 
     }
+
+    $scope.tree = [
+        { 
+            id: 'PatientAdmission',
+            parent: '#',
+            text: 'Patient Admission',
+            icon: 'fa fa-file icon-state-info',
+            state: {opened: true},
+        },
+        { 
+            id: 'WorkCover',
+            parent: '#',
+            text: 'WorkCover',
+            icon: 'fa fa-folder icon-state-warning',
+            state: {opened: true},
+        },
+            { 
+                id: 'WorkCoverWAFirst',
+                parent: 'WorkCover',
+                text: 'WorkCover WA - FIRST',
+                icon: 'fa fa-file icon-state-info',
+            },
+            { 
+                id: 'WorkCoverWAProgress',
+                parent: 'WorkCover',
+                text: 'WorkCover WA - Progress',
+                icon: 'fa fa-file icon-state-info',
+            },
+            { 
+                id: 'WorkCoverNSW',
+                parent: 'WorkCover',
+                text: 'WorkCover NSW',
+                icon: 'fa fa-file icon-state-info',
+            },
+        { 
+            id: 'Redimed',
+            parent: '#',
+            text: 'Redimed',
+            icon: 'fa fa-folder icon-state-warning',
+            state: {opened: true},
+        },
+            { 
+                id: 'RedimedPublic',
+                parent: 'Redimed',
+                text: 'Redimed Public Form',
+                icon: 'fa fa-file icon-state-info',
+            },
+            { 
+                id: 'RedimedPrivate',
+                parent: 'Redimed',
+                text: 'Redimed Private Form',
+                icon: 'fa fa-file icon-state-info',
+            },
+        { 
+            id: 'Unmasked',
+            parent: '#',
+            text: 'Unmasked Air Conduction Audiometry Test Result',
+            icon: 'fa fa-file icon-state-info',
+        },
+    ];
+    $scope.selectNode = function(e){
+        console.log('eeeeeeeeeeeeeeeeeeeeeeeee : ', e.target.text);
+    };
 });

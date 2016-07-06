@@ -1,7 +1,7 @@
-<div class="portlet portlet-fit light bordered">
+<div class="portlet portlet-fit ">
     <div class="portlet-title bold uppercase" >
         <div class="caption bold uppercase font-blue">
-            <i class="glyphicon glyphicon-th-list font-blue"></i>
+            <i class="icon-list font-blue"></i>
             <span class="caption-subject">Appointment Detail</span>
         </div>
         <div class="actions">
@@ -99,8 +99,8 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-lg-4 col-md-4">Appointment Date</label>
-                                                <div class="col-lg-8 col-md-8">
+                                                <label class="control-label col-lg-4 col-md-4 col-xs-12">Appointment</label>
+                                                <div class="col-lg-4 col-md-4 col-xs-6">
                                                     <input date-picker 
                                                         data-date-format="dd/mm/yyyy" 
                                                         ng-model="info.appointmentDate" 
@@ -108,18 +108,14 @@
                                                         data-date-start-date="0d"
                                                         />
                                                 </div>
-                                                <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d"> -->
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-md-4">Appointment Time</label>
-                                                <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-4 col-md-4 col-xs-6">
                                                     <input time-picker
                                                         ng-model="info.appointmentTime" 
                                                         set-time="info.appointmentTime"
                                                         />
                                                 </div>
-                                                <!-- <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm"> -->
-                                            </div>                                            
+                                            </div>
+                                                                                   
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Duration of Referral</label>
                                                 <div class="col-lg-8 col-md-8">
@@ -145,8 +141,12 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">&nbsp;</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <label class="checkbox margin-left-30">
-                                                        <input type="checkbox" class="regular-checkbox" name="Correspondence12" ng-true-value="'Y'" ng-false-value="'N'" ng-model="wainformation.TelehealthAppointment.Correspondence"> Correspondence
+                                                    <label class="mt-checkbox mt-checkbox-outline">
+                                                        <input type="checkbox" 
+                                                            name="Correspondence12" 
+                                                            ng-true-value="'Y'" 
+                                                            ng-false-value="'N'" 
+                                                            ng-model="wainformation.TelehealthAppointment.Correspondence"/> <span></span> Correspondence
                                                     </label>
                                                 </div>
                                             </div>                                            
@@ -213,12 +213,18 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Has GP Referral</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="radio-list">
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="gp_referral" id="gp_referral_Y" value="Y" /> Yes
+                                                    <div class="mt-radio-inline">
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" 
+                                                                name="gp_referral" 
+                                                                id="gp_referral_Y" 
+                                                                value="Y" /> <span></span> Yes
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="gp_referral" id="gp_referral_N" value="N" /> No
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" 
+                                                                name="gp_referral" 
+                                                                id="gp_referral_N" 
+                                                                value="N" /> <span></span> No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -226,15 +232,15 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Type of Treatment</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="radio-list">
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="type_of_treatment" id="Physiotherapy" value="Physiotherapy" ng-click="_onChangeChecked('physiotherapy',type_of_treatment)" /> Physiotherapy
+                                                    <div class="mt-radio-list">
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="type_of_treatment" id="Physiotherapy" value="Physiotherapy" ng-click="_onChangeChecked('physiotherapy',type_of_treatment)" /> <span></span> Physiotherapy
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="type_of_treatment" id="Exercuse_Rehab" value="Exercuse_Rehab" ng-click="_onChangeChecked('exerciseRehab',type_of_treatment)" /> Exercise Rehab
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="type_of_treatment" id="Exercuse_Rehab" value="Exercuse_Rehab" ng-click="_onChangeChecked('exerciseRehab',type_of_treatment)" /> <span></span> Exercise Rehab
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="type_of_treatment" id="Hand_Therapy" value="Hand_Therapy" ng-click="_onChangeChecked('handTherapy',type_of_treatment)" /> Hand Therapy
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="type_of_treatment" id="Hand_Therapy" value="Hand_Therapy" ng-click="_onChangeChecked('handTherapy',type_of_treatment)" /> <span></span> Hand Therapy
                                                         </label>
                                                     </div>
                                                 </div>
@@ -421,15 +427,15 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Sex</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="radio-list">
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="radioTest12" value="Male" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Male
+                                                    <div class="mt-radio-list">
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="radioTest12" value="Male" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> <span></span> Male
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="radioTest12" value="Female" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Female
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="radioTest12" value="Female" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> <span></span> Female
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" size="15" ng-click="info.selectRadioGender()" name="radioTest12" ng-checked="(ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null)?true:false" ng-disabled="ShowData.isLinkPatient"> Other &nbsp;
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" size="15" ng-click="info.selectRadioGender()" name="radioTest12" ng-checked="(ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null)?true:false" ng-disabled="ShowData.isLinkPatient"> <span></span> Other &nbsp;
                                                             <input type="text" size="10" ng-if="ShowData.patient.Gender == 'Male' || ShowData.patient.Gender == 'Female' || ShowData.patient.Gender == null" disabled>
                                                             <input type="text" size="10" ng-model="ShowData.patient.Gender" ng-if="ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null" ng-disabled="ShowData.isLinkPatient">
                                                         </label>
@@ -439,15 +445,15 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Indigenous status</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="radio-list">
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Aboriginal
+                                                    <div class="mt-radio-list">
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> <span></span> Aboriginal
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> <span></span> Torres Strait Islander
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> <span></span> None
                                                         </label>
                                                     </div>
                                                 </div>
@@ -455,12 +461,12 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Interpreter required ?</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="radio-list">
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> Yes
+                                                    <div class="mt-radio-list">
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> <span></span> Yes
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> No
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> <span></span> No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -613,12 +619,12 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Medicare Eligible</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <div class="radio-list">
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="MedicareEligible" value="Y" ng-model="ShowData.patient.MedicareEligible"> Yes
+                                                    <div class="mt-radio-inline">
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="MedicareEligible" value="Y" ng-model="ShowData.patient.MedicareEligible"> <span></span> Yes
                                                         </label>
-                                                        <label class="radio">
-                                                            <input type="radio" class="regular-radio" name="MedicareEligible" value="N" ng-model="ShowData.patient.MedicareEligible"> No
+                                                        <label class="mt-radio mt-radio-outline">
+                                                            <input type="radio" name="MedicareEligible" value="N" ng-model="ShowData.patient.MedicareEligible"> <span></span> No
                                                         </label>
                                                     </div>
                                                 </div>

@@ -700,7 +700,7 @@ module.exports = {
                             isCreateByName = true;
                             var FirstName = data.FirstName.replace(/[\s]/g,'');
                             var LastName = data.LastName.replace(/[\s]/g,'');
-                            userInfo.UserName = data.UserName?data.UserName: FirstName + "." + LastName + "." + generatePassword(4, false);
+                            userInfo.UserName = data.UserName?data.UserName: FirstName[0] + "." + LastName;
                             return success;
                         }
                     }, function(err) {
@@ -712,15 +712,59 @@ module.exports = {
                             userInfo.Password = generatePassword(6, false,/[\w\d]/);
                             userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
                             userInfo.UserName = userInfo.UserName.replace(/[\s]/g,'');
-                            return Services.UserAccount.CreateUserAccount(userInfo, t);
+                            // return Services.UserAccount.CreateUserAccount(userInfo, t);
+                            if(!data.PhoneNumber && !data.Email) {
+                                function checkUser(arr, numb){
+                                    var promise = new Promise(function(a,b) {
+                                        for(var i = 0; i < arr.length; i++) {
+                                            if(arr[i].UserName == userInfo.UserName) {
+                                                userInfo.UserName += numb;
+                                                numb++;
+                                                checkUser(arr, numb);
+                                            }
+                                        }
+                                        a();
+                                    });
+                                    return promise;
+                                }
+                                return UserAccount.findAll({
+                                    attributes:['ID','UserName'],
+                                    where :{
+                                        UserName : {$like: '%'+ userInfo.UserName +'%'},
+                                    },
+                                    transaction: t,
+                                })
+                                .then(function(got_user) {
+                                    if(got_user == '' || got_user == null) {
+                                        return validated;
+                                    }
+                                    else {
+                                        var number = 1;
+                                        checkUser(got_user, number)
+                                        .then(function() {
+                                            return validated;
+                                        });
+                                    }
+                                }, function(err) {
+                                    throw err;
+                                })
+                            }
+                            else {
+                                return validated;
+                            }
                         } else {
                             return validated;
                         }
                     }, function(err) {
                         throw err;
                     })
+                    .then(function(begin_createuser) {
+                            return Services.UserAccount.CreateUserAccount(userInfo, t);
+                    }, function(err) {
+                        throw err;
+                    })
                     .then(function(user) {
-
+                        console.log("user ", user);
                         info.UserAccountID = user.ID;
                         info.UserAccountUID = user.UID;
                         return Patient.findOne({

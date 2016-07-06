@@ -56,7 +56,6 @@ app.controller('eFormLoadFormCtrl', function($scope, $stateParams, $cookies, $st
     }, 45 * 1000);
 
     $scope.stopExternalTokenInterval = function () {
-        alert("stopExternalTokenInterval");
         if (angular.isDefined(externalTokenInterval)) {
             $interval.cancel(externalTokenInterval);
             externalTokenInterval = undefined;

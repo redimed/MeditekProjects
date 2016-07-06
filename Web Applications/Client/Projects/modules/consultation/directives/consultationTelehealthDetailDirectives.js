@@ -84,7 +84,16 @@ app.directive('telehealthDetail', function(doctorService) {
                             console.log(er);
                         })
                 }
-                console.log("data---->", $scope.wainformation)
+                console.log("data---->", $scope.wainformation);
+                //tannv.dts@gmail.com
+                $scope.appointmentData = {};
+                for (var i = 0; i < $scope.wainformation.AppointmentData.length; i++) {
+                    var apptData = $scope.wainformation.AppointmentData[i];
+                    var key = apptData.Category+"."+apptData.Section+"."+apptData.Type+"."+apptData.Name;
+                    $scope.appointmentData[key] = apptData.Value;
+                }
+                console.log("|||||||||||||||||||||||||||||||| appointmentData : ", $scope.appointmentData);
+                //----------------------------------
                 $scope.FileUploadImage = []
                 $scope.FileUploads = function() {
                     $scope.FileUploadImage = angular.copy($scope.wainformation.FileUploads)

@@ -20,7 +20,7 @@ module.exports = {
             'OtherSpecialNeed', 'MedicareEligible', 'MedicareNumber',
             'MedicareReferenceNumber', 'MedicareExpiryDate', 'DVANumber',
             'PatientKinFirstName', 'PatientKinMiddleName', 'PatientKinLastName', 'PatientKinRelationship', 'PatientKinMobilePhoneNumber',
-            'PatientKinHomePhoneNumber', 'PatientKinWorkPhoneNumber'
+            'PatientKinHomePhoneNumber', 'PatientKinWorkPhoneNumber', 'Occupation'
         ];
     },
     ExaminationRequired: function() {

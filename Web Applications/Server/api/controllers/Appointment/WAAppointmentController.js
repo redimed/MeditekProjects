@@ -350,7 +350,8 @@ module.exports = {
                     var candidateInfo = rawdata.BookingCandidates[i];
                     var appointment = {
                         FromTime: candidateInfo.AppointmentTime,
-                        Type: 'PreEmployment',
+                        // Type: 'PreEmployment',
+                        Type: rawdata.AppointmentType,
                         PatientAppointment: {
                             FirstName: candidateInfo.CandidateFirstName,
                             MiddleName: candidateInfo.CandidateMiddleName,

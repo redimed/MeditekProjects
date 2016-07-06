@@ -43,7 +43,7 @@
             android:gravity="center"
             android:hint="@string/hint_code"
             android:inputType="numberSigned"
-            android:maxLength="15"
+            android:maxLength="6"
             android:maxLines="1"
             android:singleLine="true"
             android:textColor="@android:color/black"

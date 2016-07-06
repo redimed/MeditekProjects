@@ -18,8 +18,8 @@
     <dimen name="size_title">20sp</dimen>
     <dimen name="size_txt">15sp</dimen>
 
-    <dimen name="padding_left_redisite">30sp</dimen>
-    <dimen name="padding_right_redisite">30sp</dimen>
+    <dimen name="padding_left_redisite">10sp</dimen>
+    <dimen name="padding_right_redisite">10sp</dimen>
 
     <dimen name="title_size_redisite">18sp</dimen>
     <dimen name="text_size_redisite">16sp</dimen>

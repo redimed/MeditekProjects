@@ -49,6 +49,7 @@ import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.request.RequestFragment;
 import com.redimed.telehealth.patient.request.view.IRequestView;
 import com.redimed.telehealth.patient.utlis.DefineKey;
+import com.redimed.telehealth.patient.utlis.UploadFileRequest;
 import com.redimed.telehealth.patient.views.SignaturePad;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -513,7 +514,7 @@ public class RequestPresenter implements IRequestPresenter {
 
     private ArrayList<FileUpload> listImageRequest(ArrayList<CustomGallery> customGalleries) {
         progressDialog.show();
-        ArrayList<FileUpload> fileUploads = new ArrayList<FileUpload>();
+        ArrayList<FileUpload> fileUploads = new ArrayList<>();
         for (int i = 0; i < customGalleries.size(); i++) {
             try {
                 FileUpload fileUpload = new UploadFileRequest(customGalleries.get(i).sdcardPath, context).execute().get();
@@ -555,7 +556,7 @@ public class RequestPresenter implements IRequestPresenter {
         jConsent4.addProperty("Name", "Signature");
         jConsent4.addProperty("Value", signatureUID);
 
-        ArrayList<AppointmentData> appointmentDataArrayList = new ArrayList<AppointmentData>();
+        ArrayList<AppointmentData> appointmentDataArrayList = new ArrayList<>();
         appointmentDataArrayList.add(gson.fromJson(jConsent1, AppointmentData.class));
         appointmentDataArrayList.add(gson.fromJson(jConsent2, AppointmentData.class));
         appointmentDataArrayList.add(gson.fromJson(jConsent3, AppointmentData.class));
@@ -589,56 +590,52 @@ public class RequestPresenter implements IRequestPresenter {
     }
 }
 
-class UploadFileRequest extends AsyncTask<String, String, FileUpload> {
-
-    private String pathImage;
-    private SharedPreferences uidTelehealth;
-    private static final String TAG = "=====UPLOAD=====";
-
-    public UploadFileRequest(String path, Context context) {
-        this.pathImage = path;
-        uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
-    }
-
-    @Override
-    protected final FileUpload doInBackground(String... params) {
-        try {
-            File sourceFile = new File(pathImage);
-            MediaType MEDIA_TYPE = MediaType.parse("multipart/form-data");
-
-            RequestBody requestBody = new MultipartBuilder()
-                    .type(MultipartBuilder.FORM)
-                    .addFormDataPart("userUID", uidTelehealth.getString("userUID", ""))
-                    .addFormDataPart("fileType", "MedicalImage")
-                    .addFormDataPart("uploadFile", "ImageRequest", RequestBody.create(MEDIA_TYPE, sourceFile)).build();
-
-            Request request = new Request.Builder()
-                    .url(Config.apiURLCore + "/api/uploadFile")
-                    .post(requestBody)
-                    .build();
-
-            OkHttpClient okHttpClient = new OkHttpClient();
-            okHttpClient.interceptors().add(new RESTClient.RequestInterceptor());
-
-            Response response = okHttpClient.newCall(request).execute();
-
-            if (response.isSuccessful()) {
-                String strBody = response.body().string();
-//                JsonElement jeUID = new JsonParser().parse(strBody).getAsJsonObject().get("fileUID");
+//class UploadFileRequest extends AsyncTask<String, String, FileUpload> {
 //
-//                JsonObject jsonObject = new JsonObject();
-//                jsonObject.add("UID", jeUID);
-                String strUID = new JsonParser().parse(strBody).getAsJsonObject().get("fileUID").getAsString();
-
-                FileUpload fileUpload = new FileUpload();
-                fileUpload.setUID(strUID);
-
-                return fileUpload;
-            } else
-                return null;
-        } catch (Exception e) {
-            Log.d(TAG, e.getLocalizedMessage());
-            return null;
-        }
-    }
-}
+//    private String pathImage;
+//    private SharedPreferences uidTelehealth;
+//    private static final String TAG = "=====UPLOAD=====";
+//
+//    public UploadFileRequest(String path, Context context) {
+//        this.pathImage = path;
+//        uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
+//    }
+//
+//    @Override
+//    protected final FileUpload doInBackground(String... params) {
+//        try {
+//            File sourceFile = new File(pathImage);
+//            MediaType MEDIA_TYPE = MediaType.parse("multipart/form-data");
+//
+//            RequestBody requestBody = new MultipartBuilder()
+//                    .type(MultipartBuilder.FORM)
+//                    .addFormDataPart("userUID", uidTelehealth.getString("userUID", ""))
+//                    .addFormDataPart("fileType", "MedicalImage")
+//                    .addFormDataPart("uploadFile", "ImageRequest", RequestBody.create(MEDIA_TYPE, sourceFile)).build();
+//
+//            Request request = new Request.Builder()
+//                    .url(Config.apiURLCore + "/api/uploadFile")
+//                    .post(requestBody)
+//                    .build();
+//
+//            OkHttpClient okHttpClient = new OkHttpClient();
+//            okHttpClient.interceptors().add(new RESTClient.RequestInterceptor());
+//
+//            Response response = okHttpClient.newCall(request).execute();
+//
+//            if (response.isSuccessful()) {
+//                String strBody = response.body().string();
+//                String strUID = new JsonParser().parse(strBody).getAsJsonObject().get("fileUID").getAsString();
+//
+//                FileUpload fileUpload = new FileUpload();
+//                fileUpload.setUID(strUID);
+//
+//                return fileUpload;
+//            } else
+//                return null;
+//        } catch (Exception e) {
+//            Log.d(TAG, e.getLocalizedMessage());
+//            return null;
+//        }
+//    }
+//}

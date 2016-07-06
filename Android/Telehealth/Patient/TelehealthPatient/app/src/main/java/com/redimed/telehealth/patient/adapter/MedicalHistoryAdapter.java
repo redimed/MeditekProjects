@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.models.EFormData;
+import com.redimed.telehealth.patient.models.Singleton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,18 +28,30 @@ import butterknife.ButterKnife;
 public class MedicalHistoryAdapter extends RecyclerView.Adapter<MedicalHistoryAdapter.MedicalHistoryViewHolder> {
 
     private Context context;
-    private List<String> medicals;
     private LayoutInflater inflater;
     private List<Integer> selectedPositions;
     private ArrayList<String> selectedMedicalHistory;
+    private List<String> medicals, names, refs, refRows;
+    private ArrayList<EFormData> eFormDatas, eFormDataHistory;
     private static final String TAG = "===MEDICAL_ADAPTER===";
+
+    protected MyApplication application;
 
     public MedicalHistoryAdapter(Context context) {
         this.context = context;
+        this.application = (MyApplication) context.getApplicationContext();
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        eFormDatas = new ArrayList<>();
         selectedPositions = new ArrayList<>();
         selectedMedicalHistory = new ArrayList<>();
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        eFormDataHistory = application.getSelectedMedicalHistory();
+
+        // init data Eform Medical History
         medicals = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.medical_history_arrays)));
+        refs = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.medical_history_ref_arrays)));
+        names = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.medical_history_name_arrays)));
+        refRows = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.medical_history_refRow_arrays)));
     }
 
     @Override
@@ -47,8 +62,14 @@ public class MedicalHistoryAdapter extends RecyclerView.Adapter<MedicalHistoryAd
 
     @Override
     public void onBindViewHolder(MedicalHistoryAdapter.MedicalHistoryViewHolder holder, int position) {
+        holder.lblMedicalHistory.setHint(names.get(position));
         holder.lblMedicalHistory.setText(medicals.get(position));
         holder.display(medicals.get(position), selectedPositions.contains(position));
+
+        eFormDatas.add(new EFormData("yes", names.get(position), refs.get(position), "eform_input_check_checkbox", false, refRows.get(position), 0));
+        if (eFormDataHistory.size() > 0 && eFormDataHistory.get(position).isChecked()) {
+            holder.selectedMedicalHistory(position);
+        }
     }
 
     @Override
@@ -73,6 +94,7 @@ public class MedicalHistoryAdapter extends RecyclerView.Adapter<MedicalHistoryAd
                     selectedMedicalHistory(getAdapterPosition());
                 }
             });
+            Singleton.getInstance().setEFormMedicalHistory(eFormDatas);
         }
 
         private void selectedMedicalHistory(int position) {
@@ -81,12 +103,14 @@ public class MedicalHistoryAdapter extends RecyclerView.Adapter<MedicalHistoryAd
                 display(false);
                 selectedPositions.remove(selectedIndex);
                 selectedMedicalHistory.remove(medicals.get(position));
+                eFormDatas.get(position).setChecked(false);
             } else {
                 display(true);
                 selectedPositions.add(position);
                 selectedMedicalHistory.add(medicals.get(position));
+                eFormDatas.get(position).setChecked(true);
             }
-            Log.d(TAG, selectedMedicalHistory + "");
+            Singleton.getInstance().setEFormMedicalHistory(eFormDatas);
         }
 
         private void display(String text, boolean isSelected) {

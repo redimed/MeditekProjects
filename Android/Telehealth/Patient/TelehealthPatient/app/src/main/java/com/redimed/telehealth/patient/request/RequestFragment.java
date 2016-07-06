@@ -435,7 +435,7 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
                 break;
             case R.id.lblComplete:
                 if (!iRequestPresenter.isCheckPatientConsent(chkConsent1, chkConsent2, chkConsent3)) {
-                    Toast.makeText(context, "Please accept consent and submit booking request", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.confirm_alert), Toast.LENGTH_SHORT).show();
                 } else {
                     iRequestPresenter.completeRequest(customGalleries);
                 }

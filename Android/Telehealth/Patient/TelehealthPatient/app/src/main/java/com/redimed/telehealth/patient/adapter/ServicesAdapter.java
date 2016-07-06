@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.models.EFormData;
+import com.redimed.telehealth.patient.models.Singleton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,18 +29,28 @@ import butterknife.ButterKnife;
 public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ServiceViewHolder> {
 
     private Context context;
-    private List<String> services;
     private LayoutInflater inflater;
     private List<Integer> selectedPositions;
-    private ArrayList<String> selectedService;
-    private static final String TAG = "===SErVICE_ADAPTER===";
+    private List<String> services, names, refs, refRows;
+    private ArrayList<EFormData> eFormDatas, eFormDataServices;
+    private static final String TAG = "===SERVICE_ADAPTER===";
+
+    protected MyApplication application;
 
     public ServicesAdapter(Context context) {
         this.context = context;
-        selectedService = new ArrayList<>();
-        selectedPositions = new ArrayList<>();
+        this.application = (MyApplication) context.getApplicationContext();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        eFormDatas = new ArrayList<>();
+        selectedPositions = new ArrayList<>();
+        eFormDataServices = application.getSelectedServices();
+
+        //init data Eform Services
+        refs = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.service_required_ref_arrays)));
         services = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.service_required_arrays)));
+        names = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.service_required_name_arrays)));
+        refRows = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.service_required_refRow_arrays)));
     }
 
     @Override
@@ -48,8 +61,14 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
 
     @Override
     public void onBindViewHolder(ServiceViewHolder holder, final int position) {
+        holder.txtServiceRedisite.setHint(names.get(position));
         holder.txtServiceRedisite.setText(services.get(position));
         holder.display(services.get(position), selectedPositions.contains(position));
+        eFormDatas.add(new EFormData("yes", names.get(position), refs.get(position), "eform_input_check_checkbox", false, refRows.get(position), 0));
+
+        if (eFormDataServices.size() > 0 && eFormDataServices.get(position).isChecked()) {
+            holder.selectedListService(position);
+        }
     }
 
     @Override
@@ -66,9 +85,13 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
         @Bind(R.id.txtServiceRedisite)
         TextView txtServiceRedisite;
 
+        protected ArrayList<String> selectedService;
+
         public ServiceViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            selectedService = new ArrayList<>();
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,20 +99,23 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
                     selectedListService(getAdapterPosition());
                 }
             });
+            Singleton.getInstance().setEFormDatas(eFormDatas);
         }
 
-        private void selectedListService(int position) {
+        public void selectedListService(int position) {
             int selectedIndex = selectedPositions.indexOf(position);
             if (selectedIndex > -1) {
                 display(false);
                 selectedPositions.remove(selectedIndex);
                 selectedService.remove(services.get(position));
+                eFormDatas.get(position).setChecked(false);
             } else {
                 display(true);
                 selectedPositions.add(position);
                 selectedService.add(services.get(position));
+                eFormDatas.get(position).setChecked(true);
             }
-            Log.d(TAG, selectedService + "");
+            Singleton.getInstance().setEFormDatas(eFormDatas);
         }
 
         private void display(String text, boolean isSelected) {

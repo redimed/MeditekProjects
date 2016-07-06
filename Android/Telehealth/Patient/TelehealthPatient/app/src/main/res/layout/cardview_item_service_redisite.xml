@@ -26,7 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:gravity="center_vertical"
-            android:text="TEST"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/cbServiceRedisite"
             android:layout_toEndOf="@+id/cbServiceRedisite" />
@@ -40,30 +39,5 @@
             android:layout_alignParentStart="true" />
 
     </RelativeLayout>
-
-    <!--<ImageView-->
-        <!--android:id="@+id/cbServiceRedisite"-->
-        <!--android:layout_width="0dip"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_weight="0.2"-->
-        <!--android:layout_marginLeft="5dp"-->
-        <!--android:layout_marginRight="5dp"-->
-        <!--android:background="@drawable/icon_checkbox_unselected" />-->
-    <!---->
-    <!--&lt;!&ndash;<CheckBox&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/cbServiceRedisite"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="0dip"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_gravity="center_horizontal"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_weight="0.2"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:gravity="center_horizontal" />&ndash;&gt;-->
-
-    <!--<com.redimed.telehealth.patient.font.RobotoTextView-->
-        <!--android:id="@+id/txtServiceRedisite"-->
-        <!--android:layout_width="200dp"-->
-        <!--android:layout_height="35dp"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:text="TEST" />-->
 
 </LinearLayout>

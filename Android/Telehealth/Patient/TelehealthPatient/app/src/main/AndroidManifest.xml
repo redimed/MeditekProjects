@@ -70,7 +70,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
-        tools:replace="android:icon,android:theme">
+        tools:replace="android:icon, android:theme">
         <activity
             android:name=".LauncherActivity"
             android:label="@string/title_activity_launcher"

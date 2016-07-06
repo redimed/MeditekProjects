@@ -181,6 +181,13 @@ app
     })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
         $('#loading').css("display", "none");
+        $(window).bind('beforeunload',function(){
+             //save info somewhere
+            // return 'are you sure you want to leave?';
+            if(localStorage.getItem('listAppt') !== null) {
+                localStorage.removeItem('listAppt');
+            }
+        });
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
         //     if (response.status == 401) {

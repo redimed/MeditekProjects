@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.WAAppointment.directives.listWAAppoint', []);
-app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies, toastr, $state) {
+app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies, toastr, $state, $rootScope, $window) {
     return {
         scope: {
             data: "="
@@ -7,7 +7,8 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
         restrict: 'E',
         templateUrl: "modules/WAAppointment/directives/templates/listWAApointment.html",
         link: function(scope) {
-            scope.info = {
+            scope.info = {};
+            scope.mapObject = {
                 apptStatus: WAConstant.apptStatus,
                 paging: {
                     currentPage: 1,
@@ -63,6 +64,9 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.LoadData = function() {
                 o.loadingPage(true);
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
+                    
+                    // $cookies.put('listAppt',scope.info);
+                    localStorage.setItem('listAppt',JSON.stringify(scope.info));
                     for(var i = 0; i < data.rows.length; i++) {
                         if(_.isEmpty(data.rows[i].TelehealthAppointment) == false) {
                             if(_.isEmpty(data.rows[i].TelehealthAppointment.PatientAppointment) == false) {
@@ -110,7 +114,20 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                     o.loadingPage(false);
                 });
             };
-            scope.LoadData();
+            scope.init = function() {
+                if(localStorage.getItem('listAppt') === null) {
+                    console.log("not have");
+                    scope.info = angular.copy(scope.mapObject);
+                    scope.LoadData();
+                }
+                else {
+                    console.log('have');
+                    var obj = JSON.parse(localStorage.getItem('listAppt'));
+                    scope.info = $.extend({},obj);
+                    scope.LoadData();
+                } 
+                scope.LoadData();       
+            };
             scope.reloadData = function() {
                 scope.info.data.Offset = (scope.info.paging.currentPage - 1) * scope.info.paging.itemsPerPage;
                 (scope.info.data.Search[0].PatientAppointment.FullName !== null && scope.info.data.Search[0].PatientAppointment.FullName !== undefined) ? scope.info.data.Search[0].PatientAppointment.FullName: scope.info.data.Search[0].PatientAppointment.FullName = null;
@@ -137,6 +154,7 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                 scope.info.data.Range[0].Appointment.FromTime[1]=null;
                 scope.LoadData();
             };
+            scope.init();
         }
     };
 })

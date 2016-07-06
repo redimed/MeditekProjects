@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,19 +18,34 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.models.EFormData;
+import com.redimed.telehealth.patient.models.Singleton;
 import com.redimed.telehealth.patient.redisite.consent.presenter.ConsentPresenter;
 import com.redimed.telehealth.patient.redisite.consent.presenter.IConsentPresenter;
 import com.redimed.telehealth.patient.redisite.consent.view.IConsentView;
 import com.redimed.telehealth.patient.views.SignaturePad;
+import com.redimed.telehealth.patient.widget.DialogAlert;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ConsentFragment extends Fragment implements IConsentView, View.OnClickListener {
 
     private Context context;
     private IConsentPresenter iConsentPresenter;
     private static final String TAG = "=====CONSENT=====";
+
+    @Bind(R.id.cbConsent1)
+    CheckBox cbConsent1;
+    @Bind(R.id.cbConsent2)
+    CheckBox cbConsent2;
+    @Bind(R.id.txtSupervisor)
+    EditText txtSupervisor;
+    @Bind(R.id.cbConsent3)
+    CheckBox cbConsent3;
+    @Bind(R.id.cbConsent4)
+    CheckBox cbConsent4;
 
     /* Signature */
     @Bind(R.id.signaturePad)
@@ -49,6 +66,15 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
 
     public ConsentFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Log.d(TAG, bundle.getString("flagFragment"));
+        }
     }
 
     @Override
@@ -101,16 +127,22 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
                 signaturePad.clear();
                 break;
             case R.id.lblComplete:
+                if (cbConsent1.isChecked() && cbConsent2.isChecked() && cbConsent3.isChecked() && cbConsent4.isChecked()) {
+                    iConsentPresenter.submitRedisite(txtSupervisor.getText().toString(), getArguments());
+                } else {
+                    new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                            .setContentText(getString(R.string.confirm_alert)).show();
+                }
                 break;
         }
     }
 
     @Override
-    public void onLoadImgSignature(Bitmap bitmap, String pathBase64) {
+    public void onLoadImgSignature(Bitmap bitmap, String path) {
         if (bitmap != null) {
             imgSignature.setImageBitmap(bitmap);
             vfContainer.setDisplayedChild(vfContainer.indexOfChild(layoutSubmit));
-            Log.d(TAG, pathBase64);
+            iConsentPresenter.uploadSignature(path);
         }
     }
 }

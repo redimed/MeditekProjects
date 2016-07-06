@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightBackground"
     android:orientation="vertical"
-    tools:context="com.redimed.telehealth.patient.redisite.illness.IllnessFragment">
+    tools:context=".redisite.illness.GeneralFragment">
 
     <include
         android:id="@+id/toolBar"
@@ -15,6 +16,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/layoutGeneral"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -137,7 +139,7 @@
                         android:text="Other: " />
 
                     <EditText
-                        android:id="@+id/txtOtherMedical"
+                        android:id="@+id/txtOtherMedicalHistory"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/lblOtherMedical"
@@ -321,7 +323,8 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/lblVitalSigns"
-                    android:layout_toRightOf="@+id/lblVitalSigns" />
+                    android:layout_toRightOf="@+id/lblVitalSigns"
+                    android:inputType="number" />
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
                     android:id="@+id/lblTemp"
@@ -335,7 +338,8 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/lblTemp"
-                    android:layout_toRightOf="@+id/lblTemp" />
+                    android:layout_toRightOf="@+id/lblTemp"
+                    android:inputType="number" />
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
                     android:id="@+id/lblRR"
@@ -351,7 +355,8 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:inputType="number" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -371,7 +376,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/lblBlood"
-                    android:layout_toRightOf="@+id/lblBlood" />
+                    android:layout_toRightOf="@+id/lblBlood"
+                    android:inputType="number" />
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
                     android:id="@+id/lblSaO2"
@@ -385,7 +391,8 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/lblSaO2"
-                    android:layout_toRightOf="@+id/lblSaO2"  />
+                    android:layout_toRightOf="@+id/lblSaO2"
+                    android:inputType="number" />
             </RelativeLayout>
 
             <LinearLayout
@@ -408,12 +415,12 @@
             </LinearLayout>
 
             <Button
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:id="@+id/btnIllness"
-                android:layout_gravity="center"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
                 android:text="Continue" />
 
         </LinearLayout>

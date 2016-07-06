@@ -17,6 +17,7 @@
         android:layout_marginTop="20dp">
 
         <LinearLayout
+            android:id="@+id/layoutRedisiteInjury"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -110,8 +111,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/lblOtherInjury"
-                    android:layout_toStartOf="@+id/lblOtherInjury"
                     android:layout_toEndOf="@+id/lblInjury"
                     android:layout_toRightOf="@+id/lblInjury"
                     android:background="@drawable/custom_border"
@@ -239,7 +238,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvMedicalHistory"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_border"
                     android:orientation="horizontal"
@@ -412,12 +411,12 @@
                     android:layout_height="wrap_content"
                     android:text="Other: "
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/txtInjurySymptoms"
-                    android:layout_toStartOf="@+id/txtInjurySymptoms" />
+                    android:layout_toLeftOf="@+id/txtOtherInjurySymptoms"
+                    android:layout_toStartOf="@+id/txtOtherInjurySymptoms" />
 
                 <EditText
                     android:layout_alignParentRight="true"
-                    android:id="@+id/txtInjurySymptoms"
+                    android:id="@+id/txtOtherInjurySymptoms"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content" />
 
@@ -441,11 +440,14 @@
                     android:layout_height="wrap_content"
                     android:max="10" />
 
-                <com.redimed.telehealth.patient.font.RobotoTextView
-                    android:id="@+id/lblPain"
-                    android:layout_width="25dp"
+                <EditText
+                    android:id="@+id/txtPain"
+                    android:layout_width="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    android:enabled="false"
+                    android:text="0"
+                    android:textColor="@color/darkFont"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>

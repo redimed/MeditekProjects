@@ -151,7 +151,6 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(getResources().getString(R.string.home_title));
-//            actionBar.setSubtitle(getResources().getString(R.string.home_title));
 
             actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
             actionBar.setDisplayHomeAsUpEnabled(false);

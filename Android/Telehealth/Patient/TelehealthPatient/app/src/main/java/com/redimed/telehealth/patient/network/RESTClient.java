@@ -39,7 +39,7 @@ public class RESTClient {
     private static SharedPreferences.Editor editor;
     private static SharedPreferences uidTelehealth;
     private static final String TAG = "=====REST_CLIENT=====";
-    private static RestAdapter restAdapter, restAdapterCore, restAdapterLogin;
+    private static RestAdapter restAdapter, restAdapterCore, restAdapterLogin, restAdapterEForm;
 
 
     public static void InitRESTClient(Context ctx) {
@@ -101,7 +101,7 @@ public class RESTClient {
     private static void setupRestClient() {
         //3009
         restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURL)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
@@ -119,8 +119,17 @@ public class RESTClient {
 
         //3006
         restAdapterLogin = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLLogin)
+                .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
+                .setRequestInterceptor(new SessionRequestInterceptor())
+                .setErrorHandler(new RetrofitErrorHandler(context))
+                .build();
+
+        //3015
+        restAdapterEForm = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setEndpoint(Config.apiURLEForm)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler(context))
@@ -148,6 +157,10 @@ public class RESTClient {
 
     public static RegisterApi getRegisterApiLogin() {
         return restAdapterLogin.create(RegisterApi.class);
+    }
+
+    public static RegisterApi getRegisterApiEForm() {
+        return restAdapterEForm.create(RegisterApi.class);
     }
 
     public static class InterceptingOkClient extends OkClient {

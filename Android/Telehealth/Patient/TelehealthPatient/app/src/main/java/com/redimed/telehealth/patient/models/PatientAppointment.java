@@ -7,26 +7,47 @@ import com.google.gson.annotations.SerializedName;
  */
 public class PatientAppointment {
 
+    @SerializedName("Title")
+    private String Title;
+
     @SerializedName("FirstName")
-    public String FirstName;
+    private String FirstName;
 
     @SerializedName("LastName")
-    public String LastName;
+    private String LastName;
 
     @SerializedName("PhoneNumber")
-    public String PhoneNumber;
+    private String PhoneNumber;
 
     @SerializedName("HomePhoneNumber")
-    public String HomePhoneNumber;
+    private String HomePhoneNumber;
+
+    @SerializedName("WorkPhoneNumber")
+    private String WorkPhoneNumber;
+
+    @SerializedName("Postcode")
+    private String Postcode;
+
+    @SerializedName("PatientKinMobilePhoneNumber")
+    private String PatientKinMobilePhoneNumber;
+
+    @SerializedName("PatientKinFirstName")
+    private String PatientKinFirstName;
+
+    @SerializedName("PatientKinLastName")
+    private String PatientKinLastName;
+
+    @SerializedName("Address1")
+    private String Address1;
 
     @SerializedName("Suburb")
-    public String Suburb;
+    private String Suburb;
 
     @SerializedName("DOB")
-    public String DOB;
+    private String DOB;
 
     @SerializedName("Email1")
-    public String Email;
+    private String Email;
 
     public String getFirstName() {
         return FirstName;
@@ -58,6 +79,62 @@ public class PatientAppointment {
 
     public void setHomePhoneNumber(String homePhoneNumber) {
         HomePhoneNumber = homePhoneNumber;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public String getWorkPhoneNumber() {
+        return WorkPhoneNumber;
+    }
+
+    public void setWorkPhoneNumber(String workPhoneNumber) {
+        WorkPhoneNumber = workPhoneNumber;
+    }
+
+    public String getPostcode() {
+        return Postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        Postcode = postcode;
+    }
+
+    public String getPatientKinMobilePhoneNumber() {
+        return PatientKinMobilePhoneNumber;
+    }
+
+    public void setPatientKinMobilePhoneNumber(String patientKinMobilePhoneNumber) {
+        PatientKinMobilePhoneNumber = patientKinMobilePhoneNumber;
+    }
+
+    public String getPatientKinFirstName() {
+        return PatientKinFirstName;
+    }
+
+    public void setPatientKinFirstName(String patientKinFirstName) {
+        PatientKinFirstName = patientKinFirstName;
+    }
+
+    public String getPatientKinLastName() {
+        return PatientKinLastName;
+    }
+
+    public void setPatientKinLastName(String patientKinLastName) {
+        PatientKinLastName = patientKinLastName;
+    }
+
+    public String getAddress1() {
+        return Address1;
+    }
+
+    public void setAddress1(String address1) {
+        Address1 = address1;
     }
 
     public String getSuburb() {

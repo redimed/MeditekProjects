@@ -15,6 +15,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/layoutPatientRedisite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -48,6 +49,7 @@
                             android:id="@+id/radioWork"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:hint="@string/hint_yes"
                             android:text="@string/work" />
 
@@ -649,8 +651,8 @@
                             android:background="@drawable/toggle_widget_background"
                             android:button="@null"
                             android:gravity="center"
-                            android:hint="N"
-                            android:text="N/A"
+                            android:hint="@string/hint_na"
+                            android:text="@string/na"
                             android:textColor="@color/lightFont" />
 
                         <RadioButton

@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.models.EFormData;
+import com.redimed.telehealth.patient.models.Singleton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,18 +28,29 @@ import butterknife.ButterKnife;
 public class InjurySymptomsAdapter extends RecyclerView.Adapter<InjurySymptomsAdapter.InjurySymptomsViewHolder> {
 
     private Context context;
-    private List<String> injurySymptoms;
     private LayoutInflater inflater;
     private List<Integer> selectedPositions;
     private ArrayList<String> selectedInjurySymptoms;
+    private List<String> injurySymptoms, names, refs, refRows;
+    private ArrayList<EFormData> eFormDatas, eFormDataInjurySymptoms;
     private static final String TAG = "INJURY_SYMPTOMS_ADAPTER";
+
+    protected MyApplication application;
 
     public InjurySymptomsAdapter(Context context) {
         this.context = context;
+        this.application = (MyApplication) context.getApplicationContext();
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        eFormDatas = new ArrayList<>();
         selectedPositions = new ArrayList<>();
         selectedInjurySymptoms = new ArrayList<>();
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        eFormDataInjurySymptoms = application.getSelectedInjurySymptoms();
+
+        refs = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.injury_symptoms_arrays)));
+        names = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.injury_symptoms_name_arrays)));
         injurySymptoms = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.injury_symptoms_arrays)));
+        refRows = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.injury_symptoms_refRow_arrays)));
     }
 
     @Override
@@ -47,8 +61,14 @@ public class InjurySymptomsAdapter extends RecyclerView.Adapter<InjurySymptomsAd
 
     @Override
     public void onBindViewHolder(InjurySymptomsAdapter.InjurySymptomsViewHolder holder, int position) {
+        holder.lblInjury.setHint(injurySymptoms.get(position));
         holder.lblInjury.setText(injurySymptoms.get(position));
         holder.display(injurySymptoms.get(position), selectedPositions.contains(position));
+        eFormDatas.add(new EFormData("yes", names.get(position), refs.get(position), "eform_input_check_checkbox", false, refRows.get(position), 0));
+
+        if (eFormDataInjurySymptoms.size() > 0 && eFormDataInjurySymptoms.get(position).isChecked()) {
+            holder.selectedListInjurySymptoms(position);
+        }
     }
 
     @Override
@@ -71,6 +91,7 @@ public class InjurySymptomsAdapter extends RecyclerView.Adapter<InjurySymptomsAd
                     selectedListInjurySymptoms(getAdapterPosition());
                 }
             });
+            Singleton.getInstance().setEFormInjurySymptoms(eFormDatas);
         }
 
         private void selectedListInjurySymptoms(int position) {
@@ -79,12 +100,14 @@ public class InjurySymptomsAdapter extends RecyclerView.Adapter<InjurySymptomsAd
                 display(false);
                 selectedPositions.remove(selectedIndex);
                 selectedInjurySymptoms.remove(injurySymptoms.get(position));
+                eFormDatas.get(position).setChecked(false);
             } else {
                 display(true);
                 selectedPositions.add(position);
                 selectedInjurySymptoms.add(injurySymptoms.get(position));
+                eFormDatas.get(position).setChecked(true);
             }
-            Log.d(TAG, selectedInjurySymptoms + "");
+            Singleton.getInstance().setEFormInjurySymptoms(eFormDatas);
         }
 
         private void display(String text, boolean isSelected) {

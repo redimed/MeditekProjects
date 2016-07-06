@@ -2,6 +2,8 @@ package com.redimed.telehealth.patient.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Lam on 10/14/2015.
@@ -40,6 +42,15 @@ public class Appointment {
 
     @SerializedName("Patients")
     private Patient[] Patients;
+
+    @SerializedName("FileUploads")
+    private FileUpload[] FileUploads;
+
+    @SerializedName("AppointmentData")
+    private ArrayList<AppointmentData> AppointmentDatas;
+
+    @SerializedName("PatientAppointment")
+    private PatientAppointment PatientAppointment;
 
     @SerializedName("TelehealthAppointment")
     private TelehealthAppointment TelehealthAppointment;
@@ -130,6 +141,38 @@ public class Appointment {
 
     public void setPatient(Patient[] patients) {
         Patients = patients;
+    }
+
+    public ArrayList<AppointmentData> getAppointmentDatas() {
+        return AppointmentDatas;
+    }
+
+    public void setAppointmentDatas(ArrayList<AppointmentData> appointmentDatas) {
+        AppointmentDatas = appointmentDatas;
+    }
+
+    public PatientAppointment getPatientAppointment() {
+        return PatientAppointment;
+    }
+
+    public void setPatientAppointment(PatientAppointment patientAppointment) {
+        PatientAppointment = patientAppointment;
+    }
+
+    public Patient[] getPatients() {
+        return Patients;
+    }
+
+    public void setPatients(Patient[] patients) {
+        Patients = patients;
+    }
+
+    public FileUpload[] getFileUploads() {
+        return FileUploads;
+    }
+
+    public void setFileUploads(FileUpload[] fileUploads) {
+        FileUploads = fileUploads;
     }
 
     public TelehealthAppointment getTelehealthAppointment() {

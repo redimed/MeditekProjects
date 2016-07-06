@@ -3,6 +3,8 @@ package com.redimed.telehealth.patient.api;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.models.Appointment;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import retrofit.Callback;
@@ -53,6 +55,9 @@ public interface RegisterApi {
     @GET("/api/site/list")
     void getListSite(Callback<JsonObject> callback);
 
+    @POST("/api/appointment-wa-request/company")
+    void requestCompany(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
     /* 3006 */
     @POST("/api/refresh-token/GetNewToken")
     void getNewToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
@@ -66,9 +71,6 @@ public interface RegisterApi {
 
     @GET("/api/telehealth/user/details/{teleUID}")
     void getDetailsPatient(@Path("teleUID") String teleUID, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/user/appointments")
-    void getTrackingReferrals(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @GET("/api/telehealth/user/WAAppointmentDetails/{apptUID}")
     void getAppointmentDetails(@Path("apptUID") String apptUID, Callback<JsonObject> callback);
@@ -96,4 +98,8 @@ public interface RegisterApi {
 
     @POST("/api/telehealth/updatePinNumber")
     void updatePin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    /* 3015 */
+    @POST("/eform/saveWithData")
+    void submitRedisite(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 }

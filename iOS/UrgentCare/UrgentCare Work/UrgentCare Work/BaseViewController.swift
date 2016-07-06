@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import ObjectMapper
+import AVFoundation
 
 class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelegate,AVAudioPlayerDelegate,SocketDelegate,MyPopupViewControllerDelegate {
     

@@ -96,9 +96,7 @@ class LoginViewController: BaseViewController {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
                         if let responseRegister = Mapper<ResponseRegister>().map(response.result.value) {
-                            
                             if(responseRegister.UserUID != ""){
-                                
                                 Context.setDataDefaults(responseRegister.UserUID, key: Define.keyNSDefaults.UID)
                                 Context.setDataDefaults(responseRegister.PatientUID, key: Define.keyNSDefaults.PatientUID)
                                 let VerifyPhone :VerifyViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("VerifyViewControllerID") as! VerifyViewController

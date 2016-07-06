@@ -14,7 +14,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
     @IBOutlet weak var tableView: UITableView!
     
     var nameComapny :String = "name"
-    var array = [["List Tracking"],["List Staff"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
+    var array = [["List Tracking","Redisite"],["List Staff"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
     var arrayTitle = ["Tracking","Company", "Accounts", "", "", ""]
     var StringIncompleteProfile :String = "Incomplete Profile"
     var companyInfo = DetailCompanyResponse()
@@ -40,7 +40,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     array[1].append("")
                 }
             }else{
-                array = [["List Tracking"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
+                array = [["List Tracking","Redisite"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
                 arrayTitle = ["Tracking","Accounts", "", "", ""]
                 
             }
@@ -117,6 +117,10 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     let changPinNumber :ListTrackingViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListTrackingViewControllerID") as! ListTrackingViewController
                     self.navigationController?.pushViewController(changPinNumber, animated: true)
                 }
+                if(indexPath.row == 1 && indexPath.section == 0){
+                    let changPinNumber :PatientInforViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("PatientInforViewControllerID") as! PatientInforViewController
+                    self.navigationController?.pushViewController(changPinNumber, animated: true)
+                }
                 if(indexPath.row == 0 && indexPath.section == 1){
                     let listStaff :ListStaffViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListStaffViewControllerID") as! ListStaffViewController
                      listStaff.CheckStaffInfor = true
@@ -128,11 +132,8 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     self.navigationController?.pushViewController(listSite, animated: true)
                 }
                 if(indexPath.row == 1 && indexPath.section == 2){
-            
-                    let changPinNumber :PatientInforViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("PatientInforViewControllerID") as! PatientInforViewController
+                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
                     self.navigationController?.pushViewController(changPinNumber, animated: true)
-//                    let changPinNumber :ChangePinNumberViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ChangePinNumberViewControllerID") as! ChangePinNumberViewController
-//                    self.navigationController?.pushViewController(changPinNumber, animated: true)
                 }
                 if(indexPath.row == 0 && indexPath.section == 2){
                     
@@ -156,6 +157,11 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     LogoutWhenIsAuthenticated()
                 }
             }else{
+                if(indexPath.row == 0 && indexPath.section == 0){
+                    
+                    let changPinNumber :ListTrackingViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListTrackingViewControllerID") as! ListTrackingViewController
+                    self.navigationController?.pushViewController(changPinNumber, animated: true)
+                }
                 if(indexPath.row == 0 && indexPath.section == 0){
                     
                     let changPinNumber :ListTrackingViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListTrackingViewControllerID") as! ListTrackingViewController

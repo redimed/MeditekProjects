@@ -16,7 +16,7 @@ class PatientInforViewController: BaseViewController {
     @IBOutlet weak var RelatedContentView: UIView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
-    @IBOutlet weak var txtSuburb: AutoCompleteTextField!
+    @IBOutlet weak var txtSuburb: UITextField!
     @IBOutlet weak var txtVeteranNumber: UITextField!
     @IBOutlet weak var txtMembership: UITextField!
     @IBOutlet weak var txtHealthFundName: UITextField!
@@ -41,6 +41,8 @@ class PatientInforViewController: BaseViewController {
     @IBOutlet weak var backBarItem: UIBarButtonItem!
     @IBOutlet weak var btnSelect: UIButton!
     
+    @IBOutlet weak var btnListSite: UIButton!
+    @IBOutlet weak var btnListStaff: UIButton!
     var AppointmentUID = ""
     var pickerView = UIPickerView()
     var datePicker = UIDatePicker()
@@ -52,7 +54,15 @@ class PatientInforViewController: BaseViewController {
     var PatientDataChange = General()
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
+            btnListSite.hidden = false
+            btnListStaff.hidden = false
+        }
+        if (self.isMovingFromParentViewController()) {
+            UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
+        }
         SetDefautDataPatient()
+        
     }
     //set data patient
     func SetDefautDataPatient(){
@@ -65,8 +75,8 @@ class PatientInforViewController: BaseViewController {
         PatientDataHard.general.append(Context.EformtData("yes", name: "service1", ref: "field_0_2_0", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_2"))
         PatientDataHard.general.append(Context.EformtData("yes", name: "service2", ref: "field_0_2_1", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_2"))
         PatientDataHard.general.append(Context.EformtData("yes", name: "service3", ref: "field_0_2_3", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_2"))
-        PatientDataHard.general.append(Context.EformtData("yes", name: "service4", ref: "field_0_14_1", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_14"))
-        PatientDataHard.general.append(Context.EformtData("yes", name: "service5", ref: "field_0_14_2", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_14"))
+        PatientDataHard.general.append(Context.EformtData("yes", name: "service4", ref: "field_0_3_1", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_3"))
+        PatientDataHard.general.append(Context.EformtData("yes", name: "service5", ref: "field_0_3_2", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_3"))
         PatientDataHard.general.append(Context.EformtData("yes", name: "service6", ref: "field_0_4_2", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_4"))
         PatientDataHard.general.append(Context.EformtData("yes", name: "service7", ref: "field_0_4_3", type: "eform_input_check_checkbox", checked: "false", refRow: "row_0_4"))
         
@@ -86,7 +96,22 @@ class PatientInforViewController: BaseViewController {
         PatientDataHard.general.append(Context.EformtData("white", name: "card_holder", ref: "field_1_5_3", type: "eform_input_check_radio", checked: "false", refRow: "row_1_5"))
         
         AllRedisiteData.general = PatientDataHard.general
+    }
+    func CheckRequiredData()->Bool{
+        txtSalutation.CheckTextFieldIsEmpty(txtSalutation)
+        txtFamilyName.CheckTextFieldIsEmpty(txtFamilyName)
+        txtDOB.CheckTextFieldIsEmpty(txtDOB)
+        txtAddress.CheckTextFieldIsEmpty(txtAddress)
+        txtOccupation.CheckTextFieldIsEmpty(txtOccupation)
+        txtHomeTelephone.CheckTextFieldIsEmpty(txtHomeTelephone)
         
+        if(txtSalutation.CheckTextFieldIsEmpty(txtSalutation) || txtFamilyName.CheckTextFieldIsEmpty(txtFamilyName) || txtDOB.CheckTextFieldIsEmpty(txtDOB) || txtAddress.CheckTextFieldIsEmpty(txtAddress) || txtOccupation.CheckTextFieldIsEmpty(txtOccupation) || txtHomeTelephone.CheckTextFieldIsEmpty(txtHomeTelephone)){
+            self.alertView.alertMessage("Waring", message: "Please enter all required fields!")
+            return false
+        }else{
+            CheckSubmitData()
+            return true
+        }
     }
     override func shouldAutorotate() -> Bool {
         return false
@@ -96,16 +121,17 @@ class PatientInforViewController: BaseViewController {
     }
     
     @IBAction func ActionGenerailliness(sender: AnyObject) {
-            CheckSubmitData()
+        if(CheckRequiredData()){
         let Generailliness :GeneralIllnessViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("GeneralIllnessViewControllerID") as! GeneralIllnessViewController
-        
         self.presentViewController(Generailliness, animated: true, completion: nil)
+        }
     }
-   
+    
     @IBAction func ActionInjury(sender: AnyObject) {
-        CheckSubmitData()
+        if(CheckRequiredData()){
         let ActionInjury :InjuryViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("InjuryViewControllerID") as! InjuryViewController
         self.presentViewController(ActionInjury, animated: true, completion: nil)
+        }
     }
     override func viewWillDisappear (animated: Bool) {
         super.viewWillDisappear(animated)
@@ -172,7 +198,7 @@ class PatientInforViewController: BaseViewController {
         let dataCompany = DataCompany()
         if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
             patients.UID = staff.UID
-        }        
+        }
         requestAppointDataCompany.RequestDate = Context.NowDate()
         requestAppointDataCompany.Type = "RediSite"
         
@@ -232,6 +258,8 @@ class PatientInforViewController: BaseViewController {
         PatientData.general.removeAll()
         PatientData.general = PatientDataChange.general + PatientDataHard.general
         requestAppointPostCompany = loadataCompany()
+        
+        
     }
     @IBAction func ActionSelectStaff(sender: AnyObject) {
         let listStaffViewController :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListStaffViewControllerID") as! ListStaffViewController
@@ -255,7 +283,7 @@ class PatientInforViewController: BaseViewController {
             btnSelect.setTitle(site.SiteName, forState: .Normal)
         }
     }
-
+    
     @IBAction func ActionSelectSite(sender: AnyObject) {
         let listContactPerson :UIViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListContactPersonViewControllerID") as! ListContactPersonViewController
         self.navigationController?.pushViewController(listContactPerson, animated: true)
@@ -317,6 +345,43 @@ extension PatientInforViewController {
     func cancelClick() {
         txtDOB.resignFirstResponder()
     }
+    func DatepickerModeExpiry(){
+        txtExpiry.tintColor = UIColor.clearColor()
+        datePicker.datePickerMode = .Date
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .Default
+        toolBar.translucent = true
+        toolBar.tintColor = UIColor.blackColor()
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(PatientInforViewController.doneClickExpiry))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(PatientInforViewController.cancelClickExpiry))
+        toolBar.setItems([cancelButton,spaceButton, doneButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        txtExpiry.inputView = datePicker
+        txtExpiry.inputAccessoryView = toolBar
+    }
+    //Done button in datepicker
+    func doneClickExpiry() {
+        let dateFormatter = NSDateFormatter()
+        let SaveDatetime = NSDateFormatter()
+        SaveDatetime.dateFormat = "MM/yyyy"
+        dateFormatter.dateFormat = "MM/yyyy"
+        txtExpiry.text = dateFormatter.stringFromDate(datePicker.date)
+        txtExpiry.resignFirstResponder()
+        if(Context.compareDate(datePicker.date)){
+            txtExpiry.textFiledOnlyLine(txtExpiry)
+        }else{
+            txtExpiry.txtError(txtExpiry)
+        }
+        
+    }
+    //Cancel button in datepicker
+    func cancelClickExpiry() {
+        txtExpiry.resignFirstResponder()
+    }
+    
     
 }
 
@@ -366,6 +431,7 @@ extension PatientInforViewController : UITextViewDelegate {
         txtPostCode.delegate = self
         txtHomeTelephone.delegate = self
         DatepickerMode()
+        DatepickerModeExpiry()
     }
     
     func textFieldDidEndEditing(textField: UITextField) {

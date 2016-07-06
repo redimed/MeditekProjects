@@ -20,6 +20,7 @@ class InjuryViewController: UIViewController {
     @IBOutlet weak var viewOtherBody: UIView!
     
     
+    @IBOutlet weak var sliderPain: UISlider!
     @IBOutlet weak var txtOtherBodyPart: UITextField!
     @IBOutlet weak var txtInitalTreatment: UITextField!
     @IBOutlet weak var txtPain: UITextField!
@@ -32,6 +33,7 @@ class InjuryViewController: UIViewController {
     @IBOutlet weak var txtWorkplace: UITextField!
     @IBOutlet weak var txtDateOfAccident: UITextField!
     
+    var datePicker = UIDatePicker()
     var DataPatientInjuryOrGeneral = General()
     var InjuryDataHard = General()
     var InjuryDataChange = General()
@@ -159,7 +161,7 @@ class InjuryViewController: UIViewController {
         self.presentViewController(consentView, animated: true, completion: nil)
     }
     func SetUpCustomLayout(){
-        
+        DatepickerMode()
         self.automaticallyAdjustsScrollViewInsets = false
         UIDevice.currentDevice().setValue(UIInterfaceOrientation.LandscapeLeft.rawValue, forKey: "orientation")
         
@@ -174,7 +176,7 @@ class InjuryViewController: UIViewController {
         txtWhatAcctually.textFiledOnlyLine(txtWhatAcctually)
         txtWorkplace.textFiledOnlyLine(txtWorkplace)
         txtDateOfAccident.textFiledOnlyLine(txtDateOfAccident)
-        
+        txtPain.text = "  5"
         viewTableHandShoulder.layer.borderColor =  UIColor(hex: Define.ColorCustom.greenBoderColor ).CGColor
         viewOtherBody.layer.borderColor =  UIColor(hex: Define.ColorCustom.greenBoderColor ).CGColor
         viewTableArm.layer.borderColor =  UIColor(hex: Define.ColorCustom.greenBoderColor ).CGColor
@@ -187,4 +189,50 @@ class InjuryViewController: UIViewController {
     @IBAction func ActionBack(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: {})
     }
+    @IBAction func ChangeValueSlider(sender: AnyObject) {
+        let currentValue = Int(sliderPain.value)
+        txtPain.text = "  \(currentValue)"
+    }
+    
 }
+extension InjuryViewController {
+    
+    func DatepickerMode(){
+        txtDateOfAccident.tintColor = UIColor.clearColor()
+        datePicker.datePickerMode = .Date
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .Default
+        toolBar.translucent = true
+        toolBar.tintColor = UIColor.blackColor()
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(GeneralIllnessViewController.doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(GeneralIllnessViewController.cancelClick))
+        toolBar.setItems([cancelButton,spaceButton, doneButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        txtDateOfAccident.inputView = datePicker
+        txtDateOfAccident.inputAccessoryView = toolBar
+    }
+    //Done button in datepicker
+    func doneClick() {
+        let dateFormatter = NSDateFormatter()
+        let SaveDatetime = NSDateFormatter()
+        SaveDatetime.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        txtDateOfAccident.text = dateFormatter.stringFromDate(datePicker.date)
+        txtDateOfAccident.resignFirstResponder()
+        if(Context.compareDate(datePicker.date)){
+            txtDateOfAccident.textFiledOnlyLine(txtDateOfAccident)
+        }else{
+            txtDateOfAccident.txtError(txtDateOfAccident)
+        }
+        
+    }
+    //Cancel button in datepicker
+    func cancelClick() {
+        txtDateOfAccident.resignFirstResponder()
+    }
+    
+}
+

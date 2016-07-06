@@ -16,15 +16,17 @@ class AllCollectionViewController: UICollectionViewController, UICollectionViewD
     var listID : Array<Int>! = []
     var typeOption  = ""
     var type = ""
-    var OptionalBackground = ""
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if(type != ""){
-            self.view.backgroundColor = UIColor.whiteColor()
-        }
+        self.view.backgroundColor = UIColor.redColor()
         self.automaticallyAdjustsScrollViewInsets = false
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        self.view.backgroundColor = UIColor.redColor()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -64,7 +66,6 @@ class AllCollectionViewController: UICollectionViewController, UICollectionViewD
         let myString: NSString = originalString as NSString
         let size: CGSize = myString.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(17.0)])
         Allsize.width = Allsize.width + size.width + 5
-        print(Allsize.width)
         if(typeOption == "DescrubeInjury"){
             return CGSize(width: 120, height: collectionView.frame.size.height)
         }else if(typeOption == "InjurySymtomsSegue"){

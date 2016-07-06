@@ -44,11 +44,13 @@ extension UITextField {
         textField.layer.masksToBounds = true
     }
     
-    func CheckTextFieldIsEmpty(textField:UITextField){
+    func CheckTextFieldIsEmpty(textField:UITextField)->Bool{
         if textField.text!.isEmpty {
             textField.txtError(textField)
+            return true
         }else{
             textField.textFiledOnlyLine(textField)
+            return false
         }
     }
 

@@ -33,7 +33,6 @@ class ConsentViewController: BaseViewController     {
     @IBOutlet weak var txtSupervisorName: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIDevice.currentDevice().setValue(UIInterfaceOrientation.LandscapeLeft.rawValue, forKey: "orientation")
         txtSupervisorName.textFiledOnlyLine(txtSupervisorName)
     }
     override func didReceiveMemoryWarning() {
@@ -49,11 +48,11 @@ class ConsentViewController: BaseViewController     {
     func canRotate() -> Void {
         
     }
-    internal override func showMessageNoNetwork()
+    func UploadImageError()
     {
         let alert = UIAlertView()
         alert.title = "Warning"
-        alert.message = "Could not connect to the server"
+        alert.message = "Upload Image Fail"
         alert.addButtonWithTitle("OK")
         alert.show()
     }
@@ -91,13 +90,10 @@ class ConsentViewController: BaseViewController     {
         self.view.endEditing(true)
         if(!SignatureImage.CheckDrawImageNil()){
             self.showloading(Define.MessageString.PleaseWait)
-            SaveSignature.enabled = false
             let image : UIImage = SignatureImage.SaveImage()
             let upload:UploadImage = UploadImage()
             upload.userUID = Context.getDataDefasults(Define.keyNSDefaults.UserUID) as! String
             upload.fileType = "Signature"
-            print(upload)
-            print(image)
             UserService.uploadImage(image, uploadImage: upload) { [weak self] (response) in
                 if let _ = self {
                     if response.result.isSuccess {
@@ -106,25 +102,41 @@ class ConsentViewController: BaseViewController     {
                             if let uploadImage = Mapper<UploadImage>().map(response.result.value) {
                                 print(uploadImage.status)
                                 if(uploadImage.status == "success"){
+                                    self!.SaveSignature.enabled = false
+                                    self!.hideLoading()
                                     self!.uploadImage = uploadImage
                                     self!.AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.append(self!.AppendAppointData("PatientSignatureID",value:"\(uploadImage.fileInfo.ID)"));
                                     self!.AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.append(self!.AppendAppointData("PatientSignatureUID",value:uploadImage.fileUID));
-                                    self!.hideLoading()
                                 }else{
                                     self!.hideLoading()
+                                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                    dispatch_after(time, dispatch_get_main_queue(), {
+                                        self!.AlertShow("Error", message: "Upload signature fail")
+                                    })
+                                    
                                 }
                                 
                             }
                         }
                     } else {
-                        self?.showMessageNoNetwork()
+                        self!.hideLoading()
+                        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                        dispatch_after(time, dispatch_get_main_queue(), {
+                            self!.AlertShow("Error", message: "Upload signature fail")
+                        })
+                        
                     }
                 }
             }
             
         }else{
-            print("Plesae sign signature before click save")
+            self.alertView.alertMessage("Waring", message: "Plesae sign signature before click save")
         }
+    }
+    func AlertShow(title:String,message:String){
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+        self.presentViewController(alert, animated: true){}
     }
     func AppendAppointData(name:String,value:String)-> AppointmentData{
         let appointmentData = AppointmentData()
@@ -136,7 +148,6 @@ class ConsentViewController: BaseViewController     {
         SaveSignature.enabled = true
         SignatureImage.Clear()
         self.uploadImage = UploadImage()
-        //self.setNeedsDisplay()
     }
     func GetConsentFormDataGeneral(){
         DataConsent.general.removeAll()
@@ -146,7 +157,7 @@ class ConsentViewController: BaseViewController     {
         DataConsent.general.append(Context.EformtData("yes", name: "is_third_party", ref: "field_2_22_1", type: "eform_input_check_checkbox", checked: "true", refRow: "row_2_22"))
         DataConsent.general.append(Context.EformtData("yes", name: "is_correct", ref: "field_2_23_0", type: "eform_input_check_checkbox", checked: "true", refRow: "row_2_23"))
     }
-    func GetConsentFormDataỊnury(){
+    func GetConsentFormDataInjury(){
         DataConsent.general.removeAll()
         DataConsent.general.append(Context.EformtData(txtSupervisorName.text!, name: "third_party_name", ref: "field_2_28_2", type: "eform_input_text", checked: "", refRow: "row_2_28"))
         DataConsent.general.append(Context.EformtData("yes", name: "is_discuss", ref: "field_2_26_0", type: "eform_input_check_checkbox", checked: "true", refRow: "row_2_26"))
@@ -184,8 +195,7 @@ class ConsentViewController: BaseViewController     {
                     if let _ = response.result.value {
                         if let responseEform = Mapper<ResponseEform>().map(response.result.value) {
                             if responseEform.data.Status == "saved"  {
-                                UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
-                                
+                                self?.hideLoading()
                                 let loginViewController :ViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ViewControllerID") as! ViewController
                                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                 dispatch_after(time, dispatch_get_main_queue(), {
@@ -195,12 +205,22 @@ class ConsentViewController: BaseViewController     {
                                     self!.alertView.alertMessage("Success", message: "Request Appointment Success!")
                                 })
                             }else{
+                                self?.hideLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                    dispatch_after(time, dispatch_get_main_queue(), {
+                                        self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                    })
+                                }
                             }
                         }
                     }
                 } else {
-                    //self?.hideLoading()
-                    // self?.showMessageNoNetwork()
+                    self!.hideLoading()
+                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                    dispatch_after(time, dispatch_get_main_queue(), {
+                        self!.AlertShow("Error", message: "Could not connect to the server")
+                    })
                 }
                 
             }
@@ -215,20 +235,25 @@ class ConsentViewController: BaseViewController     {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
                         if let requestAppointResponse = Mapper<RequestAppointResponse>().map(response.result.value) {
-                            self!.hideLoading()
-                            if(requestAppointResponse.status == "success"){
+                           if(requestAppointResponse.status == "success"){
                                 self!.SubmitDataAppointment(requestAppointResponse.data[0].appointment.UID)
                             }else{
-                                self?.hideLoading()
+                                self!.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
-                                    self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                                    dispatch_after(time, dispatch_get_main_queue(), {
+                                        self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                    })
                                 }
                             }
                         }
                     }
                 } else {
                     self!.hideLoading()
-                    self?.showMessageNoNetwork()
+                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
+                    dispatch_after(time, dispatch_get_main_queue(), {
+                        self!.AlertShow("Error", message: "Could not connect to the server")
+                    })
                 }
             }
         }
@@ -240,37 +265,49 @@ extension ConsentViewController {
     func UpLoadAssetImage(){
         self.ImageDta.fileUploads.removeAll()
         self.showloading(Define.MessageString.PleaseWait)
-        for i in 0..<assets.count {
-            let asset = self.assets[i]
-            asset.fetchFullScreenImage(true, completeBlock: { image, info in
-                self.UploadOneImage(image!, sucess: { (UID) in
-                    let fileUpaload = FileUploads()
-                    fileUpaload.UID = UID
-                    self.ImageDta.fileUploads.append(fileUpaload)
-                    self.CheckUploadImageSuccess()
-                    }, fail: { (emty) in
-                        self.ErrorWhenUpdateImage()
+        if(assets.count > 0){
+            var countCheck = 0
+            for i in 0..<assets.count {
+                let asset = self.assets[i]
+                asset.fetchFullScreenImage(true, completeBlock: { image, info in
+                    self.UploadOneImage(image!, sucess: { (UID) in
+                        countCheck += 1
+                        let fileUpaload = FileUploads()
+                        fileUpaload.UID = UID
+                        self.ImageDta.fileUploads.append(fileUpaload)
+                        print(i,self.assets.count-1)
+                        if(self.ImageDta.fileUploads.count == self.assets.count){
+                            self.CheckUploadImageSuccess()
+                        }
+                        }, fail: { (emty) in
+                            countCheck += 1
+                            if(countCheck == self.assets.count){
+                                self.hideLoading()
+                                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self.delay))
+                                dispatch_after(time, dispatch_get_main_queue(), {
+                                    self.AlertShow("Error", message: "Upload Image Fail")
+                                })
+                            }
+                    })
                 })
-            })
-            
+            }
+        }else{
+            self.CheckUploadImageSuccess()
         }
     }
     func CheckUploadImageSuccess(){
-        
-        if(self.ImageDta.fileUploads.count == assets.count){
-            DataSubmit.general.removeAll()
-            if(templateUID == "\(Define.Redisite.templateUID_InjuryEFormUID)"){
-                GetConsentFormDataỊnury()
-            }else{
-                GetConsentFormDataGeneral()
-            }
-            DataSubmit.general = DataPatientInjuryOrGeneral.general + DataConsent.general
-            AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.removeAll()
-            AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData = requestAppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData
-            self.AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.append(self.AppendAppointData("PatientSignatureID",value:"\(uploadImage.fileInfo.ID)"));
-            self.AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.append(self.AppendAppointData("PatientSignatureUID",value:uploadImage.fileUID));
-            postRequestAppointmentCompany(AppointPostCompany)
+        DataSubmit.general.removeAll()
+        if(templateUID == "\(Define.Redisite.templateUID_InjuryEFormUID)"){
+            GetConsentFormDataInjury()
+        }else{
+            GetConsentFormDataGeneral()
         }
+        DataSubmit.general = DataPatientInjuryOrGeneral.general + DataConsent.general
+        AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.removeAll()
+        AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData = requestAppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData
+        self.AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.append(self.AppendAppointData("PatientSignatureID",value:"\(uploadImage.fileInfo.ID)"));
+        self.AppointPostCompany.dataCompany.appointmentsCompany[0].appointmentData.append(self.AppendAppointData("PatientSignatureUID",value:uploadImage.fileUID));
+        postRequestAppointmentCompany(AppointPostCompany)
     }
     func ErrorWhenUpdateImage(){
         print("UPdate hinh thoi cung deo xong")
@@ -301,7 +338,6 @@ extension ConsentViewController {
                 }
             }
         }
-        
     }
 }
 

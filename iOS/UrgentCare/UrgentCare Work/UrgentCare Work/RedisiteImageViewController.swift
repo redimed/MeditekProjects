@@ -73,9 +73,8 @@ class RedisiteImageViewController: UIViewController ,UICollectionViewDataSource,
 }
 extension RedisiteImageViewController : UIViewControllerTransitioningDelegate,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverControllerDelegate {
     
-    
-    @IBAction func uploadImageAction(sender: AnyObject) {
-        guard let button = sender as? UIView else {
+    @IBAction func selectImageUpload(sender: AnyObject) {
+        guard let button = sender.valueForKey("view") else {
             return
         }
         let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -102,7 +101,7 @@ extension RedisiteImageViewController : UIViewControllerTransitioningDelegate,UI
         alert.addAction(galleryAction)
         alert.addAction(cancelAction)
         if let presenter = alert.popoverPresentationController {
-            presenter.sourceView = button
+            presenter.sourceView = button as? UIView
             presenter.sourceRect = button.bounds
         }
         
@@ -164,7 +163,7 @@ extension RedisiteImageViewController : UIViewControllerTransitioningDelegate,UI
     func showImagePickerWithAssetType(
         assetType: DKImagePickerControllerAssetType,
         allowMultipleType: Bool,
-        sourceType: DKImagePickerControllerSourceType = .Both,
+        sourceType: DKImagePickerControllerSourceType = [.Camera,.Photo],
         allowsLandscape: Bool,
         singleSelect: Bool) {
         

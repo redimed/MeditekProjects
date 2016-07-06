@@ -111,7 +111,6 @@ class CustomTableViewController: BaseViewController ,UITableViewDelegate, UITabl
         cell.btCheck.setImage(UIImage(named: Define.imageName.RadioOffGreen), forState: UIControlState.Normal)
         
         for i in 0 ..< listID.count {
-            print(listID[i],indexPath.row)
             if(listID[i] == indexPath.row){
                 cell.lbInformation.textColor = UIColor.whiteColor()
                 cell.btCheck.setImage(UIImage(named: Define.imageName.RadioOnWhite), forState: UIControlState.Normal)
@@ -151,7 +150,6 @@ class CustomTableViewController: BaseViewController ,UITableViewDelegate, UITabl
         cell.btCheck.setImage(UIImage(named: Define.imageName.UnCheckedGreen), forState: UIControlState.Normal)
         
         for i in 0 ..< listID.count {
-            print(listID[i],indexPath.row)
             if(listID[i] == indexPath.row){
                 cell.lbInformation.textColor = UIColor.whiteColor()
                 cell.btCheck.setImage(UIImage(named: Define.imageName.CheckedGreen), forState: UIControlState.Normal)

@@ -51,9 +51,9 @@ app.controller('eFormLoadFormCtrl', function($scope, $stateParams, $cookies, $st
                     document.getElementById('eform').contentWindow.postMessage({
                         eventName: 'updateNewExternalToken',
                         token: externalToken
-                    }, 'https://localhost:3014');
+                    }, o.const.eFormBaseUrl);
                 })
-        }, 5 * 1000);
+        }, o.const.externalTokenInterval);
 
         $scope.stopExternalTokenInterval = function () {
             if (angular.isDefined(externalTokenInterval)) {

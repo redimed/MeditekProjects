@@ -79,7 +79,7 @@
                                         <li class="active">
                                             <a href="@#tab_appointment1" data-toggle="tab">Appointment</a>
                                         </li>
-                                        <li>
+                                        <li ng-if="wainformation.Type=='Telehealth'">
                                             <a href="@#tab_appointment3" data-toggle="tab">Appointment Description</a>
                                         </li>
                                         <li>
@@ -240,7 +240,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="tab_appointment3">
+                                        {{wainformation.Type}}{{wainformation.Type=='Telehealth'}}
+                                        <div class="tab-pane" id="tab_appointment3" ng-if="wainformation.Type=='Telehealth'">
                                             <h3 class="form-section">Appointment Description</h3>
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Facetime</label>

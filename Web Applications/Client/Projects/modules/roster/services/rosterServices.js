@@ -39,5 +39,11 @@ angular.module("app.authentication.roster.services", [])
         	return api.one("roster/detail/"+data.UID).get();
         }
 
+        services.GetStaffList = function(data){
+            return api.all("staff/list").post({
+                data:data
+            });
+        }
+
         return services;
 });

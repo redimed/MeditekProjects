@@ -286,7 +286,6 @@ module.exports = {
 				else
 					info.Company[key] = data[key];
 			}
-			console.log(info);
 
 			//begin start transaction
 			return sequelize.transaction()
@@ -348,7 +347,6 @@ module.exports = {
 			attrs = defaultAttr;
 		}
         var whereClause = Services.Company.whereClause(data);
-        console.log("whereClause ",whereClause);
         if(_.isEmpty(whereClause.Company))
         	whereClause = {};
         return Company.findAndCountAll({
@@ -436,7 +434,6 @@ module.exports = {
 		        }];
 			}
 		}
-		console.log(model)
 		return model.findOne({
 			include: include,
 			where: data.whereClause
@@ -468,13 +465,11 @@ module.exports = {
 				}
 				else {
 					data.info.CompanyID = got_company.ID;
-					console.log(data.model);
 					var model = sequelize.models[data.model];
 					if(data.model == 'UserAccount'){
 						data.info.Password  = generatePassword(12, false);
 						data.info.PinNumber = generatePassword(6, false);
 						data.info.PhoneNumber = check.parseAuMobilePhone(data.info.PhoneNumber);
-						console.log(data.info);
 					}
 					data.info.UID = UUIDService.Create();
 					return model.create(data.info,{transaction:t});
@@ -534,7 +529,6 @@ module.exports = {
 												var byEmail = false;
 												var byPhone = false;
 												data.info.content = data.info.PinNumber;
-												console.log("luc nay ne  ",data.info);
 												if(data.info.PhoneNumber) {
 													return Services.Patient.sendSMS(data.info, t,function(err) {
                         							if(err)
@@ -765,8 +759,6 @@ module.exports = {
 				}
 				else {
 					patient = got_patient;
-					console.log(company);
-					console.log(got_patient.ID);
 					return RelCompanyPatient.findOne({
 						where: {
 							CompanyID : company,
@@ -785,7 +777,6 @@ module.exports = {
 			})
 			.then(function(checked_association){
 				if(checked_association == null || checked_association == ''){
-					console.log("ha ? ha ?");
 					return RelCompanyPatient.create({
 						CompanyID : company,
 						PatientID : patient.ID,
@@ -793,9 +784,7 @@ module.exports = {
 					},{transaction:t});
 				}
 				else {
-					console.log("duoc khong ha ?????");
 					if(checked_association.Active == 'Y') {
-						console.log("duoc khong ha ?????");
 						t.rollback();
 						var err = new Error("CreateStaff.Error");
 						err.pushError("Patient.Company.HasAssociation");
@@ -826,8 +815,6 @@ module.exports = {
 				}
 				else {
 					// t.commit();
-					console.log(created_association);
-					console.log("Patinet ",created_association.PatientID);
 					// return created_association;
 					return RelCompanyPatient.update({
 						Active:'N'
@@ -903,8 +890,6 @@ module.exports = {
 				}
 				else {
 					patient = got_patient;
-					console.log(company);
-					console.log(got_patient.ID);
 					return RelCompanyPatient.findOne({
 						where: {
 							CompanyID : company,
@@ -1201,7 +1186,6 @@ module.exports = {
             ]
 		})
 		.then(function(got_user){
-			console.log(got_user.Roles[0].RelUserRole);
 			if(!got_user){
 				var err = new Error('GetListStaff.error');
 				err.pushError('User.notFound');
@@ -1317,7 +1301,6 @@ module.exports = {
 			throw err;
 		})
 		.then(function(got_site) {
-			// console.log(got_site);
 			if(!got_site) {
 				var err = new Error('GetListSite.Error');
 				err.pushError('Site.notFound');
@@ -1371,7 +1354,6 @@ module.exports = {
 							}
 						})
 						.then(function(result) {
-							console.log("count ",result);
 							count = result;
 							return got_company.getFunds({
 								where:['RelFundCompany.Active=?','Y'],
@@ -1414,7 +1396,6 @@ module.exports = {
 							offset:data.offset
 						})
 						.then(function(result){
-							console.log("count ",result.count);
 							count = result.count;
 							var arrId = [];
 							for(var i = 0; i < result.rows.length; i++) {
@@ -1473,7 +1454,6 @@ module.exports = {
 							}
 						})
 						.then(function(result){
-							console.log("count ",result);
 							count = result;
 							return got_company.getPatients({
 								where:['RelCompanyPatient.Active=?','Y'],

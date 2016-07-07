@@ -1185,10 +1185,12 @@ app.directive('telehealthDetail', function(doctorService) {
                 }
 
                 function getDetailChild(compuid) {
+                    o.loadingPage(true);
                     companyService.getDetailChild({UID:compuid,model:"CompanySites",limit:1,order:[['CreatedDate','ASC']]})
                     .then(function(result) {
                         console.log(result);
                         $scope.wainformation.CompanySite = result.data[0];
+                        o.loadingPage(false);
                     },function(err) {
                         console.log(err);
                     });

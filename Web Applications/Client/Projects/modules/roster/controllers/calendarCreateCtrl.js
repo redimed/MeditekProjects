@@ -117,12 +117,13 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 				var toTime = moment(toTimeNoTz).format('YYYY-MM-DD HH:mm:ss Z');
 				var IsRecurrence = $scope.formData.IsReoccurance;
 				var UserUID = $stateParams.doctorId;
-				// var endRecurrence = $scope.formData.endReoccurance;
-				var endRecurrence = null;				
+				var endRecurrence = $scope.formData.endReoccurance;						
 				var recurrenceType = $scope.formData.reoccuranceType;
 				var bookable = $scope.formData.service.Bookable;
+				console.log("$scope.formData.IsReoccurance", $scope.formData.IsReoccurance);
 				if($scope.formData.IsReoccurance === 'Y'){
 					if(endRecurrence === null){
+						console.log("endRecurrence", endRecurrence);
 						toastr.error('Please choose End Recurrence');
 						accept = false;
 					}
@@ -132,7 +133,10 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 					}
 					else
 						endRecurrence = convertToTimeZone($scope.formData.endReoccurance);
+				}else if ($scope.formData.IsReoccurance === 'N') {
+					var endRecurrence = null;
 				}
+
 				var returnData = {
 					Roster: {
 						FromTime: fromTime,
@@ -153,8 +157,10 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 					}
 				}
 				if(accept){
+
 					RosterService.CreateRoster(returnData)
 					.then(function(response){
+						console.log("response", response);
 						if(response.status === 'overlaps'){
 							var modalInstance = $uibModal.open({
 					                                    animation: true,

@@ -1,0 +1,69 @@
+<div class="portlet portlet-fit light bordered">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="icon-list font-blue"></i>
+			<span class="caption-subject bold uppercase font-blue"> Roster Managerment</span>
+		</div>
+		<div class="actions">
+			<a href="javascript:;" class="btn default" ng-click="toggleFilter()">
+				<i class="fa fa-filter"></i> Filter
+			</a>
+			<a href="javascript:;" class="btn blue" ng-click="createDoctor()">
+				<i class="glyphicon glyphicon-plus"></i> Create
+			</a>			
+		</div>
+	</div>
+	<div class="portlet-body">		
+		<!-- begin table -->
+		<div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
+			<table class="table table-light table-hover table-striped">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th ng-repeat="i in items">
+							{{i.name}}
+							<i class="fa fa-sort-asc"  ng-click="sort(i.field,'ASC')" ng-show="fieldSort[i.field]=='ASC'"></i>
+	                        <i class="fa fa-sort-desc" ng-click="sort(i.field,'DESC')" ng-show="fieldSort[i.field]=='DESC'"></i>
+						</th>
+						<th>
+							Type							
+						</th>
+					</tr>
+					<tr ng-hide="toggle">
+						<td></td>
+						<td ng-repeat="i in items">
+							<input ng-model="search[i.field]" ng-keypress="Search(i.field, $event.which)" class="form-control" placeholder="{{i.field}}" />
+						</td>
+						<td><select class="form-control" ng-change="Search(searchObjectMap,'13')" ng-model="searchObjectMap.Filter[1].Role.RoleCode" ng-options="r.id as r.name for r in typeDoctor"></select></td>						
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="d in doctors" ng-click="clickDoctor(d.UID)">
+						<td>{{d.stt}}</td>
+						<td ng-repeat="i in items" >{{i.field=='FirstName'?d['Doctor'][i.field]:i.field=='LastName'?d['Doctor'][i.field]:d[i.field]}}</td>
+						<td>{{d.RoleCode}}</td>						
+					</tr>
+				</tbody>
+				<tfoot>
+					<th colspan="7">
+						<p></p>
+						<div class="dataTables_paginate paging_simple_numbers pull-right" id="sample_1_paginate">
+							<uib-pagination 
+							boundary-links="true" 
+							total-items="count" 
+							ng-model="searchObjectMap.currentPage" 
+							class="pagination-md " 
+							previous-text="&lsaquo; " 
+							next-text="&rsaquo; " 
+							first-text="&laquo; " 
+							last-text="&raquo; " 
+							items-per-page="searchObjectMap.Limit" 
+							max-size="searchObjectMap.maxSize"
+							ng-change="setPage()"></uib-pagination>
+						</div>
+					</th>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>

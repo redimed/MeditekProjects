@@ -70,6 +70,7 @@ module.exports = {
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
+				headers: window.userAccess||{},
 				url: Config.apiUrl+'eform/historyDetail',
 				data: data,
 				success: resolve
@@ -212,6 +213,7 @@ module.exports = {
 			$.ajax({
 				type: 'POST',
 				data: data,
+				headers: window.userAccess||{},
 				url: Config.apiUrl+'eform/save',
 				success: resolve
 			})
@@ -223,6 +225,7 @@ module.exports = {
 			$.ajax({
 				type: 'POST',
 				data: data,
+				headers: window.userAccess||{},
 				url: Config.apiUrl+'eform/saveInit',
 				success: resolve
 			})
@@ -234,6 +237,7 @@ module.exports = {
 			$.ajax({
 				type: 'POST',
 				data: data,
+				headers: window.userAccess||{},
 				url: Config.apiUrl+'eform/saveStep',
 				success: resolve
 			})
@@ -267,6 +271,7 @@ module.exports = {
 			$.ajax({
 				type: 'POST',
 				data: data,
+				headers: window.userAccess||{},
 				url: Config.apiUrl+'eform/checkDetail',
 				success: resolve
 			})
@@ -278,6 +283,7 @@ module.exports = {
 			$.ajax({
 				type: 'POST',
 				data: data,
+				headers: window.userAccess||{},
 				url: Config.apiUrl+'eform/detail',
 				success: resolve
 			})
@@ -285,12 +291,11 @@ module.exports = {
 		return p;
 	},
 	formUpdate: function(data){
-		//alert(JSON.stringify(window.userAccess));
 		var p = new Promise(function(resolve, reject){
 			$.ajax({
 				type: 'POST',
 				data: data,
-				//headers: window.userAccess,
+				headers: window.userAccess||{},
 				url: Config.apiUrl+'eform/update',
 				success: resolve,
 				/*beforeSend: function(xhr){

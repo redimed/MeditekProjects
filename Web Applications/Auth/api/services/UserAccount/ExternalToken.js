@@ -5,6 +5,7 @@ var $q = require('q');
 var o = require('../HelperService');
 var moment = require('moment');
 
+var timeExpired = 15 * 60; //second
 function Validation (userAccess) {
     var error = new Error('ExternalToken.Validation.Error');
     var q = $q.defer();
@@ -81,8 +82,7 @@ module.exports = {
                     return et.updateAttributes({
                         SecretKey: UUIDService.Create(),
                         SecretCreatedAt: new Date(),
-                        // TokenExpired: 2 * 60 * 60
-                        TokenExpired: 1 * 60
+                        TokenExpired: timeExpired, //second
                     }, {transaction: transaction})
                     .then(function(result) {
                         return result;
@@ -99,8 +99,7 @@ module.exports = {
                         SystemType: userAccess.SystemType,
                         SecretKey: UUIDService.Create(),
                         SecretCreatedAt: new Date(),
-                        // TokenExpired: 2 * 60 * 60
-                        TokenExpired: 1 * 60
+                        TokenExpired: timeExpired, //seconds
                     };
                     if (userAccess.SystemType != HelperService.const.systemType.website) {
                         insertInfo.DeviceID = userAccess.DeviceID;

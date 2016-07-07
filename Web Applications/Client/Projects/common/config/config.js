@@ -49,7 +49,9 @@ var o = {
         eformStatus: {
             saved: 'saved',
             unsaved: 'unsaved'
-        }
+        },
+
+        externalTokenInterval: 10 * 60 * 1000, //milisecond. ~ 15 * 60 in server
     },
 
     checkData: function(value) {

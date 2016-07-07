@@ -24,9 +24,9 @@ module.exports={
   	},
 
 	'UserAccount/v0_1/ExternalTokenController': {
-		'MakeExternalSecret': true,
-		'GetExternalSecret': true,
-		'GetNewExternalToken': true,
+		'MakeExternalSecret': ['isAuthenticated'],
+		'GetExternalSecret': ['isAuthenticated'],
+		'GetNewExternalToken': ['isAuthenticated'],
 	},
 
   	'UserAccount/v0_1/AuthController':{

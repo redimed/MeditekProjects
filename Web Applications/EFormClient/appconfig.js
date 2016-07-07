@@ -7,5 +7,6 @@ var listCrossOrigins = {
     webapp_testapp: 'https://testapp.redimed.com.au:3004'
 }
 module.exports = {
-    crossOrigin: listCrossOrigins.webapp_local
+    crossOrigin: listCrossOrigins.webapp_local,
+    noEFormAuth: false,
 }

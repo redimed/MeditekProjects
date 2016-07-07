@@ -1,4 +1,5 @@
 var env = 'local'; //local,meditekServer,testApp,app
+var noEFormAuth = false;
 var configRestBaseUrl = {
     'local': 'https://localhost:3005',
     'meditekServer': 'https://meditek.redimed.com.au:3005',

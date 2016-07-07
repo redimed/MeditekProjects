@@ -65,17 +65,24 @@
         <script>
             var appconfig = <%- JSON.stringify(appconfig)%>;
             var crossOrigin = null;
-            <% if(process.argv.indexOf('--noEFormAuth') < 0) { %>
-                var listCrossOrigins = {
-                    webapp_local: 'https://localhost:3004',
-                    webapp_meditek: 'https://meditek.redimed.com.au:3004',
-                    webapp_testapp: 'https://testapp.redimed.com.au:3004'
-                }
-                <% if(process.argv.indexOf('--crossorigin') >-1) {%>
-                    crossOrigin = listCrossOrigins[<%-JSON.stringify(process.argv[process.argv.indexOf('--crossorigin')+1])%>];
-                <%} else {%>
-                    crossOrigin = appconfig.crossOrigin;
-                <%}%>
+            var noEFormAuth = null;
+            var listCrossOrigins = {
+                webapp_local: 'https://localhost:3004',
+                webapp_meditek: 'https://meditek.redimed.com.au:3004',
+                webapp_testapp: 'https://testapp.redimed.com.au:3004'
+            };
+            <% if(process.argv.indexOf('--noEFormAuth')>-1) {%>
+                noEFormAuth = true;
+            <%} else {%>
+                noEFormAuth = appconfig.noEFormAuth;
+            <%}%>
+
+            <% if(process.argv.indexOf('--crossorigin') >-1) {%>
+                crossOrigin = listCrossOrigins[<%-JSON.stringify(process.argv[process.argv.indexOf('--crossorigin')+1])%>];
+            <%} else {%>
+                crossOrigin = appconfig.crossOrigin;
+            <%}%>
+            if(!noEFormAuth) {
                 if(crossOrigin) {
                     //function cua mrVuong, mrTan copy :)
                     var parseQueryString= function(location){
@@ -130,11 +137,8 @@
                             return;
                         }
                     });
-
                 }
-
-
-            <%}%>
+            }
         </script>
 
         <script src="metronic/assets/global/plugins/jquery.min.js" type="text/javascript"></script>

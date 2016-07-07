@@ -1263,6 +1263,7 @@ module.exports = {
 					stringID.push(got_list[i].PatientID);
 				}
 				return Patient.findAll({
+					attributes:['ID','UID','FirstName','LastName'],
 					where:{
 						ID:{
 							$in: stringID

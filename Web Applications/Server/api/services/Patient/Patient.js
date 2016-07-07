@@ -1080,6 +1080,7 @@ module.exports = {
                                 }
                                 if(data.Email) {
                                     console.log("data.Email ", data.Email);
+                                    var EmailPattern = new RegExp(check.regexPattern.email);
                                     if (!EmailPattern.test(data.Email)) {
                                         t.rollback();
                                         var err = new Error("UpdatePatient.Error");

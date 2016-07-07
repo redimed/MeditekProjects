@@ -86,6 +86,9 @@ module.exports = {
                 Type: success.dataValues.Type
             }
             result.dataValues.Patient = result.dataValues.Patients[0] || null;
+            if(result.dataValues.Patient && !result.dataValues.Patient.Email1) {
+                result.dataValues.Patient.Email1 = result.dataValues.Patient.Email2;
+            }
             result.dataValues.UserAccount = result.dataValues.Patients[0]
                                             && result.dataValues.Patients[0].UserAccount?
                                             result.dataValues.Patients[0].UserAccount:null;

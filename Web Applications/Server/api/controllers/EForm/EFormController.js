@@ -11,5 +11,15 @@ module.exports = {
                     res.serverError(ErrorWrap(err));
                 });
         }
-    }
+    },
+
+    GetHistoryByAppointment: function(req, res) {
+        var data = req.body.data;
+        Services.getHistoryDetail(data)
+        .then(function(result) {
+            res.ok(result);
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
 };

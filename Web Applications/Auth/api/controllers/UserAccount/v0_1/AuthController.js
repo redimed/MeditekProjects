@@ -182,7 +182,7 @@ module.exports = {
             .then(function(data) {
                 var connectInfo = _.cloneDeep(userAccess);
                 connectInfo.sid = req.sessionID;
-                req.logout();
+
                 //------------------------------------------
                 /*if(req.headers.systemtype==o.const.systemType.website)
                 {
@@ -201,6 +201,7 @@ module.exports = {
                 }
                 //Services.ExternalToken.MakeExternalSecret(userAccessEForm);
                 //------------------------------------------
+                req.logout();
                 res.ok({ status: 'success' });
             }, function(err) {
                 res.serverError(ErrorWrap(err));

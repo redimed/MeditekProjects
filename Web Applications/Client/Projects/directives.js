@@ -184,8 +184,27 @@ app.directive('patientDetailDirective', function($uibModal) {
                     templateUrl: 'common/views/sendEmail.html',
                     resolve: {
                     },
-                    controller: function(){
-                        
+                    controller: function($scope, $stateParams){                        
+                        $scope.data = {                            
+                            sender: null,
+                            recipient:[],
+                            bodyContent: null,
+                            subject: null,
+                            attachments : [
+                                {
+                                    type: "report",
+                                    content: $stateParams.UID
+                                }
+                            ],
+                        };
+                        $scope.cutstring = function(string){
+                            var string = string.split(", ");                            
+                        };
+
+                        $scope.send = function(){
+                            $scope.data.recipient[0] = $scope.data.recipient[0].split(", ");
+                            console.log($scope.data);
+                        };
                     },
                 });
                 modalInstance.result

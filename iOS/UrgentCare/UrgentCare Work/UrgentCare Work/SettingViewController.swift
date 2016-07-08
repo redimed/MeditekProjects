@@ -14,8 +14,8 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
     @IBOutlet weak var tableView: UITableView!
     
     var nameComapny :String = "name"
-    var array = [["List Tracking","Redisite"],["List Staff"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
-    var arrayTitle = ["Tracking","Company", "Accounts", "", "", ""]
+    var array = [["List Appoiment","Redisite"],["List Staff"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
+    var arrayTitle = ["Appoiment","Company", "Accounts", "", "", ""]
     var StringIncompleteProfile :String = "Incomplete Profile"
     var companyInfo = DetailCompanyResponse()
     var userInfor = LoginResponse()
@@ -40,8 +40,8 @@ class SettingViewController: BaseViewController,UITableViewDelegate ,UITableView
                     array[1].append("")
                 }
             }else{
-                array = [["List Tracking","Redisite"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
-                arrayTitle = ["Tracking","Accounts", "", "", ""]
+                array = [["List Appoiment","Redisite"],["Harry Berry","Change Pin Number"],["Other services", "About Redimed", "LOGOUT"]]
+                arrayTitle = ["Appoiment","Accounts", "", "", ""]
                 
             }
         }else{

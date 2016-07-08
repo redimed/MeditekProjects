@@ -141,7 +141,7 @@ class InjuryViewController: UIViewController {
         InjuryDataChange.general.append(Context.EformtData(txtWorkplace.text!, name: "inj_place", ref: "field_2_1_1", type: "eform_input_text", checked: "", refRow: "row_2_1"))
         InjuryDataChange.general.append(Context.EformtData(txtWhatAcctually.text!, name: "what_happened", ref: "field_2_3_0", type: "eform_input_text", checked: "", refRow: "row_2_3"))
         InjuryDataChange.general.append(Context.EformtData(txtOtherDescribleInjury.text!, name: "other_inj", ref: "field_2_6_1", type: "eform_input_text", checked: "", refRow: "row_2_6"))
-        InjuryDataChange.general.append(Context.EformtData(txtOtherMedicalHistory.text!, name: "other_medical_history", ref: "field_2_18_1", type: "eform_input_text", checked: "", refRow: "row_2_18"))
+        InjuryDataChange.general.append(Context.EformtData(txtOtherMedicalHistory.text!, name: "other_part_affected", ref: "field_2_14_1", type: "eform_input_text", checked: "", refRow: "row_2_14"))
         InjuryDataChange.general.append(Context.EformtData(txtMedicationValue.text!, name: "medictation", ref: "field_2_19_3", type: "eform_input_text", checked: "", refRow: "row_2_19"))
         InjuryDataChange.general.append(Context.EformtData(txtAllergiesYesValue.text!, name: "allergies", ref: "field_2_20_3", type: "eform_input_text", checked: "", refRow: "row_2_20"))
         InjuryDataChange.general.append(Context.EformtData(txtOtherInjurySymptoms.text!, name: "other_symptoms", ref: "field_2_24_1", type: "eform_input_text", checked: "", refRow: "row_2_24"))

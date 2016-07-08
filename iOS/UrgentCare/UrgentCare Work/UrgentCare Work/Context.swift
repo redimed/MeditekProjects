@@ -69,8 +69,12 @@ class Context {
         }else if(ErrorType == "GetListStaff.error"){
             message = "User is Not Admin"
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){
-            NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
-            message = "Please login again !"
+            if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+                NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
+                message = "Please login again !"
+            }else{
+                message = "Please login again !"
+            }
         }else if (ErrorType == "Authentication Error - invalid username"){
             message = "Authentication Error - invalid username"
         }else if (ErrorType == "Telehealth.UpdatePinNumber.Error"){
@@ -161,7 +165,7 @@ class Context {
             return true
         }
     }
-   class func validateRegex(value: String,regex:String) -> Bool {
+    class func validateRegex(value: String,regex:String) -> Bool {
         
         let REGEX = regex
         
@@ -235,5 +239,5 @@ class Context {
             }
         }
     }
-
+    
 }

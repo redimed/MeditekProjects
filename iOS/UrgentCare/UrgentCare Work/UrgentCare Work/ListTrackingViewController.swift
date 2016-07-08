@@ -35,7 +35,7 @@ class ListTrackingViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.navigationBar.topItem?.title = "Back"
-        self.navigationItem.title = "List Tracking"
+        self.navigationItem.title = "List Appointment"
 
     }
     override func didReceiveMemoryWarning() {
@@ -110,9 +110,10 @@ extension ListTrackingViewController:UITableViewDataSource,UITableViewDelegate{
        
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentTableViewCell
         let data = appointmentList.rows[indexPath.row]
+        print(data)
         cell.appointmentDate.text = data.CreatedDate.toDateTimeZone(Define.formatTime.dateTimeZone, format: Define.formatTime.formatDate)
-        cell.doctorName.text = data.DoctorsName == "" ? "N/A" : data.DoctorsName
-        cell.status.text = data.Status == "" ? "N/A" : data.Status
+        let PatientName  = "\(data.patientAppointments[0].FirstName + " " + data.patientAppointments[0].LastName)"
+        cell.doctorName.text = PatientName == "" ? "N/A" : PatientName
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

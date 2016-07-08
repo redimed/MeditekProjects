@@ -44,9 +44,13 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
         setDataInit()
     }
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.navigationBar.topItem?.title = "Back"
+        self.navigationItem.title = "Appointment"
         self.ArrayImageUID.removeAll()
         self.collectionView.reloadData()
         getDetailsAppointment(appointmentListResponseDetail.UID)
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -97,7 +101,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
     @IBAction func actionTracking(sender: AnyObject) {
         let detailsViewController :TrackingRefferalViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("TrackingRefferalViewControllerID") as! TrackingRefferalViewController
         detailsViewController.appointmentDetails = appointmentListResponseDetail
-        self.navigationController?.pushViewController(detailsViewController, animated: true)
+        self.presentViewController(detailsViewController, animated: true, completion: {})
     }
     
     //Get all image in appointment details

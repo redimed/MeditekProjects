@@ -47,7 +47,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                        if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                             if dataTeleheathUserDetail.message == "Success"  {
                                 let teleheathUserDetail = Mapper().toJSON(dataTeleheathUserDetail.data[0])
                                 Context.setDataDefaults(teleheathUserDetail, key: Define.keyNSDefaults.TeleheathUserDetail)
@@ -72,15 +72,15 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
         } else {
             pastUrls = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as! [String]
         }
-        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
-            buttonLogin.hidden = true
-        }
         pagingImage()
         resetTimer()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            buttonLogin.hidden = true
+        }
     }
     func resetTimer() {
         timer?.invalidate()

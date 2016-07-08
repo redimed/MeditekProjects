@@ -112,7 +112,7 @@ class AccountViewController: BaseViewController {
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                        if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                             if dataTeleheathUserDetail.message == "Success"  {
                                 let teleheathUserDetail = Mapper().toJSON(dataTeleheathUserDetail.data[0])
                                 Context.setDataDefaults(teleheathUserDetail, key: Define.keyNSDefaults.TeleheathUserDetail)
@@ -168,7 +168,7 @@ class AccountViewController: BaseViewController {
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                        if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                             if dataTeleheathUserDetail.message == "success"  {
                                 self!.alertView.alertMessage("Success", message: "Update Patient Information Success!")
                                 

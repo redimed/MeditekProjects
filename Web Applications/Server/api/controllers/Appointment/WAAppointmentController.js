@@ -15,8 +15,15 @@ module.exports = {
         } else {
             Services.RequestWAAppointment(data, req.user)
                 .then(function(success) {
-                    success.transaction.commit();
-                    res.ok('success');
+                    success.transaction.commit()
+                        .then(function(commitSuccess) {
+                            req.dmObj = {
+                                apptUID: success.apptUID,
+                            };
+                            res.ok('success');
+                        }, function(err) {
+                            res.serverError(err);
+                        });
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
@@ -130,18 +137,18 @@ module.exports = {
     DisableWAAppointment: function(req, res) {
         var UID = req.params.UID;
         Services.DisableAppointment(UID)
-                .then(function(success) {
-                    res.ok('success');
-                }, function(err) {
-                    if (HelperService.CheckExistData(err) &&
-                        HelperService.CheckExistData(err.transaction) &&
-                        HelperService.CheckExistData(err.error)) {
-                        err.transaction.rollback();
-                        res.serverError(err.error);
-                    } else {
-                        res.serverError(err);
-                    }
-                });
+            .then(function(success) {
+                res.ok('success');
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
+                    err.transaction.rollback();
+                    res.serverError(err.error);
+                } else {
+                    res.serverError(err);
+                }
+            });
     },
     RequestWAAppointmentPatient: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
@@ -150,11 +157,19 @@ module.exports = {
         } else {
             Services.RequestWAAppointmentPatient(data, req.user)
                 .then(function(success) {
-                    success.transaction.commit();
-                    res.ok({
-                        status: 'success',
-                        code: success.code
-                    });
+                    success.transaction.commit()
+                        .then(function(commitSuccess) {
+                            req.dmObj = {
+                                apptUID: success.apptUID,
+                            };
+                            res.ok({
+                                status: 'success',
+                                code: success.code
+                            });
+                        }, function(err) {
+                            res.serverError(err);
+                        });
+
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
@@ -213,11 +228,20 @@ module.exports = {
         } else {
             Services.RequestWAAppointmentPatient(data, req.user)
                 .then(function(success) {
-                    success.transaction.commit();
-                    res.ok({
-                        status: 'success',
-                        code: success.code
-                    });
+                    success.transaction.commit()
+                        .then(function(commitSuccess) {
+                            req.dmObj = {
+                                apptUID: success.apptUID,
+                            };
+                            res.ok({
+                                status: 'success',
+                                code: success.code,
+                                apptUID: success.apptUID
+                            });
+                        }, function(err) {
+                            res.serverError(err);
+                        });
+
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
@@ -237,11 +261,18 @@ module.exports = {
         } else {
             Services.RequestAppointmentCompany(data, req.user)
                 .then(function(success) {
-                    success.transaction.commit();
-                    res.ok({
-                        status: 'success',
-                        data: success.data
-                    });
+                    success.transaction.commit()
+                        .then(function(commitSuccess) {
+                            req.dmObj = {
+                                apptUID: success.data,
+                            };
+                            res.ok({
+                                status: 'success',
+                                data: success.data
+                            });
+                        }, function(err) {
+                            res.serverError(err);
+                        });
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
@@ -261,11 +292,18 @@ module.exports = {
         } else {
             Services.RequestWAAppointmentPatientNew(data, req.user)
                 .then(function(success) {
-                    success.transaction.commit();
-                    res.ok({
-                        status: 'success',
-                        code: success.code
-                    });
+                    success.transaction.commit()
+                        .then(function(commitSuccess) {
+                            req.dmObj = {
+                                apptUID: success.apptUID,
+                            };
+                            res.ok({
+                                status: 'success',
+                                code: success.code
+                            });
+                        }, function(err) {
+                            res.serverError(err);
+                        });
                 }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
@@ -504,7 +542,7 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            req.dmObj = {apptUID: data.UID};
+            req.dmObj = { apptUID: data.UID };
             var role = HelperService.GetRole(req.user.roles);
             if (role.isInternalPractitioner ||
                 role.isAdmin ||

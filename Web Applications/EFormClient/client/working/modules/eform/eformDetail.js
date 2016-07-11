@@ -929,7 +929,9 @@ module.exports = React.createClass({
                 templateUID: self.templateUID
             }
 
-            EFormService.createPDFForm(data)
+            console.log(data);
+
+            /*EFormService.createPDFForm(data)
             .then(function(response){
                 var fileName = 'report_'+moment().format('X');
                 var blob = new Blob([response], {
@@ -941,7 +943,7 @@ module.exports = React.createClass({
                 }, 1000)
             }, function(error){
 
-            })
+            })*/
         }
     },
     _onGoToHistory: function(history){

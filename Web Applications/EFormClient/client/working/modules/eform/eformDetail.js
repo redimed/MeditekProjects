@@ -948,7 +948,16 @@ module.exports = React.createClass({
     },
     _onGoToHistory: function(history){
         var appointmentUID = history.Appointments[0].UID;
-        window.location.href = '/#/eform/detail?appointmentUID='+appointmentUID+'&patientUID='+this.patientUID+'&templateUID='+this.templateUID+'&userUID='+this.userUID;
+        if(!window.noEFormAuth) {
+            if(window.userAccess) {
+                var ss= window.userAccess.authorization.substring(7);
+                window.location.href = '/#/eform/detail?appointmentUID='+appointmentUID+'&patientUID='+this.patientUID+'&templateUID='+this.templateUID+'&userUID='+this.userUID+'&ss='+ss;
+            } else {
+                console.error("AUTHENTICATION:EFORM:useraccess not found");
+            }
+        } else {
+            window.location.href = '/#/eform/detail?appointmentUID='+appointmentUID+'&patientUID='+this.patientUID+'&templateUID='+this.templateUID+'&userUID='+this.userUID;
+        }
         window.location.reload();
     },
     _onComponentSectionSaveTableDynamicRow: function(codeSection, codeRow, codeField, row){

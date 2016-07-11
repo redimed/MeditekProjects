@@ -114,6 +114,30 @@ module.exports = React.createClass({
         }
 
     },
+
+    sizes: [
+        {'width':550,'height':500,desc:'Canvas 550x500'},
+        {'width':750,'height':650,desc:'Canvas 750x650'},
+        {'width':900,'height':750,desc:'Canvas 900x750'},
+        {'width':1000,'height':900,desc:'Canvas 1100x900'},
+    ],
+
+    size: null,
+
+    _onCanvasSizeChange: function(e) {
+        var canvasSize = JSON.parse(e.target.value);
+        if(canvasSize) {
+            this.size = canvasSize;
+            var canvas = $(this.refs['canvasPanel']).context.querySelector('canvas');
+            console.log("AAA",$('#mycanvas').getContext());
+            canvas.width=this.size.width;
+            canvas.height=this.size.height;
+            var ctx = canvas.getContext("2d");
+            console.log(ctx);
+        }
+
+    },
+
     render: function(){
         var type = this.props.type;
         var html = null;
@@ -153,7 +177,7 @@ module.exports = React.createClass({
              </div>
              </div>
              )*/}
-            case 'eform_input_text':
+            case 'eform_input_image_object':
                 html = (
                     <div className={"dragField col-xs-"+this.props.size} ref="group">
                         {display_name}
@@ -161,6 +185,64 @@ module.exports = React.createClass({
                             this is Image Object
                             <div className="col-xs-12">
                                 <input type="text" name={this.props.name} className={this.props.className} style={inputStyle} ref="input" id={this.props.refTemp} onDoubleClick = {this.selection}/>
+                            </div>
+                        </div>
+
+                        <div ref="canvasPanel" className="row">
+                            <div className="col-md-12 col-sm-12">
+                                <div className="form-inline">
+                                    <select className="form-control" onChange={this._onCanvasSizeChange}>
+                                        {this.sizes.map(function(sizeItem, index){
+                                            return  <option value={JSON.stringify(sizeItem)}>{sizeItem.desc}</option>
+                                        })}
+                                    </select>
+
+                                    <a href="javascript:;"
+                                       className="btn btn-icon-only btn-circle">
+                                    </a>
+
+                                    <a className="btn btn-icon-only btn-circle btn-default" >
+                                        <i className="fa fa-undo"></i>
+                                    </a>
+                                    <a className="btn btn-icon-only btn-circle btn-default" >
+                                        <i className="fa fa-repeat"></i>
+                                    </a>
+
+                                    <a className="btn btn-icon-only btn-circle btn-default" >
+                                        <i class="fa fa-eraser"></i>
+                                    </a>
+                                    <a className="btn btn-icon-only btn-circle btn-default" >
+                                        <i className="fa fa-trash-o"></i>
+                                    </a>
+
+                                    <a className="btn btn-icon-only btn-circle btn-default" >
+                                        <i className="fa fa-camera"></i>
+                                    </a>
+
+                                        <span className="btn btn-default btn-file">
+                                            Load Picture<input type="file" id="imageLoader" accept="image/*"/>
+                                        </span>
+
+                                    <a className="btn btn-success" >
+                                        <i className="fa fa-floppy-o"></i> Save
+                                    </a>
+
+                                </div>
+                                <br/>
+                                <div className="form-inline">
+                                    <select className="form-control">
+                                    </select>
+                                    <input className="form-control" type="text"/>
+
+                                    <a className="btn btn-default">
+                                        Apply Text
+                                    </a>
+                                    <a className="btn btn-default">
+                                        Save Text
+                                    </a>
+                                </div>
+                                <br/>
+                                <canvas id="myCanvas"></canvas>
                             </div>
                         </div>
                     </div>

@@ -10,6 +10,7 @@ module.exports = React.createClass({
                 {code: 'eform_input_check_label', name: 'Label'},
                 {code: 'eform_input_check_label_html', name: 'Label HTML'},
                 {code: 'eform_input_text', name: 'Input Text'},
+                {code: 'eform_input_image_object', name: 'Image Object'},
                 {code: 'eform_input_date', name: 'Input Date'},
                 {code: 'eform_input_textarea', name: 'Textarea'},
                 {code: 'eform_input_check_checkbox', name: 'Checkbox'},

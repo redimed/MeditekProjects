@@ -1,5 +1,6 @@
 var CommonModal = require('common/modal');
 var CommonInputText = require('common/inputText');
+var CommonImageObject = require('common/imageObject');
 var CommonButtonReloadDoctor = require('common/buttonReloadDoctor');
 var CommonInputDate = require('common/inputDate');
 var CommonTextArea = require('common/textarea');
@@ -605,7 +606,23 @@ module.exports = React.createClass({
                                                                 preCal={field.get('preCal')}
                                                                 cal={field.get('cal')}
                                                                 onRightClickItem={this._onRightClickItem}/>
-                                                    else if(type === 'eform_button_reload_doctor') {
+                                                    else if (type ==="eform_input_image_object") {
+                                                            return <CommonImageObject
+                                                                key={index} type={type}
+                                                                groupId={groupId}
+                                                                name={field.get('name')}
+                                                                size={field.get('size')}
+                                                                permission={this.props.permission}
+                                                                context={displayContextMenu}
+                                                                ref={field.get('ref')}
+                                                                refTemp={field.get('ref')}
+                                                                code={index}
+                                                                roles={field.get('roles')}
+                                                                preCal={field.get('preCal')}
+                                                                cal={field.get('cal')}
+                                                                onRightClickItem={this._onRightClickItem}
+                                                            />
+                                                    } else if(type === 'eform_button_reload_doctor') {
                                                             return <CommonButtonReloadDoctor key={index} type={type}
                                                                 groupId={groupId}
                                                                 name={field.get('name')}
@@ -824,7 +841,19 @@ module.exports = React.createClass({
                                             code={index}
                                             onRightClickItem={this._onRightClickItem}
                                             preCal={field.get('preCal')}/>
-                                else if (type === 'eform_button_reload_doctor')
+                                else if(type === 'eform_input_image_object') {
+                                        return <CommonImageObject key={index} type={type}
+                                            groupId={groupId}
+                                            name={field.get('name')}
+                                            size={field.get('size')}
+                                            permission={this.props.permission}
+                                            context={displayContextMenu}
+                                            ref={field.get('ref')}
+                                            refTemp={field.get('ref')}
+                                            code={index}
+                                            onRightClickItem={this._onRightClickItem}
+                                            preCal={field.get('preCal')}/>
+                                } else if (type === 'eform_button_reload_doctor')
                                         return <CommonButtonReloadDoctor key={index} type={type}
                                             groupId={groupId}
                                             name={field.get('name')}

@@ -1,7 +1,15 @@
 module.exports = {
+    'get /status': {
+        controller: 'EForm/EFormController',
+        action: 'GetStatus'
+    },
     'get /eformtemplate/list': {
         controller: 'EForm/EFormController',
         action: 'GetListEFormTemplate'
+    },
+    'post /eform/print': {
+        controller: 'EForm/EFormController',
+        action: 'PostEFormPrint'
     },
     'post /eformtemplate/create': {
         controller: 'EForm/EFormController',

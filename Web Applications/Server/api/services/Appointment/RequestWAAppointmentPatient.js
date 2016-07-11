@@ -2,12 +2,14 @@ module.exports = function(data, userInfo) {
     var $q = require('q');
     var defer = $q.defer();
     var appointmentObject = null;
+    var apptUID = null;
     if (!_.isEmpty(data) &&
         !_.isEmpty(data.PatientAppointment)) {
         sequelize.transaction()
             .then(function(t) {
                     var dataAppt = Services.GetDataAppointment.AppointmentCreate(data);
                     dataAppt.UID = UUIDService.Create();
+                    apptUID = dataAppt.UID;
                     if (!_.isEmpty(userInfo)) {
                         dataAppt.CreatedBy = userInfo.ID;
                     }
@@ -207,7 +209,8 @@ module.exports = function(data, userInfo) {
                             defer.resolve({
                                 status: 'success',
                                 transaction: t,
-                                code: code
+                                code: code,
+                                apptUID: apptUID
                             });
                         }, function(err) {
                             defer.reject({

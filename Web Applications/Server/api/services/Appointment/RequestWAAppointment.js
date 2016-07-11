@@ -4,6 +4,7 @@ module.exports = function(data, userInfo) {
     var preferringPractitioner;
     var appointmentObject;
     var teleApptID;
+    var apptUID = null;
     var defer = $q.defer();
     sequelize.transaction()
         .then(function(t) {
@@ -22,6 +23,7 @@ module.exports = function(data, userInfo) {
                             preferringPractitioner = Services.GetDataAppointment.AddDataPreferredPractitioner(preferringPractitioner, data.TelehealthAppointment);
                             var dataAppointment = Services.GetDataAppointment.AppointmentCreate(data);
                             dataAppointment.UID = UUIDService.Create();
+                            apptUID = dataAppointment.UID;
                             dataAppointment.CreatedBy = preferringPractitioner.ID;
                             var objectCreatedAppointment = {
                                 data: dataAppointment,
@@ -180,7 +182,8 @@ module.exports = function(data, userInfo) {
                     .then(function(clinicalDetailCreated) {
                         defer.resolve({
                             transaction: t,
-                            status: 'success'
+                            status: 'success',
+                            apptUID: apptUID
                         });
                     }, function(err) {
                         defer.reject({

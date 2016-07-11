@@ -1,4 +1,5 @@
 var o = require("./HelperService");
+var moment = require('moment');
 var $q = require('q');
 module.exports = {
     CreateQueueJob: function(queueJob, transaction) {
@@ -232,6 +233,11 @@ module.exports = {
                 Queue: queue,
                 ReceiverUID: userUID,
             },
+            include: {
+                model: UserAccount,
+                attributes: ['UID', 'UserName'],
+                as: 'SenderAccount'
+            },
             order: 'CreatedDate DESC'
         }).then(function(data) {
             QueueJob.count({
@@ -246,7 +252,7 @@ module.exports = {
                     data: data,
                     count: count,
                 });
-            },function(err) {
+            }, function(err) {
                 console.log("GetListQueueByRoleCount", err);
             });
         }, function(err) {
@@ -256,19 +262,88 @@ module.exports = {
         return q.promise;
     },
 
-    UpdateReadQueueJob: function(userUID, queue) {
-        console.log("||||||||||||||||||||||||||||||||| UpdateReadQueueJob Service");
+    whereClause: function(data) {
+        var whereClause = {};
+        if (data.Search.userUID) {
+            whereClause.ReceiverUID = data.Search.userUID
+        };
+        if (data.Search.queue) {
+            whereClause.Queue = data.Search.queue
+        };
+        if (data.Search.Action) {
+            whereClause.MsgContent = {
+                like: '%"Display":"%' + data.Search.Action + '%",%'
+            }
+        };
+        if (data.Search.FromCreatedDate && !data.Search.ToCreatedDate) {
+            whereClause.CreatedDate = {
+                $gte: data.Search.FromCreatedDate,
+                $lt: moment(data.Search.FromCreatedDate).add(1, 'days').format('YYYY-MM-DD HH:mm:ss Z')
+            }
+        };
+        if (!data.Search.FromCreatedDate && data.Search.ToCreatedDate) {
+            whereClause.CreatedDate = {
+                $gte: data.Search.ToCreatedDate,
+                $lt: moment(data.Search.ToCreatedDate).add(1, 'days').format('YYYY-MM-DD HH:mm:ss Z')
+            }
+        };
+        if (data.Search.FromCreatedDate && data.Search.ToCreatedDate) {
+            whereClause.CreatedDate = {
+                $gte: data.Search.FromCreatedDate,
+                $lt: moment(data.Search.ToCreatedDate).add(1, 'days').format('YYYY-MM-DD HH:mm:ss Z')
+            }
+        };
+        return whereClause;
+    },
 
+    GetListQueueByRoleSearch: function(info) {
         var q = $q.defer();
 
+        var whereClause = QueueJobService.whereClause(info);
+
+        var limit = info.limit;
+        var offset = info.offset;
+
+        QueueJob.findAndCountAll({
+            offset: offset,
+            limit: limit,
+            where: whereClause,
+            include: {
+                model: UserAccount,
+                attributes: ['UserName'],
+                as: 'SenderAccount'
+            },
+            order: info.order
+        }).then(function(data) {
+            q.resolve({
+                status: 'success',
+                data: data.rows,
+                count: data.count,
+            });
+        }, function(err) {
+            console.log("GetListQueueByRole", err);
+            q.reject(err);
+        });
+        return q.promise;
+    },
+
+    UpdateReadQueueJob: function(info) {
+        console.log("||||||||||||||||||||||||||||||||| UpdateReadQueueJob Service");
+        var q = $q.defer();
+        var userUID = info.userUID;
+        var queue = info.queue;
+        var whereClause = {
+            ReceiverUID: userUID,
+            Queue: queue,
+            Read: 'N',
+        };
+        if (info.ID) {
+            whereClause.ID = info.ID;
+        };
         QueueJob.update({
             Read: 'Y'
         }, {
-            where: {
-                ReceiverUID: userUID,
-                queue: queue,
-                Read: 'N',
-            }
+            where: whereClause
         }).then(function(data) {
             q.resolve({
                 status: 'success',

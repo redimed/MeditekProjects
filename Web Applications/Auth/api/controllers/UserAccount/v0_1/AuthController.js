@@ -85,6 +85,7 @@ module.exports = {
                         UID: user.UID,
                         Activated: user.Activated,
                         roles: user.roles,
+                        UserName: user.UserName,
                         //--------------------------------
                         SystemType: req.headers.systemtype, //Dùng để validation request
                         DeviceID: req.headers.deviceid, //Dùng để validation request

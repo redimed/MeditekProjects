@@ -8,5 +8,11 @@ app.factory('notificationServices', function(NcRestangular) {
             data: data
         });
     };
+
+    services.getListNotifySearch = function(data) {
+        return ncApi.all("queue/loadlistqueuesearch").post({
+            data: data
+        });
+    };
     return services;
 });

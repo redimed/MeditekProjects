@@ -294,8 +294,14 @@ module.exports = {
                 .then(function(success) {
                     success.transaction.commit()
                         .then(function(commitSuccess) {
+                            console.log("|||||||| RequestWAAppointmentNew |||||||||||||||||||||||||||||||||||");
                             req.dmObj = {
+                                RoleCode: 'ADMIN',
+                                ReceiverType: 'ALL_ADMINS',
                                 apptUID: success.apptUID,
+                                Message: 'CreateAppointment',
+                                Action: 'create a appointment',
+                                Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok({
                                 status: 'success',
@@ -574,7 +580,11 @@ module.exports = {
         } else {
             req.dmObj = {
                 RoleCode: 'ADMIN',
+                ReceiverType: 'ALL_ADMINS',
                 apptUID: data.Appointment.UID,
+                Message: 'LinkPatient',
+                Action: 'link a patient in appointment',
+                Url_State: 'authentication.WAAppointment.detail'
             };
             var role = HelperService.GetRole(req.user.roles);
             if (role.isInternalPractitioner ||

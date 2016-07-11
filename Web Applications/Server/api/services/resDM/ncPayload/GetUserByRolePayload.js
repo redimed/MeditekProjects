@@ -4,6 +4,7 @@ module.exports = function(req, res) {
     try {
         var error = new Error('GetUserByRole.Error');
         var dmObj = req.dmObj;
+        var userActive = req.user;
         // dmLog("GetUserByRole ");
         var whereClause = {
             Role: {},
@@ -11,21 +12,18 @@ module.exports = function(req, res) {
         };
         whereClause.Role.RoleCode = dmObj.RoleCode;
         whereClause.Appointment.UID = dmObj.apptUID;
-        console.log("GetUserByRole ", whereClause);
+        console.log("|||||| userActive ||||||||||||||||||||||||||||||", userActive);
         if (_.isEmpty(whereClause.Role)) {
             error.pushError('whereClause.null');
             throw error;
         };
 
-        console.log("11111111111 ", whereClause);
         return Appointment.findOne({
             where: whereClause.Appointment
         }).then(function(appt) {
-            console.log("2222222222222222222 ");
             if (appt) {
-                console.log("3333333333333333333 ");
                 return UserAccount.findAll({
-                    attributes: ['ID', 'UID'],
+                    attributes: ['ID', 'UID', 'UserName'],
                     include: [{
                         model: Role,
                         attributes: ['ID', 'UID'],
@@ -36,19 +34,33 @@ module.exports = function(req, res) {
                     result.forEach(function(User, index) {
                         var payload = {
                             Receiver: User.UID,
-                            ReceiverType: 'ALL_ADMINS',
+                            ReceiverType: dmObj.ReceiverType,
                             ReceiverUID: User.UID,
                             Queue: 'NOTIFY',
                             Read: 'N',
-                            MsgContent: {
-                                action: 'Link Patient',
-                                Appointment: appt,
-                                sender: req.user,
-                            },
                             MsgContentType: 'JSON',
+                            MsgContent: {
+                                //Display
+                                Display: {
+                                    Subject: userActive.UserName,
+                                    Action: dmObj.Action,
+                                    Object: {
+                                        name: appt.Code,
+                                        UID: appt.UID,
+                                    },
+                                    Display: userActive.UserName + ' ' + dmObj.Action + ' ' + appt.Code
+                                },
+                                Command: {
+                                    Note: dmObj.Message,
+                                    Url_State: dmObj.Url_State,
+                                    Url_Redirect: dmObj.Url_Redirect,
+                                    // Action : {}
+                                }
+                            },
+                            SenderType: dmUtils.ncSenderType.SERVER,
+                            SenderUID: userActive.UID,
                             EventName: 'notification',
                             SendFromServer: dmUtils.currentServer,
-                            SenderType: dmUtils.ncSenderType.SERVER,
                         };
                         payloads.push(payload);
                     });

@@ -111,14 +111,31 @@ module.exports = {
         }
     },
 
+    LoadListQueueSearch: function(req, res) {
+        try {
+            console.log("LoadListQueue Search");
+            var data = req.body.data;
+            
+            QueueJobService.GetListQueueByRoleSearch(data).then(function(data) {
+                // console.log("data", data.data);
+                res.ok({
+                    status: 'success',
+                    data: data.data,
+                    count: data.count,
+                });
+            }, function(err) {
+                res.serverError(ErrorWrap(err));
+            });
+        } catch (err) {
+            console.log("LoadListQueue Search", err);
+        }
+    },
+
     UpdateReadQueueJob:function(req, res) {
         try{
             console.log("UpdateReadQueueJob");
-            var data = req.body.data;
-            var userUID = data.userUID;
-            var queue = data.queue;
-
-            QueueJobService.UpdateReadQueueJob(userUID, queue).then(function(data) {
+            var info = req.body.data;
+            QueueJobService.UpdateReadQueueJob(info).then(function(data) {
                 res.ok({
                     status: 'success',
                     data: data.data

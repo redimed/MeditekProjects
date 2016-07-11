@@ -192,20 +192,34 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
     $scope.loadListNotify();
 
-    $scope.updateReadQueueJob = function() {
-        if ($scope.UnReadCount > 0) {
-            var userUID = UserInfo.UID;
-            var queue = 'NOTIFY';
-            AuthenticationService.updateReadQueueJob({
-                userUID: userUID,
-                queue: queue
-            }).then(function(data) {
-                if (data.status === 'success') {
-                    $scope.loadListNotify();
-                };
-            }, function(err) {
-                console.log("updateReadQueueJob ", err);
-            });
+    // Update Read Notification
+    function UpdateQueueJob(whereClause) {
+        AuthenticationService.updateReadQueueJob(whereClause).then(function(data) {
+            if (data.status === 'success') {
+                $scope.loadListNotify();
+            };
+        }, function(err) {
+            console.log("updateReadQueueJob ", err);
+        });
+    };
+
+    $scope.updateReadQueueJob = function(queuejob) {
+        var userUID = UserInfo.UID;
+        var queue = 'NOTIFY';
+        var whereClause = {
+            userUID: userUID,
+            queue: queue
+        };
+        if (queuejob) {
+            if (queuejob.Read === 'N') {
+                whereClause.ID = queuejob.ID;
+                UpdateQueueJob(whereClause);
+            };
+            $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+        } else {
+            if ($scope.UnReadCount > 0) {
+                UpdateQueueJob(whereClause);
+            };
         };
     };
 
@@ -389,7 +403,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     ioSocket.telehealthNotify = function(msg) {
         $scope.loadListNotify();
         var msgContent = JSON.parse(msg);
-        toastr.success(msgContent.Appointment.Code + " " + msgContent.action, "Notification");
+        toastr.info(msgContent.Display.Subject + " " + msgContent.Display.Action + " " + msgContent.Display.Object.name, "Notification");
     };
 
     // No using
@@ -424,7 +438,7 @@ app.controller('HeaderController', function($scope) {
     });
 });
 /* Setup Layout Part - Sidebar */
-app.controller('SidebarController', function($scope, Restangular,$cookies,CommonService) {
+app.controller('SidebarController', function($scope, Restangular, $cookies, CommonService) {
     $scope.$on('$includeContentLoaded', function() {
         // Layout.initSidebar(); // init sidebar
     });
@@ -432,12 +446,12 @@ app.controller('SidebarController', function($scope, Restangular,$cookies,Common
     var api = Restangular.all("api");
     var result = api.one("module/GetModulesForUser");
     result.get()
-    .then(function(data){
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',data.data.nodes);
-        $scope.menus=data.data.nodes;
-    },function(err){
-        
-    });
+        .then(function(data) {
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data.data.nodes);
+            $scope.menus = data.data.nodes;
+        }, function(err) {
+
+        });
 
 });
 /* Setup Layout Part - Quick Sidebar */

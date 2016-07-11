@@ -76,6 +76,12 @@ socketAuth.on('notification', function(msg) {
     if (ioSocket.telehealthNotify) {
         ioSocket.telehealthNotify(msg);
     };
+    if (ioSocket.LoadListAppointment) {
+        ioSocket.LoadListAppointment();
+    };
+    if (ioSocket.LoadListNotify) {
+        ioSocket.LoadListNotify();
+    };
 });
 /* end socket 3006 */
 

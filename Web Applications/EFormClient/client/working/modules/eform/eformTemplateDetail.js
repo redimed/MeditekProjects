@@ -322,6 +322,18 @@ module.exports = React.createClass({
 
                             )
                         }
+                    case 'eform_input_image_object':
+                        return {
+                            sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>
+                                val.set('name', dataField.name)
+                                    .set('size', dataField.size)
+                                    .set('ref', dataField.ref)
+                                    .set('preCal', dataField.preCal)
+                                    .set('cal', dataField.cal)
+                                    .set('roles', Immutable.fromJS(dataField.roles))
+
+                            )
+                        }
                     default:
                         return {
                             sections: prevState.sections.updateIn([codeSection, 'rows', codeRow, 'fields', dataField.code], val =>

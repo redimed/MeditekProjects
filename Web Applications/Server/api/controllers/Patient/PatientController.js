@@ -80,7 +80,7 @@ module.exports = {
                             patient.transaction.rollback();
                             res.serverError(ErrorWrap(err));
                         });
-                    } else if(data.SiteIDRefer) {
+                    } else if(data.SiteIDRefer && data.SiteIDRefer != 0 && data.SiteIDRefer != "0") {
                         return CompanySite.findOne({
                             where:{
                                 SiteIDRefer : data.SiteIDRefer

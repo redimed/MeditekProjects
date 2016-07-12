@@ -9,10 +9,8 @@ import com.redimed.telehealth.patient.views.SignaturePad;
  */
 public interface IConsentPresenter {
 
-    void uploadSignature(String path);
+    void uploadSignature(SignaturePad signaturePad);
 
     void submitRedisite(String supervisorName, Bundle bundle);
-
-    void saveSignature(SignaturePad signaturePad);
 
 }

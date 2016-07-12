@@ -26,24 +26,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
-                android:text="Confirm"
+                android:text="@string/title_consent"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18dp" />
+                android:textSize="@dimen/title_size_redisite" />
 
             <CheckBox
                 android:id="@+id/cbConsent1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="I, authorise any doctor who treats me (whether named in this certificate or not) to discuss my medical condition, in relation to my claim for workers' compensation and return to work options, with my employer and with their insurer." />
+                android:text="@string/consent1" />
 
             <CheckBox
                 android:id="@+id/cbConsent2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="If your claim is NOT ACCEPTED by the insurance company, or your accounts are not settled by your employer, you will be liable for any invoices issued during the course of your treatment. If your account is forwarded to the debt collector, you will be liable for all fees associated." />
+                android:text="@string/consent2" />
 
 
             <LinearLayout
@@ -55,13 +55,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="I, agree to having medic/supervisor present as a third party during a medical consult with REDiMED" />
+                    android:text="@string/consent3" />
 
                 <EditText
                     android:id="@+id/txtSupervisor"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:hint="Supervisor's name" />
+                    android:hint="@string/supervisor" />
 
             </LinearLayout>
 
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="I can confirm that all information provided to REDIMED is true and correct." />
+                android:text="@string/consent4" />
 
             <ViewFlipper
                 android:id="@+id/vfContainer"
@@ -175,7 +175,7 @@
                             android:id="@+id/lblComplete"
                             style="@android:style/Widget.Button"
                             android:layout_width="280dp"
-                            android:layout_height="30dp"
+                            android:layout_height="50dp"
                             android:background="@color/colorPrimary"
                             android:clickable="false"
                             android:gravity="center"

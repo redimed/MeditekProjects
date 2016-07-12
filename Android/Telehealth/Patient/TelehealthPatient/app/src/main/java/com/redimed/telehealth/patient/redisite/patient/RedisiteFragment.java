@@ -3,6 +3,8 @@ package com.redimed.telehealth.patient.redisite.patient;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -35,9 +38,11 @@ import com.redimed.telehealth.patient.redisite.patient.presenter.PatientRedisite
 import com.redimed.telehealth.patient.redisite.patient.view.IPatientRedisiteView;
 import com.redimed.telehealth.patient.utlis.DeviceUtils;
 import com.redimed.telehealth.patient.utlis.PreCachingLayoutManager;
+import com.redimed.telehealth.patient.widget.DialogMonthYearPicker;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -544,55 +549,28 @@ public class RedisiteFragment extends Fragment implements IPatientRedisiteView, 
             switch (v.getId()) {
                 case R.id.txtDOB:
                     txtDOB.setError(null);
-                    iPatientRedisitePresenter.displayDatePickerDialog(v);
+                    iPatientRedisitePresenter.displayDatePickerDialog();
                     break;
                 case R.id.txtExpiry:
-                    createDialogWithoutDateField().show();
+                    InputMethodManager imm = (InputMethodManager) context.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(txtExpiry.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    DialogMonthYearPicker dialogMonthYearPicker = new DialogMonthYearPicker();
+                    dialogMonthYearPicker.setListener(new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                            if (month <= 9) {
+                                txtExpiry.setText("0" + month + "/" + year);
+                            } else
+                                txtExpiry.setText(month + "/" + year);
+                        }
+                    });
+                    dialogMonthYearPicker.show(getFragmentManager(), "MonthYearPickerDialog");
                     break;
             }
         }
     }
 
-    private DatePickerDialog createDialogWithoutDateField() {
-        DatePickerDialog dpd = new DatePickerDialog(context, null, 2014, 1, 24);
-        try {
-            Field[] datePickerDialogFields = dpd.getClass().getDeclaredFields();
-            Log.i(TAG, datePickerDialogFields + "");
-            for (Field datePickerDialogField : datePickerDialogFields) {
-                if (datePickerDialogField.getName().equals("mDatePicker")) {
-                    datePickerDialogField.setAccessible(true);
-                    DatePicker datePicker = (DatePicker) datePickerDialogField.get(dpd);
-
-                    Field[] datePickerFields = datePickerDialogField.getType().getDeclaredFields();
-//                    for (Field datePickerField : datePickerFields) {
-//                        Log.i(TAG, datePickerField.getName());
-//                        if ("mDaySpinner".equals(datePickerField.getName())) {
-//                            datePickerField.setAccessible(true);
-//                            Object dayPicker = datePickerField.get(datePicker);
-//                            ((View) dayPicker).setVisibility(View.GONE);
-//                        }
-//                    }
-                    for (Field datePickerField : datePickerFields) {
-                        if ("mDayPicker".equals(datePickerField.getName()) || "mDaySpinner".equals(datePickerField.getName())) {
-                            datePickerField.setAccessible(true);
-                            Object dayPicker = datePickerField.get(datePicker);
-                            ((View) dayPicker).setVisibility(View.GONE);
-                        }
-                        if ("mMonthPicker".equals(datePickerField.getName()) || "mMonthSpinner".equals(datePickerField.getName())) {
-                            datePickerField.setAccessible(true);
-                            Object dayPicker = datePickerField.get(datePicker);
-                            ((View) dayPicker).setVisibility(View.GONE);
-                        }
-                    }
-                    datePicker.setCalendarViewShown(false);
-                    datePicker.setEnabled(false);
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(TAG, ex.getLocalizedMessage());
-        }
-        return dpd;
-    }
 
     @Override
     public void onLoadErrorSpinner() {

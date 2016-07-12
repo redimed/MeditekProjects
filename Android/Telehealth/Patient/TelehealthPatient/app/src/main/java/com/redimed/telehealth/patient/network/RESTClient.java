@@ -83,8 +83,8 @@ public class RESTClient {
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             OkHttpClient okHttpClient = new OkHttpClient();
             okHttpClient.setSslSocketFactory(sslSocketFactory);
-            okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
-            okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
+            okHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
+            okHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
             okHttpClient.setHostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
@@ -101,7 +101,7 @@ public class RESTClient {
     private static void setupRestClient() {
         //3009
         restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Config.apiURL)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
@@ -138,12 +138,12 @@ public class RESTClient {
 
     public static class SessionRequestInterceptor extends RequestInterceptor implements retrofit.RequestInterceptor {
         public void intercept(RequestFacade paramRequestFacade) {
+            paramRequestFacade.addHeader("AppID", DefineKey.AppID);
             paramRequestFacade.addHeader("SystemType", DefineKey.SystemType);
+            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", ""));
+            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", ""));
             paramRequestFacade.addHeader("DeviceID", uidTelehealth.getString("deviceID", ""));
             paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", ""));
-            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", ""));
-            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", ""));
-            paramRequestFacade.addHeader("AppID", DefineKey.AppID);
         }
     }
 
@@ -178,6 +178,8 @@ public class RESTClient {
                     editor = uidTelehealth.edit();
                     editor.putString("cookie", header.getValue());
                     editor.apply();
+
+                    Log.d(TAG, header.getValue());
                 }
                 if (null != header.getName() && header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")) {
 
@@ -204,10 +206,10 @@ public class RESTClient {
         }
     }
 
+    // HEADER REQUEST for UPLOAD FILE
     public static class RequestInterceptor implements Interceptor {
 
-        public RequestInterceptor() {
-        }
+        public RequestInterceptor() {}
 
         @Override
         public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {

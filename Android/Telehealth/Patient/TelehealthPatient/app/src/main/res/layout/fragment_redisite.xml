@@ -459,6 +459,8 @@
                         android:hint="@string/medicare_expiry"
                         android:inputType="date|datetime"
                         android:maxLength="20"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner"
                         android:singleLine="true" />
 
                     <com.redimed.telehealth.patient.font.RobotoTextView

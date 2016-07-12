@@ -13,7 +13,7 @@ public class Singleton {
     private static Singleton singletonInstance = null;
     private ArrayList<EFormData> EFormDatas, EFormInjury, EFormMedicalHistory, EFormInjurySymptoms, EFormBodyParts, EFormPatient, EFormSymptoms;
 
-    private Singleton(){
+    private Singleton() {
         customGalleries = new ArrayList<>();
 
         EFormDatas = new ArrayList<>();
@@ -25,8 +25,8 @@ public class Singleton {
         EFormInjurySymptoms = new ArrayList<>();
     }
 
-    public static Singleton getInstance(){
-        if(singletonInstance == null) {
+    public static Singleton getInstance() {
+        if (singletonInstance == null) {
             singletonInstance = new Singleton();
         }
         return singletonInstance;

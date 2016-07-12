@@ -77,8 +77,8 @@ public class ImageFragment extends Fragment implements IImageView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         setHasOptionsMenu(true);
+        // Inflate the layout for this fragment
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         View v = inflater.inflate(R.layout.fragment_image, container, false);
         ButterKnife.bind(this, v);
@@ -145,13 +145,21 @@ public class ImageFragment extends Fragment implements IImageView {
             switch (requestCode) {
                 case RESULT_PHOTO:
                     String[] allPath = data.getStringArrayExtra("all_path");
-                    iImagePresenter.setImageGallery(allPath);
+                    customGalleries.addAll(iImagePresenter.setImageGallery(allPath));
+
+                    onLoadGallery(customGalleries);
                     break;
                 case RESULT_CAMERA:
+                    CustomGallery item = new CustomGallery();
+                    item.sdcardPath = fileUri.getPath();
+                    customGalleries.add(item);
+
+                    onLoadGallery(customGalleries);
                     break;
                 default:
                     break;
             }
+            Singleton.getInstance().setCustomGalleries(customGalleries);
         }
     }
 
@@ -190,7 +198,7 @@ public class ImageFragment extends Fragment implements IImageView {
 
     @Override
     public void onLoadGallery(ArrayList<CustomGallery> customGalleries) {
-        Singleton.getInstance().setCustomGalleries(customGalleries);
+//        Singleton.getInstance().setCustomGalleries(customGalleries);
         if (customGalleries.size() > 0)
             lblImage.setVisibility(View.GONE);
 

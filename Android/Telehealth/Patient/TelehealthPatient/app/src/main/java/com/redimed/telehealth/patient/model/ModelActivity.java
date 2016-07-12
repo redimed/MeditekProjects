@@ -19,11 +19,11 @@ import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.model.presenter.IModelPresenter;
 import com.redimed.telehealth.patient.model.presenter.ModelPresenter;
 import com.redimed.telehealth.patient.model.view.IModelView;
-import com.redimed.telehealth.patient.widget.DialogAlert;
 import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ModelActivity extends AppCompatActivity implements IModelView, View.OnClickListener {
 
@@ -110,9 +110,11 @@ public class ModelActivity extends AppCompatActivity implements IModelView, View
         } else if (msg.equalsIgnoreCase("Network Error")) {
             new DialogConnection(this).show();
         } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
-            new DialogAlert(this, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
+            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(getString(R.string.token_expired)).show();
         } else {
-            new DialogAlert(this, DialogAlert.State.Error, msg).show();
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    .setContentText(msg).show();
         }
     }
 

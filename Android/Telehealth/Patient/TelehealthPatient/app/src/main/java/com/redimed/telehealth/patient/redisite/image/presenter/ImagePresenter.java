@@ -33,12 +33,21 @@ public class ImagePresenter implements IImagePresenter {
 
     private static File getOutputMediaFile(int type) {
         // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File mediaFile = null;
+        File mediaFile;
+
+        /*
+            // Location Device storage > Pictures
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+            // Location Device storage
+            Environment.getExternalStorageDirectory()
+        */
 
         // External sdcard location
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "Telehealth");
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Telehealth");
+
         // Create the storage directory if it does not exist
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
                 mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
@@ -61,13 +70,14 @@ public class ImagePresenter implements IImagePresenter {
     }
 
     @Override
-    public void setImageGallery(String[] allPath) {
-        ArrayList<CustomGallery> dataT = new ArrayList<>();
-        for (String string : allPath) {
+    public ArrayList<CustomGallery> setImageGallery(String[] allPath) {
+        ArrayList<CustomGallery> customGalleries = new ArrayList<>();
+        for (String path : allPath) {
             CustomGallery item = new CustomGallery();
-            item.sdcardPath = string;
-            dataT.add(item);
+            item.sdcardPath = path;
+            customGalleries.add(item);
         }
-        iImageView.onLoadGallery(dataT);
+//        iImageView.onLoadGallery(customGalleries);
+        return customGalleries;
     }
 }

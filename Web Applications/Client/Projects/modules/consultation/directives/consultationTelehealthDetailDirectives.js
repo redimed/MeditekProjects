@@ -901,25 +901,46 @@ app.directive('telehealthDetail', function(doctorService) {
                                         if(result == 'success') {
                                             $scope.isLinked = true;
                                             $scope.wainformation.Patients.push({UID:patientUid});
-                                            loopArray($scope.wainformation.AppointmentData, {CompanyName:'CompanyName'}, function(isExist) {
-                                                console.log(isExist);
-                                                if(isExist == false) {
-                                                    $scope.wainformation.Company = data.data[0].Companies[0];
-                                                }
+                                            
+                                            var p1 = new Promise(function(a, b) {
+                                                loopArray($scope.wainformation.AppointmentData, {CompanyName:'CompanyName'}, function(isExist) {
+                                                    console.log(isExist);
+                                                    if(isExist == false) {
+                                                        $scope.wainformation.Company = data.data[0].Companies[0];
+                                                    }
+                                                });
                                             });
-                                            loopArray($scope.wainformation.AppointmentData, {PatientSignatureUID:'PatientSignatureUID',PatientSignatureID:'PatientSignatureID'}, function(isExist, data) {
-                                                console.log(isExist);
-                                                if(isExist == true) {
-                                                    console.log("data ",data);
-                                                    PatientService.updateSignature({Signature:data.PatientSignatureID,FileUID:data.PatientSignatureUID,PatientUID:patientUid})
-                                                    .then(function(result) {
-                                                        console.log("result ",result);
-                                                    }, function(err) {
-                                                        console.log("err ",err);
-                                                    })
-                                                }
+
+                                            var p2 = new Promise(function(a, b) {
+                                                loopArray($scope.wainformation.AppointmentData, {
+                                                    PatientSignatureUID:'PatientSignatureUID',
+                                                    PatientSignatureID:'PatientSignatureID'}, function(isExist, data) {
+                                                    console.log(isExist);
+                                                    if(isExist == true) {
+                                                        console.log("data ",data);
+                                                        PatientService.updateSignature({Signature:data.PatientSignatureID,FileUID:data.PatientSignatureUID,PatientUID:patientUid})
+                                                        .then(function(result) {
+                                                            console.log("result ",result);
+                                                        }, function(err) {
+                                                            console.log("err ",err);
+                                                        })
+                                                    }
+                                                });
                                             });
-                                            toastr.success("Select patient successfully!", "success");
+
+                                            var p3 = new Promise(function(a, b) {
+                                                PatientService.updateEFormAppointment({PatientUID: patientUid,ApptUID: $stateParams.UID})
+                                                .then(function(result) {
+                                                    console.log("result eform ",result)
+                                                },function(err) {
+                                                    console.log(err)
+                                                });
+                                            });
+
+                                            Promise.all([p1,p2])
+                                            .then(function(values) {
+                                                toastr.success("Select patient successfully!", "success");
+                                            });
                                         }
                                     },function(err) {
                                         console.log(err);

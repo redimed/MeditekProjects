@@ -82,4 +82,9 @@ module.exports={
 		controller: 'Patient/PatientController',
 		action:'UpdateSignature'
 	},
+
+	'post /api/patient/update-eform-appt': {
+		controller: 'Patient/PatientController',
+		action: 'UpdateEFormAppointment'
+	},
 }

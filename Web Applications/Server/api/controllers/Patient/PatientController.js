@@ -813,4 +813,14 @@ module.exports = {
         })
     },
 
+    UpdateEFormAppointment: function(req, res) {
+        var data = req.body.data;
+        Services.Patient.UpdateEFormAppointment(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
+
 };

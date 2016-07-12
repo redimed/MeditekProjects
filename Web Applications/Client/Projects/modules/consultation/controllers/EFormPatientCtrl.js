@@ -4,6 +4,8 @@ var app = angular.module("app.authentication.consultation.patient.controller",[
 app.controller('EFormPatientCtrl', function($scope, $state, $timeout){
 	console.log($state.params);
 	$scope.isIframe = false;
+    $scope.patientUID =  $state.params.patientUID;
+    $scope.userUID = $state.params.userUID;
     $scope.getEForm = function() {
         $scope.isIframe = true;
         var userUID = $state.params.userUID;

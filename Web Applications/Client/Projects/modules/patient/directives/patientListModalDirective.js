@@ -544,6 +544,10 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							scope.ermsg ='';
 							scope.updatedata.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?null:3;
 							scope.updatedata.timezone = new Date().toString().match(/([\+-][0-9]+)/)[1];
+							if(scope.updatedata.PatientPension != null && scope.updatedata.PatientPension != '' &&
+								(scope.updatedata.PatientPension.ExpiryDate == null || scope.updatedata.PatientPension.ExpiryDate == '')) {
+								delete scope.updatedata['PatientPension'];
+							}
 							PatientService.updatePatient(scope.updatedata).then(function(response){
 								if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 								   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){

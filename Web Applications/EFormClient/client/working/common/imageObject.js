@@ -1,3 +1,4 @@
+var Config = require('config');
 module.exports = React.createClass({
     value: '',
     propTypes: {
@@ -19,6 +20,9 @@ module.exports = React.createClass({
             className: 'form-control',
             size: '12'
         }
+    },
+    componentWillMount: function() {
+        this.initDrawing();
     },
     componentDidMount: function(){
         var self = this;
@@ -50,6 +54,94 @@ module.exports = React.createClass({
                 self.props.onKeyPress(event);
             }
         })
+
+        //tannv.dts
+        this.canvas = $("#myCanvas")[0];
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa", this.canvas);
+
+        this.ctx = this.canvas.getContext("2d");
+        alert(JSON.stringify(this.size));
+        this.canvas.width = this.size.width;
+        this.canvas.height = this.size.height;
+        this.cPush();
+        this.imageLoader = $('#imageLoader')[0];
+        $(this.imageLoader).on('change', function(e){
+            var objectUrl = URL.createObjectURL(e.target.files[0]);
+            var img = new Image;
+            img.onload = function () {
+                this.clearCanvas();
+                this.ctx.drawImage(img, (this.canvas.width - img.width) / 2, (this.canvas.height - img.height)/2);
+                this.cPush();
+            }
+            img.src = objectUrl;
+        });
+
+        $(this.canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', function(event){
+            if(event.type === 'mousemove' && !self.drawing && !self.typing) {
+                return;
+            }
+            event.preventDefault();
+            switch(event.type) {
+                case 'mousedown':
+                case 'touchstart':
+                    if(event.offsetX){
+                        self.lastX = event.offsetX;
+                        self.lastY = event.offsetY;
+                    } else if(event.originalEvent) {
+                        self.lastX = event.originalEvent.targetTouches[0].pageX - $(self.canvas).offset().left;
+                        self.lastY = event.originalEvent.targetTouches[0].pageY - $(self.canvas).offset().top;
+                    } else {
+                        self.lastX = event.pageX - $(self.canvas).offset().left;
+                        self.lastY = event.pageY - $(self.canvas).offset().top;
+                    }
+                    self.ctx.beginPath();
+                    if(!self.typing) {
+                        self.drawing = true;
+                    }
+                    break;
+
+                case 'mousemove':
+                case 'touchmove':
+                    if(self.typing || self.drawing) {
+                        if(event.offsetX) {
+                            self.currentX = event.offsetX;
+                            self.currentY = event.offsetY;
+                        } else if(event.originalEvent) {
+                            self.currentX = event.originalEvent.targetTouches[0].pageX - $(self.canvas).offset().left;
+                            self.currentY = event.originalEvent.targetTouches[0].pageY - $(self.canvas).offset().top;
+                        } else {
+                            self.currentX = event.pageX - $(self.canvas).offset().left;
+                            self.currentY = event.pageY - $(self.canvas).offset().top;
+                        }
+                    }
+                    if(self.drawing) {
+                        self.draw(self.lastX, self.lastY, self.currentX, self.currentY);
+                        self.lastX = self.currentX;
+                        self.lastY = self.currentY;
+                    }
+                    if(self.typing && self.textMove) {
+                        var img = new Image;
+                        img.onload = function() {
+                            self.clearCanvas();
+                            self.ctx.drawImage(img, 0, 0);
+                            self.drawText(currentX, currentY);
+                        }
+                        img.src = self.typingState;
+                    }
+                    break;
+                case 'mouseup':
+                case 'touchend':
+                    if(self.typing) {
+                        self.textMove = !self.textMove;
+                    } else {
+                        self.cPush();
+                    }
+                case 'mouseout':
+                    self.drawing = false;
+
+            }
+        });
+
     },
     componentWillReceiveProps: function(nextProps){
         $(this.refs.input).val(nextProps.defaultValue);
@@ -115,25 +207,242 @@ module.exports = React.createClass({
 
     },
 
-    sizes: [
-        {'width':550,'height':500,desc:'Canvas 550x500'},
-        {'width':750,'height':650,desc:'Canvas 750x650'},
-        {'width':900,'height':750,desc:'Canvas 900x750'},
-        {'width':1000,'height':900,desc:'Canvas 1100x900'},
-    ],
+    initDrawing: function() {
+        this.canvas= null;
+        this.ctx=null;
+        this.drawing= false;
+        this.lastX= null;
+        this.lastY= null;
+        this.typing= false;
+        this.textMove= false;
+        this.typingState= null;
 
-    size: null,
+        this.colors= [
+            {'color': 'blue-ebonyclay'},
+            {'color': 'green'},
+            {'color': 'blue'},
+            {'color': 'red'}
+        ],
+        this.color= 'black';
+        this.sizes= [
+            {'width':550,'height':500,desc:'Canvas 550x500'},
+            {'width':750,'height':650,desc:'Canvas 750x650'},
+            {'width':900,'height':750,desc:'Canvas 900x750'},
+            {'width':1000,'height':900,desc:'Canvas 1100x900'},
+        ];
+
+        this.size = this.sizes[1];
+
+        this.fontSizes= [
+            {size:12,desc:'Font 12px'},
+            {size:15,desc:'Font 15px'},
+            {size:20,desc:'Font 20px'},
+            {size:25,desc:'Font 25px'},
+            {size:30,desc:'Font 30px'},
+        ],
+
+        this.fontSize = this.fontSizes[4];
+
+        this.lineWidth=3;
+
+        this.cPushArray= new Array();
+        this.cStep= -1;
+
+        this.userUID= null;
+
+        this.fileType= null;
+
+        linewidth= null;
+    },
+
+
+
+    makeFileName: function() {
+        var fileName= "Drawing_"
+            .concat(moment().format("YYYY-MM-DD_HHmmss.SSS"))
+            .concat('.jpg');
+        return fileName;
+    },
+
+    capture: function() {
+        //tannv.dts@gmail.com todo....
+        if(this.canvas.toBlob) {
+            this.canvas.toBlob(function(blob) {
+                //todo
+            })
+        }
+    },
+
+
+
+    action: function(fileInfo) {
+        alert(JSON.stringify(fileInfo));
+    },
+
+    uploadDrawing: function() {
+        if(canvas.toBlob) {
+            canvas.toBlob(function(blob){
+                var formdata = new FormData();
+                formdata.append('userUID', this.userUID);
+                formdata.append('fileType', this.fileType);
+                var fileName = this.makeFileName();
+                formdata.append('uploadFile', blob, fileName);
+                $.ajax({
+                    url: Config.apiServerUrl+'/api/uploadFileWithoutLogin',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    headers:{
+                        //Authorization: ('Bearer ' + $cookies.get("token")),
+                        //systemtype: 'WEB',
+                        //userUID: scope.data.userUID,
+                        fileType: this.fileType
+                    },
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                }).done(function(respond){
+                    console.log(respond);
+                    if(respond.status=='success')
+                    {
+                        // console.log('respond',respond);
+                        // CommonService.downloadFile(respond.fileUID);
+                        toastr.success("Save drawing successfully", "success");
+                        this.action(respond.fileInfo);
+                    }
+                });
+            })
+        }
+    },
+
+    cPush: function() {
+        var self = this;
+        this.cStep++;
+        if(this.cStep < this.cPushArray.length) {
+            this.cPushArray.length = this.cStep;
+        }
+
+        if(this.canvas.toBlob) {
+            this.canvas.toBlob(function(blob) {
+                var objectUrl = URL.createObjectURL(blob);
+                self.cPushArray.push(objectUrl);
+            })
+        }
+    },
+
+    clearCanvas: function () {
+        this.ctx.save();
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.restore();
+    },
+
+    cUndo: function() {
+        if(this.cStep>0) {
+            this.cStep--;
+            var img = new Image;
+            img.onload = function () {
+                this.clearCanvas();
+                this.ctx.drawingImage(img, 0, 0);
+            }
+            img.src= this.cPushArray[this.cStep];
+        }
+    },
+
+    cRedo: function() {
+        if(this.cStep<this.cPushArray.length-1) {
+            this.cStep++;
+            var img=new Image();
+            img.onload=function() {
+                this.clearCanvas();
+                this.ctx.drawingImage(img, 0, 0);
+            }
+            img.src=this.cPushArray[this.cStep];
+        }
+    },
+
+    cSaveTypingState: function() {
+        if(this.canvas.toBlob) {
+            this.canvas.toBlob(function(blob) {
+                var objectUrl = URL.createObjectURL(blob);
+                this.typingState = objectUrl;
+            })
+        }
+    },
+
+    cGetText: function() {
+        this.typing= true;
+        this.textMove=true;
+        this.cSaveTypingState();
+    },
+
+    cClearTyping: function() {
+        this.typing = false;
+        this.textMove = false;
+        this.typingState = null;
+    },
+
+    drawText: function(currentX, currentY) {
+        this.ctx.fillStyle = this.color;
+        this.ctx.font = this.fontSize+"px Arial";
+        this.ctx.fillText(this.cText, currentX, currentY);
+    },
+
+
+    changeColor: function(c) {
+        if(c== 'blue-ebonyclay') {
+            this.color = 'black';
+        } else {
+            this.color = c;
+        }
+        this.lineWidth = this.linewidth;
+        this.erasing = false;
+    },
+
+    clearCanvas: function() {
+        this.ctx.save();
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.restore();
+    },
+
+    clear: function () {
+        this.clearCanvas();
+        this.cPush();
+    },
+    
+    erase: function() {
+        this.color = $('#myCanvas')[0].css('background-color');
+        this.lineWidth = 50;
+        this.erasing = true;
+    },
+
+    draw: function(lX, lY, cX, cY) {
+        this.ctx.lineCap = "round";
+        this.ctx.fillStyle = "solid";
+        this.ctx.strokeStyle = this.color;
+        this.ctx.lineWidth = this.lineWidth;
+        this.ctx.moveTo(lX,lY);
+        this.ctx.lineTo(cX,cY);
+        this.ctx.stroke();
+    },
+
+    imageLoaderClick: function () {
+        this.cClearTyping();
+    },
+
+
+
+
+
 
     _onCanvasSizeChange: function(e) {
         var canvasSize = JSON.parse(e.target.value);
         if(canvasSize) {
             this.size = canvasSize;
-            var canvas = $(this.refs['canvasPanel']).context.querySelector('canvas');
-            console.log("AAA",$('#mycanvas').getContext());
-            canvas.width=this.size.width;
-            canvas.height=this.size.height;
-            var ctx = canvas.getContext("2d");
-            console.log(ctx);
+            this.canvas.width=this.size.width;
+            this.canvas.height=this.size.height;
         }
 
     },
@@ -148,11 +457,12 @@ module.exports = React.createClass({
                     {this.props.name}
                 </div>
             )
-        }
+        };
         var inputStyle = {
             paddingLeft: '1px',
             paddingRight:'1px'
-        }
+        };
+
         switch(type){
             case 'default':
                 html = (
@@ -193,7 +503,7 @@ module.exports = React.createClass({
                                 <div className="form-inline">
                                     <select className="form-control" onChange={this._onCanvasSizeChange}>
                                         {this.sizes.map(function(sizeItem, index){
-                                            return  <option value={JSON.stringify(sizeItem)}>{sizeItem.desc}</option>
+                                            return  <option key={index} value={JSON.stringify(sizeItem)}>{sizeItem.desc}</option>
                                         })}
                                     </select>
 
@@ -209,7 +519,7 @@ module.exports = React.createClass({
                                     </a>
 
                                     <a className="btn btn-icon-only btn-circle btn-default" >
-                                        <i class="fa fa-eraser"></i>
+                                        <i className="fa fa-eraser"></i>
                                     </a>
                                     <a className="btn btn-icon-only btn-circle btn-default" >
                                         <i className="fa fa-trash-o"></i>

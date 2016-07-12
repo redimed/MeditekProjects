@@ -42,6 +42,30 @@ module.exports = {
             method: dmUtils.method.nc,
             payload: userByRolePayload,
             sendto: ncSendto
+        },
+        'RequestWAAppointment': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: userByRolePayload,
+            sendto: ncSendto
+        },
+        'RequestWAAppointmentPatient': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: userByRolePayload,
+            sendto: ncSendto
+        },
+        'RequestWAAppointmentPatientOnlineBooking': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: userByRolePayload,
+            sendto: ncSendto
+        },
+        'RequestAppointmentCompany': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: userByRolePayload,
+            sendto: ncSendto
         }
     },
 

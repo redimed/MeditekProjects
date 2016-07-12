@@ -19,6 +19,11 @@ module.exports = {
                         .then(function(commitSuccess) {
                             req.dmObj = {
                                 apptUID: success.apptUID,
+                                RoleCode: 'ADMIN',
+                                ReceiverType: 'ALL_ADMINS',
+                                Message: 'CreateAppointment',
+                                Action: 'create a appointment',
+                                Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok('success');
                         }, function(err) {
@@ -161,6 +166,11 @@ module.exports = {
                         .then(function(commitSuccess) {
                             req.dmObj = {
                                 apptUID: success.apptUID,
+                                RoleCode: 'ADMIN',
+                                ReceiverType: 'ALL_ADMINS',
+                                Message: 'CreateAppointment',
+                                Action: 'create a appointment',
+                                Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok({
                                 status: 'success',
@@ -232,6 +242,11 @@ module.exports = {
                         .then(function(commitSuccess) {
                             req.dmObj = {
                                 apptUID: success.apptUID,
+                                RoleCode: 'ADMIN',
+                                ReceiverType: 'ALL_ADMINS',
+                                Message: 'CreateAppointment',
+                                Action: 'create a appointment',
+                                Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok({
                                 status: 'success',
@@ -263,8 +278,14 @@ module.exports = {
                 .then(function(success) {
                     success.transaction.commit()
                         .then(function(commitSuccess) {
+                            console.log("|||||||||||||||||||||||| success.data", success.data);
                             req.dmObj = {
                                 apptUID: success.data,
+                                Message: 'CreateAppointment',
+                                RoleCode: 'ADMIN',
+                                ReceiverType: 'ALL_ADMINS',
+                                Action: 'create appointment',
+                                Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok({
                                 status: 'success',
@@ -296,9 +317,9 @@ module.exports = {
                         .then(function(commitSuccess) {
                             console.log("|||||||| RequestWAAppointmentNew |||||||||||||||||||||||||||||||||||");
                             req.dmObj = {
+                                apptUID: success.apptUID,
                                 RoleCode: 'ADMIN',
                                 ReceiverType: 'ALL_ADMINS',
-                                apptUID: success.apptUID,
                                 Message: 'CreateAppointment',
                                 Action: 'create a appointment',
                                 Url_State: 'authentication.WAAppointment.detail'

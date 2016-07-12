@@ -40,21 +40,18 @@ class ListContactPersonViewController:BaseViewController,UITableViewDelegate ,UI
                             if let listSite = Mapper<ListSite>().map(response.result.value) {
                                 print(response.result.value)
                                 if(listSite.message == "success"){
-                                    //self!.hideLoading()
                                     self?.listSite = listSite
                                     self!.tableView.reloadData()
                                 }else{
-                                    //self!.hideLoading()
                                     if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                         print(errorModel)
-                                        self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                        self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                     }
                                 }
                             }
                         }
                     } else {
-                        // self!.hideLoading()
-                        self?.showMessageNoNetwork()
+                        self?.AlertShow("Warning", message: "Could not connect to the server")
                     }
                 }
             }
@@ -101,5 +98,10 @@ class ListContactPersonViewController:BaseViewController,UITableViewDelegate ,UI
     }
     @IBAction func actionBack(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    func AlertShow(title:String,message:String){
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+        self.presentViewController(alert, animated: true){}
     }
 }

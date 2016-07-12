@@ -16,7 +16,7 @@ class PatientInforViewController: BaseViewController {
     @IBOutlet weak var RelatedContentView: UIView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
-    @IBOutlet weak var txtSuburb: UITextField!
+    @IBOutlet weak var txtSuburb: AutoCompleteTextField!
     @IBOutlet weak var txtVeteranNumber: UITextField!
     @IBOutlet weak var txtMembership: UITextField!
     @IBOutlet weak var txtHealthFundName: UITextField!
@@ -46,14 +46,18 @@ class PatientInforViewController: BaseViewController {
     var AppointmentUID = ""
     var pickerView = UIPickerView()
     var datePicker = UIDatePicker()
-    var dataSalutation = ["Mr", "Mrs", "Mr","Miss", "Master", "Dr"]
+    let monthYearPickerView = MonthYearPickerView()
+    var dataSalutation = ["","Mr", "Mrs", "Ms","Miss", "Master", "Dr"]
     var autocompleteUrls = [String]()
     var site = Site()
-    var staff = Staff()
+    var staff = DataPatientDetail()
     var PatientDataHard = General()
     var PatientDataChange = General()
+    var pastUrls : [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        DatepickerModeExpiry()
         if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
             btnListSite.hidden = false
             btnListStaff.hidden = false
@@ -61,8 +65,21 @@ class PatientInforViewController: BaseViewController {
         if (self.isMovingFromParentViewController()) {
             UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
         }
+        txtSuburb.hidesWhenEmpty = true
+        txtSuburb.hidesWhenSelected = true
+        pastUrls = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as! [String]
+        handleTextFieldInterfaces()
         SetDefautDataPatient()
         
+    }
+    private func handleTextFieldInterfaces(){
+        txtSuburb.onTextChange = {[weak self] text in
+            if !text.isEmpty{
+                let scrollPoint: CGPoint  = CGPointMake(0.0, 200.0);
+                self!.scrollView.setContentOffset(scrollPoint, animated: true)
+                self!.txtSuburb.autoCompleteStrings = Context.searchAutocompleteEntriesWithSubstring(text,pastUrls: self!.pastUrls)
+            }
+        }
     }
     //set data patient
     func SetDefautDataPatient(){
@@ -106,7 +123,7 @@ class PatientInforViewController: BaseViewController {
         txtHomeTelephone.CheckTextFieldIsEmpty(txtHomeTelephone)
         
         if(txtSalutation.CheckTextFieldIsEmpty(txtSalutation) || txtFamilyName.CheckTextFieldIsEmpty(txtFamilyName) || txtDOB.CheckTextFieldIsEmpty(txtDOB) || txtAddress.CheckTextFieldIsEmpty(txtAddress) || txtOccupation.CheckTextFieldIsEmpty(txtOccupation) || txtHomeTelephone.CheckTextFieldIsEmpty(txtHomeTelephone)){
-            self.alertView.alertMessage("Waring", message: "Please enter all required fields!")
+            self.AlertShow("Waring", message: "Please enter all required fields!")
             return false
         }else{
             CheckSubmitData()
@@ -119,18 +136,25 @@ class PatientInforViewController: BaseViewController {
     func canRotate() -> Void {
         
     }
-    
+    func AlertShow(title:String,message:String){
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+        self.presentViewController(alert, animated: true){}
+    }
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.LandscapeRight
+    }
     @IBAction func ActionGenerailliness(sender: AnyObject) {
         if(CheckRequiredData()){
-        let Generailliness :GeneralIllnessViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("GeneralIllnessViewControllerID") as! GeneralIllnessViewController
-        self.presentViewController(Generailliness, animated: true, completion: nil)
+            let Generailliness :GeneralIllnessViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("GeneralIllnessViewControllerID") as! GeneralIllnessViewController
+            self.presentViewController(Generailliness, animated: true, completion: nil)
         }
     }
     
     @IBAction func ActionInjury(sender: AnyObject) {
         if(CheckRequiredData()){
-        let ActionInjury :InjuryViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("InjuryViewControllerID") as! InjuryViewController
-        self.presentViewController(ActionInjury, animated: true, completion: nil)
+            let ActionInjury :InjuryViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("InjuryViewControllerID") as! InjuryViewController
+            self.presentViewController(ActionInjury, animated: true, completion: nil)
         }
     }
     override func viewWillDisappear (animated: Bool) {
@@ -169,15 +193,19 @@ class PatientInforViewController: BaseViewController {
     }
     @IBAction func ChangePrivateHealth(sender: UISegmentedControl) {
         if(sender.selectedSegmentIndex == 0){
-            Context.RadioGetData("no", title: [["no","field_1_1_1"],["yes","field_1_1_2"]])
+            Context.RadioGetData("no", title: [["no","field_1_1_2"],["yes","field_1_1_1"]])
         }
         else{
-            Context.RadioGetData("yes", title: [["no","field_1_1_1"],["yes","field_1_1_2"]])
+            Context.RadioGetData("yes", title: [["no","field_1_1_2"],["yes","field_1_1_1"]])
         }
     }
     @IBAction func ActionHistoryCover(sender: AnyObject) {
-        if(sender.selectedSegmentIndex == 0){ Context.RadioGetData("no", title: [["no","field_1_3_1"],["yes","field_1_3_2"]])}
-        else{ Context.RadioGetData("yes", title: [["no","field_1_3_1"],["yes","field_1_3_2"]])}
+        if(sender.selectedSegmentIndex == 0){
+            Context.RadioGetData("no", title: [["no","field_1_3_2"],["yes","field_1_3_1"]])
+        }
+        else{
+            Context.RadioGetData("yes", title: [["no","field_1_3_2"],["yes","field_1_3_1"]])
+        }
     }
     @IBAction func ActionCardHolder(sender: AnyObject) {
         if(sender.selectedSegmentIndex == 0){
@@ -197,7 +225,7 @@ class PatientInforViewController: BaseViewController {
         let patients = PatientsCompany()
         let dataCompany = DataCompany()
         if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
-            patients.UID = staff.UID
+            patients.UID = staff.data[0].UID
         }
         requestAppointDataCompany.RequestDate = Context.NowDate()
         requestAppointDataCompany.Type = "RediSite"
@@ -270,11 +298,16 @@ class PatientInforViewController: BaseViewController {
             Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaffCheck)
             let data : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.DetailStaff) as! NSDictionary
             staff = Mapper().map(data)!
-            txtFamilyName.text = staff.FirstName
-            txtGivenName.text = staff.LastName
-            txtHomeTelephone.text = staff.HomePhoneNumber
-            txtDOB.text = staff.DOB
-            txtSuburb.text = staff.Suburb
+            txtFamilyName.text = staff.data[0].FirstName
+            txtGivenName.text = staff.data[0].LastName
+            txtHomeTelephone.text = staff.data[0].HomePhoneNumber
+            txtDOB.text = staff.data[0].DOB
+            txtSuburb.text = staff.data[0].Suburb
+            txtAddress.text = staff.data[0].Address1
+            txtSalutation.text = staff.data[0].Title
+            txtOccupation.text = staff.data[0].Occupation
+            txtPostCode.text = staff.data[0].Postcode
+            Context.RadioGetData(staff.data[0].Title, title: [["Mr","field_0_5_1"],["Mrs","field_0_5_2"],["Ms","field_0_5_3"],["Miss","field_0_6_1"],["Master","field_0_6_2"],["Dr","field_0_6_3"]])
         }
         if(Context.getDataDefasults(Define.keyNSDefaults.DetailSiteCheck) as! String == "YES"){
             Context.deleteDatDefaults(Define.keyNSDefaults.DetailSiteCheck)
@@ -346,39 +379,36 @@ extension PatientInforViewController {
         txtDOB.resignFirstResponder()
     }
     func DatepickerModeExpiry(){
+        
         txtExpiry.tintColor = UIColor.clearColor()
-        datePicker.datePickerMode = .Date
         let toolBar = UIToolbar()
         toolBar.barStyle = .Default
         toolBar.translucent = true
         toolBar.tintColor = UIColor.blackColor()
         toolBar.sizeToFit()
-        
+        var fullDate = txtExpiry.text!.characters.split{$0 == "/"}.map(String.init)
+        if(fullDate.count == 1){
+            if let month : Int = Int(fullDate[0])!{
+                if let year : Int =  Int(fullDate[1])! {
+                    monthYearPickerView.SetCurrentDate(month,year: year)
+                }
+            }
+        }
+        monthYearPickerView.onDateSelected = { (month: Int, year: Int) in}
         let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(PatientInforViewController.doneClickExpiry))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(PatientInforViewController.cancelClickExpiry))
         toolBar.setItems([cancelButton,spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
-        txtExpiry.inputView = datePicker
+        txtExpiry.inputView = monthYearPickerView
         txtExpiry.inputAccessoryView = toolBar
     }
-    //Done button in datepicker
     func doneClickExpiry() {
-        let dateFormatter = NSDateFormatter()
-        let SaveDatetime = NSDateFormatter()
-        SaveDatetime.dateFormat = "MM/yyyy"
-        dateFormatter.dateFormat = "MM/yyyy"
-        txtExpiry.text = dateFormatter.stringFromDate(datePicker.date)
+        self.txtExpiry.text = monthYearPickerView.done()
         txtExpiry.resignFirstResponder()
-        if(Context.compareDate(datePicker.date)){
-            txtExpiry.textFiledOnlyLine(txtExpiry)
-        }else{
-            txtExpiry.txtError(txtExpiry)
-        }
-        
     }
-    //Cancel button in datepicker
     func cancelClickExpiry() {
+        monthYearPickerView.cancel()
         txtExpiry.resignFirstResponder()
     }
     
@@ -431,7 +461,7 @@ extension PatientInforViewController : UITextViewDelegate {
         txtPostCode.delegate = self
         txtHomeTelephone.delegate = self
         DatepickerMode()
-        DatepickerModeExpiry()
+        
     }
     
     func textFieldDidEndEditing(textField: UITextField) {

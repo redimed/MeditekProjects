@@ -32,7 +32,7 @@ class RegisterViewController : BaseViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    //Giap: Validate email and change view
+    // Validate email and change view
     @IBAction func btnCheckPhoneAction(sender: DesignableButton)  {
         view.endEditing(true)
         //Check email if email is valid return message

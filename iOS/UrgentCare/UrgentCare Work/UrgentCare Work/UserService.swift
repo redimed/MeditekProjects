@@ -53,6 +53,9 @@ class UserService {
     class func postEformDetail(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.post(Constants.UserURL.URL_POST_EORM_SAVEINIT, model: model, completion: completion)
     }
+    class func postGetPatientDetail(model: BaseModel, completion : Response<AnyObject, NSError> -> Void) -> Request {
+        return RequestFactory.post(Constants.UserURL.URL_GET_PATIENT_DETAIL, model: model, completion: completion)
+    }
     //Get API
     class func getLogout(completion : Response<AnyObject, NSError> -> Void) -> Request {
         return RequestFactory.get(Constants.UserURL.URL_GET_LOGOUT, completion: completion)

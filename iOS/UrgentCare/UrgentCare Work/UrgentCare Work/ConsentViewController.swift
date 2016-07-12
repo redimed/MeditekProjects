@@ -130,7 +130,7 @@ class ConsentViewController: BaseViewController     {
             }
             
         }else{
-            self.alertView.alertMessage("Waring", message: "Plesae sign signature before click save")
+            self.AlertShow("Waring", message: "Plesae sign signature before click save")
         }
     }
     func AlertShow(title:String,message:String){
@@ -170,10 +170,10 @@ class ConsentViewController: BaseViewController     {
             if(uploadImage.fileUID != ""){
                 UpLoadAssetImage()
             }else{
-                self.alertView.alertMessage("Waring", message: "Please sign signature")
+                self.AlertShow("Waring", message: "Please sign signature")
             }
         }else{
-            self.alertView.alertMessage("Waring", message: "Please check all checkbox")
+            self.AlertShow("Waring", message: "Please check all checkbox")
         }
         
     }
@@ -202,14 +202,19 @@ class ConsentViewController: BaseViewController     {
                                     let loginNavi = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mainNavigation") as! UINavigationController
                                     loginNavi.viewControllers = [loginViewController]
                                     Define.appDelegate.window?.rootViewController = loginNavi
-                                    self!.alertView.alertMessage("Success", message: "Request Appointment Success!")
+                                    self!.AlertShow("Success", message: "Request Appointment Success!")
                                 })
                             }else{
                                 self?.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                     let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                     dispatch_after(time, dispatch_get_main_queue(), {
-                                        self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                        if(errorModel.ErrorType != "Policies.isAuthenticated.Error"){
+                                            self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                        }else{
+                                            NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
+                                            self!.AlertShow("Error", message: "Please login again !")
+                                        }
                                     })
                                 }
                             }
@@ -242,7 +247,12 @@ class ConsentViewController: BaseViewController     {
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
                                     let time = dispatch_time(DISPATCH_TIME_NOW, Int64(self!.delay))
                                     dispatch_after(time, dispatch_get_main_queue(), {
-                                        self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                        if(errorModel.ErrorType != "Policies.isAuthenticated.Error"){
+                                            self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                        }else{
+                                            NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
+                                            self!.AlertShow("Error", message: "Please login again !")
+                                        }
                                     })
                                 }
                             }

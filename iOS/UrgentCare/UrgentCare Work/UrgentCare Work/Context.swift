@@ -69,14 +69,20 @@ class Context {
         }else if(ErrorType == "GetListStaff.error"){
             message = "User is Not Admin"
         }else if(ErrorType == "Policies.isAuthenticated.Error" ){
-            NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
-            message = "Please login again !"
+            if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+                NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
+                message = "Please login again !"
+            }else{
+                message = "Please login again !"
+            }
         }else if (ErrorType == "Authentication Error - invalid username"){
             message = "Authentication Error - invalid username"
         }else if (ErrorType == "Telehealth.UpdatePinNumber.Error"){
             message = "Invalid Params"
         }else if (ErrorType == "Missing credentials"){
             message = "Missing credentials"
+        }else if(ErrorType == "connect ECONNREFUSED"){
+            message = "Connect ECONNREFUSED"
         }
         return message
     }
@@ -161,7 +167,7 @@ class Context {
             return true
         }
     }
-   class func validateRegex(value: String,regex:String) -> Bool {
+    class func validateRegex(value: String,regex:String) -> Bool {
         
         let REGEX = regex
         
@@ -235,5 +241,14 @@ class Context {
             }
         }
     }
-
+    class func searchAutocompleteEntriesWithSubstring(substring: String , pastUrls:[String])->[String]
+    {
+        let dataSource = pastUrls
+        var autocompleteUrls = [String]()
+        let searchString = substring.uppercaseString
+        let predicate = NSPredicate(format: "SELF beginswith[c] %@", searchString)
+        let searchDataSource = dataSource.filter { predicate.evaluateWithObject($0) }
+        autocompleteUrls = searchDataSource
+        return autocompleteUrls
+    }
 }

@@ -12,7 +12,7 @@ import ObjectMapper
 class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-     var alertViewList = UIAlertView()
+    var alertViewList = UIAlertView()
     var refreshControl: UIRefreshControl!
     var listStaff = ListStaff()
     var staff = Staff()
@@ -60,14 +60,13 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
                             }else{
                                 //self!.hideLoading()
                                 if let errorModel = Mapper<ErrorModel>().map(response.result.value){
-                                    self!.alertViewList.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                    self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
                                 }
                             }
                         }
                     }
                 } else {
-                    // self!.hideLoading()
-                    self?.showMessageNoNetwork()
+                    self!.AlertShow("Waring", message: "Could not connect to the server")
                 }
             }
         }
@@ -83,28 +82,61 @@ class ListStaffViewController:BaseViewController,UITableViewDelegate ,UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell;
-        cell.textLabel?.text = listStaff.data[indexPath.row].FirstName + listStaff.data[indexPath.row].LastName
+        cell.textLabel?.text =  "\(listStaff.data[indexPath.row].FirstName + " " + listStaff.data[indexPath.row].LastName)"
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        GetStaffDetail(listStaff.data[indexPath.row].UID)
         
-        if(CheckStaffInfor != true){
-            Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaff)
-            Context.setDataDefaults("YES", key: Define.keyNSDefaults.DetailStaffCheck)
-            let profile = Mapper().toJSON(listStaff.data[indexPath.row])
-            Context.setDataDefaults(profile, key: Define.keyNSDefaults.DetailStaff)
-            self.navigationController?.popViewControllerAnimated(true)
-        }else{
-            let staffViewController :StaffDetailViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("StaffDetailViewControllerID") as! StaffDetailViewController
-            staffViewController.staff = listStaff.data[indexPath.row]
-            self.navigationController?.pushViewController(staffViewController, animated: true)
+    }
+    func GetStaffDetail(patientUID:String){
+        let getDatailPatientData : GetDatailPatientData = GetDatailPatientData()
+        let getDatailPatient : GetDatailPatient = GetDatailPatient()
+        getDatailPatient.UID = patientUID
+        getDatailPatientData.data = getDatailPatient
+        
+        UserService.postGetPatientDetail(getDatailPatientData) { [weak self] (response) in
+            print(response.result.value)
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        if let dataPatientDetail = Mapper<DataPatientDetail>().map(response.result.value) {
+                            if(dataPatientDetail.message == "success"){
+                                if(self!.CheckStaffInfor != true){
+                                    Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaff)
+                                    Context.setDataDefaults("YES", key: Define.keyNSDefaults.DetailStaffCheck)
+                                    let profile = Mapper().toJSON(dataPatientDetail)
+                                    Context.setDataDefaults(profile, key: Define.keyNSDefaults.DetailStaff)
+                                    self!.navigationController?.popViewControllerAnimated(true)
+                                }else{
+                                    let staffViewController :StaffDetailViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("StaffDetailViewControllerID") as! StaffDetailViewController
+                                    staffViewController.staff = dataPatientDetail
+                                    self!.navigationController?.pushViewController(staffViewController, animated: true)
+                                }
+                                
+                            }else{
+                                //self!.hideLoading()
+                                if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+                                    self!.AlertShow("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self!.AlertShow("Waring", message: "Could not connect to the server")
+                }
+            }
         }
-        
     }
     @IBAction func actionBack(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    func AlertShow(title:String,message:String){
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+        self.presentViewController(alert, animated: true){}
     }
 }

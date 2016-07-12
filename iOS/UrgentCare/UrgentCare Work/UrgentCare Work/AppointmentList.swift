@@ -70,7 +70,7 @@ class AppointmentListResponseDetail: Mappable {
     dynamic var RequestDate = ""
     dynamic var SiteID = ""
     dynamic var Status = ""
-    dynamic var TelehealthAppointment : TelehealthsAppointment!
+    var patientAppointments = [PatientsAppointment]()
     dynamic var ToTime = ""
     dynamic var Type = ""
     dynamic var UID = ""
@@ -90,11 +90,12 @@ class AppointmentListResponseDetail: Mappable {
         RequestDate    <- map["RequestDate"]
         SiteID    <- map["SiteID"]
         Status    <- map["Status"]
-        TelehealthAppointment    <- map["TelehealthAppointment"]
+        patientAppointments    <- map["PatientAppointments"]
         ToTime    <- map["ToTime"]
         Type    <- map["Type"]
         UID    <- map["UID"]
         Doctors <- map["Doctors"]
+        Patients <- map["Patients"]
     }
     
 }

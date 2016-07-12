@@ -25,7 +25,6 @@ class ChangePinNumberViewController: BaseViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
@@ -49,7 +48,7 @@ class ChangePinNumberViewController: BaseViewController {
                 if let _ = self {
                     if response.result.isSuccess {
                         if let _ = response.result.value {
-                            if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                            if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                                 if dataTeleheathUserDetail.message == "success"  {
                                     self!.alertView.alertMessage("Success", message: "Update Pin Number Success!")
                                     self!.navigationController?.popViewControllerAnimated(true)

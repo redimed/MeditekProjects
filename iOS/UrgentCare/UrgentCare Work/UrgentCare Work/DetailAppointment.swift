@@ -22,7 +22,7 @@ class DetailAppointment: BaseModel {
     dynamic var SiteID = ""
     dynamic var ToTime = ""
     dynamic var OnsiteAppointments = ""
-    dynamic var Doctors = ""
+    var Doctors = [DoctorsAppointment]()
     dynamic var Status = ""
     dynamic var Type = ""
     dynamic var Code = ""

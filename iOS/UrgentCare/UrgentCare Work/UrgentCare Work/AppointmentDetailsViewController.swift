@@ -2,8 +2,8 @@
 //  AppointmentDetailsViewController.swift
 //  Telehealth
 //
-//  Created by Giap Vo Duc on 10/23/15.
-//  Copyright © 2015 Giap Vo Duc. All rights reserved.
+//  Created by Meditek on 5/26/16.
+//   Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit
@@ -44,13 +44,16 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
         setDataInit()
     }
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.navigationBar.topItem?.title = "Back"
+        self.navigationItem.title = "Appointment"
         self.ArrayImageUID.removeAll()
         self.collectionView.reloadData()
         getDetailsAppointment(appointmentListResponseDetail.UID)
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     func getDetailsAppointment(AppointmentUID:String){
         UserService.getDetailAppointment(AppointmentUID) { [weak self] (response) in
@@ -71,6 +74,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
                             self!.emailLabel.text = Patients.Email1
                             self!.dobLabel.text = Patients.DOB
                             self!.UIDApointment = detailAppointment.UID
+                            self!.doctorName.text = detailAppointment.Doctors.count != 0 ? "\(detailAppointment.Doctors[0].FirstName + " " + detailAppointment.Doctors[0].LastName)" : ""
                         }
                     }
                 } else {
@@ -97,7 +101,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
     @IBAction func actionTracking(sender: AnyObject) {
         let detailsViewController :TrackingRefferalViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("TrackingRefferalViewControllerID") as! TrackingRefferalViewController
         detailsViewController.appointmentDetails = appointmentListResponseDetail
-        self.navigationController?.pushViewController(detailsViewController, animated: true)
+        self.presentViewController(detailsViewController, animated: true, completion: {})
     }
     
     //Get all image in appointment details
@@ -108,7 +112,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
         }
     }
     
-    //Giap: Download image
+    // Download image
     func downloadImage(imageUID:String){
         UserService.getImage(imageUID) { [weak self] (response) in
             if let _ = self {
@@ -124,30 +128,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
             
         }
 }
-//
-//
-//    //send data view to view
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "ImageDetailSegue" {
-//            //get index path selected image in collection view
-//            if let indexPath = sender as? NSIndexPath {
-//                let destVC = segue.destinationViewController as! ImageDetailViewController
-//                destVC.imageDetail = ArrayImageUID[indexPath.row]
-//
-//            }
-//        } else if segue.identifier == "BodyUploadSegue" {
-//            let body = segue.destinationViewController as! BodyUploadViewController
-//            body.imageSelect = imageDetails
-//            body.appointmentID = appointmentDetails.UIDApointment
-//            body.delegate = self
-//        } else if segue.identifier == "TrackingSegue" {
-//            let Tracking = segue.destinationViewController as! TrackingRefferalViewController
-//            Tracking.appointmentDetails = appointmentDetails
-//        }
-//    }
 
-
-//Select image or capture imge
 @IBAction func SelectImageUpload(sender: AnyObject) {
     let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
     
@@ -210,13 +191,10 @@ func imagePickerController(picker: UIImagePickerController, didFinishPickingMedi
 {
     picker .dismissViewControllerAnimated(true, completion: nil)
     imageDetails = info[UIImagePickerControllerOriginalImage] as? UIImage
-    //Check capture and save image to Gallery
     if(picker.sourceType == UIImagePickerControllerSourceType.Camera)
     {
-        // Access the uncropped image from info dictionary
-        let imageToSave: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage //same but with different way
+        let imageToSave: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
-        //  alertView.alertMessage("Saved!", message:MessageString.savedPictureMessage)
         
     }
     let bodyUploadViewController :BodyUploadViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("BodyUploadViewControllerID") as! BodyUploadViewController
@@ -231,8 +209,6 @@ func imagePickerControllerDidCancel(picker: UIImagePickerController)
     self.dismissViewControllerAnimated(true, completion: nil)
 }
 
-
-//Add new item to collection view
 func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage) {
     
     ArrayImageUID.append(sender)
@@ -243,7 +219,6 @@ func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage)
     }
     
 }
-//add an image to collection view
 func insertDataToCollectionView(){
     let newRowIndex = ArrayImageUID.count
     let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
@@ -260,7 +235,6 @@ func insertDataToCollectionView(){
 }
 
 extension AppointmentDetailsViewController : UICollectionViewDataSource, UICollectionViewDelegate {
-    //Giap: Collection View
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }

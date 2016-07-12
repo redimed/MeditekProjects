@@ -1,9 +1,9 @@
 //
-//  PaintView.swift
-//  PaintingTest
+//  SignatureUIView.swift
+//  UrgentCare Work
 //
-//  Created by Rodrigo Pélissier on 11-04-15.
-//  Copyright (c) 2015 Rodrigo Pélissier. All rights reserved.
+//  Created by Meditek on 6/16/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit
@@ -31,8 +31,6 @@ class SignatureUIView: UIView {
         strokeColor?.setStroke()
         path.lineWidth = 2
         path.stroke()
-        
-        //drawImage?.drawInRect(bounds)
         
     }
     

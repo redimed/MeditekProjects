@@ -2,8 +2,8 @@
 //  BodyUploadViewController.swift
 //  Telehealth
 //
-//  Created by Giap Vo Duc on 10/23/15.
-//  Copyright © 2015 Giap Vo Duc. All rights reserved.
+//  Created by Meditek on 5/26/16.
+//   Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit
@@ -21,9 +21,6 @@ class BodyUploadViewController: BaseViewController {
     var appointmentID = String()
     var delegate : reloadCollectionDelegate?
     
-   // let appointmentService = AppointmentService()
-   // let alertView = UIAlertView()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         image.image = imageSelect
@@ -37,16 +34,13 @@ class BodyUploadViewController: BaseViewController {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    //click button upload image
     @IBAction func UploadImageButton(sender: AnyObject) {
         showloading("Please wait...")
         uploadImage(image.image!, userUID: Context.getDataDefasults(Define.keyNSDefaults.UserUID) as! String)
     }
     
-    //Upload image to user
     func uploadImage(image:UIImage,userUID:String){
         let upload:UploadImage = UploadImage()
         upload.userUID = userUID
@@ -112,8 +106,6 @@ class BodyUploadViewController: BaseViewController {
         
     }
     
-    
-    //set portrait
     override func shouldAutorotate() -> Bool {
         if (UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft ||
             UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight ||

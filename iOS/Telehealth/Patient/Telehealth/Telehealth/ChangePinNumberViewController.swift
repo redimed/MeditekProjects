@@ -46,16 +46,16 @@ class ChangePinNumberViewController: BaseViewController {
                 if let _ = self {
                     if response.result.isSuccess {
                         if let _ = response.result.value {
-                            if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
-                                if dataTeleheathUserDetail.message == "success"  {
-                                    self!.alertView.alertMessage("Success", message: "Update Pin Number Success!")
-                                    self!.navigationController?.popViewControllerAnimated(true)
-                                }else{
-                                    if let errorModel = Mapper<ErrorModel>().map(response.result.value){
-                                        self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
-                                    }
-                                }
-                            }
+//                            if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+//                                if dataTeleheathUserDetail.message == "success"  {
+//                                    self!.alertView.alertMessage("Success", message: "Update Pin Number Success!")
+//                                    self!.navigationController?.popViewControllerAnimated(true)
+//                                }else{
+//                                    if let errorModel = Mapper<ErrorModel>().map(response.result.value){
+//                                        self!.alertView.alertMessage("Error", message:Context.getErrorMessage(errorModel.ErrorType))
+//                                    }
+//                                }
+//                            }
                         }
                     } else {
                         self?.showMessageNoNetwork()

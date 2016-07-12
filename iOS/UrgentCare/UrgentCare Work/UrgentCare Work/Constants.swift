@@ -11,22 +11,23 @@ import UIKit
 
 struct Constants {
     
-    //            struct Path {
-    //                static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
-    //                static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
-    //                static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
-    //                static let SERVICE_URL_3015                              = "https://testapp.redimed.com.au:3015"
-    //                static let SandboxOption                                 = false
-    //            }
-    
     struct Path {
-        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
-        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
-        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
-        static let SERVICE_URL_3015                              = "https://meditek.redimed.com.au:3015"
-        static let SandboxOption                                 = true
-        static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
+        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
+        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
+        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+        static let SERVICE_URL_3015                              = "https://testapp.redimed.com.au:3015"
+        static let SandboxOption                                 = false
+        static let PatientUID                                    = "2fdad635-8481-4e1a-9c67-a668703b5791"
     }
+    
+    //        struct Path {
+    //            static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
+    //            static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
+    //            static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
+    //            static let SERVICE_URL_3015                              = "https://meditek.redimed.com.au:3015"
+    //            static let SandboxOption                                 = true
+    //            static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
+    //        }
     //    struct Path {
     //        static let SERVICE_URL_3006                              = "http://192.168.1.116:3006"
     //        static let SERVICE_URL_3005                              = "http://192.168.1.116:3005"
@@ -61,6 +62,7 @@ struct Constants {
         static let URL_POST_REQUEST_APPOINTMENT                  = Path.SERVICE_URL_3005 + "/api/appointment-wa-request/patient-new"
         static let URL_GET_IMAGE                                 = Path.SERVICE_URL_3005 + "/api/downloadFile/400"
         static let URL_UPLOAD_IMAGE                              = Path.SERVICE_URL_3005 + "/api/uploadFile"
+        static let URL_GET_PATIENT_DETAIL                        = Path.SERVICE_URL_3005 + "/api/patient/detail-patient"
         
         static let URL_POST_REQUEST_VERIFY                       = Path.SERVICE_URL_3009 + "/api/telehealth/user/requestActivationCode"
         static let URL_POST_CHECKVERIFY_CODE                     = Path.SERVICE_URL_3009 + "/api/telehealth/user/verifyActivationCode"
@@ -74,7 +76,7 @@ struct Constants {
         static let URL_GET_DETAILS_APPOINMENT                    = Path.SERVICE_URL_3009 + "/api/telehealth/user/WAAppointmentDetails"
         static let URL_POST_UPDATEFILE_TO_APPOINTMENT            = Path.SERVICE_URL_3009 + "/api/telehealth/appointment/updateFile"
         
-        static let URL_POST_EORM_SAVEINIT                          = Path.SERVICE_URL_3015 + "/eform/saveWithData"
+        static let URL_POST_EORM_SAVEINIT                        = Path.SERVICE_URL_3015 + "/eform/saveWithData"
         
     }
     

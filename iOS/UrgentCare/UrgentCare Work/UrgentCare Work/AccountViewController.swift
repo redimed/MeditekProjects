@@ -23,12 +23,17 @@ class AccountViewController: BaseViewController {
     @IBOutlet weak var txtDOB: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtAddress: UITextField!
-    @IBOutlet weak var txtSuburb: UITextField!
+    //@IBOutlet weak var txtSuburb: UITextField!
     @IBOutlet weak var txtPostCode: UITextField!
     @IBOutlet weak var txtCountry: UITextField!
+    @IBOutlet weak var txtSuburb: AutoCompleteTextField!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var datePicker = UIDatePicker()
     var dateofbirth: String = ""
+    
+    var autocompleteUrls = [String]()
+    var pastUrls : [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +41,22 @@ class AccountViewController: BaseViewController {
         loadDataUserAccount()
         GetPatientInfomation()
         DatepickerMode()
+        pastUrls = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as! [String]
+        //
+        txtSuburb.hidesWhenEmpty = true
+        txtSuburb.hidesWhenSelected = true
+        
+        handleTextFieldInterfaces()
+        //
+    }
+    private func handleTextFieldInterfaces(){
+        txtSuburb.onTextChange = {[weak self] text in
+            if !text.isEmpty{
+                let scrollPoint: CGPoint  = CGPointMake(0.0, 150.0);
+                self!.scrollView.setContentOffset(scrollPoint, animated: true)
+                self!.txtSuburb.autoCompleteStrings = Context.searchAutocompleteEntriesWithSubstring(text,pastUrls: Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as! [String])
+            }
+        }
     }
     func DatepickerMode(){
         txtDOB.tintColor = UIColor.clearColor()
@@ -46,18 +67,15 @@ class AccountViewController: BaseViewController {
         toolBar.tintColor = UIColor.blackColor()
         toolBar.sizeToFit()
         
-        // Adds the buttons
         let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(SubmitInjuryViewController.doneClick))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(SubmitInjuryViewController.cancelClick))
         toolBar.setItems([cancelButton,spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
-        // Adds the toolbar to the view
         txtDOB.inputView = datePicker
         txtDOB.inputAccessoryView = toolBar
     }
-    //Done button in datepicker
     func doneClick() {
         let dateFormatter = NSDateFormatter()
         let SaveDatetime = NSDateFormatter()
@@ -67,7 +85,7 @@ class AccountViewController: BaseViewController {
         txtDOB.text = dateFormatter.stringFromDate(datePicker.date)
         txtDOB.resignFirstResponder()
     }
-    //Cancel button in datepicker
+    
     func cancelClick() {
         txtDOB.resignFirstResponder()
     }
@@ -112,7 +130,7 @@ class AccountViewController: BaseViewController {
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                        if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                             if dataTeleheathUserDetail.message == "Success"  {
                                 let teleheathUserDetail = Mapper().toJSON(dataTeleheathUserDetail.data[0])
                                 Context.setDataDefaults(teleheathUserDetail, key: Define.keyNSDefaults.TeleheathUserDetail)
@@ -168,7 +186,7 @@ class AccountViewController: BaseViewController {
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                        if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                             if dataTeleheathUserDetail.message == "success"  {
                                 self!.alertView.alertMessage("Success", message: "Update Patient Information Success!")
                                 

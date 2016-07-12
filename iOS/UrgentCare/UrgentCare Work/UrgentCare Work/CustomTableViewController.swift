@@ -1,9 +1,9 @@
 //
-//  ListReasonsViewController.swift
-//  VGODriverApp
+//  CustomTableViewController.swift
+//  UrgentCare Work
 //
-//  Created by Meditek on 4/16/16.
-//  Copyright © 2016 Vu Dinh Trung. All rights reserved.
+//  Created by Meditek on 6/16/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit

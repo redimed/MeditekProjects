@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import RealmSwift
 
-class DataTeleheathUserDetail: BaseModel {
+class DataPatientDetail: BaseModel {
     var data = [PatientInformation]()
     dynamic var message = ""
     dynamic var status = 0
@@ -144,6 +144,31 @@ class PostUpdatePatientInfo: BaseModel {
     
     override func mapping(map: Map) {
         data    <- map["data"]
+    }
+    
+}
+
+class GetDatailPatientData: BaseModel {
+    var data : GetDatailPatient!
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    override func mapping(map: Map) {
+        data    <- map["data"]
+    }
+    
+}
+class GetDatailPatient: BaseModel {
+    var UID = ""
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    override func mapping(map: Map) {
+        UID    <- map["UID"]
     }
     
 }

@@ -34,20 +34,20 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
             self.socketService.openSocket(Context.getDataDefasults(Define.keyNSDefaults.TelehealthUserUID) as! String,complete: {
                 complete in
             })
-
+            
         }
         
     }
     func GetPatientInfomation(){
         let data = Context.getDataDefasults(Define.keyNSDefaults.userInfor)
         let respone = Mapper<LoginResponse>().map(data)
-
+        
         UserService.getPatientInfomation((respone?.user!.telehealthUser.UID)!) { [weak self] (response) in
             print(response)
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                        if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                             if dataTeleheathUserDetail.message == "Success"  {
                                 let teleheathUserDetail = Mapper().toJSON(dataTeleheathUserDetail.data[0])
                                 Context.setDataDefaults(teleheathUserDetail, key: Define.keyNSDefaults.TeleheathUserDetail)
@@ -64,7 +64,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                 
             }
         }
-
+        
     }
     override func viewDidAppear(animated: Bool) {
         if let _ = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as? String {
@@ -72,15 +72,15 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
         } else {
             pastUrls = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as! [String]
         }
-        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
-            buttonLogin.hidden = true
-        }
         pagingImage()
         resetTimer()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            buttonLogin.hidden = true
+        }
     }
     func resetTimer() {
         timer?.invalidate()
@@ -271,9 +271,22 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
         }
         
     }
+    @IBAction func GoRedisite(sender: AnyObject) {
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
+                let redisite :PatientInforViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("PatientInforViewControllerID") as! PatientInforViewController
+                self.navigationController?.pushViewController(redisite, animated: true)
+            }else{
+                 self.alertView.alertMessage("Warning", message: "Please login account company before uses redisite !")
+            }
+            
+        }else{
+            self.alertView.alertMessage("Warning", message: "Please login account company before uses redisite !")
+        }
+    }
     
     @IBAction func CallUsButton(sender: AnyObject) {
-         UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
     }
     
     @IBAction func acctionSetting(sender: AnyObject) {
@@ -295,7 +308,7 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                         let a = jsonObj["suburb"][i]["name"].string
                         pastUrls.append(a!)
                     }
-                Context.setDataDefaults(pastUrls, key: Define.keyNSDefaults.pastUrls)
+                    Context.setDataDefaults(pastUrls, key: Define.keyNSDefaults.pastUrls)
                 } else {
                     print("could not get json from file, make sure that file contains valid json.")
                 }

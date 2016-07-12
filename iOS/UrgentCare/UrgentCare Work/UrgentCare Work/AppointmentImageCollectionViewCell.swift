@@ -2,8 +2,8 @@
 //  AppointmentImageCollectionViewCell.swift
 //  Telehealth
 //
-//  Created by Giap Vo Duc on 10/23/15.
-//  Copyright © 2015 Giap Vo Duc. All rights reserved.
+//  Created by Meditek on 5/26/16.
+//   Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit

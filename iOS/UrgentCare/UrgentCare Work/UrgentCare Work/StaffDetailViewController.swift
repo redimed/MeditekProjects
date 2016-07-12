@@ -9,7 +9,7 @@
 import UIKit
 
 class StaffDetailViewController: BaseViewController {
-    var staff = Staff()
+    var staff = DataPatientDetail()
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtMiddleName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
@@ -23,15 +23,15 @@ class StaffDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        txtFirstName.text = staff.FirstName
-        txtMiddleName.text = staff.MiddleName
-        txtLastName.text = staff.LastName
-        txtHomePhone.text = staff.HomePhoneNumber
-        txtDOB.text = staff.DOB
-        txtEmail.text = staff.Email1
-        txtAddress.text = staff.Address1
-        txtSuburb.text = staff.Suburb
-        txtPostCode.text = staff.Postcode
+        txtFirstName.text = staff.data[0].FirstName
+        txtMiddleName.text = staff.data[0].MiddleName
+        txtLastName.text = staff.data[0].LastName
+        txtHomePhone.text = staff.data[0].HomePhoneNumber
+        txtDOB.text = staff.data[0].DOB
+        txtEmail.text = staff.data[0].Email1
+        txtAddress.text = staff.data[0].Address1
+        txtSuburb.text = staff.data[0].Suburb
+        txtPostCode.text = staff.data[0].Postcode
     }
 
     override func didReceiveMemoryWarning() {

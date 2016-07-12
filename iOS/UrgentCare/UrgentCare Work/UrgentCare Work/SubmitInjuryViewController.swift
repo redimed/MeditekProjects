@@ -58,7 +58,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
     var exerciseRehab:String = "N"
     let userInfo = LoginResponse()
     var companyInfo = DetailCompanyResponse()
-    var staff = Staff()
+    var staff = DataPatientDetail()
     var detailCompanyData = DetailCompanyData()
     var pickOption = ["","Telehealth", "Onsite"]
     var site = Site()
@@ -172,12 +172,12 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             Context.deleteDatDefaults(Define.keyNSDefaults.DetailStaffCheck)
             let data : NSDictionary = Context.getDataDefasults(Define.keyNSDefaults.DetailStaff) as! NSDictionary
             staff = Mapper().map(data)!
-            firstNameTextField.text = staff.FirstName
-            lastNameTextField.text = staff.LastName
-            contactPhoneTextField.text = staff.HomePhoneNumber
-            emailTextField.text = staff.Email1
-            birthDayTextField.text = staff.DOB
-            suburbTextField.text = staff.Suburb
+            firstNameTextField.text = staff.data[0].FirstName
+            lastNameTextField.text = staff.data[0].LastName
+            contactPhoneTextField.text = staff.data[0].HomePhoneNumber
+            emailTextField.text = staff.data[0].Email1
+            birthDayTextField.text = staff.data[0].DOB
+            suburbTextField.text = staff.data[0].Suburb
         }
         if(Context.getDataDefasults(Define.keyNSDefaults.DetailSiteCheck) as! String == "YES"){
             Context.deleteDatDefaults(Define.keyNSDefaults.DetailSiteCheck)
@@ -347,7 +347,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
         let patients = PatientsCompany()
         let dataCompany = DataCompany()
         if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
-            patients.UID = staff.UID
+            patients.UID = staff.data[0].UID
         }else{
             patients.UID = Context.getDataDefasults(Define.keyNSDefaults.PatientUID) as! String
         }
@@ -631,7 +631,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
-                        if let dataTeleheathUserDetail = Mapper<DataTeleheathUserDetail>().map(response.result.value) {
+                        if let dataTeleheathUserDetail = Mapper<DataPatientDetail>().map(response.result.value) {
                             if dataTeleheathUserDetail.message == "Success"  {
                                 let teleheathUserDetail = Mapper().toJSON(dataTeleheathUserDetail.data[0])
                                 Context.setDataDefaults(teleheathUserDetail, key: Define.keyNSDefaults.TeleheathUserDetail)

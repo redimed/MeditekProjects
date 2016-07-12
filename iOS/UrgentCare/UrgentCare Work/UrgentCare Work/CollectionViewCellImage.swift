@@ -1,11 +1,10 @@
 //
-//  CollectionViewCell.swift
-//  PinterestLayout
+//  CollectionViewCellImage.swift
+//  UrgentCare Work
 //
-//  Created by Shrikar Archak on 12/21/14.
-//  Copyright (c) 2014 Shrikar Archak. All rights reserved.
+//  Created by Meditek on 6/16/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
-
 import UIKit
 
 class CollectionViewCellImage: UICollectionViewCell {

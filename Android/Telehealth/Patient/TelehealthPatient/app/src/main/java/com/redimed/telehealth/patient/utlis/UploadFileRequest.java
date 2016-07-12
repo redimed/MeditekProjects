@@ -42,7 +42,7 @@ public class UploadFileRequest extends AsyncTask<String, String, FileUpload> {
                     .type(MultipartBuilder.FORM)
                     .addFormDataPart("userUID", uidTelehealth.getString("userUID", ""))
                     .addFormDataPart("fileType", "MedicalImage")
-                    .addFormDataPart("uploadFile", "ImageRequest", RequestBody.create(MEDIA_TYPE, sourceFile)).build();
+                    .addFormDataPart("uploadFile", pathImage, RequestBody.create(MEDIA_TYPE, sourceFile)).build();
 
             Request request = new Request.Builder()
                     .url(Config.apiURLCore + "/api/uploadFile")

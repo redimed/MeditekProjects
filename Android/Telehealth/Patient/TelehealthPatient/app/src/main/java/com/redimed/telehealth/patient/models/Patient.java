@@ -40,7 +40,7 @@ public class Patient {
     @SerializedName("State")
     private String State;
 
-    @SerializedName("Email")
+    @SerializedName("Email1")
     private String Email;
 
     @SerializedName("PhoneNumber")

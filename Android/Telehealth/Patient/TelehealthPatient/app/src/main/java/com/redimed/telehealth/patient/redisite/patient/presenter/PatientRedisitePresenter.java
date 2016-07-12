@@ -66,17 +66,14 @@ public class PatientRedisitePresenter implements IPatientRedisitePresenter {
     }
 
     @Override
-    public void displayDatePickerDialog(final View v) {
+    public void displayDatePickerDialog() {
         Calendar birthdayCalendar = Calendar.getInstance();
         DatePickerDialog birthdayPickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newCalendar = Calendar.getInstance();
                 newCalendar.set(year, monthOfYear, dayOfMonth);
-                if (v.getId() == R.id.txtDOB)
-                    iPatientRedisiteView.onLoadDOB(dateFormat.format(newCalendar.getTime()));
-                else
-                    iPatientRedisiteView.onLoadExpiry(dateFormat.format(newCalendar.getTime()));
+                iPatientRedisiteView.onLoadDOB(dateFormat.format(newCalendar.getTime()));
             }
         }, birthdayCalendar.get(Calendar.YEAR), birthdayCalendar.get(Calendar.MONTH), birthdayCalendar.get(Calendar.DATE));
         birthdayPickerDialog.show();
@@ -155,20 +152,20 @@ public class PatientRedisitePresenter implements IPatientRedisitePresenter {
         for (View child : allViewsWithinMyTopView) {
             if (child instanceof EditText) {
                 EditText e = (EditText) child;
-                if (e.getText().length() == 0) {
-                    if (e.getId() == R.id.txtFamily || e.getId() == R.id.txtGiven || e.getId() == R.id.txtDOB || e.getId() == R.id.txtOccupation ||
-                            e.getId() == R.id.txtAddress || e.getId() == R.id.txtSuburb || e.getId() == R.id.txtPostCode ||
-                            e.getId() == R.id.txtHome || e.getId() == R.id.txtMobile || e.getId() == R.id.txtWork) {
-                        iPatientRedisiteView.onLoadErrorField(e);
-                        validated = false;
-                        break;
-                    }
-                }
-                if (salutation.equalsIgnoreCase("NONE")) {
-                    iPatientRedisiteView.onLoadErrorSpinner();
-                    validated = false;
-                    break;
-                }
+//                if (e.getText().length() == 0) {
+//                    if (e.getId() == R.id.txtFamily || e.getId() == R.id.txtGiven || e.getId() == R.id.txtDOB || e.getId() == R.id.txtOccupation ||
+//                            e.getId() == R.id.txtAddress || e.getId() == R.id.txtSuburb || e.getId() == R.id.txtPostCode ||
+//                            e.getId() == R.id.txtHome || e.getId() == R.id.txtMobile || e.getId() == R.id.txtWork) {
+//                        iPatientRedisiteView.onLoadErrorField(e);
+//                        validated = false;
+//                        break;
+//                    }
+//                }
+//                if (salutation.equalsIgnoreCase("NONE")) {
+//                    iPatientRedisiteView.onLoadErrorSpinner();
+//                    validated = false;
+//                    break;
+//                }
                 switch (e.getId()) { //Get Id element
                     case R.id.txtFamily:
                         eFormDatas.add(new EFormData(e.getText().toString(), "p_firstname", "field_0_7_1", "eform_input_text", "row_0_7", 0));

@@ -25,6 +25,7 @@ import com.redimed.telehealth.patient.redisite.consent.presenter.IConsentPresent
 import com.redimed.telehealth.patient.redisite.consent.view.IConsentView;
 import com.redimed.telehealth.patient.views.SignaturePad;
 import com.redimed.telehealth.patient.widget.DialogAlert;
+import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -121,7 +122,7 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblSave:
-                iConsentPresenter.saveSignature(signaturePad);
+                iConsentPresenter.uploadSignature(signaturePad);
                 break;
             case R.id.lblClear:
                 signaturePad.clear();
@@ -138,11 +139,25 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
     }
 
     @Override
-    public void onLoadImgSignature(Bitmap bitmap, String path) {
+    public void onLoadError(String msg) {
+        if (msg.equalsIgnoreCase("Network Error")) {
+            new DialogConnection(context).show();
+        } else if (msg.equalsIgnoreCase("TokenExpiredError")) {
+            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(getResources().getString(R.string.token_expired))
+                    .show();
+        } else {
+            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                    .setContentText(msg)
+                    .show();
+        }
+    }
+
+    @Override
+    public void onLoadImgSignature(Bitmap bitmap) {
         if (bitmap != null) {
             imgSignature.setImageBitmap(bitmap);
             vfContainer.setDisplayedChild(vfContainer.indexOfChild(layoutSubmit));
-            iConsentPresenter.uploadSignature(path);
         }
     }
 }

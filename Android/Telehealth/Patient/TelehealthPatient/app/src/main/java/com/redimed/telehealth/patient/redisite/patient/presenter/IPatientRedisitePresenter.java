@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public interface IPatientRedisitePresenter {
 
-    void displayDatePickerDialog(View v);
+    void displayDatePickerDialog();
 
     void hideKeyboardFragment(View view);
 

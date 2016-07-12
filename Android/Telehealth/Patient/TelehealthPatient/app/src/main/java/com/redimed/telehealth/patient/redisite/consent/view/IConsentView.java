@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
  */
 public interface IConsentView {
 
-    void onLoadImgSignature(Bitmap bitmap, String path);
+    void onLoadError(String msg);
+
+    void onLoadImgSignature(Bitmap bitmap);
 
 }

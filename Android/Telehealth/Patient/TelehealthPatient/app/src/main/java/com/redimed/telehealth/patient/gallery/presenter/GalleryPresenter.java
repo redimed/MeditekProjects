@@ -27,17 +27,17 @@ public class GalleryPresenter implements IGalleryPresenter {
     private Cursor imageCursor;
     private IGalleryView iGalleryView;
     private AppCompatActivity activity;
+    private ArrayList<CustomGallery> galleryList;
 
     public GalleryPresenter(Context context, IGalleryView iGalleryView, AppCompatActivity appCompatActivity) {
         this.context = context;
         this.iGalleryView = iGalleryView;
         this.activity = appCompatActivity;
-
+        this.galleryList = new ArrayList<>();
     }
 
     @Override
     public ArrayList<CustomGallery> getGalleryPhotos() {
-        ArrayList<CustomGallery> galleryList = new ArrayList<CustomGallery>();
         try {
             final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID};
             final String orderBy = MediaStore.Images.Media._ID;
@@ -55,6 +55,7 @@ public class GalleryPresenter implements IGalleryPresenter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            assert imageCursor != null;
             imageCursor.close();
         }
 

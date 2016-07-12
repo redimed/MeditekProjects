@@ -886,7 +886,9 @@ module.exports = {
                     sendSMS(phoneNumber, "Your REDiMED account pin number is " + data.PinNumber).then(function(mess) {
                         return res.ok(mess);
                     }, function(error) {
-                        return res.serverError(ErrorWrap(error));
+                        var err = new Error("Telehealth.Activation.Trello.Error");
+                        err.pushError(error);
+                        return res.serverError(ErrorWrap(err));
                     });
                 }
                 res.ok(data);

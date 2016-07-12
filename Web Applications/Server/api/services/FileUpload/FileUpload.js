@@ -179,6 +179,7 @@ module.exports = {
                         if (data) {
                             var fileUID = UUIDService.Create();
                             var fileName = decodeURIComponent(uploadedFiles[0].filename);
+                            console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",fileName);
                             var fileExt = uploadedFiles[0].filename.split('.')[uploadedFiles[0].filename.split('.').length - 1].toLowerCase();
                             var fileType = params.fileType;
                             if (!_.contains(constImgExt, fileExt)) fileType = constFileType.document;
@@ -233,6 +234,7 @@ module.exports = {
                                             transaction: t
                                         }).then(function(file) {
                                             fileInfo = file;
+                                            console.log("Aaaaaaaaaaaaaaaaaaaaaaaaaaaa",fileType);
                                             if (fileType == constFileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
                                             else if (fileType == constFileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
                                         })

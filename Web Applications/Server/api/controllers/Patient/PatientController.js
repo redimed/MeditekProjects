@@ -36,10 +36,11 @@ module.exports = {
                         })
                         .then(function(got_site) {
                             if(_.isEmpty(got_site)) {
-                                patient.transaction.rollback();
-                                var err = new Error('CreatePatient.error');
-                                err.pushError('Site.notFound');
-                                return res.serverError(ErrorWrap(err));
+                                // patient.transaction.rollback();
+                                // var err = new Error('CreatePatient.error');
+                                // err.pushError('Site.notFound');
+                                // return res.serverError(ErrorWrap(err));
+                                return got_site;
                             }
                             else {
                                 return RelCompanyPatient.create({
@@ -53,13 +54,13 @@ module.exports = {
                             res.serverError(ErrorWrap(err));
                         })
                         .then(function(created_relcompanypatient) {
-                            if(_.isEmpty(created_relcompanypatient)) {
-                                patient.transaction.rollback();
-                                var err = new Error('CreatePatient.error');
-                                err.pushError('AddCompany.queryerror');
-                                return res.serverError(ErrorWrap(err));
-                            }
-                            else {
+                            // if(_.isEmpty(created_relcompanypatient)) {
+                            //     patient.transaction.rollback();
+                            //     var err = new Error('CreatePatient.error');
+                            //     err.pushError('AddCompany.queryerror');
+                            //     return res.serverError(ErrorWrap(err));
+                            // }
+                            // else {
                                 patient.transaction.commit();
                                 var info = {
                                     UID: patient.UID,
@@ -75,7 +76,7 @@ module.exports = {
                                     message: "success",
                                     data: info
                                 });
-                            }
+                            // }
                         },function(err) {
                             patient.transaction.rollback();
                             res.serverError(ErrorWrap(err));
@@ -89,10 +90,11 @@ module.exports = {
                         })
                         .then(function(got_site) {
                             if(_.isEmpty(got_site)) {
-                                patient.transaction.rollback();
-                                var err = new Error('CreatePatient.error');
-                                err.pushError('Site.notFound');
-                                return res.serverError(ErrorWrap(err));
+                                // patient.transaction.rollback();
+                                // var err = new Error('CreatePatient.error');
+                                // err.pushError('Site.notFound');
+                                // return res.serverError(ErrorWrap(err));
+                                return got_site;
                             }
                             else {
                                 return RelCompanyPatient.create({
@@ -106,13 +108,13 @@ module.exports = {
                             res.serverError(ErrorWrap(err));
                         })
                         .then(function(created_relcompanypatient) {
-                            if(_.isEmpty(created_relcompanypatient)) {
-                                patient.transaction.rollback();
-                                var err = new Error('CreatePatient.error');
-                                err.pushError('AddCompany.queryerror');
-                                return res.serverError(ErrorWrap(err));
-                            }
-                            else {
+                            // if(_.isEmpty(created_relcompanypatient)) {
+                            //     patient.transaction.rollback();
+                            //     var err = new Error('CreatePatient.error');
+                            //     err.pushError('AddCompany.queryerror');
+                            //     return res.serverError(ErrorWrap(err));
+                            // }
+                            // else {
                                 patient.transaction.commit();
                                 var info = {
                                     UID: patient.UID,
@@ -128,7 +130,7 @@ module.exports = {
                                     message: "success",
                                     data: info
                                 });
-                            }
+                            // }
                         },function(err) {
                             patient.transaction.rollback();
                             res.serverError(ErrorWrap(err));

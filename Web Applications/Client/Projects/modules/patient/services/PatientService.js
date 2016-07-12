@@ -462,5 +462,10 @@ PatientService.validate = function(info) {
 		return sendEmailWhenLinked.post({data:data});
 	};
 
+	PatientService.updateEFormAppointment = function(data) {
+		var updateEFormAppointment = api.all('patient/update-eform-appt');
+		return updateEFormAppointment.post({data:data});
+	};
+
 	return PatientService;
 })

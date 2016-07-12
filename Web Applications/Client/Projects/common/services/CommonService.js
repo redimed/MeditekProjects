@@ -426,6 +426,12 @@ angular.module("app.common.CommonService", [])
             return result.get();
         };
 
+        commonService.uploadEFormFile = function(data)
+        {
+            var result = api.all("eform/create-form-by-upload");
+            return result.post({data:data});
+        }
+
 
         return commonService;
     })

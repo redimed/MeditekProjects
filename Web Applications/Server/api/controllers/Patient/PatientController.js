@@ -80,7 +80,7 @@ module.exports = {
                             patient.transaction.rollback();
                             res.serverError(ErrorWrap(err));
                         });
-                    } else if(data.SiteIDRefer) {
+                    } else if(data.SiteIDRefer && data.SiteIDRefer != 0 && data.SiteIDRefer != "0") {
                         return CompanySite.findOne({
                             where:{
                                 SiteIDRefer : data.SiteIDRefer
@@ -806,6 +806,16 @@ module.exports = {
     UpdateSignature: function(req, res) {
         var data = req.body.data;
         Services.Patient.UpdateSignature(data)
+        .then(function(result) {
+            res.ok({message:'success',data:result});
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
+
+    UpdateEFormAppointment: function(req, res) {
+        var data = req.body.data;
+        Services.Patient.UpdateEFormAppointment(data)
         .then(function(result) {
             res.ok({message:'success',data:result});
         }, function(err) {

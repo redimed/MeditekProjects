@@ -2331,15 +2331,121 @@ module.exports = {
         });
 
         return p;
+    },
+
+    UpdateEFormAppointment: function(data) {
+        if(!data) {
+            var err = new Error('UpdateEFormAppointment.error');
+            err.pushError('notFoundParams');
+            throw err;
+        }
+        if(!data.PatientUID) {
+            var err = new Error('UpdateEFormAppointment.error');
+            err.pushError('notFoundParams.PatientUID');
+            throw err;
+        }
+        if(!data.ApptUID) {
+            var err = new Error('UpdateEFormAppointment.error');
+            err.pushError('notFoundParams.ApptUID');
+            throw err;
+        }
+        var p = new Promise(function(a, b) {
+            var patient, appointment;
+            sequelize.transaction()
+            .then(function(t) {
+
+                Patient.findOne({
+                    attributes: ['ID','UID','UserAccountID','FirstName','LastName'],
+                    where : {
+                        UID : data.PatientUID,
+                    },
+                    transaction : t
+                })
+                .then(function(got_patient) {
+                    if(got_patient == null || got_patient == '') {
+                        var err = new Error('UpdateEFormAppointment.error');
+                        err.pushError('notFound.Patient');
+                        throw err;
+                    }
+                    else {
+                        patient = got_patient;
+                        return Appointment.findOne({
+                            attributes: ['ID','UID','Code'],
+                            where : {
+                                UID : data.ApptUID,
+                            },
+                            transaction : t,
+                        });
+                    }
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(got_appt) {
+                    if(got_appt == null || got_appt == '') {
+                        var err = new Error('UpdateEFormAppointment.error');
+                        err.pushError('notFound.Appointment');
+                        throw err;
+                    }
+                    else {
+                        appointment = got_appt;
+                        return RelPatientAppointment.findOne({
+                            where : {
+                                PatientID     : patient.ID,
+                                AppointmentID : appointment.ID,
+                            },
+                            transaction : t,
+                        });
+                    }
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(got_relApptPatient) {
+                    if(got_relApptPatient == null || got_relApptPatient == '') {
+                        var err = new Error('UpdateEFormAppointment.error');
+                        err.pushError('Patient.hasNot.relationship.Appointment');
+                        throw err;
+                    }
+                    else {
+                        return appointment.getEForms();
+                    }
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(got_eform) {
+                    if(got_eform == null || got_eform == '' || got_eform.length == 0) {
+                        return got_eform;
+                    }
+                    else {
+                        var eform_id = [];
+                        for(var i = 0; i < got_eform.length; i++) {
+                            eform_id.push(got_eform[i].ID);
+                        }
+                        return RelEFormPatient.update({
+                            PatientID : patient.ID,
+                        },{
+                            where :{
+                                EFormID : {$in : eform_id},
+                            },
+                            transaction : t,
+                        });
+                    }
+                }, function(err) {
+                    throw err;
+                })
+                .then(function(updated_eform) {
+                    t.commit();
+                    a(updated_eform);
+                }, function(err) {
+                    t.rollback();
+                    b(err);
+                })
+
+            }, function(err) {
+                b(err);
+            });
+        });
+        
+        return p;
     }
-
-
-    // DeletePatient : function(patientID) {
-    //  return Patient.destroy({
-    //      where : {
-    //          ID : patientID
-    //      }
-    //  });
-    // }
 
 };

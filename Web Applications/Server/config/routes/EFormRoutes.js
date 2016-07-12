@@ -8,4 +8,9 @@ module.exports = {
     	controller: 'EForm/EFormController',
     	action: 'GetHistoryByAppointment'
     },
+
+    'post /api/eform/create-form-by-upload': {
+    	controller: 'EForm/EFormController',
+    	action: 'CreateFormByUpload',
+    },
 };

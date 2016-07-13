@@ -31,6 +31,11 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
         o.audio.play();
     };
 
+    console.log("apiKey, sessionId, token");
+    console.log(apiKey);
+    console.log(sessionId);
+    console.log(token);
+
     OTSession.init(apiKey, sessionId, token, function(err) {
         if (!err) {
             if (!_.isEmpty(socketTelehealth)) {
@@ -41,6 +46,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
                 }
             }
 
+        }else{
+            console.log(err);
         }
     });
 

@@ -93,19 +93,85 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
 
     $rootScope.insurers = [{
-            name: 'Insurer Company'
-        }, {
-            name: 'Mineral Resources'
-        }, {
-            name: 'Mesa Minerals'
-        }];
+        name: 'Insurer Company'
+    }, {
+        name: 'Mineral Resources'
+    }, {
+        name: 'Mesa Minerals'
+    }];
     $rootScope.Account_types = [{
-            name: 'Titanium Privilege Account'
-        }, {
-            name: '3-in-1 Account'
-        }, {
-            name: 'Silver Savings Account'
-        }];
+        name: 'Titanium Privilege Account'
+    }, {
+        name: '3-in-1 Account'
+    }, {
+        name: 'Silver Savings Account'
+    }];
+
+    // Update Read Notification
+
+    var UserInfo = $cookies.getObject('userInfo');
+
+    function UpdateQueueJob(whereClause) {
+        AuthenticationService.updateReadQueueJob(whereClause).then(function(data) {
+            if (data.status === 'success') {
+                $scope.loadListNotify();
+            };
+        }, function(err) {
+            console.log("updateReadQueueJob ", err);
+        });
+    };
+
+    $scope.updateReadQueueJob = function(queuejob) {
+        var userUID = UserInfo.UID;
+        var queue = 'NOTIFY';
+        var whereClause = {
+            userUID: userUID,
+            queue: queue
+        };
+        if (queuejob) {
+            if (queuejob.Read === 'N') {
+                whereClause.ID = queuejob.ID;
+                UpdateQueueJob(whereClause);
+            };
+            $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+        } else {
+            if ($scope.UnReadCount > 0) {
+                UpdateQueueJob(whereClause);
+            };
+        };
+    };
+
+    ioSocket.telehealthNotify = function(msg) {
+        $scope.loadListNotify();
+        var msgContent = JSON.parse(msg);
+        toastr.info(msgContent.Display.Subject + " " + msgContent.Display.Action + " " + msgContent.Display.Object.name, "Notification");
+    };
+
+    $scope.loadListNotify = function() {
+        // var roles = UserInfo.roles;
+        var userUID = UserInfo.UID;
+        var queue = 'NOTIFY';
+
+        console.log('%c loadListNotify!!!!!!!!!!!!!!!!!!!!!!! ', 'background: #222; color: #bada55');
+        AuthenticationService.getListNotify({
+            userUID: userUID,
+            queue: queue
+        }).then(function(data) {
+            for (var i = 0; i < data.data.length; i++) {
+                data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                data.data[i].CreatedDate = new Date(data.data[i].CreatedDate);
+                // data.data[i].time = (Date.now() - data.data[i].CreatedDate).toHHMMSS();
+                // console.log(typeof data.data[i].time);
+            };
+            console.log("listNotify", data.data);
+            console.log("listNotify", data.count);
+            $scope.listNotify = data.data;
+            $scope.UnReadCount = data.count;
+        });
+    };
+
+    $scope.loadListNotify();
+
 
     //phan quoc chien
     $scope.loadListDoctor = function(fullname) {
@@ -118,7 +184,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             isAvatar: true,
             RoleID: [4]
         }).then(function(data) {
-            $scope.listDoctorInternal = data.data;
+            $scope.listDoctorExternal = data.data;
         });
 
         //EXTERNAL 
@@ -130,7 +196,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             isAvatar: true,
             RoleID: [5]
         }).then(function(data) {
-            $scope.listDoctorExternal = data.data;
+            $scope.listDoctorInternal = data.data;
         });
     };
 
@@ -260,7 +326,7 @@ app.controller('HeaderController', function($scope) {
     });
 });
 /* Setup Layout Part - Sidebar */
-app.controller('SidebarController', function($scope, Restangular,$cookies,CommonService) {
+app.controller('SidebarController', function($scope, Restangular, $cookies, CommonService) {
     $scope.$on('$includeContentLoaded', function() {
         // Layout.initSidebar(); // init sidebar
     });
@@ -268,12 +334,12 @@ app.controller('SidebarController', function($scope, Restangular,$cookies,Common
     var api = Restangular.all("api");
     var result = api.one("module/GetModulesForUser");
     result.get()
-    .then(function(data){
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',data.data.nodes);
-        $scope.menus=data.data.nodes;
-    },function(err){
-        
-    });
+        .then(function(data) {
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data.data.nodes);
+            $scope.menus = data.data.nodes;
+        }, function(err) {
+
+        });
 
 });
 /* Setup Layout Part - Quick Sidebar */

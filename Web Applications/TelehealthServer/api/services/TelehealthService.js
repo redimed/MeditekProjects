@@ -474,7 +474,7 @@ module.exports = {
         console.log("FindTelehealthUserByUIDs");
         var $q = require('q');
         var defer = $q.defer();
-        sequelize.query('SELECT * FROM telehealthuser WHERE UID = :callerTeleUID UNION SELECT * FROM telehealthuser WHERE UID = :receiverTeleUID', {
+        sequelize.query('SELECT * FROM TelehealthUser WHERE UID = :callerTeleUID UNION SELECT * FROM TelehealthUser WHERE UID = :receiverTeleUID', {
             replacements: {
                 callerTeleUID: callerTeleUID,
                 receiverTeleUID: receiverTeleUID
@@ -496,7 +496,7 @@ module.exports = {
     FindUserByUIDs: function(callerUID, receiverUID) {
         var $q = require('q');
         var defer = $q.defer();
-        sequelize.query('(SELECT * FROM useraccount WHERE UID = :callerUID) UNION (SELECT * FROM useraccount WHERE UID = :receiverUID)', {
+        sequelize.query('(SELECT * FROM UserAccount WHERE UID = :callerUID) UNION (SELECT * FROM UserAccount WHERE UID = :receiverUID)', {
             replacements: {
                 callerUID: callerUID,
                 receiverUID: receiverUID

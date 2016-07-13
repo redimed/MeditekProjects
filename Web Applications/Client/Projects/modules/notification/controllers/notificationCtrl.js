@@ -6,5 +6,5 @@ var app = angular.module("app.authentication.notification.controller",[
 ]);
 
 app.controller('notificationCtrl', function($scope){
-
+	
 });

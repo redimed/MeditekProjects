@@ -172,6 +172,12 @@ app
             RestangularConfigurer.setBaseUrl(o.const.telehealthBaseURL);
         });
     })
+    //SETTING RESTANGULAR FOR NOTIFICATION
+    .factory('NcRestangular', function(Restangular) {
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setBaseUrl(o.const.ncBaseUrl);
+        });
+    })
      //SETTING RESTANGULAR FOR AUTHENTICATION
     .factory('PDFFormUrlRestangular', function(Restangular) {
         return Restangular.withConfig(function(RestangularConfigurer) {

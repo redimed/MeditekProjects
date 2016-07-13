@@ -46,6 +46,10 @@ module.exports={
             type:Sequelize.STRING(1000),
         },
 
+        MsgKind:{
+            type:Sequelize.STRING(45),
+        },
+
         MsgContentType:{
         	type:Sequelize.STRING(255),
         },
@@ -93,7 +97,7 @@ module.exports={
         },
 
         CreatedDate:{
-        	type:Sequelize.DATE,
+        	type:Sequelize.DATE
         },
 
         CreatedBy:{
@@ -109,6 +113,11 @@ module.exports={
 	options: {
         tableName: 'QueueJob',
         timestamps: false,
+        hooks: {
+            beforeCreate: function(queuejob, options, callback) {
+                queuejob.CreatedDate = new Date();
+                callback();
+            }
+        }
     }
-
 }

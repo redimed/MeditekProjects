@@ -1,0 +1,74 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar margin-bottom-20">
+    <ul class="page-breadcrumb">
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i><span> Notification Private</span></li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<div class="portlet portlet-fit light bordered">
+    <div class="portlet-title">
+        <div class="caption bold uppercase font-blue">
+            <i class="icon-list"></i>
+            <span class="caption-subject bold uppercase"> Notification Private</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn btn-outline red" ng-click="toggleFilter()">
+                <i class="glyphicon glyphicon-filter"></i> Filter
+            </a>
+            <a href="javascript:;" class="btn btn-outline blue" ng-click="init()">
+                <i class="glyphicon glyphicon-refresh"></i> Refresh
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive">
+            <table class="table table-light">
+                <thead>
+                    <tr class="uppercase">
+                        <th width="1">#</th>
+                        <th>
+                            Action
+                            <!-- <i class="fa fa-sort-asc" ng-click="sort('Action','ASC')" ng-show="fieldSort.Action === 'ASC'"></i>
+                            <i class="fa fa-sort-desc" ng-click="sort('Action','DESC')" ng-show="fieldSort.Action === 'DESC'"></i> -->
+                        </th>
+                        <th>
+                            Time
+                            <i class="fa fa-sort-asc" ng-click="sort('Time','ASC')" ng-show="fieldSort.Time==='ASC'"></i>
+                            <i class="fa fa-sort-desc" ng-click="sort('Time','DESC')" ng-show="fieldSort.Time==='DESC'"></i>
+                        </th>
+                    </tr>
+                    <tr ng-show="toggle">
+                        <td>#</td>
+                        <td>
+                            <input ng-model="search.Action" ng-enter="Search(search,$event.which)" type="text" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control date-picker input-small margin-bottom-5" style="width:100% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search,$event.which)" placeholder="From Date">
+                            <input type="text" class="form-control date-picker input-small" style="width:100% !important" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="Search(search,$event.which)" placeholder="To Date">
+                            <!--  <input ng-model="search.CreatedDate" ng-keypress="Search(search,$event.which)" type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" /> -->
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="not in listNotify" ng-click="gotoUrl(not)" ng-class="not.Read == 'Y' ? 'blue' : ''">
+                        <td>{{($index + 1) * searchObjectMap.currentPage}}</td>
+                        <td>
+                            <a class="primary-link">{{not.MsgContent.Display.Subject}}</a> {{not.MsgContent.Display.Action}} <b>{{not.MsgContent.Display.Object.name}}</b></td>
+                        <td>{{not.CreatedDate | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <th colspan="7" class="text-right">
+                        <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                            <uib-pagination boundary-links="true" total-items="count" ng-model="searchObjectMap.currentPage" class="pagination-md" previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></uib-pagination>
+                        </div>
+                    </th>
+                </tfoot>
+            </table>
+            <!--   <div ng-show="listNotify.length <= 0">
+                <h3> You do not notification</h3>
+            </div> -->
+        </div>
+    </div>
+</div>

@@ -1,5 +1,8 @@
 var app = angular.module("app.authentication.notification",[
 	"app.authentication.notification.controller",
+	"app.authentication.notification.service",
+	"app.authentication.notification.directive.global",
+	"app.authentication.notification.directive.private",
 ]);
 
 app.config(function($stateProvider){
@@ -21,6 +24,5 @@ app.config(function($stateProvider){
 			data: {pageTitle: 'Notification'},
 			controller: "notificationPrivateCtrl",
 			templateUrl: "modules/notification/views/notificationPrivate.html",
-		})
-		;
+		});
 });

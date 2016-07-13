@@ -152,7 +152,7 @@ app.directive('autoComplete', function($timeout) {
     };
 });
 
-app.directive('patientDetailDirective', function($uibModal) {
+app.directive('patientDetailDirective', function($uibModal, $timeout) {
     return {
         restrict: 'E',
         scope: {
@@ -184,26 +184,76 @@ app.directive('patientDetailDirective', function($uibModal) {
                     templateUrl: 'common/views/sendEmail.html',
                     resolve: {
                     },
-                    controller: function($scope, $stateParams){                        
-                        $scope.data = {                            
+                    controller: function($scope, $stateParams, CommonService, FileUploader){
+                        var self = $scope;
+                        App.initAjax();                    
+                        self.data = {                            
                             sender: null,
                             recipient:[],
                             bodyContent: null,
                             subject: null,
-                            attachments : [
-                                {
-                                    type: "report",
-                                    content: $stateParams.UID
-                                }
-                            ],
                         };
-                        $scope.cutstring = function(string){
+                                                             
+                        self.UIDTemplate = [];                         
+
+                        self.cutstring = function(string){
                             var string = string.split(", ");                            
                         };
 
-                        $scope.send = function(){
-                            $scope.data.recipient[0] = $scope.data.recipient[0].split(", ");
-                            console.log($scope.data);
+                        self.checkUIDTemplate = function(UID) {                            
+                            console.log("UID", UID);
+                            console.log("self.UIDTemplate", self.UIDTemplate);
+
+                            for(key in self.UIDTemplate){
+                                console.log('>>>>>>>>>>>>', self.UIDTemplate[key])
+                            }
+                        };                        
+
+                        self.getEformTemplant = function(){
+                            console.log("self.UIDTemplate", self.UIDTemplate);
+                            console.log("..............", $stateParams);
+                            self.info = {
+                                patientUID: $stateParams.UIDPatient,
+                                search:{
+                                    ApptUID: $stateParams.UID
+                                }
+                            };
+                            CommonService.getListEformTemplant(self.info).then(function(data) {
+                                console.log("|||||||||||||||||||||||||||||||||||", data);
+                                self.attack = data.rows;
+                                console.log("self.attack", self.attack);
+                            })
+                        };
+                        self.getEformTemplant();
+
+                        self.send = function(){
+                            self.data.recipient = self.data.recipient[0].split(", ");                                                 
+                            self.attachments = [];
+
+                            for (var key in self.UIDTemplate){
+                                console.log(key," here ", self.UIDTemplate[key]);
+                                if(self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined){
+                                    console.log("this is the value - ",self.UIDTemplate[key]);
+                                    tmp = {
+                                        type:'report',
+                                        content: self.UIDTemplate[key]
+                                    };
+                                    self.attachments.push(tmp);
+                                }
+                            }
+                            // fix here tommorow
+                            if (self.attachments.length > 0) {
+                                self.data.attachments = self.attachments;
+                            }
+                            else{
+                                if (self.data.attachments) {
+                                    delete self.data.attachments;
+                                }
+                            }                                                                                    
+                            // https://meditek.redmied.com.au:3013/sendmail
+                            CommonService.sendEmail(self.data).then(function(data){
+                                console.log(">>>>>>>>>>>>>>>>>>>>>>>>data", data);
+                            })
                         };
                     },
                 });

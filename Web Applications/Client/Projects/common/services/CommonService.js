@@ -1,8 +1,9 @@
 angular.module("app.common.CommonService", [])
-    .factory("CommonService", function(Restangular,FileRestangular,$cookies,$http) {
+    .factory("CommonService", function(Restangular,FileRestangular,$cookies,$http, PDFFormUrlRestangular) {
         var commonService = {};
         var api = Restangular.all("api");
         var apiFile=FileRestangular.all('api');
+        var PDFForm = PDFFormUrlRestangular;
 
         //FUNCTION MẪU
 
@@ -425,6 +426,16 @@ angular.module("app.common.CommonService", [])
             var result=api.one('refreshToken');
             return result.get();
         };
+        commonService.getListEformTemplant = function(data)
+        {
+            var result=api.all('eform/get-history-by-appointment');
+            return result.post({data:data});
+        };
+        commonService.sendEmail = function(data)
+        {
+            var result = PDFForm.all('sendmail')
+            return result.post(data);
+        }
 
         commonService.uploadEFormFile = function(data)
         {

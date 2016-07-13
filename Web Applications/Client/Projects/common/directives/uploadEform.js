@@ -77,6 +77,7 @@ angular.module('app.common.uploadEform',[])
 		    };
 		},
 		link:function(scope,element,attrs) {
+			console.log("????????")
 			scope.isChose = false;
 			scope.Add = function(model, data) {
 				var modalInstance = $uibModal.open({

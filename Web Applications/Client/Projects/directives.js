@@ -184,7 +184,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                     templateUrl: 'common/views/sendEmail.html',
                     resolve: {
                     },
-                    controller: function($scope, $stateParams, CommonService, FileUploader){
+                    controller: function($scope, $stateParams, CommonService, FileUploader, toastr, $cookies){
                         var self = $scope;
                         App.initAjax();                    
                         self.data = {                            
@@ -193,6 +193,13 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                             bodyContent: null,
                             subject: null,
                         };
+                        var userInfo = $cookies.getObject('userInfo');
+                        console.log("userInfo", userInfo.UID);
+                        self.uploadFile = {
+                                patientUID: $stateParams.UIDPatient,
+                                ApptUID: $stateParams.UID,
+                                userUID:  userInfo.UID
+                            }
                                                              
                         self.UIDTemplate = [];                         
 
@@ -227,6 +234,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                         self.getEformTemplant();
 
                         self.send = function(){
+
                             self.data.recipient = self.data.recipient[0].split(", ");                                                 
                             self.attachments = [];
 
@@ -249,11 +257,16 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                                 if (self.data.attachments) {
                                     delete self.data.attachments;
                                 }
-                            }                                                                                    
+                            }
+                            toastr.info('Sending...');                                                                                                                    
                             // https://meditek.redmied.com.au:3013/sendmail
                             CommonService.sendEmail(self.data).then(function(data){
                                 console.log(">>>>>>>>>>>>>>>>>>>>>>>>data", data);
-                            })
+                                modalInstance.close();                                                                
+                                toastr.success('Send successfully');
+                            }, function(err){
+                                toastr.error('Send failed',"Unexpected Error");
+                            })                
                         };
                     },
                 });

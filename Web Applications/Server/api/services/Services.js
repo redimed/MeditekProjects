@@ -135,6 +135,7 @@ module.exports = {
     GetListEFormTemplate: require('./EForm/GetListEFormTemplate'),
     AttributesEForm: require('./EForm/AttributesEForm'),
     getHistoryDetail: require('./EForm/getHistoryDetail'),
+    createFormByUpload: require('./EForm/createFormByUpload'),
     //end EForm
     //begin SystemSetting
     GetValueSetting: require('./SystemSetting/GetValueSetting'),

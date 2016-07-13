@@ -16,6 +16,7 @@ var app = angular.module('app', [
     'app.common.drawing',
     'app.common.ngThumb',
     'app.common.finishRender',
+    'app.common.uploadEform',
     'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",

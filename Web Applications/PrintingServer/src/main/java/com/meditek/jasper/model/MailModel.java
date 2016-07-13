@@ -5,6 +5,7 @@
  */
 package com.meditek.jasper.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,11 +52,11 @@ public class MailModel {
     }
 
     public List<NewAttachmentModel> getAttachments() {
-        return attachments;
+        return (attachments==null)?new ArrayList<>():attachments;
     }
 
     public void setAttachments(List<NewAttachmentModel> attachments) {
-        this.attachments = attachments;
+        this.attachments = (attachments==null)?new ArrayList<>():attachments;
     }
     
 }

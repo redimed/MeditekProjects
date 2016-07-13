@@ -12,6 +12,7 @@ package com.meditek.jasper.model;
 public class NewAttachmentModel {
     String type;
     String content;
+    String name;
 
     public String getType() {
         return type;
@@ -29,8 +30,12 @@ public class NewAttachmentModel {
         this.content = content;
     }
 
-    
+    public String getName() {
+        return name;
+    }
 
-
+    public void setName(String name) {
+        this.name = name;
+    }
     
 }

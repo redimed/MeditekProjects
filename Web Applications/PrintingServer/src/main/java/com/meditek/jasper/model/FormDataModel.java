@@ -19,6 +19,7 @@ public class FormDataModel {
     String refRow;
     String base64Data;
     String moduleID;
+    String typeChild;
     int columns;
     int rows;
     int pageID;

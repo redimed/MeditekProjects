@@ -62,10 +62,21 @@ var logstashLogger = new winston.Logger({
             level: 'verbose',
             colorize: false,
         }),
-	    new winston.transports.Console({
+        new winston.transports.Console({
             level: 'verbose',
             colorize: true,
             prettyPrint: true,
+        }),
+	//transports history server via day
+        new winston.transports.DailyRotateFile({
+            silent: false,
+            colorize: false,
+            timestamp: true,
+            json: true,
+            prettyPrint: true,
+            showLevel: true,
+            formatter: true,
+            filename: './logs/log'
         }),
     ],
     levels: config.levels,
@@ -88,8 +99,8 @@ var log = {};
 if (process.env.NODE_ENV === 'production') {
     log['custom'] = customLogger;
 } else {
-    // log['custom'] = logstashLogger;
-    log['level'] = 'verbose';
+    log['custom'] = logstashLogger;
+    // log['level'] = 'verbose';
 }
 
 // Override console.log. All console.log is now treated at debug level of winston log.

@@ -46,13 +46,13 @@ function pushAPNNotification(info, devices) {
 };
 module.exports = {
     JoinConferenceRoom: function(req, res) {
-        console.log("aaaaaaa", req.param('uid'), req.isSocket);
-        console.log("headers", req.headers);
         if (!req.isSocket) {
             var err = new Error("Socket.JoinConferenceRoom.Error");
             err.pushError("Socket Request Only!");
             return res.serverError(ErrorWrap(err));
         }
+        console.log("aaaaaaa", req.param('uid'), req.isSocket);
+        console.log("headers", req.headers);
         var uid = req.param('uid');
         var error = null;
         if (uid) {
@@ -79,8 +79,13 @@ module.exports = {
             }).catch(function(err) {
                 error = err;
             })
-        } else error = "Invalid Params";
-        if (error) emitError(req.socket, error);
+        } else{
+            error = "Invalid Params";
+        } 
+
+        if (error != null){
+            return res.serverError({error: error});
+        }
     },
     MessageTransfer: function(req, res) {
         if (!req.isSocket) {

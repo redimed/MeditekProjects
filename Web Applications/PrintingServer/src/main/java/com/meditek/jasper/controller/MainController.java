@@ -136,15 +136,15 @@ public class MainController {
 //        System.out.println("this is the number of attachments" +);
         // Get attachments
         String baseUrl=req.getScheme()+"://"+req.getServerName()+":3005";
+//        String baseUrl="https://meditek.redimed.com.au:3005";
         for (NewAttachmentModel attachment : mailRequest.getAttachments()){
             switch (attachment.getType()){
                 case "report":
                     //test only
-                    
-//                    String baseUrl="https://meditek.redimed.com.au:3005";
-//                    String printMethod = attachment.getContent().getPrintMethod();
+//                  String printMethod = attachment.getContent().getPrintMethod();
                     // for main deployment
                     URL getReportURL=new URL(req.getScheme()+"://"+req.getServerName()+":3015/eform/print");
+//                    URL getReportURL=new URL("https://meditek.redimed.com.au:3015/eform/print");
                     HttpsURLConnection conn = (HttpsURLConnection) getReportURL.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setDoOutput(true);
@@ -181,7 +181,7 @@ public class MainController {
                     if (baos!=null) {
                         InputStream is = new ByteArrayInputStream(baos.toByteArray());
                         is.close();
-                        helper.addAttachment(attachment+".pdf", new ByteArrayResource(baos.toByteArray()));
+                        helper.addAttachment(attachment.getName()+"-"+attachment.getContent()+".pdf", new ByteArrayResource(baos.toByteArray()));
                     }
                     break;
                     case "image":
@@ -189,7 +189,7 @@ public class MainController {
                         InputStream imgStream = new URL(baseUrl+"/api/downloadFileWithoutLogin/"+attachment.getContent()).openStream();
                         if(imgStream!=null) {
                             byte[] imgArr = IOUtils.toByteArray(imgStream);
-                            helper.addAttachment(attachment+".jpg", new ByteArrayResource(imgArr));
+                            helper.addAttachment(attachment.getName()+"-"+attachment.getContent()+".jpg", new ByteArrayResource(imgArr));
                         }
                         break;
             }

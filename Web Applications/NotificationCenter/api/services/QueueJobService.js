@@ -19,6 +19,7 @@ module.exports = {
                     EventName: true,
                     MsgContent: true,
                     Subject: true,
+                    MsgKind: true,
                     MsgContentType: true,
                     FirstDelay: true,
                     ReleaseDelay: true,
@@ -272,7 +273,7 @@ module.exports = {
         };
         if (data.Search.Action) {
             whereClause.MsgContent = {
-                like: '%"Display":"%' + data.Search.Action + '%",%'
+                like: '%"Display":"%' + data.Search.Action + '%"},"%'
             }
         };
         if (data.Search.FromCreatedDate && !data.Search.ToCreatedDate) {

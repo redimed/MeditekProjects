@@ -37,6 +37,14 @@ module.exports={
         	type:Sequelize.TEXT,
         },
 
+        Subject:{
+            type:Sequelize.STRING(1000),
+        },
+
+        MsgKind:{
+            type:Sequelize.STRING(45),
+        },
+
         MsgContentType:{
         	type:Sequelize.STRING(255),
         },

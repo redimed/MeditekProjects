@@ -18,7 +18,7 @@ app.directive('notificationPrivate', function() {
             };
             $scope.fieldSort = {};
 
-            $scope.fieldSort.Time = 'DESC';
+            $scope.fieldSort.Time = 'ASC';
             // $scope.fieldSort.Action = 'ASC';
 
             $scope.loadListNotify = function(info) {

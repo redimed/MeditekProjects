@@ -22,7 +22,7 @@ module.exports = {
                                 RoleCode: 'ADMIN',
                                 ReceiverType: 'ALL_ADMINS',
                                 Message: 'CreateAppointment',
-                                Action: 'create a appointment',
+                                Action: 'create appointment',
                                 Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok('success');
@@ -169,7 +169,7 @@ module.exports = {
                                 RoleCode: 'ADMIN',
                                 ReceiverType: 'ALL_ADMINS',
                                 Message: 'CreateAppointment',
-                                Action: 'create a appointment',
+                                Action: 'create appointment',
                                 Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok({
@@ -245,7 +245,7 @@ module.exports = {
                                 RoleCode: 'ADMIN',
                                 ReceiverType: 'ALL_ADMINS',
                                 Message: 'CreateAppointment',
-                                Action: 'create a appointment',
+                                Action: 'create appointment',
                                 Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok({
@@ -321,7 +321,7 @@ module.exports = {
                                 RoleCode: 'ADMIN',
                                 ReceiverType: 'ALL_ADMINS',
                                 Message: 'CreateAppointment',
-                                Action: 'create a appointment',
+                                Action: 'create appointment',
                                 Url_State: 'authentication.WAAppointment.detail'
                             };
                             res.ok({

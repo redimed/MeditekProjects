@@ -20,7 +20,7 @@ module.exports = function(req, res) {
             } else {
                 whereClause.Appointment.UID = dmObj.apptUID;
             };
-            console.log("|||||| userActive ||||||||||||||||||||||||||||||", userActive);
+            console.log("|||||| GetUserByRole ||||||||||||||||||||||||||||||");
             if (_.isEmpty(whereClause.Role)) {
                 error.pushError('whereClause.null');
                 throw error;
@@ -64,6 +64,7 @@ module.exports = function(req, res) {
                                         // Action : {}
                                     }
                                 },
+                                MsgKind: 'Reference',
                                 SenderType: dmUtils.ncSenderType.SERVER,
                                 SenderUID: userActive.UID,
                                 EventName: 'notification',
@@ -130,11 +131,12 @@ module.exports = function(req, res) {
                                     },
                                     Command: {
                                         Note: dmObj.Message
-                                        // Url_State: dmObj.Url_State,
-                                        // Url_Redirect: dmObj.Url_Redirect,
-                                        // Action : {}
+                                            // Url_State: dmObj.Url_State,
+                                            // Url_Redirect: dmObj.Url_Redirect,
+                                            // Action : {}
                                     }
                                 },
+                                MsgKind: 'Reference',
                                 SenderType: dmUtils.ncSenderType.SERVER,
                                 SenderUID: userActive.UID,
                                 EventName: 'notification',

@@ -23,14 +23,14 @@
     </div>
     <div class="portlet-body">
         <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive">
-            <table class="table table-light" ng-show="listNotify.length > 0">
+            <table class="table table-light">
                 <thead>
                     <tr class="uppercase">
                         <th width="1">#</th>
                         <th>
                             Action
-                            <i class="fa fa-sort-asc" ng-click="sort('Action','ASC')" ng-show="fieldSort.Action === 'ASC'"></i>
-                            <i class="fa fa-sort-desc" ng-click="sort('Action','DESC')" ng-show="fieldSort.Action === 'DESC'"></i>
+                            <!-- <i class="fa fa-sort-asc" ng-click="sort('Action','ASC')" ng-show="fieldSort.Action === 'ASC'"></i>
+                            <i class="fa fa-sort-desc" ng-click="sort('Action','DESC')" ng-show="fieldSort.Action === 'DESC'"></i> -->
                         </th>
                         <th>
                             Time
@@ -44,7 +44,7 @@
                             <input ng-model="search.Action" ng-enter="Search(search,$event.which)" type="text" class="form-control" />
                         </td>
                         <td>
-                            <input type="text" class="form-control date-picker input-small" style="width:100% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search,$event.which)" placeholder="From Date">
+                            <input type="text" class="form-control date-picker input-small margin-bottom-5" style="width:100% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search,$event.which)" placeholder="From Date">
                             <input type="text" class="form-control date-picker input-small" style="width:100% !important" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="Search(search,$event.which)" placeholder="To Date">
                             <!--  <input ng-model="search.CreatedDate" ng-keypress="Search(search,$event.which)" type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" /> -->
                         </td>
@@ -66,9 +66,9 @@
                     </th>
                 </tfoot>
             </table>
-            <div ng-show="listNotify.length <= 0">
-                <h3>You do not notification </h3>
-            </div>
+            <!--   <div ng-show="listNotify.length <= 0">
+                <h3> You do not notification</h3>
+            </div> -->
         </div>
     </div>
 </div>

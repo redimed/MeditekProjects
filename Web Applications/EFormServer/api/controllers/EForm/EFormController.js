@@ -9,7 +9,6 @@ module.exports = {
         })
     },
     PostEFormPrint: function(req, res){
-        console.log('req', req.body);
         EForm.findOne({
             where: {Enable: 'Y', UID: req.body.EFormUID},
             include: [{
@@ -23,17 +22,13 @@ module.exports = {
             }]
         })
         .then(function(data){
-            if(!data)
-                res.json({status: 'null'});
-            else{
-                var data_value = JSON.parse(data.EFormData.FormData);
-                var result = {
-                    printMethod:data.EFormTemplate.PrintType,
-                    templateUID: data.EFormTemplate.UID,
-                    data: data_value
-                }
-                res.json(result);
+            var data_value = JSON.parse(data.EFormData.FormData);
+            var result = {
+                printMethod:data.EFormTemplate.PrintType,
+                templateUID: data.EFormTemplate.UID,
+                data: data_value
             }
+            res.json(result);
         })
     },
     GetEFormUserRoles: function(req, res){

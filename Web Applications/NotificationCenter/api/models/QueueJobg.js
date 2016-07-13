@@ -17,11 +17,6 @@ module.exports={
         	allowNull:false,
         },
 
-        CC:{
-        	type:Sequelize.STRING(255),
-        	allowNull:true,
-        },
-
         ReceiverType:{
         	type:Sequelize.STRING(20),
         },
@@ -82,8 +77,6 @@ module.exports={
         	type:Sequelize.STRING(20)
         },
 
-        
-
         SendFromServer:{
         	type:Sequelize.STRING(255)
         },
@@ -96,8 +89,12 @@ module.exports={
         	type:Sequelize.STRING(255)
         },
 
-        CreatedDate:{
+        EndTime:{
         	type:Sequelize.DATE
+        },
+
+        CreatedDate:{
+            type:Sequelize.DATE
         },
 
         CreatedBy:{
@@ -111,11 +108,11 @@ module.exports={
 
 	associations: function() {},
 	options: {
-        tableName: 'QueueJob',
+        tableName: 'QueueJobg',
         timestamps: false,
         hooks: {
-            beforeCreate: function(queuejob, options, callback) {
-                queuejob.CreatedDate = new Date();
+            beforeCreate: function(queuejobg, options, callback) {
+                queuejobg.CreatedDate = new Date();
                 callback();
             }
         }

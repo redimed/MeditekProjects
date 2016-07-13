@@ -22,23 +22,47 @@ socketJoinRoom = function(server, api, obj) {
     });
 }
 
-messageTransfer = function(from, to, message) {
-    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
-        from: from,
-        to: to,
-        message: message
-    }, function(data) {
-        console.log("send call", data);
+messageTransfer = function(caller, receiver, message, receiverName, teleCallUID, data) {
+    var info = {
+        callerTeleUID: caller,
+        receiverTeleUID: receiver,
+        message: message,
+        receiverName: receiverName,
+        teleCallUID: teleCallUID,
+    };
+    if (message === "waiting") {
+        info.callerInfo = data;
+    }
+    socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(msg) {
+        console.log("send call", msg);
     });
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
 /*begin socket 3006 */
 socketAuth = io.sails.connect(o.const.authBaseUrl);
 socketAuth.on('connect', function() {
     console.log("auth connect socket");
-    if (ioSocket.socketAuthReconnect) {
-        ioSocket.socketAuthReconnect();
-    }
+    // if (ioSocket.socketAuthReconnect) {
+    //     ioSocket.socketAuthReconnect();
+    // };
+    if (getCookie("userInfo")) {
+        socketJoinRoom(socketAuth, '/api/socket/makeUserOwnRoom', { UID: JSON.parse(decodeURIComponent(getCookie("userInfo"))).UID });
+    };
     createSocketConnectRest();
 });
 socketAuth.on('testmessage', function(msg) {
@@ -46,10 +70,20 @@ socketAuth.on('testmessage', function(msg) {
 });
 socketAuth.on('UpdateRequestWAAppointmentCompany_DM', function(msg) {
     console.log('UpdateRequestWAAppointmentCompany_DM', msg);
-})
+});
+socketAuth.on('notification', function(msg) {
+    console.log('notification', msg);
+    if (ioSocket.telehealthNotify) {
+        ioSocket.telehealthNotify(msg);
+    };
+    if (ioSocket.LoadListAppointment) {
+        ioSocket.LoadListAppointment();
+    };
+    if (ioSocket.LoadListNotify) {
+        ioSocket.LoadListNotify();
+    };
+});
 /* end socket 3006 */
-
-
 
 
 
@@ -64,12 +98,11 @@ function createSocketConnectRest() {
     socketRest.on('testmessage', function(msg) {
         console.log(JSON.stringify("b" + msg));
     })
-    socketRest.on('testaaa', function(msg){
-        console.log("testaaa",msg);
+    socketRest.on('testaaa', function(msg) {
+        console.log("testaaa", msg);
     })
 }
 /* begin socket 3005 */
-
 
 
 

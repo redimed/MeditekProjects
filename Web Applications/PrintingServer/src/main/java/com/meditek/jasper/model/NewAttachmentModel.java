@@ -13,6 +13,7 @@ public class NewAttachmentModel {
     String type;
     String content;
     String name;
+    String extension;
 
     public String getType() {
         return type;
@@ -36,6 +37,14 @@ public class NewAttachmentModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getExtension() {
+        return extension==null || extension.equals("")?"pdf":extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
     
 }

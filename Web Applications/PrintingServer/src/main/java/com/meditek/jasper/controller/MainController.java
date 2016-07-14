@@ -180,20 +180,20 @@ public class MainController {
                     }
                     if (baos!=null) {
                         InputStream is = new ByteArrayInputStream(baos.toByteArray());
-                        is.close();
-                        helper.addAttachment(attachment.getName()+"-"+attachment.getContent()+".pdf", new ByteArrayResource(baos.toByteArray()));
+                        is.close(); 
+                        helper.addAttachment(attachment.getName()+".pdf", new ByteArrayResource(baos.toByteArray()));
                     }
                     break;
-                    case "image":
-                        ByteArrayOutputStream image;
-                        InputStream imgStream = new URL(baseUrl+"/api/downloadFileWithoutLogin/"+attachment.getContent()).openStream();
-                        if(imgStream!=null) {
-                            byte[] imgArr = IOUtils.toByteArray(imgStream);
-                            helper.addAttachment(attachment.getName()+"-"+attachment.getContent()+".jpg", new ByteArrayResource(imgArr));
+                    case "fileupload":
+                        ByteArrayOutputStream fileOS;
+                        InputStream fileStream = new URL(baseUrl+"/api/downloadFileWithoutLogin/"+attachment.getContent()).openStream();
+                        if(fileStream!=null) {
+                            byte[] fileArr = IOUtils.toByteArray(fileStream);
+                            helper.addAttachment(attachment.getName()+"."+attachment.getExtension(), new ByteArrayResource(fileArr));
                         }
                         break;
             }
-
+  
         }
 //        File file = new File("/home/rockmanexe1994/Downloads/Swallows Nest.mp3");
 //        helper.addAttachment(file.getName(),file);

@@ -63,7 +63,7 @@ module.exports = React.createClass({
     },
     _viewEForm: function(data) {
         window.location.href = '/#/eform/detail?appointmentUID='+data.Appointments[0].UID+
-                                '&patientUID='+this.searchObjectMap.patientUID+
+                                '&patientUID='+data.Appointments[0].Patients[0].UID+
                                 '&templateUID='+data.EFormTemplate.UID+
                                 '&userUID='+this.searchObjectMap.userUID;
         window.location.reload();

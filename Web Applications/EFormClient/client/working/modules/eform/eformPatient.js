@@ -24,6 +24,10 @@ module.exports = React.createClass({
         }
     },
     _loadListEform: function(data,isInit) {
+        App.blockUI({
+            arget: 'blockui_body',
+            animate: true
+        });
         var self = this;
         EFormService.eformGetListByPatient(data)
         .then(function(response) {
@@ -40,6 +44,7 @@ module.exports = React.createClass({
                 }
             }
             self.refs.filter.setValue();
+            App.unblockUI();
         },function(err) {
             console.log(err);
         });
@@ -176,6 +181,7 @@ module.exports = React.createClass({
                                     <Paginator ref="pagination" onChange={this._setPage} maxButtons={this.searchObjectMap.maxButtons} item={this.searchObjectMap.item} activePage={this.searchObjectMap.activePage} />
                                     <div><label>Total : { this.searchObjectMap.count } </label></div>
                                 </div>
+                                <div id="blockui_body"></div>
                             </div>
                         </div>
                     </div>

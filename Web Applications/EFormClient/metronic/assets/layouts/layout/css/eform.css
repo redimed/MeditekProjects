@@ -39,3 +39,30 @@
 .eform-selection-field {
     border-left: 4px solid #00A0D1!important;
 }
+
+.eform-drawing #myCanvas {
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    background-color: #EAE9E3;
+    box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);
+}
+
+.eform-drawing .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.eform-drawing .btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

@@ -57,21 +57,39 @@ module.exports = React.createClass({
 
         //tannv.dts
         this.canvas = $("#myCanvas")[0];
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa", this.canvas);
-
         this.ctx = this.canvas.getContext("2d");
-        alert(JSON.stringify(this.size));
         this.canvas.width = this.size.width;
         this.canvas.height = this.size.height;
         this.cPush();
         this.imageLoader = $('#imageLoader')[0];
         $(this.imageLoader).on('change', function(e){
+            console.log("imageLoader",$(self.imageLoader));
+            self.currentImageLoaderFile = e.target.files[0];
             var objectUrl = URL.createObjectURL(e.target.files[0]);
+            self.currentImageLoaderFileUrl = URL.createObjectURL(e.target.files[0]);
+            $("#imageLoaderPreview").attr('src',self.currentImageLoaderFileUrl)
             var img = new Image;
+            var flagRotate = false;
+
             img.onload = function () {
-                this.clearCanvas();
-                this.ctx.drawImage(img, (this.canvas.width - img.width) / 2, (this.canvas.height - img.height)/2);
-                this.cPush();
+                self.clearCanvas();
+                //----------------------
+                var displayWidth, displayHeight = null;
+                var ratio = null;
+                if(img.height>img.width) {
+                    //Hình đứng
+                    displayHeight = self.canvas.height ;
+                    ratio = img.height/self.canvas.height;
+                    displayWidth = Math.floor(img.width / ratio);
+                } else {
+                    //Hình ngang
+                    displayWidth = self.canvas.width;
+                    ratio = img.width/self.canvas.width;
+                    displayHeight = Math.floor(img.height/ratio);
+                }
+                self.ctx.drawImage(img, (self.canvas.width-displayWidth)/2, (self.canvas.height-displayHeight)/2, displayWidth, displayHeight);
+                self.cPush();
+                // self.ctx.setTransform(1, 0, 0, 1, 0, 0);
             }
             img.src = objectUrl;
         });
@@ -124,7 +142,7 @@ module.exports = React.createClass({
                         img.onload = function() {
                             self.clearCanvas();
                             self.ctx.drawImage(img, 0, 0);
-                            self.drawText(currentX, currentY);
+                            self.drawText(self.currentX, self.currentY);
                         }
                         img.src = self.typingState;
                     }
@@ -142,7 +160,72 @@ module.exports = React.createClass({
             }
         });
 
+        $('#getTextBtn').attr('disabled', true);
+        $('#applyTextBtn').attr('disabled', true);
+
     },
+
+    rotateImageLoader:function() {
+        console.log("||||||||||||||||||||||||rotateImageLoader:");
+        if(this.currentImageLoaderFileUrl) {
+            var self = this;
+            var img = new Image;
+            img.onload = function () {
+                self.clearCanvas();
+                self.rotateAngle = self.nextRotateAngle();
+                console.log('rotateAngle', self.rotateAngle);
+                var sameLayout = self.rotateAngle/Math.PI%1 == 0;
+                console.log("sameLayout", sameLayout);
+                var displayWidth, displayHeight = null;
+                var canvasWidth = sameLayout?self.canvas.width:self.canvas.height;
+                var canvasHeight = sameLayout?self.canvas.height:self.canvas.width;
+
+                var quarterList = [
+                    0, //phan tu thu 1
+                    (1/2)*Math.PI, //phan tu thu 2
+                    Math.PI, //phan tu thu 3
+                    (3/2)*Math.PI, //phan tu thu 4
+                ]
+                var quarter = 0; //mac dinh phan tu thu 1
+
+                var quarterVector = {
+                    0: {w: 0,h: 0}, //phan tu thu 1
+                    1: {w: 0, h: -self.canvas.width}, //phan tu thu 2
+                    2: {w: -self.canvas.width, h: -self.canvas.height}, //phan tu thu 3
+                    3: {w: -self.canvas.height, h: 0} //phan tu thu 4
+                }
+
+                var ratio = null;
+                if(img.height > img.width) {
+                    console.log("Hinh dung")
+                    displayHeight = canvasHeight ;
+                    ratio = img.height/canvasHeight;
+                    displayWidth = Math.floor(img.width / ratio);
+                } else {
+                    console.log("Hinh ngang");
+                    displayWidth = canvasWidth;
+                    ratio = img.width/canvasWidth;
+                    displayHeight = Math.floor(img.height/ratio);
+                }
+
+                for(var i =0; i<quarterList.length; i++) {
+                    if(quarterList[i] == self.rotateAngle) {
+                        quarter = i;
+                        break;
+                    }
+                }
+                console.log("quarter", quarter, quarterList[quarter]);
+                self.ctx.save();
+                self.ctx.rotate(self.rotateAngle);
+                self.ctx.drawImage(img,quarterVector[quarter].w + (canvasWidth-displayWidth)/2, quarterVector[quarter].h +(canvasHeight-displayHeight)/2 , displayWidth, displayHeight);
+                self.cPush();
+                self.ctx.restore();
+                // self.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            }
+            img.src = this.currentImageLoaderFileUrl;
+        }
+    },
+
     componentWillReceiveProps: function(nextProps){
         $(this.refs.input).val(nextProps.defaultValue);
     },
@@ -227,6 +310,7 @@ module.exports = React.createClass({
         this.sizes= [
             {'width':550,'height':500,desc:'Canvas 550x500'},
             {'width':750,'height':650,desc:'Canvas 750x650'},
+            // {'width':650,'height':650,desc:'Canvas 750x650'},
             {'width':900,'height':750,desc:'Canvas 900x750'},
             {'width':1000,'height':900,desc:'Canvas 1100x900'},
         ];
@@ -239,11 +323,19 @@ module.exports = React.createClass({
             {size:20,desc:'Font 20px'},
             {size:25,desc:'Font 25px'},
             {size:30,desc:'Font 30px'},
-        ],
+        ];
 
         this.fontSize = this.fontSizes[4];
 
-        this.lineWidth=3;
+        this.lineWidths = [
+            {width:1, desc:'Line 1'},
+            {width:2, desc:'Line 2'},
+            {width:3, desc:'Line 3'},
+            {width:4, desc:'Line 4'},
+            {width:5, desc:'Line 5'},
+        ];
+
+        this.lineWidth=this.lineWidths[3];//tannv.dts todo
 
         this.cPushArray= new Array();
         this.cStep= -1;
@@ -252,7 +344,17 @@ module.exports = React.createClass({
 
         this.fileType= null;
 
-        linewidth= null;
+        this.currentImageLoaderFile = null;
+        this.currentImageLoaderFileUrl =  null;
+        this.rotateAngle = 0;
+    },
+
+    nextRotateAngle: function() {
+        if(this.rotateAngle == (3/2)*Math.PI) {
+            return 0;
+        } else {
+            return this.rotateAngle + Math.PI/2;
+        }
     },
 
 
@@ -260,15 +362,16 @@ module.exports = React.createClass({
     makeFileName: function() {
         var fileName= "Drawing_"
             .concat(moment().format("YYYY-MM-DD_HHmmss.SSS"))
-            .concat('.jpg');
+            .concat('.png');
         return fileName;
     },
 
     capture: function() {
         //tannv.dts@gmail.com todo....
+        var self = this;
         if(this.canvas.toBlob) {
             this.canvas.toBlob(function(blob) {
-                //todo
+                saveAs(blob,self.makeFileName());
             })
         }
     },
@@ -331,50 +434,67 @@ module.exports = React.createClass({
         }
     },
 
-    clearCanvas: function () {
-        this.ctx.save();
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.restore();
-    },
-
     cUndo: function() {
+        var self = this;
         if(this.cStep>0) {
             this.cStep--;
             var img = new Image;
             img.onload = function () {
-                this.clearCanvas();
-                this.ctx.drawingImage(img, 0, 0);
+                self.clearCanvas();
+                self.ctx.drawImage(img, 0, 0);
             }
             img.src= this.cPushArray[this.cStep];
         }
     },
 
     cRedo: function() {
+        var self = this;
         if(this.cStep<this.cPushArray.length-1) {
             this.cStep++;
             var img=new Image();
             img.onload=function() {
-                this.clearCanvas();
-                this.ctx.drawingImage(img, 0, 0);
+                self.clearCanvas();
+                self.ctx.drawImage(img, 0, 0);
             }
             img.src=this.cPushArray[this.cStep];
         }
     },
 
     cSaveTypingState: function() {
+        var self = this;
         if(this.canvas.toBlob) {
             this.canvas.toBlob(function(blob) {
                 var objectUrl = URL.createObjectURL(blob);
-                this.typingState = objectUrl;
+                self.typingState = objectUrl;
             })
         }
     },
 
+    changeCanvasText: function (e) {
+        this.cText = e.target.value;
+        if(this.cText) {
+            $('#getTextBtn').attr('disabled', false);
+        } else {
+            $('#getTextBtn').attr('disabled', true);
+        }
+    },
+
     cGetText: function() {
+        console.log("cGetText");
+        this.cText = $('#canvasText').val();
+        $('#getTextBtn').attr('disabled', true);
+        $('#applyTextBtn').attr('disabled', false);
         this.typing= true;
         this.textMove=true;
         this.cSaveTypingState();
+    },
+
+    cApplyText: function () {
+        $('#getTextBtn').attr('disabled', false);
+        $('#applyTextBtn').attr('disabled', true);
+        this.typing = false;
+        this.textMove = false;
+        this.cPush();
     },
 
     cClearTyping: function() {
@@ -385,7 +505,7 @@ module.exports = React.createClass({
 
     drawText: function(currentX, currentY) {
         this.ctx.fillStyle = this.color;
-        this.ctx.font = this.fontSize+"px Arial";
+        this.ctx.font = this.fontSize.size+"px Arial";
         this.ctx.fillText(this.cText, currentX, currentY);
     },
 
@@ -396,14 +516,17 @@ module.exports = React.createClass({
         } else {
             this.color = c;
         }
-        this.lineWidth = this.linewidth;
+        this.lineWidth = this.lineWidth.width;
         this.erasing = false;
     },
 
     clearCanvas: function() {
+        //Store the current transformation matrix
         this.ctx.save();
+        //Use the identity matrix while clearing the canvas
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        //Restore the transform
         this.ctx.restore();
     },
 
@@ -413,8 +536,8 @@ module.exports = React.createClass({
     },
     
     erase: function() {
-        this.color = $('#myCanvas')[0].css('background-color');
-        this.lineWidth = 50;
+        this.color = $(this.canvas).css('background-color');
+        this.lineWidth = {width:50, desc: 'Erase'};
         this.erasing = true;
     },
 
@@ -422,7 +545,7 @@ module.exports = React.createClass({
         this.ctx.lineCap = "round";
         this.ctx.fillStyle = "solid";
         this.ctx.strokeStyle = this.color;
-        this.ctx.lineWidth = this.lineWidth;
+        this.ctx.lineWidth = this.lineWidth.width;
         this.ctx.moveTo(lX,lY);
         this.ctx.lineTo(cX,cY);
         this.ctx.stroke();
@@ -437,7 +560,7 @@ module.exports = React.createClass({
 
 
 
-    _onCanvasSizeChange: function(e) {
+    changeSize: function(e) {
         var canvasSize = JSON.parse(e.target.value);
         if(canvasSize) {
             this.size = canvasSize;
@@ -446,6 +569,22 @@ module.exports = React.createClass({
         }
 
     },
+
+    changeFontSize: function(e) {
+        var canvasFontSize = JSON.parse(e.target.value);
+        if(canvasFontSize) {
+            this.fontSize = canvasFontSize;
+        }
+    },
+
+    changeLineWidth: function(e) {
+        var canvasLineWidth = JSON.parse(e.target.value);
+        if(canvasLineWidth) {
+            this.lineWidth = canvasLineWidth;
+        }
+    },
+
+
 
     render: function(){
         var type = this.props.type;
@@ -498,56 +637,81 @@ module.exports = React.createClass({
                             </div>
                         </div>
 
-                        <div ref="canvasPanel" className="row">
-                            <div className="col-md-12 col-sm-12">
+                        <div className="row">
+                            <div className="col-md-12 col-sm-12 eform-drawing">
                                 <div className="form-inline">
-                                    <select className="form-control" onChange={this._onCanvasSizeChange}>
+                                    <select className="form-control" onChange={this.changeSize} defaultValue={JSON.stringify(this.sizes[1])}>
                                         {this.sizes.map(function(sizeItem, index){
                                             return  <option key={index} value={JSON.stringify(sizeItem)}>{sizeItem.desc}</option>
                                         })}
                                     </select>
 
+                                    <select className="form-control" onChange={this.changeLineWidth} defaultValue={JSON.stringify(this.lineWidths[3])}>
+                                        {this.lineWidths.map(function(lineWidthItem, index){
+                                            return  <option key={index} value={JSON.stringify(lineWidthItem)}>{lineWidthItem.desc}</option>
+                                        })}
+                                    </select>
+
+                                    {/*<a href="javascript:;"
+                                       className="btn btn-icon-only btn-circle">
+                                    </a>*/}
+
+                                    <a className="btn btn-default" onClick={this.cUndo} href="javascript:;">
+                                        <i className="fa fa-undo"></i> Undo
+                                    </a>
+                                    <a className="btn btn-default" onClick={this.cRedo} href="javascript:;">
+                                        <i className="fa fa-repeat"></i> Redo
+                                    </a>
+
+                                    <a className="btn btn-default" onClick={this.erase} href="javascript:;">
+                                        <i className="fa fa-eraser"></i> Erase
+                                    </a>
+                                    <a className="btn btn-default" onClick={this.clear} href="javascript:;">
+                                        <i className="fa fa-trash-o"></i> Clear
+                                    </a>
+
+                                    <a className="btn btn-default" onClick={this.capture} href="javascript:;">
+                                        <i className="fa fa-camera"></i> Capture
+                                    </a>
+
                                     <a href="javascript:;"
                                        className="btn btn-icon-only btn-circle">
                                     </a>
-
-                                    <a className="btn btn-icon-only btn-circle btn-default" >
-                                        <i className="fa fa-undo"></i>
-                                    </a>
-                                    <a className="btn btn-icon-only btn-circle btn-default" >
-                                        <i className="fa fa-repeat"></i>
-                                    </a>
-
-                                    <a className="btn btn-icon-only btn-circle btn-default" >
-                                        <i className="fa fa-eraser"></i>
-                                    </a>
-                                    <a className="btn btn-icon-only btn-circle btn-default" >
-                                        <i className="fa fa-trash-o"></i>
-                                    </a>
-
-                                    <a className="btn btn-icon-only btn-circle btn-default" >
-                                        <i className="fa fa-camera"></i>
-                                    </a>
-
-                                        <span className="btn btn-default btn-file">
-                                            Load Picture<input type="file" id="imageLoader" accept="image/*"/>
-                                        </span>
 
                                     <a className="btn btn-success" >
                                         <i className="fa fa-floppy-o"></i> Save
                                     </a>
 
                                 </div>
+
                                 <br/>
                                 <div className="form-inline">
-                                    <select className="form-control">
-                                    </select>
-                                    <input className="form-control" type="text"/>
+                                    <span className="btn btn-default btn-file">
+                                        Load Picture<input type="file" id="imageLoader" accept="image/*"/>
+                                    </span>
+                                    <img id="imageLoaderPreview" height="35px"/>
+                                    <a className="btn btn-default" onClick={this.rotateImageLoader} href="javascript:;">
+                                        <i className="fa fa-repeat"></i> Rotate & Apply
+                                    </a>
 
-                                    <a className="btn btn-default">
+                                    <a href="javascript:;"
+                                       className="btn btn-icon-only btn-circle">
+                                    </a>
+                                </div>
+                                <br/>
+                                <div className="form-inline">
+                                    
+                                    <select className="form-control" onChange={this.changeFontSize} defaultValue={JSON.stringify(this.fontSizes[4])}>
+                                        {this.fontSizes.map(function(fontSizeItem, index){
+                                            return  <option key={index} value={JSON.stringify(fontSizeItem)}>{fontSizeItem.desc}</option>
+                                        })}
+                                    </select>
+                                    <input className="form-control" type="text" id="canvasText" onChange={this.changeCanvasText}/>
+
+                                    <a id="getTextBtn" className="btn btn-default" onClick = {this.cGetText}>
                                         Apply Text
                                     </a>
-                                    <a className="btn btn-default">
+                                    <a id="applyTextBtn" className="btn btn-default" onClick = {this.cApplyText}>
                                         Save Text
                                     </a>
                                 </div>

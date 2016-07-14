@@ -6,6 +6,7 @@ var EFormTemplateModuleDetail = require('modules/eform/eformTemplateModuleDetail
 var EFormGroup = require('modules/eform/eformGroup');
 var EFormConsultation = require('modules/eform/eformConsultation');
 var EFrormListApptByPatient = require('modules/eform/eformPatient');
+var EFormListByAppointment = require('modules/eform/eformAppointment');
 
 module.exports = [
             {path: '/eformTemplate', component: EFormTemplate},
@@ -16,4 +17,5 @@ module.exports = [
             {path: '/eformGroup', component: EFormGroup},
             {path: '/eform/consultation', component: EFormConsultation},
             {path: '/eform/patient',component: EFrormListApptByPatient},
+            {path: '/eform/appointment',component: EFormListByAppointment},
 ]

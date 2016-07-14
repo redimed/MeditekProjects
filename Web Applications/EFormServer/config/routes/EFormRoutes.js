@@ -131,4 +131,8 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'GetListEFormTemplateByPatient',
     },
+    'post /eform/get-list-eform-by-appointment':{
+        controller: 'EForm/EFormController',
+        action: 'GetListEFormTemplateByAppointment',
+    },
 };

@@ -800,5 +800,17 @@ module.exports = {
         }, function(err) {
             res.serverError(ErrorWrap(err));
         })
-    }
+    },
+    GetListEFormTemplateByAppointment: function(req, res) {
+        var data = req.body;
+        if (typeof(data) == 'string') {
+            data = JSON.parse(data);
+        }
+        Services.GetListEFormTemplateByAppointment(data)
+        .then(function(result) {
+            res.ok(result);
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
 }

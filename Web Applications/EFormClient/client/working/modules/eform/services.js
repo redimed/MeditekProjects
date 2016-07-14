@@ -412,4 +412,25 @@ module.exports = {
 		})
 		return p;
 	},
+	// get-list-eform-by-appointment
+	eformGetListByAppointment: function(dataFilter){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				dataType: "json",
+   				contentType: "application/json",
+				url: Config.apiUrl+'eform/get-list-eform-by-appointment',
+				data: JSON.stringify({
+					limit      : dataFilter.limit,
+					offset     : dataFilter.offset,
+					ApptUID	   : dataFilter.ApptUID,
+					search     : dataFilter.search,
+					order      : dataFilter.order,
+				}),
+				processData: false,
+				success: resolve
+			})
+		})
+		return p;
+	},
 }

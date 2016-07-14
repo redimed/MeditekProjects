@@ -120,4 +120,5 @@ module.exports = {
     GetListEFormGroup: require('./EForm/GetListEFormGroup'),
     GetListEFormTemplateFilter: require('./EForm/GetListEFormTemplateFilter'),
     GetListEFormTemplateByPatient: require('./EForm/GetListEFormTemplateByPatient'),
+    GetListEFormTemplateByAppointment: require('./EForm/GetListEFormTemplateByAppointment'),
 };

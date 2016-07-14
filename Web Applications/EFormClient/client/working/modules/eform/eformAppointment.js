@@ -2,7 +2,7 @@ var Config = require('config');
 var InputText = require('common/inputText');
 var InputDate = require('common/inputDate');
 var Paginator = require('common/paginator');
-var Filter    = require('modules/eform/eformPatient/filter');
+var Filter    = require('modules/eform/eformAppointment/filter');
 var EFormService = require('modules/eform/services');
 module.exports = React.createClass({
     searchObjectMap : {
@@ -24,8 +24,12 @@ module.exports = React.createClass({
         }
     },
     _loadListEform: function(data,isInit) {
+        App.blockUI({
+            arget: 'blockui_body',
+            animate: true
+        });
         var self = this;
-        EFormService.eformGetListByPatient(data)
+        EFormService.eformGetListByAppointment(data)
         .then(function(response) {
             self.setState({ list: response.rows });
             if(isInit == true) {
@@ -40,6 +44,7 @@ module.exports = React.createClass({
                 }
             }
             self.refs.filter.setValue();
+            App.unblockUI();
         },function(err) {
             console.log(err);
         });
@@ -48,7 +53,7 @@ module.exports = React.createClass({
         // var searchObjectMap = Object.clone(this.searchObject);
         // var searchObjectMap = jQuery.extend({},this.searchObject);
         var locationParams = Config.parseQueryString(window.location.href);
-        this.searchObjectMap.patientUID = locationParams.patientUID;
+        this.searchObjectMap.ApptUID = locationParams.ApptUID;
         this.searchObjectMap.userUID = locationParams.userUID;
         this._loadListEform(this.searchObjectMap,true);
     },
@@ -123,17 +128,13 @@ module.exports = React.createClass({
                                             <tr className="uppercase">
                                                 <th>#</th>
                                                 <th>
-                                                    <label onClick={this._sort.bind(this, 'FromTime')}>
-                                                        Appointment Date &nbsp;
-                                                        {this.state.sort.FromTime=="ASC"?<i className="fa fa-sort-asc" ref="sort_apt_date_asc"></i>:<i className="fa fa-sort-desc" ref="sort_apt_date_desc"></i>}
-
-
+                                                    <label>
+                                                        Appointment Date
                                                     </label>
                                                 </th>
                                                 <th>
-                                                    <label onClick={this._sort.bind(this, 'Code')}>
-                                                        Appointment Code &nbsp;
-                                                        {this.state.sort.Code=="ASC"?<i className="fa fa-sort-asc" ref="sort_apt_date_asc"></i>:<i className="fa fa-sort-desc" ref="sort_apt_date_desc"></i>}
+                                                    <label>
+                                                        Appointment Code
                                                     </label>
                                                 </th>
                                                 <th>
@@ -176,6 +177,7 @@ module.exports = React.createClass({
                                     <Paginator ref="pagination" onChange={this._setPage} maxButtons={this.searchObjectMap.maxButtons} item={this.searchObjectMap.item} activePage={this.searchObjectMap.activePage} />
                                     <div><label>Total : { this.searchObjectMap.count } </label></div>
                                 </div>
+                                <div id="blockui_body"></div>
                             </div>
                         </div>
                     </div>

@@ -40,12 +40,14 @@ module.exports = function(data) {
 				}
 				else {
 					patient = got_patient;
+					var uid = UUIDService.Create();
 					return EForm.create({
-						UID 			: UUIDService.Create(),
+						UID 			: uid,
 						EFormTemplateID : o.const.ImportTemplate,
 						Name 			: data.fileName,
 						Status			: 'saved',
 						Enable			: 'Y',
+						Note 			: data.fileUID,
 						CreatedBy		: patient.UserAccountID,
 					},{transaction: t});
 				}

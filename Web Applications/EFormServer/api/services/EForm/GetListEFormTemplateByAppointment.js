@@ -96,7 +96,7 @@ module.exports = function(data) {
                             {
                                 model:Patient,
                                 attributes:['ID','UID','FirstName','LastName'],
-                                required:true,
+                                required:false,
                                 // where:{
                                 //     UID : data.patientUID
                                 // }

@@ -15,6 +15,11 @@ module.exports = function(data) {
 		err.pushError('notFound.fileName.Params');
 		throw err;
 	}
+	if(!data.fileExt) {
+		var err = new Error('createFormByUpload.error');
+		err.pushError('notFound.fileExt.Params');
+		throw err;
+	}
 	if(!data.patientUID) {
 		var err = new Error('createFormByUpload.error');
 		err.pushError('notFound.patientUID.Params');
@@ -47,7 +52,7 @@ module.exports = function(data) {
 						Name 			: data.fileName,
 						Status			: 'saved',
 						Enable			: 'Y',
-						Note 			: data.fileUID,
+						Note 			: data.fileUID + '.' + data.fileExt,
 						CreatedBy		: patient.UserAccountID,
 					},{transaction: t});
 				}

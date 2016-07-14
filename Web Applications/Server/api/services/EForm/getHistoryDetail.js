@@ -107,7 +107,7 @@ module.exports = function(data) {
                     },
                     {
                         model:EFormTemplate,
-                        attributes:['ID','UID'],
+                        attributes:['ID','UID','Name'],
                         required:true,
                     }
                 ],

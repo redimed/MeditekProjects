@@ -15,10 +15,12 @@ angular.module('app.common.uploadEform',[])
 			function capitalizeFirstLetter(string) {
 			    return string.charAt(0).toUpperCase() + string.slice(1);
 			}
-			function uploadEForm(response) {
+			function uploadEForm(response, fileItem) {
+				var Ext = fileItem.file.type.substr(fileItem.file.type.indexOf('/') + 1, fileItem.file.type.length);
 				CommonService.uploadEFormFile({
 		        	fileUID:response.fileUID, 
 		        	fileName:capitalizeFirstLetter($scope.FormName),
+		        	fileExt: Ext,
 		        	patientUID:$scope.PatientUID,
 		        	ApptUID: $scope.ApptUID ? $scope.ApptUID : null,
 		        })
@@ -62,10 +64,10 @@ angular.module('app.common.uploadEform',[])
 		        console.info('onCompleteItem', response);
 		        if (Boolean(headers.requireupdatetoken) === true) {
 		            $rootScope.getNewToken();
-		            uploadEForm(response);
+		            uploadEForm(response, fileItem);
 		        }
 		        else {
-		        	uploadEForm(response);
+		        	uploadEForm(response, fileItem);
 		        }
 		        
 		    };
@@ -77,7 +79,6 @@ angular.module('app.common.uploadEform',[])
 		    };
 		},
 		link:function(scope,element,attrs) {
-			console.log("????????")
 			scope.isChose = false;
 			scope.Add = function(model, data) {
 				var modalInstance = $uibModal.open({

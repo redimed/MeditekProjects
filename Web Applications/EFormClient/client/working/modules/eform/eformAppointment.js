@@ -31,16 +31,18 @@ module.exports = React.createClass({
         var self = this;
         EFormService.eformGetListByAppointment(data)
         .then(function(response) {
-            self.setState({ list: response.rows });
+            self.setState({ list: response.rows});
             if(isInit == true) {
                 self.searchObjectMap.count = response.count;
-                if(response.count%self.searchObjectMap.limit != 0){
-                    self.searchObjectMap.item = (response.count/self.searchObjectMap.limit) + 1;
-                    self.refs.pagination.init(self.searchObjectMap);
-                }
-                else{
-                    self.searchObjectMap.item = (response.count/self.searchObjectMap.limit);
-                    self.refs.pagination.init(self.searchObjectMap);
+                if(response.count != 0) {
+                    if(response.count%self.searchObjectMap.limit != 0){
+                        self.searchObjectMap.item = (response.count/self.searchObjectMap.limit) + 1;
+                        self.refs.pagination.init(self.searchObjectMap);
+                    }
+                    else{
+                        self.searchObjectMap.item = (response.count/self.searchObjectMap.limit);
+                        self.refs.pagination.init(self.searchObjectMap);
+                    }
                 }
             }
             self.refs.filter.setValue();
@@ -53,7 +55,7 @@ module.exports = React.createClass({
         // var searchObjectMap = Object.clone(this.searchObject);
         // var searchObjectMap = jQuery.extend({},this.searchObject);
         var locationParams = Config.parseQueryString(window.location.href);
-        this.searchObjectMap.ApptUID = locationParams.ApptUID;
+        this.searchObjectMap.ApptUID = locationParams.apptUID;
         this.searchObjectMap.userUID = locationParams.userUID;
         this._loadListEform(this.searchObjectMap,true);
     },

@@ -137,7 +137,9 @@
                             <td>{{doctor.Department?doctor.Department.DepartmentName:null}}</td>
                             <td>{{doctor.UserAccount?doctor.UserAccount.PhoneNumber:null}}</td>
                             <td>
-                                <input type="checkbox" class="regular-checkbox regular-no-lable" ng-model="doctor.Selected" ng-true-value="'Y'" ng-false-value="'N'" ng-click="action.doctor.selectedDoctor(doctor)"/>
+                                <label class="mt-checkbox mt-checkbox-outline">
+                                    <input type="checkbox" ng-model="doctor.Selected" ng-true-value="'Y'" ng-false-value="'N'" ng-click="action.doctor.selectedDoctor(doctor)"/><span></span>
+                                </label>
                             </td>
                         </tr>
                     </tbody>

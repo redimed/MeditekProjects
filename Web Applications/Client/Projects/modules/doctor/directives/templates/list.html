@@ -1,5 +1,5 @@
 <!-- content page -->
-<div class="portlet portlet-fit light bordered">
+<div class="portlet portlet-fit">
 	<div class="portlet-title">
 		<div class="caption bold uppercase font-blue">
 			<i class="icon-list"></i>
@@ -20,6 +20,24 @@
 		<div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
 			<table class="table table-light table-hover table-striped">
 				<thead>
+					<tr>
+						<th colspan="7">
+							<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+								<uib-pagination
+									boundary-links="true"
+									total-items="count"
+									ng-model="searchObjectMap.currentPage"
+									class="pagination-md"
+									previous-text="&lsaquo; "
+									next-text="&rsaquo; "
+									first-text="&laquo; "
+									last-text="&raquo; "
+									items-per-page="searchObjectMap.limit"
+									max-size="searchObjectMap.maxSize"
+									ng-change="setPage()"></uib-pagination>
+							</div>
+						</th>
+					</tr>
 					<tr class="uppercase">
 						<th>#</th>
 						<th ng-repeat="i in items">
@@ -82,22 +100,24 @@
 					</tr>
 				</tbody>
 				<tfoot>
-					<th colspan="7" class="text-right">
-						<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-							<uib-pagination
-							boundary-links="true"
-							total-items="count"
-							ng-model="searchObjectMap.currentPage"
-							class="pagination-md"
-							previous-text="&lsaquo; "
-							next-text="&rsaquo; "
-							first-text="&laquo; "
-							last-text="&raquo; "
-							items-per-page="searchObjectMap.limit"
-							max-size="searchObjectMap.maxSize"
-							ng-change="setPage()"></uib-pagination>
-						</div>
-					</th>
+					<tr>
+						<th colspan="7">
+							<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+								<uib-pagination
+								boundary-links="true"
+								total-items="count"
+								ng-model="searchObjectMap.currentPage"
+								class="pagination-md"
+								previous-text="&lsaquo; "
+								next-text="&rsaquo; "
+								first-text="&laquo; "
+								last-text="&raquo; "
+								items-per-page="searchObjectMap.limit"
+								max-size="searchObjectMap.maxSize"
+								ng-change="setPage()"></uib-pagination>
+							</div>
+						</th>
+					</tr>
 				</tfoot>
 			</table>
 		</div>

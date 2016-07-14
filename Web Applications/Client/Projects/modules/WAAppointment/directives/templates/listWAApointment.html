@@ -1,20 +1,14 @@
 <!--BEGIN PAGE HEADER-->
 <div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a href="javascript:;" ui-sref="authentication.home.list">Homepage</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <span>Appointment</span>
-        </li>
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i> <span>Appointment</span></li>
     </ul>
 </div>
 <!-- <h3 class="page-title bold">Appointment</h3> -->
 <!-- END PAGE HEADER-->
 <!-- BEGIN BODY -->
-<div class="portlet portlet-fit light bordered">
+<div class="portlet">
     <div class="portlet-title">
         <div class="caption bold uppercase font-blue">
             <i class="icon-list"></i>
@@ -22,19 +16,27 @@
             <!-- <span class="caption-helper font-yellow-lemon"></span> -->
         </div>
         <div class="actions">
-            <a  href="javascript:;" class="btn blue" ng-click="LoadData()">
+            <a href="javascript:;" class="btn blue" ng-click="LoadData()">
                 <i class="fa fa-refresh"></i> Refresh
             </a>
-            <a  href="javascript:;" class="btn default" ng-click="Clear()">
+            <a href="javascript:;" class="btn default" ng-click="Clear()">
                 <i class="glyphicon glyphicon-remove"></i> Clear Search
             </a>
         </div>
     </div>
     <div class="portlet-body">
         <!-- <div class="table-scrollable margin-top-10"> -->
-        <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
-            <table class="table table-light table-hover table-striped">
+        <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-30">
+            <table class="table table-light table-bordered">
                 <thead>
+                    <tr class="uppercase">
+                        <th colspan="9" class="">
+                            <div class="dataTables_info" id="sample_3_info" role="status" aria-live="polite">Total: {{info.listWaapointment.count}} records</div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                                <pagination boundary-links="true" total-items="info.listWaapointment.count" ng-model="info.paging.currentPage" class="pagination-md" previous-text="&lsaquo;" next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo;" items-per-page="info.paging.itemsPerPage" max-size="info.paging.maxSize" ng-change="reloadData()"></pagination>
+                            </div>
+                        </th>
+                    </tr>
                     <tr class="uppercase">
                         <th width="1">#</th>
                         <th>Code</th>
@@ -45,7 +47,7 @@
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
                             <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
                         </th>
-                        <th style="min-width:150px;">Appointment Type</th>
+                        <th style="min-width:160px;">Appointment Type</th>
                         <th style="min-width:150px;">
                             Appointment Date
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
@@ -102,13 +104,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-click="WAAppointmentDetail(appt.UID,appt.Type)" ng-repeat="appt in info.listWaapointment.rows">
+                    <tr ng-click="WAAppointmentDetail(appt.UID,appt.Type)" 
+                    ng-repeat="appt in info.listWaapointment.rows"
+                    ng-class="hightLight(appt.Type)">
                         <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
                         <td>{{appt.Code}}</td>
                         <td>
                             <span>
-                            {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
-                            </span><span ng-if="appt.ishavePatientAppointment === true" style="color:red;">*</span>
+                                {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
+                            </span>
+                            <span ng-if="appt.ishavePatientAppointment === true" style="color:red;">*</span>
                         </td>
                         <td>
                             <!--{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}-->
@@ -133,18 +138,19 @@
                             <span ng-if="appt.Status === info.apptStatus[5].value"><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
                         </td>
                         <td class="text-center">
-                            <i class="glyphicon glyphicon-ok font-green-haze" ng-if="appt.TelehealthAppointment.Correspondence === 'Y'"></i>
-                            <i class="glyphicon glyphicon-remove font-red" ng-if="appt.TelehealthAppointment.Correspondence !== 'Y'"></i>
+                            <i class="fa fa-check fa-1x font-green-haze" ng-if="appt.TelehealthAppointment.Correspondence === 'Y'"></i>
+                            <i class="fa fa-remove fa-1x font-red-flamingo" ng-if="appt.TelehealthAppointment.Correspondence !== 'Y'"></i>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
-                    <th colspan="9" class="uppercase">
-                        <div class="pull-left">Total: {{info.listWaapointment.count}} records</div>
-                        <div class="dataTables_paginate paging_simple_numbers pull-right" id="sample_1_paginate">
-                            <pagination boundary-links="true" total-items="info.listWaapointment.count" ng-model="info.paging.currentPage" class="pagination-md" previous-text="&lsaquo;" next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo;" items-per-page="info.paging.itemsPerPage" max-size="info.paging.maxSize" ng-change="reloadData()"></pagination>
-                        </div>
-                    </th>
+                    <tr>
+                        <th colspan="9" class="">
+                            <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                                <pagination boundary-links="true" total-items="info.listWaapointment.count" ng-model="info.paging.currentPage" class="pagination-md" previous-text="&lsaquo;" next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo;" items-per-page="info.paging.itemsPerPage" max-size="info.paging.maxSize" ng-change="reloadData()"></pagination>
+                            </div>
+                        </th>
+                    </tr>
                 </tfoot>
             </table>
         </div>

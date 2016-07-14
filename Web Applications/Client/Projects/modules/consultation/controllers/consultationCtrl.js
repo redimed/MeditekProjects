@@ -1,6 +1,7 @@
 var app = angular.module("app.authentication.consultation.controller",[
 	'app.authentication.consultation.list.controller',
 	'app.authentication.consultation.detail.controller',
+	'app.authentication.consultation.detail1.controller',
 	'app.authentication.consultation.drawing.controller',
 	'app.authentication.consultation.directives.listAppoint',
 	'app.authentication.consultation.directives.listAppConsultation',

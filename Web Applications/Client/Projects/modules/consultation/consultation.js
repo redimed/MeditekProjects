@@ -106,4 +106,61 @@ app.config(function($stateProvider) {
             templateUrl: 'modules/consultation/views/patient.html',
             controller: 'EFormPatientCtrl',
         })
+
+        // consultation detail 1
+        .state('authentication.consultation.detail1', {
+            url: '/detail1',
+            data: { pageTitle: 'Consultation detail1' },
+            controller: 'consultationDetail1Ctrl',
+            templateUrl: 'modules/consultation/views/consultationDetail1.html',
+        })
+        .state("authentication.consultation.detail1.workCover",{
+            url: "/workCover",
+            template: 'modules/consultation/views/consultationDetail1WorkCover.html',
+        })
+        .state("authentication.consultation.detail1.referral",{
+            url: "/referral",
+            template: 'modules/consultation/views/consultationDetail1Referral.html',
+        })
+        .state("authentication.consultation.detail1.internal",{
+            url: "/internal",
+            template: 'modules/consultation/views/consultationDetail1Internal.html',
+        })
+        .state("authentication.consultation.detail1.clinic",{
+            url: "/clinic",
+            template: 'modules/consultation/views/consultationDetail1Clinic.html',
+        })
+        .state("authentication.consultation.detail1.drawing",{
+            url: "/drawing",
+            template: 'modules/consultation/views/consultationDetail1Drawing.html',
+        })
+        .state("authentication.consultation.detail1.prescription",{
+            url: "/prescription",
+            template: 'modules/consultation/views/consultationDetail1Prescription.html',
+        })
+        .state("authentication.consultation.detail1.dictation",{
+            url: "/dictation",
+            template: 'modules/consultation/views/consultationDetail1Dictation.html',
+        })
+        .state("authentication.consultation.detail1.image",{
+            url: "/image",
+            template: 'modules/consultation/views/consultationDetail1Image.html',
+        })
+        .state("authentication.consultation.detail1.consent",{
+            url: "/consent",
+            template: 'modules/consultation/views/consultationDetail1Consent.html',
+        })
+        .state("authentication.consultation.detail1.admission",{
+            url: "/admission",
+            template: 'modules/consultation/views/consultationDetail1Admission.html',
+        })
+        .state("authentication.consultation.detail1.billing",{
+            url: "/billing",
+            template: 'modules/consultation/views/consultationDetail1Billing.html',
+        })
+        .state("authentication.consultation.detail1.appointment",{
+            url: "/appointment",
+            template: 'modules/consultation/views/consultationDetail1Appointment.html',
+        })
+        ;
 });

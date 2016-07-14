@@ -1,8 +1,21 @@
+<!--BEGIN PAGE HEADER-->
+<div class="page-bar margin-bottom-20">
+    <ul class="page-breadcrumb">
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i> <a ui-sref="authentication.consultation.list">Consultation</a></li>
+        <li><i class="fa fa-circle"></i> <span>Consultation Detail</span></li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
 <div ui-view>
-    <div class="hidden-xs" ng-if="width > 768">
+    <div class="hidden-sm hidden-xs" ng-if="width > 768">
         <div class="row">
             <div class="col-lg-9 col-md-8">
-                <div class="portlet box green-soft" ng-hide="HasRoleAdminOrPractitioner == false">
+                <div class="portlet box blue-soft" ng-hide="HasRoleAdminOrPractitioner == false">
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-bubbles"></i>
@@ -74,84 +87,75 @@
                         </div>
                     </div>
                 </div>
-                <!-- EFORM -->
-                <div class="portlet box blue-madison">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <i class="fa fa-clone"></i>
-                            <span class="caption-subject bold uppercase">EForm List</span>
-                            <span class="caption-helper"></span>
-                        </div>
-                        <div class="tools">
-                            <a href="javascript:;" class="collapse"> </a>
-                            <a href="javascript:;" class="fullscreen"> </a>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="portlet box yellow-crusta">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-clone"></i>
+                                    <span class="caption-subject bold uppercase">EFORM GROUP</span>
+                                    <span class="caption-helper"></span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <js-tree tree-data="scope" tree-model="tree"></js-tree>
+                            </div>
                         </div>
                     </div>
-                    <div class="portlet-body">
-                        <!-- ROW -->
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="dashboard-stat green-jungle margin-bottom-20" ng-click="admission()">
-                                    <div class="visual">
-                                        <i class="fa fa-file"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">
-                                            <span data-counter="counterup" data-value="0">
-                                                <i class="fa fa-file"></i>
-                                            </span>
-                                        </div>
-                                        <div class="desc uppercase bold"> Patient Admission </div>
-                                    </div>
-                                    <a class="more" href="javascript:;">
-                                        View
-                                        <i class="m-icon-swapright m-icon-white"></i>
-                                    </a>
+                    <div class="col-xs-8">
+                        <div class="portlet box yellow-casablanca">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-clone"></i>
+                                    <span class="caption-subject bold uppercase">EFORM LIST</span>
+                                    <span class="caption-helper"></span>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6" 
-                                ng-repeat="eformTemplate in eformTemplates track by $index">
-                                <div class="dashboard-stat blue margin-bottom-20" 
-                                    ng-class="styleFunction(eformTemplate.EForms)"
-                                    ng-click="eFormTemplate(eformTemplate)">
-
-                                    <div class="visual">
-                                        <i class="fa fa-file"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">
-                                            <span data-counter="counterup" data-value="0">
-                                                <i class="fa fa-file"></i>
-                                            </span>
-                                        </div>
-                                        <div class="desc uppercase bold"> {{eformTemplate.Name}} </div>
-                                    </div>
-                                    <a class="more" href="javascript:;">
-                                        View
-                                        <i class="m-icon-swapright m-icon-white"></i>
-                                    </a>
+                            <div class="portlet-body">
+                                <div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
+                                    <ul class="feeds">
+                                        <li ng-click="admission()">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-green">
+                                                            <i class="fa fa-file-text-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc">Patient Admission</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date">View</div>
+                                            </div>
+                                        </li>
+                                        <li ng-repeat="eformTemplate in eformTemplates track by $index"
+                                            ng-click="eFormTemplate(eformTemplate)">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label " ng-class="styleFunction(eformTemplate.EForms)">
+                                                            <i class="fa fa-file-text-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc">{{eformTemplate.Name}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date">View</div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="eformTemplate in eformTemplates track by $index" style="margin-bottom: 10px;">
-                                <div class="dashboard-stat"
-                                    ng-class="styleFunction(eformTemplate.EForms)"
-                                    ng-click="eFormTemplate(eformTemplate)">
-                                    <div class="visual">
-                                        <i class="fa fa-file-text-o"></i>
-                                    </div>
-                                    <div class="details">
-                                        <div class="number">{{eformTemplate.Name}}</div>
-                                    </div>
-                                    <a class="more" href="javascript:;" ng-click="eFormTemplate(eformTemplate)">
-                                        View  <i class="m-icon-swapright m-icon-white"></i>
-                                    </a>
-                                </div>
-                            </div> -->
                         </div>
-                        <!-- END ROW -->
                     </div>
                 </div>
-                <!-- END EFORM -->
+                
             </div>
             <div class="col-lg-3 col-md-4">
                 <patient-detail-directive info="dataDirective"></patient-detail-directive>
@@ -178,14 +182,7 @@
             </div>
         </div>
     </div>
-    <div class="hidden-lg hidden-md hidden-sm" ng-if="width <= 768">
-        <div class="page-bar margin-bottom-20">
-            <ul class="page-breadcrumb">
-                <li><a ui-sref="authentication.home.list">Homepage</a></li>
-                <li><i class="fa fa-circle"></i><a ui-sref="authentication.consultation.list">Consultation</a></li>
-                <li><i class="fa fa-circle"></i><span>Consultation Detail</span></li>
-            </ul>
-        </div>
+    <div class="hidden-lg hidden-md" ng-if="width <= 768">
         <div class="tabbable-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="@#tab_consultation" data-toggle="tab">Consultation Detail - E-Form List</a></li>
@@ -193,7 +190,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_consultation">
-                    <div class="portlet box green-soft" ng-hide="HasRoleAdminOrPractitioner == false">
+                    <div class="portlet box blue-soft" ng-hide="HasRoleAdminOrPractitioner == false">
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-bubbles"></i>
@@ -265,84 +262,138 @@
                             </div>
                         </div>
                     </div>
-                    <!-- EFORM -->
-                    <div class="portlet box blue-madison">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                <i class="fa fa-clone"></i>
-                                <span class="caption-subject bold uppercase">EForm List</span>
-                                <span class="caption-helper"></span>
-                            </div>
-                            <div class="tools">
-                                <a href="javascript:;" class="collapse"> </a>
-                                <a href="javascript:;" class="fullscreen"> </a>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="portlet box yellow-crusta">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-clone"></i>
+                                        <span class="caption-subject bold uppercase">EFORM Group</span>
+                                        <span class="caption-helper"></span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="scroller">
+                                        <js-tree tree-data="scope" tree-model="tree" tree-events="dblclick:selectNode;"></js-tree>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="portlet-body">
-                            <!-- ROW -->
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-xs-6">
-                                    <div class="dashboard-stat green-jungle margin-bottom-20" ng-click="admission()">
-                                        <div class="visual">
-                                            <i class="fa fa-file"></i>
-                                        </div>
-                                        <div class="details">
-                                            <div class="number">
-                                                <span data-counter="counterup" data-value="0">
-                                                    <i class="fa fa-file"></i>
-                                                </span>
-                                            </div>
-                                            <div class="desc uppercase bold"> Patient Admission </div>
-                                        </div>
-                                        <a class="more" href="javascript:;">
-                                            View
-                                            <i class="m-icon-swapright m-icon-white"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-xs-6" 
-                                    ng-repeat="eformTemplate in eformTemplates track by $index">
-                                    <div class="dashboard-stat blue margin-bottom-20" 
-                                        ng-class="styleFunction(eformTemplate.EForms)"
-                                        ng-click="eFormTemplate(eformTemplate)">
 
-                                        <div class="visual">
-                                            <i class="fa fa-file"></i>
-                                        </div>
-                                        <div class="details">
-                                            <div class="number">
-                                                <span data-counter="counterup" data-value="0">
-                                                    <i class="fa fa-file"></i>
-                                                </span>
-                                            </div>
-                                            <div class="desc uppercase bold"> {{eformTemplate.Name}} </div>
-                                        </div>
-                                        <a class="more" href="javascript:;">
-                                            View
-                                            <i class="m-icon-swapright m-icon-white"></i>
-                                        </a>
+                        <div class="col-xs-6">
+                            <div class="portlet box yellow-casablanca">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-clone"></i>
+                                        <span class="caption-subject bold uppercase">EForm List</span>
+                                        <span class="caption-helper"></span>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="eformTemplate in eformTemplates track by $index" style="margin-bottom: 10px;">
-                                    <div class="dashboard-stat"
-                                        ng-class="styleFunction(eformTemplate.EForms)"
-                                        ng-click="eFormTemplate(eformTemplate)">
-                                        <div class="visual">
-                                            <i class="fa fa-file-text-o"></i>
-                                        </div>
-                                        <div class="details">
-                                            <div class="number">{{eformTemplate.Name}}</div>
-                                        </div>
-                                        <a class="more" href="javascript:;" ng-click="eFormTemplate(eformTemplate)">
-                                            View  <i class="m-icon-swapright m-icon-white"></i>
-                                        </a>
+                                <div class="portlet-body">
+                                    <div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
+                                        <ul class="feeds">
+                                            <li ng-click="admission()">
+                                                <div class="col1">
+                                                    <div class="cont">
+                                                        <div class="cont-col1">
+                                                            <div class="label label-green">
+                                                                <i class="fa fa-file-text-o"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cont-col2">
+                                                            <div class="desc"> Patient Admission</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col2">
+                                                    <div class="date"> View </div>
+                                                </div>
+                                            </li>
+                                            <li ng-repeat="eformTemplate in eformTemplates track by $index"
+                                                ng-click="eFormTemplate(eformTemplate)">
+                                                <div class="col1">
+                                                    <div class="cont">
+                                                        <div class="cont-col1">
+                                                            <div class="label " ng-class="styleFunction(eformTemplate.EForms)">
+                                                                <i class="fa fa-file-text-o"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cont-col2">
+                                                            <div class="desc">{{eformTemplate.Name}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col2">
+                                                    <div class="date">View</div>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </div> -->
+                                    <!-- ROW -->
+                                    <div class="row">
+                                        <!-- <div class="col-lg-3 col-md-4 col-xs-6">
+                                            <div class="dashboard-stat green-jungle margin-bottom-20" ng-click="admission()">
+                                                <div class="visual">
+                                                    <i class="fa fa-file"></i>
+                                                </div>
+                                                <div class="details">
+                                                    <div class="number">
+                                                        <span data-counter="counterup" data-value="0">
+                                                            <i class="fa fa-file"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="desc uppercase bold"> Patient Admission </div>
+                                                </div>
+                                                <a class="more" href="javascript:;">
+                                                    View
+                                                    <i class="m-icon-swapright m-icon-white"></i>
+                                                </a>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-lg-3 col-md-4 col-xs-6" 
+                                            ng-repeat="eformTemplate in eformTemplates track by $index">
+                                            <div class="dashboard-stat blue margin-bottom-20" 
+                                                ng-class="styleFunction(eformTemplate.EForms)"
+                                                ng-click="eFormTemplate(eformTemplate)">
+
+                                                <div class="visual">
+                                                    <i class="fa fa-file"></i>
+                                                </div>
+                                                <div class="details">
+                                                    <div class="number">
+                                                        <span data-counter="counterup" data-value="0">
+                                                            <i class="fa fa-file"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="desc uppercase bold"> {{eformTemplate.Name}} </div>
+                                                </div>
+                                                <a class="more" href="javascript:;">
+                                                    View
+                                                    <i class="m-icon-swapright m-icon-white"></i>
+                                                </a>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="eformTemplate in eformTemplates track by $index" style="margin-bottom: 10px;">
+                                            <div class="dashboard-stat"
+                                                ng-class="styleFunction(eformTemplate.EForms)"
+                                                ng-click="eFormTemplate(eformTemplate)">
+                                                <div class="visual">
+                                                    <i class="fa fa-file-text-o"></i>
+                                                </div>
+                                                <div class="details">
+                                                    <div class="number">{{eformTemplate.Name}}</div>
+                                                </div>
+                                                <a class="more" href="javascript:;" ng-click="eFormTemplate(eformTemplate)">
+                                                    View  <i class="m-icon-swapright m-icon-white"></i>
+                                                </a>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <!-- END ROW -->
+                                </div>
                             </div>
-                            <!-- END ROW -->
                         </div>
                     </div>
-                    <!-- END EFORM -->
                 </div>
                 <div class="tab-pane" id="tab_profile">
                     <div class="row">

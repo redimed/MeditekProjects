@@ -152,6 +152,22 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
 
             ioSocket.LoadListAppointment = function() {
                 scope.init();
+            }
+            
+            scope.hightLight = function(type){
+                var r = '';
+                switch (type) {
+                    case 'Telehealth': r = 'blue'; break;
+                    case 'On Site': r = 'purple'; break;
+                    case 'OnSite': r = 'purple'; break;
+                    case 'Onsite': r = 'purple'; break;
+                    case 'PreEmployment': r = 'yellow'; break;
+                    case 'Campaign': r = 'green'; break;
+                    case 'RediSite': r = 'red'; break;
+                    case 'Redisite': r = 'red'; break;
+                    default: r = '';
+                }
+                return r;
             };
         }
     };

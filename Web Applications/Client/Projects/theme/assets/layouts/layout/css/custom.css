@@ -144,6 +144,75 @@ ul.my-ul {
 .tabbable-custom>.nav-tabs>li.active>a{
     /*background-color: #36c6d3;*/
 }
+
+
+/*BEGIN LIST CONSULTATION*/
+    .my-list-ui-view {
+        width: 100%;
+        /*overflow: auto;*/
+    }
+    .my-list-ui-view > ul.title {
+        float: left;
+        width: 20%;
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        font-weight: 300;
+        list-style-type: none;
+    }
+    .my-list-ui-view > ul.title > li {
+        background-color: #fff;
+        background-color: rgb(245, 245, 245);
+        cursor: pointer;
+        margin-bottom: 2px;
+    }
+
+    .my-list-ui-view > ul.title > li.active {
+        background-color: #00acc2;
+        -webkit-box-shadow: inset 0 -8px 6px -6px #005762;
+           -moz-box-shadow: inset 0 -8px 6px -6px #005762;
+                box-shadow: inset 0px -8px 6px -6px #005762;
+        -webkit-transition: background 2s, box-shadow 2s; /* Safari */
+                transition: background 2s, box-shadow 2s;
+    }
+
+
+    .my-list-ui-view > ul.title > li > a {
+        color: #555;
+        text-decoration: none;
+        display: block;
+        padding: 15px 15px;
+    }
+    .my-list-ui-view > ul.title > li.active > a {
+        color: #fff;
+    }
+    .my-list-ui-view > ul.title > li > a:hover {
+        background-color: #00c1da;
+        color: white;
+        -webkit-transition: background .5s; /* Safari */
+                transition: background .5s;
+    }
+    .my-list-ui-view > ul.title > li.active > a:hover {
+        background-color: #00acc2;
+        -webkit-box-shadow: inset 0 -8px 6px -6px #005762;
+           -moz-box-shadow: inset 0 -8px 6px -6px #005762;
+                box-shadow: inset 0px -8px 6px -6px #005762;
+        -webkit-transition: background 1s, box-shadow 1s; /* Safari */
+                transition: background 1s, box-shadow 1s;
+    }
+    .my-list-ui-view > .content {
+        float: right;
+        width: 80%;
+        border-left: 4px solid #c1c1c1 !important;
+        /*border: 1px solid #e7ecf1;*/
+        padding: 20px 20px;
+        min-height: 800px;
+
+        -webkit-box-shadow: 1px 0px 2px 1px #e7ecf1;
+           -moz-box-shadow: 1px 0px 2px 1px #e7ecf1;
+                box-shadow: 1px 0px 2px 1px #e7ecf1;
+    }
+/*END LIST CONSULTATION*/
 /*BEGIN tab-vertical-custom========================================*/
     /*col-sm*/
     @media (max-width: 767px){
@@ -525,6 +594,23 @@ ul.my-ul {
 .padding-right-40 { padding-right: 40px; }
 
 
+.label-green { background-color: #00b400; }
+
+.table>tbody>tr.red>td {
+    background-color: rgba(240,169,169,.125);
+}
+.table>tbody>tr.green>td {
+    background-color: rgba(188,232,170,.125);
+}
+.table>tbody>tr.blue>td {
+    background-color: rgba(163,212,240,.125);
+}
+.table>tbody>tr.yellow>td {
+    background-color: rgba(240,222,121,.125);
+}
+.table>tbody>tr.purple>td {
+    background-color: rgba(194,170,232,.125);
+}
 /*consultation>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
     .my-skype {
@@ -1030,6 +1116,28 @@ ul.my-ul {
     font-weight: bolder;
 }
 
+.feeds li:hover {
+    cursor: pointer !important;
+    background-color: rgba(125,125,125,.125) !important;
+}
+.feeds li .col1>.cont>.cont-col1>.label {
+    padding: 15px 10px 13px 10px;
+}
+.feeds li .col1>.cont>.cont-col2>.desc {
+    margin-left: 60px;
+}
+.feeds li .col1>.cont>.cont-col1>.label>i {
+    font-size: 25px;
+}
+
+.profile-userpic img {
+    -webkit-border-radius: 10% !important; 
+    -moz-border-radius: 10% !important;
+    border-radius: 10% !important; 
+    max-height: 150px !important; 
+}
+
+
 .box {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -1064,12 +1172,7 @@ input[type="email"]:disabled,
     padding-left: 10px !important;
 }*/
 
-.profile-userpic img {
-    -webkit-border-radius: 10% !important; 
-    -moz-border-radius: 10% !important;
-    border-radius: 10% !important; 
-    max-height: 150px !important; 
-}
+
 /*phan quoc chien================================================================================*/
 
     .margin-left-right-0 {

@@ -1,5 +1,5 @@
 <!-- content page -->
-<div class="portlet portlet-fit light bordered">
+<div class="portlet">
 	<div class="portlet-title">
 		<div class="caption uppercase bold font-blue">
 			<i class="icon-list font-blue"></i>
@@ -16,6 +16,24 @@
 		<div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-20">
 			<table class="table table-light table-hover table-striped">
 				<thead>
+					<tr>
+						<th colspan="3">
+							<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+								<uib-pagination
+								boundary-links="true"
+								total-items="count"
+								ng-model="searchObjectMap.currentPage"
+								class="pagination-md "
+								previous-text="&lsaquo; "
+								next-text="&rsaquo; "
+								first-text="&laquo; "
+								last-text="&raquo; "
+								items-per-page="searchObjectMap.limit"
+								max-size="searchObjectMap.maxSize"
+								ng-change="setPage()"></uib-pagination>
+							</div>
+						</th>
+					</tr>
 					<tr class="uppercase">
 						<th width="1">#</th>
 						<th>
@@ -53,29 +71,30 @@
 						<td>{{$index+1}}</td>
 						<td>{{c.CompanyName}}</td>
 						<td class="text-center">
-							<i class="glyphicon glyphicon-ok font-green-haze" ng-if="c.Active=='Y'"></i>
+							<i class="glyphicon glyphicon-ok font-green-jungle" ng-if="c.Active=='Y'"></i>
 							<i class="glyphicon glyphicon-remove font-red" ng-if="c.Active=='N'"></i>
 						</td>
 					</tr>
 				</tbody>
 				<tfoot>
-					<th colspan="3">
-						<p></p>
-						<div class="dataTables_paginate paging_simple_numbers pull-right" id="sample_1_paginate">
-							<uib-pagination
-							boundary-links="true"
-							total-items="count"
-							ng-model="searchObjectMap.currentPage"
-							class="pagination-md "
-							previous-text="&lsaquo; "
-							next-text="&rsaquo; "
-							first-text="&laquo; "
-							last-text="&raquo; "
-							items-per-page="searchObjectMap.limit"
-							max-size="searchObjectMap.maxSize"
-							ng-change="setPage()"></uib-pagination>
-						</div>
-					</th>
+					<tr>
+						<th colspan="3">
+							<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+								<uib-pagination
+								boundary-links="true"
+								total-items="count"
+								ng-model="searchObjectMap.currentPage"
+								class="pagination-md "
+								previous-text="&lsaquo; "
+								next-text="&rsaquo; "
+								first-text="&laquo; "
+								last-text="&raquo; "
+								items-per-page="searchObjectMap.limit"
+								max-size="searchObjectMap.maxSize"
+								ng-change="setPage()"></uib-pagination>
+							</div>
+						</th>
+					</tr>
 				</tfoot>
 			</table>
 		</div>

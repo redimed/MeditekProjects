@@ -57,12 +57,12 @@
                                     </div>
                                     <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Gender.$invalid]">
                                         <label class="control-label">Gender <span class="required">*</span></label>
-                                        <div class="radio-list">
-                                            <label class="radio-inline">
-                                                <input type="radio" class="regular-radio" name="Gender" value="Male" ng-model="postData.data.Gender"> Male
+                                        <div class="mt-radio-inline">
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" name="Gender" value="Male" ng-model="postData.data.Gender"> Male <span></span>
                                             </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" class="regular-radio" name="Gender" value="Female" ng-model="postData.data.Gender"> Female
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" name="Gender" value="Female" ng-model="postData.data.Gender"> Female <span></span>
                                             </label>
                                         </div>
                                         <p class="help-block required-text" ng-if="submitted && step1.Gender.$error.required">
@@ -183,12 +183,12 @@
                                         <label class="control-label">
                                             Next of kin available?
                                         </label>
-                                        <div class="radio-list">
-                                            <label class="radio-inline">
-                                                <input type="radio" class="regular-radio" ng-model="NextOfKin" value="Y" name="NextOfKin" checked> Yes
+                                        <div class="mt-radio-inline">
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" ng-model="NextOfKin" value="Y" name="NextOfKin" checked> Yes <span></span>
                                             </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" class="regular-radio" ng-model="NextOfKin" value="N" name="NextOfKin"> No
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" ng-model="NextOfKin" value="N" name="NextOfKin"> No <span></span>
                                             </label>
                                         </div>
                                     </div>
@@ -517,7 +517,7 @@
                             <label class="control-label col-md-3 col-sm-3">
                                 PIN Number / Password <span class="required">*</span>
                             </label>
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-8 col-sm-8">
                                 <input type="text" class="form-control" name="PinNumber" ng-model="postData.data.PinNumber" ng-pattern="/^[0-9]{6}$/" required>
                                 <span class="help-block">This Pin code is your password to access your online health information through REDIMED, at your convenience. </span>
                                 <p class="help-block required-text" ng-if="submitted && step3.PinNumber.$error.required">This field is required.</p>
@@ -526,62 +526,57 @@
                         </div>
                        	<div ng-show="typedoctor == 'typedoctor'">
 	                        <div class="form-group">
-	                            <div class="col-md-3 col-sm-3">
+	                            <label class="control-label col-md-3 col-sm-3">How did you hear about our Skin Screen service?</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="mt-checkbox-list">
+	                                    <label class="mt-checkbox mt-checkbox-outline">
+	                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.webpage'].Value"><span></span> Shire's webpage</label>
+	                                    <label class="mt-checkbox mt-checkbox-outline">
+	                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Facebook'].Value"><span></span> Facebook</label>
+	                                    <label class="mt-checkbox mt-checkbox-outline">
+	                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Wordofmouth'].Value"><span></span> Word of mouth</label>
+	                                    <label class="mt-checkbox mt-checkbox-outline">
+	                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Noticeboards'].Value"><span></span> Notice boards</label>
+	                                    <label class="mt-checkbox mt-checkbox-outline">
+	                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Newspaper'].Value"><span></span> Newspaper</label>
+	                                    <label class="mt-checkbox mt-checkbox-outline">
+	                                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Localclinic'].Value"><span></span> Local clinic</label>
+                                        <label class="mt-checkbox mt-checkbox-outline">
+                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Otherspleasespecify'].Value"><span></span> &nbsp;Others (please specify)</label>
+	                                </div>
 	                            </div>
-	                            <div class="col-md-5 col-sm-5">
-	                                <label>How did you hear about our Skin Screen service?</label>
-	                                <div class="checkbox-list" style="margin-left: 2em;">
-	                                    <label>
-	                                        <input type="checkbox"  class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.webpage'].Value"> Shire's webpage</label>
-	                                    <label>
-	                                        <input type="checkbox"  class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Facebook'].Value"> Facebook</label>
-	                                    <label>
-	                                        <input type="checkbox"  class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Wordofmouth'].Value"> Word of mouth</label>
-	                                    <label>
-	                                        <input type="checkbox"  class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Noticeboards'].Value"> Notice boards</label>
-	                                    <label>
-	                                        <input type="checkbox"  class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Newspaper'].Value"> Newspaper</label>
-	                                    <label>
-	                                        <input type="checkbox"  class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Localclinic'].Value"> Local clinic</label>
-	                                    <div class="form-inline">
-	                                        <label>
-	                                            <input type="checkbox"  class="regular-checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Otherspleasespecify'].Value">&nbsp;Others (please specify)</label>
-	                                        <input type="text" class="form-control">
-	                                    </div>
+	                        </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3">Others (please specify)</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+	                        <div class="form-group">
+	                            <label class="control-label col-md-3 col-sm-3">Would you be interested to have annual Skin Screens by Redimed?</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="mt-radio-inline">
+	                                    <label class="mt-radio mt-radio-outline">
+	                                        <input type="radio" name="byRedimed" value="Y" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Skinscreensbyredimed'].Value"><span></span> Yes</label>
+	                                    <label class="mt-radio mt-radio-outline">
+	                                        <input type="radio" name="byRedimed" value="N" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Skinscreensbyredimed'].Value"><span></span> No</label>
 	                                </div>
 	                            </div>
 	                        </div>
 	                        <div class="form-group">
-	                            <div class="col-md-3 col-sm-3">
-	                            </div>
-	                            <div class="col-md-5 col-sm-5">
-	                                <label>Would you be interested to have annual Skin Screens by Redimed?</label>
-	                                <div class="radio-list">
-	                                    <label class="radio-inline">
-	                                        <input type="radio" class="regular-radio" name="byRedimed" value="Y" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Skinscreensbyredimed'].Value"> Yes</label>
-	                                    <label class="radio-inline">
-	                                        <input type="radio" class="regular-radio" name="byRedimed" value="N" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Skinscreensbyredimed'].Value"> No</label>
+	                            <label class="control-label col-md-3 col-sm-3">Would you be happy for Redimed to provide your town with other health services on a regular basis?</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="mt-radio-inline">
+	                                    <label class="mt-radio mt-radio-outline">
+	                                        <input type="radio" name="regularbasis" value="Y" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Regularbasis'].Value"><span></span> Yes</label>
+	                                    <label class="mt-radio mt-radio-outline">
+	                                        <input type="radio" name="regularbasis" value="N" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Regularbasis'].Value"><span></span> No</label>
 	                                </div>
 	                            </div>
 	                        </div>
 	                        <div class="form-group">
-	                            <div class="col-md-3 col-sm-3">
-	                            </div>
-	                            <div class="col-md-5 col-sm-5">
-	                                <label>Would you be happy for Redimed to provide your town with other health services on a regular basis?</label>
-	                                <div class="radio-list">
-	                                    <label class="radio-inline">
-	                                        <input type="radio" class="regular-radio" name="regularbasis" value="Y" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Regularbasis'].Value"> Yes</label>
-	                                    <label class="radio-inline">
-	                                        <input type="radio" class="regular-radio" name="regularbasis" value="N" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Regularbasis'].Value"> No</label>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div class="form-group">
-	                            <div class="col-md-3 col-sm-3">
-	                            </div>
-	                            <div class="col-md-5 col-sm-5">
-	                                <label> If yes, what kind of health service?</label>
+	                            <label class="control-label col-md-3 col-sm-3"> If yes, what kind of health service?</label>
+	                            <div class="col-md-8 col-sm-8">
 	                                <input type="text" class="form-control" ng-model="AppointmentData['Appointment.Telehealth.Screenservice.Ifhealthservice'].Value"></input>
 	                            </div>
 	                        </div>

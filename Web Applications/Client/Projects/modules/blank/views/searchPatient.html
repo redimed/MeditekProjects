@@ -11,24 +11,24 @@
 			<div class="portlet-body form" >
 				<!-- {{postData}} -->
 				<form name="step1" class="form-horizontal " novalidate ng-submit="next()" ng-show="number == 1">
-					<div class="form-body my-form-body-padding">
+					<div class="form-body">
 						<div class="row margin-top-20">
-							<div class="col-lg-6 col-md-12">
+							<div class="col-lg-6 col-md-6 col-sm-12">
 								<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.FirstName.$invalid]">
 									<label class="control-label col-md-4 col-sm-4">
 										First Name <span class="required">*</span>
 									</label>
-									<div class="col-md-6">
+									<div class="col-md-6 col-sm-6">
 										<input type="text" class="form-control" name="FirstName" 
 											ng-model="postData.data.FirstName" required>
 										<p class="help-block" ng-if="submitted && step1.FirstName.$error.required">This field is required.</p>
 									</div>
 								</div>
 								<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.LastName.$invalid]">
-									<label class="control-label col-md-4">
+									<label class="control-label col-md-4 col-sm-4">
 										Last Name <span class="required">*</span>
 									</label>
-									<div class="col-md-6">
+									<div class="col-md-6 col-sm-6">
 										<input type="text" class="form-control" name="LastName" 
 											ng-model="postData.data.LastName" required>
 										<p class="help-block" ng-if="submitted && step1.LastName.$error.required">This field is required.</p>
@@ -38,43 +38,43 @@
 									<label class="control-label col-md-4 col-sm-4">
 										Date of Birth <span class="required">*</span>
 									</label>
-									<div class="col-md-6">
+									<div class="col-md-6 col-sm-6">
 										<input type="text" class="form-control date-picker" name="DOB" data-date-format="dd/mm/yyyy" ng-model="postData.data.DOB" data-date-end-date="0d" required>
 										<p class="help-block" ng-if="submitted && step1.DOB.$error.required">This field is required.</p>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-6 col-md-12">
+							<div class="col-lg-6 col-md-6 col-sm-12">
 								<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Gender.$invalid]">
-									<label class="control-label col-md-4">
+									<label class="control-label col-md-4 col-sm-4">
 										Gender <span class="required">*</span>
 									</label>
-									<div class="col-md-6">
-										<div class="radio-list">
-											<label class="radio-inline">
-												<input type="radio" class="regular-radio" value="Male" name="Gender" ng-model="postData.data.Gender" required> Male
+									<div class="col-md-6 col-sm-6">
+										<div class="mt-radio-inline">
+											<label class="mt-radio mt-radio-outline">
+												<input type="radio" value="Male" name="Gender" ng-model="postData.data.Gender" required> Male <span></span>
 											</label>
-											<label class="radio-inline">
-												<input type="radio" class="regular-radio" value="Female" name="Gender" ng-model="postData.data.Gender" required> Female
+											<label class="mt-radio mt-radio-outline">
+												<input type="radio" value="Female" name="Gender" ng-model="postData.data.Gender" required> Female <span></span>
 											</label>
 										</div>
 										<p class="help-block" ng-if="submitted && step1.Gender.$error.required">This field is required.</p>
 									</div>
 								</div>
 								<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.PhoneNumber.$invalid]">
-									<label class="control-label col-md-4">
+									<label class="control-label col-md-4 col-sm-4">
 										Phone Number
 									</label>
-									<div class="col-md-6">
+									<div class="col-md-6 col-sm-6">
 										<input type="text" class="form-control" name="PhoneNumber" ng-model="postData.data.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
 										<p ng-show="submitted && step1.PhoneNumber.$error.pattern" class="help-block">This is not a mobile phone number</p>
 									</div>
 								</div>
 								<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Email1.$invalid]">
-									<label class="control-label col-md-4">
+									<label class="control-label col-md-4 col-sm-4">
 										Email <span class="required">&nbsp;</span>
 									</label>
-									<div class="col-md-6">
+									<div class="col-md-6 col-sm-6">
 										<input type="text" class="form-control" ng-model="postData.data.Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" name="Email1">
 										<p ng-show="submitted && step1.Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
 									</div>
@@ -83,13 +83,13 @@
 						</div>
 					</div>
 					<div class="form-actions right">
-						<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcome" ng-show="typePatient != 'PatientCampaign'">
+						<a href="javascript:;" class="btn btn-md btn-default" ui-sref="blank.welcome" ng-show="typePatient != 'PatientCampaign'">
 							<i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
-						<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcomeCampaign" ng-show="typePatient == 'PatientCampaign'">
+						<a href="javascript:;" class="btn btn-md btn-default" ui-sref="blank.welcomeCampaign" ng-show="typePatient == 'PatientCampaign'">
 							<i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
-						<button type="button" class="btn btn-lg yellow" ng-click="Reset()">
+						<button type="button" class="btn btn-md yellow" ng-click="Reset()">
 							<i class="glyphicon glyphicon-refresh"></i> Reset</button>
-						<button type="submit" class="btn btn-lg blue">
+						<button type="submit" class="btn btn-md blue">
 							Search <i class="glyphicon glyphicon-arrow-right"></i></button>
 					</div>
 				</form>

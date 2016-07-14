@@ -1,0 +1,76 @@
+<!--BEGIN PAGE HEADER-->
+<div class="page-bar margin-bottom-20">
+    <ul class="page-breadcrumb">
+        <li><a ui-sref="authentication.home.list">Homepage</a></li>
+        <li><i class="fa fa-circle"></i> <a ui-sref="authentication.consultation.list">Consultation</a></li>
+        <li><i class="fa fa-circle"></i> <span>Consultation Detail</span></li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="portlet">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-green uppercase bold">Consultation Detail</span>
+            <span class="caption-helper"></span>
+        </div>
+        <div class="actions">
+            <!-- <a class="btn btn-circle btn-icon-only btn-default fullscreen"></a> -->
+            <a class="btn green" ng-click="zoom()">{{zoomLabel}}</a>   
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-xs-12" id="col1" >
+                <div class="my-list-ui-view">
+                    <ul class="title">
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.workCover">WorkCover forms</a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="authentication.consultation.detail1.referral">Referrals forms</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.internal">Internal Referrals</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.clinic">Clinic Op Notes</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.drawing">Drawing</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.prescription">Prescription</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.dictation">Dictation</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.image">Image Capture</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.consent">Consent forms</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.admission">Admission forms</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.billing">Billing Code</a>
+                        </li>
+                        <li ui-sref-active="active" class="">
+                            <a ui-sref="authentication.consultation.detail1.appointment">Appointment</a>
+                        </li>
+                    </ul>
+                    <div class="content" ui-view>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4" id="col2">
+                <patient-detail-directive info="dataDirective"></patient-detail-directive>
+                <appointment-detail-directive info="dataDirective"></appointment-detail-directive>
+                <medicare-directive info="dataDirective"></medicare-directive>
+            </div>
+        </div>
+    </div>
+</div>
+

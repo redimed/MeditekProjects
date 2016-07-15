@@ -5,85 +5,91 @@
         <i class="fa fa-envelope"></i> Send Email</h4>
         
 </div>
-<form name="myForm" novalidate>
+<form name="myForm" name="myForm" novalidate>
     <div class="modal-body">    
-        <div class="form">        
-            <div class="form-horizontal">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h4 class="form-section text-primary">Enter Information</h4>
-                        <div class="form-group" ng-class="myForm.email1.$error.email ? 'has-error' : ''">
-                            <label class="control-label col-xs-3 text-right">From:</label>
-                            <div class="col-xs-8">
-                                <input type="email" name="email1" class="form-control" ng-model="data.sender" placeholder="From" required />
-                                <span ng-show="myForm.email1.$error.email" class="help-block"> Not valid email! </span>
+        <form class="form"> 
+            <div class="form-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4 class="form-section text-primary">Enter Information</h4>
+                            <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.email1.$invalid]">
+                                <label class="control-label col-xs-3 text-right">From:</label>
+                                <div class="col-xs-8">
+                                    <input type="email" name="email1" class="form-control" ng-model="data.sender" placeholder="example@domain.com" required />
+                                    <span class="help-block" ng-if="submitted && myForm.email1.$error.required">Required</span>
+                                    <span class="font-red" ng-if="myForm.email1.$error.email">Invalid From address.</span>                                
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.email2.$invalid]">
+                                <label class="control-label col-xs-3 text-right">To:</label>
+                                <div class="col-xs-8">
+                                    <input type="email" name="email2" class="form-control" ng-model="data.recipient[0]" placeholder="exaple@domain.com" ng-change="cutstring(data.recipient[0])" required /> 
+                                    <span class="help-block" ng-if="submitted && myForm.email2.$error.required">Required</span>
+                                    <span class="font-red" ng-if="myForm.email2.$error.email">Invalid From address.</span>                                
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.Subject.$invalid]">
+                                <label class="control-label col-xs-3 text-right">Subject:</label>
+                                <div class="col-xs-8">
+                                    <input type="text" name="Subject" class="form-control" ng-model="data.subject" placeholder="Enter subject" required />
+                                    <span class="help-block" ng-if="submitted && myForm.Subject.$error.required">Required</span>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.Content.$invalid]">
+                                <label class="control-label col-xs-3 text-right">Content:</label>
+                                <div class="col-xs-8">
+                                    <textarea class="form-control" name="Content" rows="7" ng-model="data.bodyContent" placeholder="Enter content" required></textarea>
+                                    <span class="help-block" ng-if="submitted && myForm.Content.$error.required">Required</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-xs-3 text-right">To:</label>
-                            <div class="col-xs-8">
-                                <input type="email" name="email2" class="form-control" ng-model="data.recipient[0]" placeholder="To" ng-change="cutstring(data.recipient[0])" />                                
-                            </div>
+                        <div class="col-xs-12">
+                            <h4 class="form-section text-primary">Attachment</h4>
+                            <div class="table-responsive">
+                                <table class="table table-light table-checkable order-column" id="sample_1">
+                                   <thead>
+                                       <tr class="uppercase">
+                                           <th width="1"></th>
+                                           <th> Code </th>
+                                           <th> Name </th>
+                                           <th> Date </th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr class="odd gradeX" ng-repeat="at in attach">
+                                           <td>
+                                                <input type="checkbox" ng-model="UIDTemplate[at.Note]" ng-true-value="'{{at.Note}}'" ng-false-value="''" ng-change="checkUIDTemplate(at.Note,$index)" />
+                                           </td>
+                                           <td>{{at.Appointments[0].Code}}</td>
+                                           <td>{{at.Name}}</td>
+                                           <td>{{at.ModifiedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>                    
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-xs-3 text-right">Subject:</label>
-                            <div class="col-xs-8">
-                                <input type="text" class="form-control" ng-model="data.bodyContent" placeholder="Enter subject"/>
+                        <!-- <div class="col-xs-6">
+                            <h4 class="form-section text-primary">Signature</h4>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 250px; height: 150px;">
+                                    <img src="theme/assets/global/images/no_signature.jpg" alt="" /> 
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 150px;"> </div>
+                                <div>
+                                    <span class="btn default btn-file">
+                                        <span class="fileinput-new"> Select image </span>
+                                        <span class="fileinput-exists"> Change </span>
+                                        <input type="file" name="..."> 
+                                    </span>
+                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-xs-3 text-right">Content:</label>
-                            <div class="col-xs-8">
-                                <textarea class="form-control" rows="7" ng-model="data.subject" placeholder="Enter content"></textarea>
-                            </div>
-                        </div>
+                        </div> -->                
                     </div>
-                    <div class="col-xs-12">
-                        <h4 class="form-section text-primary">Attachment</h4>
-                        <div class="table-responsive">
-                            <table class="table table-light table-checkable order-column" id="sample_1">
-                               <thead>
-                                   <tr class="uppercase">
-                                       <th width="1"></th>
-                                       <th> Code </th>
-                                       <th> Name </th>
-                                       <th> Date </th>
-                                   </tr>
-                               </thead>
-                               <tbody>
-                                   <tr class="odd gradeX" ng-repeat="at in attach">
-                                       <td>
-                                            <input type="checkbox" ng-model="UIDTemplate[at.Note]" ng-true-value="'{{at.Note}}'" ng-false-value="''" ng-change="checkUIDTemplate(at.Note,$index)" />
-                                       </td>
-                                       <td>{{at.Appointments[0].Code}}</td>
-                                       <td>{{at.Name}}</td>
-                                       <td>{{at.ModifiedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>                    
-                    </div>
-                    <!-- <div class="col-xs-6">
-                        <h4 class="form-section text-primary">Signature</h4>
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <div class="fileinput-new thumbnail" style="width: 250px; height: 150px;">
-                                <img src="theme/assets/global/images/no_signature.jpg" alt="" /> 
-                            </div>
-                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 150px;"> </div>
-                            <div>
-                                <span class="btn default btn-file">
-                                    <span class="fileinput-new"> Select image </span>
-                                    <span class="fileinput-exists"> Change </span>
-                                    <input type="file" name="..."> 
-                                </span>
-                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                            </div>
-                        </div>
-                    </div> -->                
                 </div>
             </div>
-            
-        </div>
+        </form>
     </div>
 </form>
 <div class="modal-footer">

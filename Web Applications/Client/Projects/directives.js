@@ -190,8 +190,8 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                         self.data = {                            
                             sender: null,
                             recipient:[],
-                            bodyContent: null,
-                            subject: null,
+                            bodyContent: "",
+                            subject: "",
                         };
                         var userInfo = $cookies.getObject('userInfo');
                         console.log("userInfo", userInfo.UID);
@@ -246,48 +246,65 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
 
                         self.close = function(){
                             modalInstance.close();
-                        }
+                        };
 
-                        self.send = function(){                            
-                            self.data.recipient = self.data.recipient[0].split(", ");                                                 
-                            self.attachments = [];
+                        self.submitted = false;                        
 
-                            for (var key in self.UIDTemplate){
-                                console.log(key," here ", self.UIDTemplate[key]);
-                                if(self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined){
-                                    console.log("this is the value - ",self.UIDTemplate[key]);
-                                    var subStrs = self.UIDTemplate[key].split(".");
-                                    var name = '';
-                                    for (var i = 0; i < self.attach.length; i++) {
-                                        if (self.attach[i].UID === self.UIDTemplate[key] || self.attach[i].Note === self.UIDTemplate[key]) {
-                                            name = self.attach[i].Name;
+                        self.send = function(){
+                            self.submitted = true;
+                            // if (self.myForm.Subject.$invalid || self.myForm.email1.$dirty && self.myForm.email1.$invalid || self.myForm.Content.$invalid ) {
+                            if (self.myForm.$invalid){
+                                toastr.error("you must enter full information !!!!!");                            
+                            }
+                            else
+                            {
+                                o.loadingPage(true);
+                                // if (self.data.bodyContent === null || self.data.bodyContent === undefined) {
+                                //     self.data.bodyContent = " ";
+                                // }                            
+                                self.data.recipient = self.data.recipient[0].split(", ");                                                 
+                                self.attachments = [];
+
+                                for (var key in self.UIDTemplate){
+                                    console.log(key," here ", self.UIDTemplate[key]);
+                                    if(self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined){
+                                        console.log("this is the value - ",self.UIDTemplate[key]);
+                                        var subStrs = self.UIDTemplate[key].split(".");
+                                        var name = '';
+                                        for (var i = 0; i < self.attach.length; i++) {
+                                            if (self.attach[i].UID === self.UIDTemplate[key] || self.attach[i].Note === self.UIDTemplate[key]) {
+                                                name = self.attach[i].Name;
+                                            };
                                         };
-                                    };
-                                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> aaaaaaaaa", name);
-                                    tmp = {
-                                        type:subStrs.length>1?"fileupload":"report",
-                                        content: subStrs[0],
-                                        name:name,
-                                        extension:subStrs.length>1?subStrs[1]:"pdf"
-                                    };
-                                    self.attachments.push(tmp);
+                                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> aaaaaaaaa", name);
+                                        tmp = {
+                                            type:subStrs.length>1?"fileupload":"report",
+                                            content: subStrs[0],
+                                            name:name,
+                                            extension:subStrs.length>1?subStrs[1]:"pdf"
+                                        };
+                                        self.attachments.push(tmp);
+                                    }
+                                }                            
+                                if (self.attachments.length > 0) {
+                                    self.data.attachments = self.attachments;
                                 }
-                            }                            
-                            if (self.attachments.length > 0) {
-                                self.data.attachments = self.attachments;
-                            }
-                            else{
-                                if (self.data.attachments) {
-                                    delete self.data.attachments;
+                                else{
+                                    if (self.data.attachments) {
+                                        delete self.data.attachments;
+                                    }
                                 }
+                                // toastr.info('Sending...');                                                                                                                                                
+                                CommonService.sendEmail(self.data).then(function(data){
+                                     o.loadingPage(false);                              
+                                    modalInstance.close();                                                                                            
+                                    toastr.success('Send successfully');
+                                }, function(err){
+                                     o.loadingPage(false);
+                                    toastr.error('Send failed',"Unexpected Error");
+                                })   
                             }
-                            toastr.info('Sending...');                                                                                                                                                
-                            CommonService.sendEmail(self.data).then(function(data){                                
-                                modalInstance.close();                                                                
-                                toastr.success('Send successfully');
-                            }, function(err){
-                                toastr.error('Send failed',"Unexpected Error");
-                            })                
+                                         
                         };
                     },
                 });

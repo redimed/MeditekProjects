@@ -1,8 +1,225 @@
 <resources>
-    <!-- Application Name-->
-    <string name="app_name">REDIMED Health Work Injury</string>
+	<string name="app_name">REDIMED Health Work Injury</string>
 
-    <!-- Home Activity-->
+    <!-- Launcher-->
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_call">CallActivity</string>
+    <string name="title_activity_contact">ContactActivity</string>
+
+    <!-- Main-->
+    <string name="un_title">Do you want to logout the system?</string>
+
+    <!-- Activation-->
+    <string name="activation_title">Activation</string>
+
+    <!-- Login -->
+    <string name="hint_fone">Phone Number</string>
+    <string name="hint_pin">Pin</string>
+    <string name="btn_continue">Continue</string>
+    <string name="btn_login">Login</string>
+
+    <!-- Error-->
+    <string name="error_network">Network Error</string>
+    <string name="error_no_response">No Response From Server</string>
+    <string name="error_network_http_error">Network Http Error</string>
+    <string name="error_unknown">Error Unknown</string>
+    <string name="alert_wrong_phone">Phone Number Invalid</string>
+    <string name="empty_email">Please Input Your Email</string>
+    <string name="error_email">Email Invalid</string>
+    <string name="token_expired">Sorry for inconvenience, please login application again!</string>
+    <string name="token_mismatched">Session Mismatched, please refresh again!</string>
+    <string name="alert_login">Your Phone Number or Pin Code was incorrect</string>
+
+    <!-- Connection Dialog-->
+    <string name="btn_primary">Settings</string>
+    <string name="btn_foreign">Skip</string>
+    <string name="title_connection">Can\'t connect to Server!</string>
+    <string name="message_connection">Please check Wifi or Cellular in your device settings to use full our service!</string>
+
+    <!-- Fontello icons -->
+    <string name="fontello_search">&#xe816;</string>
+    <string name="fontello_x_mark">&#xe81f;</string>
+    <string name="fontello_x_mark_masked">&#xe806;</string>
+    <string name="fontello_microfon">&#xe80f;</string>
+    <string name="fontello_user">&#xe81b;</string>
+    <string name="fontello_password">&#xe823;</string>
+    <string name="fontello_upload">&#xe81a;</string>
+    <string name="fontello_play">&#xe813;</string>
+    <string name="fontello_heart_empty">&#xe80b;</string>
+    <string name="fontello_heart_full">&#xe80a;</string>
+    <string name="fontello_drag_and_drop">&#xe821;</string>
+
+    <!-- Material Design Icons -->
+    <string name="material_icon_bike">&#xe915;</string>
+    <string name="material_icon_go">&#xea04;</string>
+    <string name="material_icon_sleep">&#xe9c2;</string>
+    <string name="material_icon_eat">&#xeac6;</string>
+    <string name="material_icon_play">&#xe831;</string>
+    <string name="material_icon_drink">&#xea08;</string>
+    <string name="material_icon_party">&#xe937;</string>
+    <string name="material_icon_shop">&#xe858;</string>
+    <string name="material_icon_account">&#xe800;</string>
+    <string name="material_icon_account_multiple">&#xe8dc;</string>
+    <string name="material_icon_message">&#xea12;</string>
+    <string name="material_icon_image_box">&#xe952;</string>
+    <string name="material_icon_video">&#xeb39;</string>
+    <string name="material_icon_clock">&#xe881;</string>
+    <string name="material_icon_star_outline">&#xeade;</string>
+    <string name="material_icon_star">&#xeadf;</string>
+    <string name="material_icon_share">&#xeac0;</string>
+    <string name="material_icon_plus_box">&#xea7f;</string>
+    <string name="material_icon_check">&#xe867;</string>
+    <string name="material_icon_undo">&#xeb2c;</string>
+    <string name="material_icon_friends">&#xe8d5;</string>
+    <string name="material_icon_email">&#xe99c;</string>
+    <string name="material_icon_password">&#xe9fa;</string>
+    <string name="material_icon_flag">&#xe96a;</string>
+    <string name="material_icon_city">&#xe878;</string>
+    <string name="material_icon_unfold_more">&#xeb2f;</string>
+    <string name="material_icon_home_variant">&#xe9bd;</string>
+    <string name="material_icon_home">&#xe9be;</string>
+    <string name="material_icon_hotels">&#xeae3;</string>
+    <string name="material_icon_date">&#xe848;</string>
+    <string name="material_icon_like">&#xeb03;</string>
+    <string name="material_icon_bookmark">&#xe921;</string>
+    <string name="material_icon_back">&#xe875;</string>
+    <string name="search">Search Country</string>
+
+    <!-- Drawer Layout-->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- Home Layout-->
+    <string name="home_title">Home</string>
+
+    <!-- Appointment Layout-->
+    <string name="appt_title">Appointment</string>
+    <string name="appt_sub_title">APPOINTMENT INFORMATION</string>
+    <string name="lbl_date">Date</string>
+    <string name="lbl_time">Time</string>
+    <string name="lbl_doctor">Doctor</string>
+    <string name="lbl_status">Status</string>
+    <string name="lbl_code">Appointment Code</string>
+    <string name="lbl_first">First Name</string>
+    <string name="lbl_last">Last Name</string>
+    <string name="lbl_mobile">Mobile Phone</string>
+    <string name="lbl_home">Home Phone</string>
+    <string name="lbl_suburb">Suburb</string>
+    <string name="lbl_appt_type">Appointment Type</string>
+    <string name="lbl_dob">Date of Birth</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_des">Description of Injury</string>
+    <string name="lbl_image">Image</string>
+
+    <!--Dialog Appointment-->
+    <string name="title_dialog_appt">Alert!</string>
+    <string name="message_dialog_appt">Sorry there is no appointment in this time.</string>
+
+    <!-- Model Layout-->
+    <string name="title_activity_model">ModelActivity</string>
+
+    <!-- List Appointment-->
+    <string name="list_appt_title">Tracking Bookings</string>
+    <string name="sub_title">Tracking</string>
+    <string name="no_data_result">No Data Result</string>
+    <string name="no_image_result">No Image</string>
+    <string name="req_date">Request Date</string>
+    <string name="ref_pra">Referring Practitioner</string>
+    <string name="pre_pra">Treating Practitioner</string>
+
+    <!-- Setting Layout-->
+
+    <!-- Profile Layout-->
+    <string name="profile_first_name">First Name</string>
+    <string name="profile_mid_name">Middle Name</string>
+    <string name="profile_last_name">Last Name</string>
+    <string name="profile_title">Patient Profile</string>
+    <string name="profile_mobile">Mobile</string>
+    <string name="profile_dob">DOB</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_home_phone">Home Phone</string>
+    <string name="profile_address">Address</string>
+    <string name="profile_suburb">Suburb</string>
+    <string name="profile_post_code">Post Code</string>
+    <string name="profile_country">Country</string>
+    <string name="profile_update">Update Profile</string>
+
+    <!-- Sub Tracking Layout-->
+    <string name="sub_tracking_received">Received</string>
+    <string name="sub_tracking_appt_pending">&#160;&#160;&#160;Appt&#x000A;pending</string>
+    <string name="sub_tracking_appt_time">Appt&#x000A;time</string>
+    <string name="appt_time_time">Time</string>
+    <string name="appt_time_date">Date</string>
+    <string name="appt_time_location">Location</string>
+    <string name="appt_time_treating_doctor">Treating Doctor</string>
+    <string name="sub_tracking_attend">Attended</string>
+    <string name="sub_tracking_wait">&#160;&#160;&#160;Wait&#x000A;&#160;&#160;&#160;&#160;&#160;list&#x000A;&#160;surgery</string>
+    <string name="sub_tracking_finish">Finish</string>
+    <string name="sub_appointment">Appointment</string>
+
+    <!--Request Layout-->
+    <string name="res_title">Request Telehealth</string>
+    <string name="res_please">Please provide the following information.</string>
+    <string name="res_sub_title">CONTACT INFORMATION</string>
+    <string name="res_first_name">First Name *</string>
+    <string name="res_last_name">Last Name *</string>
+    <string name="res_mobile">Mobile Number *</string>
+    <string name="res_home">Homephone</string>
+    <string name="res_suburb">Suburb *</string>
+    <string name="res_appt_type">Appointment Type *</string>
+    <string name="res_dob">DOB *</string>
+    <string name="res_email">Email *</string>
+    <string name="res_des">Description of Injury</string>
+    <string name="field_empty">This field cannot be empty.</string>
+    <string name="phone_format">Mobile Number wrong formatted</string>
+    <string name="email_valid">Email address not valid</string>
+
+    <string-array name="appt__type_arrays">
+        <item>Appointment Type *</item>
+        <item>Onsite</item>
+        <item>Telehealth</item>
+    </string-array>
+
+    <!-- Mix-->
+    <string name="back">Back</string>
+    <string name="btn_submit">Submit</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_upload">Upload Photos</string>
+    <string name="fileSuburb">suburb.json</string>
+    <string name="fileCountry">country.json</string>
+    <string name="confirm_sign">Please sign consents form before booking an appointment with Redimed</string>
+    <string name="sign_edit">Edit Signature</string>
+    <string name="sign_clear">Clear</string>
+    <string name="sign_cancel">Cancel</string>
+    <string name="sign_save">Save Signature</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Notification-->
+    <string name="not_title">Telehealth</string>
+
+    <!-- Maps -->
+    <string name="title_activity_maps">Map</string>
+
+    <!--Gallery -->
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="title_gallery">Gallery</string>
+
+    <!-- Confirm -->
+    <string name="confirm_title">Confirm your Request</string>
+    <string name="confirm_sub_title">Summary Information</string>
+    <string name="confirm_complete">Complete Request</string>
+    <string name="confirm_option1">I, authorise any doctor who treats me (whether named in this certificate or not) to discuss my medical condition, in relation to my claim for worker\'s compensation and return to work options, with my employer and with their insurer.</string>
+    <string name="confirm_option2">If your claim is NOT ACCEPTED by the insurance company, or your accounts are not settled by your employer, you will be liable for any invoices issued during the course of your treatment. If your account is forwarded to the debt collector, you will be liable for all fees associated.</string>
+    <string name="confirm_option3">I, agree to having medic/supervisor present as a third party during a medical consult with REDiMED.</string>
+
+    <!-- Pin -->
+    <string name="pin_title">Change Pin</string>
+    <string name="current_pin">Current Pin</string>
+    <string name="new_pin">New Pin</string>
+    <string name="confirm_pin">Re-type new</string>
+    <string name="error_pin">Please input your field is 6 characters</string>
+
+  <!-- Home Activity-->
     <string name="green_btn">Rehab</string>
     <string name="blue_btn">Specialist</string>
     <string name="red_btn">GP</string>
@@ -107,5 +324,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting">Setting</string>
+    <string name="home">Home</string>
+    <string name="login">Login</string>
+    <string name="patient_infomation">PATIENT INFORMATION</string>
+    <string name="change_pin_number">Change Pin Number</string>
+    <string name="staff_information">STAFF INFORMATION</string>
 
 </resources>

@@ -47,11 +47,11 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import patient.telehealth.redimed.workinjury.model.AppointmentDataModel;
-import patient.telehealth.redimed.workinjury.model.AppointmentModel;
-import patient.telehealth.redimed.workinjury.model.PatientAppointmentModel;
-import patient.telehealth.redimed.workinjury.model.SiteModel;
-import patient.telehealth.redimed.workinjury.model.StaffModel;
+import patient.telehealth.redimed.workinjury.models.AppointmentDataModel;
+import patient.telehealth.redimed.workinjury.models.AppointmentModel;
+import patient.telehealth.redimed.workinjury.models.PatientAppointmentModel;
+import patient.telehealth.redimed.workinjury.models.ModelSite;
+import patient.telehealth.redimed.workinjury.models.ModelStaff;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.utils.TypefaceUtil;
 import retrofit.Callback;
@@ -599,22 +599,22 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         Intent intent = getIntent();
 
-        StaffModel staffModel = intent.getExtras().getParcelable("staff"+"");
-        SiteModel siteModel = intent.getExtras().getParcelable("site"+"");
-        Log.d("Resume", String.valueOf(staffModel));
-        if (staffModel != null){
-            Log.d("intent",staffModel.getFirstName()+"");
-            txtFirstName.setText(staffModel.getFirstName());
-            txtLastName.setText(staffModel.getLastName());
-            txtContactPhone.setText(staffModel.getHomePhoneNumber());
-            autoCompleteSuburb.setText(staffModel.getSuburb());
-            txtDOB.setText(staffModel.getDOB());
-            txtEmail.setText(staffModel.getEmail1());
+        ModelStaff modelStaff = intent.getExtras().getParcelable("staff"+"");
+        ModelSite modelSite = intent.getExtras().getParcelable("site"+"");
+        Log.d("Resume", String.valueOf(modelStaff));
+        if (modelStaff != null){
+            Log.d("intent", modelStaff.getFirstName()+"");
+            txtFirstName.setText(modelStaff.getFirstName());
+            txtLastName.setText(modelStaff.getLastName());
+            txtContactPhone.setText(modelStaff.getHomePhoneNumber());
+            autoCompleteSuburb.setText(modelStaff.getSuburb());
+            txtDOB.setText(modelStaff.getDOB());
+            txtEmail.setText(modelStaff.getEmail1());
         }
-        if (siteModel != null){
-            Log.d("intent",siteModel.getSiteName()+"");
-            txtContactPerson.setText(siteModel.getContactName());
-            txtCompanyPhone.setText(siteModel.getHomePhoneNumber());
+        if (modelSite != null){
+            Log.d("intent", modelSite.getSiteName()+"");
+            txtContactPerson.setText(modelSite.getContactName());
+            txtCompanyPhone.setText(modelSite.getHomePhoneNumber());
         }
     }
 

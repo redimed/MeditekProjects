@@ -15,9 +15,9 @@ import com.google.gson.JsonObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import patient.telehealth.redimed.workinjury.model.StaffModel;
+import patient.telehealth.redimed.workinjury.models.ModelStaff;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
-import patient.telehealth.redimed.workinjury.utils.ListStaffAdapter;
+import patient.telehealth.redimed.workinjury.staff.adapter.AdapterStaff;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -29,8 +29,8 @@ public class StaffListActivity extends AppCompatActivity implements View.OnClick
 
     private String UserUid;
     private SharedPreferences workInjury;
-    private ListStaffAdapter staffAdapter;
-    private StaffModel[] data;
+    private AdapterStaff staffAdapter;
+    private ModelStaff[] data;
     private Gson gson;
     private boolean work;
 
@@ -49,13 +49,13 @@ public class StaffListActivity extends AppCompatActivity implements View.OnClick
         RESTClient.getCoreApi().getListStaff(UserUid, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                data = gson.fromJson(jsonObject.get("data").toString(), StaffModel[].class);
+                data = gson.fromJson(jsonObject.get("data").toString(), ModelStaff[].class);
                 Log.d("eeeeeeee",jsonObject.get("data").toString());
 //                for (UrgentRequestModel urgentRequestModel : data){
 //                    Log.d("1111111111111111",urgentRequestModel.getDOB() + "");
 //
 //                }
-                staffAdapter = new ListStaffAdapter(StaffListActivity.this,data,work);
+                //staffAdapter = new AdapterStaff(StaffListActivity.this,data, );
                 staffRecyclerView.setAdapter(staffAdapter);
                 staffRecyclerView.setLayoutManager(new LinearLayoutManager(StaffListActivity.this));
             }

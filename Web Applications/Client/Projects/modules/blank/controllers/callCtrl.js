@@ -144,14 +144,15 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
         if ($scope.streams.length < 1) {
             window.close();
         }
-    })
+    });
 
-    session.on('streamDestroyed', function() {
-        console.log("streamDestroyed ", $scope.streams.length);
+    session.on('streamDestroyed', function(event) {
+        // console.log("streamDestroyed", event.reason);
+        // console.log("streamDestroyed ", $scope.streams.length);
         if ($scope.streams.length < 1) {
             window.close();
         }
-    })
+    });
 
     session.on("signal:endCall", function(event) {
         console.log("Signal sent from connection ", event);

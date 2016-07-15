@@ -21,8 +21,8 @@ import com.google.gson.JsonObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import patient.telehealth.redimed.workinjury.model.RolesModel;
-import patient.telehealth.redimed.workinjury.model.UserModel;
+import patient.telehealth.redimed.workinjury.models.RolesModel;
+import patient.telehealth.redimed.workinjury.models.UserModel;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;

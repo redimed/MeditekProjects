@@ -5,9 +5,12 @@ import com.google.gson.JsonObject;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.mime.TypedFile;
 
 /**
  * Created by Lam on 11/3/2015.
@@ -43,6 +46,9 @@ public interface UrgentRequest {
     @GET("/api/user-account/GetUserAccountDetails?UID=")
     void getDetailUser(@Query("userUid") String userUid, Callback<JsonObject> callback);
 
+    @GET("/api/telehealth/user/details/{uid}=")
+    void getDetailAccount(@Query("uid") String uid, Callback<JsonObject> callback);
+
     @POST("/api/telehealth/appointment/request")
     void sendAppointment(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
@@ -58,4 +64,28 @@ public interface UrgentRequest {
     @POST("/api/telehealth/user/forgetPin")
     void forgetPin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
+    @POST("/api/patient/detail-patient")
+    void getDetailPatient(@Body JsonObject object, Callback<JsonObject> callback);
+
+    @POST("/api/company/load-detail")
+    void getDetailSite(@Body JsonObject object, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/updatePinNumber")
+    void updatePin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/user/update")
+    void updatePatient(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/appointment/updateFile")
+    void addAppointmentFile(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+
+    /* 3005 */
+    @Multipart
+    @POST("/api/uploadFile")
+    void uploadFileModel(@Part("userUID") String userUID, @Part("fileType") String fileType, @Part("bodyPart") String bodyPart,
+                         @Part("description") String description, @Part("uploadFile") TypedFile uploadFile,
+                         Callback<JsonObject> callback);
+
+    @GET("/api/telehealth/user/WAAppointmentDetails/{apptUID}")
+    void getAppointmentDetails(@Path("apptUID") String apptUID, Callback<JsonObject> callback);
 }

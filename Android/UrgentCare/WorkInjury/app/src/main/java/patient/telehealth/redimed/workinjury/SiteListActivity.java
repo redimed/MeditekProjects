@@ -14,9 +14,9 @@ import com.google.gson.JsonObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import patient.telehealth.redimed.workinjury.model.SiteModel;
+import patient.telehealth.redimed.workinjury.models.ModelSite;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
-import patient.telehealth.redimed.workinjury.utils.ListSiteAdapter;
+import patient.telehealth.redimed.workinjury.site.adapter.AdapterSite;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -29,8 +29,8 @@ public class SiteListActivity extends AppCompatActivity implements View.OnClickL
 
     private SharedPreferences workInjury;
     private Gson gson;
-    private SiteModel[] data;
-    private ListSiteAdapter siteAdapter;
+    private ModelSite[] data;
+    private AdapterSite siteAdapter;
     private boolean work;
 
     @Override
@@ -46,8 +46,7 @@ public class SiteListActivity extends AppCompatActivity implements View.OnClickL
         RESTClient.getCoreApi().getListSite(workInjury.getString("companyUid",""), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                data = gson.fromJson(jsonObject.get("data").toString(), SiteModel[].class);
-                siteAdapter = new ListSiteAdapter(SiteListActivity.this, data, work);
+                data = gson.fromJson(jsonObject.get("data").toString(), ModelSite[].class);
                 siteRecyclerView.setAdapter(siteAdapter);
                 siteRecyclerView.setLayoutManager(new LinearLayoutManager(SiteListActivity.this));
             }

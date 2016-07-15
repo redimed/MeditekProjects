@@ -22,19 +22,13 @@ socketJoinRoom = function(server, api, obj) {
     });
 }
 
-messageTransfer = function(caller, receiver, message, receiverName, teleCallUID, data) {
-    var info = {
-        callerTeleUID: caller,
-        receiverTeleUID: receiver,
-        message: message,
-        receiverName: receiverName,
-        teleCallUID: teleCallUID,
-    };
-    if (message === "waiting") {
-        info.callerInfo = data;
-    }
-    socketTelehealth.get('/api/telehealth/socket/messageTransfer', info, function(msg) {
-        console.log("send call", msg);
+messageTransfer = function(from, to, message) {
+    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        from: from,
+        to: to,
+        message: message
+    }, function(data) {
+        console.log("send call", data);
     });
 }
 
@@ -121,6 +115,10 @@ function createSocketConnectTelehealth() {
         console.log(JSON.stringify("d" + msg));
     });
 
+    // socketTelehealth.on('disconnect', function() {
+    //     console.log("disconnect");
+    //     socketTelehealth = io.socket.delete(o.const.telehealthBaseURL);
+    // });
 
     socketTelehealth.on('receiveMessage', function(msg) {
         switch (msg.message) {

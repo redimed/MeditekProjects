@@ -1,19 +1,11 @@
 package patient.telehealth.redimed.workinjury.utils;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -22,7 +14,6 @@ import java.util.List;
 
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
-import retrofit.http.Part;
 import retrofit.mime.TypedByteArray;
 
 /**

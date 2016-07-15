@@ -5,7 +5,7 @@ module.exports.myconf = {
     twilioPhone: '+61439558227',
     twilioEnv:'debug',//debug,product
     url: 'https://meditek.redimed.com.au:3004',
-    urlNc: 'https://localhost:3016'
+    urlNc: 'http://localhost:3016'
     // urlNc: 'http://localhost:3016'
     // url:'http://localhost:3004',
 };

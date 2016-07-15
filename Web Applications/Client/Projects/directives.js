@@ -210,6 +210,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                         self.checkUIDTemplate = function(Note,index) {
                             console.log("index", index);                            
                             console.log("Note", Note);
+                            console.log("Note", Note);
                             console.log("self.UIDTemplate", self.UIDTemplate);
                             var checkExit = 0
                             for(key in self.UIDTemplate){
@@ -247,7 +248,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                             modalInstance.close();
                         }
 
-                        self.send = function(){
+                        self.send = function(){                            
                             self.data.recipient = self.data.recipient[0].split(", ");                                                 
                             self.attachments = [];
 
@@ -255,11 +256,19 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                                 console.log(key," here ", self.UIDTemplate[key]);
                                 if(self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined){
                                     console.log("this is the value - ",self.UIDTemplate[key]);
+                                    var subStrs = self.UIDTemplate[key].split(".");
+                                    var name = '';
+                                    for (var i = 0; i < self.attach.length; i++) {
+                                        if (self.attach[i].UID === self.UIDTemplate[key] || self.attach[i].Note === self.UIDTemplate[key]) {
+                                            name = self.attach[i].Name;
+                                        };
+                                    };
+                                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> aaaaaaaaa", name);
                                     tmp = {
-                                        type:'fileupload',
-                                        content: self.UIDTemplate[key],
-                                        name:self.attach.Name
-                                        // extension:self.attach.
+                                        type:subStrs.length>1?"fileupload":"report",
+                                        content: subStrs[0],
+                                        name:name,
+                                        extension:subStrs.length>1?subStrs[1]:"pdf"
                                     };
                                     self.attachments.push(tmp);
                                 }

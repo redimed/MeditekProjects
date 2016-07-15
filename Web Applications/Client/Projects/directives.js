@@ -207,13 +207,21 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                             var string = string.split(", ");                            
                         };
 
-                        self.checkUIDTemplate = function(UID) {                            
-                            console.log("UID", UID);
+                        self.checkUIDTemplate = function(Note,index) {
+                            console.log("index", index);                            
+                            console.log("Note", Note);
+                            console.log("Note", Note);
+                            console.log("self.UIDTemplate", self.UIDTemplate);
+                            var checkExit = 0
+                            for(key in self.UIDTemplate){
+                                console.log("self.UIDTemplate>>>>>>>>", self.UIDTemplate[key]);
+                            }
+                            if (self.UIDTemplate[Note] == ""){
+                                delete self.UIDTemplate[Note]
+                            }
                             console.log("self.UIDTemplate", self.UIDTemplate);
 
-                            for(key in self.UIDTemplate){
-                                console.log('>>>>>>>>>>>>', self.UIDTemplate[key])
-                            }
+                                                     
                         };                        
 
                         self.getEformTemplant = function(){
@@ -227,14 +235,20 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                             };
                             CommonService.getListEformTemplant(self.info).then(function(data) {
                                 console.log("|||||||||||||||||||||||||||||||||||", data);
-                                self.attack = data.rows;
-                                console.log("self.attack", self.attack);
+                                self.attach = data.rows;  
+                                for (var i = 0; i < self.attach.length; i++) {
+                                      self.attach[i].Note = ( self.attach[i].Note == null)? self.attach[i].UID :  self.attach[i].Note;
+                                  } 
+
                             })
                         };
                         self.getEformTemplant();
 
-                        self.send = function(){
+                        self.close = function(){
+                            modalInstance.close();
+                        }
 
+                        self.send = function(){                            
                             self.data.recipient = self.data.recipient[0].split(", ");                                                 
                             self.attachments = [];
 
@@ -242,14 +256,23 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                                 console.log(key," here ", self.UIDTemplate[key]);
                                 if(self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined){
                                     console.log("this is the value - ",self.UIDTemplate[key]);
+                                    var subStrs = self.UIDTemplate[key].split(".");
+                                    var name = '';
+                                    for (var i = 0; i < self.attach.length; i++) {
+                                        if (self.attach[i].UID === self.UIDTemplate[key] || self.attach[i].Note === self.UIDTemplate[key]) {
+                                            name = self.attach[i].Name;
+                                        };
+                                    };
+                                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> aaaaaaaaa", name);
                                     tmp = {
-                                        type:'report',
-                                        content: self.UIDTemplate[key]
+                                        type:subStrs.length>1?"fileupload":"report",
+                                        content: subStrs[0],
+                                        name:name,
+                                        extension:subStrs.length>1?subStrs[1]:"pdf"
                                     };
                                     self.attachments.push(tmp);
                                 }
-                            }
-                            // fix here tommorow
+                            }                            
                             if (self.attachments.length > 0) {
                                 self.data.attachments = self.attachments;
                             }
@@ -258,10 +281,8 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                                     delete self.data.attachments;
                                 }
                             }
-                            toastr.info('Sending...');                                                                                                                    
-                            // https://meditek.redmied.com.au:3013/sendmail
-                            CommonService.sendEmail(self.data).then(function(data){
-                                console.log(">>>>>>>>>>>>>>>>>>>>>>>>data", data);
+                            toastr.info('Sending...');                                                                                                                                                
+                            CommonService.sendEmail(self.data).then(function(data){                                
                                 modalInstance.close();                                                                
                                 toastr.success('Send successfully');
                             }, function(err){

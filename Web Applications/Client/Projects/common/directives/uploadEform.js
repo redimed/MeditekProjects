@@ -8,7 +8,8 @@ angular.module('app.common.uploadEform',[])
 		scope: {
 			ApptUID:"=apptUid",
 			PatientUID:"=patientUid",
-			userUID:"=userUid"
+			userUID:"=userUid",
+			onSubmit:"=onSubmit",
 		},
 		controller: function($scope, FileUploader) {
 			$scope.FormName;
@@ -26,6 +27,7 @@ angular.module('app.common.uploadEform',[])
 		        })
 		        .then(function(result) {
 		        	toastr.success('Upload Successfully.');
+		        	if(typeof $scope.onSubmit !== "undefined") $scope.onSubmit();
 		        	o.loadingPage(false);
 		        }, function(err) {
 		        	toastr.error('Upload error.');

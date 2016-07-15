@@ -3,7 +3,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title text-primary uppercase">
         <i class="fa fa-envelope"></i> Send Email</h4>
-        <upload-eform patient-uid="uploadFile.patientUID" user-uid="uploadFile.userUID" appt-uid="uploadFile.ApptUID"></upload-eform>
+        
 </div>
 <form name="myForm" novalidate>
     <div class="modal-body">    
@@ -51,9 +51,9 @@
                                    </tr>
                                </thead>
                                <tbody>
-                                   <tr class="odd gradeX" ng-repeat="at in attack">
+                                   <tr class="odd gradeX" ng-repeat="at in attach">
                                        <td>
-                                            <input type="checkbox" ng-model="UIDTemplate[at.UID]" ng-true-value="'{{at.UID}}'" ng-false-value="''" ng-change="checkUIDTemplate(at.UID)" />
+                                            <input type="checkbox" ng-model="UIDTemplate[at.Note]" ng-true-value="'{{at.Note}}'" ng-false-value="''" ng-change="checkUIDTemplate(at.Note,$index)" />
                                        </td>
                                        <td>{{at.Appointments[0].Code}}</td>
                                        <td>{{at.Name}}</td>
@@ -87,7 +87,8 @@
     </div>
 </form>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    <upload-eform patient-uid="uploadFile.patientUID" user-uid="uploadFile.userUID" appt-uid="uploadFile.ApptUID" on-submit="getEformTemplant"></upload-eform>
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cancel</button>
     <button type="button" class="btn btn-primary" ng-click="send()">Send</button>
 </div>
 

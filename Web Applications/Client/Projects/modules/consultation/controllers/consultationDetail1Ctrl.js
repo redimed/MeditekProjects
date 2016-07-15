@@ -1,7 +1,7 @@
 var app = angular.module("app.authentication.consultation.detail1.controller", [
 ]);
 app.controller('consultationDetail1Ctrl', function($scope, $state) {
-	$state.go("authentication.consultation.detail1.workCover");
+	// $state.go("authentication.consultation.detail1.workCover");
 	$scope.toggle = true;
 	$scope.zoomLabel = 'Show Profile';
 	$("#col2").hide();

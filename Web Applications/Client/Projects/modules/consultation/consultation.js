@@ -114,6 +114,10 @@ app.config(function($stateProvider) {
             controller: 'consultationDetail1Ctrl',
             templateUrl: 'modules/consultation/views/consultationDetail1.html',
         })
+        .state("authentication.consultation.detail1.group",{
+            url: "/group",
+            templateUrl: 'modules/consultation/views/consultationDetail1Group.html',
+        })
         .state("authentication.consultation.detail1.workCover",{
             url: "/workCover",
             template: 'modules/consultation/views/consultationDetail1WorkCover.html',

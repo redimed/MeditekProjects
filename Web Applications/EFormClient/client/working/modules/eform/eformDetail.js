@@ -558,6 +558,7 @@ module.exports = React.createClass({
                                 }
                                 else if(field.type !== 'eform_input_image_doctor'){
                                     if(typeof self.refs[section_ref] !== 'undefined'){
+                                        
                                         self.refs[section_ref].setValue(row_ref, field_ref, field.value);
                                         self.field_age.map(function(f){
                                             if(f.name === field.name)

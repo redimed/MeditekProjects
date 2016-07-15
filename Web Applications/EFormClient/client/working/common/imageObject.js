@@ -1,4 +1,5 @@
 var Config = require('config');
+var CommonModal = require('common/modal');
 module.exports = React.createClass({
     value: '',
     propTypes: {
@@ -39,7 +40,7 @@ module.exports = React.createClass({
             })
         }
         if(this.props.permission === 'eformDev'){
-            $(this.refs.input).prop('disabled', true);
+            //$(this.refs['modal-edit-drawing-btn']).prop('disabled', true);
         }
         if(typeof this.props.defaultValue !== 'undefined'){
             $(this.refs.input).val(this.props.defaultValue);
@@ -56,18 +57,18 @@ module.exports = React.createClass({
         })
 
         //tannv.dts
-        this.canvas = $("#myCanvas")[0];
+        this.canvas = $(this.refs['myCanvas'])[0];
         this.ctx = this.canvas.getContext("2d");
         this.canvas.width = this.size.width;
         this.canvas.height = this.size.height;
         this.cPush();
-        this.imageLoader = $('#imageLoader')[0];
+        this.imageLoader = $(this.refs['imageLoader'])[0];
         $(this.imageLoader).on('change', function(e){
             console.log("imageLoader",$(self.imageLoader));
             self.currentImageLoaderFile = e.target.files[0];
             var objectUrl = URL.createObjectURL(e.target.files[0]);
             self.currentImageLoaderFileUrl = URL.createObjectURL(e.target.files[0]);
-            $("#imageLoaderPreview").attr('src',self.currentImageLoaderFileUrl)
+            $(self.refs['imageLoaderPreview']).attr('src',self.currentImageLoaderFileUrl)
             var img = new Image;
             var flagRotate = false;
 
@@ -95,7 +96,7 @@ module.exports = React.createClass({
         });
 
 
-        $.ajax({
+        /*$.ajax({
             url: Config.apiServerUrl+'api/downloadFileWithoutLogin/9c5e637c-1852-4dd9-b901-82f99fe6b09d',
             xhrFields: {
                 withCredentials: true
@@ -111,7 +112,41 @@ module.exports = React.createClass({
         }).fail(function(error) {
             console.log("error ne")
             console.log(error);
-        })
+        })*/
+
+        if(this.value) {
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'arraybuffer';
+            xhr.open('GET', Config.apiServerUrl+'api/downloadFileWithoutLogin/'+this.value, true);
+            xhr.onload = function(e) {
+                var blob = new Blob([this.response],{type: 'image/png'});
+                var objectUrl = URL.createObjectURL(blob);
+                var img = new Image;
+                img.onload = function () {
+                    self.clearCanvas();
+                    //----------------------
+                    var displayWidth, displayHeight = null;
+                    var ratio = null;
+                    if(img.height>img.width) {
+                        //Hình đứng
+                        displayHeight = self.canvas.height ;
+                        ratio = img.height/self.canvas.height;
+                        displayWidth = Math.floor(img.width / ratio);
+                    } else {
+                        //Hình ngang
+                        displayWidth = self.canvas.width;
+                        ratio = img.width/self.canvas.width;
+                        displayHeight = Math.floor(img.height/ratio);
+                    }
+                    self.ctx.drawImage(img, (self.canvas.width-displayWidth)/2, (self.canvas.height-displayHeight)/2, displayWidth, displayHeight);
+                    self.cPush();
+                    console.log("PreDrawing");
+                }
+                img.src = objectUrl;
+            };
+            xhr.send();
+        }
+
 
 
 
@@ -182,10 +217,47 @@ module.exports = React.createClass({
             }
         });
 
-        $('#getTextBtn').attr('disabled', true);
-        $('#applyTextBtn').attr('disabled', true);
+        $(self.refs['getTextBtn']).attr('disabled', true);
+        $(self.refs['applyTextBtn']).attr('disabled', true);
 
     },
+
+    loadDrawingForEdit: function() {
+        var self = this;
+        if(this.value) {
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'arraybuffer';
+            xhr.open('GET', Config.apiServerUrl+'api/downloadFileWithoutLogin/'+this.value, true);
+            xhr.onload = function(e) {
+                var blob = new Blob([this.response],{type: 'image/png'});
+                var objectUrl = URL.createObjectURL(blob);
+                var img = new Image;
+                img.onload = function () {
+                    self.clearCanvas();
+                    //----------------------
+                    var displayWidth, displayHeight = null;
+                    var ratio = null;
+                    if(img.height>img.width) {
+                        //Hình đứng
+                        displayHeight = self.canvas.height ;
+                        ratio = img.height/self.canvas.height;
+                        displayWidth = Math.floor(img.width / ratio);
+                    } else {
+                        //Hình ngang
+                        displayWidth = self.canvas.width;
+                        ratio = img.width/self.canvas.width;
+                        displayHeight = Math.floor(img.height/ratio);
+                    }
+                    self.ctx.drawImage(img, (self.canvas.width-displayWidth)/2, (self.canvas.height-displayHeight)/2, displayWidth, displayHeight);
+                    self.cPush();
+                    console.log("PreDrawing");
+                }
+                img.src = objectUrl;
+            };
+            xhr.send();
+        }
+    },
+
 
     rotateImageLoader:function() {
         console.log("||||||||||||||||||||||||rotateImageLoader:");
@@ -261,8 +333,8 @@ module.exports = React.createClass({
         })
     },
     setValue: function(value){
-        self.value = value;
-        $(this.refs.input).val(value).change();
+        this.value = value;
+        this.updateImageViewable();
     },
 
     setDisplay: function(type){
@@ -273,7 +345,7 @@ module.exports = React.createClass({
         }
     },
     getValue: function(){
-        return $(this.refs.input).val()
+        return this.value;
     },
     getName: function(){
         return this.props.name;
@@ -398,10 +470,24 @@ module.exports = React.createClass({
         }
     },
 
+    updateImageViewable: function() {
+        var self = this;
+        if(this.value) {
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'arraybuffer';
+            xhr.open('GET', Config.apiServerUrl+'api/downloadFileWithoutLogin/'+this.value, true);
+            xhr.onload = function(e) {
+                var blob = new Blob([this.response],{type: 'image/png'});
+                var objectUrl = URL.createObjectURL(blob);
+                $(self.refs['imageViewable']).attr('src', objectUrl);
+            };
+            xhr.send();
+        }
+    },
 
 
     action: function(fileInfo) {
-        alert(JSON.stringify(fileInfo));
+        this.setValue(fileInfo.UID);
     },
 
     uploadDrawing: function() {
@@ -433,7 +519,8 @@ module.exports = React.createClass({
                     if(respond.status=='success')
                     {
                         toastr.success("Save drawing successfully", "success");
-                        //self.action(respond.fileInfo);
+                        self.action(respond.fileInfo);
+
                     }
                 }).fail(function(error) {
                     console.log("error ne")
@@ -497,25 +584,25 @@ module.exports = React.createClass({
     changeCanvasText: function (e) {
         this.cText = e.target.value;
         if(this.cText) {
-            $('#getTextBtn').attr('disabled', false);
+            $(this.refs['getTextBtn']).attr('disabled', false);
         } else {
-            $('#getTextBtn').attr('disabled', true);
+            $(this.refs['getTextBtn']).attr('disabled', true);
         }
     },
 
     cGetText: function() {
         console.log("cGetText");
-        this.cText = $('#canvasText').val();
-        $('#getTextBtn').attr('disabled', true);
-        $('#applyTextBtn').attr('disabled', false);
+        this.cText = $(this.refs['canvasText']).val();
+        $(self.refs['getTextBtn']).attr('disabled', true);
+        $(this.refs['applyTextBtn']).attr('disabled', false);
         this.typing= true;
         this.textMove=true;
         this.cSaveTypingState();
     },
 
     cApplyText: function () {
-        $('#getTextBtn').attr('disabled', false);
-        $('#applyTextBtn').attr('disabled', true);
+        $(self.refs['getTextBtn']).attr('disabled', false);
+        $(this.refs['applyTextBtn']).attr('disabled', true);
         this.typing = false;
         this.textMove = false;
         this.cPush();
@@ -608,8 +695,6 @@ module.exports = React.createClass({
         }
     },
 
-
-
     render: function(){
         var type = this.props.type;
         var html = null;
@@ -655,94 +740,117 @@ module.exports = React.createClass({
                     <div className={"dragField col-xs-"+this.props.size} ref="group">
                         {display_name}
                         <div className="form-group" id={this.props.groupId}>
-                            this is Image Object
+
                             <div className="col-xs-12">
-                                <input type="text" name={this.props.name} className={this.props.className} style={inputStyle} ref="input" id={this.props.refTemp} onDoubleClick = {this.selection}/>
+                                <img ref ="imageViewable" style ={{maxWidth: "100%"}}/>
                             </div>
+                            <div className="col-xs-12" >
+                                <button ref="modal-edit-drawing-btn" type="button" className="btn btn-default" data-toggle="modal" data-target={'.'+this.props.refTemp} onClick = {this.loadDrawingForEdit}>Add/Edit Drawing</button>
+
+                                <div className={"modal fade " +this.props.refTemp} tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style={{overflowY:'scroll'}}>
+                                    <div className="modal-dialog modal-lg" style = {{width: "80vw"}}>
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 className="modal-title" id="myModalLabel">Edit Drawing</h4>
+                                            </div>
+                                            <div className="modal-body" style = {{overflowX: 'scroll', overflowY: 'scroll'}}>
+                                                <div className="row">
+                                                    <div className="col-md-12 col-sm-12 eform-drawing">
+                                                        <div className="form-inline">
+                                                            <select className="form-control" onChange={this.changeSize} defaultValue={JSON.stringify(this.sizes[1])}>
+                                                                {this.sizes.map(function(sizeItem, index){
+                                                                    return  <option key={index} value={JSON.stringify(sizeItem)}>{sizeItem.desc}</option>
+                                                                })}
+                                                            </select>
+
+                                                            <select className="form-control" onChange={this.changeLineWidth} defaultValue={JSON.stringify(this.lineWidths[3])}>
+                                                                {this.lineWidths.map(function(lineWidthItem, index){
+                                                                    return  <option key={index} value={JSON.stringify(lineWidthItem)}>{lineWidthItem.desc}</option>
+                                                                })}
+                                                            </select>
+
+                                                            {/*<a href="javascript:;"
+                                                             className="btn btn-icon-only btn-circle">
+                                                             </a>*/}
+
+                                                            <a className="btn btn-default" onClick={this.cUndo} href="javascript:;">
+                                                                <i className="fa fa-undo"></i> Undo
+                                                            </a>
+                                                            <a className="btn btn-default" onClick={this.cRedo} href="javascript:;">
+                                                                <i className="fa fa-repeat"></i> Redo
+                                                            </a>
+
+                                                            <a className="btn btn-default" onClick={this.erase} href="javascript:;">
+                                                                <i className="fa fa-eraser"></i> Erase
+                                                            </a>
+                                                            <a className="btn btn-default" onClick={this.clear} href="javascript:;">
+                                                                <i className="fa fa-trash-o"></i> Clear
+                                                            </a>
+
+                                                            <a className="btn btn-default" onClick={this.capture} href="javascript:;">
+                                                                <i className="fa fa-camera"></i> Capture
+                                                            </a>
+
+                                                            <a href="javascript:;"
+                                                               className="btn btn-icon-only btn-circle">
+                                                            </a>
+
+                                                            <a className="btn btn-success" onClick={this.uploadDrawing}>
+                                                                <i className="fa fa-floppy-o"></i> Save
+                                                            </a>
+
+                                                        </div>
+
+                                                        <br/>
+                                                        <div className="form-inline">
+                                                <span className="btn btn-default btn-file">
+                                                    Load Picture<input type="file" ref="imageLoader" accept="image/*"/>
+                                                </span>
+                                                            <img ref="imageLoaderPreview" height="35px"/>
+                                                            <a className="btn btn-default" onClick={this.rotateImageLoader} href="javascript:;">
+                                                                <i className="fa fa-repeat"></i> Rotate & Apply
+                                                            </a>
+
+                                                            <a href="javascript:;"
+                                                               className="btn btn-icon-only btn-circle">
+                                                            </a>
+                                                        </div>
+                                                        <br/>
+                                                        <div className="form-inline">
+
+                                                            <select className="form-control" onChange={this.changeFontSize} defaultValue={JSON.stringify(this.fontSizes[4])}>
+                                                                {this.fontSizes.map(function(fontSizeItem, index){
+                                                                    return  <option key={index} value={JSON.stringify(fontSizeItem)}>{fontSizeItem.desc}</option>
+                                                                })}
+                                                            </select>
+                                                            <input className="form-control" type="text" ref="canvasText" onChange={this.changeCanvasText}/>
+
+                                                            <a ref="getTextBtn" className="btn btn-default" onClick = {this.cGetText}>
+                                                                Apply Text
+                                                            </a>
+                                                            <a ref="applyTextBtn" className="btn btn-default" onClick = {this.cApplyText}>
+                                                                Save Text
+                                                            </a>
+                                                        </div>
+                                                        <br/>
+                                                        <canvas ref="myCanvas" className="myCanvas"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
 
-                        <div className="row">
-                            <div className="col-md-12 col-sm-12 eform-drawing">
-                                <div className="form-inline">
-                                    <select className="form-control" onChange={this.changeSize} defaultValue={JSON.stringify(this.sizes[1])}>
-                                        {this.sizes.map(function(sizeItem, index){
-                                            return  <option key={index} value={JSON.stringify(sizeItem)}>{sizeItem.desc}</option>
-                                        })}
-                                    </select>
 
-                                    <select className="form-control" onChange={this.changeLineWidth} defaultValue={JSON.stringify(this.lineWidths[3])}>
-                                        {this.lineWidths.map(function(lineWidthItem, index){
-                                            return  <option key={index} value={JSON.stringify(lineWidthItem)}>{lineWidthItem.desc}</option>
-                                        })}
-                                    </select>
 
-                                    {/*<a href="javascript:;"
-                                       className="btn btn-icon-only btn-circle">
-                                    </a>*/}
 
-                                    <a className="btn btn-default" onClick={this.cUndo} href="javascript:;">
-                                        <i className="fa fa-undo"></i> Undo
-                                    </a>
-                                    <a className="btn btn-default" onClick={this.cRedo} href="javascript:;">
-                                        <i className="fa fa-repeat"></i> Redo
-                                    </a>
-
-                                    <a className="btn btn-default" onClick={this.erase} href="javascript:;">
-                                        <i className="fa fa-eraser"></i> Erase
-                                    </a>
-                                    <a className="btn btn-default" onClick={this.clear} href="javascript:;">
-                                        <i className="fa fa-trash-o"></i> Clear
-                                    </a>
-
-                                    <a className="btn btn-default" onClick={this.capture} href="javascript:;">
-                                        <i className="fa fa-camera"></i> Capture
-                                    </a>
-
-                                    <a href="javascript:;"
-                                       className="btn btn-icon-only btn-circle">
-                                    </a>
-
-                                    <a className="btn btn-success" onClick={this.uploadDrawing}>
-                                        <i className="fa fa-floppy-o"></i> Save
-                                    </a>
-
-                                </div>
-
-                                <br/>
-                                <div className="form-inline">
-                                    <span className="btn btn-default btn-file">
-                                        Load Picture<input type="file" id="imageLoader" accept="image/*"/>
-                                    </span>
-                                    <img id="imageLoaderPreview" height="35px"/>
-                                    <a className="btn btn-default" onClick={this.rotateImageLoader} href="javascript:;">
-                                        <i className="fa fa-repeat"></i> Rotate & Apply
-                                    </a>
-
-                                    <a href="javascript:;"
-                                       className="btn btn-icon-only btn-circle">
-                                    </a>
-                                </div>
-                                <br/>
-                                <div className="form-inline">
-                                    
-                                    <select className="form-control" onChange={this.changeFontSize} defaultValue={JSON.stringify(this.fontSizes[4])}>
-                                        {this.fontSizes.map(function(fontSizeItem, index){
-                                            return  <option key={index} value={JSON.stringify(fontSizeItem)}>{fontSizeItem.desc}</option>
-                                        })}
-                                    </select>
-                                    <input className="form-control" type="text" id="canvasText" onChange={this.changeCanvasText}/>
-
-                                    <a id="getTextBtn" className="btn btn-default" onClick = {this.cGetText}>
-                                        Apply Text
-                                    </a>
-                                    <a id="applyTextBtn" className="btn btn-default" onClick = {this.cApplyText}>
-                                        Save Text
-                                    </a>
-                                </div>
-                                <br/>
-                                <canvas id="myCanvas"></canvas>
-                            </div>
-                        </div>
                     </div>
                 )
         }

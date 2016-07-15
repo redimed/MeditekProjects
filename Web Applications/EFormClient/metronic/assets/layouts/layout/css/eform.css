@@ -40,7 +40,7 @@
     border-left: 4px solid #00A0D1!important;
 }
 
-.eform-drawing #myCanvas {
+.eform-drawing .myCanvas {
     border-bottom: 1px solid rgba(0,0,0,0.3);
     background-color: #EAE9E3;
     box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);

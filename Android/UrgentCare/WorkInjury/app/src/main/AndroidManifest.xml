@@ -71,9 +71,9 @@
         </service>
         <service
             android:name=".gcm.RegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
         <!-- [END gcm_service] -->
-        <activity android:name=".main.MainActivity"></activity>
+        <activity android:name=".main.MainActivity" />
     </application>
 
 </manifest>

@@ -1,31 +1,15 @@
 <resources>
-
+    <!-- Base application theme. -->
     <style name="MyTheme" parent="MyTheme.Base">
-        <!-- Customize your theme here. -->
+
+        <item name="buttonStyle">@style/AppTheme.Button</item>
+
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
-    </style>
 
-    <style name="TabStyle" parent="TabPageIndicator">
-        <item name="android:textColor">#FF33AA33</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:fadingEdgeLength">8dp</item>
-    </style>
-
-    <style name="TabPageIndicator">
-        <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">22dip</item>
-        <item name="android:paddingRight">22dip</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
     </style>
 
     <style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+
         <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
         <item name="windowNoTitle">true</item>
         <!--We will be using the toolbar so no need to show ActionBar-->
@@ -40,9 +24,48 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!-- You can also set colorControlNormal, colorControlActivated
             colorControlHighlight and colorSwitchThumbNormal. -->
+
     </style>
 
-    <style name="MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="TabPageIndicator">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">22dip</item>
+        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
 
+    <style name="TabStyle" parent="TabPageIndicator">
+    	<item name="android:textColor">#FF33AA33</item>
+	<item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
+    </style>
+
+   <style name="AppTheme.Button" parent="android:Widget.Button">
+        <item name="android:background">#2196f3</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
+
+    <style name="ToolBarStyle.Base" parent="">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+    <style name="ToolBarStyle.Event" parent="ToolBarStyle">
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>
+    </style>
+    <style name="TextAppearance.Widget.Event.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <!--Any text styling can be done here-->
+        <item name="android:textStyle">normal</item>
+        <!--<item name="android:textSize">@dimen/event_title_text_size</item>-->
+    </style>
     <style name="MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 </resources>

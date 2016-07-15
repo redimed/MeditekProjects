@@ -1,15 +1,17 @@
 package patient.telehealth.redimed.workinjury.login.presendter;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.login.view.ILoginView;
-import patient.telehealth.redimed.workinjury.model.RolesModel;
-import patient.telehealth.redimed.workinjury.model.UserModel;
+import patient.telehealth.redimed.workinjury.models.RolesModel;
+import patient.telehealth.redimed.workinjury.models.UserModel;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
+import patient.telehealth.redimed.workinjury.utils.Key;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -19,25 +21,30 @@ import retrofit.client.Response;
  */
 public class LoginPresenter implements ILoginPresenter {
 
+    private String TAG = Key.Login.TAG;
     private Gson gson;
-    private FragmentActivity fragmentActivity;
+    private AppCompatActivity activity;
     private ILoginView iLoginView;
+    private MyApplication application;
+    private String token;
 
-    public LoginPresenter(ILoginView iLoginView, FragmentActivity fragmentActivity) {
-        this.fragmentActivity = fragmentActivity;
+    public LoginPresenter(ILoginView iLoginView, Activity activity) {
+        this.activity = (AppCompatActivity) activity;
         this.iLoginView = iLoginView;
 
         gson = new Gson();
+        application = MyApplication.getInstance();
+        token = (String) application.getDataSharedPreferences(Key.deviceToken, Key.defalt);
     }
 
     @Override
     public void CheckActivation(String phone) {
         JsonObject objData = new JsonObject();
-        objData.addProperty("data", MyApplication.getInstance().parseToJson(new String[]{"phone", phone}));
+        objData.addProperty(Key.Login.data, application.parseToJson(new String[]{Key.Login.phone, phone}));
         RESTClient.getTelehealthApi().checkActivation(objData, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                MyApplication.getInstance().setDataSharedPreferences("useruid",jsonObject.get("UserUID").getAsString());
+                application.setDataSharedPreferences(Key.useruid,jsonObject.get(Key.Login.UserUID).getAsString());
                 iLoginView.ResponseSuccess();
             }
 
@@ -50,32 +57,33 @@ public class LoginPresenter implements ILoginPresenter {
 
     @Override
     public void Login(String verityCode) {
-        String UserUID = (String) MyApplication.getInstance().getDataSharedPreferences("useruid","");
+        String UserUID = (String) application.getDataSharedPreferences(Key.useruid, Key.defalt);
+        String[] data = {Key.Login.UserUID, UserUID, Key.Login.PinNumber, verityCode, Key.Login.UserName, Key.Login.DefaultUserName, Key.Login.Password, Key.Login.DefaultPassword};
 
-        RESTClient.getAuthApi().login(MyApplication.getInstance().createJson(new String[]{"UserUID", UserUID, "PinNumber", verityCode, "UserName", "1", "Password", "1"}), new Callback<JsonObject>() {
+        RESTClient.getAuthApi().login(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                String token = jsonObject.get("token").getAsString();
-                String refreshCode = jsonObject.get("refreshCode").getAsString();
-                UserModel userModel = gson.fromJson(jsonObject.get("user").getAsJsonObject(), UserModel.class);
-                String useruid = (jsonObject.get("user").getAsJsonObject()).get("UID").getAsString();
-                String username = (jsonObject.get("user").getAsJsonObject()).get("UserName").getAsString();
+                String token = jsonObject.get(Key.Login.token).getAsString();
+                String refreshCode = jsonObject.get(Key.Login.refreshCode).getAsString();
+                UserModel userModel = gson.fromJson(jsonObject.get(Key.Login.user).getAsJsonObject(), UserModel.class);
+                String useruid = userModel.getUID();
+                String username = userModel.getUserName();
 
                 for (RolesModel rolesModel : userModel.getRoles()) {
-                    if (rolesModel.getRoleCode().equals("ORGANIZATION")){
-                        MyApplication.getInstance().setDataSharedPreferences("isTypeCompany", true);
+                    if (rolesModel.getRoleCode().equals(Key.typeNameCompany)){
+                        application.setDataSharedPreferences(Key.isTypeCompany, true);
                     }
                 }
 
-                MyApplication.getInstance().setDataSharedPreferences("token", token);
-                MyApplication.getInstance().setDataSharedPreferences("refreshCode", refreshCode);
-                MyApplication.getInstance().setDataSharedPreferences("useruid", useruid);
-                MyApplication.getInstance().setDataSharedPreferences("username", username);
-                MyApplication.getInstance().setDataSharedPreferences("isAuthenticated", true);
+                application.setDataSharedPreferences(Key.token, token);
+                application.setDataSharedPreferences(Key.refreshCode, refreshCode);
+                application.setDataSharedPreferences(Key.useruid, useruid);
+                application.setDataSharedPreferences(Key.username, username);
+                application.setDataSharedPreferences(Key.isAuthenticated, true);
 
                 GetTelehealthUser(useruid);
 
-                MyApplication.getInstance().replaceFragment( fragmentActivity, new HomeFragment());
+                application.replaceFragment(activity, new HomeFragment(),Key.fmHome,null);
             }
 
             @Override
@@ -87,12 +95,12 @@ public class LoginPresenter implements ILoginPresenter {
 
     @Override
     public void GetTelehealthUser(String uid) {
-        String token = (String) MyApplication.getInstance().getDataSharedPreferences("deviceToken", "");
-
-        RESTClient.getTelehealthApi().getTelehealthUser(MyApplication.getInstance().createJson(new String[]{"uid", uid, "token", token}), new Callback<JsonObject>() {
+        String[] data = {Key.Login.uid, uid, Key.token, token};
+        RESTClient.getTelehealthApi().getTelehealthUser(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                Log.d("GetTelehealthUser", String.valueOf(jsonObject));
+                String TeleUid = jsonObject.get(Key.Login.data).getAsJsonObject().get(Key.Login.telehealthUser).getAsJsonObject().get(Key.Login.UID).getAsString();
+                application.setDataSharedPreferences(Key.teleUid, TeleUid);
             }
 
             @Override
@@ -104,12 +112,12 @@ public class LoginPresenter implements ILoginPresenter {
 
     @Override
     public void ForgetPin(String phone) {
-        String token = (String) MyApplication.getInstance().getDataSharedPreferences("deviceToken", "");
+        String[] data = {Key.Login.phone, phone, Key.token, token};
 
-        RESTClient.getTelehealthApi().forgetPin(MyApplication.getInstance().createJson(new String[]{"phone", phone, "token", token}), new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().forgetPin(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                Log.d("GetTelehealthUser", String.valueOf(jsonObject));
+                Log.d(TAG, String.valueOf(jsonObject));
             }
 
             @Override

@@ -4,9 +4,8 @@ package patient.telehealth.redimed.workinjury.login;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -20,17 +19,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.R;
-import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.login.presendter.ILoginPresenter;
 import patient.telehealth.redimed.workinjury.login.presendter.LoginPresenter;
 import patient.telehealth.redimed.workinjury.login.view.ILoginView;
+import patient.telehealth.redimed.workinjury.utils.Key;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment implements ILoginView, View.OnClickListener {
 
-    @Bind(R.id.btnBack) Button btnBack;
     @Bind(R.id.logo) ImageView mLogo;
 
     //=======Layout 1=========
@@ -47,20 +45,28 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
 
     private Context context;
     private ILoginPresenter iLoginPresenter;
+    private MyApplication application;
     public LoginFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        application = MyApplication.getInstance();
+        iLoginPresenter = new LoginPresenter(this, getActivity());
+        this.context = context;
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        context = view.getContext();
-
         ButterKnife.bind(this, view);
 
-        iLoginPresenter = new LoginPresenter(this, getActivity());
+        setHasOptionsMenu(true);
+        application.createTooBar(view,getActivity(), Key.fmLogin);
 
         layoutContainer.setAnimateFirstView(true);
         layoutContainer.setAlpha(0.0f);
@@ -73,7 +79,6 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
         //set listener
         btnSubmitPinNumber.setOnClickListener(this);
         btnCheckActivation.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
         btnForgetPin.setOnClickListener(this);
 
         return view;
@@ -101,16 +106,14 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
     public void onClick(View v) {
         String phone = txtPhone.getText().toString();
         switch (v.getId()) {
-            case R.id.btnBack:
-                MyApplication.getInstance().replaceFragment(getActivity(), new HomeFragment());
-                break;
             case R.id.btnCheckActivation:
+                application.hidenKeyboard(getView());
                 iLoginPresenter.CheckActivation(phone);
                 break;
             case R.id.btnSubmitPinNumber:
+                application.hidenKeyboard(getView());
                 String verityCode = txtVerifyCode.getText().toString();
                 iLoginPresenter.Login(verityCode);
-                MyApplication.getInstance().hidenKeyboard(getView());
                 break;
             case R.id.btnForgetPin:
                 iLoginPresenter.ForgetPin(phone);
@@ -121,7 +124,6 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
     @Override
     public void ResponseSuccess() {
         switchView(R.anim.in_from_left, R.anim.out_to_right, layoutRegisterFone);
-        MyApplication.getInstance().hidenKeyboard(getView());
     }
 
     @Override
@@ -129,21 +131,14 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
 
     }
 
-    //Handler back button
     @Override
-    public void onResume() {
-        super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    MyApplication.getInstance().replaceFragment(getActivity(), new HomeFragment());
-                    return true;
-                }
-                return false;
-            }
-        });
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                application.BackFragment(getActivity(),Key.fmHome,null);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

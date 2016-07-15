@@ -16,17 +16,15 @@ import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import patient.telehealth.redimed.workinjury.FAQsActivity;
-import patient.telehealth.redimed.workinjury.LoginActivity;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.R;
-import patient.telehealth.redimed.workinjury.SettingActivity;
 import patient.telehealth.redimed.workinjury.WorkActivity;
 import patient.telehealth.redimed.workinjury.home.presenter.HomePresenter;
 import patient.telehealth.redimed.workinjury.home.presenter.IHomepresenter;
 import patient.telehealth.redimed.workinjury.home.view.IHomeView;
 import patient.telehealth.redimed.workinjury.login.LoginFragment;
 import patient.telehealth.redimed.workinjury.setting.SettingFragment;
+import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.utils.PageIndicator;
 import patient.telehealth.redimed.workinjury.utils.SliderImageAdapter;
 import patient.telehealth.redimed.workinjury.utils.TypefaceUtil;
@@ -43,6 +41,9 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     private boolean shouldFinish = false;
     private Context context;
     private IHomepresenter iHomepresenter;
+    private boolean isLogin;
+    private MyApplication application;
+
 
     @Bind(R.id.slider) ViewPager slider;
     @Bind(R.id.circleIndicator) PageIndicator circleIndicator;
@@ -60,25 +61,29 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        iHomepresenter = new HomePresenter(context, getActivity());
+        isLogin = iHomepresenter.isLogin();
+        this.context = context;
+        sliderImageAdapter = new SliderImageAdapter(context);
+        application = MyApplication.getInstance();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        context = view.getContext();
+        TypefaceUtil.applyFont(context, view.findViewById(R.id.activityHome), Key.fontRoboto);
 
-        TypefaceUtil.applyFont(context, view.findViewById(R.id.activityHome), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this, view);
 
-
-        iHomepresenter = new HomePresenter(context);
-        if (iHomepresenter.isCompany()){
+        if (isLogin){
             btnLogin.setVisibility(View.GONE);
         }
 
-
-        sliderImageAdapter = new SliderImageAdapter(context);
         slider.setAdapter(sliderImageAdapter);
         circleIndicator.setViewPager(slider);
-
         final int totalPage = slider.getAdapter().getCount();
         final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
@@ -93,9 +98,9 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         };
         handler.postDelayed(runnable, 4000);
 
-        btnCall.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf"), Typeface.BOLD);
-        btnFAQ.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf"), Typeface.BOLD);
-        btnUrgent.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf"), Typeface.BOLD);
+        btnCall.setTypeface(Typeface.createFromAsset(context.getAssets(), Key.fontRoboto), Typeface.BOLD);
+        btnFAQ.setTypeface(Typeface.createFromAsset(context.getAssets(), Key.fontRoboto), Typeface.BOLD);
+        btnUrgent.setTypeface(Typeface.createFromAsset(context.getAssets(), Key.fontRoboto), Typeface.BOLD);
 
         btnCall.setOnClickListener(this);
         btnFAQ.setOnClickListener(this);
@@ -119,7 +124,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     if (!shouldFinish) {
-                        Toast.makeText(v.getContext(), R.string.confirm_exit, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), Key.confirmExit, Toast.LENGTH_SHORT).show();
                         shouldFinish = true;
                         return true;
                     } else {
@@ -140,40 +145,34 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                 iHomepresenter.Contact();
                 break;
             case R.id.btnFAQ:
-                i = new Intent(context, FAQsActivity.class);
-                i.putExtra("doc", "faq");
-                startActivity(i);
-                getActivity().finish();
+                iHomepresenter.displayFAQs(Key.FAQ.titleFAQs);
                 break;
             case R.id.btnUrgentCare:
-                i = new Intent(context, FAQsActivity.class);
-                i.putExtra("doc", "urgent");
-                startActivity(i);
-                getActivity().finish();
+                iHomepresenter.displayFAQs(Key.FAQ.fileAboutUs);
                 break;
             case R.id.btnOther:
-                MyApplication.getInstance().replaceFragment(getActivity(), new SettingFragment());
+                application.replaceFragment(getActivity(), new SettingFragment(),Key.fmSetting,Key.fmHome);
                 break;
             case R.id.btnRehab:
                 i = new Intent(context, WorkActivity.class);
-                i.putExtra("URType", "rehab");
+                i.putExtra(Key.uRType, Key.rehab);
                 startActivity(i);
                 getActivity().finish();
                 break;
             case R.id.btnSpec:
                 i = new Intent(context, WorkActivity.class);
-                i.putExtra("URType", "specialist");
+                i.putExtra(Key.uRType, Key.specialist);
                 startActivity(i);
                 getActivity().finish();
                 break;
             case R.id.btnGP:
                 i = new Intent(context, WorkActivity.class);
-                i.putExtra("URType", "gp");
+                i.putExtra(Key.uRType, Key.gp);
                 startActivity(i);
                 getActivity().finish();
                 break;
             case  R.id.btnLogin:
-                MyApplication.getInstance().replaceFragment(getActivity() ,new LoginFragment());
+                application.replaceFragment(getActivity() ,new LoginFragment(),Key.fmLogin,Key.fmHome);
                 break;
         }
     }

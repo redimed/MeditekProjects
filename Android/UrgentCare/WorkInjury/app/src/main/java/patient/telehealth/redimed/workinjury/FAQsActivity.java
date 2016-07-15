@@ -26,17 +26,7 @@ public class FAQsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         String url = null;
         i = getIntent();
-        if (i != null){
-            if (i.getStringExtra("doc").equalsIgnoreCase("faq")){
-               url  = "file:///android_asset/FAQs.html";
-            }
-            else if(i.getStringExtra("doc").equalsIgnoreCase("urgent")){
-                url = "file:///android_asset/UrgentCare.html";
-            }
-            else {
-                url = "file:///android_asset/OtherServices.html";
-            }
-        }
+
         WebSettings webSettings = webViewFAQs.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webViewFAQs.setBackgroundColor(Color.TRANSPARENT);

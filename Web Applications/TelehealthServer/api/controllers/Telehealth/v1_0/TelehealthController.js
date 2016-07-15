@@ -393,28 +393,33 @@ module.exports = {
     },
 
     Logout: function(req, res) {
-        console.log("================================", req.body.data);
         var err = new Error("Telehealth.Logout.Error");
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
-        }
-        var info = HelperService.toJson(req.body.data);
-        var uid = info.uid;
-        var deviceId = req.headers.deviceid;
-        var systemtype = req.headers.systemtype;
-        var deviceType = headers.devicetype;
+
+        var uid = req.body.uid;
+        var deviceType = req.headers.deviceid;
+        var appid = req.headers.appid;
         var roomList = sails.sockets.rooms();
-        if (uid && deviceType && deviceId) {
+        console.log("================================", req.body.uid);
+        console.log("================================", deviceType);
+        console.log("================================", appid);
+
+        if (req.headers.systemtype === "WEB") {
+            sails.sockets.leave(req.socket, uid);
+            return res.ok({
+                status: "success"
+            });
+        }
+
+
+        if (uid && deviceType && appid) {
             return TelehealthService.FindByUID(uid).then(function(teleUser) {
                 return TelehealthDevice.update({
                     DeviceToken: null
                 }, {
                     where: {
                         TelehealthUserID: teleUser.ID,
-                        Type: systemtype,
-                        DeviceModel: deviceType
+                        DeviceType: deviceType,
+                        Appid: appid
                     }
                 }).then(function(result) {
                     console.log("111111111111111111111111111111", result);

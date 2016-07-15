@@ -1,12 +1,14 @@
 package patient.telehealth.redimed.workinjury.home.presenter;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -15,9 +17,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.R;
 import patient.telehealth.redimed.workinjury.api.UrgentRequest;
+import patient.telehealth.redimed.workinjury.faq.FAQsFragment;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
+import patient.telehealth.redimed.workinjury.utils.Key;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -27,35 +32,33 @@ import retrofit.client.Response;
  */
 public class HomePresenter implements IHomepresenter {
 
-    private String TAG = "HomePresenter";
+    private String TAG = Key.Home.TAG;
     private UrgentRequest urgentRequestApi;
-    private static SharedPreferences workinjury;
-    private boolean isTypeCompany;
-    private String UserUid;
+    private MyApplication application;
     private Context context;
+    private AppCompatActivity activity;
 
 
-    public HomePresenter(Context context) {
+    public HomePresenter(Context context, Activity activity) {
         this.context = context;
-
+        this.activity = (AppCompatActivity) activity;
+        application = MyApplication.getInstance();
         urgentRequestApi = RESTClient.getRegisterApi();
-        workinjury = context.getSharedPreferences("WorkInjury", context.MODE_PRIVATE);
 
         CreateJsonDataSuburb();
     }
 
     @Override
     public void getDetailCompany() {
+        String UserUid = (String) application.getDataSharedPreferences(Key.useruid, Key.defalt);
+
         RESTClient.getCoreApi().getDetailCompany(UserUid, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                Log.d(TAG + ">>>getDetailCompany :",jsonObject.get("data").getAsJsonArray()+"");
-                String companyUid = ((jsonObject.get("data").getAsJsonArray()).get(0).getAsJsonObject()).get("UID").getAsString();
-                String companyName = ((jsonObject.get("data").getAsJsonArray()).get(0).getAsJsonObject()).get("CompanyName").getAsString();
-                SharedPreferences.Editor editor = workinjury.edit();
-                editor.putString("companyUid",companyUid);
-                editor.putString("companyName",companyName);
-                editor.apply();
+                String companyUid = ((jsonObject.get(Key.Home.data).getAsJsonArray()).get(0).getAsJsonObject()).get(Key.Home.UID).getAsString();
+                String companyName = ((jsonObject.get(Key.Home.data).getAsJsonArray()).get(0).getAsJsonObject()).get(Key.Home.CompanyName).getAsString();
+                application.setDataSharedPreferences(Key.companyUid, companyUid);
+                application.setDataSharedPreferences(Key.companyName, companyName);
             }
 
             @Override
@@ -68,7 +71,7 @@ public class HomePresenter implements IHomepresenter {
     @Override
     public void CreateJsonDataSuburb() {
         File file = new File(
-                "/data/data/" + context.getPackageName() + "/" + context.getResources().getString(R.string.fileName)
+                Key.locationFileSuburb + context.getPackageName() + Key.fileSuburb
         );
 
         if (!file.exists()) {
@@ -78,7 +81,7 @@ public class HomePresenter implements IHomepresenter {
                     Log.d(TAG, ">>>>CreateJsonDataSuburb Success");
                     try {
                         FileWriter file = new FileWriter(
-                                "/data/data/" + context.getPackageName() + "/" + context.getResources().getString(R.string.fileName)
+                                Key.locationFileSuburb + context.getPackageName() + Key.fileSuburb
                         );
                         file.write(String.valueOf(jsonObject));
                         file.flush();
@@ -98,7 +101,7 @@ public class HomePresenter implements IHomepresenter {
 
     @Override
     public void Contact() {
-        Uri call = Uri.parse("tel:" + context.getResources().getString(R.string.phone_call));
+        Uri call = Uri.parse(Key.telCall);
         Intent phoneCallIntent = new Intent(Intent.ACTION_CALL, call);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (context.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -110,13 +113,24 @@ public class HomePresenter implements IHomepresenter {
     }
 
     @Override
-    public boolean isCompany() {
-        isTypeCompany = workinjury.getBoolean("isTypeCompany", false);
-        if (isTypeCompany){
-            UserUid = workinjury.getString("useruid","");
-            getDetailCompany();
+    public boolean isLogin() {
+        boolean isLogin = (boolean) application.getDataSharedPreferences(Key.isAuthenticated, false);
+        if (isLogin){
+            boolean isTypeCompany = (boolean) application.getDataSharedPreferences(Key.isTypeCompany, false);
+            if (isTypeCompany){
+                getDetailCompany();
+            }
         }
-        return isTypeCompany;
+        return isLogin;
+    }
+
+    @Override
+    public void displayFAQs(String content) {
+        FAQsFragment fragment = new FAQsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Key.Home.msg, content);
+        fragment.setArguments(bundle);
+        application.replaceFragment(activity, fragment, Key.fmFAQs, Key.fmHome);
     }
 
 }

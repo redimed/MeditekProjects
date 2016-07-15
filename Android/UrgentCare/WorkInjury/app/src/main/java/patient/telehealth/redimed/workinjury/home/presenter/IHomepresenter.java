@@ -12,5 +12,7 @@ public interface IHomepresenter {
 
     void Contact();
 
-    boolean isCompany();
+    boolean isLogin();
+
+    void displayFAQs(String content);
 }

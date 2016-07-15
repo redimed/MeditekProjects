@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import patient.telehealth.redimed.workinjury.model.SiteModel;
+import patient.telehealth.redimed.workinjury.models.ModelSite;
 
 public class CompanyActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.btnBack) LinearLayout btnBack;
@@ -28,13 +28,13 @@ public class CompanyActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent intent = getIntent();
         if (intent != null){
-            SiteModel siteModel = intent.getExtras().getParcelable("site");
-            Log.d("Intent",  siteModel.getSiteName()+ "");
-            siteName.setText(siteModel.getSiteName());
-            address.setText(siteModel.getAddress1());
-            suburb.setText(siteModel.getSuburb());
-            postcode.setText(siteModel.getPostcode());
-            state.setText(siteModel.getState());
+            ModelSite modelSite = intent.getExtras().getParcelable("site");
+            Log.d("Intent",  modelSite.getSiteName()+ "");
+            siteName.setText(modelSite.getSiteName());
+            address.setText(modelSite.getAddress1());
+            suburb.setText(modelSite.getSuburb());
+            postcode.setText(modelSite.getPostcode());
+            state.setText(modelSite.getState());
         }
     }
 

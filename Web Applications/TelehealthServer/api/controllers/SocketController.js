@@ -79,12 +79,12 @@ module.exports = {
             }).catch(function(err) {
                 error = err;
             })
-        } else{
+        } else {
             error = "Invalid Params";
-        } 
+        }
 
-        if (error != null){
-            return res.serverError({error: error});
+        if (error != null) {
+            return res.serverError({ error: error });
         }
     },
     MessageTransfer: function(req, res) {
@@ -109,8 +109,8 @@ module.exports = {
         var roomList = sails.sockets.rooms();
         if (message.toLowerCase() == 'call') {
             sessionId = req.param('sessionId');
-            //appid = req.param("")
             if (!sessionId) return;
+            console.log("33333333333333333333333");
             token = opentok.generateToken(sessionId, tokenOptions);
             data.apiKey = config.OpentokAPIKey;
             data.sessionId = sessionId;
@@ -143,11 +143,11 @@ module.exports = {
                         if (devices) {
                             for (var i = 0; i < devices.length; i++) {
                                 if (devices[i].Appid == config.WorkinjuryAppid) {
-                                    console.log("WorkinjuryAppid",devices[i].DeviceToken);
+                                    console.log("WorkinjuryAppid", devices[i].DeviceToken);
                                     if (devices[i].DeviceToken != null)
                                         tokens.push(devices[i].DeviceToken);
                                 } else {
-                                    console.log("TelehealthAppid",devices[i].DeviceToken);
+                                    console.log("TelehealthAppid", devices[i].DeviceToken);
                                     if (devices[i].DeviceToken != null) {
                                         if (devices[i].Type == 'IOS')
                                             iosDevices.push(devices[i].DeviceToken);
@@ -241,29 +241,23 @@ module.exports = {
         var uid = req.param('uid');
         if (req.headers.systemtype === "WEB") {
             sails.sockets.leave(req.socket, uid);
-            console.log("roomList", sails.sockets.rooms());
             return res.ok({
                 status: "success"
             });
         }
 
         /*request header*/
-        var deviceId = req.headers.deviceid;
-        var deviceType = req.headers.systemtype;
-
-        /*push param */
-        // var deviceId = req.param('deviceid');
-        // var deviceType = req.param('systemtype');
-        var roomList = sails.sockets.rooms();
-        if (uid && deviceType && deviceId) {
+        var deviceType = req.headers.deviceid;
+        var appid = req.headers.appid;
+        if (uid && appid && deviceType) {
             return TelehealthService.FindByUID(uid).then(function(teleUser) {
                 return TelehealthDevice.update({
                     DeviceToken: null
                 }, {
                     where: {
                         TelehealthUserID: teleUser.ID,
-                        DeviceID: deviceId,
-                        Type: deviceType
+                        DeviceType: deviceType,
+                        Appid: appid
                     }
                 }).then(function(result) {
                     sails.sockets.leave(req.socket, uid);

@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import patient.telehealth.redimed.workinjury.model.AccountModel;
+import patient.telehealth.redimed.workinjury.models.AccountModel;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;

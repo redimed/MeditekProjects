@@ -5,4 +5,5 @@ package patient.telehealth.redimed.workinjury.setting.presenter;
  */
 public interface ISettingPresenter {
     void Logout();
+    void displayFAQs(String content);
 }

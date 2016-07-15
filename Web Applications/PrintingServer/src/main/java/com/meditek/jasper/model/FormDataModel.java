@@ -112,4 +112,22 @@ public class FormDataModel {
     public void setRows(int rows) {
         this.rows = rows;
     }
+
+    public String getTypeChild() {
+        return typeChild;
+    }
+
+    public void setTypeChild(String typeChild) {
+        this.typeChild = typeChild;
+    }
+
+    public int getPageID() {
+        return pageID;
+    }
+
+    public void setPageID(int pageID) {
+        this.pageID = pageID;
+    }
+    
+    
 }

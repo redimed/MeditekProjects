@@ -112,45 +112,43 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
-                                <div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
-                                    <ul class="feeds">
-                                        <li ng-click="admission()">
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-green">
-                                                            <i class="fa fa-file-text-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc">Patient Admission</div>
+                                <ul class="feeds">
+                                    <li ng-click="admission()">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-green">
+                                                        <i class="fa fa-file-text-o"></i>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date">View</div>
-                                            </div>
-                                        </li>
-                                        <li ng-repeat="eformTemplate in eformTemplates track by $index"
-                                            ng-click="eFormTemplate(eformTemplate)">
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label " ng-class="styleFunction(eformTemplate.EForms)">
-                                                            <i class="fa fa-file-text-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc">{{eformTemplate.Name}}</div>
-                                                    </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">Patient Admission</div>
                                                 </div>
                                             </div>
-                                            <div class="col2">
-                                                <div class="date">View</div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date">View</div>
+                                        </div>
+                                    </li>
+                                    <li ng-repeat="eformTemplate in eformTemplates track by $index"
+                                        ng-click="eFormTemplate(eformTemplate)">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label " ng-class="styleFunction(eformTemplate.EForms)">
+                                                        <i class="fa fa-file-text-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">{{eformTemplate.Name}}</div>
+                                                </div>
                                             </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date">View</div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -290,45 +288,43 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
-                                        <ul class="feeds">
-                                            <li ng-click="admission()">
-                                                <div class="col1">
-                                                    <div class="cont">
-                                                        <div class="cont-col1">
-                                                            <div class="label label-green">
-                                                                <i class="fa fa-file-text-o"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2">
-                                                            <div class="desc"> Patient Admission</div>
+                                    <ul class="feeds">
+                                        <li ng-click="admission()">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-green">
+                                                            <i class="fa fa-file-text-o"></i>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col2">
-                                                    <div class="date"> View </div>
-                                                </div>
-                                            </li>
-                                            <li ng-repeat="eformTemplate in eformTemplates track by $index"
-                                                ng-click="eFormTemplate(eformTemplate)">
-                                                <div class="col1">
-                                                    <div class="cont">
-                                                        <div class="cont-col1">
-                                                            <div class="label " ng-class="styleFunction(eformTemplate.EForms)">
-                                                                <i class="fa fa-file-text-o"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2">
-                                                            <div class="desc">{{eformTemplate.Name}}</div>
-                                                        </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> Patient Admission</div>
                                                     </div>
                                                 </div>
-                                                <div class="col2">
-                                                    <div class="date">View</div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date"> View </div>
+                                            </div>
+                                        </li>
+                                        <li ng-repeat="eformTemplate in eformTemplates track by $index"
+                                            ng-click="eFormTemplate(eformTemplate)">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label " ng-class="styleFunction(eformTemplate.EForms)">
+                                                            <i class="fa fa-file-text-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc">{{eformTemplate.Name}}</div>
+                                                    </div>
                                                 </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date">View</div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                     <!-- ROW -->
                                     <div class="row">
                                         <!-- <div class="col-lg-3 col-md-4 col-xs-6">

@@ -94,6 +94,28 @@ module.exports = React.createClass({
             img.src = objectUrl;
         });
 
+
+        $.ajax({
+            url: Config.apiServerUrl+'api/downloadFileWithoutLogin/9c5e637c-1852-4dd9-b901-82f99fe6b09d',
+            xhrFields: {
+                withCredentials: true
+            },
+            type: "GET",
+            processData: false,
+            contentType: false,
+            responseType:'arraybuffer'
+        }).done(function(respond){
+            console.log(respond);
+            var blob = new Blob([respond],{type: 'image/png'});
+            saveAs(blob,"aa.png");
+        }).fail(function(error) {
+            console.log("error ne")
+            console.log(error);
+        })
+
+
+
+
         $(this.canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', function(event){
             if(event.type === 'mousemove' && !self.drawing && !self.typing) {
                 return;
@@ -342,7 +364,7 @@ module.exports = React.createClass({
 
         this.userUID= null;
 
-        this.fileType= null;
+        this.fileType= 'MedicalImage';
 
         this.currentImageLoaderFile = null;
         this.currentImageLoaderFileUrl =  null;
@@ -383,23 +405,24 @@ module.exports = React.createClass({
     },
 
     uploadDrawing: function() {
-        if(canvas.toBlob) {
-            canvas.toBlob(function(blob){
+        var self = this;
+        if(this.canvas.toBlob) {
+            this.canvas.toBlob(function(blob){
                 var formdata = new FormData();
-                formdata.append('userUID', this.userUID);
-                formdata.append('fileType', this.fileType);
-                var fileName = this.makeFileName();
+                formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+                formdata.append('fileType', self.fileType);
+                var fileName = self.makeFileName();
                 formdata.append('uploadFile', blob, fileName);
                 $.ajax({
-                    url: Config.apiServerUrl+'/api/uploadFileWithoutLogin',
+                    url: Config.apiServerUrl+'api/uploadFileWithoutLogin',
                     xhrFields: {
                         withCredentials: true
                     },
                     headers:{
                         //Authorization: ('Bearer ' + $cookies.get("token")),
-                        //systemtype: 'WEB',
-                        //userUID: scope.data.userUID,
-                        fileType: this.fileType
+                        systemtype: 'WEB',
+                        userUID: '2d0626f3-e741-11e5-8fab-0050569f3a15',
+                        fileType: self.fileType
                     },
                     type: "POST",
                     data: formdata,
@@ -409,12 +432,13 @@ module.exports = React.createClass({
                     console.log(respond);
                     if(respond.status=='success')
                     {
-                        // console.log('respond',respond);
-                        // CommonService.downloadFile(respond.fileUID);
                         toastr.success("Save drawing successfully", "success");
-                        this.action(respond.fileInfo);
+                        //self.action(respond.fileInfo);
                     }
-                });
+                }).fail(function(error) {
+                    console.log("error ne")
+                    console.log(error);
+                })
             })
         }
     },
@@ -678,7 +702,7 @@ module.exports = React.createClass({
                                        className="btn btn-icon-only btn-circle">
                                     </a>
 
-                                    <a className="btn btn-success" >
+                                    <a className="btn btn-success" onClick={this.uploadDrawing}>
                                         <i className="fa fa-floppy-o"></i> Save
                                     </a>
 

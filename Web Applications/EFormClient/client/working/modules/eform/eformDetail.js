@@ -159,7 +159,49 @@ module.exports = React.createClass({
                 },0, refRow, refField, refSection);
             });
             return promise;
+        }
 
+        
+        var CrossEFormData = function (obj) {
+            var preCalRes = obj.preCalRes;
+            var refRow = obj.refRow;
+            var refField = obj.refField;
+            var refSection = obj.refSection;
+            var appointmentCode = preCalRes[preCalRes.length-1];
+
+            var promiseList = [];
+            for (var i = 0; i < preCalRes.length-1; i++) {
+                var arr = preCalRes[i].split(':');//.replace(/ /g,'')
+                var eformField = {
+                    templateName: arr[0],
+                    fieldName: arr[1]
+                }
+                var promise = new Promise(function(resolve, reject) {
+                    setTimeout(function(eformField, refRow, refField, refSection){
+                        EFormService.eformCheckDetail({templateName: eformField.templateName, appointmentCode: appointmentCode})
+                            .then(function(eformRes){
+                                if(eformRes.data) {
+                                    var formData = eformRes.data.EFormData.FormData?JSON.parse(eformRes.data.EFormData.FormData):null;
+                                    for (var i = 0; i < formData.length; i++) {
+                                        var item = formData[i];
+                                        if (item.name == eformField.fieldName) {
+                                            objRef[refField] = {refRow: refRow, value: item.value};
+                                            self.refs[refSection].setValue(refRow, refField, item.value);
+                                            resolve({status: 'success', msg:'get value success'});
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    resolve({status: 'warning', msg: 'not found'});
+                                }
+                            }, function (err) {
+                                resolve({status:'error', msg: err});
+                            })
+                    }, 0, eformField, refRow, refField, refSection);
+                });
+                promiseList.push(promise);
+            }
+            return promiseList;
         }
 
         EFormService.getUserRoles({UID: this.userUID})
@@ -456,7 +498,6 @@ module.exports = React.createClass({
                                     if (Config.getPrefixField(preCal, 'EFORMDATA(') > -1) {
                                         var preCalRes = Config.getArrayPrecal(10, preCal);
                                         if(preCalRes.length == 3 && self.refs[section.ref]) {
-                                            loadAsync = true;
                                             if (preCalRes[2] == 0) {
                                                 preCalRes[2] = appointmentInfo.Code;
                                             }
@@ -466,6 +507,28 @@ module.exports = React.createClass({
                                             asyncArr.push(EFormData({preCalRes: preCalRes, refRow: refRow, refField: refField, refSection: refSection}));
                                         }
                                     }
+
+                                    //EFORMDATA(EFormName:FieldName,EFormName:FieldName, 0/AppointmentCode) //0: appointment hien tai
+                                    if (Config.getPrefixField(preCal, 'CROSSEFORMDATA(') > -1) {
+                                        console.log("CROSSEFORMDATA", preCal);
+                                        var preCalRes = Config.getArrayPrecal(15, preCal);
+                                        if(self.refs[section.ref]) {
+                                            if(preCalRes[preCalRes.length-1] == 0) {
+                                                preCalRes[preCalRes.length-1] = appointmentInfo.Code;
+                                            }
+                                            var refRow = row.ref;
+                                            var refField = field.ref;
+                                            var refSection = section.ref;
+                                            var listP = CrossEFormData({preCalRes: preCalRes, refRow: refRow, refField: refField, refSection: refSection});
+                                            console.log("CROSSEFORMDATA: LISTP:", listP);
+                                            listP.map(function(p) {
+                                                asyncArr.push(p);
+                                            })
+
+                                        }
+                                    }
+
+
 
 
                                     /* END CONCAT PREFIX */

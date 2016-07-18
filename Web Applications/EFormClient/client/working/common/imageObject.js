@@ -40,7 +40,7 @@ module.exports = React.createClass({
             })
         }
         if(this.props.permission === 'eformDev'){
-            //$(this.refs['modal-edit-drawing-btn']).prop('disabled', true);
+            $(this.refs['modal-edit-drawing-btn']).prop('disabled', true);
         }
         if(typeof this.props.defaultValue !== 'undefined'){
             $(this.refs.input).val(this.props.defaultValue);
@@ -492,6 +492,9 @@ module.exports = React.createClass({
 
     uploadDrawing: function() {
         var self = this;
+        $(self.refs['mytest']).modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
         if(this.canvas.toBlob) {
             this.canvas.toBlob(function(blob){
                 var formdata = new FormData();
@@ -520,11 +523,15 @@ module.exports = React.createClass({
                     {
                         toastr.success("Save drawing successfully", "success");
                         self.action(respond.fileInfo);
-
                     }
                 }).fail(function(error) {
-                    console.log("error ne")
+                    toastr.error("Save drawing error", "error");
+                    console.log("error ne");
                     console.log(error);
+                }).complete(function() {
+                    $(self.refs['mytest']).modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
                 })
             })
         }
@@ -745,9 +752,9 @@ module.exports = React.createClass({
                                 <img ref ="imageViewable" style ={{maxWidth: "100%"}}/>
                             </div>
                             <div className="col-xs-12" >
-                                <button ref="modal-edit-drawing-btn" type="button" className="btn btn-default" data-toggle="modal" data-target={'.'+this.props.refTemp} onClick = {this.loadDrawingForEdit}>Add/Edit Drawing</button>
+                                <button ref="modal-edit-drawing-btn" type="button" className="btn btn-default" data-toggle="modal" data-target={'.image-object'+this.props.refTemp} onClick = {this.loadDrawingForEdit}>Add/Edit Drawing</button>
 
-                                <div className={"modal fade " +this.props.refTemp} tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style={{overflowY:'scroll'}}>
+                                <div className={"modal fade image-object" +this.props.refTemp} ref ="mytest" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style={{overflowY:'scroll'}}>
                                     <div className="modal-dialog modal-lg" style = {{width: "80vw"}}>
                                         <div className="modal-content">
                                             <div className="modal-header">

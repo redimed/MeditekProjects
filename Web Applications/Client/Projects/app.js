@@ -182,7 +182,7 @@ app
     .factory('PDFFormUrlRestangular', function(Restangular) {
         return Restangular.withConfig(function(RestangularConfigurer) {
             RestangularConfigurer.setFullResponse(true);
-            RestangularConfigurer.setDefaultHeaders({'Content-Type': 'application/json'});
+            RestangularConfigurer.setDefaultHeaders({'Content-Type': 'application/json; charset=utf-8'});
             RestangularConfigurer.setBaseUrl(o.const.PDFFormUrl);
         });
     })

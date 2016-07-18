@@ -90,5 +90,7 @@ app.controller('eFormLoadFormCtrl', function($scope, $stateParams, $cookies, $st
              (e || window.event).returnValue = confirmationMessage; //Gecko + IE
              return confirmationMessage;                            //Webkit, Safari, Chrome*/
         });
+    } else {
+        $('#eform').attr('src', $scope.eFormBaseUrl+'/#/eform/detail?appointmentUID='+AppointmentUID+'&patientUID='+PatientUID+'&templateUID='+TemplateUID+'&userUID='+UserUID);
     }
 });

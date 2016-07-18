@@ -177,7 +177,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                 };
             };
 
-            $scope.sendEmail = function(){
+            $scope.sendEmail = function(response){
                 var modalInstance = $uibModal.open({
                     animation: true,
                     size: 'lg',
@@ -185,10 +185,11 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                     resolve: {
                     },
                     controller: function($scope, $stateParams, CommonService, FileUploader, toastr, $cookies){
+                        console.log("asiodhiaoshdoashdoias ",response.Email1);
                         var self = $scope;
                         App.initAjax();                    
                         self.data = {                            
-                            sender: null,
+                            sender: "meditek.bk001@gmail.com",                            
                             recipient:[],
                             bodyContent: "",
                             subject: "",
@@ -206,6 +207,13 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                         self.cutstring = function(string){
                             var string = string.split(", ");                            
                         };
+
+                        if (response.Email1 != null) {
+                            self.data.recipient.push(response.Email1);
+                        }
+                        else if (response.Email2 != null) {
+                            self.data.recipient.push(response.Email2);
+                        }
 
                         self.checkUIDTemplate = function(Note,index) {
                             console.log("index", index);                            
@@ -262,7 +270,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
                                 // if (self.data.bodyContent === null || self.data.bodyContent === undefined) {
                                 //     self.data.bodyContent = " ";
                                 // }                            
-                                self.data.recipient = self.data.recipient[0].split(", ");                                                 
+                                // self.data.recipient = self.data.recipient[0].split(", ");                                                 
                                 self.attachments = [];
 
                                 for (var key in self.UIDTemplate){

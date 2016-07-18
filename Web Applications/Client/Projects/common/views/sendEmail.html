@@ -13,10 +13,10 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h4 class="form-section text-primary">Enter Information</h4>
-                            <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.email1.$invalid]">
+                            <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.email1.$invalid]" hidden="true">
                                 <label class="control-label col-xs-3 text-right">From:</label>
                                 <div class="col-xs-8">
-                                    <input type="email" name="email1" class="form-control" ng-model="data.sender" placeholder="example@domain.com" required />
+                                    <input type="email" name="email1" class="form-control" ng-model="data.sender" required />
                                     <span class="help-block" ng-if="submitted && myForm.email1.$error.required">Required</span>
                                     <span class="font-red" ng-if="myForm.email1.$error.email">Invalid From address.</span>                                
                                 </div>
@@ -24,7 +24,7 @@
                             <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.email2.$invalid]">
                                 <label class="control-label col-xs-3 text-right">To:</label>
                                 <div class="col-xs-8">
-                                    <input type="email" name="email2" class="form-control" ng-model="data.recipient[0]" placeholder="exaple@domain.com" ng-change="cutstring(data.recipient[0])" required /> 
+                                    <input type="email" name="email2" class="form-control" ng-model="data.recipient[0]" ng-change="cutstring(data.recipient[0])" required /> 
                                     <span class="help-block" ng-if="submitted && myForm.email2.$error.required">Required</span>
                                     <span class="font-red" ng-if="myForm.email2.$error.email">Invalid From address.</span>                                
                                 </div>

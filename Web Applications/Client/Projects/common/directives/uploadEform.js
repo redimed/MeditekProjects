@@ -56,6 +56,7 @@ angular.module('app.common.uploadEform',[])
 		       	fileItem.formData[0].userUID = $scope.userUID;
                 fileItem.headers.userUID = $scope.userUID;
                 fileItem.headers.fileType = $scope.fileType;
+                $scope.EFormName = fileItem.file.name.substr(0, fileItem.file.name.lastIndexOf('.'));
 		    };
 		    uploader.onBeforeUploadItem = function(item) {
 		        item.headers.Authorization = 'Bearer ' + $cookies.get("token");

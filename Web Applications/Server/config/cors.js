@@ -46,7 +46,7 @@ var corsConfig = {
      ***************************************************************************/
 
     //For local testing
-    origin: 'http://localhost:3001, http://localhost:3004, http://localhost:3006, http://localhost:3007, http://localhost:3009, ' +
+    origin: 'https://localhost:3014, http://localhost:3001, http://localhost:3004, http://localhost:3006, http://localhost:3007, http://localhost:3009, ' +
         'https://localhost:3001, https://localhost:3004, https://localhost:3006, https://localhost:3007, https://localhost:3009, ' +
         'http://192.168.1.247:3001, http://192.168.1.247:3004, http://192.168.1.247:3006, http://192.168.1.247:3007, http://192.168.1.247:3009, ' +
         'http://192.168.1.216:3001, http://192.168.1.216:3004, http://192.168.1.216:3006, http://192.168.1.216:3007, http://192.168.1.216:3009, ' +

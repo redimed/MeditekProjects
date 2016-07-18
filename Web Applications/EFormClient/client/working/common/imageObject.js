@@ -492,9 +492,6 @@ module.exports = React.createClass({
 
     uploadDrawing: function() {
         var self = this;
-        $(self.refs['mytest']).modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
         if(this.canvas.toBlob) {
             this.canvas.toBlob(function(blob){
                 var formdata = new FormData();
@@ -529,9 +526,7 @@ module.exports = React.createClass({
                     console.log("error ne");
                     console.log(error);
                 }).complete(function() {
-                    $(self.refs['mytest']).modal('hide');
-                    $('body').removeClass('modal-open');
-                    $('.modal-backdrop').remove();
+
                 })
             })
         }
@@ -600,7 +595,7 @@ module.exports = React.createClass({
     cGetText: function() {
         console.log("cGetText");
         this.cText = $(this.refs['canvasText']).val();
-        $(self.refs['getTextBtn']).attr('disabled', true);
+        $(this.refs['getTextBtn']).attr('disabled', true);
         $(this.refs['applyTextBtn']).attr('disabled', false);
         this.typing= true;
         this.textMove=true;
@@ -608,7 +603,7 @@ module.exports = React.createClass({
     },
 
     cApplyText: function () {
-        $(self.refs['getTextBtn']).attr('disabled', false);
+        $(this.refs['getTextBtn']).attr('disabled', false);
         $(this.refs['applyTextBtn']).attr('disabled', true);
         this.typing = false;
         this.textMove = false;
@@ -754,7 +749,7 @@ module.exports = React.createClass({
                             <div className="col-xs-12" >
                                 <button ref="modal-edit-drawing-btn" type="button" className="btn btn-default" data-toggle="modal" data-target={'.image-object'+this.props.refTemp} onClick = {this.loadDrawingForEdit}>Add/Edit Drawing</button>
 
-                                <div className={"modal fade image-object" +this.props.refTemp} ref ="mytest" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style={{overflowY:'scroll'}}>
+                                <div className={"modal fade image-object" +this.props.refTemp} tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style={{overflowY:'scroll'}}>
                                     <div className="modal-dialog modal-lg" style = {{width: "80vw"}}>
                                         <div className="modal-content">
                                             <div className="modal-header">
@@ -803,7 +798,7 @@ module.exports = React.createClass({
                                                                className="btn btn-icon-only btn-circle">
                                                             </a>
 
-                                                            <a className="btn btn-success" onClick={this.uploadDrawing}>
+                                                            <a className="btn btn-success" onClick={this.uploadDrawing} data-dismiss="modal">
                                                                 <i className="fa fa-floppy-o"></i> Save
                                                             </a>
 

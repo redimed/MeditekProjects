@@ -17,7 +17,7 @@ target 'UrgentCare Work' do
 #    pod 'ObjectMapper', '~> 0.18'
 #    pod 'RealmSwift'
 #    pod 'ChameleonFramework/Swift'
-#    pod 'PromiseKit', '3.0.2'
+#    #pod 'PromiseKit', '3.0.2'
 #    pod 'UIAlertController+Blocks', '0.9'
 #    pod 'XCGLogger', '3.2'
 #    pod 'SFRoundProgressCounterView'
@@ -25,7 +25,6 @@ target 'UrgentCare Work' do
 #    pod 'Socket.IO-Client-Swift', '~> 5.2.3' # Or latest version
 #    pod 'OpenTok'
 #    pod 'Google/CloudMessaging'
-#    pod 'DKImagePickerController'
 end
 
 target 'UrgentCare WorkTests' do

@@ -31,7 +31,6 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
     var uuidFrom = String()
     var uuidTo = String()
     
-    var savedData  = CallContainer()
     let defaults = NSUserDefaults.standardUserDefaults()
     var tokens :String = String()
     var userUID :String = String()
@@ -66,7 +65,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
         }
-        socketService.emitDataToServer(Define.MessageString.CallAnswer, uidFrom: uuidFrom, uuidTo: uuidTo)
+        socketService.emitDataToServer(Define.MessageString.CallAnswer, uidFrom: receiveMessageData.to, uuidTo: receiveMessageData.from)
         
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ScreenCallingViewController.endCallAnswer), name: "endCallAnswer", object: nil)
@@ -380,7 +379,6 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
     
     func publisher(publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
         NSLog("publisher streamDestroyed %@", stream)
-        
         if subscriber?.stream.streamId == stream.streamId {
             doUnsubscribe()
         }

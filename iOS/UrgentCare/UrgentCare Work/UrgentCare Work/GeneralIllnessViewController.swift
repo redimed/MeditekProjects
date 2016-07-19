@@ -176,6 +176,7 @@ class GeneralIllnessViewController: UIViewController {
         DataPatientInjuryOrGeneral.general = PatientData.general + GeneralData.general
         redisiteView.DataPatientInjuryOrGeneral = DataPatientInjuryOrGeneral
         redisiteView.templateUID = Define.Redisite.templateUID_GeneralEFormUID
+        redisiteView.redisiteName = "Redisite General"
         self.presentViewController(redisiteView, animated: true, completion: nil)
     }
     @IBAction func ChangeSymptomsBeforeRadio(sender: AnyObject) {

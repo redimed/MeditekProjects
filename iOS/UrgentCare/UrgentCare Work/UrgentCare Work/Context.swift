@@ -73,7 +73,7 @@ class Context {
                 NSNotificationCenter.defaultCenter().postNotificationName(Define.LogoutFunction, object: self)
                 message = "Please login again !"
             }else{
-                message = "Please login again !"
+                message = ""
             }
         }else if (ErrorType == "Authentication Error - invalid username"){
             message = "Authentication Error - invalid username"
@@ -151,11 +151,9 @@ class Context {
     }
     
     //check validate
-    class func validatePhoneNumber(value: String,regex:String) -> Bool {
-        
-        let PHONE_REGEX = regex
-        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
-        let result =  phoneTest.evaluateWithObject(value)
+    class func CheckRegex(value: String,regex:String) -> Bool {
+        let CheckRegex = NSPredicate(format: "SELF MATCHES %@", regex)
+        let result =  CheckRegex.evaluateWithObject(value)
         
         return result
         
@@ -250,5 +248,31 @@ class Context {
         let searchDataSource = dataSource.filter { predicate.evaluateWithObject($0) }
         autocompleteUrls = searchDataSource
         return autocompleteUrls
+    }
+    class func getEndDateOfMonth(month: NSInteger, year: NSInteger) -> NSDate? {
+        let components = NSDateComponents()
+        components.month = month
+        components.year = year
+        
+        let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+        
+        return gregorian!.dateFromComponents(components)
+    }
+    
+    class func GetOrientationDevice()->String{
+        var orientation = ""
+        switch UIDevice.currentDevice().orientation{
+        case .Portrait:
+            orientation = "Portrait"
+        case .PortraitUpsideDown:
+            orientation = "PortraitUpsideDown"
+        case .LandscapeLeft:
+            orientation = "LandscapeLeft"
+        case .LandscapeRight:
+            orientation = "LandscapeRight"
+        default:
+            orientation = "Another"
+        }
+        return orientation
     }
 }

@@ -11,10 +11,12 @@ import UIKit
 
 extension UIAlertView {
     func alertMessage(title:String,message:String){
-        let alert = UIAlertView()
-        alert.title = title
-        alert.message = message
-        alert.addButtonWithTitle("OK")
-        alert.show()
+        if(message != ""){
+            let alert = UIAlertView()
+            alert.title = title
+            alert.message = message
+            alert.addButtonWithTitle("OK")
+            alert.show()
+        }
     }
 }

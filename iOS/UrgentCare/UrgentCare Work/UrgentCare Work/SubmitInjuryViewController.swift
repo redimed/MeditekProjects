@@ -230,7 +230,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                     alertMessage(Define.MessageString.required, message: "Last name is max 250 character!")
                 }else if Context.checkMaxLength(contactPhoneTextField, length: 100) == false{
                     alertMessage(Define.MessageString.required, message: "Contact phone is max 250 character!")
-                }else if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:Define.Regex.MobileNumber) == false {
+                }else if Context.CheckRegex(contactPhoneTextField.text!,regex:Define.Regex.MobileNumber) == false {
                     borderTextFieldValid(contactPhoneTextField, color: Define.ColorCustom.colorCustomRed)
                     alertMessage(Define.MessageString.required, message: "Please check your phonenumber!")
                 }
@@ -238,11 +238,11 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                     alertMessage(Define.MessageString.required, message: "Please check your BirthDay!")
                     borderTextFieldValid(birthDayTextField, color: Define.ColorCustom.colorCustomRed)
                 }
-                else if emailTextField.text != "" && Context.validatePhoneNumber(emailTextField.text!,regex:Define.Regex.Email) == false {
+                else if emailTextField.text != "" && Context.CheckRegex(emailTextField.text!,regex:Define.Regex.Email) == false {
                     alertMessage(Define.MessageString.required, message: "Please check your email!")
                     borderTextFieldValid(emailTextField, color: Define.ColorCustom.colorCustomRed)
                 }
-                else if companyPhoneNumberTextField.text != "" && Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:Define.Regex.PhoneNumber) == false {
+                else if companyPhoneNumberTextField.text != "" && Context.CheckRegex(companyPhoneNumberTextField.text!,regex:Define.Regex.PhoneNumber) == false {
                     borderTextFieldValid(companyPhoneNumberTextField, color: Define.ColorCustom.colorCustomRed)
                     alertMessage(Define.MessageString.required, message: "Please check your company phone number!")
                 }
@@ -545,7 +545,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
                 borderTextFieldValid(lastNameTextField, color: Define.ColorCustom.colorCustomRed)
             }
         case contactPhoneTextField:
-            if Context.validatePhoneNumber(contactPhoneTextField.text!,regex:Define.Regex.MobileNumber) == false || contactPhoneTextField.text == "" {
+            if Context.CheckRegex(contactPhoneTextField.text!,regex:Define.Regex.MobileNumber) == false || contactPhoneTextField.text == "" {
                 borderTextFieldValid(contactPhoneTextField, color: Define.ColorCustom.colorCustomRed)
             }else {
                 borderTextFieldValid(contactPhoneTextField, color: Define.ColorCustom.colorCustomBrow)
@@ -559,7 +559,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             }
         case emailTextField:
             if emailTextField.text != ""{
-                if Context.validatePhoneNumber(emailTextField.text!,regex:Define.Regex.Email) == false {
+                if Context.CheckRegex(emailTextField.text!,regex:Define.Regex.Email) == false {
                     borderTextFieldValid(emailTextField, color: Define.ColorCustom.colorCustomRed)
                 }else {
                     borderTextFieldValid(emailTextField, color: Define.ColorCustom.colorCustomBrow)
@@ -583,7 +583,7 @@ class SubmitInjuryViewController: BaseViewController,SSRadioButtonControllerDele
             }
         case companyPhoneNumberTextField:
             if companyPhoneNumberTextField.text != "" {
-                if Context.validatePhoneNumber(companyPhoneNumberTextField.text!,regex:Define.Regex.PhoneNumber) == false {
+                if Context.CheckRegex(companyPhoneNumberTextField.text!,regex:Define.Regex.PhoneNumber) == false {
                     borderTextFieldValid(companyPhoneNumberTextField, color: Define.ColorCustom.colorCustomRed)
                 }else {
                     borderTextFieldValid(companyPhoneNumberTextField, color: Define.ColorCustom.colorCustomBrow)

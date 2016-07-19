@@ -27,6 +27,7 @@ class ConsentViewController: BaseViewController     {
     var AppointPost = RequestAppointPostCompany()
     var uploadImage = UploadImage()
     var templateUID = ""
+    var redisiteName = ""
     var assets: [DKAsset] = []
     var ImageDta = RequestAppointDataCompany()
     
@@ -188,6 +189,7 @@ class ConsentViewController: BaseViewController     {
         jsonString = jsonString!.substringWithRange(Range<String.Index>(start: jsonString!.startIndex.advancedBy(16), end: jsonString!.endIndex.advancedBy(-2)))
         redisiteData.tempData = jsonString!
         redisiteData.templateUID = templateUID
+        redisiteData.name = redisiteName
         UserService.postEformDetail(redisiteData) { [weak self] (response) in
             print(response.result.value)
             if let _ = self {

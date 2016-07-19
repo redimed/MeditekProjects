@@ -1,9 +1,9 @@
 //
 //  UIImageView+Customize.swift
-//  AppPromotion
+//  UrgentCare Work
 //
-//  Created by IosDeveloper on 27/10/15.
-//  Copyright © 2015 Trung.vu. All rights reserved.
+//  Created by Meditek on 7/13/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import Foundation

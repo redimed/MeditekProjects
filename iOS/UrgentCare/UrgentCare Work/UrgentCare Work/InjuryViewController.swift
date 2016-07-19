@@ -159,6 +159,7 @@ class InjuryViewController: UIViewController {
         DataPatientInjuryOrGeneral.general = PatientData.general + InjuryData.general
         consentView.DataPatientInjuryOrGeneral = DataPatientInjuryOrGeneral
         consentView.templateUID = Define.Redisite.templateUID_InjuryEFormUID
+        consentView.redisiteName = "Redisite Injury"
         self.presentViewController(consentView, animated: true, completion: nil)
     }
     func SetUpCustomLayout(){

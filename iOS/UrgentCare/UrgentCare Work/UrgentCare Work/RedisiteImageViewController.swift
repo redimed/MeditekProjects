@@ -17,6 +17,7 @@ class RedisiteImageViewController: UIViewController ,UICollectionViewDataSource,
     var DataPatientInjuryOrGeneral = General()
     var AppointPostCompany = RequestAppointPostCompany()
     var ImageDta = RequestAppointDataCompany()
+    var redisiteName = ""
     //
     var CountImage = 0
     //
@@ -148,6 +149,7 @@ extension RedisiteImageViewController : UIViewControllerTransitioningDelegate,UI
         consentView.DataPatientInjuryOrGeneral = DataPatientInjuryOrGeneral
         consentView.templateUID = templateUID
         consentView.assets = assets
+        consentView.redisiteName = redisiteName
         self.presentViewController(consentView, animated: true, completion: nil)
     }
     

@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
         if let rootViewController = self.topViewControllerWithRootViewController(window?.rootViewController) {
             if (rootViewController.respondsToSelector(Selector("canRotate"))) {
-                // Unlock landscape view orientations for this view controller
                 return .LandscapeLeft;
             }
         }

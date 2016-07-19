@@ -54,7 +54,8 @@ class PatientInforViewController: BaseViewController {
     var PatientDataHard = General()
     var PatientDataChange = General()
     var pastUrls : [String] = []
-    
+    var expiryDate : String = ""
+    var CheckOrientationDevice = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         DatepickerModeExpiry()
@@ -62,9 +63,9 @@ class PatientInforViewController: BaseViewController {
             btnListSite.hidden = false
             btnListStaff.hidden = false
         }
-        if (self.isMovingFromParentViewController()) {
-            UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
-        }
+        print(Context.GetOrientationDevice())
+        CheckOrientationDevice = Context.GetOrientationDevice()
+        UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
         txtSuburb.hidesWhenEmpty = true
         txtSuburb.hidesWhenSelected = true
         pastUrls = Context.getDataDefasults(Define.keyNSDefaults.pastUrls) as! [String]
@@ -126,7 +127,21 @@ class PatientInforViewController: BaseViewController {
             self.AlertShow("Waring", message: "Please enter all required fields!")
             return false
         }else{
-            CheckSubmitData()
+            if(CheckRegexTextField(txtNOKEmail,regex:Define.Regex.Email)){
+                CheckSubmitData()
+                return true
+            }else{
+                self.AlertShow("Waring", message: "Please check format fields!")
+                return false
+            }
+        }
+    }
+    func CheckRegexTextField(textField:UITextField,regex:String)->Bool{
+        if !Context.CheckRegex(textField.text!,regex:regex){
+            textField.txtError(textField)
+            return false
+        }else{
+            textField.textFiledOnlyLine(textField)
             return true
         }
     }
@@ -140,9 +155,6 @@ class PatientInforViewController: BaseViewController {
         let alert = UIAlertController(title: title, message:message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
         self.presentViewController(alert, animated: true){}
-    }
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.LandscapeRight
     }
     @IBAction func ActionGenerailliness(sender: AnyObject) {
         if(CheckRequiredData()){
@@ -160,8 +172,14 @@ class PatientInforViewController: BaseViewController {
     override func viewWillDisappear (animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = true
-        if (self.isMovingFromParentViewController()) {
-            UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeRight.rawValue), forKey: "orientation")
+        if(CheckOrientationDevice == "LandscapeRight"){
+            if (self.isMovingFromParentViewController()) {
+                UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeRight.rawValue), forKey: "orientation")
+            }
+        }else{
+            if (self.isMovingFromParentViewController()) {
+                UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.PortraitUpsideDown.rawValue), forKey: "orientation")
+            }
         }
         
     }
@@ -175,14 +193,6 @@ class PatientInforViewController: BaseViewController {
         AllRedisiteData.general = PatientDataHard.general
         getStaff()
         backBarItem.width = 20
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        let statusBar: UIView = UIApplication.sharedApplication().valueForKey("statusBar") as! UIView
-        if (self.isMovingFromParentViewController()) {
-            UIDevice.currentDevice().setValue(Int(UIInterfaceOrientation.LandscapeLeft.rawValue), forKey: "orientation")
-        }
-        if statusBar.respondsToSelector(Selector("setBackgroundColor:")) {
-            statusBar.backgroundColor = UIColor(hex: Define.ColorCustom.greenBoldColor)
-        }
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "SegueViewRelated"){
@@ -225,7 +235,7 @@ class PatientInforViewController: BaseViewController {
         let patients = PatientsCompany()
         let dataCompany = DataCompany()
         if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
-            patients.UID = staff.data[0].UID
+            patients.UID = staff.data.count != 0 ? staff.data[0].UID : ""
         }
         requestAppointDataCompany.RequestDate = Context.NowDate()
         requestAppointDataCompany.Type = "RediSite"
@@ -307,6 +317,7 @@ class PatientInforViewController: BaseViewController {
             txtSalutation.text = staff.data[0].Title
             txtOccupation.text = staff.data[0].Occupation
             txtPostCode.text = staff.data[0].Postcode
+            txtNOKEmail.text = staff.data[0].Email1
             Context.RadioGetData(staff.data[0].Title, title: [["Mr","field_0_5_1"],["Mrs","field_0_5_2"],["Ms","field_0_5_3"],["Miss","field_0_6_1"],["Master","field_0_6_2"],["Dr","field_0_6_3"]])
         }
         if(Context.getDataDefasults(Define.keyNSDefaults.DetailSiteCheck) as! String == "YES"){
@@ -405,6 +416,18 @@ extension PatientInforViewController {
     }
     func doneClickExpiry() {
         self.txtExpiry.text = monthYearPickerView.done()
+        //        var fullDate = txtExpiry.text!.characters.split{$0 == "/"}.map(String.init)
+        //        if(fullDate.count != 0){
+        //            if let month : Int = Int(fullDate[0])!{
+        //                if let year : Int =  Int(fullDate[1])! {
+        //                    print(Context.getEndDateOfMonth(month, year: year))
+        //                    let formatter = NSDateFormatter()
+        //                    formatter.timeZone = NSTimeZone(abbreviation: "UTC")
+        //                    let utcTimeZoneStr = formatter.stringFromDate(Context.getEndDateOfMonth(month, year: year)!)
+        //                    print("utcTimeZoneStr",utcTimeZoneStr)
+        //                }
+        //            }
+        //        }
         txtExpiry.resignFirstResponder()
     }
     func cancelClickExpiry() {
@@ -418,7 +441,6 @@ extension PatientInforViewController {
 extension PatientInforViewController : UITextViewDelegate {
     func setUpUI(){
         self.navigationController?.navigationBarHidden = true
-        UIDevice.currentDevice().setValue(UIInterfaceOrientation.LandscapeLeft.rawValue, forKey: "orientation")
         self.automaticallyAdjustsScrollViewInsets = false
         
         txtVeteranNumber.textFiledOnlyLine(txtVeteranNumber)
@@ -460,6 +482,9 @@ extension PatientInforViewController : UITextViewDelegate {
         txtSuburb.delegate = self
         txtPostCode.delegate = self
         txtHomeTelephone.delegate = self
+        txtWorkTelephone.delegate = self
+        txtMobileTelephone.delegate = self
+        txtNOKTelephone.delegate = self
         DatepickerMode()
         
     }
@@ -467,6 +492,29 @@ extension PatientInforViewController : UITextViewDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         if(textField.tag == 69){
             textField.CheckTextFieldIsEmpty(textField)
+        }
+    }
+    func checkNumberPhone(textField: UITextField,string: String)->Bool{
+        let hashValue = string.hash
+        let length = ((textField.text?.length)! + string.length)
+        if Context.validateInputOnlyNumber(hashValue) == false || length > 10 {
+            return false
+        }else{
+            return true
+        }
+    }
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        switch textField {
+        case txtHomeTelephone:
+            return checkNumberPhone(textField,string: string)
+        case txtMobileTelephone:
+            return checkNumberPhone(textField,string: string)
+        case txtWorkTelephone:
+            return checkNumberPhone(textField,string: string)
+        case txtWorkTelephone:
+            return checkNumberPhone(textField,string: string)
+        default:
+            return true
         }
     }
 }

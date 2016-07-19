@@ -2,7 +2,7 @@ var app = angular.module('app.unAuthentication.changepass.controller', []);
 app.controller('changepassCtrl', function($scope,$rootScope, $q, $state, $cookies, UnauthenticatedService, toastr, $timeout) {
 	$('.forget-form').show();
 	$('.content').removeClass('sign-up');
-
+	o.loadingPage(true);
 	$scope.data = {};
 	$scope.err  = {};
 	$scope.isCheck= false;
@@ -15,9 +15,11 @@ app.controller('changepassCtrl', function($scope,$rootScope, $q, $state, $cookie
 	.then(function(success){
 		console.log(success);
 		$scope.isCheck = true;
+		o.loadingPage(false);
 	},function(err){
 		toastr.error(err.data.ErrorsList[0],"Error");
 		console.log(err);
+		o.loadingPage(false);
 	});
 
 	$scope.changePass = function() {

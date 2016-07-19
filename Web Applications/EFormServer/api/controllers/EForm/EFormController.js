@@ -23,6 +23,12 @@ module.exports = {
         })
         .then(function(data){
             var data_value = JSON.parse(data.EFormData.FormData);
+            data_value.map(function(value){
+                if(value.type === 'eform_input_signature'){
+                    value.base64Data = value.value.sub;
+                    delete value.value;
+                }
+            });
             var result = {
                 printMethod:data.EFormTemplate.PrintType,
                 templateUID: data.EFormTemplate.UID,

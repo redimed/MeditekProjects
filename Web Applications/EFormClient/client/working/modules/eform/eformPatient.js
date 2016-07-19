@@ -68,6 +68,64 @@ module.exports = React.createClass({
                                 '&userUID='+this.searchObjectMap.userUID;
         window.location.reload();
     },
+    _downloadFile: function(data) {
+        var extFileImage = ['jpeg','png','jpg'];
+        var extFilePDF = ['pdf'];
+        var UID = data.Note.substr(0, data.Note.lastIndexOf('.'));
+        EFormService.getImage({UID: UID})
+        .then(function(response) {
+            if(response) {
+                var options={};
+                var FileExt = data.Note.substr(data.Note.lastIndexOf('.') + 1, data.Note.length);
+                var promise_checkPDF = new Promise(function(a, b) {
+                    var arr = extFilePDF.filter(function(item) {
+                        return item === FileExt;
+                    });
+                    a(arr);
+                });
+
+                var promise_checkImage = new Promise(function(a, b) {
+                    var arr = extFileImage.filter(function(item) {
+                        return item === FileExt;
+                    });
+                    a(arr);
+                });
+
+                function toImage(name, type) {
+                    options.type=type;
+                    var blob = new Blob([response],options);
+                    var objectUrl = URL.createObjectURL(blob);
+                    var anchor = document.createElement("a");
+                    anchor.download=name||'';
+                    anchor.href = objectUrl;
+                    anchor.click();
+                }
+
+                Promise.all([promise_checkImage, promise_checkPDF])
+                .then(function(values) {
+                    if(values[0].length != 0) {
+                        var type = 'image/' + values[0][0];
+                        var name = data.Name + '.' + values[0][0];
+                        toImage(name, type);
+                    }
+                    else if (values[1].length != 0) {
+                        var type = 'application/pdf';
+                        var name = data.Name + '.' +  values[1][0];
+                        toImage(name, type);
+                    }
+                }, function(err) {
+                    console.log("err ", err);
+                })
+
+                
+            }
+            else {
+                console.log("err ");
+            }
+        }, function(err) {
+            console.log("err ",err);
+        });
+    },
     _sort: function(fieldName) {
         this.searchObjectMap.order = {};
         if(this.state.sort[fieldName] == "ASC"){
@@ -160,20 +218,38 @@ module.exports = React.createClass({
                                         <tbody>
                                         {
                                             this.state.list.map((item, index) =>{
-                                                return(
-                                                    <tr key={index}>
-                                                        <td>{this.searchObjectMap.offset + index+1}</td>
-                                                        <td>{item.Appointments[0].FromTime!=null?moment(item.Appointments[0].FromTime,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
-                                                        <td>{item.Appointments[0].Code}</td>
-                                                        <td className="primary-link">{item.Name}</td>
-                                                        <td>{item.CreatedDate!=null?moment(item.CreatedDate,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
-                                                        <td className="text-center">
-                                                            <a className="btn btn-sm btn-primary" onClick={this._viewEForm.bind(this,item)}>
-                                                                <i className="glyphicon glyphicon-search"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                )
+                                                if(item.Appointments.length != 0) {
+                                                    return(
+                                                        <tr key={index}>
+                                                            <td>{index+1}</td>
+                                                            <td>{item.Appointments[0].FromTime!=null?moment(item.Appointments[0].FromTime,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
+                                                            <td>{item.Appointments[0].Code}</td>
+                                                            <td className="primary-link">{item.Name}</td>
+                                                            <td>{item.CreatedDate!=null?moment(item.CreatedDate,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
+                                                            <td className="text-center">
+                                                                <a className="btn btn-sm btn-primary" onClick={this._viewEForm.bind(this,item)}>
+                                                                    <i className="glyphicon glyphicon-search"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                }
+                                                else {
+                                                    return(
+                                                        <tr key={index}>
+                                                            <td>{index+1}</td>
+                                                            <td>&nbsp;</td>
+                                                            <td>&nbsp;</td>
+                                                            <td className="primary-link">{item.Name}</td>
+                                                            <td>{item.CreatedDate!=null?moment(item.CreatedDate,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
+                                                            <td className="text-center">
+                                                                <a className="btn btn-sm btn-primary" onClick={this._downloadFile.bind(this,item)}>
+                                                                    <i className="glyphicon glyphicon-search"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                }
                                             })
                                         }
                                         </tbody>

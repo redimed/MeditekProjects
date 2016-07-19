@@ -90,23 +90,21 @@ module.exports = function(data) {
                         model:Appointment,
                         attributes:['ID','UID','Code','FromTime','ToTime','RequestDate'],
                         where:pagination.whereClause.Appointment,
-                        required:true,
-                        include:[
-                            {
-                                model:Patient,
-                                attributes:['ID','UID','FirstName','LastName'],
-                                required:true,
-                                where:{
-                                    UID : data.patientUID
-                                }
-                            },
-                        ],
+                        required:false,
                     },
                     {
                         model:EFormTemplate,
                         attributes:['ID','UID'],
                         required:true,
-                    }
+                    },
+                    {
+                        model:Patient,
+                        attributes:['ID','UID','FirstName','LastName'],
+                        required:true,
+                        where:{
+                            UID : data.patientUID
+                        }
+                    },
                 ],
                 where:{$and:[pagination.whereClause.EForm, {Status:'saved'}]},
                 limit:data.limit,

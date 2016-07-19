@@ -1,9 +1,9 @@
 //
 //  Contants.swift
-//  VgoUserApp
+//  UrgentCare Work
 //
-//  Created by admin on 07/02/16.
-//  Copyright © 2016 Trung.Vu. All rights reserved.
+//  Created by Meditek on 7/13/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import Foundation
@@ -11,39 +11,34 @@ import UIKit
 
 struct Constants {
     
-    struct Path {
-        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
-        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
-        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
-        static let SERVICE_URL_3015                              = "https://testapp.redimed.com.au:3015"
-        static let SandboxOption                                 = false
-        static let PatientUID                                    = "2fdad635-8481-4e1a-9c67-a668703b5791"
-    }
-    
-    //        struct Path {
-    //            static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
-    //            static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
-    //            static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
-    //            static let SERVICE_URL_3015                              = "https://meditek.redimed.com.au:3015"
-    //            static let SandboxOption                                 = true
-    //            static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
-    //        }
-    //    struct Path {
-    //        static let SERVICE_URL_3006                              = "http://192.168.1.116:3006"
-    //        static let SERVICE_URL_3005                              = "http://192.168.1.116:3005"
-    //        static let SERVICE_URL_3009                              = "http://192.168.1.116:3009"
-    //        static let SERVICE_URL_3015                              = "http://192.168.1.116:3015"
-    //        static let SandboxOption                                 = true
-    //        static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
-    //    }
-    //    struct Path {
-    //        static let SERVICE_URL_3006                              = "http://192.168.1.247:3006"
-    //        static let SERVICE_URL_3005                              = "http://192.168.1.247:3005"
-    //        static let SERVICE_URL_3009                              = "http://192.168.1.247:3009"
-    //        static let SERVICE_URL_3015                              = "http://192.168.1.247:3015"
-    //
-    //        static let SandboxOption                                 = true
-    //    }
+//    struct Path {
+//        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
+//        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
+//        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+//        static let SERVICE_URL_3015                              = "https://testapp.redimed.com.au:3015"
+//        static let SERVICE_URL_3014                              = "https://testapp.redimed.com.au:3014"
+//        static let SandboxOption                                 = false
+//        static let PatientUID                                    = "2fdad635-8481-4e1a-9c67-a668703b5791"
+//    }
+//
+            struct Path {
+                static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
+                static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
+                static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
+                static let SERVICE_URL_3015                              = "https://meditek.redimed.com.au:3015"
+                static let SERVICE_URL_3014                              = "https://meditek.redimed.com.au:3014"
+                static let SandboxOption                                 = true
+                static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
+            }
+//        struct Path {
+//            static let SERVICE_URL_3006                              = "http://192.168.1.251:3006"
+//            static let SERVICE_URL_3005                              = "http://192.168.1.251:3005"
+//            static let SERVICE_URL_3009                              = "http://192.168.1.251:3009"
+//            static let SERVICE_URL_3015                              = "http://192.168.1.251:3015"
+//            static let SERVICE_URL_3014                              = "http://192.168.1.251:3014"
+//            static let SandboxOption                                 = true
+//            static let PatientUID                                    = "3b784269-1377-4f17-99c3-cfb685cd601f"
+//        }
     struct KeyPushNotification {
         static let SandboxOption = Path.SandboxOption
         //True: using key develoment
@@ -75,8 +70,11 @@ struct Constants {
         static let URL_POST_APPOINTMENTLIST                      = Path.SERVICE_URL_3009 + "/api/telehealth/user/appointments"
         static let URL_GET_DETAILS_APPOINMENT                    = Path.SERVICE_URL_3009 + "/api/telehealth/user/WAAppointmentDetails"
         static let URL_POST_UPDATEFILE_TO_APPOINTMENT            = Path.SERVICE_URL_3009 + "/api/telehealth/appointment/updateFile"
+        static let URL_POST_LOGOUT_TELEHEALTH                    = Path.SERVICE_URL_3009 + "/api/telehealth/logout"
         
         static let URL_POST_EORM_SAVEINIT                        = Path.SERVICE_URL_3015 + "/eform/saveWithData"
+        
+        static let URL_EFORM                                     = Path.SERVICE_URL_3014 + "/#/eform"
         
     }
     

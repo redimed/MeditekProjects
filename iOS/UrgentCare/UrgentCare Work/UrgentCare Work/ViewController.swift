@@ -24,8 +24,10 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttonLogin.hidden = false
         self.navigationController?.navigationBarHidden = true
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            buttonLogin.hidden = true
+        }
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             GetPatientInfomation()
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
@@ -80,6 +82,12 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
         self.navigationController?.navigationBarHidden = true
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             buttonLogin.hidden = true
+        }
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        let statusBar: UIView = UIApplication.sharedApplication().valueForKey("statusBar") as! UIView
+        
+        if statusBar.respondsToSelector(Selector("setBackgroundColor:")) {
+            statusBar.backgroundColor = UIColor(hex: Define.ColorCustom.greenBoldColor)
         }
     }
     func resetTimer() {
@@ -278,6 +286,19 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
                 self.navigationController?.pushViewController(redisite, animated: true)
             }else{
                  self.alertView.alertMessage("Warning", message: "Please login account company before uses redisite !")
+            }
+            
+        }else{
+            self.alertView.alertMessage("Warning", message: "Please login account company before uses redisite !")
+        }
+    }
+    @IBAction func ActionListTracking(sender: AnyObject) {
+        if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
+            if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
+                let changPinNumber :ListTrackingViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListTrackingViewControllerID") as! ListTrackingViewController
+                self.navigationController?.pushViewController(changPinNumber, animated: true)
+            }else{
+                self.alertView.alertMessage("Warning", message: "Please login account company before uses redisite !")
             }
             
         }else{

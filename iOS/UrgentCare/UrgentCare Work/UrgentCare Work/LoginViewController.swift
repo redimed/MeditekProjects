@@ -131,9 +131,8 @@ class LoginViewController: BaseViewController {
         let loginTelehealth:LoginTelehealth = LoginTelehealth();
         loginTelehealth.uid = UID
         loginTelehealth.token = Context.getDataDefasults(Define.keyNSDefaults.DeviceToken) as! String
-        
+        print(loginTelehealth)
         UserService.postTelehealthUser(loginTelehealth) { [weak self] (response) in
-            print(response)
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {

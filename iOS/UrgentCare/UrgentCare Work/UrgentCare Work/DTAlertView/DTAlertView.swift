@@ -1,9 +1,9 @@
 //
 //  DTAlertView.swift
-//  VgoUserApp
+//  UrgentCare Work
 //
-//  Created by admin on 30/01/16.
-//  Copyright © 2016 Trung.Vu. All rights reserved.
+//  Created by Meditek on 7/13/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit

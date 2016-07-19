@@ -23,14 +23,15 @@ class ListTrackingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getAppointmentLists()
-
-        //create refreshControl
+        refreshController()
+    }
+    
+    func refreshController() {
         refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.blackColor()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(ListTrackingViewController.getAppointmentLists), forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
-        
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
@@ -40,10 +41,8 @@ class ListTrackingViewController: UIViewController {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-    // Get Appointment List
+
     func getAppointmentLists() {
         refreshPage(Context.getDataDefasults(Define.keyNSDefaults.PatientUID) as! String,Offset: "0",refreshPage:true)
     }
@@ -52,8 +51,7 @@ class ListTrackingViewController: UIViewController {
         appointmentListTrackingData.Offset = Offset
         appointmentListTrackingData.Limit = "10"
         filterPatientData.UID = patientUID
-        
-        
+
         filterPatient.Patient = filterPatientData
         orderAppointment.Appointment = orderAppointmentData
         appointmentListTrackingData.Filter.removeAll()
@@ -118,8 +116,7 @@ extension ListTrackingViewController:UITableViewDataSource,UITableViewDelegate{
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       // performSegueWithIdentifier("appointmentDetailsSegue", sender: self)
-        print(indexPath.row)
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
         let detailsViewController :AppointmentDetailsViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("AppointmentDetailsViewControllerID") as! AppointmentDetailsViewController
         detailsViewController.appointmentListResponseDetail = appointmentList.rows[indexPath.row]

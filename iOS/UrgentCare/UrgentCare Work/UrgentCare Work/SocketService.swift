@@ -56,6 +56,7 @@ class SocketService {
     }
 
     func emitDataToServer(message:String,uidFrom:String,uuidTo:String){
+        print(message,uidFrom,uuidTo)
         let modifieldURLString = NSString(format: Define.UrlAPISocket.emit,uidFrom,uuidTo,message) as String
         let dictionNary : NSDictionary = ["url": modifieldURLString]
         print(dictionNary)

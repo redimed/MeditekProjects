@@ -111,3 +111,15 @@ class LogoutResponse: BaseModel {
     }
     
 }
+class LogoutTelehealth: BaseModel {
+    dynamic var uid = ""
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    override func mapping(map: Map) {
+        uid    <- map["uid"]
+    }
+    
+}

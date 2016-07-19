@@ -1,9 +1,9 @@
 //
 //  BaseViewController.swift
-//  VgoUserApp
+//  UrgentCare Work
 //
-//  Created by admin on 02/02/16.
-//  Copyright © 2016 Trung.Vu. All rights reserved.
+//  Created by Meditek on 7/13/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit
@@ -19,7 +19,6 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     var alertDTAlertView: DTAlertView!
     let delay = 0.5 * Double(NSEC_PER_SEC)
     var backMusic: AVAudioPlayer!
-    let callService = CallService()
     let socketService = SocketService()
     
     override func viewDidLoad() {
@@ -29,7 +28,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         NSNotificationCenter.defaultCenter().removeObserver(self,name:Define.LogoutFunction, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.LogoutWhenIsAuthenticated), name: Define.LogoutFunction, object: nil)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -53,7 +52,6 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     func receiveMessage(controller: SocketService, message: String, data: AnyObject) {
         switch message {
         case Define.MessageString.Call :
-            callService.setDataCalling(data)
             self.openPopUpCalling()
         case  Define.MessageString.CallEndCall:
             NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
@@ -102,7 +100,6 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         backMusic.stop()
         socketService.emitDataToServer(Define.MessageString.Decline, uidFrom: receiveMessageData.to, uuidTo: receiveMessageData.from)
         self.dismissPopupViewController(.Fade)
-        //savedData = CallContainer()
     }
     //Play ringtone while have calling
     func playRingtone() {
@@ -129,6 +126,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     
     func LogoutWhenIsAuthenticated(){
         
+        LogoutTeleheath(Context.getDataDefasults(Define.keyNSDefaults.TelehealthUserUID) as! String)
         CallAPILogout(Context.getDataDefasults(Define.keyNSDefaults.UID) as! String)
         Context.deleteDatDefaults(Define.keyNSDefaults.Authorization)
         Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
@@ -140,10 +138,27 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
         Context.deleteDatDefaults(Define.keyNSDefaults.TeleheathUserDetail)
         Context.deleteDatDefaults(Define.keyNSDefaults.TelehealthUserUID)
-        Socket.disconnect()
+    
+        Socket.removeAllHandlers()
+    }
+    func LogoutTeleheath(teleahthUID:String){
+        let logoutTeleatlh = LogoutTelehealth()
+        logoutTeleatlh.uid = teleahthUID
+        print(logoutTeleatlh.uid)
+        UserService.postLogoutTeleheatlh(logoutTeleatlh) { [weak self] (response) in
+            if let _ = self {
+                if response.result.isSuccess {
+                    if let _ = response.result.value {
+                        print(response.result.value)
+                    }
+                } else {
+                    
+                }
+            }
+        }
     }
     func CallAPILogout(uid:String){
-       self.showloading(Define.MessageString.PleaseWait)
+        self.showloading(Define.MessageString.PleaseWait)
         UserService.getLogout() { [weak self] (response) in
             print(response.result.value)
             if let _ = self {
@@ -176,7 +191,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
                     dispatch_after(time, dispatch_get_main_queue(), {
                         self?.navigationController?.pushViewController(loginViewController, animated: true)
                     })
-
+                    
                 }
             }
         }

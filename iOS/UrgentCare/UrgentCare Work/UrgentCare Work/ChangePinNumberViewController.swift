@@ -37,7 +37,7 @@ class ChangePinNumberViewController: BaseViewController {
     }
     @IBAction func ActionChangePinNumber(sender: AnyObject) {
         
-        if(txtPinNumber.text == txtConfirmPinNumber.text && txtPinNumber.text != "" && txtPinNumber.text?.length <= 6 && txtConfirmPinNumber.text != "" && txtOldPinNumber.text != "" && txtOldPinNumber.text?.length <= 6 && txtConfirmPinNumber.text?.length <= 6 && Context.validatePhoneNumber(txtPinNumber.text!,regex:Define.Regex.PinNumber) && Context.validatePhoneNumber(txtOldPinNumber.text!,regex:Define.Regex.PinNumber) && Context.validatePhoneNumber(txtConfirmPinNumber.text!,regex:Define.Regex.PinNumber)){
+        if(txtPinNumber.text == txtConfirmPinNumber.text && txtPinNumber.text != "" && txtPinNumber.text?.length <= 6 && txtConfirmPinNumber.text != "" && txtOldPinNumber.text != "" && txtOldPinNumber.text?.length <= 6 && txtConfirmPinNumber.text?.length <= 6 && Context.CheckRegex(txtPinNumber.text!,regex:Define.Regex.PinNumber) && Context.CheckRegex(txtOldPinNumber.text!,regex:Define.Regex.PinNumber) && Context.CheckRegex(txtConfirmPinNumber.text!,regex:Define.Regex.PinNumber)){
             
             let updatePinNumber : UpdatePinNumber = UpdatePinNumber()
             updatePinNumber.oldPin = txtOldPinNumber.text!

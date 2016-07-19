@@ -1,9 +1,9 @@
 //
 //  UIColorExtension.swift
-//  StoreApp
+//  UrgentCare Work
 //
-//  Created by Hien Le on 2/19/16.
-//  Copyright © 2016 HarveyNash. All rights reserved.
+//  Created by Meditek on 7/13/16.
+//  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
 //
 
 import UIKit

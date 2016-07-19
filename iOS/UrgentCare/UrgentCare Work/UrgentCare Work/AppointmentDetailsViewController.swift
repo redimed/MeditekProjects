@@ -35,8 +35,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
     var popover:UIPopoverController?=nil
     var appointmentListResponseDetail = AppointmentListResponseDetail()
     var ArrayImageUID : [UIImage] = []
-    
-    // let alertView = UIAlertView()
+    var detailAppointment = DetailAppointment()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,14 +56,13 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
     }
     func getDetailsAppointment(AppointmentUID:String){
         UserService.getDetailAppointment(AppointmentUID) { [weak self] (response) in
-            print(response.result.value!["data"])
             if let _ = self {
                 if response.result.isSuccess {
                     if let _ = response.result.value {
                         print(JSON(response.result.value!))
                         if let detailAppointment = Mapper<DetailAppointment>().map(response.result.value!["data"]) {
                             print(detailAppointment.PatientAppointments)
-                           
+                            self!.detailAppointment = detailAppointment
                             self!.getAllImageInAppointmentDetails(detailAppointment.fileUploads)
                             let Patients = detailAppointment.Patients.count != 0 ? detailAppointment.Patients[0] : detailAppointment.PatientAppointments[0]
                             self!.fullNameLabel.text = Patients.FirstName + " " + Patients.LastName
@@ -95,7 +93,6 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
         doctorName.text = appointmentListResponseDetail.DoctorsName
         status.text = appointmentListResponseDetail.Status
         Code.text = appointmentListResponseDetail.Code
-        print(appointmentListResponseDetail)
         
     }
     @IBAction func actionTracking(sender: AnyObject) {
@@ -122,116 +119,120 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
                         self!.insertDataToCollectionView()
                     }
                 } else {
-                   // self?.showMessageNoNetwork()
+                    // self?.showMessageNoNetwork()
                 }
             }
             
         }
-}
-
-@IBAction func SelectImageUpload(sender: AnyObject) {
-    let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+    }
     
-    let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default)
-    {
-        UIAlertAction in
-        self.openCamera()
+    @IBAction func SelectImageUpload(sender: AnyObject) {
+        let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default)
+        {
+            UIAlertAction in
+            self.openCamera()
+            
+        }
+        let galleryAction = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default)
+        {
+            UIAlertAction in
+            self.openGallery()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel)
+        {
+            UIAlertAction in
+            
+        }
+        
+        // Add the actions
+        picker?.delegate = self
+        alert.addAction(cameraAction)
+        alert.addAction(galleryAction)
+        alert.addAction(cancelAction)
+        // Present the controller
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+        {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            popover=UIPopoverController(contentViewController: alert)
+            popover!.presentPopoverFromRect(selectOptionImage.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+        }
         
     }
-    let galleryAction = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default)
+    
+    func openCamera()
     {
-        UIAlertAction in
-        self.openGallery()
-    }
-    let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel)
-    {
-        UIAlertAction in
-        
+        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
+        {
+            picker!.sourceType = UIImagePickerControllerSourceType.Camera
+            self.presentViewController(picker!, animated: true, completion: nil)
+        }
+        else
+        {
+            openGallery()
+        }
     }
     
-    // Add the actions
-    picker?.delegate = self
-    alert.addAction(cameraAction)
-    alert.addAction(galleryAction)
-    alert.addAction(cancelAction)
-    // Present the controller
-    if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+    func openGallery()
     {
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    else
-    {
-        popover=UIPopoverController(contentViewController: alert)
-        popover!.presentPopoverFromRect(selectOptionImage.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-    }
-    
-}
-
-func openCamera()
-{
-    if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
-    {
-        picker!.sourceType = UIImagePickerControllerSourceType.Camera
+        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         self.presentViewController(picker!, animated: true, completion: nil)
-    }
-    else
-    {
-        openGallery()
-    }
-}
-
-func openGallery()
-{
-    picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-    self.presentViewController(picker!, animated: true, completion: nil)
-    
-}
-
-func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
-{
-    picker .dismissViewControllerAnimated(true, completion: nil)
-    imageDetails = info[UIImagePickerControllerOriginalImage] as? UIImage
-    if(picker.sourceType == UIImagePickerControllerSourceType.Camera)
-    {
-        let imageToSave: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
         
     }
-    let bodyUploadViewController :BodyUploadViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("BodyUploadViewControllerID") as! BodyUploadViewController
-    bodyUploadViewController.imageSelect = imageDetails
-    bodyUploadViewController.appointmentID = appointmentListResponseDetail.UID
-    self.navigationController?.pushViewController(bodyUploadViewController, animated: true)
-}
-
-func imagePickerControllerDidCancel(picker: UIImagePickerController)
-{
-    print("picker cancel.")
-    self.dismissViewControllerAnimated(true, completion: nil)
-}
-
-func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage) {
     
-    ArrayImageUID.append(sender)
-    insertDataToCollectionView()
-    alertView.alertMessage("Upload", message: "Upload Success")
-    if ArrayImageUID.count != 0{
-        messageImageLabel.hidden = true
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+    {
+        picker .dismissViewControllerAnimated(true, completion: nil)
+        imageDetails = info[UIImagePickerControllerOriginalImage] as? UIImage
+        if(picker.sourceType == UIImagePickerControllerSourceType.Camera)
+        {
+            let imageToSave: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+            UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
+            
+        }
+        let bodyUploadViewController :BodyUploadViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("BodyUploadViewControllerID") as! BodyUploadViewController
+        bodyUploadViewController.imageSelect = imageDetails
+        bodyUploadViewController.appointmentID = appointmentListResponseDetail.UID
+        self.navigationController?.pushViewController(bodyUploadViewController, animated: true)
     }
     
-}
-func insertDataToCollectionView(){
-    let newRowIndex = ArrayImageUID.count
-    let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
-    collectionView.insertItemsAtIndexPaths([indexPath])
-}
-
+    func imagePickerControllerDidCancel(picker: UIImagePickerController)
+    {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage) {
+        
+        ArrayImageUID.append(sender)
+        insertDataToCollectionView()
+        alertView.alertMessage("Upload", message: "Upload Success")
+        if ArrayImageUID.count != 0{
+            messageImageLabel.hidden = true
+        }
+        
+    }
+    func insertDataToCollectionView(){
+        let newRowIndex = ArrayImageUID.count
+        let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
+        collectionView.insertItemsAtIndexPaths([indexPath])
+    }
+    
     @IBAction func RedisiteForm(sender: AnyObject) {
         let patientInfor :PatientInforViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("PatientInforViewControllerID") as! PatientInforViewController
         patientInfor.AppointmentUID = UIDApointment
         self.navigationController?.pushViewController(patientInfor, animated: true)
     }
-
-
+    
+    @IBAction func ListEformOfPatient(sender: AnyObject) {
+        let listRedisite :ListRedisteViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ListRedisteViewControllerID") as! ListRedisteViewController
+        listRedisite.AppointmentUID = appointmentListResponseDetail.UID
+        self.navigationController?.pushViewController(listRedisite, animated: true)
+    }
+    
 }
 
 extension AppointmentDetailsViewController : UICollectionViewDataSource, UICollectionViewDelegate {
@@ -252,13 +253,11 @@ extension AppointmentDetailsViewController : UICollectionViewDataSource, UIColle
         cell.imageView.layer.shadowOffset = CGSize.zero
         return cell
     }
-    //select 1 item in collection view
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //performSegueWithIdentifier("ImageDetailSegue", sender: indexPath)
+        
     }
     
-    
-    //animation collection view cell scrolling
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         cell.alpha = 0
         UIView.animateWithDuration(0.5, animations: {

@@ -25,7 +25,7 @@ import com.redimed.telehealth.patient.login.presenter.LoginPresenter;
 import com.redimed.telehealth.patient.login.presenter.ILoginPresenter;
 import com.redimed.telehealth.patient.login.view.ILoginView;
 import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.sign_in.SignInFragment;
+import com.redimed.telehealth.patient.activation.SignInFragment;
 import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;

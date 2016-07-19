@@ -41,7 +41,6 @@ public class RESTClient {
     private static final String TAG = "=====REST_CLIENT=====";
     private static RestAdapter restAdapter, restAdapterCore, restAdapterLogin, restAdapterEForm;
 
-
     public static void InitRESTClient(Context ctx) {
         context = ctx;
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
@@ -206,7 +205,7 @@ public class RESTClient {
         }
     }
 
-    // HEADER REQUEST for UPLOAD FILE
+    // HEADER REQUEST for OkHttp
     public static class RequestInterceptor implements Interceptor {
 
         public RequestInterceptor() {}

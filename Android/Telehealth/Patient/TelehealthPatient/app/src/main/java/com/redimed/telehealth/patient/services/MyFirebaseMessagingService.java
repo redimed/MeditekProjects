@@ -1,12 +1,12 @@
 /**
- * Copyright 2015 Google Inc. All Rights Reserved.
- * <p/>
+ * Copyright 2016 Google Inc. All Rights Reserved.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p/>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,6 @@
 
 package com.redimed.telehealth.patient.services;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,82 +23,54 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.PowerManager;
-import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
-import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;
-import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.waiting.WaitingActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegistrationIntentService extends IntentService {
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private Notification notification;
     private PendingIntent contentIntent;
     private SharedPreferences uidTelehealth;
     private NotificationCompat.Builder builder;
-    private static int CALL_NOTIFICATION_ID = 0;
-    private static SharedPreferences.Editor editor;
-    private static String TAG = "RegIntentService";
-    private NotificationManager notificationManager;
+    private static final String TAG = "MyFirebaseMsgService";
 
-    public RegistrationIntentService() {
-        super(TAG);
-    }
-
+    /**
+     * Called when message is received.
+     *
+     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
+     */
+    // [START receive_message]
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onMessageReceived(RemoteMessage remoteMessage) {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
-        editor = uidTelehealth.edit();
-        try {
-            InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(Config.GCMSenderID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-
-            String serialNumber = Build.SERIAL + Build.DEVICE;
-            String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID) + serialNumber;
-
-            editor.putBoolean("sendToken", true);
-            editor.putString("systemType", "Android");
-            editor.putString("deviceID", deviceId);
-            editor.putString("gcmToken", token);
-            editor.apply();
-
-            GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-            gcm.register(Config.GCMSenderID);
-            String messageType = gcm.getMessageType(intent);
-            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                Log.d("MESSAGE TYPE SEND ERROR", messageType);
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                Log.d("MESSAGE TYPE DELETED", messageType);
-            } else {
-                Bundle data = intent.getExtras();
-                if (data != null) {
-                    SendNotification(data.getString("data"));
-                }
-            }
-
-        } catch (Exception e) {
-            editor.putBoolean("sendToken", false);
-            Log.d(TAG, "Failed to complete token refresh", e);
-        }
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
+        // If the application is in the foreground handle both data and notification messages here.
+        // Also if you intend on generating your own notifications as a result of a received FCM
+        // message, here is where that should be initiated. See sendNotification method below.
+        Log.d(TAG, "Notification Message Body: " + remoteMessage.getData());
+        sendNotification(String.valueOf(remoteMessage.getData().get("data")));
     }
+    // [END receive_message]
 
-    private void SendNotification(String message) {
+    /**
+     * Create and show a simple notification containing the received FCM message.
+     *
+     * @param messageBody FCM message body received.
+     */
+    private void sendNotification(String messageBody) {
         Intent intent;
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         try {
-            JSONObject msg = new JSONObject(message);
+            JSONObject msg = new JSONObject(messageBody);
             if (msg.get("message").toString().equalsIgnoreCase("call")) {
                 intent = new Intent(this, WaitingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -117,7 +88,7 @@ public class RegistrationIntentService extends IntentService {
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(getResources().getString(R.string.not_title))
                         .setContentText("You have message")
-                        .setPriority(NotificationCompat.PRIORITY_MAX) // On top task bar
+                        .setPriority(android.support.v7.app.NotificationCompat.PRIORITY_MAX) // On top task bar
                         .setVibrate(new long[]{500, 1000})
                         .setLights(Color.BLUE, 3000, 3000)
 //                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ringtone))
@@ -130,6 +101,7 @@ public class RegistrationIntentService extends IntentService {
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 notification.flags |= Notification.FLAG_INSISTENT;
 
+                int CALL_NOTIFICATION_ID = 0;
                 notificationManager.notify(CALL_NOTIFICATION_ID, notification);
 
                 PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -143,7 +115,7 @@ public class RegistrationIntentService extends IntentService {
                 notificationManager.cancel(0);
             }
         } catch (Exception e) {
-            Log.d(TAG + " Error ", e.getLocalizedMessage());
+            Log.d(TAG, e.getLocalizedMessage());
         }
     }
 
@@ -159,4 +131,3 @@ public class RegistrationIntentService extends IntentService {
         return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 }
-

@@ -1,13 +1,9 @@
 package com.redimed.telehealth.patient.models;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ProgressBar;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
 
 /**
  * Created by Lam on 10/21/2015.

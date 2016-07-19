@@ -3,9 +3,6 @@ package com.redimed.telehealth.patient.redisite.patient.presenter;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-
-import java.util.ArrayList;
 
 /**
  * Created by MeditekMini on 6/9/16.

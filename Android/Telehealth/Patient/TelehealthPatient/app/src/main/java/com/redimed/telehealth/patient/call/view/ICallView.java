@@ -3,7 +3,6 @@ package com.redimed.telehealth.patient.call.view;
 import android.view.View;
 
 import com.opentok.android.Publisher;
-import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
 
 /**

@@ -1,7 +1,6 @@
 package com.redimed.telehealth.patient.main.presenter;
 
 import android.support.v4.app.Fragment;
-import android.widget.ArrayAdapter;
 
 /**
  * Created by Fox on 1/14/2016.

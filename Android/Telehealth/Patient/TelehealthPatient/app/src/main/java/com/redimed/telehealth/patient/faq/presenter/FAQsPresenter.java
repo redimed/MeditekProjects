@@ -4,13 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.redimed.telehealth.patient.faq.view.IFAQsView;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
-import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.request.RequestFragment;
 
 /**

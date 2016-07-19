@@ -1,4 +1,4 @@
-package com.redimed.telehealth.patient.sign_in;
+package com.redimed.telehealth.patient.activation;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,9 +23,9 @@ import android.widget.Toast;
 
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.sign_in.presenter.ISignInPresenter;
-import com.redimed.telehealth.patient.sign_in.presenter.SignInPresenter;
-import com.redimed.telehealth.patient.sign_in.view.ISignInView;
+import com.redimed.telehealth.patient.activation.presenter.ISignInPresenter;
+import com.redimed.telehealth.patient.activation.presenter.SignInPresenter;
+import com.redimed.telehealth.patient.activation.view.ISignInView;
 import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;

@@ -97,7 +97,7 @@ public class InjuryPresenter implements IInjuryPresenter {
                 EditText e = (EditText) child;
                 switch (e.getId()) { //Get Id element
                     case R.id.txtDOC:
-                        eFormDatas.add(new EFormData(e.getText().toString(), "exp_date", "field_1_0_5", "eform_input_date", "row_1_0", 0));
+                        eFormDatas.add(new EFormData(e.getText().toString(), "inj_date", "field_1_0_5", "eform_input_date", "row_1_0", 0));
                         break;
                     case R.id.txtWorkplace:
                         eFormDatas.add(new EFormData(e.getText().toString(), "inj_place", "field_2_1_1", "eform_input_text", "row_2_1", 0));

@@ -1,4 +1,4 @@
-package com.redimed.telehealth.patient.sign_in.presenter;
+package com.redimed.telehealth.patient.activation.presenter;
 
 import android.support.v4.app.Fragment;
 import android.view.View;

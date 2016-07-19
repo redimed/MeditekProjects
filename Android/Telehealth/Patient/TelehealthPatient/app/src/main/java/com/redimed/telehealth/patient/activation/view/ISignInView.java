@@ -1,4 +1,4 @@
-package com.redimed.telehealth.patient.sign_in.view;
+package com.redimed.telehealth.patient.activation.view;
 
 /**
  * Created by Fox on 3/24/2016.

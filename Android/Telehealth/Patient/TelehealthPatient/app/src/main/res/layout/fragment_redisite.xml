@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/lightBackground"
     android:orientation="vertical"
-    tools:context=".redisite.patient.RedisiteFragment">
+    tools:context="com.redimed.telehealth.patient.redisite.patient.RedisiteFragment">
 
     <include
         android:id="@+id/toolBar"

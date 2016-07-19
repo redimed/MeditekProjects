@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.models.CustomGallery;
-import com.redimed.telehealth.patient.models.Singleton;
 
 import java.util.ArrayList;
 

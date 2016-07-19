@@ -1,30 +1,23 @@
 package com.redimed.telehealth.patient.redisite.consent.presenter;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.home.HomeFragment;
-import com.redimed.telehealth.patient.main.MainActivity;
 import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.AppointmentData;
 import com.redimed.telehealth.patient.models.CustomGallery;
@@ -33,37 +26,20 @@ import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.models.PatientAppointment;
 import com.redimed.telehealth.patient.models.Singleton;
-import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.redisite.consent.view.IConsentView;
-import com.redimed.telehealth.patient.setting.SettingFragment;
 import com.redimed.telehealth.patient.utlis.UploadFileRequest;
 import com.redimed.telehealth.patient.views.SignaturePad;
 import com.redimed.telehealth.patient.widget.DialogLoading;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

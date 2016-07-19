@@ -1,1 +1,42 @@
-{"project_info":{"project_id":"telehealthpatient-61","project_number":"24396950171","name":"TelehealthPatient"},"client":[{"client_info":{"mobilesdk_app_id":"1:24396950171:android:b0d62f1e9f9e5c4a","client_id":"android:com.redimed.telehealth.patient","client_type":1,"android_client_info":{"package_name":"com.redimed.telehealth.patient"}},"oauth_client":[],"api_key":[],"services":{"analytics_service":{"status":1},"cloud_messaging_service":{"status":2,"apns_config":[]},"appinvite_service":{"status":1,"other_platform_oauth_client":[]},"google_signin_service":{"status":1},"ads_service":{"status":1}}}],"client_info":[],"ARTIFACT_VERSION":"1"}
+{
+  "project_info": {
+    "project_number": "642474502376",
+    "firebase_url": "https://redimed-telehealth-patie-3ad4e.firebaseio.com",
+    "project_id": "redimed-telehealth-patie-3ad4e",
+    "storage_bucket": "redimed-telehealth-patie-3ad4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642474502376:android:0de37b2f1fc52270",
+        "android_client_info": {
+          "package_name": "au.com.redimed.telehealthPatient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642474502376-61djchm3eq833oa2j1cgh74jqr5ljdgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV0DkTiarAem7jFWkBXnn8-CgextMR-6I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

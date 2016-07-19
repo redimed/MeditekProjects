@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/slider2"
-    tools:context=".login.LoginFragment">
+    tools:context="com.redimed.telehealth.patient.login.LoginFragment">
 
     <include
         android:id="@+id/toolBar"

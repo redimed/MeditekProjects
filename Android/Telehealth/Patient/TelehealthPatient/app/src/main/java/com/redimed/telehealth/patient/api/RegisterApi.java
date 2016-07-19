@@ -1,11 +1,6 @@
 package com.redimed.telehealth.patient.api;
 
 import com.google.gson.JsonObject;
-import com.redimed.telehealth.patient.models.Appointment;
-
-import org.json.JSONObject;
-
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -65,6 +60,9 @@ public interface RegisterApi {
     @POST("/api/login")
     void login(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
+    @GET("/api/logout")
+    void logout(Callback<JsonObject> callback);
+
     /* 3009 */
     @POST("/api/telehealth/checkActivation")
     void activation(@Body JsonObject jsonObject, Callback<JsonObject> callback);
@@ -90,8 +88,8 @@ public interface RegisterApi {
     @POST("/api/telehealth/user/update")
     void updateProfile(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
-    @POST("/api/telehealth/user/logout")
-    void logout(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+    @POST("/api/telehealth/logout")
+    void logoutTelehealth(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @GET("/api/telehealth/listCountry")
     void getListCountry(Callback<JsonObject> callback);

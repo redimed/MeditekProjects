@@ -25,8 +25,6 @@ import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.pin.view.IPinView;
 
-import java.util.ArrayList;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

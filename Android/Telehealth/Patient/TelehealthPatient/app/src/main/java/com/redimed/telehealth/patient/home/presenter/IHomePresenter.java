@@ -1,9 +1,6 @@
 package com.redimed.telehealth.patient.home.presenter;
 
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-
 /**
  * Created by Fox on 1/14/2016.
  */

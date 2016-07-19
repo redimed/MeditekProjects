@@ -10,7 +10,6 @@
 
     <!-- Camera -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
         android:name="android.hardware.camera"
@@ -28,12 +27,14 @@
     <!-- Generate Shortcut -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" />
 
-    <permission
-        android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+    <!-- GCM -->
+    <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
+    <!--<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />-->
+    <!--<uses-permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" />-->
+    <!--<permission-->
+        <!--android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE"-->
+        <!--android:protectionLevel="signature" />-->
 
     <!-- Google Maps -->
     <uses-feature
@@ -51,7 +52,6 @@
 
     <!-- Mix -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -159,6 +159,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <!-- Broadcast Receiver-->
         <receiver
             android:name=".receiver.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -170,43 +172,35 @@
                 <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
 
-                <!-- Receives the registration id. -->
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.redimed.telehealth.patient" />
-            </intent-filter>
-        </receiver>
-
+        <!-- Socket -->
         <service
             android:name=".services.SocketService"
             android:enabled="true" />
-        <service
-            android:name=".services.MyGcmListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".services.MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".services.RegistrationIntentService"
-            android:exported="false" />
+
+        <!-- GPS -->
         <service
             android:name=".services.GPSTrackerService"
             android:enabled="true"
             android:exported="false" />
+
+        <!-- [START firebase_service] -->
+        <service
+            android:name=".services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
+
+        <!-- [START firebase_iid_service] -->
+        <service
+            android:name=".services.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_iid_service] -->
 
     </application>
 

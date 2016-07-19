@@ -29,10 +29,12 @@ import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.pin.PinFragment;
-import com.redimed.telehealth.patient.services.RegistrationIntentService;
+import com.redimed.telehealth.patient.services.SocketService;
 import com.redimed.telehealth.patient.setting.view.ISettingView;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -154,10 +156,16 @@ public class SettingPresenter implements ISettingPresenter {
         alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Logout", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                clearApplication();
-                clearDataServer(uid);
-                context.startService(new Intent(context, RegistrationIntentService.class));
-                iMainPresenter.replaceFragment(new HomeFragment());
+                logoutTele(uid);
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        logout();
+                        clearApplication();
+                        iMainPresenter.replaceFragment(new HomeFragment());
+                        context.stopService(new Intent(context, SocketService.class));
+                    }
+                }, 5000);
             }
         });
 
@@ -170,16 +178,31 @@ public class SettingPresenter implements ISettingPresenter {
         alertDialog.show();
     }
 
-    private void clearDataServer(String uid) {
+    // 3009
+    private void logoutTele(String uid) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("uid", uid);
 
-        JsonObject dataJson = new JsonObject();
-        dataJson.addProperty("data", gson.toJson(jsonObject));
-
-        restClient.logout(dataJson, new Callback<JsonObject>() {
+        restClient.logoutTelehealth(jsonObject, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
+                // Return Success
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, error.getLocalizedMessage());
+            }
+        });
+    }
+
+
+    // 3006
+    private void logout() {
+        RESTClient.getRegisterApiLogin().logout(new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                // Return Success
             }
 
             @Override

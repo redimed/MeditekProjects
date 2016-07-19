@@ -551,8 +551,7 @@ module.exports = React.createClass({
                         }
                     }//end for
 
-                    // self._checkServerEFormDetail();
-
+                    //self._checkServerEFormDetail();
                     Promise.all(asyncArr)
                     .then(function(values){
                         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> _serverPreFormDetail: asyncArr: exec: values: ", values);
@@ -564,8 +563,8 @@ module.exports = React.createClass({
                                 }
                             }
                         }
-                        self._checkServerEFormDetail();
                     })
+                    self._checkServerEFormDetail();
                 })// END EFormGetPatient
             })// END EFormGetUserRoles
         })
@@ -583,6 +582,7 @@ module.exports = React.createClass({
         return age;
     },
     _checkServerEFormDetail: function(){
+        console.log('after');
         var self = this;
         EFormService.eformCheckDetail({templateUID: this.templateUID, appointmentUID: this.appointmentUID})
         .then(function(response){

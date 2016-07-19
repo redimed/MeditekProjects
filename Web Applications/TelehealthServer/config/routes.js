@@ -80,6 +80,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'SendCoreServer'
     },
+    '/api/telehealth/logout': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'Logout'
+    },
     //================Telehealth Socket Routes==========================
      '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',
@@ -88,10 +92,6 @@ module.exports.routes = {
     '/api/telehealth/socket/messageTransfer': {
         controller: 'SocketController',
         action: 'MessageTransfer'
-    },
-    '/api/telehealth/logout': {
-        controller: 'SocketController',
-        action: 'Logout'
     },
     '/api/telehealth/socket/addDoctor': {
         controller: 'SocketController',

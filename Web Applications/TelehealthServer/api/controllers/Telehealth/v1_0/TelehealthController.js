@@ -803,6 +803,50 @@ module.exports = {
             msg: 'No Device Found!'
         });
     },
+    TestGCMTelehealth: function(req, res) {
+        var params = req.params.all();
+        if (!params.device) {
+            var err = new Error("Telehealth.TestGCM.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        var device = params.device;
+        var tokens = [];
+        if (device) {
+            tokens.push(device);
+            var opts = {
+                collapseKey: 'demo',
+                priority: 'high',
+                contentAvailable: true,
+                delayWhileIdle: true,
+                timeToLive: 3,
+                dryRun: false,
+                data: {
+                    "data": {
+                        "apiKey": "45364382",
+                        "message": "call",
+                        "fromName": "",
+                        "sessionId": "",
+                        "token": "",
+                        "from": ""
+                    }
+                },
+                notification: {
+                    title: "Redimed",
+                    icon: "ic_launcher",
+                    body: "Test Push Notification",
+                    sound: "default"
+                }
+            };
+            return TelehealthService.SendGCMPush(opts, tokens, config.GCMTelehealth).then(function(result) {
+                res.ok(result);
+            }).catch(function(err) {
+                res.serverError(ErrorWrap(err));
+            })
+        } else return res.ok({
+            msg: 'No Device Found!'
+        });
+    },
     CheckActivation: function(req, res) {
         console.log("Activation", JSON.stringify(req.body));
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {

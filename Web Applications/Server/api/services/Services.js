@@ -127,6 +127,8 @@ module.exports = {
     DestroyBooking: require('./Booking/DestroyBooking'),
     UpdateStatusBooking: require('./Booking/UpdateStatusBooking'),
     CheckTimeRoster: require('./Booking/CheckTimeRoster'),
+    GetListRosterAdmin: require('./Roster/GetListRosterAdmin'),
+    GetListRosterStaff: require('./Roster/GetListRosterStaff'),
     //begin Roster
     //Begin Company
     Company: require('./Company/Company'),

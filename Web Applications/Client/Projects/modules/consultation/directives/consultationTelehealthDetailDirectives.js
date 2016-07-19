@@ -1417,7 +1417,8 @@ app.directive('telehealthDetail', function(doctorService) {
             $scope.sendMailWhenLinked = function() {
                 var email = [];
                 for(var key in $scope.ShowData.patient) {
-                    if(key == 'Email1' || key == 'Email2' && $scope.ShowData.patient[key] != null && $scope.ShowData.patient[key] != '') {
+                    if((key == 'Email1' || key == 'Email2') && $scope.ShowData.patient[key] != null && $scope.ShowData.patient[key] != '') {
+
                         email.push($scope.ShowData.patient[key]);
                     }
                 }

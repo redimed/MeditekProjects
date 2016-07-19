@@ -1,4 +1,4 @@
-var env = 'local'; //local,meditekServer,testApp,app
+var env = 'meditekServer'; //local,meditekServer,testApp,app
 var noEFormAuth = false;
 var configRestBaseUrl = {
     'local': 'https://localhost:3005',

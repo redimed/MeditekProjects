@@ -34,13 +34,15 @@ module.exports = React.createClass({
             self.setState({ list: response.rows });
             if(isInit == true) {
                 self.searchObjectMap.count = response.count;
-                if(response.count%self.searchObjectMap.limit != 0){
-                    self.searchObjectMap.item = (response.count/self.searchObjectMap.limit) + 1;
-                    self.refs.pagination.init(self.searchObjectMap);
-                }
-                else{
-                    self.searchObjectMap.item = (response.count/self.searchObjectMap.limit);
-                    self.refs.pagination.init(self.searchObjectMap);
+                if(self.searchObjectMap.count != 0) {
+                    if(response.count%self.searchObjectMap.limit != 0){
+                        self.searchObjectMap.item = (response.count/self.searchObjectMap.limit) + 1;
+                        self.refs.pagination.init(self.searchObjectMap);
+                    }
+                    else{
+                        self.searchObjectMap.item = (response.count/self.searchObjectMap.limit);
+                        self.refs.pagination.init(self.searchObjectMap);
+                    }
                 }
             }
             self.refs.filter.setValue();

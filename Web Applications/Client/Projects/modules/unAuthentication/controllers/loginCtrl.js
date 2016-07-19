@@ -43,16 +43,21 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
                 }
                 //-----------------------------------------------------
 
-                if (data.user.Activated == 'Y') {
-                    $cookies.putObject("userInfo", data.user);
-                    console.log(data.user);
-                    $cookies.put("token", data.token);
-                    $rootScope.refreshCode = data.refreshCode;
-                    $state.go("authentication.home.list");
-                } else {
-                    $cookies.putObject("userInfo", { UID: data.user.UID, token: data.token });
-                    $state.go('unAuthentication.activation', null, { reload: true });
-                }
+                // if (data.user.Activated == 'Y') {
+                //     $cookies.putObject("userInfo", data.user);
+                //     console.log(data.user);
+                //     $cookies.put("token", data.token);
+                //     $rootScope.refreshCode = data.refreshCode;
+                //     $state.go("authentication.home.list");
+                // } else {
+                //     $cookies.putObject("userInfo", { UID: data.user.UID, token: data.token });
+                //     $state.go('unAuthentication.activation', null, { reload: true });
+                // }
+                $cookies.putObject("userInfo", data.user);
+                console.log(data.user);
+                $cookies.put("token", data.token);
+                $rootScope.refreshCode = data.refreshCode;
+                $state.go("authentication.home.list");
 
             }, function(err) {
                 $scope.laddaLoading = false;

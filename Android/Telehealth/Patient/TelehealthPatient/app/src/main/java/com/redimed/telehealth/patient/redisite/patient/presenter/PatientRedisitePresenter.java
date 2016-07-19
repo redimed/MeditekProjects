@@ -14,26 +14,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.models.EFormData;
 import com.redimed.telehealth.patient.models.Singleton;
-import com.redimed.telehealth.patient.redisite.injury.InjuryFragment;
 import com.redimed.telehealth.patient.redisite.patient.view.IPatientRedisiteView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Created by MeditekMini on 6/9/16.
@@ -145,6 +140,17 @@ public class PatientRedisitePresenter implements IPatientRedisitePresenter {
         return spinnerArrayAdapter;
     }
 
+    private String getLastDateOfMonth(int year, int month) {
+        int monthCount = month - 1;
+        Calendar calendar = new GregorianCalendar(year, monthCount, Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, monthCount);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        Log.d(TAG, calendar.getTime() + "");
+        return dateFormat.format(calendar.getTime());
+    }
+
     @Override
     public boolean validatedAllElement(View view, String salutation) {
         boolean validated = true;
@@ -216,7 +222,14 @@ public class PatientRedisitePresenter implements IPatientRedisitePresenter {
                         eFormDatas.add(new EFormData(e.getText().toString(), "pos_no", "field_1_0_2", "eform_input_text", "row_1_0", 0));
                         break;
                     case R.id.txtExpiry:
-                        eFormDatas.add(new EFormData(e.getText().toString(), "exp_date", "field_1_0_5", "eform_input_text", "row_1_0", 0));
+                        if (e.getText().toString().length() > 0) {
+                            int month = Integer.valueOf(e.getText().toString().substring(0, 2));
+                            int year = Integer.valueOf(e.getText().toString().substring(3));
+
+                            eFormDatas.add(new EFormData(getLastDateOfMonth(year, month), "exp_date", "field_1_0_5", "eform_input_text", "row_1_0", 0));
+                        } else {
+                            eFormDatas.add(new EFormData(e.getText().toString(), "exp_date", "field_1_0_5", "eform_input_text", "row_1_0", 0));
+                        }
                         break;
                     case R.id.txtHealthFund:
                         eFormDatas.add(new EFormData(e.getText().toString(), "private_fund", "field_1_2_1", "eform_input_text", "row_1_2", 0));

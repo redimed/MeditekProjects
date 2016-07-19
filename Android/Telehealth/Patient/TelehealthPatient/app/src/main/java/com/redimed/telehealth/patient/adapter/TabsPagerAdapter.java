@@ -3,13 +3,12 @@ package com.redimed.telehealth.patient.adapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.View;
+import android.util.Log;
 
 import com.redimed.telehealth.patient.appointment.AppointmentFragment;
 import com.redimed.telehealth.patient.appointment_images.ImagesAppointmentFragment;
-import com.redimed.telehealth.patient.request.RequestFragment;
+import com.redimed.telehealth.patient.eform.EFormFragment;
 
 import java.util.ArrayList;
 
@@ -52,7 +51,12 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
                 fragmentImageAppt.setArguments(bundleImageAppt);
                 return fragmentImageAppt;
             case 2:
-                Fragment fragmentEForm = new RequestFragment();
+                Bundle bundleEForm = new Bundle();
+                bundleEForm.putString("apptUID", uidAppt);
+                Log.d(TAG, uidAppt);
+
+                Fragment fragmentEForm = new EFormFragment();
+                fragmentEForm.setArguments(bundleEForm);
                 return fragmentEForm;
         }
         return null;

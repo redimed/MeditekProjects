@@ -3,14 +3,11 @@ package com.redimed.telehealth.patient.redisite.patient;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +37,7 @@ import com.redimed.telehealth.patient.utlis.DeviceUtils;
 import com.redimed.telehealth.patient.utlis.PreCachingLayoutManager;
 import com.redimed.telehealth.patient.widget.DialogMonthYearPicker;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

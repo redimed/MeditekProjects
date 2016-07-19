@@ -1,20 +1,24 @@
 package com.redimed.telehealth.patient.home.presenter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.faq.FAQsFragment;
 import com.redimed.telehealth.patient.home.view.IHomeView;
-import com.redimed.telehealth.patient.sign_in.SignInFragment;
+import com.redimed.telehealth.patient.activation.SignInFragment;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 import com.redimed.telehealth.patient.network.RESTClient;
@@ -23,6 +27,7 @@ import com.redimed.telehealth.patient.request.RequestFragment;
 import com.redimed.telehealth.patient.services.SocketService;
 import com.redimed.telehealth.patient.setting.SettingFragment;
 import com.redimed.telehealth.patient.tracking.TrackingFragment;
+import com.redimed.telehealth.patient.utlis.DefineKey;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -60,12 +65,21 @@ public class HomePresenter implements IHomePresenter {
         registerApi = RESTClient.getRegisterApi();
         iMainPresenter = new MainPresenter(context, activity);
         uidTelehealth = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
+
+//        String serialNumber = Build.SERIAL + Build.DEVICE;
+//        String deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + serialNumber;
+
+        SharedPreferences.Editor editor = uidTelehealth.edit();
+        editor.putString("deviceID", Build.DEVICE);
+        editor.putString("systemType", DefineKey.SystemType);
+        editor.putString("gcmToken", FirebaseInstanceId.getInstance().getToken());
+        editor.apply();
     }
 
     //CreatedJsonDataSuburb : if suburb.json file not exists then create file suburb.json
     @Override
     public void createdJsonDataSuburb() {
-        File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
+        @SuppressLint("SdCardPath") File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
                 context.getResources().getString(R.string.fileSuburb));
         if (!file.exists()) {
             RestAdapter restAdapter = new RestAdapter.Builder()
@@ -79,7 +93,7 @@ public class HomePresenter implements IHomePresenter {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     try {
-                        FileWriter file = new FileWriter(
+                        @SuppressLint("SdCardPath") FileWriter file = new FileWriter(
                                 "/data/data/" + context.getApplicationContext().getPackageName() + "/" +
                                         context.getResources().getString(R.string.fileSuburb));
                         file.write(String.valueOf(jsonObject));
@@ -101,14 +115,14 @@ public class HomePresenter implements IHomePresenter {
     //CreatedJsonDataCountry : if country.json file not exists then create file country.json
     @Override
     public void createdJsonDataCountry() {
-        File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
+        @SuppressLint("SdCardPath") File file = new File("/data/data/" + context.getApplicationContext().getPackageName() + "/" +
                 context.getResources().getString(R.string.fileCountry));
         if (!file.exists()) {
             registerApi.getListCountry(new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     try {
-                        FileWriter file = new FileWriter(
+                        @SuppressLint("SdCardPath") FileWriter file = new FileWriter(
                                 "/data/data/" + context.getApplicationContext().getPackageName() + "/" +
                                         context.getResources().getString(R.string.fileCountry));
                         file.write(String.valueOf(jsonObject));
@@ -143,6 +157,7 @@ public class HomePresenter implements IHomePresenter {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("token", uidTelehealth.getString("gcmToken", ""));
         jsonObject.addProperty("uid", uidTelehealth.getString("uid", ""));
+
         JsonObject dataJson = new JsonObject();
         dataJson.addProperty("data", gson.toJson(jsonObject));
 

@@ -18,13 +18,10 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.models.EFormData;
-import com.redimed.telehealth.patient.models.Singleton;
 import com.redimed.telehealth.patient.redisite.consent.presenter.ConsentPresenter;
 import com.redimed.telehealth.patient.redisite.consent.presenter.IConsentPresenter;
 import com.redimed.telehealth.patient.redisite.consent.view.IConsentView;
 import com.redimed.telehealth.patient.views.SignaturePad;
-import com.redimed.telehealth.patient.widget.DialogAlert;
 import com.redimed.telehealth.patient.widget.DialogConnection;
 
 import butterknife.Bind;

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:keepScreenOn="true"
-    tools:context=".call.CallActivity">
+    tools:context="com.redimed.telehealth.patient.call.CallActivity">
 
     <RelativeLayout
         android:id="@+id/callLayout"

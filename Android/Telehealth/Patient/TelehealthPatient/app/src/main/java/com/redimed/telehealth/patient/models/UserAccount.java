@@ -2,8 +2,6 @@ package com.redimed.telehealth.patient.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 /**
  * Created by Lam on 9/28/2015.
  */

@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.services;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
@@ -40,6 +41,8 @@ import io.socket.emitter.Emitter;
  */
 public class SocketService extends Service {
 
+    int i = 1;
+
     private static Socket socket;
     private static SharedPreferences uidTelehealth;
     private static String TAG = "=====SocketService=====";
@@ -49,7 +52,7 @@ public class SocketService extends Service {
         String auth = uidTelehealth.getString("token", "");
         String deviceId = uidTelehealth.getString("deviceId", "");
         try {
-            SSLContext sc = null;
+            SSLContext sc;
             sc = SSLContext.getInstance("TLS");
             sc.init(null, trustAllCerts, new SecureRandom());
 
@@ -70,12 +73,14 @@ public class SocketService extends Service {
     }
 
     private TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+        @SuppressLint("TrustAllX509TrustManager")
         @Override
         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
                 throws CertificateException {
 
         }
 
+        @SuppressLint("TrustAllX509TrustManager")
         @Override
         public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
                 throws CertificateException {
@@ -88,6 +93,7 @@ public class SocketService extends Service {
     }};
 
     public static class RelaxedHostNameVerifier implements HostnameVerifier {
+        @SuppressLint("BadHostnameVerifier")
         public boolean verify(String hostname, SSLSession session) {
             return true;
         }
@@ -138,11 +144,11 @@ public class SocketService extends Service {
 
     public static void JoinRoom() {
         try {
-            Map<String, Object> params = new HashMap<String, Object>();
+            Map<String, Object> params = new HashMap<>();
             params.put("uid", uidTelehealth.getString("uid", ""));
             SocketService.sendData("socket/joinRoom", params);
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            Log.d(TAG, throwable.getLocalizedMessage());
         }
     }
 
@@ -214,7 +220,8 @@ public class SocketService extends Service {
                     localBroadcastManager.sendBroadcast(new Intent("call.action.finish"));
                     notificationManager.cancel(0);
                 }
-                Log.d(TAG, message);
+                Log.d(TAG  + " = " + i, message);
+                i++;
             } catch (JSONException e) {
                 e.printStackTrace();
             }

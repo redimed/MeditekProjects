@@ -1,7 +1,6 @@
 package com.redimed.telehealth.patient.receiver;
 
 import android.app.ActivityManager;
-import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

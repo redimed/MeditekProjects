@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import com.redimed.telehealth.patient.models.Appointment;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Fox on 1/18/2016.

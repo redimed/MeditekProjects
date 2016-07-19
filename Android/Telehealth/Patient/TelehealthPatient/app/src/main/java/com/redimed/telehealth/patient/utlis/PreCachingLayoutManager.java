@@ -1,11 +1,8 @@
 package com.redimed.telehealth.patient.utlis;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 
 /**
  * Created by LamNguyen on 1/4/2016.

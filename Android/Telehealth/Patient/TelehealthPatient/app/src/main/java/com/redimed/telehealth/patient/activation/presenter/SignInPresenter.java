@@ -1,13 +1,11 @@
-package com.redimed.telehealth.patient.sign_in.presenter;
+package com.redimed.telehealth.patient.activation.presenter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,7 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.login.LoginFragment;
 import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.services.RegistrationIntentService;
-import com.redimed.telehealth.patient.sign_in.view.ISignInView;
+import com.redimed.telehealth.patient.activation.view.ISignInView;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
 
@@ -107,32 +104,29 @@ public class SignInPresenter implements ISignInPresenter {
         JsonObject patientJSON = new JsonObject();
         patientJSON.addProperty("data", gson.toJson(telehealthUser));
 
-        if (spDevice.getBoolean("sendToken", false)) {
-            registerApi = RESTClient.getRegisterApi();
-            registerApi.activation(patientJSON, new Callback<JsonObject>() {
-                @Override
-                public void success(JsonObject jsonObject, Response response) {
+        registerApi = RESTClient.getRegisterApi();
+        registerApi.activation(patientJSON, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
 
-                    editor = spDevice.edit();
-                    editor.putString("userUID", jsonObject.get("UserUID").isJsonNull() ? "" : jsonObject.get("UserUID").getAsString());
-                    editor.putString("patientUID", jsonObject.get("PatientUID").isJsonNull() ? "" : jsonObject.get("PatientUID").getAsString());
-                    editor.apply();
+                editor = spDevice.edit();
+                editor.putString("userUID", jsonObject.get("UserUID").isJsonNull() ? "" : jsonObject.get("UserUID").getAsString());
+                editor.putString("patientUID", jsonObject.get("PatientUID").isJsonNull() ? "" : jsonObject.get("PatientUID").getAsString());
+                editor.apply();
 
-                    bundle.putString("isActivated", jsonObject.get("Activated").isJsonNull() ? "" : jsonObject.get("Activated").getAsString());
-                    bundle.putString("phoneNumber", phoneNumber);
-                    fragment.setArguments(bundle);
+                bundle.putString("isActivated", jsonObject.get("Activated").isJsonNull() ? "" : jsonObject.get("Activated").getAsString());
+                bundle.putString("phoneNumber", phoneNumber);
+                fragment.setArguments(bundle);
 
-                    iMainPresenter.replaceFragment(fragment);
-                }
+                iMainPresenter.replaceFragment(fragment);
+            }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    iSignInView.onLoadError(error.getLocalizedMessage());
-                }
-            });
-        } else {
-            context.startService(new Intent(context, RegistrationIntentService.class));
-        }
+            @Override
+            public void failure(RetrofitError error) {
+                iSignInView.onLoadError(error.getLocalizedMessage());
+            }
+        });
+
     }
 
     @Override

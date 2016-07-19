@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,7 +31,6 @@ import com.redimed.telehealth.patient.models.Singleton;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.network.RetrofitErrorHandler;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
-import com.redimed.telehealth.patient.services.RegistrationIntentService;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -91,7 +92,6 @@ public class MyApplication extends Application {
         myApplication = this;
         RESTClient.InitRESTClient(this);
         registerApi = RESTClient.getRegisterApi();
-        startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
 
         // Preferences to store all ready created or not finding purpose.
         appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -129,13 +129,13 @@ public class MyApplication extends Application {
 
     @NonNull
     public String ConvertDate(String dataTime) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date myDate = null;
+        Date myDate;
         String finalDate = "NONE";
         try {
             myDate = dateFormat.parse(dataTime);
-            SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy");
             timeFormat.setTimeZone(TimeZone.getDefault());
             finalDate = timeFormat.format(myDate);
         } catch (ParseException e) {
@@ -146,13 +146,13 @@ public class MyApplication extends Application {
 
     @NonNull
     public String ConvertTime(String dataTime) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date myDate = null;
+        Date myDate;
         String finalDate = "NONE";
         try {
             myDate = dateFormat.parse(dataTime);
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
             timeFormat.setTimeZone(TimeZone.getDefault());
             finalDate = timeFormat.format(myDate);
         } catch (ParseException e) {
@@ -240,7 +240,7 @@ public class MyApplication extends Application {
     }
 
     public void createdJsonDataSuburb() {
-        File file = new File("/data/data/" + getApplicationContext().getPackageName() + "/" +
+        @SuppressLint("SdCardPath") File file = new File("/data/data/" + getApplicationContext().getPackageName() + "/" +
                 getResources().getString(R.string.fileSuburb));
         if (!file.exists()) {
             RestAdapter restAdapter = new RestAdapter.Builder()
@@ -254,7 +254,7 @@ public class MyApplication extends Application {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     try {
-                        FileWriter file = new FileWriter(
+                        @SuppressLint("SdCardPath") FileWriter file = new FileWriter(
                                 "/data/data/" + getApplicationContext().getPackageName() + "/" +
                                         getResources().getString(R.string.fileSuburb));
                         file.write(String.valueOf(jsonObject));
@@ -276,7 +276,7 @@ public class MyApplication extends Application {
     public ArrayAdapter<String> loadJsonData() {
         ArrayAdapter<String> adapter = null;
         try {
-            File file = new File("/data/data/" + getApplicationContext().getPackageName() + "/" + getResources().getString(R.string.fileSuburb));
+            @SuppressLint("SdCardPath") File file = new File("/data/data/" + getApplicationContext().getPackageName() + "/" + getResources().getString(R.string.fileSuburb));
             if (file.exists()) {
                 FileInputStream is = new FileInputStream(file);
                 int size = is.available();

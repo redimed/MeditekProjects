@@ -12,25 +12,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.login.view.ILoginView;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
-import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.redimed.telehealth.patient.utlis.DefineKey;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -43,10 +38,10 @@ public class LoginPresenter implements ILoginPresenter {
 
     private Context context;
     private ILoginView iLoginView;
+    private SharedPreferences spTele;
     private FragmentActivity activity;
     private IMainPresenter iMainPresenter;
     private SharedPreferences.Editor editor;
-    private SharedPreferences spTele;
     private RegisterApi registerApi, registerApiLogin;
     private static final String TAG = "=ACTIVATION_PRESENTER=";
 
@@ -77,7 +72,7 @@ public class LoginPresenter implements ILoginPresenter {
         jsonLogin.addProperty("PinNumber", pinNumber);
         jsonLogin.addProperty("UserUID", spTele.getString("userUID", ""));
         jsonLogin.addProperty("DeviceID", spTele.getString("deviceID", ""));
-        jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
+        jsonLogin.addProperty("AppID", DefineKey.AppID);
         return jsonLogin;
     }
 

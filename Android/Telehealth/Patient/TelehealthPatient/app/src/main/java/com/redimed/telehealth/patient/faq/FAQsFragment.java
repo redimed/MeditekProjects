@@ -21,13 +21,10 @@ import android.view.ViewGroup;
 
 import android.webkit.WebView;
 
-import android.widget.LinearLayout;
-
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.faq.presenter.FAQsPresenter;
 import com.redimed.telehealth.patient.faq.presenter.IFAQsPresenter;
 import com.redimed.telehealth.patient.faq.view.IFAQsView;
-import com.redimed.telehealth.patient.home.HomeFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

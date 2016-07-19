@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import com.redimed.telehealth.patient.adapter.MedicalHistoryAdapter;
 import com.redimed.telehealth.patient.adapter.SymptomsAdapter;
 import com.redimed.telehealth.patient.models.EFormData;
 import com.redimed.telehealth.patient.models.Singleton;
-import com.redimed.telehealth.patient.redisite.consent.ConsentFragment;
 import com.redimed.telehealth.patient.redisite.illness.presenter.IGeneralPresenter;
 import com.redimed.telehealth.patient.redisite.illness.presenter.GeneralPresenter;
 import com.redimed.telehealth.patient.redisite.illness.view.IGeneralView;
@@ -38,7 +36,6 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.http.Header;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,8 +1,6 @@
 package com.redimed.telehealth.patient.appointment_images.presenter;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,7 +8,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.appointment_images.view.IImageAppointmentView;

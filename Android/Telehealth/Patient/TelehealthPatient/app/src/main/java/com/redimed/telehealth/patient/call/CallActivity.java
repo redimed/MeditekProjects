@@ -1,8 +1,6 @@
 package com.redimed.telehealth.patient.call;
 
 import android.content.Intent;
-import android.graphics.PointF;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;

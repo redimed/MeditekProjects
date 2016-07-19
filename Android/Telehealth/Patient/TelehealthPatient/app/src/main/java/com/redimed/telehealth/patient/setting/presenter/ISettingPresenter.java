@@ -3,8 +3,6 @@ package com.redimed.telehealth.patient.setting.presenter;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 
-import com.redimed.telehealth.patient.models.Patient;
-
 /**
  * Created by Fox on 1/15/2016.
  */

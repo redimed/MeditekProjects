@@ -1,12 +1,9 @@
 package com.redimed.telehealth.patient.request.view;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.redimed.telehealth.patient.models.CustomGallery;
-import com.redimed.telehealth.patient.models.Patient;
 
 import java.util.ArrayList;
 

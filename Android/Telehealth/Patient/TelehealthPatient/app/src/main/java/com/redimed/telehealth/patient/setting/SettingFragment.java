@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.home.HomeFragment;
 import com.redimed.telehealth.patient.models.Patient;
-import com.redimed.telehealth.patient.redisite.injury.InjuryFragment;
 import com.redimed.telehealth.patient.redisite.patient.RedisiteFragment;
 import com.redimed.telehealth.patient.setting.presenter.ISettingPresenter;
 import com.redimed.telehealth.patient.setting.presenter.SettingPresenter;
@@ -126,7 +125,7 @@ public class SettingFragment extends Fragment implements ISettingView, View.OnCl
                 firstName = patient.getFirstName() == null ? "NONE" : patient.getFirstName();
                 lastName = patient.getLastName() == null ? "" : patient.getLastName();
                 lblPhoneNumber.setText(patient.getPhoneNumber() == null ? "NONE" : patient.getPhoneNumber());
-                lblName.setText(firstName + " " + lastName);
+                lblName.setText(String.format("%s %s", firstName, lastName));
             }
         }
         progressDialog.dismiss();

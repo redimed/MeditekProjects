@@ -1,7 +1,5 @@
 package com.redimed.telehealth.patient.models;
 
-import com.redimed.telehealth.patient.utlis.UploadFile;
-
 import java.util.ArrayList;
 
 /**

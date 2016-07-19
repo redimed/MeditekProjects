@@ -3,7 +3,6 @@ package com.redimed.telehealth.patient.redisite.injury;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
@@ -34,13 +32,11 @@ import com.redimed.telehealth.patient.adapter.InjurySymptomsAdapter;
 import com.redimed.telehealth.patient.adapter.MedicalHistoryAdapter;
 import com.redimed.telehealth.patient.models.EFormData;
 import com.redimed.telehealth.patient.models.Singleton;
-import com.redimed.telehealth.patient.redisite.consent.ConsentFragment;
 import com.redimed.telehealth.patient.redisite.image.ImageFragment;
 import com.redimed.telehealth.patient.redisite.injury.presenter.IInjuryPresenter;
 import com.redimed.telehealth.patient.redisite.injury.presenter.InjuryPresenter;
 import com.redimed.telehealth.patient.redisite.injury.view.IInjuryView;
 import com.redimed.telehealth.patient.redisite.patient.RedisiteFragment;
-import com.redimed.telehealth.patient.setting.SettingFragment;
 import com.redimed.telehealth.patient.utlis.GridItemView;
 import com.redimed.telehealth.patient.utlis.DeviceUtils;
 import com.redimed.telehealth.patient.utlis.PreCachingLayoutManager;
@@ -163,7 +159,7 @@ public class InjuryFragment extends Fragment implements IInjuryView, RadioGroup.
         if (eFormDatas.size() > 0) {
             for (EFormData eFormData : eFormDatas) {
                 switch (eFormData.getName()) {
-                    case "exp_date":
+                    case "inj_date":
                         txtDOC.setText(eFormData.getValue());
                         break;
                     case "inj_place":

@@ -209,6 +209,8 @@ public class MainController {
         sender.setUsername(propsFromFile.getProperty("mail.username")==null?"":propsFromFile.getProperty("mail.username"));
         sender.setPassword(propsFromFile.getProperty("mail.password")==null?"":propsFromFile.getProperty("mail.password"));
         sender.setPort(propsFromFile.getProperty("mail.port")==null?0:Integer.valueOf(propsFromFile.getProperty("mail.port")));
+        helper.setFrom(propsFromFile.getProperty("mail.sender")==null?mailRequest.getSender():propsFromFile.getProperty("mail.sender"));
+        System.out.println("This is the JavaMail: "+helper.toString());
         //Additional Properties
         Properties props = new Properties();
         props.put("mail.smtp.auth", propsFromFile.getProperty("mail.props.smtp.auth")==null?null:propsFromFile.getProperty("mail.props.smtp.auth"));

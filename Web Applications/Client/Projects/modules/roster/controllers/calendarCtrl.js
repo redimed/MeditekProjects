@@ -126,7 +126,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
         }
     };
     $scope.select = function(event){
-        if(userRole === 1){
+        // if(userRole === 1){
             var modalInstance = $uibModal.open({
                 animation: true,
                 size: 'md',
@@ -145,7 +145,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
                 }, function(result) {
                     // dismiss
                 });
-        }
+        // }
     };
     $scope.dayClick = function(event){  
     };
@@ -265,6 +265,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
             RosterService.PostListRoster(postData)
             .then(function(response){
                     _.forEach(response.data.rows, function(item, index){
+                        console.log("item>>>>>>>>>>>>>>>>>>>>>>>>>>", item)
                             var Service = item.Services[0];
                             //$scope.doctorName = item.UserAccounts[0].Doctor.FirstName+" "+item.UserAccounts[0].Doctor.LastName;
                             var color = (item.IsRecurrence === 'Y')?'green':'green';

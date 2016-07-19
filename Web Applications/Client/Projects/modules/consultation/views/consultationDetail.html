@@ -1,17 +1,19 @@
-<!--BEGIN PAGE HEADER-->
-<div class="page-bar margin-bottom-20">
-    <ul class="page-breadcrumb">
-        <li><a ui-sref="authentication.home.list">Homepage</a></li>
-        <li><i class="fa fa-circle"></i> <a ui-sref="authentication.consultation.list">Consultation</a></li>
-        <li><i class="fa fa-circle"></i> <span>Consultation Detail</span></li>
-    </ul>
-</div>
-<!-- END PAGE HEADER-->
+
 
 
 
 
 <div ui-view>
+    <!--BEGIN PAGE HEADER-->
+    <div class="page-bar margin-bottom-20">
+        <ul class="page-breadcrumb">
+            <li><a ui-sref="authentication.home.list">Homepage</a></li>
+            <li><i class="fa fa-circle"></i> <a ui-sref="authentication.consultation.list">Consultation</a></li>
+            <li><i class="fa fa-circle"></i> <span>Consultation Detail</span></li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+
     <div class="hidden-sm hidden-xs" ng-if="width > 768">
         <div class="row">
             <div class="col-lg-9 col-md-8">

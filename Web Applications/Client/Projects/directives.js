@@ -137,6 +137,21 @@ app.directive('timePicker', function($timeout) {
     };
 });
 
+app.directive('datetimePicker', function(){
+    return {
+        link: function(scope, elem, attr){
+            elem.datetimepicker({
+                // viewMode: 'years',
+                format: 'DD/MM/YYYY HH:mm',
+            });
+            elem.addClass('form-control');
+            elem.attr('type', 'text');
+            elem.attr('placeholder', 'dd/mm/yyyy hh:mm');
+            // elem.attr('readonly', true);
+        }
+    };
+});
+
 app.directive('autoComplete', function($timeout) {
     return function(scope, iElement, iAttrs) {
         iElement.autocomplete({

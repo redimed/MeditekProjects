@@ -112,7 +112,7 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
             if countImage == 0{
                 self.messageImageLabel.hidden = false
             }
-            for var i = 0 ; i < countImage ; i++ {
+            for i in 0  ..< countImage  {
                 let imageUID = arrImage[i]
                 self.downloadImage(imageUID)
             }

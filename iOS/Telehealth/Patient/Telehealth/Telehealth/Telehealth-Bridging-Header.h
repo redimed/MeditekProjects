@@ -10,7 +10,7 @@
 #define Telehealth_Bridging_Header_h
 
 #import <OpenTok/OpenTok.h>
-#import <Google/CloudMessaging.h>
+#import <Firebase/Firebase.h>
 
 
 #endif /* Telehealth_Bridging_Header_h */

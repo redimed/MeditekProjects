@@ -117,7 +117,7 @@ class ConfirmRequestTelehealthViewController: UIViewController ,signatureDelegat
                 if response["message"] == "success"{
                     let  fileUID = response["data"].string! as String
                     self.fileUpload.append(["UID":fileUID])
-                    self.countImage++
+                    self.countImage += 1
                     self.uploadImageReq(self.UserUID)
                     if self.countImage >= self.telehealthData.imageTelehealth.count{
                         self.view.hideLoading()
@@ -187,7 +187,7 @@ class ConfirmRequestTelehealthViewController: UIViewController ,signatureDelegat
     func checkRadiobtn(index:Int){
         var arr = [btn1,btn2,btn3]
         var check =  [b1,b2,b3]
-        for var i = 0 ; i < arr.count; i++ {
+        for i in 0  ..< arr.count {
             if i == index {
                 arr[i].setImage(imageOn , forState: .Normal)
                 check[i] = true

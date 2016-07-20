@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3F2EEDD91CB75C2500516422 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2EEDD81CB75C2500516422 /* Context.swift */; };
-		3FB8BFDF1CE377D500A6E500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */; };
 		3FD192101CE479FF00379364 /* ChangePinNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */; };
 		3FD192121CE47A5E00379364 /* UpdatePinNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */; };
 		3FF7FE661C92A58F00C75AE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */; };
@@ -27,7 +26,9 @@
 		3FFBDF411C9BBB1F006F041B /* DTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */; };
 		3FFBDF441C9BBBDE006F041B /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF431C9BBBDE006F041B /* Define.swift */; };
 		3FFBDF461C9BBC95006F041B /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */; };
-		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
+		761CE78095486734000B17F0 /* Pods_TelehealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BD1FFA07C4D8AC96E41A08 /* Pods_TelehealthUITests.framework */; };
+		96D7796F98496C7486C1ABE0 /* Pods_TelehealthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 957475BC0983FE18791F0F38 /* Pods_TelehealthTests.framework */; };
+		9720D6EA1D3F657A00AF2D14 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9720D6E91D3F657A00AF2D14 /* GoogleService-Info.plist */; };
 		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; };
 		AF00A6221C86EF6100104E0B /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00A6211C86EF6100104E0B /* SignatureViewController.swift */; };
 		AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */; };
@@ -153,6 +154,7 @@
 		AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D2F1BB1068A006A190E /* HomeViewController.swift */; };
 		AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */; };
 		AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */; };
+		CF26DE27DAEBD0BA746D87B4 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98B2F96F4A83FACBEDFF9D8 /* Pods_Telehealth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,9 +175,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
+		33F04A52ACE2310502403816 /* Pods-TelehealthTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelehealthTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TelehealthTests/Pods-TelehealthTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F2EEDD81CB75C2500516422 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
-		3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3FD1920F1CE479FF00379364 /* ChangePinNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePinNumberViewController.swift; sourceTree = "<group>"; };
 		3FD192111CE47A5E00379364 /* UpdatePinNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatePinNumber.swift; sourceTree = "<group>"; };
 		3FF7FE651C92A58F00C75AE0 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +195,12 @@
 		3FFBDF401C9BBB1F006F041B /* DTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAlertView.swift; sourceTree = "<group>"; };
 		3FFBDF431C9BBBDE006F041B /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		3FFBDF451C9BBC95006F041B /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		49BD1FFA07C4D8AC96E41A08 /* Pods_TelehealthUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TelehealthUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FFCD6CE84C80B02FA42362A /* Pods-TelehealthUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelehealthUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TelehealthUITests/Pods-TelehealthUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		957475BC0983FE18791F0F38 /* Pods_TelehealthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TelehealthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9720D6E91D3F657A00AF2D14 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A98B2F96F4A83FACBEDFF9D8 /* Pods_Telehealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEFF83B7E317894A8015D604 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
 		AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewCell.swift; sourceTree = "<group>"; };
 		AF00A6211C86EF6100104E0B /* SignatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
 		AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -333,8 +340,9 @@
 		AFF21D2F1BB1068A006A190E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenCallingViewController.swift; sourceTree = "<group>"; };
 		AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationSystem.swift; sourceTree = "<group>"; };
-		C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.release.xcconfig"; sourceTree = "<group>"; };
-		F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C61D9D3B234CCAFD72C99D65 /* Pods-Telehealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.release.xcconfig"; sourceTree = "<group>"; };
+		D7ECFF83A4D0351FF4241F15 /* Pods-TelehealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelehealthUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TelehealthUITests/Pods-TelehealthUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E690474B7DBA81C20B58507D /* Pods-TelehealthTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelehealthTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TelehealthTests/Pods-TelehealthTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,7 +369,7 @@
 				AF943FF51BBA637F003F3B07 /* AVFoundation.framework in Frameworks */,
 				AF943FF31BBA6376003F3B07 /* AudioToolbox.framework in Frameworks */,
 				AF943FF11BBA6221003F3B07 /* OpenTok.framework in Frameworks */,
-				50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */,
+				CF26DE27DAEBD0BA746D87B4 /* Pods_Telehealth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +377,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96D7796F98496C7486C1ABE0 /* Pods_TelehealthTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,21 +385,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761CE78095486734000B17F0 /* Pods_TelehealthUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08787A27393C4E6115D764A5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */,
-				C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		3FFAAE671CD2F6B20045D2CD /* Commons */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +435,19 @@
 			name = DTAlert;
 			sourceTree = "<group>";
 		};
+		88FA9C804F2D083EA0F0F8F6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AEFF83B7E317894A8015D604 /* Pods-Telehealth.debug.xcconfig */,
+				C61D9D3B234CCAFD72C99D65 /* Pods-Telehealth.release.xcconfig */,
+				33F04A52ACE2310502403816 /* Pods-TelehealthTests.debug.xcconfig */,
+				E690474B7DBA81C20B58507D /* Pods-TelehealthTests.release.xcconfig */,
+				5FFCD6CE84C80B02FA42362A /* Pods-TelehealthUITests.debug.xcconfig */,
+				D7ECFF83A4D0351FF4241F15 /* Pods-TelehealthUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9C8F9A3844FDFD23E44C015B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,7 +469,9 @@
 				AF943FF41BBA637F003F3B07 /* AVFoundation.framework */,
 				AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */,
 				AF943FF01BBA6221003F3B07 /* OpenTok.framework */,
-				F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */,
+				A98B2F96F4A83FACBEDFF9D8 /* Pods_Telehealth.framework */,
+				957475BC0983FE18791F0F38 /* Pods_TelehealthTests.framework */,
+				49BD1FFA07C4D8AC96E41A08 /* Pods_TelehealthUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -560,7 +576,7 @@
 		AF9440181BBA79AF003F3B07 /* Supporting File */ = {
 			isa = PBXGroup;
 			children = (
-				3FB8BFDE1CE377D500A6E500 /* GoogleService-Info.plist */,
+				9720D6E91D3F657A00AF2D14 /* GoogleService-Info.plist */,
 				AFEE34E51BB0413600471592 /* Info.plist */,
 				AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */,
 			);
@@ -596,8 +612,8 @@
 				AFEE34ED1BB0413600471592 /* TelehealthTests */,
 				AFEE34F81BB0413600471592 /* TelehealthUITests */,
 				AFEE34D41BB0413600471592 /* Products */,
-				08787A27393C4E6115D764A5 /* Pods */,
 				9C8F9A3844FDFD23E44C015B /* Frameworks */,
+				88FA9C804F2D083EA0F0F8F6 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -789,12 +805,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFEE34FE1BB0413600471592 /* Build configuration list for PBXNativeTarget "Telehealth" */;
 			buildPhases = (
-				010D2AAFB364786A32815BFB /* Check Pods Manifest.lock */,
+				52768EECF91BAE2BDA08E21F /* [CP] Check Pods Manifest.lock */,
 				AFEE34CF1BB0413600471592 /* Sources */,
 				AFEE34D01BB0413600471592 /* Frameworks */,
 				AFEE34D11BB0413600471592 /* Resources */,
-				EA2AB3FC4C8BEB0BB945E336 /* Embed Pods Frameworks */,
-				8D86392C331A67C8216876E6 /* Copy Pods Resources */,
+				D7FA805DAE50DCC3C60305B3 /* [CP] Embed Pods Frameworks */,
+				7590EF31B2333EEE7D69CC4B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -809,9 +825,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFEE35011BB0413600471592 /* Build configuration list for PBXNativeTarget "TelehealthTests" */;
 			buildPhases = (
+				E1D0442C1FC2B935A6DC10AC /* [CP] Check Pods Manifest.lock */,
 				AFEE34E61BB0413600471592 /* Sources */,
 				AFEE34E71BB0413600471592 /* Frameworks */,
 				AFEE34E81BB0413600471592 /* Resources */,
+				DC8EE7CEC26834FC21AA13ED /* [CP] Embed Pods Frameworks */,
+				D5C03E0AE0CDBFA3CDDB9788 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -827,9 +846,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFEE35041BB0413600471592 /* Build configuration list for PBXNativeTarget "TelehealthUITests" */;
 			buildPhases = (
+				B2E118046193D08BAAC9FE1E /* [CP] Check Pods Manifest.lock */,
 				AFEE34F11BB0413600471592 /* Sources */,
 				AFEE34F21BB0413600471592 /* Frameworks */,
 				AFEE34F31BB0413600471592 /* Resources */,
+				025C02A4B5480FED5C59B497 /* [CP] Copy Pods Resources */,
+				C7846C9EEAB90BA8DE145F13 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -906,7 +928,7 @@
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
 				AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */,
-				3FB8BFDF1CE377D500A6E500 /* GoogleService-Info.plist in Resources */,
+				9720D6EA1D3F657A00AF2D14 /* GoogleService-Info.plist in Resources */,
 				AF73C84D1C7BF9030015A625 /* DKImagePickerController.bundle in Resources */,
 				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
@@ -933,29 +955,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		010D2AAFB364786A32815BFB /* Check Pods Manifest.lock */ = {
+		025C02A4B5480FED5C59B497 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TelehealthUITests/Pods-TelehealthUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8D86392C331A67C8216876E6 /* Copy Pods Resources */ = {
+		52768EECF91BAE2BDA08E21F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7590EF31B2333EEE7D69CC4B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -963,19 +1000,94 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EA2AB3FC4C8BEB0BB945E336 /* Embed Pods Frameworks */ = {
+		B2E118046193D08BAAC9FE1E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C7846C9EEAB90BA8DE145F13 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TelehealthUITests/Pods-TelehealthUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5C03E0AE0CDBFA3CDDB9788 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TelehealthTests/Pods-TelehealthTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7FA805DAE50DCC3C60305B3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC8EE7CEC26834FC21AA13ED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TelehealthTests/Pods-TelehealthTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1D0442C1FC2B935A6DC10AC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1232,7 +1344,7 @@
 		};
 		AFEE34FF1BB0413600471592 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */;
+			baseConfigurationReference = AEFF83B7E317894A8015D604 /* Pods-Telehealth.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1257,7 +1369,7 @@
 		};
 		AFEE35001BB0413600471592 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */;
+			baseConfigurationReference = C61D9D3B234CCAFD72C99D65 /* Pods-Telehealth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1282,6 +1394,7 @@
 		};
 		AFEE35021BB0413600471592 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33F04A52ACE2310502403816 /* Pods-TelehealthTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TelehealthTests/Info.plist;
@@ -1294,6 +1407,7 @@
 		};
 		AFEE35031BB0413600471592 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E690474B7DBA81C20B58507D /* Pods-TelehealthTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TelehealthTests/Info.plist;
@@ -1306,6 +1420,7 @@
 		};
 		AFEE35051BB0413600471592 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5FFCD6CE84C80B02FA42362A /* Pods-TelehealthUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = TelehealthUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1318,6 +1433,7 @@
 		};
 		AFEE35061BB0413600471592 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7ECFF83A4D0351FF4241F15 /* Pods-TelehealthUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = TelehealthUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

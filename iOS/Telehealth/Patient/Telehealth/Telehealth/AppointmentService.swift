@@ -43,7 +43,7 @@ class AppointmentService {
                 let sumPage = response["count"]
                 var CreatedDate : String!
                 
-                for var i = 0 ; i < countAppointment ;i++ {
+                for i in 0  ..< countAppointment  {
                     refName = data[i]["TelehealthAppointment"]["RefName"].string ?? ""
                     UIDApointment = data[i]["UID"].string ?? ""
                     FromTime = data[i]["FromTime"].string ?? ""
@@ -108,10 +108,10 @@ class AppointmentService {
         let appointmentImageCount : Int = jsonImage.count
 
         //Get uid Image in Clinical
-        for var i = 0 ; i < clinicalCount ; ++i{
+        for i in 0  ..< clinicalCount {
             if AppointmentDetail["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"].count != 0 {
                 let fileUploadCount = AppointmentDetail["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"].count
-                for var j = 0 ; j < fileUploadCount ; ++j{
+                for j in 0  ..< fileUploadCount {
                     print(AppointmentDetail["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"][j]["FileType"])
                     //check Filetype
                     if AppointmentDetail["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"][j]["FileType"] == "MedicalImage" {
@@ -122,7 +122,7 @@ class AppointmentService {
             }
         }
 
-        for var i = 0 ; i < appointmentImageCount ; ++i {
+        for var i = 0 ; i < appointmentImageCount ; i += 1 {
             if jsonImage[i]["FileType"] == "MedicalImage" {
                 let appointmentImage = jsonImage[i]["UID"].string
                 ArrayImageUID.append(appointmentImage!)

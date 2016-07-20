@@ -10,18 +10,15 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-
-
-
 class VerifyPhoneAPI:TokenAPI {
     //Giap: Check phone number and send verify code
-    func SendVerifyPhoneNumber (var phoneNumber:String,completionHandler:(JSON) -> Void){
+    func SendVerifyPhoneNumber (var phoneNumber:String, completionHandler:(JSON) -> Void){
         config.setHeader()
         //Split number 0
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         var phoneConfig : String!
         if ConfigurationSystem.http == Constants.Path.SERVICE_URL {
-            phoneConfig = "+61"+phoneNumber
+            phoneConfig = "+61" + phoneNumber
         }else {
             phoneConfig = "+61412345678"
             //  phoneConfig = "+61400000002"
@@ -58,7 +55,7 @@ class VerifyPhoneAPI:TokenAPI {
     }
     
     //Giap: Check verify code
-    func CheckVerifyPhoneNumber (verifyCode:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
+    func CheckVerifyPhoneNumber (verifyCode:String, var phoneNumber:String,completionHandler:(JSON) -> Void){
         config.setHeader()
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         var phoneConfig : String!

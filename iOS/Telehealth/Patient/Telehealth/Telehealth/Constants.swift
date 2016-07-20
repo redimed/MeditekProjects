@@ -11,28 +11,30 @@ import UIKit
 
 struct Constants {
     
-            struct Path {
-                static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
-                static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
-                static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
-                static let SERVICE_URL                                   = "https://testapp.redimed.com.au"
-                static let SandboxOption                                 = true
-    }
-    
-//        struct Path {
-//            static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
-//            static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
-//            static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
-//            static let SERVICE_URL                                   = "https://meditek.redimed.com.au"
-//            static let SandboxOption                                 = true
-//        }
 //    struct Path {
-//        static let SERVICE_URL_3006                              = "http://192.168.1.230:3006"
-//        static let SERVICE_URL_3005                              = "http://192.168.1.230:3005"
-//        static let SERVICE_URL_3009                              = "http://192.168.1.230:3009"
-//        static let SERVICE_URL                                   = "http://192.168.1.230"
+//        static let SERVICE_URL_3006                              = "https://testapp.redimed.com.au:3006"
+//        static let SERVICE_URL_3005                              = "https://testapp.redimed.com.au:3005"
+//        static let SERVICE_URL_3009                              = "https://testapp.redimed.com.au:3009"
+//        static let SERVICE_URL                                   = "https://testapp.redimed.com.au"
 //        static let SandboxOption                                 = true
 //    }
+    
+//    struct Path {
+//        static let SERVICE_URL_3006                              = "https://meditek.redimed.com.au:3006"
+//        static let SERVICE_URL_3005                              = "https://meditek.redimed.com.au:3005"
+//        static let SERVICE_URL_3009                              = "https://meditek.redimed.com.au:3009"
+//        static let SERVICE_URL                                   = "https://meditek.redimed.com.au"
+//        static let SandboxOption                                 = true
+//    }
+    
+    struct Path {
+        static let SERVICE_URL_3006                              = "http://192.168.1.247:3006"
+        static let SERVICE_URL_3005                              = "http://192.168.1.247:3005"
+        static let SERVICE_URL_3009                              = "http://192.168.1.247:3009"
+        static let SERVICE_URL                                   = "http://192.168.1.247"
+        static let SandboxOption                                 = true
+    }
+    
     struct KeyPushNotification {
         static let SandboxOption = Path.SandboxOption
         //True: using key develoment

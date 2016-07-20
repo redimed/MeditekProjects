@@ -103,9 +103,8 @@ class VerifyViewController: BaseViewController {
                 
             }
         }
-        
-        
     }
+    
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         let length = ((textField.text?.length)! + string.length)

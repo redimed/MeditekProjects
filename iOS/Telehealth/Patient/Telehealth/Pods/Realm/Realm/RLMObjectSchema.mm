@@ -34,7 +34,7 @@ using namespace realm;
 
 // private properties
 @interface RLMObjectSchema ()
-@property (nonatomic, readwrite) NSDictionary RLM_GENERIC(id, RLMProperty *) *allPropertiesByName;
+@property (nonatomic, readwrite) NSDictionary<id, RLMProperty *> *allPropertiesByName;
 @property (nonatomic, readwrite) NSString *className;
 @end
 
@@ -162,17 +162,23 @@ using namespace realm;
     }
 
     for (RLMProperty *prop in schema.properties) {
-        RLMPropertyType type = prop.type;
-        if (prop.optional && !RLMPropertyTypeIsNullable(type)) {
-            NSString *error = [NSString stringWithFormat:@"Only 'string', 'binary', and 'object' properties can be made optional, and property '%@' is of type '%@'.", prop.name, RLMTypeToString(type)];
-            if (prop.type == RLMPropertyTypeAny && isSwift) {
-                error = [error stringByAppendingString:@"\nIf this is a 'String?' property, it must be declared as 'NSString?' instead."];
-            }
-            @throw RLMException(@"%@", error);
+        if (prop.optional && !RLMPropertyTypeIsNullable(prop.type)) {
+            @throw RLMException(@"Only 'string', 'binary', and 'object' properties can be made optional, and property '%@' is of type '%@'.",
+                                prop.name, RLMTypeToString(prop.type));
         }
     }
 
     return schema;
+}
+
++ (nullable NSString *)baseNameForLazySwiftProperty:(NSString *)propertyName {
+    // A Swift lazy var shows up as two separate children on the reflection tree: one named 'x', and another that is
+    // optional and is named 'x.storage'. Note that '.' is illegal in either a Swift or Objective-C property name.
+    NSString *const storageSuffix = @".storage";
+    if ([propertyName hasSuffix:storageSuffix]) {
+        return [propertyName substringToIndex:propertyName.length - storageSuffix.length];
+    }
+    return nil;
 }
 
 + (NSArray *)propertiesForClass:(Class)objectClass isSwift:(bool)isSwiftClass {
@@ -271,6 +277,18 @@ using namespace realm;
             }
             if (auto type = RLMCoerceToNil(propertyType)) {
                 if (existing == NSNotFound) {
+                    // Check to see if this optional property is an underlying storage property for a Swift lazy var.
+                    // Managed lazy vars are't allowed.
+                    // NOTE: Revisit this once property behaviors are implemented in Swift.
+                    if (NSString *lazyPropertyBaseName = [self baseNameForLazySwiftProperty:propertyName]) {
+                        if ([ignoredProperties containsObject:lazyPropertyBaseName]) {
+                            // This property is the storage property for a ignored lazy Swift property. Just continue.
+                            return;
+                        } else {
+                            @throw RLMException(@"Lazy managed property '%@' is not allowed on a Realm Swift object class. Either add the property to the ignored properties list or make it non-lazy.", lazyPropertyBaseName);
+                        }
+                    }
+                    // The current property isn't a storage property for a lazy Swift property.
                     property = [[RLMProperty alloc] initSwiftOptionalPropertyWithName:propertyName
                                                                               indexed:[indexed containsObject:propertyName]
                                                                                  ivar:class_getInstanceVariable(objectClass, propertyName.UTF8String)

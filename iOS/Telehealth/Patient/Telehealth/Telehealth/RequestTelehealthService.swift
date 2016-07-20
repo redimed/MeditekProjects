@@ -62,7 +62,7 @@ class RequestTelehealthService {
                 let data = try NSData(contentsOfURL: NSURL(fileURLWithPath: path), options: NSDataReadingOptions.DataReadingMappedIfSafe)
                 let jsonObj = JSON(data: data)
                 if jsonObj != JSON.null {
-                    for var i = 0; i < jsonObj["suburb"].count; ++i {
+                    for i in 0 ..< jsonObj["suburb"].count {
                         let a = jsonObj["suburb"][i]["name"].string
                         pastUrls.append(a!)
                     }
@@ -86,7 +86,7 @@ class RequestTelehealthService {
                 let data = try NSData(contentsOfURL: NSURL(fileURLWithPath: path), options: NSDataReadingOptions.DataReadingMappedIfSafe)
                 let jsonObj = JSON(data: data)
                 if jsonObj != JSON.null {
-                    for var i = 0; i < jsonObj["country"].count; ++i {
+                    for i in 0 ..< jsonObj["country"].count {
                         let a = jsonObj["country"][i]["NAME"].string
                         pastUrls.append(a!)
                     }
@@ -114,7 +114,7 @@ class RequestTelehealthService {
                 let jsonObj = JSON(data: data)
                 print(jsonObj)
                 if jsonObj != JSON.null {
-                    for var i = 0; i < jsonObj["country"].count; ++i {
+                    for i in 0 ..< jsonObj["country"].count {
                         let a = jsonObj["country"][i]["name"].string
                         pastUrls.append(a!)
                     }

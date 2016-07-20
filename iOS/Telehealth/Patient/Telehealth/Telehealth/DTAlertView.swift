@@ -206,7 +206,7 @@ class DTAlertView: UIView {
         let index: NSInteger! = application.keyWindow?.subviews.count
         var isHas = false
         if self.alertViewStyle == DTAlertStyle.DTAlertStyleError {
-            for var i = 0; i < application.keyWindow?.subviews.count; i++ {
+            for var i = 0; i < application.keyWindow?.subviews.count; i += 1 {
                 let view: UIView = (application.keyWindow?.subviews[i])!
                 if view.tag == 400 {
                     isHas = true

@@ -11,7 +11,7 @@ import SwiftyJSON
 class VerifyService{
     let api = VerifyPhoneAPI()
     let socketService = SocketService()
-    func checkPhoneNumber(phoneNumber:String,compailer:(JSON) -> Void){
+    func checkPhoneNumber(phoneNumber:String, compailer:(JSON) -> Void){
         api.SendVerifyPhoneNumber(phoneNumber){
             response in
            

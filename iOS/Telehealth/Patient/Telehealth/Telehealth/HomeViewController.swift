@@ -188,10 +188,10 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             if page == numberofPage {
                 page = 0
                 autoSlide(page + 1)
-                page++
+                page += 1
             }else{
                 autoSlide(page + 1)
-                page++
+                page += 1
             }
         }
     }
@@ -251,7 +251,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         {
             return nil
         }
-        index--
+        index -= 1
         return self.viewControllerAtIndex(index)
         
     }
@@ -263,7 +263,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         {
             return nil
         }
-        index++
+        index += 1
         if (index == self.pageTitles.count)
         {
             return nil

@@ -1,0 +1,6 @@
+framework module Pods_TelehealthTests {
+  umbrella header "Pods-TelehealthTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

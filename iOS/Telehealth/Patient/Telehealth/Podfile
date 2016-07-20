@@ -5,15 +5,14 @@ use_frameworks!
 
 
 target 'Telehealth' do
-	pod 'Alamofire', '~> 3.0'
- 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
-    pod 'Socket.IO-Client-Swift', '~> 5.2.3' # Or latest version
+    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON'
+    pod 'Socket.IO-Client-Swift', '~> 5.2.3'
     pod 'ObjectMapper', '~> 0.18'
-    ###
     pod 'RealmSwift'
-    pod 'Google/CloudMessaging'
-
-	
+    #pod 'Google/CloudMessaging'
+    pod 'Firebase’
+    pod 'Firebase/Messaging'
 end
 
 target 'TelehealthTests' do

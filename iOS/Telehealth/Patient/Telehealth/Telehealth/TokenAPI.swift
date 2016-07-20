@@ -71,7 +71,7 @@ class TokenAPI {
                     response in
                     print("updateTokenPush",response)
                     switch response.result {
-                    case .Success(let JSONData):
+                    case .Success( _):
                         if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
                             if requireupdatetoken as! String == "true" {
                                 print("Update token",requireupdatetoken)
@@ -110,7 +110,7 @@ class TokenAPI {
                                 self.getNewToken()
                             }
                         }
-                        let data = JSON(JSONData)
+                        _ = JSON(JSONData)
                         //print("data---",data)
                         
                     case .Failure(let error):

@@ -322,7 +322,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 /* Setup Layout Part - Header */
 app.controller('HeaderController', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
-        Layout.initHeader(); // init header
+        // Layout.initHeader(); // init header
     });
 });
 /* Setup Layout Part - Sidebar */
@@ -362,6 +362,6 @@ app.controller('QuickSidebarController', ['$scope', function($scope) {
 /* Setup Layout Part - Footer */
 app.controller('FooterController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
-        Layout.initFooter(); // init footer
+        // Layout.initFooter(); // init footer
     });
 }])

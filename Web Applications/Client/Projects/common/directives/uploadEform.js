@@ -50,6 +50,7 @@ angular.module('app.common.uploadEform',[])
                 }
             });
 		    uploader.onAfterAddingFile = function(fileItem) {
+		    	$scope.uploader.queue.splice(0, $scope.uploader.queue.length - 1);
 		    	$scope.isChose = true;
 		        fileItem.formData[0] = {};
 		        fileItem.formData[0].fileType = $scope.fileType;

@@ -128,6 +128,14 @@ module.exports = React.createClass({
             console.log("err ",err);
         });
     },
+    _choseForm: function(data) {
+        if(data.EFormTemplateID == 2) {
+            this._downloadFile(data);
+        }
+        else {
+            this._viewEForm(data);
+        }
+    },
     _sort: function(fieldName) {
         this.searchObjectMap.order = {};
         if(this.state.sort[fieldName] == "ASC"){
@@ -220,38 +228,21 @@ module.exports = React.createClass({
                                         <tbody>
                                         {
                                             this.state.list.map((item, index) =>{
-                                                if(item.Appointments.length != 0) {
-                                                    return(
-                                                        <tr key={index}>
-                                                            <td>{index+1}</td>
-                                                            <td>{item.Appointments[0].FromTime!=null?moment(item.Appointments[0].FromTime,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
-                                                            <td>{item.Appointments[0].Code}</td>
-                                                            <td className="primary-link">{item.Name}</td>
-                                                            <td>{item.CreatedDate!=null?moment(item.CreatedDate,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
-                                                            <td className="text-center">
-                                                                <a className="btn btn-sm btn-primary" onClick={this._viewEForm.bind(this,item)}>
-                                                                    <i className="glyphicon glyphicon-search"></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                }
-                                                else {
-                                                    return(
-                                                        <tr key={index}>
-                                                            <td>{index+1}</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td className="primary-link">{item.Name}</td>
-                                                            <td>{item.CreatedDate!=null?moment(item.CreatedDate,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
-                                                            <td className="text-center">
-                                                                <a className="btn btn-sm btn-primary" onClick={this._downloadFile.bind(this,item)}>
-                                                                    <i className="glyphicon glyphicon-search"></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                }
+                                                return(
+                                                    <tr key={index}>
+                                                        <td>{this.searchObjectMap.offset + index + 1}</td>
+                                                        <td>{item.Appointments.length == 0 ? null : item.Appointments[0].FromTime!=null?moment(item.Appointments[0].FromTime,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
+                                                        <td>{item.Appointments.length == 0 ? null : item.Appointments[0].Code}</td>
+                                                        <td className="primary-link">{item.Name}</td>
+                                                        <td>{item.CreatedDate!=null?moment(item.CreatedDate,'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'):null}</td>
+                                                        <td className="text-center">
+                                                            <a className="btn btn-sm btn-primary" onClick={this._choseForm.bind(this,item)}>
+                                                                <i className="glyphicon glyphicon-search"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                                
                                             })
                                         }
                                         </tbody>

@@ -36,6 +36,10 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                         Doctor: {
                             FullName: null
                         }
+                    },{
+                        Appointment:{
+                            Code:null
+                        }
                     }],
                     Range: [{
                         Appointment: {
@@ -104,7 +108,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             scope.LoadData = function() {
                 //console.log(scope.info.data);
                 WAAppointmentService.loadListWAAppointmentConsultation(scope.info.data).then(function(data) {
-                    console.log('aaaaaaaa', data);
+                    console.log('aaaaaaaa', scope.info.data);
                     for (var i = 0; i < data.rows.length; i++) {
                         if(!_.isEmpty(data.rows[i].Doctors))
                         {

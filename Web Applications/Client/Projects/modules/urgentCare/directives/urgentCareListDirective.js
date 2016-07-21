@@ -41,6 +41,7 @@ app.directive('urgentcareList', function(urgentCareService, $uibModal, toastr,$c
 
 			scope.loadList = function(info){
 				urgentCareService.loadlist(info).then(function(response){
+					console.log("pppppppppppppppppppppppp", response);
 					if(response.message=="success"){
 						scope.urgent = response.data;
 						for(var i = 0; i < response.data.length;i++){

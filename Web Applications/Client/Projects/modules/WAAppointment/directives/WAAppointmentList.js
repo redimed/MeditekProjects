@@ -64,7 +64,7 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.LoadData = function() {
                 o.loadingPage(true);
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
-
+                    console.log("scope.info.dataLLLLLLLLLLLLLLLLLLLLLLLL", scope.info.data)
                     // $cookies.put('listAppt',scope.info);
                     localStorage.setItem('listAppt', JSON.stringify(scope.info));
                     for (var i = 0; i < data.rows.length; i++) {

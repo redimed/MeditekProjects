@@ -875,7 +875,8 @@ module.exports = React.createClass({
                         var split = field.ref.split('_');
                         var section_ref = "section_"+split[1];
                         if(field.type === 'eform_input_image_patient'){
-                            var value = self.refs[section_ref].getValue(field.refRow, field.ref);
+                            if(typeof self.refs[section_ref] !== 'undefined')
+                                var value = self.refs[section_ref].getValue(field.refRow, field.ref);
                             f.value = value;
                         }
                         if(section_ref === section.ref){
@@ -908,8 +909,10 @@ module.exports = React.createClass({
                     var split = field.ref.split('_');
                     var section_ref = "section_"+split[1];
                     if(field.type === 'eform_input_image_patient'){
-                        var value = self.refs[section_ref].getValue(field.refRow, field.ref);
-                        f.value = value;
+                        if(typeof self.refs[section_ref] !== 'undefined'){
+                            var value = self.refs[section_ref].getValue(field.refRow, field.ref);
+                            f.value = value;
+                        }
                     }
                     if(section_ref === section.ref){
                         if(field.type === 'eform_input_signature'){

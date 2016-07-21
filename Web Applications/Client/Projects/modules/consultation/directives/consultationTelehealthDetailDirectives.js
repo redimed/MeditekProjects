@@ -326,7 +326,9 @@ app.directive('telehealthDetail', function(doctorService) {
                             response.rows[i].DoctorsName = '';
                             for(var j = 0; j < response.rows[i].Doctors.length; j ++) {
                                 var d = response.rows[i].Doctors[j];
+                                if( response.rows[i].Doctors[j].Enable === "Y"){
                                 response.rows[i].DoctorsName = response.rows[i].DoctorsName + d.FirstName + ' ' + d.LastName + (j<response.rows[i].Doctors.length-1?', ':'');
+                                }
                             }
                         }
                         $scope.info.listDoctorGroup = response.rows;

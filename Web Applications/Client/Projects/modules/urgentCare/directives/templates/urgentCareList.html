@@ -16,13 +16,13 @@
             <i class="icon-rocket font-blue"></i>
             <span class="caption-subject">Urgent Care</span>
         </div>
-        <div class="actions">
+       <!--  <div class="actions">
             <a href="javascript:;" class="btn btn-outline blue" ng-click="toggleFilter()">
                 <i class="fa fa-filter"></i> Filter
-            </a>
-            <!-- <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
-        </div>
-    </div>
+            </a> -->
+            <!-- <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+        </div> -->
+    <!-- </div> -->
     <div class="portlet-body">
         <!-- begin table -->
         <div class="row margin-top-10">
@@ -55,35 +55,35 @@
                                 <th>
                                     Full Name
                                     <i class="fa fa-sort-asc"  ng-click="sort('FirstName','ASC')" ng-show="fieldSort.FirstName=='ASC'"></i>
-                                    <i class="fa fa-sort-desc" ng-click="sort('FirstName','DESC')"ng-show="fieldSort.FirstName=='DESC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('FirstName','DESC')" ng-show="fieldSort.FirstName=='DESC'"></i>
                                 </th>
                                 <th>
                                     Request Type
                                     <i class="fa fa-sort-asc"  ng-click="sort('UrgentRequestType','ASC')" ng-show="fieldSort.UrgentRequestType=='ASC'" ></i>
-                                    <i class="fa fa-sort-desc" ng-click="sort('UrgentRequestType','DESC')"ng-show="fieldSort.UrgentRequestType=='DESC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('UrgentRequestType','DESC')" ng-show="fieldSort.UrgentRequestType=='DESC'"></i>
                                 </th>
                                 <th>
                                     Request Time
                                     <i class="fa fa-sort-asc"  ng-click="sort('RequestDate','ASC')" ng-show="fieldSort.RequestDate=='ASC'"></i>
-                                    <i class="fa fa-sort-desc" ng-click="sort('RequestDate','DESC')"ng-show="fieldSort.RequestDate=='DESC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('RequestDate','DESC')" ng-show="fieldSort.RequestDate=='DESC'"></i>
                                 </th>
                                 <th>
                                     Phone Number
                                     <i class="fa fa-sort-asc"  ng-click="sort('PhoneNumber','ASC')" ng-show="fieldSort.PhoneNumber=='ASC'" ></i>
-                                    <i class="fa fa-sort-desc" ng-click="sort('PhoneNumber','DESC')"ng-show="fieldSort.PhoneNumber=='DESC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('PhoneNumber','DESC')" ng-show="fieldSort.PhoneNumber=='DESC'"></i>
                                 </th>
                                 <th>
                                     Suburb
                                     <i class="fa fa-sort-asc"  ng-click="sort('Suburb','ASC')" ng-show="fieldSort.Suburb=='ASC'"></i>
-                                    <i class="fa fa-sort-desc" ng-click="sort('Suburb','DESC')"ng-show="fieldSort.Suburb=='DESC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('Suburb','DESC')" ng-show="fieldSort.Suburb=='DESC'"></i>
                                 </th>
                                 <th>
                                     Status
                                     <i class="fa fa-sort-asc"  ng-click="sort('Status','ASC')" ng-show="fieldSort.Status=='ASC'"></i>
-                                    <i class="fa fa-sort-desc" ng-click="sort('Status','DESC')"ng-show="fieldSort.Status=='DESC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('Status','DESC')" ng-show="fieldSort.Status=='DESC'"></i>
                                 </th>
                             </tr>
-                            <tr ng-hide="toggle">
+                            <tr ng-show="toggle">
                                 <td></td>
                                 <td><input type="text" class="form-control" ng-model="search.FullName" ng-keypress="Search(search,$event.which)"></td>
                                 <td><input type="text" class="form-control" ng-model="search.RequestType" ng-keypress="Search(search,$event.which)"></td>

@@ -231,6 +231,8 @@ module.exports={
 		var attributes = [];
 		var isConcat = false;
 		var whereClause = Services.UrgentCare.whereClause(data);
+		if(data.order == null || data.order == '' || data.order.length == 0)
+			data.order.push(['RequestDate', 'DESC']);
 		if(data.Search){
 			if(data.Search.FullName!='' && data.Search.FullName!=undefined){
 				FullName = data.Search.FullName;

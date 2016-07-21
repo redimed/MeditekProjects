@@ -51,9 +51,11 @@ module.exports = React.createClass({
         }
     },
     setValue: function(value){
-        if(value.indexOf('+') > -1)
-            value = moment(value).format('DD/MM/YYYY');
-        $(this.refs.input).datepicker("update", value);
+        if(value){
+            if(value.indexOf('+') > -1)
+                value = moment(value).format('DD/MM/YYYY');
+            $(this.refs.input).datepicker("update", value);
+        }
     },
     setDisplay: function(type){
         if(type === 'disable'){

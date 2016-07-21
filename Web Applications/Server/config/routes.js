@@ -93,4 +93,8 @@ _.extend(routes, LanguageRoutes);
 var StaffRoutes = require('./routes/StaffRoutes');
 _.extend(routes, StaffRoutes);
 //end module Staff
+//begin module Builling
+var BuillingRoutes = require('./routes/BuillingRoutes');
+_.extend(routes, BuillingRoutes);
+//end module Builling
 module.exports.routes = routes;

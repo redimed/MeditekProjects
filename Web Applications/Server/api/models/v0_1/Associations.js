@@ -542,5 +542,45 @@ module.exports = {
             through: 'RelAppointmentPatientAppointment',
             foreignKey: 'PatientAppointmentID'
         });
+
+        //association Appointment - BillingInvoice
+        Appointment.belongsToMany(BillingInvoice, {
+            through: 'RelAppointmentBillingInvoice',
+            foreignKey: 'AppointmentID'
+        });
+        BillingInvoice.belongsToMany(Appointment, {
+            through: 'RelAppointmentBillingInvoice',
+            foreignKey: 'BillingInvoiceID'
+        });
+
+        //association BillingItem - BillingGroup
+        BillingItem.belongsToMany(BillingGroup, {
+            through: 'RelBillingItemGroup',
+            foreignKey: 'BillingItemID'
+        });
+        BillingGroup.belongsToMany(BillingItem, {
+            through: 'RelBillingItemGroup',
+            foreignKey: 'BillingGroupID'
+        });
+
+        //association Company - BillingInvoice
+        Company.belongsToMany(BillingInvoice, {
+            through: 'RelCompanyBillingInvoice',
+            foreignKey: 'CompanyID'
+        });
+        BillingInvoice.belongsToMany(Company, {
+            through: 'RelCompanyBillingInvoice',
+            foreignKey: 'BillingInvoiceID'
+        });
+
+         //association Patient - BillingInvoice
+        Patient.belongsToMany(BillingInvoice, {
+            through: 'RelPatientBillingInvoice',
+            foreignKey: 'PatientID'
+        });
+        BillingInvoice.belongsToMany(Patient, {
+            through: 'RelPatientBillingInvoice',
+            foreignKey: 'BillingInvoiceID'
+        });
     }
 };

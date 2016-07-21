@@ -266,8 +266,10 @@ module.exports = React.createClass({
         })
     },
     setValue: function(value){
-        self.value = value;
-        $(this.refs.input).val(value).change();
+        if(value){            
+            self.value = value;
+            $(this.refs.input).val(value).change();
+        }
     },
 
     setDisplay: function(type){

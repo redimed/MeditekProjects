@@ -93,4 +93,8 @@ _.extend(routes, LanguageRoutes);
 var StaffRoutes = require('./routes/StaffRoutes');
 _.extend(routes, StaffRoutes);
 //end module Staff
+//begin module Billing
+var BillingRoutes = require('./routes/BillingRoutes');
+_.extend(routes, BillingRoutes);
+//end module Billing
 module.exports.routes = routes;

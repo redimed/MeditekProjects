@@ -4,7 +4,7 @@
   "dependencies": {
     "bcrypt-nodejs": {
       "version": "0.0.3",
-      "from": "bcrypt-nodejs@latest",
+      "from": "https://registry.npmjs.org/bcrypt-nodejs/-/bcrypt-nodejs-0.0.3.tgz",
       "resolved": "https://registry.npmjs.org/bcrypt-nodejs/-/bcrypt-nodejs-0.0.3.tgz"
     },
     "colors": {
@@ -13,23 +13,23 @@
       "resolved": "https://registry.npmjs.org/colors/-/colors-1.1.2.tgz"
     },
     "connect-redis": {
-      "version": "1.5.0",
-      "from": "https://registry.npmjs.org/connect-redis/-/connect-redis-1.5.0.tgz",
-      "resolved": "https://registry.npmjs.org/connect-redis/-/connect-redis-1.5.0.tgz",
+      "version": "1.4.5",
+      "from": "connect-redis@1.4.5",
+      "resolved": "https://registry.npmjs.org/connect-redis/-/connect-redis-1.4.5.tgz",
       "dependencies": {
         "redis": {
-          "version": "0.10.3",
-          "from": "https://registry.npmjs.org/redis/-/redis-0.10.3.tgz",
-          "resolved": "https://registry.npmjs.org/redis/-/redis-0.10.3.tgz"
+          "version": "0.7.3",
+          "from": "redis@>=0.7.0 <0.8.0",
+          "resolved": "https://registry.npmjs.org/redis/-/redis-0.7.3.tgz"
         },
         "debug": {
           "version": "2.2.0",
-          "from": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz",
+          "from": "debug@*",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz",
           "dependencies": {
             "ms": {
               "version": "0.7.1",
-              "from": "https://registry.npmjs.org/ms/-/ms-0.7.1.tgz",
+              "from": "ms@0.7.1",
               "resolved": "https://registry.npmjs.org/ms/-/ms-0.7.1.tgz"
             }
           }
@@ -2890,7 +2890,7 @@
     },
     "moment": {
       "version": "2.14.1",
-      "from": "moment@latest",
+      "from": "https://registry.npmjs.org/moment/-/moment-2.14.1.tgz",
       "resolved": "https://registry.npmjs.org/moment/-/moment-2.14.1.tgz"
     },
     "mysql": {

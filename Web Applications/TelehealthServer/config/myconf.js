@@ -1,6 +1,7 @@
 var rootPath = process.cwd();
 var gcm = require('node-gcm');
-var telehealthApiKey = 'AIzaSyBdHCijDr0RNRzYYjvImikY8ZmMWibiYkc';
+var telehealthApiKey = 'AIzaSyAo_sOEWtIEoNgGJxsdd8Fywkep-c5FbB0';
+// var telehealthApiKey = 'AIzaSyBdHCijDr0RNRzYYjvImikY8ZmMWibiYkc';
 var workinjuryApiKey = 'AIzaSyAX5704J8-KtexZHaPoFFglzneoPKwv5cs';
 var gcmTelehealth = new gcm.Sender(telehealthApiKey);
 var gcmWorkInjury = new gcm.Sender(workinjuryApiKey);

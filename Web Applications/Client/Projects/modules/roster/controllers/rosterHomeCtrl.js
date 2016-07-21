@@ -11,5 +11,5 @@ app.controller('rosterHomeCtrl', function($scope, $state, doctorService, $cookie
      		$scope.isDoctor = true;
      		$state.go("authentication.roster.calendar", {doctorId: userUID});     		
      	}
-     } 
+    } 
 });

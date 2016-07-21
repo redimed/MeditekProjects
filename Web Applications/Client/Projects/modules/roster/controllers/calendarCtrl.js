@@ -56,7 +56,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
         angular.element('.fc-other-month').css('background-color', '#eee');
         element.find('.fc-time').html(moment(event.start).format('hh:mm').toLowerCase()+'-'+moment(event.enddate).format('hh:mm').toLowerCase()+'<br/>');
         element.find('.fc-title').html('<h4 class="text-center"><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
-        if(userRole === 1){
+        if(userRole === 1 || userRole === 4 || userRole === 5){
             $(element).attr('id', 'event_id_'+event.UID);
             $.contextMenu({
                 selector: '#event_id_'+event.UID,
@@ -66,7 +66,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
                         callback: function(key,opt){
                             var UID = opt.selector.split('_')[2];
                             RosterService.GetDetailRoster({UID: UID})
-                            .then(function(response){
+                             .then(function(response){
                                     var modalInstance = $uibModal.open({
                                         animation: true,
                                         size: 'md',
@@ -109,6 +109,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
                                     });
                                     modalInstance.result
                                     .then(function(result) {
+                                            console.log("||||||||||||||| ",result);
                                             $scope.events.splice(0, $scope.events.length);
                                             ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
                                     }, function() {}); 
@@ -126,7 +127,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
         }
     };
     $scope.select = function(event){
-        // if(userRole === 1){
+        if(userRole === 1 || userRole === 4 || userRole === 5){
             var modalInstance = $uibModal.open({
                 animation: true,
                 size: 'md',
@@ -145,7 +146,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
                 }, function(result) {
                     // dismiss
                 });
-        // }
+        }
     };
     $scope.dayClick = function(event){  
     };
@@ -264,7 +265,8 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
             }
             RosterService.PostListRoster(postData)
             .then(function(response){
-                    _.forEach(response.data.rows, function(item, index){
+                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP", response);
+                    _.forEach(response.data.data.rows, function(item, index){
                         console.log("item>>>>>>>>>>>>>>>>>>>>>>>>>>", item)
                             var Service = item.Services[0];
                             //$scope.doctorName = item.UserAccounts[0].Doctor.FirstName+" "+item.UserAccounts[0].Doctor.LastName;

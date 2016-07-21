@@ -91,6 +91,32 @@
                     </a>
                 </div>
             </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-if="isDoctor==true" ng-click="RosterCalendar()">
+                <div class="dashboard-stat red">
+                    <div class="visual">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Personal Calendar</div>
+                    </div>
+                    <a class="more" href="javascript:;" ng-click="RosterCalendar()">
+                        Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-if="isDoctor==false" ng-click="RosterCalendar()">
+                <div class="dashboard-stat red">
+                    <div class="visual">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Roster</div>
+                    </div>
+                    <a class="more" href="javascript:;" ng-click="RosterCalendar()">
+                        Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

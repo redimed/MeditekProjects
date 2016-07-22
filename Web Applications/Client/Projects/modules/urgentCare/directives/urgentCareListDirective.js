@@ -32,7 +32,7 @@ app.directive('urgentcareList', function(urgentCareService, $uibModal, toastr,$c
 			];
 			scope.fieldSort={};
 			for(var i = 0; i < scope.items.length; i++){
-				scope.fieldSort[scope.items[i].field]='ASC';
+				scope.fieldSort[scope.items[i].field]='DESC';
 			};
 			scope.toggle = true;
 			scope.toggleFilter = function(){

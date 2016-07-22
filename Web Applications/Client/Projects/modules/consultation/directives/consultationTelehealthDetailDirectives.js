@@ -386,8 +386,10 @@ app.directive('telehealthDetail', function(doctorService) {
                 $scope.action = {};
                 $scope.action.doctor={
                     selectedDoctor: function(doctor){
+                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>", doctor);
                         if(doctor.Selected=='Y')
                         {
+                            console.log("sajfioasjoifjasoifjaosifjoaisjoaisjfsaoijsi")
                             //Push vao listDoctorSelected
                             var d = {
                                 UID: doctor.UID,
@@ -424,33 +426,37 @@ app.directive('telehealthDetail', function(doctorService) {
                     selectDoctorFromGroup: function (doctorGroup) {
                         //Loop cac doctor trong group
                         for(var i = 0; i < doctorGroup.Doctors.length; i++) {
-                            var d = {
-                                UID: doctorGroup.Doctors[i].UID,
-                                Name: doctorGroup.Doctors[i].FirstName  + ' ' + doctorGroup.Doctors[i].LastName,
-                                DepartmentName: doctorGroup.Doctors[i].Department?doctorGroup.Doctors[i].Department.DepartmentName:null,
-                                GroupID: doctorGroup.ID,
-                                GroupName: doctorGroup.GroupName
-                            }
-                            //Kiem tra xem doctor co ton tai trong listDoctorSelected  hay khong
-                            var exist = false;
-                            for (var j = 0; j< $scope.info.listDoctorSelected.length; j++) {
-                                if(d.UID == $scope.info.listDoctorSelected[j].UID)
-                                {
-                                    exist = true;
-                                    $scope.info.listDoctorSelected[j].GroupID = doctorGroup.ID;
-                                    $scope.info.listDoctorSelected[j].GroupName = doctorGroup.GroupName;
-                                    break;
+                            console.log("Doctors ",doctorGroup.Doctors[i])
+                            if(doctorGroup.Doctors[i].Enable === 'Y') {
+                                var d = {
+                                    UID: doctorGroup.Doctors[i].UID,
+                                    Name: doctorGroup.Doctors[i].FirstName  + ' ' + doctorGroup.Doctors[i].LastName,
+                                    DepartmentName: doctorGroup.Doctors[i].Department?doctorGroup.Doctors[i].Department.DepartmentName:null,
+                                    GroupID: doctorGroup.ID,
+                                    GroupName: doctorGroup.GroupName
                                 }
-                            }
-                            if(!exist)
-                            {
-                                $scope.info.listDoctorSelected.push(d);
-                            }
-                            //Dong bo hoa hien thi voi listDoctorTreatingPractitioner
-                            for( var j = 0; j < $scope.info.listDoctorTreatingPractitioner.length; j++) {
-                                if (d.UID == $scope.info.listDoctorTreatingPractitioner[j].UID)
+                                //Kiem tra xem doctor co ton tai trong listDoctorSelected  hay khong
+                                var exist = false;
+                                console.log("$scope.info.listDoctorSelected", $scope.info.listDoctorSelected);
+                                for (var j = 0; j< $scope.info.listDoctorSelected.length; j++) {
+                                    if(d.UID == $scope.info.listDoctorSelected[j].UID)
+                                    {
+                                        exist = true;
+                                        $scope.info.listDoctorSelected[j].GroupID = doctorGroup.ID;
+                                        $scope.info.listDoctorSelected[j].GroupName = doctorGroup.GroupName;
+                                        break;
+                                    }
+                                }
+                                if(!exist)
                                 {
-                                    $scope.info.listDoctorTreatingPractitioner[j].Selected = 'Y';
+                                    $scope.info.listDoctorSelected.push(d);
+                                }
+                                //Dong bo hoa hien thi voi listDoctorTreatingPractitioner
+                                for( var j = 0; j < $scope.info.listDoctorTreatingPractitioner.length; j++) {
+                                    if (d.UID == $scope.info.listDoctorTreatingPractitioner[j].UID)
+                                    {
+                                        $scope.info.listDoctorTreatingPractitioner[j].Selected = 'Y';
+                                    }
                                 }
                             }
                         }

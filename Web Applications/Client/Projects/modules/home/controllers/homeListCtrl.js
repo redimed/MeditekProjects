@@ -54,23 +54,28 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
         };
 
     };
-    $scope.isDoctor = false;
-    console.log("$scope.UserRole>>>>>>>>>>>>>>>>>>>>>>>", $scope.UserRole);
-    if ($scope.UserRole === "INTERNAL_PRACTITIONER" || $scope.UserRole === "EXTERTAL_PRACTITIONER") {
-        $scope.isDoctor = true;
+    $scope.isDoctor = null;
+    var roles = $cookies.getObject('userInfo').roles; 
+    for (var i = 0; i < roles.length; i++) {
+        if (roles[i].RoleCode === "INTERNAL_PRACTITIONER" || roles[i].RoleCode === "EXTERTAL_PRACTITIONER"){
+            $scope.isDoctor = true;         
+        }
+        if (roles[i].RoleCode === "ADMIN") {
+            $scope.isDoctor = false;  
+        }
     }
+ 
     $scope.RosterCalendar = function(){
         var roles = $cookies.getObject('userInfo').roles;        
         var userUID = $cookies.getObject('userInfo').UID;
         console.log("rosterUID", $cookies.getObject('userInfo'))
         for (var i = 0; i < roles.length; i++) {
             if (roles[i].RoleCode === "INTERNAL_PRACTITIONER" || roles[i].RoleCode === "EXTERTAL_PRACTITIONER"){
-                $scope.isDoctor = true;
+               
                 $state.go("authentication.roster.calendar", {doctorId: userUID});           
             }
-            else
-            {
-                $scope.isDoctor = false;
+            if (roles[i].RoleCode === "ADMIN") {
+    
                 $state.go("authentication.roster.home", {reload: true});
             }
         }

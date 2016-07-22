@@ -44,14 +44,14 @@
                         <th style="min-width:200px;">Treating Practitioner</th>
                         <th style="min-width:120px;">
                             Submit Date
-                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
-                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
+                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('CreatedDate','ASC')" ng-show="fieldSort['CreatedDate']=='ASC'"></i>
+                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('CreatedDate','DESC')" ng-show="fieldSort['CreatedDate'] == 'DESC'"></i>
                         </th>
                         <th style="min-width:160px;">Appointment Type</th>
                         <th style="min-width:150px;">
                             Appointment Date
-                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
-                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('AppointmentDate','DESC')" ng-show="typeAppointmentDate == 'DESC'"></i>
+                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('FromTime','ASC')" ng-show="fieldSort['FromTime']=='ASC'"></i>
+                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('FromTime','DESC')" ng-show="fieldSort['FromTime'] == 'DESC'"></i>
                         </th>
                         <th width="1" align="center" style="text-align:center">
                             <span style="display:block;">Referral Tracking</span>

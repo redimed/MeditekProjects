@@ -25,7 +25,7 @@ extension UITextField {
         border.borderColor = UIColor(hex: Define.ColorCustom.greenColor).CGColor
         border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  1000, height: textField.frame.size.height)
         if(textField.placeholder != nil){
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes:[ NSForegroundColorAttributeName: UIColor(hex:Define.ColorCustom.placehoderColor)])
+            textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes:[ NSForegroundColorAttributeName: UIColor(hex:Define.ColorCustom.placehoderColor)])
         }
         border.borderWidth = width
         textField.layer.addSublayer(border)
@@ -53,5 +53,5 @@ extension UITextField {
             return false
         }
     }
-
+    
 }

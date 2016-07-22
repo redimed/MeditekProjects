@@ -1,6 +1,6 @@
 //
 //  ScreenCallingViewController.swift
-//  Telehealth
+//  UrgentCare Work
 //
 //  Created by Nguyen Duc Manh on 9/22/15.
 //  Copyright © 2015 Nguyen Duc Manh. All rights reserved.
@@ -8,42 +8,33 @@
 
 import UIKit
 
-let videoWidthSub : CGFloat = 150
-let videoHeightSub : CGFloat = 150
+let videoWidthPub : CGFloat = 100
+let videoHeightPub : CGFloat = 100
 
 var ApiKey  = String()
-// Replace with your generated session ID
 var SessionID = String()
-// Replace with your generated token
 var Token = String()
-
-// Change to YES to subscribe to your own stream.
 let SubscribeToSelf = false
 
 
 class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate {
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    
     var videoWidth : CGFloat  = UIScreen.mainScreen().bounds.width
     var videoHeight : CGFloat  = UIScreen.mainScreen().bounds.height
     var session : OTSession?
     var publisher : OTPublisher?
     var subscriber : OTSubscriber?
-    var uuidFrom = String()
-    var uuidTo = String()
     
-    let defaults = NSUserDefaults.standardUserDefaults()
-    var tokens :String = String()
-    var userUID :String = String()
+    var startTime = NSTimeInterval()
+    var timer:NSTimer = NSTimer()
+    let panRec = UIPanGestureRecognizer()
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet weak var displayTimeLabel: UILabel!
     @IBOutlet weak var buttonHoldCall: DesignableButton!
     @IBOutlet weak var buttonEndCall: DesignableButton!
     @IBOutlet weak var buttonMuteCall: DesignableButton!
     @IBOutlet weak var buttonOffMic: DesignableButton!
-    let panRec = UIPanGestureRecognizer()
-    var startTime = NSTimeInterval()
-    var timer:NSTimer = NSTimer()
-    
     @IBOutlet weak var timeEffect: UIVisualEffectView!
     
     override func viewDidLoad() {
@@ -55,23 +46,14 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         let token = receiveMessageData.token
         
         ApiKey = String(apiKey)
-        // Replace with your generated session ID
         SessionID = String(sessionId)
-        // Replace with your generated token
         Token = String(token)
-        //get UUID to
-        uuidTo = String(receiveMessageData.from)
-        //Get uuid from in localstorage
-        if let uuid = defaults.valueForKey("uid") as? String {
-            uuidFrom = uuid
-        }
-        socketService.emitDataToServer(Define.MessageString.CallAnswer, uidFrom: receiveMessageData.to, uuidTo: receiveMessageData.from)
         
+        socketService.emitDataToServer(Define.MessageString.CallAnswer, uidFrom: receiveMessageData.to, uuidTo: receiveMessageData.from)
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ScreenCallingViewController.endCallAnswer), name: "endCallAnswer", object: nil)
-        //Remove data in receiveMessageData
+        
     }
-    //start count timer call
     func start() {
         if (!timer.valid) {
             let aSelector : Selector = #selector(ScreenCallingViewController.updateTime)
@@ -79,39 +61,27 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
             startTime = NSDate.timeIntervalSinceReferenceDate()
         }
     }
-    //stop count timer call
     func stop() {
         timer.invalidate()
     }
-    //func handle count timer
     func updateTime() {
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
-        
-        //Find the difference between current time and start time.
         var elapsedTime: NSTimeInterval = currentTime - startTime
         
-        //calculate the minutes in elapsed time.
         let minutes = UInt8(elapsedTime / 60.0)
         elapsedTime -= (NSTimeInterval(minutes) * 60)
         
-        //calculate the seconds in elapsed time.
         let seconds = UInt8(elapsedTime)
         elapsedTime -= NSTimeInterval(seconds)
         
-        //find out the fraction of milliseconds to be displayed.
         let fraction = UInt8(elapsedTime * 100)
-        
-        //add the leading zero for minutes, seconds and millseconds and store them as string constants
         
         let strMinutes = String(format: "%02d", minutes)
         let strSeconds = String(format: "%02d", seconds)
         _ = String(format: "%02d", fraction)
-        
-        //concatenate minuets, seconds and milliseconds as assign it to the UILabel
         displayTimeLabel.text = "\(strMinutes):\(strSeconds)"
     }
     
-    //Open or close publisher video
     @IBAction func buttonHoldCallAction(sender: DesignableButton) {
         
         if publisher?.publishVideo.boolValue == true {
@@ -125,11 +95,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
             publisher?.view.hidden = false
         }
         
-        
-        
-        
     }
-    // On or Off speaker
     @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
         if subscriber?.subscribeToAudio.boolValue == true {
             subscriber?.subscribeToAudio = false
@@ -163,15 +129,6 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         }
         
     }
-    
-    //Func handle emit socket to server 2 message : Answer or EndCall
-//    func emitDataToServer(message:String){
-//        let modifieldURLString = NSString(format: Constants.UrlAPISocket.emitAnswer,self.uuidFrom,self.uuidTo,message) as String
-//        let dictionNary : NSDictionary = ["url": modifieldURLString]
-//        sharedSocket.socket.emit("get", dictionNary)
-//    }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -230,7 +187,7 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         view.addSubview(buttonOffMic)
         
         panRec.addTarget(self, action: #selector(ScreenCallingViewController.draggedView(_:)))
-        publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
+        publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthPub, height: videoHeightPub)
         publisher?.view.userInteractionEnabled = true
         publisher?.view.addGestureRecognizer(panRec)
         
@@ -346,7 +303,6 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
         subscriber?.view.addSubview(buttonMuteCall)
         subscriber?.view.addSubview(buttonOffMic)
         subscriber?.view.addSubview(timeEffect)
-        buttonEndCall.enabled = true
         start()
         view.hideLoading()
         
@@ -424,9 +380,5 @@ class ScreenCallingViewController: BaseViewController,OTSessionDelegate, OTSubsc
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return [UIInterfaceOrientationMask.Portrait ,UIInterfaceOrientationMask.PortraitUpsideDown]
     }
-    
-    
-    
-    
     
 }

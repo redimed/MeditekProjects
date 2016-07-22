@@ -10,9 +10,9 @@ import UIKit
 
 class AppointmentTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var status: UILabel!
-    @IBOutlet weak var doctorName: UILabel!
-    @IBOutlet weak var appointmentDate: UILabel!
+    @IBOutlet weak var Code: UILabel!
+    @IBOutlet weak var RequestDate: UILabel!
+    @IBOutlet weak var PatientName: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

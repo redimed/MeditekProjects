@@ -1,6 +1,6 @@
 //
 //  VerifyViewController.swift
-//  Telehealth
+//  UrgentCare Work
 //
 //  Created by Nguyen Duc Manh on 9/21/15.
 //  Copyright © 2015 Nguyen Duc Manh. All rights reserved.

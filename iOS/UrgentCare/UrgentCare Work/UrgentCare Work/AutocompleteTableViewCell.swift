@@ -9,8 +9,8 @@
 import UIKit
 
 class AutocompleteTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var name: UILabel!
-
-
+    
+    
 }

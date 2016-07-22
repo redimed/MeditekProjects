@@ -14,7 +14,6 @@ import AVFoundation
 
 class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelegate,AVAudioPlayerDelegate,SocketDelegate,MyPopupViewControllerDelegate {
     
-    //var alertView: DTAlertView!
     var alertView = UIAlertView()
     var alertDTAlertView: DTAlertView!
     let delay = 0.5 * Double(NSEC_PER_SEC)
@@ -31,7 +30,6 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     func animationView(view:DesignableView){
         view.animation = "shake"
@@ -138,7 +136,7 @@ class BaseViewController: UIViewController,DTAlertViewDelegate,UITextFieldDelega
         Context.deleteDatDefaults(Define.keyNSDefaults.userLogin)
         Context.deleteDatDefaults(Define.keyNSDefaults.TeleheathUserDetail)
         Context.deleteDatDefaults(Define.keyNSDefaults.TelehealthUserUID)
-    
+        
         Socket.removeAllHandlers()
     }
     func LogoutTeleheath(teleahthUID:String){

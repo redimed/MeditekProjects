@@ -4,3 +4,4 @@
 
 #import <OpenTok/OpenTok.h>
 #import <Google/CloudMessaging.h>
+#import <DKImagePickerController/DKImagePickerController-Swift.h>

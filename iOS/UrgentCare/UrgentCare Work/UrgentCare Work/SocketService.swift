@@ -1,6 +1,6 @@
 //
 //  SocketService.swift
-//  Telehealth
+//  UrgentCare Work
 //
 //  Created by Nguyen Duc Manh on 1/14/16.
 //  Copyright © 2016 Nguyen Duc Manh. All rights reserved.
@@ -54,7 +54,7 @@ class SocketService {
         Socket.connect()
         
     }
-
+    
     func emitDataToServer(message:String,uidFrom:String,uuidTo:String){
         print(message,uidFrom,uuidTo)
         let modifieldURLString = NSString(format: Define.UrlAPISocket.emit,uidFrom,uuidTo,message) as String

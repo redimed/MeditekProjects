@@ -11,6 +11,8 @@ import SwiftyJSON
 import ObjectMapper
 
 class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentViewDelegate{
+    @IBOutlet weak var viewAccountCompany: UIView!
+    @IBOutlet weak var viewAccountPatient: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var viewPaging: UIView!
     var pageViewController: UIPageViewController!
@@ -25,13 +27,24 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = true
+        if(UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone){
+            viewAccountPatient.hidden = false
+            viewAccountCompany.hidden = true
+        }else{
+            viewAccountPatient.hidden = true
+            viewAccountCompany.hidden = false
+            
+        }
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             buttonLogin.hidden = true
+            
         }
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             GetPatientInfomation()
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
                 loadInformationData()
+            }else{
+                
             }
             self.socketService.openSocket(Context.getDataDefasults(Define.keyNSDefaults.TelehealthUserUID) as! String,complete: {
                 complete in
@@ -249,43 +262,47 @@ class ViewController: BaseViewController,UIPageViewControllerDataSource,ContentV
         page = index
     }
     
-    //send data by segue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if segue.identifier == "TreatmentSegue" {
-            let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
-            submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "Rehab"
-            submitViewController.Rehab = "Y"
-        }else if segue.identifier == "specialistSegue" {
-            let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
-            submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "Specialist Clinic"
-            submitViewController.specialist = "Y"
-        }else if segue.identifier == "generalSegue" {
-            let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
-            submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "General Clinic"
-            submitViewController.GP = "Y"
-        }else if segue.identifier == "FAQsSegue"{
-            let data = segue.destinationViewController as! FAQsViewController
-            data.fileName = "FAQs"
-            data.navigationBarString = "FAQs"
-        }else if segue.identifier == "UrgentCareSegue"{
-            let data = segue.destinationViewController as! FAQsViewController
-            data.fileName = "UrgentCare"
-            data.navigationBarString = "ABOUT REDIMED"
-            
-        }
-        
+    @IBAction func ActionRehab(sender: AnyObject) {
+        let Rehab :SubmitInjuryViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("SubmitInjuryViewControllerID") as! SubmitInjuryViewController
+        Rehab.pastUrls = pastUrls
+        Rehab.NavigateBarTitle = "Rehab"
+        Rehab.Rehab = "Y"
+        self.navigationController?.pushViewController(Rehab, animated: true)
     }
+    @IBAction func ActionSpecialist(sender: AnyObject) {
+        let Specialist :SubmitInjuryViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("SubmitInjuryViewControllerID1") as! SubmitInjuryViewController
+        Specialist.pastUrls = pastUrls
+        Specialist.NavigateBarTitle = "Specialist Clinic"
+        Specialist.specialist = "Y"
+        self.navigationController?.pushViewController(Specialist, animated: true)
+    }
+    @IBAction func ActionGp(sender: AnyObject) {
+        let ActionGp :SubmitInjuryViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("SubmitInjuryViewControllerID1") as! SubmitInjuryViewController
+        ActionGp.pastUrls = pastUrls
+        ActionGp.NavigateBarTitle = "General Clinic"
+        ActionGp.GP = "Y"
+        self.navigationController?.pushViewController(ActionGp, animated: true)
+    }
+    @IBAction func ActionUgrentCare(sender: AnyObject) {
+        let data :FAQsViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
+        data.fileName = "FAQs"
+        data.navigationBarString = "FAQs"
+        self.navigationController?.pushViewController(data, animated: true)
+    }
+    @IBAction func ActionFAGs(sender: AnyObject) {
+        let data :FAQsViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("FAQsViewControllerID") as! FAQsViewController
+        data.fileName = "UrgentCare"
+        data.navigationBarString = "ABOUT REDIMED"
+        self.navigationController?.pushViewController(data, animated: true)
+    }
+   
     @IBAction func GoRedisite(sender: AnyObject) {
         if (Context.getDataDefasults(Define.keyNSDefaults.userLogin) as! String != "") {
             if(Context.getDataDefasults(Define.keyNSDefaults.IsCompanyAccount) as! String != ""){
                 let redisite :PatientInforViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("PatientInforViewControllerID") as! PatientInforViewController
                 self.navigationController?.pushViewController(redisite, animated: true)
             }else{
-                 self.alertView.alertMessage("Warning", message: "Please login account company before uses redisite !")
+                self.alertView.alertMessage("Warning", message: "Please login account company before uses redisite !")
             }
             
         }else{

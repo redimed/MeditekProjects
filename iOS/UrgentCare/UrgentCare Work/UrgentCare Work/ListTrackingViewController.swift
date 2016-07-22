@@ -49,7 +49,7 @@ class ListTrackingViewController: UIViewController {
     
     func refreshPage(patientUID:String,Offset:String,refreshPage:Bool){
         appointmentListTrackingData.Offset = Offset
-        appointmentListTrackingData.Limit = "10"
+        appointmentListTrackingData.Limit = "20"
         filterPatientData.UID = patientUID
 
         filterPatient.Patient = filterPatientData
@@ -109,10 +109,11 @@ extension ListTrackingViewController:UITableViewDataSource,UITableViewDelegate{
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentTableViewCell
         let data = appointmentList.rows[indexPath.row]
         print(data)
-        cell.appointmentDate.text = data.CreatedDate.toDateTimeZone(Define.formatTime.dateTimeZone, format: Define.formatTime.formatDate)
+        cell.Code.text = data.Code
+        cell.RequestDate.text = data.CreatedDate.toDateTimeZone(Define.formatTime.dateTimeZone, format: Define.formatTime.formatDate)
         let DataPatient = data.Patients.count != 0 ? data.Patients[0] : data.patientAppointments[0]
         let PatientName  = "\(DataPatient.FirstName + " " + DataPatient.LastName)"
-        cell.doctorName.text = PatientName == "" ? "N/A" : PatientName
+        cell.PatientName.text = PatientName == "" ? "N/A" : PatientName
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -122,11 +123,8 @@ extension ListTrackingViewController:UITableViewDataSource,UITableViewDelegate{
         detailsViewController.appointmentListResponseDetail = appointmentList.rows[indexPath.row]
         self.navigationController?.pushViewController(detailsViewController, animated: true)
     }
-    
-    
+
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        print(self.loadingData,indexPath.row,appointmentList.rows.count,sumPage)
         if !self.loadingData && indexPath.row == appointmentList.rows.count - 1 && appointmentList.rows.count + 1 <= Int(sumPage) {
             self.loadingData = true
             let count = String(appointmentList.rows.count)

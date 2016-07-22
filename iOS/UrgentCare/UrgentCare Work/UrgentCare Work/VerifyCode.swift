@@ -38,3 +38,17 @@ class VerifyCodeRequest: BaseModel {
     }
     
 }
+
+class TelehealthUser: BaseModel {
+    dynamic var ID = 0
+    dynamic var UID = ""
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    override func mapping(map: Map) {
+        ID    <- map["ID"]
+        UID    <- map["UID"]
+    }
+    
+}

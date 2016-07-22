@@ -18,9 +18,7 @@ class RedisiteImageViewController: UIViewController ,UICollectionViewDataSource,
     var AppointPostCompany = RequestAppointPostCompany()
     var ImageDta = RequestAppointDataCompany()
     var redisiteName = ""
-    //
     var CountImage = 0
-    //
     
     @IBOutlet weak var CollectionView: UICollectionView!
     override func viewDidLoad() {
@@ -111,7 +109,6 @@ extension RedisiteImageViewController : UIViewControllerTransitioningDelegate,UI
     
     func openCamera()
     {
-        
         let assetType = DKOption.types[1]
         let allowMultipleType = true
         let sourceType: DKImagePickerControllerSourceType = DKImagePickerControllerSourceType.Camera
@@ -141,8 +138,6 @@ extension RedisiteImageViewController : UIViewControllerTransitioningDelegate,UI
             allowsLandscape: allowsLandscape,
             singleSelect: singleSelect
         )
-        
-        
     }
     @IBAction func ActionContinue(sender: AnyObject) {
         let consentView :ConsentViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ConsentViewControllerID") as! ConsentViewController
@@ -165,20 +160,17 @@ extension RedisiteImageViewController : UIViewControllerTransitioningDelegate,UI
     func showImagePickerWithAssetType(
         assetType: DKImagePickerControllerAssetType,
         allowMultipleType: Bool,
-        sourceType: DKImagePickerControllerSourceType = [.Camera,.Photo],
+        sourceType: DKImagePickerControllerSourceType = .Both,
         allowsLandscape: Bool,
         singleSelect: Bool) {
         
         let pickerController = DKImagePickerController()
-        
         pickerController.assetType = assetType
         pickerController.allowsLandscape = allowsLandscape
         pickerController.allowMultipleTypes = allowMultipleType
         pickerController.sourceType = sourceType
         pickerController.singleSelect = singleSelect
-        
         pickerController.defaultSelectedAssets = self.assets
-        
         pickerController.didSelectAssets = { [unowned self] (assets: [DKAsset]) in
             self.assets = assets
             self.CollectionView.reloadData()

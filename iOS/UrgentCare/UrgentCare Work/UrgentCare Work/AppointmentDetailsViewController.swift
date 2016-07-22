@@ -39,17 +39,13 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //picker?.delegate = self
         setDataInit()
+        getDetailsAppointment(appointmentListResponseDetail.UID)
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.navigationBar.topItem?.title = "Back"
         self.navigationItem.title = "Appointment"
-        self.ArrayImageUID.removeAll()
-        self.collectionView.reloadData()
-        getDetailsAppointment(appointmentListResponseDetail.UID)
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -72,7 +68,17 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
                             self!.emailLabel.text = Patients.Email1
                             self!.dobLabel.text = Patients.DOB
                             self!.UIDApointment = detailAppointment.UID
-                            self!.doctorName.text = detailAppointment.Doctors.count != 0 ? "\(detailAppointment.Doctors[0].FirstName + " " + detailAppointment.Doctors[0].LastName)" : ""
+                            var ListDoctorName = ""
+                            if(detailAppointment.Doctors.count != 0){
+                                for i in 0..<detailAppointment.Doctors.count {
+                                    if(i==0){
+                                        ListDoctorName = "\(detailAppointment.Doctors[i].FirstName + " " + detailAppointment.Doctors[i].LastName)"
+                                    }else{
+                                        ListDoctorName = "\(detailAppointment.Doctors[i].FirstName + " " + detailAppointment.Doctors[i].LastName)" + ", " + ListDoctorName
+                                    }
+                                }
+                            }
+                            self!.doctorName.text = ListDoctorName
                         }
                     }
                 } else {
@@ -101,7 +107,6 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
         self.presentViewController(detailsViewController, animated: true, completion: {})
     }
     
-    //Get all image in appointment details
     func getAllImageInAppointmentDetails(fileUploads:[FileUploads]){
         
         for i in 0  ..< fileUploads.count  {
@@ -109,7 +114,6 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
         }
     }
     
-    // Download image
     func downloadImage(imageUID:String){
         UserService.getImage(imageUID) { [weak self] (response) in
             if let _ = self {
@@ -119,7 +123,6 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
                         self!.insertDataToCollectionView()
                     }
                 } else {
-                    // self?.showMessageNoNetwork()
                 }
             }
             
@@ -197,6 +200,7 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
         let bodyUploadViewController :BodyUploadViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("BodyUploadViewControllerID") as! BodyUploadViewController
         bodyUploadViewController.imageSelect = imageDetails
         bodyUploadViewController.appointmentID = appointmentListResponseDetail.UID
+        bodyUploadViewController.delegate = self
         self.navigationController?.pushViewController(bodyUploadViewController, animated: true)
     }
     
@@ -206,14 +210,8 @@ class AppointmentDetailsViewController: BaseViewController,UIViewControllerTrans
     }
     
     func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage) {
-        
         ArrayImageUID.append(sender)
-        insertDataToCollectionView()
-        alertView.alertMessage("Upload", message: "Upload Success")
-        if ArrayImageUID.count != 0{
-            messageImageLabel.hidden = true
-        }
-        
+        self.collectionView.reloadData()
     }
     func insertDataToCollectionView(){
         let newRowIndex = ArrayImageUID.count
@@ -255,7 +253,10 @@ extension AppointmentDetailsViewController : UICollectionViewDataSource, UIColle
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        let imageView :ImageViewViewController = UIStoryboard(name: "Main", bundle:nil).instantiateViewControllerWithIdentifier("ImageViewViewControllerID") as! ImageViewViewController
+        imageView.uiimage = ArrayImageUID[indexPath.row]
+        imageView.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        self.navigationController?.pushViewController(imageView, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {

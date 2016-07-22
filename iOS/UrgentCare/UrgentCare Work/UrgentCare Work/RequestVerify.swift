@@ -13,7 +13,6 @@ import RealmSwift
 
 class RequestRegister: BaseModel {
     dynamic var phone = ""
-    //dynamic var deviceType = "ios"
     
     required convenience init?(_ map: Map) {
         self.init()
@@ -21,7 +20,6 @@ class RequestRegister: BaseModel {
     
     override func mapping(map: Map) {
         phone    <- map["phone"]
-        //deviceType    <- map["deviceType"]
     }
     
 }

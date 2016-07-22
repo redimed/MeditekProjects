@@ -3,6 +3,8 @@
  */
 module.exports = {
     'Company/CompanyController': {
-        CreateCompanyForOnlineBooking: ['isIp']
+        CreateCompanyForOnlineBooking: ['isIp'],
+        TransferData: true,
+        TransferUser:true,
     }
 }

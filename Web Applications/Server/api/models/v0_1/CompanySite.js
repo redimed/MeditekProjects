@@ -120,31 +120,31 @@ module.exports = {
             }
         },
         PhoneNumber: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 20],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
         },
         HomePhoneNumber: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 20],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
         },
         FaxNumber: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 10],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }

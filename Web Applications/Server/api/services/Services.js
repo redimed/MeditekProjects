@@ -132,6 +132,8 @@ module.exports = {
     //begin Roster
     //Begin Company
     Company: require('./Company/Company'),
+    transferData: require('./Company/transferData'),
+    transferUser: require('./Company/transferUser'),
     //End Company
     //begin EForm
     GetListEFormTemplate: require('./EForm/GetListEFormTemplate'),

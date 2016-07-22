@@ -67,7 +67,7 @@ module.exports = {
                     args: [0, 50],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s]{0,50}$/
+                // is: /^[a-zA-Z0-9\s]{0,50}$/
             }
         },
         MiddleName: {
@@ -89,7 +89,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s]{0,50}$/
+                // is: /^[a-zA-Z0-9\s]{0,50}$/
             }
         },
         PreferredName: {
@@ -169,7 +169,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
+                // is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
             }
         },
         Address2: {
@@ -180,7 +180,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
+                // is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
             }
         },
         Postcode: {
@@ -266,26 +266,37 @@ module.exports = {
                 //isEmail : true
             }
         },
-        HomePhoneNumber: {
-            type: Sequelize.STRING(20),
+        PhoneNumber: {
+            type: Sequelize.STRING(100),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 20],
+                    args: [0, 100],
                     msg: 'Too long!'
                 },
-                is: /^[0-9]{6,10}$/
+                // is: /^[0-9]{6,10}$/
+            }
+        },
+        HomePhoneNumber: {
+            type: Sequelize.STRING(100),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 100],
+                    msg: 'Too long!'
+                },
+                // is: /^[0-9]{6,10}$/
             }
         },
         WorkPhoneNumber: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(100),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 20],
+                    args: [0, 100],
                     msg: 'Too long!'
                 },
-                is: /^[0-9]{6,10}$/
+                // is: /^[0-9]{6,10}$/
             }
         },
         FaxNumber: {

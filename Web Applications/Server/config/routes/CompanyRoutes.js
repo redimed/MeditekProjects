@@ -94,4 +94,14 @@ module.exports = {
         controller: 'Company/CompanyController',
         action: 'GetHistoryCompanyList'
     },
+
+    'post /api/company/transfer-data': {
+        controller: 'Company/CompanyController',
+        action: 'TransferData'
+    },
+
+    'post /api/company/transfer-user': {
+        controller: 'Company/CompanyController',
+        action: 'TransferUser'
+    },
 };

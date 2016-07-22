@@ -46,7 +46,8 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                     }],
                     Order: [{
                         Appointment: {
-                            CreatedDate: 'DESC'
+                            CreatedDate:"DESC",
+                            // FromTime:null
                         }
                     }]
                 },
@@ -61,6 +62,34 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                 };
 
             };
+            
+            scope.fieldSort={};
+            scope.fieldSort['CreatedDate']='ASC';
+            scope.fieldSort['FromTime']='ASC';
+
+            scope.sortDataTable = function(field, sort){
+                console.log("OOOOOOOOOOOOOOO", field);
+                console.log("dddddddddd", sort);
+                scope.isClickASC = false;
+
+                console.log(scope.mapObject);
+
+                if(sort==="ASC"){
+                    scope.isClickASC = true;
+                    scope.fieldSort[field]= 'DESC';
+                }
+                else{
+                    scope.isClickASC = false;
+                    scope.fieldSort[field]= 'ASC';
+                }
+                var data = {};
+                 data[field] = sort;
+                scope.mapObject.data.Order[0].Appointment = data;
+                console.log("scope.sortField.order", scope.mapObject.data);
+                scope.info.data = angular.copy(scope.mapObject.data);
+                scope.LoadData();
+            }
+
             scope.LoadData = function() {
                 o.loadingPage(true);
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {

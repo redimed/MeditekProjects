@@ -16,6 +16,7 @@ angular.module('app.authentication.doctor.directive.group.detail', [])
 				doctorService.loadlistDoctorfromGroup({doctorGroupUID:uid})
 				.then(function(result) {
 					console.log("????????????????", result);
+					scope.doctors = [];
 					for (var i = 0; i < result.data.length; i++) {
 						if(result.data[i].Enable === "Y")
 						{

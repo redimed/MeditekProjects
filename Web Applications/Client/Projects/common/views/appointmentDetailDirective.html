@@ -41,7 +41,7 @@
                 <span ng-if="apptdetail.Doctors[0].FirstName == null && apptdetail.Doctors[0].LastName == null">N/A</span>
             </a>
         </div>
-        <div class="margin-top-10 profile-desc-link">
+        <div class="margin-top-10 profile-desc-link" ng-hide="!rolePatient">
             <i><small>Online Users:</small></i>
             <a class="btn btn-circle green-meadow margin-left-20 padding-left-40 padding-right-40" 
                 ng-click="funCallOpentok()" ng-disabled="!Opentok">Call

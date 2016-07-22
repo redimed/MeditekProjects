@@ -167,7 +167,7 @@ app.directive('autoComplete', function($timeout) {
     };
 });
 
-app.directive('patientDetailDirective', function($uibModal, $timeout) {
+app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) {
     return {
         restrict: 'E',
         scope: {
@@ -175,6 +175,12 @@ app.directive('patientDetailDirective', function($uibModal, $timeout) {
         },
         templateUrl: 'common/views/patientDetailDirective.html',
         controller: function($scope, WAAppointmentService) {
+            $scope.rolePatient = true
+            var roles = $cookies.getObject('userInfo').roles;
+            for (var i = 0; i < roles.length; i++) {
+                if(roles[i].RoleCode === "PATIENT")
+                    $scope.rolePatient = false;
+            }
             $scope.info.setDataPatientDetail = function(data) {
                 console.log("patientDetailDirective", data);
                 $scope.apptdetail = data;
@@ -383,6 +389,12 @@ app.directive('appointmentDetailDirective', function() {
         },
         templateUrl: 'common/views/appointmentDetailDirective.html',
         controller: function($scope, WAAppointmentService, AuthenticationService, $cookies, $state, toastr) {
+            $scope.rolePatient = true
+            var roles = $cookies.getObject('userInfo').roles;
+            for (var i = 0; i < roles.length; i++) {
+                if(roles[i].RoleCode === "PATIENT")
+                    $scope.rolePatient = false;
+            }
             $scope.info.setDataApptDetail = function(data) {
                 console.log("appointmentDetailDirective", data);
                 $scope.apptdetail = data;

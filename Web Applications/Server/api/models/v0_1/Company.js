@@ -30,12 +30,32 @@ module.exports = {
                 }
             }
         },
+        Code: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
         CompanyName: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
                     args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Alias: {
+            type: Sequelize.STRING(100),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 100],
                     msg: 'Too long!'
                 }
             }

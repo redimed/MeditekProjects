@@ -306,6 +306,26 @@ module.exports = {
         });
     },
 
+    TransferData: function(req, res) {
+        var data = req.body.data;
+        Services.transferData(data)
+        .then(function(result) {
+            res.ok(result);
+        }, function(err) {
+            res.serverError(err);
+        })
+    },
+
+    TransferUser: function(req, res) {
+        var data = req.body.data;
+        Services.transferUser(data)
+        .then(function(result) {
+            res.ok(result);
+        }, function(err) {
+            res.serverError(err);
+        })
+    },
+
 
     Test: function(req, res) {
         return UserAccount.findAll({

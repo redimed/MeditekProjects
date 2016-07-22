@@ -85,10 +85,9 @@ module.exports = function(data) {
 					throw err;
 				}
 				else {
-					return RelEFormPatient.create({
-						EFormID 	: eform.ID,
-						PatientID 	: patient.ID,
-					},{transaction: t});
+					return eform.addPatient(patient.ID,{
+                            transaction: t
+                    })
 				}
 			}, function(err) {
 				throw err;
@@ -115,10 +114,9 @@ module.exports = function(data) {
 								throw err;
 							}
 							else {
-								return RelEFormAppointment.create({
-									EFormID 		: eform.ID,
-									AppointmentID 	: got_appt.ID,
-								},{transaction: t});
+								return eform.addAppointment(got_appt.ID,{
+		                               transaction: t
+		                        })
 							}
 						}, function(err) {
 							throw err;

@@ -102,6 +102,65 @@ module.exports = function(data, userLogin) {
 		return p;
 	}
 
+	function updatePatient(patientInfo, UID, transaction) {
+		var p = new Promise(function(a, b) {
+			for(var key in patientInfo) {
+				if(key == '' || key == null) {
+					delete patientInfo[key];
+				}
+				if(key == 'Email') {
+					patientInfo.Email1 = patientInfo[key];
+				}
+			}
+			Patient.update(patientInfo, {
+				where : { UID : UID },
+				transaction : transaction
+			})
+			.then(function(updated) {
+				if(!updated) {
+					var err = new Error('updateUserData.error');
+					err.pushError('updatePatient.QueryError');
+					b(err);
+				}
+				else {
+					a('updatedPatient');
+				}
+			}, function(err) {
+				b(err);
+			})
+		});
+
+		return p;
+	}
+
+	function updateDoctor(doctorInfo, transaction) {
+		var p = new Promise(function(a, b) {
+			for(var key in doctorInfo) {
+				if(key == '' || key == null) {
+					delete doctorInfo[key];
+				}
+			}
+			Doctor.update(doctorInfo, {
+				where : { UID : UID },
+				transaction : transaction
+			})
+			.then(function(updated) {
+				if(!updated) {
+					var err = new Error('updateUserData.error');
+					err.pushError('updateDoctor.QueryError');
+					b(err);
+				}
+				else {
+					a('updatedDoctor');
+				}
+			}, function(err) {
+				b(err);
+			})
+		});
+		
+		return p;
+	}
+
 	var p = new Promise(function(a, b) {
 		var user;
 		var userUID;
@@ -222,9 +281,25 @@ module.exports = function(data, userLogin) {
 						b(err);
 					}
 					else {
-						t.commit();
-						a(updated);
+						// t.commit();
+						var arr_updatedChild = [];
+						if(user.Patient != null) {
+							arr_updatedChild.push(updatePatient(data.data, user.Patient.UID, t));
+						}
+						if(user.Doctor != null) {
+							arr_updatedChild.push(updateDoctor(data.data, user.Patient.UID, t));
+						}
+						return Promise.all(arr_updatedChild);
+						// a(updated);
 					}
+				}, function(err) {
+					// t.rollback();
+					// b(err);
+					throw err;
+				})
+				.then(function(updated_child) {
+					t.commit();
+					a(updated_child);
 				}, function(err) {
 					t.rollback();
 					b(err);

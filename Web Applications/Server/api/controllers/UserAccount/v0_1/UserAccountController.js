@@ -528,7 +528,7 @@ module.exports = {
 				var dataUpdatePassword = _.clone(req.body.data, true);
 			_.forEach(dataUpdatePassword, function(data_v, data_i){
 				if(!_.isEmpty(data_v)) {
-					dataUpdatePassword[data_i].Password = generatePassword(6, false,/[\w\d]/);
+					dataUpdatePassword[data_i].Password = generatePassword(6, false,/^[A-Za-z0-9]$/);
 					arrayPromise.push(UserAccount.update({
 						Password: dataUpdatePassword[data_i].Password
 					},{

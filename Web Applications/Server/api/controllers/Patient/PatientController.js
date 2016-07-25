@@ -444,7 +444,7 @@ module.exports = {
 
                     responseData[0].dataValues.PhoneNumber = info.PhoneNumber;
                     responseData[0].dataValues.Email = info.Email;
-                    responseData[0].dataValues.CountryName = info.Patient.Country1.ShortName;
+                    responseData[0].dataValues.CountryName = (info.Patient.Country1) ? (info.Patient.Country1.ShortName) :null;
                     delete responseData[0].dataValues['Country1'];
                     for (var i = 0; i < info.dataValues.FileUploads.length; i++) {
                         // info[0].dataValues.ProfileImage = info[0].dataValues.UserAccount.FileUploads[i].FileType=='ProfileImage'?info[0].dataValues.UserAccount.FileUploads[i].UID:null;
@@ -455,7 +455,6 @@ module.exports = {
                         if (responseData[0].dataValues.Signature == null || responseData[0].dataValues.Signature == '') {
                             responseData[0].dataValues.Signature = info.dataValues.FileUploads[i].FileType == 'Signature' ? info.dataValues.FileUploads[i].UID : null;
                         }
-
                     }
                     // delete info[0].dataValues['UserAccount'];
 

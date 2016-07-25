@@ -539,7 +539,12 @@ module.exports = {
 			});
 			$q.all(arrayPromise)
 			.then(function(successAll){
-				res.ok({data: dataUpdatePassword});
+					t.commit()
+                        .then(function(commitSuccess) {
+                            res.ok({data: dataUpdatePassword});
+                        }, function(err) {
+                            res.serverError(err);
+                        });
 			}, function(err){
 				res.serverError(error);
 			});

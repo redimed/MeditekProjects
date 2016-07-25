@@ -1474,7 +1474,7 @@ module.exports = {
 												required:true
 											}
 										],
-										attributes:['PhoneNumber','ID','Email','UserName'],
+										attributes:['PhoneNumber','ID','Email','UserName','UID'],
 										required:true
 									}
 								]

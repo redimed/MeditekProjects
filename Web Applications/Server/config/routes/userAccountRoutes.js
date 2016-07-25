@@ -155,4 +155,9 @@ module.exports={
 		controller: 'UserAccount/v0_1/UserAccountController',
 		action: 'UpdatePassword'
 	},
+
+	'post /api/user-account/update-user': {
+		controller: 'UserAccount/v0_1/UserAccountController',
+		action: 'UpdateUser'
+	},
 };

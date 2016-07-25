@@ -27,7 +27,7 @@
     <div class="portlet-body">
         <!-- <div class="table-scrollable margin-top-10"> -->
         <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-30">
-            <table class="table table-light table-bordered">
+            <table class="table table-light11">
                 <thead>
                     <tr class="uppercase">
                         <th colspan="9" class="">
@@ -37,19 +37,19 @@
                             </div>
                         </th>
                     </tr>
-                    <tr class="uppercase">
+                    <tr class="uppercase" style="background:#647792; color: white !important;">
                         <th width="1">#</th>
                         <th>Code</th>
                         <th style="min-width:180px;">Patient</th>
                         <th style="min-width:200px;">Treating Practitioner</th>
-                        <th style="min-width:120px;">
-                            Submit Date
+                        <th style="min-width:130px;">
+                            Submit Date&nbsp;
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('CreatedDate','ASC')" ng-show="fieldSort['CreatedDate']=='ASC'"></i>
                             <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('CreatedDate','DESC')" ng-show="fieldSort['CreatedDate'] == 'DESC'"></i>
                         </th>
-                        <th style="min-width:160px;">Appointment Type</th>
-                        <th style="min-width:150px;">
-                            Appointment Date
+                        <th style="min-width:170px;">Appointment Type</th>
+                        <th style="min-width:180px;">
+                            Appointment Date&nbsp;
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('FromTime','ASC')" ng-show="fieldSort['FromTime']=='ASC'"></i>
                             <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('FromTime','DESC')" ng-show="fieldSort['FromTime'] == 'DESC'"></i>
                         </th>
@@ -60,7 +60,7 @@
                         
                         <th width="1">Correspondence</th>
                     </tr>
-                    <tr ng-hide="info.toggle">
+                    <tr ng-hide="info.toggle" style="background:#b4cee0; color: white;">
                         <td></td>
                         <td>
                             <input type="text" class="form-control" ng-model="info.data.Search[2].Appointment.Code" ng-enter="reloadData()" capitalize>

@@ -13,6 +13,7 @@ module.exports={
       'forceChangePass':true,
 	  //'GeneratePassword':true,
 	  'forgetPassword':true,
+    'UpdatePassword': true,
 	},
 
   	'UserAccount/v0_1/UserActivationController':{

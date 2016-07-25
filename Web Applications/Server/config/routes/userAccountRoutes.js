@@ -150,4 +150,9 @@ module.exports={
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'forgetPassword'
 	},
+	//api temp update password all
+	'post /api/user-account/update-password': {
+		controller: 'UserAccount/v0_1/UserAccountController',
+		action: 'UpdatePassword'
+	},
 };

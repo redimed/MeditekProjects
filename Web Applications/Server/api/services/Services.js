@@ -151,4 +151,5 @@ module.exports = {
     //begin Staff
     GetListStaff: require('./Staff/GetListStaff'),
     //end Staff
+    updateUserData: require('./UserAccount/updateUserData'),
 };

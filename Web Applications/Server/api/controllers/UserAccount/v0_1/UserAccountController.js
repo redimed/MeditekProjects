@@ -555,6 +555,17 @@ module.exports = {
 	else {
 		res.badRequest({error: 'data failed'});
 	}
+	},
+
+	UpdateUser: function(req, res) {
+		var data =  req.body.data;
+		Services.updateUserData(data, req.user)
+		.then(function(result) {
+			console.log("result ",result);
+			res.ok(result);
+		}, function(err) {
+			res.serverError(ErrorWrap(err));
+		})
 	}
 
 

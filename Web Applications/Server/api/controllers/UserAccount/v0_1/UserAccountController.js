@@ -513,6 +513,48 @@ module.exports = {
 		}, function(err) {
 			return res.serverError(ErrorWrap(err));
 		})
+	},
+	UpdatePassword: function(req, res) {
+		var generatePassword = require('password-generator');
+		var arrayPromise = [];
+		var $q = require('q');
+		if(!_.isEmpty(req) &&
+		!_.isEmpty(req.body) &&
+		!_.isEmpty(req.body.data) &&
+		_.isArray(req.body.data)) {
+			sequelize.transaction()
+			.then(function(t){
+				var dataOrigin = _.clone(req.body.data, true);
+				var dataUpdatePassword = _.clone(req.body.data, true);
+			_.forEach(dataUpdatePassword, function(data_v, data_i){
+				if(!_.isEmpty(data_v)) {
+					dataUpdatePassword[data_i].Password = generatePassword(6, false,/[\w\d]/);
+					arrayPromise.push(UserAccount.update({
+						Password: dataUpdatePassword[data_i].Password
+					},{
+						where: dataOrigin[data_i],
+						transaction: t
+					}));
+				}
+			});
+			$q.all(arrayPromise)
+			.then(function(successAll){
+					t.commit()
+                        .then(function(commitSuccess) {
+                            res.ok({data: dataUpdatePassword});
+                        }, function(err) {
+                            res.serverError(err);
+                        });
+			}, function(err){
+				res.serverError(error);
+			});
+		}, function(err){
+			res.serverError(error);
+		});
+		}
+	else {
+		res.badRequest({error: 'data failed'});
+	}
 	}
 
 

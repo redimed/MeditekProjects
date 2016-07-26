@@ -15,7 +15,7 @@ module.exports={
 	  // 'forgetPassword':true,
    //  'UpdateUser':true,
    //  'SendEmail':true,
-    'TransferPassword':'isAdmin',
+    'UpdatePassword':'isAdmin',
 	},
 
   	'UserAccount/v0_1/UserActivationController':{

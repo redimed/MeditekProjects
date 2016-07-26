@@ -153,7 +153,7 @@ module.exports={
 	//api temp update password all
 	'post /api/user-account/transfer-password': {
 		controller: 'UserAccount/v0_1/UserAccountController',
-		action: 'UpdatePassword'
+		action: 'TransferPassword'
 	},
 
 	'post /api/user-account/update-user': {
@@ -163,7 +163,7 @@ module.exports={
 
 	'post /api/user-account/update-password': {
 		controller: 'UserAccount/v0_1/UserAccountController',
-		action: 'TransferPassword'
+		action: 'UpdatePassword'
 	},
 
 	'post /api/user-account/send-email': {

@@ -514,7 +514,7 @@ module.exports = {
 			return res.serverError(ErrorWrap(err));
 		})
 	},
-	UpdatePassword: function(req, res) {
+	TransferPassword: function(req, res) {
 		var generatePassword = require('password-generator');
 		var arrayPromise = [];
 		var $q = require('q');
@@ -567,7 +567,7 @@ module.exports = {
 		})
 	},
 
-	TransferPassword: function(req, res) {
+	UpdatePassword: function(req, res) {
 		var data =  req.body.data;
 		Services.updatePassword(data, req.user)
 		.then(function(result) {

@@ -455,6 +455,7 @@ module.exports = {
                         if (responseData[0].dataValues.Signature == null || responseData[0].dataValues.Signature == '') {
                             responseData[0].dataValues.Signature = info.dataValues.FileUploads[i].FileType == 'Signature' ? info.dataValues.FileUploads[i].UID : null;
                         }
+
                     }
                     // delete info[0].dataValues['UserAccount'];
 

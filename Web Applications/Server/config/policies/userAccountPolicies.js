@@ -12,8 +12,10 @@ module.exports={
       'CheckExistUser':true,
       'forceChangePass':true,
 	  //'GeneratePassword':true,
-	  'forgetPassword':true,
-    'UpdatePassword': true,
+	  // 'forgetPassword':true,
+   //  'UpdateUser':true,
+   //  'SendEmail':true,
+    'TransferPassword':'isAdmin',
 	},
 
   	'UserAccount/v0_1/UserActivationController':{

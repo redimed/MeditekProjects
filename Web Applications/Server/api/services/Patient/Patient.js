@@ -709,8 +709,8 @@ module.exports = {
                     })
                     .then(function(validated) {
                         if (validated && validated.status == 'success') {
-                            userInfo.Password = generatePassword(6, false,/[\w\d]/);
-                            userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/\d/);
+                            userInfo.Password = generatePassword(6, false,/^[A-Za-z0-9]$/);
+                            userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/^[0-9]$/);
                             userInfo.UserName = userInfo.UserName.replace(/[\s]/g,'');
                             // return Services.UserAccount.CreateUserAccount(userInfo, t);
                             if(!data.PhoneNumber && !data.Email) {
@@ -2130,10 +2130,11 @@ module.exports = {
         }
 
         var p = new Promise(function(a, b) {
+            var NewPassword;
             sequelize.transaction()
             .then(function(t) {
                 Patient.findOne({
-                    attributes:['ID','FirstName','LastName','Email1','Email2'],
+                    attributes:['ID','UserAccountID','FirstName','LastName','Email1','Email2'],
                     include:[
                         {
                             model:UserAccount,
@@ -2154,31 +2155,25 @@ module.exports = {
                     }
                     else {
                         patient = got_patient;
-                        payload = {
-                                UID : got_patient.UserAccount.UID
-                        };
-                        token = jwt.sign(
-                                        payload,
-                                        secret,
-                                        {expiresIn:2*60*60}
-                        );
-                        return UserForgot.create({
-                            UserAccountUID : got_patient.UserAccount.UID,
-                            Token          : token
-                        },{transaction: t});
+                        NewPassword = generatePassword(6, false, /^[A-Za-z0-9]$/);
+                        return UserAccount.update({Password : NewPassword},{
+                            transaction: t,
+                            where: { ID : patient.UserAccountID}
+                        });
                     }
                 }, function(err) {
                     throw err;
                 })
-                .then(function(created_userForgot){
-                    if(created_userForgot == '' || created_userForgot == null) {
+                .then(function(updated_user){
+                    if(updated_user == '' || updated_user == null) {
                         var err = new Error('SendEmailWhenLinked.error');
-                        err.pushError('createUserForgot.queryError');
+                        err.pushError('updatePassword.queryError');
                         throw err;
                     }
                     else {
                         if(data.type == 'PreEmployment') {
                             var promise_arr = [];
+                            patient.UserAccount.Password = NewPassword;
                             for(var i = 0; i < data.to.length; i++) {
                                 var emailInfo = {
                                     // from     : data.from,
@@ -2187,7 +2182,6 @@ module.exports = {
                                     email    : data.to[i],
                                     subject  : data.subject,
                                     url      : config.url,
-                                    token    : token,
                                 };
                                 var promise = CreatePromiseSendMail(data.type, emailInfo);
                                 promise_arr.push(promise);

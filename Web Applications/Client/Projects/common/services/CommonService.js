@@ -443,6 +443,21 @@ angular.module("app.common.CommonService", [])
             return result.post({data:data});
         }
 
+        commonService.getUserProfile = function(data) {
+            var result = api.one('user-account/GetUserAccountDetails?UID='+data.UID);
+            return result.get();
+        }
+
+        commonService.updateUserProfile = function(data)
+        {
+            var result = api.all("user-account/update-user");
+            return result.post({data:data});
+        }
+
+        commonService.sendMailUserProfile = function(data) {
+            var result = api.all("user-account/send-email");
+            return result.post({data:data});
+        }
 
         return commonService;
     })

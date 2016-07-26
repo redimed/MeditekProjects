@@ -222,6 +222,7 @@
                                             <th>User Name</th>
                                             <th>PhoneNumber</th>
                                             <th>Email</th>
+                                            <th width="1">Edit</th>
                                             <th width="1">Action</th>
                                             <th width="1">Enable</th>
                                         </tr>
@@ -232,6 +233,7 @@
                                             <td class="primary-link">{{u.UserAccount.UserName}}</td>
                                             <td>{{u.UserAccount.PhoneNumber}}</td>
                                             <td>{{u.UserAccount.Email}}</td>
+                                            <td><update-user user-uid="u.UserAccount.UID" on-finish="updatedUser"></update-user></td>
                                             <td class="text-center"><button type="button" class="btn btn-danger btn-icon-only" ng-click="deleteUser(u)">
                                                 <i class="fa fa-trash"></i>
                                             </button></td>

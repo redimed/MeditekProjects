@@ -13,12 +13,6 @@ module.exports = function(data, userLogin) {
 		throw err;
 	}
 
-	if(!data.type) {
-		var err = new Error('updateUserData.error');
-		err.pushError('notFound.type.params');
-		throw err;
-	}
-
 	function CheckUserName(UserName, transaction) {
 		var p = new Promise(function(a, b) {
 			UserAccount.findOne({
@@ -263,6 +257,10 @@ module.exports = function(data, userLogin) {
 				})
 				.then(function(checked_data) {
 					// a(checked_data);
+					if(data.data.PhoneNumber) {
+						data.data.PhoneNumber=data.data.PhoneNumber.slice(-9);
+						data.data.PhoneNumber='+61'+data.data.PhoneNumber;
+					}
 					return UserAccount.update(data.data,{
 						where: {
 							UID : userUID

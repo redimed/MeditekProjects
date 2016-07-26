@@ -293,6 +293,11 @@ app.directive('companyDetail', function($uibModal, $timeout, $state, companyServ
 					windowClass: 'app-modal-window'
 				});
 			};
+
+			scope.updatedUser = function() {
+				scope.viewmodel('UserAccounts');
+				toastr.success('Update Successfully !!!');
+			}
 		},
 	};
 });

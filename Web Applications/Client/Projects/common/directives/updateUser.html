@@ -1,0 +1,62 @@
+<a class="btn btn-success" ng-click="openModal(userUID, finish())">Edit</a>
+<script type="text/ng-template " id="EditUser">
+    <div class="portlet box green" style="margin-bottom:0">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-list"></i>
+                <span class="caption-subject bold uppercase"> Edit User</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="col-sm-3 col-xs-12">
+                        <label class="control-label">UserName :</label>
+                    </div>
+                    <div class="col-sm-7 col-xs-12">
+                        <input type="text" ng-model="user.UserName" class="form-control" ng-style="errorObj" ng-change="setNull()" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">&nbsp;</div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="col-sm-3 col-xs-12">
+                        <label class="control-label">PhoneNumber :</label>
+                    </div>
+                    <div class="col-sm-7 col-xs-12">
+                        <input type="text" ng-model="user.PhoneNumber" class="form-control" ng-style="errorObj" ng-change="setNull()" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">&nbsp;</div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="col-sm-3 col-xs-12">
+                        <label class="control-label">Email :</label>
+                    </div>
+                    <div class="col-sm-7 col-xs-12">
+                        <input type="text" ng-model="user.Email" class="form-control" ng-style="errorObj" ng-change="setNull()" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">&nbsp;</div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="col-sm-3 col-xs-12">
+                        <a class="btn btn-info" ng-click="generatePassword()">Generate Password</a>
+                    </div>
+                    <div class="col-sm-7 col-xs-12">
+                        <input type="text" ng-model="user.Password" class="form-control" ng-style="errorObj" ng-change="setNull()" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-xs-2">
+                    <a class="btn btn-success" ng-click="Submit('SendMail')">SendMail</a>
+                </div>
+                <div class="col-sm-2 col-xs-2">
+                    <a class="btn btn-info" ng-click="Submit()">Ok</a>
+                </div>
+                <div class="col-sm-2 col-xs-2">
+                    <a class="btn btn-default" ng-click="close()">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

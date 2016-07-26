@@ -514,7 +514,7 @@ module.exports = {
 			return res.serverError(ErrorWrap(err));
 		})
 	},
-	UpdatePassword: function(req, res) {
+	TransferPassword: function(req, res) {
 		var generatePassword = require('password-generator');
 		var arrayPromise = [];
 		var $q = require('q');
@@ -561,12 +561,31 @@ module.exports = {
 		var data =  req.body.data;
 		Services.updateUserData(data, req.user)
 		.then(function(result) {
-			console.log("result ",result);
 			res.ok(result);
 		}, function(err) {
 			res.serverError(ErrorWrap(err));
 		})
-	}
+	},
+
+	UpdatePassword: function(req, res) {
+		var data =  req.body.data;
+		Services.updatePassword(data, req.user)
+		.then(function(result) {
+			res.ok(result);
+		}, function(err) {
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	SendEmail: function(req, res) {
+		var data =  req.body.data;
+		Services.sendEmail(data)
+		.then(function(result) {
+			res.ok(result);
+		}, function(err) {
+			res.serverError(ErrorWrap(err));
+		})
+	},
 
 
 }

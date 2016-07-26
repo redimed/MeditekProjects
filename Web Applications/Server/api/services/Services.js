@@ -152,4 +152,6 @@ module.exports = {
     GetListStaff: require('./Staff/GetListStaff'),
     //end Staff
     updateUserData: require('./UserAccount/updateUserData'),
+    updatePassword: require('./UserAccount/updatePassword'),
+    sendEmail: require('./UserAccount/sendEmail'),
 };

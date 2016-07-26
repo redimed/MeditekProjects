@@ -2,7 +2,7 @@
  * Directive dùng để upload eform pdf 
  */
 angular.module('app.common.uploadEform',[])
-.directive('uploadEform',function(CommonService, $rootScope, $cookies, toastr, $uibModal){
+.directive('uploadEform',function(CommonService, $rootScope, $cookies, toastr, $uibModal, WAAppointmentService){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -13,6 +13,7 @@ angular.module('app.common.uploadEform',[])
 		},
 		controller: function($scope, FileUploader) {
 			$scope.FormName;
+			$scope.UID;
 			function capitalizeFirstLetter(string) {
 			    return string.charAt(0).toUpperCase() + string.slice(1);
 			}
@@ -23,7 +24,7 @@ angular.module('app.common.uploadEform',[])
 		        	fileName:capitalizeFirstLetter($scope.FormName),
 		        	fileExt: Ext,
 		        	patientUID:$scope.PatientUID,
-		        	ApptUID: $scope.ApptUID ? $scope.ApptUID : null,
+		        	ApptUID: $scope.UID,
 		        })
 		        .then(function(result) {
 		        	toastr.success('Upload Successfully.');
@@ -84,12 +85,36 @@ angular.module('app.common.uploadEform',[])
 		},
 		link:function(scope,element,attrs) {
 			scope.isChose = false;
+			scope.isShowListAppt = true;
+			scope.list = [];
+			console.log("ApptUID ",scope.ApptUID);
+			if(scope.ApptUID != null && scope.ApptUID != '' && scope.ApptUID != undefined) {
+				scope.isShowListAppt = false;
+				scope.UID = scope.ApptUID;
+			}
+			else {
+				WAAppointmentService.loadListWAAppointment({
+					Filter:[{
+						Patient:{UID : scope.PatientUID}
+					}],
+					Order:[{
+						Appointment:{CreatedDate:"DESC"}
+					}]
+				})
+				.then(function(response) {
+					console.log("response ",response);
+					scope.list = response.rows;
+				}, function(err) {
+					console.log("err ",err);
+				})
+			}
 			scope.Add = function(model, data) {
 				var modalInstance = $uibModal.open({
 					templateUrl: 'ChoseFile',
 					scope : scope,
 					controller: function($scope, $modalInstance){
 						$scope.EFormName;
+						$scope.AppointmentUID = scope.UID;
 						$scope.errorObj = {};
 						$scope.cancel = function(){
 							$modalInstance.dismiss('cancel');
@@ -113,8 +138,14 @@ angular.module('app.common.uploadEform',[])
 								o.loadingPage(false);
 								return ;
 							}
+							if($scope.AppointmentUID == '' || $scope.AppointmentUID == null) {
+								toastr.error('Please chose Appointment.');
+								o.loadingPage(false);
+								return ;
+							}
 							else {
 								scope.FormName = $scope.EFormName;
+								scope.UID = $scope.AppointmentUID;
 								$scope.uploader.uploadAll();
 								$modalInstance.dismiss('cancel');
 							}

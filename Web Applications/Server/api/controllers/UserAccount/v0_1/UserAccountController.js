@@ -561,12 +561,31 @@ module.exports = {
 		var data =  req.body.data;
 		Services.updateUserData(data, req.user)
 		.then(function(result) {
-			console.log("result ",result);
 			res.ok(result);
 		}, function(err) {
 			res.serverError(ErrorWrap(err));
 		})
-	}
+	},
+
+	TransferPassword: function(req, res) {
+		var data =  req.body.data;
+		Services.updatePassword(data, req.user)
+		.then(function(result) {
+			res.ok(result);
+		}, function(err) {
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	SendEmail: function(req, res) {
+		var data =  req.body.data;
+		Services.sendEmail(data)
+		.then(function(result) {
+			res.ok(result);
+		}, function(err) {
+			res.serverError(ErrorWrap(err));
+		})
+	},
 
 
 }

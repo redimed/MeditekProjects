@@ -1,4 +1,4 @@
-<a class="btn btn-success" ng-click="Add()">Add File</a>
+<a class="btn green" ng-click="Add()">Add File</a>
 
 <script type="text/ng-template " id="ChoseFile">
     <div class="portlet box green" style="margin-bottom:0">
@@ -8,34 +8,39 @@
                 <span class="caption-subject bold uppercase"> Choose File</span>
             </div>
         </div>
-        <div class="portlet-body">
-            <div class="row">
-                <div class="col-sm-12 col-xs-12">
-                    <div class="col-sm-3 col-xs-12">
-                        <label class="control-label">EForm Name: </label>
-                    </div>
-                    <div class="col-sm-7 col-xs-12">
-                        <input type="text" ng-model="EFormName" class="form-control" ng-style="errorObj" ng-change="setNull()" />
-                    </div>
-                    <div class="col-sm-2 col-xs-12">
-                        <div ng-form name="checkInForm" novalidate>
-                            <div class="form-group">
-                                <div class="container">
-                                    <label for="fileUpload" style="float:left; padding-right: 1%;">
-                                        <span class="btn green" ng-if="isChose==false" style="width: 120px;">Select File</span>
-                                        <span class="btn green" ng-if="isChose==true" style="width: 120px;">Change File</span>
-                                        <input type="file" id="fileUpload" ng-model="aaa" name="fileUpload" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
-                                    </label>
+        <div class="portlet-body form">
+            <div class="form-horizontal">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-12">EForm Name:</label>
+                        <div class="col-md-8 col-sm-12">
+                            <input type="text" ng-model="EFormName" class="form-control" ng-style="errorObj" ng-change="setNull()" />
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div ng-form name="checkInForm" novalidate>
+                                <div class="form-group">
+                                    <div class="container">
+                                        <label for="fileUpload" style="float:left; padding-right: 1%;">
+                                            <span class="btn green" ng-if="isChose==false" style="width: 120px;">Select File</span>
+                                            <span class="btn green" ng-if="isChose==true" style="width: 120px;">Change File</span>
+                                            <input type="file" id="fileUpload" ng-model="aaa" name="fileUpload" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
+                                        </label>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group" ng-show="isShowListAppt">
+                        <label class="control-label col-md-2 col-sm-12"></label>
+                        <div class="col-md-8 col-sm-12">
+                            <select class="form-control" multiple ng-model="AppointmentUID" ng-options="item.UID as item.Code for item in list">
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-xs-12">
-                    <a class="btn btn-info" ng-click="Submit()">Submit</a>
+                <div class="form-actions right">
+                    <a class="btn green" ng-click="Submit()">Submit</a>
                 </div>
             </div>
         </div>

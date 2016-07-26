@@ -151,7 +151,7 @@ module.exports={
     	action:'forgetPassword'
 	},
 	//api temp update password all
-	'post /api/user-account/update-password': {
+	'post /api/user-account/transfer-password': {
 		controller: 'UserAccount/v0_1/UserAccountController',
 		action: 'UpdatePassword'
 	},
@@ -161,7 +161,7 @@ module.exports={
 		action: 'UpdateUser'
 	},
 
-	'post /api/user-account/transfer-password': {
+	'post /api/user-account/update-password': {
 		controller: 'UserAccount/v0_1/UserAccountController',
 		action: 'TransferPassword'
 	},

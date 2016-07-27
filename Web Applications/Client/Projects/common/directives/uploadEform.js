@@ -2,7 +2,7 @@
  * Directive dùng để upload eform pdf 
  */
 angular.module('app.common.uploadEform',[])
-.directive('uploadEform',function(CommonService, $rootScope, $cookies, toastr, $uibModal, WAAppointmentService){
+.directive('uploadEform',function(CommonService, $rootScope, $cookies, toastr, $uibModal, WAAppointmentService, $timeout){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -85,29 +85,32 @@ angular.module('app.common.uploadEform',[])
 		},
 		link:function(scope,element,attrs) {
 			scope.isChose = false;
-			scope.isShowListAppt = true;
-			scope.list = [];
-			console.log("ApptUID ",scope.ApptUID);
-			if(scope.ApptUID != null && scope.ApptUID != '' && scope.ApptUID != undefined) {
-				scope.isShowListAppt = false;
-				scope.UID = scope.ApptUID;
-			}
-			else {
-				WAAppointmentService.loadListWAAppointment({
-					Filter:[{
-						Patient:{UID : scope.PatientUID}
-					}],
-					Order:[{
-						Appointment:{CreatedDate:"DESC"}
-					}]
-				})
-				.then(function(response) {
-					console.log("response ",response);
-					scope.list = response.rows;
-				}, function(err) {
-					console.log("err ",err);
-				})
-			}
+			$timeout(function() {
+				scope.isShowListAppt = true;
+				scope.list = [];
+				console.log("ApptUID ",scope.ApptUID);
+				console.log("PatientUID ",scope.PatientUID);
+				if(scope.ApptUID != null && scope.ApptUID != '' && scope.ApptUID != undefined) {
+					scope.isShowListAppt = false;
+					scope.UID = scope.ApptUID;
+				}
+				else {
+					WAAppointmentService.loadListWAAppointment({
+						Filter:[{
+							Patient:{UID : scope.PatientUID}
+						}],
+						Order:[{
+							Appointment:{CreatedDate:"DESC"}
+						}]
+					})
+					.then(function(response) {
+						console.log("response ",response);
+						scope.list = response.rows;
+					}, function(err) {
+						console.log("err ",err);
+					})
+				}
+			},2000);
 			scope.Add = function(model, data) {
 				var modalInstance = $uibModal.open({
 					templateUrl: 'ChoseFile',

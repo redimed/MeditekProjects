@@ -40,9 +40,7 @@ module.exports = function(data, userInfo) {
             order: pagination.order
         })
         .then(function(listRosterRes) {
-            defer.resolve({
-                data: listRosterRes
-            });
+            defer.resolve(listRosterRes);
         }, function(err) {
             defer.reject(err);
         });

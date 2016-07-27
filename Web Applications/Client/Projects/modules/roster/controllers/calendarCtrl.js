@@ -265,9 +265,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
             }
             RosterService.PostListRoster(postData)
             .then(function(response){
-                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP", response);
-                    _.forEach(response.data.data.rows, function(item, index){
-                        console.log("item>>>>>>>>>>>>>>>>>>>>>>>>>>", item)
+                    _.forEach(response.data.rows, function(item, index){
                             var Service = item.Services[0];
                             //$scope.doctorName = item.UserAccounts[0].Doctor.FirstName+" "+item.UserAccounts[0].Doctor.LastName;
                             var color = (item.IsRecurrence === 'Y')?'green':'green';

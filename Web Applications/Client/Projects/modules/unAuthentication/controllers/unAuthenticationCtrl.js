@@ -5,6 +5,7 @@ var app = angular.module('app.unAuthentication.controller', [
 	'app.unAuthentication.activation.controller',
 	'app.unAuthentication.forgot.controller',
 	'app.unAuthentication.changepass.controller',
+	'app.unAuthentication.registerlogin.controller',
 ]);
 
 app.controller('unAuthenticationCtrl', function($scope, $q, toastr){

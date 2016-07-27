@@ -2,11 +2,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Urgent Received</title>
+    <title>Welcome - Register Patient</title>
 </head>
 
 <body>
-        <h5>Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.</h5>
-            <a href="<%=url%>/#/changepass/<%=UID%>/<%=data%>" target="_blank"><%=data%></a>
+	<div>Thank you for checking in with REDIMED Total Health Solutions.</div><br/>
+    <div>Your username and password is <b><%= userInfo.UserName %> / <%= userInfo.Password %>. </b> </div><br/>
+    <div> You will need this code for any future appointments with REDIMED so we can better track your Skin Screening history.</div><br/><br/>
+    <div>Kind regards</div><br/>
+    <div>REDIMED Team</div><br/>
 </body>
 </html>

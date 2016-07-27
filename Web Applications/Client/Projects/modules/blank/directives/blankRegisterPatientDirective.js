@@ -13,7 +13,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 ComponentsDateTimePickers.init();
                 $.uniform.update();
             }, 0);
-            $scope.NextOfKin = "Y"
+            $scope.NextOfKin = "N"
             ComponentsDropdowns.init();
             $scope.number = 1;
             $scope.submitted = false;
@@ -151,15 +151,15 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         $scope.dataCreateAppointment.Doctor.UID = response.data.Value;
                         blankServices.PatientRequestAppointmentNew($scope.dataCreateAppointment).then(function(response) {
                             o.loadingPage(false);
-                            $state.go("authentication.home.list")
+                            $state.go("unAuthentication.registerlogin")
                         }, function(err) {
                             o.loadingPage(false);
-                            $state.go("authentication.home.list")
+                            $state.go("unAuthentication.registerlogin")
                             toastr.error('Request Appointment fail');
                         })
                     }, function(err) {
                         o.loadingPage(false);
-                        $state.go("authentication.home.list")
+                        $state.go("unAuthentication.registerlogin")
                         toastr.error('Set campaign doctor for Appointment fail');
                     })
                 }else{
@@ -167,10 +167,10 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                     console.log("$scope.dataCreateAppointment",$scope.dataCreateAppointment);
                     blankServices.PatientRequestAppointmentNew($scope.dataCreateAppointment).then(function(response) {
                         o.loadingPage(false);
-                        $state.go("authentication.home.list")
+                        $state.go("unAuthentication.registerlogin")
                     }, function(err) {
                         o.loadingPage(false);
-                        $state.go("authentication.home.list")
+                        $state.go("unAuthentication.registerlogin")
                         toastr.error('Request Appointment fail');
                     })
                 };
@@ -341,17 +341,19 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                     $scope.FormatDate();
                     blankServices.registerPatient($scope.postData).then(function(response) {
                         if (response.data.status = 200) {
-                            $scope.logInData.UserUID = response.data.UserAccountUID;
-                            $scope.logInData.PinNumber = $scope.postData.data.PinNumber;
-                            blankServices.login($scope.logInData).then(function(response) {
-                                $cookies.putObject("userInfo", response.user);
-                                $cookies.put("token", response.token);
-                                $rootScope.refreshCode = response.refreshCode;
-                                $scope.GetDataAppointment();
-                            }, function(err) {
-                                o.loadingPage(false);
-                                toastr.error('Patient login fail');
-                            })
+                            console.log("response ",response);
+                            $scope.GetDataAppointment();
+                            // $scope.logInData.UserUID = response.data.UserAccountUID;
+                            // $scope.logInData.PinNumber = $scope.postData.data.PinNumber;
+                            // blankServices.login($scope.logInData).then(function(response) {
+                            //     $cookies.putObject("userInfo", response.user);
+                            //     $cookies.put("token", response.token);
+                            //     $rootScope.refreshCode = response.refreshCode;
+                            //     $scope.GetDataAppointment();
+                            // }, function(err) {
+                            //     o.loadingPage(false);
+                            //     toastr.error('Patient login fail');
+                            // })
                         };
                     }, function(err) {
                         o.loadingPage(false);

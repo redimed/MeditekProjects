@@ -264,7 +264,7 @@ module.exports = {
         // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
         // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
         // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
-        Services.Patient.CreatePatient(data, otherData)
+        Services.Patient.CreatePatient(data, otherData, false)
             .then(function(patient) {
 
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {

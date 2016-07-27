@@ -87,9 +87,11 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.PhoneNumber.$invalid]">
-                                                <label class="control-label">Mobile</label>
-                                                <input type="text" class="form-control" ng-model="postData.data.PhoneNumber" name="PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" />
+                                                <label class="control-label">Mobile <span class="required">*</span></label>
+                                                <input type="text" class="form-control" ng-model="postData.data.PhoneNumber" name="PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required/>
                                                 <p ng-show="submitted && step1.PhoneNumber.$error.pattern" class="help-block required-text">This is not a mobile phone number</p>
+                                                <p class="help-block required-text" ng-if="submitted && step1.PhoneNumber.$error.required">
+                                            This field is required.</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">

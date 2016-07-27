@@ -2,8 +2,7 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" 
 			aria-hidden="true" ng-click="cancel()"></button>
-		<h4 class="modal-title uppercase bold font-red-thunderbird">
-			<i class="glyphicon glyphicon-calendar"></i> Slot Time</h4>
+		<h4 class="modal-title uppercase bold font-red-thunderbird">Slot Time</h4>
 	</div>
 	<div class="modal-body">
 		<div class="col-md-6 col-sm-6 form-group">
@@ -34,7 +33,7 @@
 			<input type="text" class="form-control timepicker timepicker-24" data-default-time=''
 				ng-model="formData.toTime">
 		</div>
-		<div class="col-md-12 col-sm-12 form-group">
+		<div class="col-md-6 col-sm-6 form-group">
 			<label class="control-label">Appointment Type</label>
 			<select class="form-control"
 				ng-options="item.code as item.name for item in listTypes"
@@ -57,9 +56,9 @@
 		</div>
 	</div>
 	<center style="margin-bottom: 10px;">
-		<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+		<button type="button" class="btn dark" data-dismiss="modal" 
 			ng-click="cancel()">Cancel</button>
-		<button type="submit" class="btn btn-lg red">
+		<button type="submit" class="btn red">
 			<i class="glyphicon glyphicon-save"></i> Submit</button>
 	</center>
 </form>

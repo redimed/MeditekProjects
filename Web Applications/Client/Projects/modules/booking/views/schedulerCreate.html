@@ -1,78 +1,109 @@
 
-<form name="form" ng-submit="submit()">
+
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" 
 			aria-hidden="true" ng-click="cancel()"></button>
-		<h4 class="modal-title uppercase bold font-red-thunderbird">
-			<i class="glyphicon glyphicon-calendar"></i> Slot Time </h4>
+		<h4 class="modal-title uppercase bold font-red-thunderbird">Slot Time </h4>
 	</div>
 	<div class="modal-body">
-		<div class="form-body">
+		<div class="form-horizontal">
 			<div class="row">
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-6 col-sm-12">
 					<div class="form-group">
-						<label class="control-label">Doctor</label></br>
-						<p class="form-control-static bold" data-display="">{{formData.Doctor.FirstName+' '+formData.Doctor.LastName}}</p>
+						<label class="control-label col-md-4 col-sm-3">Doctor:</label>
+						<div class="col-md-4 col-sm-6">
+							<div class="form-control-static bold" data-display="">
+								{{formData.Doctor.FirstName+' '+formData.Doctor.LastName}}
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-3">
+							<a class="btn btn-outline blue">Select Doctor</a>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-6 col-sm-12">
 					<div class="form-group">
-						<label class="control-label">Select Patient</label></br>
-						<p class="form-control-static bold" data-display="">&nbsp;{{formData.Patient.FirstName}} {{formData.Patient.LastName}}</p>
+						<label class="control-label col-md-4 col-sm-3">Appointment Type:</label>
+						<div class="col-md-8 col-sm-9">
+							<select class="form-control"
+								ng-options="item.code as item.name for item in listTypes"
+								ng-model="formData.type">
+							</select>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4 col-sm-4">
+				<div class="col-md-6 col-sm-12">
 					<div class="form-group">
-						<label class="control-label">Selection Date</label></br>
-						<p class="form-control-static bold" data-display="">&nbsp;{{formData.date}}</p>
+						<label class="control-label col-md-4 col-sm-3">Select Patient:</label>
+						<div class="col-md-8 col-sm-9">
+							<div class="form-control-static bold" data-display="">
+								{{formData.Patient.FirstName}} {{formData.Patient.LastName}}
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-4">
+				<div class="col-md-6 col-sm-12">
 					<div class="form-group">
-						<label class="control-label">From Time</label>
-						<input type="text" class="form-control timepicker timepicker-24" data-default-time='' 
-							ng-model="formData.fromTime">
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class=" form-group">
-						<label class="control-label">To Time</label>
-						<input type="text" class="form-control timepicker timepicker-24" data-default-time=''
-							ng-model="formData.toTime">
+						<label class="control-label col-md-4 col-sm-3">Selection Date:</label>
+						<div class="col-md-8 col-sm-9">
+							<div class="form-control-static bold" data-display="">
+								{{formData.date}}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12 col-sm-12">
+				<div class="col-md-6 col-sm-12">
 					<div class="form-group">
-						<label class="control-label">Appointment Type</label>
-						<select class="form-control"
-							ng-options="item.code as item.name for item in listTypes"
-							ng-model="formData.type">
-						</select>
+						<label class="control-label col-md-4 col-sm-3">From Time:</label>
+						<div class="col-md-8 col-sm-9">
+							<input type="text" 
+								class="form-control timepicker timepicker-24" 
+								data-default-time='' 
+								ng-model="formData.fromTime"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-3">To Time:</label>
+						<div class="col-md-8 col-sm-9">
+							<input type="text" 
+								class="form-control timepicker timepicker-24" 
+								data-default-time=''
+								ng-model="formData.toTime"/>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-6 col-sm-12">
 					<div class="form-group">
-						<label class="control-label">Service Name</label></br>
-						<p class="form-control-static bold" data-display="">{{formData.service.ServiceName}}</p>
+						<label class="control-label col-md-4 col-sm-3">Service Name:</label>
+						<div class="col-md-8 col-sm-9">
+							<div class="form-control-static bold" data-display="">{{formData.service.ServiceName}}</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-6 col-sm-12">
 					<div class="form-group">
-						<label class="control-label">Site</label>
-						<select class="form-control"
-							ng-options="item.SiteName for item in listSites track by item.UID"
-							ng-model="formData.site">
-						</select>
+						<label class="control-label col-md-4 col-sm-3">Site:</label>
+						<div class="col-md-8 col-sm-9">
+							<select class="form-control"
+								ng-options="item.SiteName for item in listSites track by item.UID"
+								ng-model="formData.site">
+							</select>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
+				
+			</div>
+			<div class="row margin-top-40">
 				<div class="col-md-12" ng-if="!formData.Patient">
 					<patient-list on-item="items" on-limit="5" on-select="true" appointment="patient" ></patient-list>
 				</div>
@@ -81,10 +112,9 @@
 	</div>
 	<div class="modal-footer">
 		<div class="form-actions right">
-			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+			<button type="button" class="btn dark" data-dismiss="modal" 
 				ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
-			<button type="submit" class="btn btn-lg red">
+			<button type="submit" class="btn red" ng-click="submit()">
 				Submit <i class="glyphicon glyphicon-save"></i></button>
 		</div>
 	</div>
-</form>

@@ -2,10 +2,9 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" 
 			aria-hidden="true" ng-click="cancel()"></button>
-		<h4 class="modal-title uppercase bold font-red-thunderbird">
-			<i class="glyphicon glyphicon-calendar"></i> Slot Time </h4>
+		<h4 class="modal-title uppercase bold font-red-thunderbird">Slot Time</h4>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body form">
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-6 col-sm-6">
@@ -44,7 +43,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12 col-sm-12">
+				<div class="col-md-4 col-sm-4">
 					<div class="form-group">
 						<label class="control-label">Appointment Type</label>
 						<select class="form-control"
@@ -53,15 +52,13 @@
 						</select>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-4 col-sm-4">
 					<div class="form-group">
 						<label class="control-label">Service Name</label></br>
 						<p class="form-control-static bold" data-display="">{{formData.service.ServiceName}}</p>
 					</div>
 				</div>
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-4 col-sm-4">
 					<div class="form-group">
 						<label class="control-label">Site</label>
 						<select class="form-control"
@@ -72,6 +69,11 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-md-12 text-right">
+					<a class="btn btn-outline blue">Select Doctor</a>
+				</div>
+			</div>
+			<div class="row margin-top-40">
 				<div class="col-md-12" ng-if="!formData.Patient">
 					<patient-list on-item="items" on-limit="5" on-select="true" appointment="patient" ></patient-list>
 				</div>
@@ -80,9 +82,9 @@
 	</div>
 	<div class="modal-footer">
 		<div class="form-actions right">
-			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+			<button type="button" class="btn dark" data-dismiss="modal" 
 				ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
-			<button type="submit" class="btn btn-lg red">
+			<button type="submit" class="btn red">
 				Submit <i class="glyphicon glyphicon-save"></i></button>
 		</div>
 	</div>

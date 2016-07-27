@@ -62,6 +62,15 @@ app.config(function($stateProvider,$urlRouterProvider){
 				}
 			}
 		})
+		.state('unAuthentication.registerlogin', {
+			url: '/welcome-login',
+			views: {
+				'main-content': {
+					templateUrl: 'modules/unAuthentication/views/RegisterLogin.html',
+					controller: 'RegisterLoginCtrl'
+				}
+			}
+		})
 		// ======================================================================
 		;
 });

@@ -644,7 +644,9 @@ module.exports = {
         input: Patient's information
         output: insert Patient's information into table Patient
     */
-    CreatePatient: function(data, other, transaction) {
+    CreatePatient: function(data, other, isAdmin) {
+        console.log("isAdmin ",isAdmin)
+        var isCreatedByAdmin = isAdmin != null ? isAdmin : true;
         var PatientDetail = {};
         var isCreateByPhoneNumber = false;
         var isCreateByName = false;
@@ -764,7 +766,7 @@ module.exports = {
                         throw err;
                     })
                     .then(function(user) {
-                        console.log("user ", user);
+                        // console.log("user ", user);
                         info.UserAccountID = user.ID;
                         info.UserAccountUID = user.UID;
                         return Patient.findOne({
@@ -976,7 +978,73 @@ module.exports = {
                     // }, function(err) {
                     //     throw err;
                     // })
+                    .then(function(created_patientPension) {
+                        console.log("isCreatedByAdmin ",isCreatedByAdmin);
+                        if(isCreatedByAdmin == true) {
+                            return created_patientPension;
+                        }
+                        else {
+                            var promise_arr = [];
+                            function sendEmail(email, info) {
+                                var p1 = new Promise(function(a, b) {
+                                    var emailInfo = {
+                                        // from     : data.from,
+                                        from     : 'Redimed <giangvotest2511@gmail.com>',
+                                        userInfo : info,
+                                        email    : email,
+                                        subject  : 'Register Patient',
+                                        url      : config.url,
+                                    };
+                                    SendMailService.SendMail('demo', emailInfo, function(err, responseStatus, html, text) {
+                                        console.log("err ",err);
+                                        if(err) {
+                                            b(err);
+                                        }
+                                        else {
+                                            a({message:'success'});
+                                        }
+                                    });
+                                });
+                                return p1;
+                            }
+
+                            function sendSms(PhoneNumber, info) {
+                                var content = 'Thank you for checking in with REDIMED Total Health Solutions.'+
+                                        'Your username and password is ' + info.UserName + '/' + info.Password + ' . '+
+                                        'You will need this code for any future appointments with REDIMED so we can better track your Skin Screening history.'+
+                                        'Kind regards'+
+                                        'REDIMED team';
+                                var p1 = new Promise(function(a, b) {
+                                    twilioClient.messages.create({
+                                        body: content,
+                                        // to: PhoneNumber,
+                                        to: '+84967394041',
+                                        from: config.twilioPhone
+                                    }, function(err, message){
+                                        if(err) {
+                                            b(err);
+                                        }
+                                        else {
+                                            a(message);
+                                        }
+                                    });
+                                });
+                                return p1;
+                            }
+
+                            if(data.Email) {
+                                promise_arr.push(sendEmail(data.Email1, userInfo));
+                            }
+                            else {
+                                promise_arr.push(sendSms(userInfo.PhoneNumber, userInfo));
+                            }
+                            return Promise.all(promise_arr);
+                        }
+                    }, function(err) {
+                        throw err;
+                    })
                     .then(function(success) {
+                        console.log("success ",success)
                         //call send Mail or send SMSs
                         console.log("ishaveUser ", ishaveUser);
                         info.transaction = t;

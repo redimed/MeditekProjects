@@ -93,6 +93,10 @@ module.exports={
         	type:Sequelize.DATE
         },
 
+        Enable:{
+            type:Sequelize.STRING(1)
+        },
+
         CreatedDate:{
             type:Sequelize.DATE
         },

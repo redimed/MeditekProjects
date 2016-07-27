@@ -80,6 +80,7 @@ module.exports={
 				}
 				else
 				{
+					console.log("|||||||||||||||||||||||||||||||||",delay);
 					mqlog("usecmd.result: tubename: ",tubename);
 					client.put(priority,delay,ttr,payload,function(err,jobid){
 						if(err)

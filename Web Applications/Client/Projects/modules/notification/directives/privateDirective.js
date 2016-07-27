@@ -16,18 +16,33 @@ app.directive('notificationPrivate', function() {
                 userUID: userUID,
                 queue: queue
             };
+            
             $scope.fieldSort = {};
 
-            $scope.fieldSort.Time = 'ASC';
-            // $scope.fieldSort.Action = 'ASC';
+            $scope.itemSearch = [
+                { field: "SenderAccount", name: "Sender" },
+                { field: "Subject", name: "Subject" },
+                { field: "MsgContent", name: "Content" },
+                { field: "Object", name: "Object" }
+            ];
 
-            $scope.loadListNotify = function(info) {
+            $scope.itemDefault = [
+                { field: "SenderAccount", name: "Sender" },
+                { field: "Subject", name: "Subject" },
+                { field: "MsgContent", name: "Content" },
+                { field: "Object", name: "Object" },
+                { field: "CreatedDate", name: "Created Date" }
+            ];
+
+            $scope.fieldSort['CreatedDate'] = 'ASC';
+
+            $scope.loadListPrivateNotify = function(info) {
                 notificationServices.getListNotifySearch(info).then(function(data) {
                     for (var i = 0; i < data.data.length; i++) {
                         data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
                     };
                     console.log("listNotifySearch", data.data);
-                    $scope.listNotify = data.data;
+                    $scope.listPrivateNotify = data.data;
                     $scope.count = data.count;
                 });
             };
@@ -49,7 +64,7 @@ app.directive('notificationPrivate', function() {
                 };
                 // scope.search.Enable = null;
                 $scope.searchObjectMap = angular.copy($scope.searchObject);
-                $scope.loadListNotify($scope.searchObjectMap);
+                $scope.loadListPrivateNotify($scope.searchObjectMap);
             };
 
             $scope.init();
@@ -61,7 +76,7 @@ app.directive('notificationPrivate', function() {
 
             $scope.setPage = function() {
                 $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-                $scope.loadListNotify($scope.searchObjectMap);
+                $scope.loadListPrivateNotify($scope.searchObjectMap);
             };
 
             $scope.Search = function(data, e) {
@@ -69,7 +84,7 @@ app.directive('notificationPrivate', function() {
                     ($scope.fromCreateDate && $scope.fromCreateDate !== null) ? data.FromCreatedDate = moment($scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.FromCreatedDate = null;
                     ($scope.toCreateDate && $scope.toCreateDate !== null) ? data.ToCreatedDate = moment($scope.toCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.ToCreatedDate = null;
                     $scope.searchObjectMap.Search = data;
-                    $scope.loadListNotify($scope.searchObjectMap);
+                    $scope.loadListPrivateNotify($scope.searchObjectMap);
                 } catch (err) {
                     console.log(err);
                 };
@@ -95,7 +110,7 @@ app.directive('notificationPrivate', function() {
                 data = field + ' ' + sort;
 
                 $scope.searchObjectMap.order = data;
-                $scope.loadListNotify($scope.searchObjectMap);
+                $scope.loadListPrivateNotify($scope.searchObjectMap);
             };
 
             // Go to state

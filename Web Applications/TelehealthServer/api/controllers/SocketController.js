@@ -106,8 +106,10 @@ module.exports = {
             role: 'moderator'
         };
         var token = null;
+        console.log("111111111111111111111");
         var roomList = sails.sockets.rooms();
         if (message.toLowerCase() == 'call') {
+            console.log("2222222222222222222222");
             sessionId = req.param('sessionId');
             if (!sessionId) return;
             console.log("33333333333333333333333");
@@ -156,38 +158,51 @@ module.exports = {
                                     }
                                 }
                             }
-                            if (androidDevices.length > 0)
+                            if (androidDevices.length > 0) {
+                                console.log("androidDevices", androidDevices);
                                 pushGCMNotification(pushInfo, androidDevices, config.GCMTelehealth);
+                            }
                             if (iosDevices.length > 0)
                                 pushAPNNotification(pushInfo, iosDevices);
-                            if (tokens.length >0)
+                            if (tokens.length > 0) {
+                                console.log("tokens", tokens.length);
+                                console.log("tokens", tokens);
                                 pushGCMNotification(pushInfo, tokens, config.GCMWorkInjury);
+                            }
                         }
                     })
                 }
             })
         }
+
+        console.log("44444444444444444444444");
+
         if (roomList.length > 0) {
             data.from = from;
             data.message = message;
             data.to = to;
             data.timeCall = new Date();
+            
             //if uid to online telehealth server
             // RedisWrap.setex(redisKey, to, data);
             switch (message.toLowerCase()) {
                 case "call":
-                    RedisWrap.hset(redisKey, to, data);
+                    // RedisWrap.hset(redisKey, to, data);
                     break;
                 default:
-                    RedisWrap.hdel(redisKey, to);
-                    console.log("DELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+                //     RedisWrap.hdel(redisKey, to);
             }
 
+            console.log("chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",data);
+
+
             if (_.contains(roomList, to)) {
+                console.log(data.message, "calllllllllllllllllllllllllllllllllllllllllllllllllll");
                 sails.sockets.broadcast(to, 'receiveMessage', data);
             }
 
             if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
+                console.log("3 thang vao 1 phonggggggggggggggggggggggggggggggggggggggggggggggggggg")
                 data.message = 'decline';
                 data.to = from;
                 sails.sockets.emit(from, 'receiveMessage', data, req.socket);
@@ -232,7 +247,9 @@ module.exports = {
     Logout: function(req, res) {
         console.log("aaaaaaa", req.param('uid'), req.isSocket);
         console.log("headers", req.headers.systemtype);
+        console.log("Logouttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
         var err = new Error("Socket.Logout.Error");
+
         if (!req.isSocket) {
             err.pushError("Socket Request Only!");
             return res.serverError(ErrorWrap(err));

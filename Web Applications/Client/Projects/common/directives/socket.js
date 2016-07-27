@@ -66,17 +66,67 @@ socketAuth.on('UpdateRequestWAAppointmentCompany_DM', function(msg) {
     console.log('UpdateRequestWAAppointmentCompany_DM', msg);
 });
 socketAuth.on('notification', function(msg) {
-    console.log('notification', msg);
-    if (ioSocket.telehealthNotify) {
-        ioSocket.telehealthNotify(msg);
-    };
-    if (ioSocket.LoadListAppointment) {
-        ioSocket.LoadListAppointment();
-    };
-    if (ioSocket.LoadListNotify) {
-        ioSocket.LoadListNotify();
+    var msgContent = JSON.parse(msg);
+    console.log('notification', msgContent);
+
+});
+
+socketAuth.on('globalnotify', function(msg) {
+    var msgContent = JSON.parse(msg);
+    switch (msgContent.Command.Note) {
+        case "NotifyMessage":
+            if (ioSocket.telehealthGlobalNotify) {
+                ioSocket.telehealthGlobalNotify(msgContent);
+            };
+            if (ioSocket.LoadListGlobalNotify) {
+                ioSocket.LoadListGlobalNotify();
+            };
+            break;
+        case "CreateAppointment":
+        case "LinkPatient":
+            if (ioSocket.telehealthNotify) {
+                ioSocket.telehealthNotify(msgContent);
+            };
+            if (ioSocket.LoadListAppointment) {
+                ioSocket.LoadListAppointment();
+            };
+            if (ioSocket.LoadListGlobalNotify) {
+                ioSocket.LoadListGlobalNotify();
+            };
+            break;
+        default:
+            break;
     };
 });
+
+socketAuth.on('privatenofify', function(msg) {
+    var msgContent = JSON.parse(msg);
+    switch (msgContent.Command.Note) {
+        case "NotifyMessage":
+            if (ioSocket.telehealthGlobalNotify) {
+                ioSocket.telehealthGlobalNotify(msgContent);
+            };
+            if (ioSocket.LoadListGlobalNotify) {
+                ioSocket.LoadListGlobalNotify();
+            };
+            break;
+        case "CreateAppointment":
+        case "LinkPatient":
+            if (ioSocket.telehealthNotify) {
+                ioSocket.telehealthNotify(msgContent);
+            };
+            if (ioSocket.LoadListAppointment) {
+                ioSocket.LoadListAppointment();
+            };
+            if (ioSocket.LoadListGlobalNotify) {
+                ioSocket.LoadListGlobalNotify();
+            };
+            break;
+        default:
+            break;
+    };
+});
+
 /* end socket 3006 */
 
 

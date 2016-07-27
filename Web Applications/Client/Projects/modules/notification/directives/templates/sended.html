@@ -3,6 +3,7 @@
     <ul class="page-breadcrumb">
         <li><a ui-sref="authentication.home.list">Homepage</a></li>
         <li><i class="fa fa-circle"></i><span> Notification Global</span></li>
+        <li><i class="fa fa-circle"></i><span> Notification Global Sended</span></li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
@@ -10,20 +11,17 @@
     <div class="portlet-title">
         <div class="caption bold uppercase font-blue">
             <i class="icon-list"></i>
-            <span class="caption-subject bold uppercase"> Notification Global</span>
+            <span class="caption-subject bold uppercase"> Notification Sended</span>
         </div>
         <div class="actions">
+            <a ui-sref="authentication.notification.global" class="btn btn-outline yellow">
+                <i class="glyphicon glyphicon-chevron-left"></i> Back
+            </a>
             <a href="javascript:;" class="btn btn-outline red" ng-click="toggleFilter()">
                 <i class="glyphicon glyphicon-filter"></i> Filter
             </a>
             <a href="javascript:;" class="btn btn-outline green" ng-click="init()">
                 <i class="glyphicon glyphicon-refresh"></i> Refresh
-            </a>
-            <a href="javascript:;" class="btn btn-outline blue" ng-click="openCreate()">
-                <i class="glyphicon glyphicon-plus"></i> Create
-            </a>
-            <a ui-sref="authentication.notification.sended" class="btn btn-outline yellow">
-                <i class="glyphicon glyphicon-send"></i> Sended
             </a>
         </div>
     </div>
@@ -54,10 +52,7 @@
                     <tr ng-repeat="lsnc in listGlobalNotify" ng-click="openDetail(lsnc)">
                         <td>{{(($index + 1) + (searchObjectMap.limit * (searchObjectMap.currentPage - 1)))}}</td>
                         <td ng-repeat="ite in itemDefault">
-                            {{ ite.field === 'MsgContent' ? (lsnc[ite.field]['Display']['Action'].length > 50 ? lsnc[ite.field]['Display']['Action'].substr(0, 50) + '...' : lsnc[ite.field]['Display']['Action']) : 
-                            ite.field === 'Object' ? lsnc['MsgContent']['Display'][ite.field]['name'] :
-                            ite.field === 'CreatedDate' || ite.field === 'EndTime' ? (lsnc[ite.field] | date:"dd/MM/yyyy") : 
-                            ite.field === 'SenderAccount' ? lsnc[ite.field]['UserName'] : lsnc[ite.field] }}
+                            {{ ite.field === 'MsgContent' ? (lsnc[ite.field]['Display']['Action'].length > 50 ? lsnc[ite.field]['Display']['Action'].substr(0, 50) + '...' : lsnc[ite.field]['Display']['Action']) : ite.field === 'CreatedDate' || ite.field === 'EndTime' ? (lsnc[ite.field] | date:"dd/MM/yyyy") : ite.field === 'SenderAccount' ? lsnc[ite.field]['UserName'] : lsnc[ite.field] }}
                         </td>
                     </tr>
                 </tbody>

@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.controller', [
 
 ]);
 
-app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cookies, AuthenticationService, toastr, CommonService, $q) {
+app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cookies, AuthenticationService, toastr, CommonService, $q, notificationServices) {
     $.backstretch("destroy");
     $('body').removeClass("login");
     // Chinh kich thuoc man hinh khi su dung ipad mini
@@ -110,68 +110,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     // Update Read Notification
 
     var UserInfo = $cookies.getObject('userInfo');
-
-    function UpdateQueueJob(whereClause) {
-        AuthenticationService.updateReadQueueJob(whereClause).then(function(data) {
-            if (data.status === 'success') {
-                $scope.loadListNotify();
-            };
-        }, function(err) {
-            console.log("updateReadQueueJob ", err);
-        });
-    };
-
-    $scope.updateReadQueueJob = function(queuejob) {
-        var userUID = UserInfo.UID;
-        var queue = 'NOTIFY';
-        var whereClause = {
-            userUID: userUID,
-            queue: queue
-        };
-        if (queuejob) {
-            if (queuejob.Read === 'N') {
-                whereClause.ID = queuejob.ID;
-                UpdateQueueJob(whereClause);
-            };
-            $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
-        } else {
-            if ($scope.UnReadCount > 0) {
-                UpdateQueueJob(whereClause);
-            };
-        };
-    };
-
-    ioSocket.telehealthNotify = function(msg) {
-        $scope.loadListNotify();
-        var msgContent = JSON.parse(msg);
-        toastr.info(msgContent.Display.Subject + " " + msgContent.Display.Action + " " + msgContent.Display.Object.name, "Notification");
-    };
-
-    $scope.loadListNotify = function() {
-        // var roles = UserInfo.roles;
-        var userUID = UserInfo.UID;
-        var queue = 'NOTIFY';
-
-        console.log('%c loadListNotify!!!!!!!!!!!!!!!!!!!!!!! ', 'background: #222; color: #bada55');
-        AuthenticationService.getListNotify({
-            userUID: userUID,
-            queue: queue
-        }).then(function(data) {
-            for (var i = 0; i < data.data.length; i++) {
-                data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
-                data.data[i].CreatedDate = new Date(data.data[i].CreatedDate);
-                // data.data[i].time = (Date.now() - data.data[i].CreatedDate).toHHMMSS();
-                // console.log(typeof data.data[i].time);
-            };
-            console.log("listNotify", data.data);
-            console.log("listNotify", data.count);
-            $scope.listNotify = data.data;
-            $scope.UnReadCount = data.count;
-        });
-    };
-
-    $scope.loadListNotify();
-
+    console.log("----------- UserInfo ----------");
+    console.log(UserInfo);
+    console.log("----------- -------- ----------");
 
     //phan quoc chien
     $scope.loadListDoctor = function(fullname) {

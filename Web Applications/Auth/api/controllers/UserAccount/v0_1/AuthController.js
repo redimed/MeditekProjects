@@ -151,7 +151,21 @@ module.exports = {
         //Socket join room
         console.log("makeUserOwnRoom+++++++++++++++++++++++");
         console.log(req.body);
-        sails.sockets.join(req.socket, req.body.UID);
+
+        var body = req.body;
+
+        sails.sockets.join(req.socket, body.UID);
+
+        // Join room 'EXTERTAL_PRACTITIONER','INTERNAL_PRACTITIONER','ADMIN','PATIENT','ASSISTANT','ORGANIZATION'
+        if (req.session && req.session.passport && req.session.passport.user) {
+            var user = req.session.passport.user;
+
+            for (var i = 0; i < user.roles.length; i++) {
+                // if (user.roles[i].RoleCode === 'EXTERTAL_PRACTITIONER' || user.roles[i].RoleCode === 'INTERNAL_PRACTITIONER') {
+                // };
+                sails.sockets.join(req.socket, user.roles[i].RoleCode);
+            };
+        };
         return res.ok({ msg: 'user make own room on auth server successfully' });
         //---------------------------------------------
     },
@@ -194,14 +208,14 @@ module.exports = {
                 RedisService.removeUserConnect(connectInfo);
                 //------------------------------------------
                 var userAccessEForm = {
-                    UserUID: req.user.UID,
-                    ExternalName: 'EFORM',
-                    SystemType: req.headers.systemtype,
-                    DeviceID: req.headers.deviceid,
-                    AppID: req.headers.appid
-                }
-                //Services.ExternalToken.MakeExternalSecret(userAccessEForm);
-                //------------------------------------------
+                        UserUID: req.user.UID,
+                        ExternalName: 'EFORM',
+                        SystemType: req.headers.systemtype,
+                        DeviceID: req.headers.deviceid,
+                        AppID: req.headers.appid
+                    }
+                    //Services.ExternalToken.MakeExternalSecret(userAccessEForm);
+                    //------------------------------------------
                 req.logout();
                 res.ok({ status: 'success' });
             }, function(err) {

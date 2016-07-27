@@ -62,7 +62,8 @@ module.exports={
 		queue:{
 			'SMS':'SMS',
 			'EMAIL':'EMAIL',
-			'NOTIFY':'NOTIFY',
+            'NOTIFY':'NOTIFY',
+			'GLOBALNOTIFY':'GLOBALNOTIFY',
 			'SERVERMSG':'SERVERMSG',
 			'FEEDBACK':'FEEDBACK'
 		},

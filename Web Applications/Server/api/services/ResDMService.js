@@ -72,6 +72,9 @@ module.exports = {
                             case dmUtils.ncQueue.NOTIFY:
                                 NcService.pushNotify(item)
                                 break;
+                            case dmUtils.ncQueue.GLOBALNOTIFY:
+                                NcService.pushGlobalNotify(item)
+                                break;
                         }
                     }
                 } else {

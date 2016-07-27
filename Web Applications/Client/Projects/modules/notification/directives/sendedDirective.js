@@ -1,26 +1,17 @@
-var app = angular.module('app.authentication.notification.directive.global', []);
+var app = angular.module('app.authentication.notification.directive.sended', []);
 
-app.directive('notificationGlobal', function() {
+app.directive('globalSended', function() {
     return {
         restrict: 'EA',
-        templateUrl: 'modules/notification/directives/templates/global.html',
-        options: {
-            scope: '='
-        },
-        controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $state) {
+        templateUrl: 'modules/notification/directives/templates/sended.html',
+        controller: function($scope, notificationServices, toastr, $cookies, $uibModal) {
             var UserInfo = $cookies.getObject('userInfo');
-            var roles = UserInfo.roles;
-            var Role = [];
+            var SenderUID = UserInfo.UID;
             var queue = 'GLOBALNOTIFY';
             $scope.toggle = false;
 
-            for (var i = 0; i < roles.length; i++) {
-                Role.push(roles[i].RoleCode);
-            };
-
             $scope.search = {
-                UID: UserInfo.UID,
-                Role: Role,
+                SenderUID: SenderUID,
                 queue: queue
             };
 
@@ -28,21 +19,23 @@ app.directive('notificationGlobal', function() {
                 { field: "SenderAccount", name: "Sender" },
                 { field: "Subject", name: "Subject" },
                 { field: "MsgContent", name: "Content" },
-                { field: "Object", name: "Object" }
+                { field: "Status", name: "Status" }
             ];
 
             $scope.itemDefault = [
                 { field: "SenderAccount", name: "Sender" },
                 { field: "Subject", name: "Subject" },
                 { field: "MsgContent", name: "Content" },
-                { field: "Object", name: "Object" },
+                { field: "Status", name: "Status" },
                 { field: "CreatedDate", name: "Created Date" }
             ];
 
             $scope.fieldSort = {};
             $scope.items = $scope.items != null && $scope.items != undefined ? $scope.items : $scope.itemDefault;
 
-            $scope.fieldSort['CreatedDate'] = 'ASC';
+            for (var i = 0; i < $scope.items.length; i++) {
+                $scope.fieldSort[$scope.items[i].field] = 'ASC';
+            };
 
             $scope.toggleFilter = function() {
                 $scope.toggle = $scope.toggle === true ? false : true;
@@ -53,9 +46,9 @@ app.directive('notificationGlobal', function() {
                     for (var i = 0; i < data.data.length; i++) {
                         data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
                     };
-                    console.log("LoadListGlobalNotify", data);
+                    console.log("LoadListGlobalNotify", data.data);
                     $scope.listGlobalNotify = data.data;
-                    $scope.count = data.countAll;
+                    $scope.count = data.count;
                 });
             };
 
@@ -67,8 +60,7 @@ app.directive('notificationGlobal', function() {
                     maxSize: 5,
                     // attributes: scope.items,
                     Search: {
-                        UID: UserInfo.UID,
-                        Role: Role,
+                        SenderUID: SenderUID,
                         queue: queue
                     },
                     order: 'CreatedDate DESC'
@@ -109,74 +101,33 @@ app.directive('notificationGlobal', function() {
                 LoadListGlobalNotify($scope.searchObjectMap);
             };
 
-            $scope.openCreate = function(data) {
+            $scope.openDetail = function(data) {
+                // if (data.SenderUID === UserInfo.UID) {
+                //     $scope.openCreate(data);
+                // } else {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     size: 'lg', // windowClass: 'app-modal-window', 
-                    templateUrl: 'modules/notification/views/notificationGlobalCreate.html',
+                    templateUrl: 'modules/notification/views/notificationGlobalDetail.html',
                     resolve: {
                         data: function() {
                             return data;
                         }
                     },
-                    controller: 'notificationGlobalCreateCtrl',
+                    controller: 'notificationGlobalDetailCtrl',
                 });
                 modalInstance.result.then(function(result) {
                     if (result === 'close') {
                         ioSocket.LoadListGlobalNotify();
                     };
                 }, function(err) {
-                    console.log("Global.Notification.Create", err);
+                    console.log("Global.Notification.Detail", err);
                 });
-            };
-
-            $scope.openDetail = function(data) {
-                if (data.MsgContent.Command && data.MsgContent.Command.Url_State) {
-                    $state.go(data.MsgContent.Command.Url_State, { UID: data.MsgContent.Display.Object.UID });
-                } else {
-                    var modalInstance = $uibModal.open({
-                        animation: true,
-                        size: 'lg', // windowClass: 'app-modal-window', 
-                        templateUrl: 'modules/notification/views/notificationGlobalDetail.html',
-                        resolve: {
-                            data: function() {
-                                return data;
-                            }
-                        },
-                        controller: 'notificationGlobalDetailCtrl',
-                    });
-                    modalInstance.result.then(function(result) {
-                        if (result === 'close') {
-                            ioSocket.LoadListGlobalNotify();
-                        };
-                    }, function(err) {
-                        console.log("Global.Notification.Detail", err);
-                    });
-                };
-
-                // Change Read Log
-                if (data.Read.indexOf(UserInfo.UID) === -1) {
-                    var info = {
-                        ID: data.ID,
-                        Read: data.Read,
-                        UserUID: UserInfo.UID
-                    };
-                    notificationServices.ChangeReadQueueJobg(info).then(function(info) {
-                        $scope.init();
-                        if (ioSocket.telehealthGlobalNotify()) {
-                            ioSocket.telehealthGlobalNotify("msg");
-                        }
-                    }, function(err) {
-                        console.log("GlobalNotify.ChangeReadQueueJobg", err);
-                    });
-                };
             };
 
             ioSocket.LoadListGlobalNotify = function() {
                 $scope.init();
             };
-
-            ComponentsDateTimePickers.init();
         },
     };
 });

@@ -120,7 +120,6 @@ module.exports = {
             var data = req.body.data;
 
             QueueJobService.GetListQueueByRoleSearch(data).then(function(data) {
-                // console.log("data", data.data);
                 res.ok({
                     status: 'success',
                     data: data.data,

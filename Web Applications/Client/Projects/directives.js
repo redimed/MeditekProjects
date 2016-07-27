@@ -137,12 +137,12 @@ app.directive('timePicker', function($timeout) {
     };
 });
 
-app.directive('datetimePicker', function(){
+app.directive('datetimePicker', function() {
     return {
-        link: function(scope, elem, attr){
+        link: function(scope, elem, attr) {
             elem.datetimepicker({
                 // viewMode: 'years',
-                format: 'DD/MM/YYYY HH:mm',
+                format: 'dd/mm/yyyy hh:ii',
             });
             elem.addClass('form-control');
             elem.attr('type', 'text');
@@ -503,3 +503,182 @@ app.directive("drawingDirective", function() {
         }
     };
 });
+
+// Notification
+app.directive("globalNotify", function() {
+    return {
+        restrict: 'A',
+        scope: {
+            scope: "="
+        },
+        templateUrl: 'common/views/globalNotify.html',
+        controller: function($scope, $cookies, notificationServices, toastr, $uibModal, $state) {
+            var UserInfo = $cookies.getObject('userInfo');
+            var Role = [];
+            var roles = UserInfo.roles;
+
+            for (var i = 0; i < roles.length; i++) {
+                Role.push(roles[i].RoleCode);
+            };
+
+            $scope.loadListGlobalNotify = function() {
+                var data = {
+                    Search: {
+                        queue: 'GLOBALNOTIFY',
+                        Role: Role,
+                        UID: UserInfo.UID
+                    },
+                    order: 'CreatedDate DESC',
+                };
+
+                notificationServices.LoadListGlobalNotify(data).then(function(data) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                        data.data[i].fromTime = moment(data.data[i].CreatedDate).fromNow();
+                        // data.data[i].CreatedDate = new Date(data.data[i].CreatedDate);
+                    };
+                    $scope.listGlobalNotify = data.data;
+                    $scope.globalCount = data.count;
+                    console.log("Count", data.count);
+                    console.log("$scope.listGlobalNotify", $scope.listGlobalNotify);
+                });
+            };
+
+            $scope.OpenDetail = function(global) {
+                if (global.MsgContent.Command && global.MsgContent.Command.Url_State) {
+                    $state.go(global.MsgContent.Command.Url_State, { UID: global.MsgContent.Display.Object.UID });
+                } else {
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        size: 'lg', // windowClass: 'app-modal-window', 
+                        templateUrl: 'modules/notification/views/notificationGlobalDetail.html',
+                        resolve: {
+                            data: function() {
+                                return global;
+                            }
+                        },
+                        controller: 'notificationGlobalDetailCtrl',
+                    });
+                    modalInstance.result.then(function(result) {
+                        if (result === 'Close') {
+                            ioSocket.LoadListGlobalNotify();
+                        };
+                    }, function(err) {
+                        console.log("globalNotify.Directive", err);
+                    });
+                };
+
+                // Change Read Log
+                if (global.Read.indexOf(UserInfo.UID) === -1) {
+                    var info = {
+                        ID: global.ID,
+                        Read: global.Read,
+                        UserUID: UserInfo.UID
+                    };
+                    notificationServices.ChangeReadQueueJobg(info).then(function(data) {
+                        $scope.loadListGlobalNotify();
+                    }, function(err) {
+                        console.log("GlobalNotify.ChangeReadQueueJobg", err);
+                    });
+                };
+            };
+
+            $scope.dissMissAll = function() {
+                if ($scope.globalCount > 0) {
+                    var info = {
+                        Role: Role,
+                        UID: UserInfo.UID,
+                        queue: 'GLOBALNOTIFY',
+                    };
+                    notificationServices.ChangeReadAllQueueJobg(info).then(function(data) {
+                        $scope.loadListGlobalNotify();
+                    });
+                };
+            };
+
+            ioSocket.telehealthGlobalNotify = function(msg) {
+                $scope.loadListGlobalNotify();
+                if (msg != 'msg') {
+                    toastr.info(msg.Display.Subject + " send you a message ", "Notification");
+                }
+            };
+
+            $scope.loadListGlobalNotify();
+        },
+    };
+});
+
+app.directive("privateNotify", function() {
+    return {
+        restrict: 'A',
+        scope: {
+            scope: "="
+        },
+        templateUrl: 'common/views/privateNotify.html',
+        controller: function($scope, $cookies, notificationServices, AuthenticationService, toastr, $uibModal, $state) {
+            var UserInfo = $cookies.getObject('userInfo');;
+
+            $scope.loadListNotify = function() {
+                // var roles = UserInfo.roles;
+                var userUID = UserInfo.UID;
+                var queue = 'NOTIFY';
+
+                console.log('%c loadListNotify!!!!!!!!!!!!!!!!!!!!!!! ', 'background: #222; color: #bada55');
+                AuthenticationService.getListNotify({
+                    userUID: userUID,
+                    queue: queue
+                }).then(function(data) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                        data.data[i].fromTime = moment(data.data[i].CreatedDate).fromNow();
+                        // data.data[i].time = (Date.now() - data.data[i].CreatedDate).toHHMMSS();
+                        // console.log(typeof data.data[i].time);
+                    };
+                    console.log("listNotify", data.data);
+                    console.log("listNotify", data.count);
+                    $scope.listNotify = data.data;
+                    $scope.UnReadCount = data.count;
+                });
+            };
+
+            $scope.loadListNotify();
+
+            function UpdateQueueJob(whereClause) {
+                AuthenticationService.updateReadQueueJob(whereClause).then(function(data) {
+                    if (data.status === 'success') {
+                        $scope.loadListNotify();
+                    };
+                }, function(err) {
+                    console.log("updateReadQueueJob ", err);
+                });
+            };
+
+            $scope.updateReadQueueJob = function(queuejob) {
+                var userUID = UserInfo.UID;
+                var queue = 'NOTIFY';
+                var whereClause = {
+                    userUID: userUID,
+                    queue: queue
+                };
+                if (queuejob) {
+                    if (queuejob.Read === 'N') {
+                        whereClause.ID = queuejob.ID;
+                        UpdateQueueJob(whereClause);
+                    };
+                    $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+                } else {
+                    if ($scope.UnReadCount > 0) {
+                        UpdateQueueJob(whereClause);
+                    };
+                };
+            };
+
+            ioSocket.telehealthNotify = function(msg) {
+                $scope.loadListNotify();
+                toastr.info(msg.Display.Subject + " " + msg.Display.Action + " " + msg.Display.Object.name, "Notification");
+            };
+        },
+    };
+});
+
+// End Notification

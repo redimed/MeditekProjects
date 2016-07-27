@@ -271,9 +271,21 @@ module.exports = {
         if (data.Search.queue) {
             whereClause.Queue = data.Search.queue
         };
-        if (data.Search.Action) {
+        console.log(data.Search.SenderAccount);
+
+        if (data.Search.MsgContent) {
             whereClause.MsgContent = {
-                like: '%"Display":"%' + data.Search.Action + '%"},"%'
+                like: '%"Action":"%' + data.Search.MsgContent + '%"}%'
+            }
+        };
+        if (data.Search.Subject) {
+            whereClause.Subject = {
+                like: '%' + data.Search.Subject + '%'
+            }
+        };
+        if (data.Search.Object) {
+            whereClause.MsgContent = {
+                like: '%"Object":{"name":"%' + data.Search.Object + '%","%'
             }
         };
         if (data.Search.FromCreatedDate && !data.Search.ToCreatedDate) {
@@ -302,6 +314,14 @@ module.exports = {
 
         var whereClause = QueueJobService.whereClause(info);
 
+        var whereClauseAccount = {};
+
+        if (info.Search.SenderAccount) {
+            whereClauseAccount.UserName = {
+                like: '%' + info.Search.SenderAccount + '%'
+            }
+        };
+
         var limit = info.limit;
         var offset = info.offset;
 
@@ -312,7 +332,8 @@ module.exports = {
             include: {
                 model: UserAccount,
                 attributes: ['UserName'],
-                as: 'SenderAccount'
+                as: 'SenderAccount',
+                where: whereClauseAccount
             },
             order: info.order
         }).then(function(data) {

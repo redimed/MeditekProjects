@@ -46,11 +46,14 @@ var corsConfig = {
      ***************************************************************************/
 
     //For local testing
-    origin: 'http://localhost:3001, http://localhost:3004, http://localhost:3005, http://localhost:3007, http://localhost:3009, '+
+    origin: 
+            'http://localhost:3001, http://localhost:3004, http://localhost:3005, http://localhost:3007, http://localhost:3009, '+
+            'http://localhost:4001, http://localhost:4004, http://localhost:4005, http://localhost:4007, http://localhost:4009, '+
             'https://localhost:3001, https://localhost:3004, https://localhost:3005, https://localhost:3007, https://localhost:3009, '+
             'http://192.168.1.247:3001, http://192.168.1.247:3004, http://192.168.1.247:3005, http://192.168.1.247:3007, http://192.168.1.247:3009, '+
             'http://192.168.1.216:3001, http://192.168.1.216:3004, http://192.168.1.216:3005, http://192.168.1.216:3007, http://192.168.1.216:3009, '+
             'http://192.168.1.251:3001, http://192.168.1.251:3004, http://192.168.1.251:3005, http://192.168.1.251:3007, http://192.168.1.251:3009, '+
+            'http://192.168.1.251:4001, http://192.168.1.251:4004, http://192.168.1.251:4005, http://192.168.1.251:4007, http://192.168.1.251:4009, '+
             'https://192.168.1.251:3001, https://192.168.1.251:3004, https://192.168.1.251:3005, https://192.168.1.251:3007, https://192.168.1.251:3009,',
     //For TestApp deployment
     //origin: 'http://testapp.redimed.com.au:3001, http://testapp.redimed.com.au:3004, http://testapp.redimed.com.au:3007, http://testapp.redimed.com.au:3009',

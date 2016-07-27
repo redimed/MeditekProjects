@@ -10,6 +10,7 @@ var appointmentInfoPayload = require('../../api/services/resDM/payload/Appointme
 var testPostNcPayload = require('../../api/services/resDM/ncPayload/TestPostNcPayload');
 var nullPayLoad = require('../../api/services/resDM/payload/NullPayLoad');
 
+var getDoctorInAppt = require('../../api/services/resDM/ncPayload/GetDoctorAppt');
 var userByRolePayload = require('../../api/services/resDM/ncPayload/GetUserByRolePayload');
 var ncSendto = require('../../api/services/resDM/sendto/NCSendto');
 var dmUtils = require('../../api/services/resDM/dmUtils');
@@ -35,6 +36,12 @@ module.exports = {
             eventName: 'nc',
             method: dmUtils.method.nc,
             payload: userByRolePayload,
+            sendto: ncSendto
+        },
+        'LinkAppointmentPatient': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: getDoctorInAppt,
             sendto: ncSendto
         },
         'RequestWAAppointmentPatientNew': {

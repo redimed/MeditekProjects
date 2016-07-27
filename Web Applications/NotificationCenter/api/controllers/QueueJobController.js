@@ -55,13 +55,16 @@ module.exports = {
                     type: 'sendnotify',
                     payload: data.dataValues
                 }
-                BeansService.putJob('NOTIFY', 0, 0, 20, JSON.stringify(job))
-                    .then(function(result) {
-                        console.log(result);
-                        res.ok(result);
-                    }, function(err) {
-                        res.serverError(ErrorWrap(err));
-                    })
+
+                sails.sockets.broadcast(body.Receiver, body.EventName, body.MsgContent);
+
+                // BeansService.putJob('NOTIFY', 0, 0, 20, JSON.stringify(job))
+                //     .then(function(result) {
+                //         console.log(result);
+                //         res.ok(result);
+                //     }, function(err) {
+                //         res.serverError(ErrorWrap(err));
+                //     })
 
             }, function(err) {
                 res.serverError(ErrorWrap(err));
@@ -115,7 +118,7 @@ module.exports = {
         try {
             console.log("LoadListQueue Search");
             var data = req.body.data;
-            
+
             QueueJobService.GetListQueueByRoleSearch(data).then(function(data) {
                 // console.log("data", data.data);
                 res.ok({
@@ -131,8 +134,8 @@ module.exports = {
         }
     },
 
-    UpdateReadQueueJob:function(req, res) {
-        try{
+    UpdateReadQueueJob: function(req, res) {
+        try {
             console.log("UpdateReadQueueJob");
             var info = req.body.data;
             QueueJobService.UpdateReadQueueJob(info).then(function(data) {
@@ -143,8 +146,8 @@ module.exports = {
             }, function(err) {
                 res.serverError(ErrorWrap(err));
             });
-        }catch(err){
-            console.log("UpdateReadQueueJob",err);
+        } catch (err) {
+            console.log("UpdateReadQueueJob", err);
         }
     }
 }

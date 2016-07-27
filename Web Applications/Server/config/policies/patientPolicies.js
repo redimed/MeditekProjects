@@ -2,7 +2,7 @@ module.exports={
 	'Patient/PatientController':{
 
 		'GetListCountry': true,
-		'LoadListPatient':['isAuthenticated','isAdmin'],
+		'LoadListPatient':['isAuthenticated','isAdmin','isAdminOrAssistant','isExternalPractitioner','isInternalPractitioner'],
 		'PatientController': ['isAuthenticated','isAdmin'],
 		'CheckPatient': true,
 		'SearchPatient':true,

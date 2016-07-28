@@ -67,4 +67,12 @@ _.extend(policies, consultationPolicies);
 var companyPolicies = require('./policies/companyPolicies');
 _.extend(policies,companyPolicies);
 //End module Company
+//Begin module Roster
+var rosterPolicies = require('./policies/RosterPolicies');
+_.extend(policies,rosterPolicies);
+//End module Roster
+//Begin module Booking
+var bookingPolicies = require('./policies/BookingPolicies');
+_.extend(policies,bookingPolicies);
+//End module Booking
 module.exports.policies = policies;

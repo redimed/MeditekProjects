@@ -66,12 +66,18 @@ module.exports = function(data, userInfo) {
                             });
                         })
                         .then(function(relApptFileUploadCreated) {
-                            if (!_.isEmpty(userInfo)) {
+                            var whereClause = {};
+                            if(!_.isEmpty(data.Patient)){
+                                whereClause.UID = data.Patient.UID;
+                            }
+                            else if(!_.isEmpty(userInfo)) {
+                                whereClause.UserAccountID = userInfo.ID;
+                            }
+                            if (!_.isEmpty(userInfo) ||
+                                !_.isEmpty(data.Patient)) {
                                 return Patient.findOne({
                                     attributes: ['ID'],
-                                    where: {
-                                        UserAccountID: userInfo.ID
-                                    },
+                                    where: whereClause,
                                     transaction: t,
                                     raw: true
                                 });

@@ -127,7 +127,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
         }
     };
     $scope.select = function(event){
-        if(userRole === 1 || userRole === 4 || userRole === 5){
+        if(userRole === 1){
             var modalInstance = $uibModal.open({
                 animation: true,
                 size: 'md',

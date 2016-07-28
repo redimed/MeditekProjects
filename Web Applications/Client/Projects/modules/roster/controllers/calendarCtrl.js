@@ -56,7 +56,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
         angular.element('.fc-other-month').css('background-color', '#eee');
         element.find('.fc-time').html(moment(event.start).format('hh:mm').toLowerCase()+'-'+moment(event.enddate).format('hh:mm').toLowerCase()+'<br/>');
         element.find('.fc-title').html('<h4 class="text-center"><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
-        if(userRole === 1 || userRole === 4 || userRole === 5){
+        if(userRole === 1){
             $(element).attr('id', 'event_id_'+event.UID);
             $.contextMenu({
                 selector: '#event_id_'+event.UID,

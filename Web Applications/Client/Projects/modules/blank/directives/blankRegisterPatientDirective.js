@@ -94,7 +94,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                    $scope.AppointmentDataPost = angular.copy(AppointmentDataTemp)
                    console.log($scope.AppointmentDataPost)
                 }
-            $scope.GetDataAppointment = function() {
+            $scope.GetDataAppointment = function(patientInfo) {
                 var NowDate = moment().format('YYYY-MM-DD HH:mm:ss Z');
                 $scope.dataCreateAppointment = {
                     "FromTime": NowDate,
@@ -142,6 +142,9 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                     "AppointmentData":$scope.AppointmentDataPost,
                     "Doctor": {
                         "UID": null
+                    },
+                    "Patient":{
+                        "UID":patientInfo.UID
                     }
                 }
                 console.log($scope.dataCreateAppointment)
@@ -300,7 +303,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                 }
             };
             $scope.FormatDate = function() {
-                if ($scope.postData.otherData.PatientPension !== undefined) {
+                if ($scope.postData.otherData.PatientPension !== undefined && !_.isEmpty($scope.postData.otherData.PatientPension)) {
                     if ($scope.postData.otherData.PatientPension.ExpiryDate !== undefined) {
                         if ($scope.postData.otherData.PatientPension.ExpiryDate !== '') {
                             $scope.postData.otherData.PatientPension.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientPension.ExpiryDate);
@@ -309,7 +312,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                         };
                     };
                 }
-                if ($scope.postData.otherData.PatientMedicare !== undefined) {
+                if ($scope.postData.otherData.PatientMedicare !== undefined && !_.isEmpty($scope.postData.otherData.PatientMedicare)) {
                     if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== undefined) {
                         if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== '') {
                             $scope.postData.otherData.PatientMedicare.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientMedicare.ExpiryDate);
@@ -342,7 +345,7 @@ app.directive('registerPatientblank', function(AppointmentService, $modal, $cook
                     blankServices.registerPatient($scope.postData).then(function(response) {
                         if (response.data.status = 200) {
                             console.log("response ",response);
-                            $scope.GetDataAppointment();
+                            $scope.GetDataAppointment(response.data);
                             // $scope.logInData.UserUID = response.data.UserAccountUID;
                             // $scope.logInData.PinNumber = $scope.postData.data.PinNumber;
                             // blankServices.login($scope.logInData).then(function(response) {

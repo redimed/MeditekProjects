@@ -825,4 +825,14 @@ module.exports = {
         })
     },
 
+    LoadChildNode: function(req, res) {
+        var data = req.body.data;
+        Services.loadChildNode(data)
+        .then(function(result) {
+            res.ok(result);
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        })
+    },
+
 };

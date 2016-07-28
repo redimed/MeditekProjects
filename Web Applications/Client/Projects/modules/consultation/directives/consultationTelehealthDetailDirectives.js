@@ -947,6 +947,7 @@ app.directive('telehealthDetail', function(doctorService) {
 
                                             Promise.all([p1,p2])
                                             .then(function(values) {
+                                                $scope.loadDetailPatient();
                                                 toastr.success("Select patient successfully!", "success");
                                             });
                                         }
@@ -1445,6 +1446,65 @@ app.directive('telehealthDetail', function(doctorService) {
                 }
                 else {
                     toastr.error('Not found Email to send.');
+                }
+            }
+
+            $scope.loadDetailPatient = function() {
+                console.log("wainformation ",$scope.wainformation);
+                if($scope.wainformation.PatientAppointments.length > 0) {
+                    console.log('chay o tren')
+                    $scope.ShowData.patient.MedicareEligible = $scope.wainformation.PatientAppointments[0].MedicareEligible;
+                    $scope.ShowData.patient.MedicareNumber = $scope.wainformation.PatientAppointments[0].MedicareNumber;
+                    $scope.ShowData.patient.MedicareReferenceNumber = $scope.wainformation.PatientAppointments[0].MedicareReferenceNumber;
+                    $scope.ShowData.patient.MedicareExpiryDate =
+                            $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=null
+                            &&$scope.wainformation.PatientAppointments[0].MedicareExpiryDate ? 
+                            moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
+                    $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
+                    $scope.ShowData.patient.PatientKinFirstName = $scope.wainformation.PatientAppointments[0].PatientKinFirstName;
+                    $scope.ShowData.patient.PatientKinLastName = $scope.wainformation.PatientAppointments[0].PatientKinLastName;
+                    $scope.ShowData.patient.PatientKinRelationship = $scope.wainformation.PatientAppointments[0].PatientKinRelationship;
+                    $scope.ShowData.patient.PatientKinMobilePhoneNumber = $scope.wainformation.PatientAppointments[0].PatientKinMobilePhoneNumber;
+                }
+                else if($scope.wainformation.Patients.length != 0) {
+                    console.log("patient ", $scope.wainformation.Patients[0].UID);
+                    PatientService.loadChildNode({
+                        UID:$scope.wainformation.Patients[0].UID,
+                        models:['PatientKin','PatientDVA','PatientMedicare']
+                    })
+                    .then(function(response) {
+                        console.log("response ",response);
+                        for(var i = 0; i < response.data.length; i++) {
+                            var tempData = response.data[i];
+                                for(var key in tempData) {
+                                    if(key == 'PatientMedicare') {
+                                        if(tempData[key].length > 0) {
+                                            $scope.ShowData.patient.MedicareEligible = tempData[key][0].MedicareEligible;
+                                            $scope.ShowData.patient.MedicareNumber = tempData[key][0].MedicareNumber;
+                                            $scope.ShowData.patient.MedicareReferenceNumber = tempData[key][0].MedicareReferenceNumber;
+                                            $scope.ShowData.patient.MedicareExpiryDate = 
+                                                tempData[key][0].ExpiryDate!=null&&tempData[key].ExpiryDate!='' ? 
+                                                moment(tempData[key][0].ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
+                                        }
+                                    }
+                                    else if(key == 'PatientDVA') {
+                                        if(tempData[key].length > 0) {
+                                            $scope.ShowData.patient.DVANumber = tempData[key][0].DVANumber;
+                                        }
+                                    }
+                                    else if(key == 'PatientKin') {
+                                        if(tempData[key].length > 0) {
+                                            $scope.ShowData.patient.PatientKinFirstName = tempData[key][0].FirstName;
+                                            $scope.ShowData.patient.PatientKinLastName = tempData[key][0].LastName;
+                                            $scope.ShowData.patient.PatientKinRelationship = tempData[key][0].Relationship;
+                                            $scope.ShowData.patient.PatientKinMobilePhoneNumber = tempData[key][0].MobilePhoneNumber;
+                                        }
+                                    }
+                                }
+                        }
+                    }, function(err) {
+                        console.log("err ",err);
+                    })
                 }
             }
 

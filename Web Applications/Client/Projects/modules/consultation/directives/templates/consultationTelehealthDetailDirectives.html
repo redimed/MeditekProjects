@@ -335,7 +335,7 @@
                                     <ul class="nav nav-tabs">
                                         <li class="active"><a href="@#tab_patient1" data-toggle="tab">Basic Info</a></li>
                                         <li><a href="@#tab_patient2" data-toggle="tab">Contact Info</a></li>
-                                        <li><a href="@#tab_patient3" data-toggle="tab">More Info</a></li>
+                                        <li ng-click="loadDetailPatient()"><a href="@#tab_patient3" data-toggle="tab">More Info</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_patient1">
@@ -593,25 +593,25 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">First Name</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinFirstName">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinFirstName" ng-disabled="ShowData.isLinkPatient">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Last Name</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinLastName">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinLastName" ng-disabled="ShowData.isLinkPatient">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-md-4">Relationship</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinRelationship">
+                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PatientKinRelationship" ng-disabled="ShowData.isLinkPatient">
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$invalid}">
                                                 <label class="control-label col-lg-4 col-md-4">Contact Number</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.PatientKinMobilePhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber">
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.PatientKinMobilePhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber"ng-disabled="ShowData.isLinkPatient">
                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PatientKinMobilePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
                                                 </div>
                                             </div>
@@ -621,10 +621,10 @@
                                                 <div class="col-lg-8 col-md-8">
                                                     <div class="mt-radio-inline">
                                                         <label class="mt-radio mt-radio-outline">
-                                                            <input type="radio" name="MedicareEligible" value="Y" ng-model="ShowData.patient.MedicareEligible"> <span></span> Yes
+                                                            <input type="radio" name="MedicareEligible" value="Y" ng-model="ShowData.patient.MedicareEligible"ng-disabled="ShowData.isLinkPatient"> <span></span> Yes
                                                         </label>
                                                         <label class="mt-radio mt-radio-outline">
-                                                            <input type="radio" name="MedicareEligible" value="N" ng-model="ShowData.patient.MedicareEligible"> <span></span> No
+                                                            <input type="radio" name="MedicareEligible" value="N" ng-model="ShowData.patient.MedicareEligible"ng-disabled="ShowData.isLinkPatient"> <span></span> No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -633,13 +633,13 @@
                                                 <div class="form-group" ng-show="ShowData.patient.MedicareEligible == 'Y'">
                                                     <label class="control-label col-lg-4 col-md-4">Medicare Number</label>
                                                     <div class="col-lg-8 col-md-8">
-                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareNumber">
+                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareNumber"ng-disabled="ShowData.isLinkPatient">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" ng-show="ShowData.patient.MedicareEligible == 'Y'">
                                                     <label class="control-label col-lg-4 col-md-4">Medicare reference number</label>
                                                     <div class="col-lg-8 col-md-8">
-                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareReferenceNumber">
+                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MedicareReferenceNumber"ng-disabled="ShowData.isLinkPatient">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" ng-show="ShowData.patient.MedicareEligible == 'Y'">
@@ -649,6 +649,7 @@
                                                             data-date-format="dd/mm/yyyy" 
                                                             ng-model="ShowData.patient.MedicareExpiryDate" 
                                                             set-date="ShowData.patient.MedicareExpiryDate"
+                                                            ng-disabled="ShowData.isLinkPatient"
                                                         />
                                                     </div>
                                                     <!-- <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="ShowData.patient.MedicareExpiryDate"> -->
@@ -656,7 +657,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-4 col-md-4">DVA number</label>
                                                     <div class="col-lg-8 col-md-8">
-                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.DVANumber">
+                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.DVANumber"ng-disabled="ShowData.isLinkPatient">
                                                     </div>
                                                 </div>
                                             </div>

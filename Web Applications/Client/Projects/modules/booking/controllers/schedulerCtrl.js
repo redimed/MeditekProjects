@@ -118,8 +118,24 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
     };
 
     var userRole = 0;
+    var isAdmin = false;
+    var isDoctor = false;
+
     if (typeof $cookies.getObject('userInfo')) {
-        userRole = $cookies.getObject('userInfo').roles[0].ID;
+        userRole = $cookies.getObject('userInfo').roles;
+        console.log("$cookies.getObject('userInfo').roles", $cookies.getObject('userInfo').roles);            
+        _.forEach(userRole, function(role_v, role_i){
+            console.log("role_v", role_v);            
+            if(role_v.RoleCode =='ADMIN' ||
+                role_v.RoleCode=='ASSISTANT')
+                 {
+                    isAdmin = true;
+                 } 
+                else if(role_v.RoleCode=='INTERNAL_PRACTITIONER' ||
+                    role_v.RoleCode=='EXTERTAL_PRACTITIONER') {
+                    isDoctor = true;
+            }
+        });
     }
 
     var currentEvent = {
@@ -147,15 +163,15 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                 }
             }]
         }
-        $('#calendar').fullCalendar('removeEvents');
-        var resources = $('#calendar').fullCalendar('getResources');
-        _.forEach(resources, function(resource, index) {
-            $('#calendar').fullCalendar('removeResource', resource);
-        })
+            
         RosterService.PostListRoster(postData)
             .then(function(response) {
+                $('#calendar').fullCalendar('removeEvents');
+                var resources = $('#calendar').fullCalendar('getResources');
+                _.forEach(resources, function(resource, index) {
+                    $('#calendar').fullCalendar('removeResource', resource);
+                })
                 var events = [];
-
                 _.forEach(response.data.rows, function(roster, index) {
                     var doctor = roster.UserAccounts[0].Doctor;
                     var FromTime = moment(roster.FromTime).format('YYYY-MM-DDTHH:mm:ss');
@@ -195,6 +211,13 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                         }
                     }]
                 }
+                if (isDoctor) {
+                    bookingData.Filter.push({
+                        Doctor: {
+                            UserAccountID: $cookies.getObject('userInfo').ID
+                        }
+                    })
+                }
                 var bookingEvents = [];
                 BookingService.LoadBooking(bookingData)
                     .then(function(response) {
@@ -220,6 +243,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                             bookingEvents.push(event);
                         });
                         $('#calendar').fullCalendar('addEventSource', bookingEvents);
+
                     })
             }, function(error) {
 
@@ -307,7 +331,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
             element.find('.fc-content').append(' <b>' + event.Patient.FirstName + ' ' + event.Patient.LastName + '</b>');
         }
 
-        if (userRole === 1) {
+        if (isAdmin || isDoctor) {
             if (event.rendering !== 'background') {
                 $(element).attr('id', 'event_id_' + event.id);
                 $.contextMenu({
@@ -581,7 +605,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
 
     // create new event
     $scope.select = function(start, end, jsEvent, view, resource, event, allDay) {
-        if (userRole === 1) {
+        if (isAdmin || isDoctor) {
             if (oldEvent.id !== currentEvent.id) {
                 var service = currentEvent.Services[0];
                 if (service.Bookable === 'Y') {

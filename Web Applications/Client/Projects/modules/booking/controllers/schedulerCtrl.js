@@ -126,12 +126,12 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         console.log("$cookies.getObject('userInfo').roles", $cookies.getObject('userInfo').roles);            
         _.forEach(userRole, function(role_v, role_i){
             console.log("role_v", role_v);            
-            if(role_v.RoleCode =='ADMIN')
+            if(role_v.RoleCode =='ADMIN' || 
+                role_v.RoleCode == 'ASSISTANT')
                  {
                     isAdmin = true;
                  } 
-                else if(role_v.RoleCode=='INTERNAL_PRACTITIONER' ||
-                    role_v.RoleCode=='EXTERTAL_PRACTITIONER') {
+                else if(role_v.RoleCode=='INTERNAL_PRACTITIONER') {
                     isDoctor = true;
             }
         });

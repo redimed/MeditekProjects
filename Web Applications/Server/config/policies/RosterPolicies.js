@@ -8,7 +8,6 @@ module.exports = {
             _.forEach(req.user.roles, function(role_v, role_i) {
                 if (role_v.RoleCode == 'ADMIN' ||
                     role_v.RoleCode == 'ASSISTANT' ||
-                    role_v.RoleCode == 'EXTERTAL_PRACTITIONER' ||
                     role_v.RoleCode == 'INTERNAL_PRACTITIONER') {
                     isNext = true
                 }

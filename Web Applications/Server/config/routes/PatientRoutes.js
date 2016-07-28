@@ -87,4 +87,9 @@ module.exports={
 		controller: 'Patient/PatientController',
 		action: 'UpdateEFormAppointment'
 	},
+
+	'post /api/patient/load-child-node': {
+		controller: 'Patient/PatientController',
+		action: 'LoadChildNode'
+	},
 }

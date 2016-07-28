@@ -467,5 +467,10 @@ PatientService.validate = function(info) {
 		return updateEFormAppointment.post({data:data});
 	};
 
+	PatientService.loadChildNode = function(data) {
+		var loadChildNode = api.all('patient/load-child-node');
+		return loadChildNode.post({data:data});
+	};
+
 	return PatientService;
 })

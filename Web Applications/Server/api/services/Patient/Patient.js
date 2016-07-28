@@ -797,8 +797,10 @@ module.exports = {
                         info.ID = result.ID;
                         if (other != null) {
                             for (var key in other) {
-                                other[key].PatientID = result.ID;
-                                other[key].UID = UUIDService.Create();
+                                if(!_.isEmpty(other[key])) {
+                                    other[key].PatientID = result.ID;
+                                    other[key].UID = UUIDService.Create();
+                                }
                             }
                             PatientDetail = other;
                         }
@@ -820,7 +822,7 @@ module.exports = {
                             throw err;
                         } else {
                             if (PatientDetail != null && PatientDetail != '') {
-                                if (PatientDetail.PatientMedicare != null && PatientDetail.PatientMedicare != '') {
+                                if (PatientDetail.PatientMedicare != null && PatientDetail.PatientMedicare != '' && !_.isEmpty(PatientDetail.PatientMedicare)) {
                                     PatientDetail.PatientMedicare.Enable = 'Y';
                                     return PatientMedicare.create(PatientDetail.PatientMedicare, { transaction: t });
                                 }
@@ -831,7 +833,7 @@ module.exports = {
                     })
                     .then(function(created_patientMedicare) {
                         if (PatientDetail != null && PatientDetail != '') {
-                            if (PatientDetail.PatientKin != null && PatientDetail.PatientKin != '') {
+                            if (PatientDetail.PatientKin != null && PatientDetail.PatientKin != '' && !_.isEmpty(PatientDetail.PatientKin)) {
                                 PatientDetail.PatientKin.Enable = 'Y';
                                 return PatientKin.create(PatientDetail.PatientKin, { transaction: t });
                             }
@@ -841,7 +843,7 @@ module.exports = {
                     })
                     .then(function(created_patientKin) {
                         if (PatientDetail != null && PatientDetail != '') {
-                            if (PatientDetail.Fund != null && PatientDetail.Fund != '') {
+                            if (PatientDetail.Fund != null && PatientDetail.Fund != '' && !_.isEmpty(PatientDetail.Fund)) {
                                 PatientDetail.Fund.Enable = 'Y';
                                 return PatientFund.create(PatientDetail.Fund, { transaction: t });
                             }
@@ -851,7 +853,7 @@ module.exports = {
                     })
                     .then(function(created_patientFund) {
                         if (PatientDetail != null && PatientDetail != '') {
-                            if (PatientDetail.PatientDVA != null && PatientDetail.PatientDVA != '') {
+                            if (PatientDetail.PatientDVA != null && PatientDetail.PatientDVA != '' && !_.isEmpty(PatientDetail.PatientDVA)) {
                                 PatientDetail.PatientDVA.Enable = 'Y';
                                 return PatientDVA.create(PatientDetail.PatientDVA, { transaction: t });
                             }
@@ -861,7 +863,7 @@ module.exports = {
                     })
                     .then(function(created_patientDVA) {
                         if (PatientDetail != null && PatientDetail != '') {
-                            if (PatientDetail.PatientGP != null && PatientDetail.PatientGP != '') {
+                            if (PatientDetail.PatientGP != null && PatientDetail.PatientGP != '' && !_.isEmpty(PatientDetail.PatientGP)) {
                                 PatientDetail.PatientGP.Enable = 'Y';
                                 return PatientGP.create(PatientDetail.PatientGP, { transaction: t });
                             }
@@ -871,7 +873,7 @@ module.exports = {
                     })
                     .then(function(created_patientGP) {
                         if (PatientDetail != null && PatientDetail != '') {
-                            if (PatientDetail.PatientPension != null && PatientDetail.PatientPension != '') {
+                            if (PatientDetail.PatientPension != null && PatientDetail.PatientPension != '' && !_.isEmpty(PatientDetail.PatientPension)) {
                                 PatientDetail.PatientPension.Enable = 'Y';
                                 return PatientPension.create(PatientDetail.PatientPension, { transaction: t });
                             }
@@ -1018,7 +1020,7 @@ module.exports = {
                                     twilioClient.messages.create({
                                         body: content,
                                         // to: PhoneNumber,
-                                        to: '+84967394041',
+                                        to: '+84933990549',
                                         from: config.twilioPhone
                                     }, function(err, message){
                                         if(err) {
@@ -1044,9 +1046,9 @@ module.exports = {
                         throw err;
                     })
                     .then(function(success) {
-                        console.log("success ",success)
+                        // console.log("success ",success)
                         //call send Mail or send SMSs
-                        console.log("ishaveUser ", ishaveUser);
+                        // console.log("ishaveUser ", ishaveUser);
                         info.transaction = t;
                         info.PinNumber = userInfo.PinNumber;
                         defer.resolve(info);

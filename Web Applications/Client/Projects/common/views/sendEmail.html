@@ -93,6 +93,7 @@
     </div>
 </form>
 <div class="modal-footer">
+    <upload-eform patient-uid="patientInfo.UID" appt-uid="ApptUID" user-uid="patientInfo.UserAccount.UID" on-submit="getEformTemplant"></upload-eform>
     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cancel</button>
     <button type="button" class="btn btn-primary" ng-click="send()">Send</button>
 </div>

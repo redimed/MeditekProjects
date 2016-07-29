@@ -836,9 +836,7 @@ module.exports = {
 				}
 			}
 			if(data.Search.Enable){
-				whereClause.Doctor.Enable = {
-					like:'%'+data.Search.Enable+'%'
-				}
+				whereClause.Doctor.Enable = data.Search.Enable;
 			}
 			if(data.Search.UserAccount){
 				if(data.Search.UserAccount[0]=='0'){

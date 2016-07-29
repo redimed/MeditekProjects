@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title text-primary">List user</h4>
+</div>
+<div class="modal-body">
+    <div class="table-scrollable table-responsive dt-responsive scroller-height">
+        <table class="table table-light">
+            <thead>
+                <tr class="uppercase">
+                    <th>
+                        <span>#</span>
+                    </th>
+                    <th>Name</th>
+                    <th>Image</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th colspan="2">
+                        <input type="text" class="form-control" ng-model="fullname" ng-enter="loadListDoctor(fullname)" />
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="doctor in listDoctor | orderBy:'FirstName'" class="odd gradeX">
+                    <td>
+                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                            <input type="checkbox" ng-model="cb[doctor.UserAccount.UID]" ng-click="pushUser(doctor)"/>
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>{{((doctor.FirstName === null)?"":doctor.FirstName)+" "+((doctor.MiddleName === null)?"":doctor.MiddleName)+" "+((doctor.LastName === null)?"":doctor.LastName)}}</td>
+                    <td>
+                        <img dimage dimage-uid="doctor.UserAccount.FileUploads[0].UID" class="media-object" alt="" ng-if="doctor.UserAccount.FileUploads[0].UID" style="height:35px;width:35px;" />
+                        <img class="media-object" src="theme/assets/global/images/no_person.jpg" ng-if="!doctor.UserAccount.FileUploads[0].UID" style="height:35px;width:35px;" alt="..." />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+    <button type="button" class="btn btn-primary" ng-click="submit(global)">Submit</button>
+</div>
+<style type="text/css">
+.scroller-height {
+    max-height: 500px;
+    overflow: auto;
+}
+</style>

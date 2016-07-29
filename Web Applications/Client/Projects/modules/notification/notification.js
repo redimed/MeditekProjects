@@ -27,8 +27,8 @@ app.config(function($stateProvider) {
             templateUrl: "modules/notification/views/notificationPrivate.html",
         })
         .state("authentication.notification.sended", {
-            url: "/sended",
-            data: { pageTitle: 'Global Sended' },
+            url: "/sended/:type",
+            data: { pageTitle: 'Sended' },
             controller: "notificationGlobalSendedCtrl",
             templateUrl: "modules/notification/views/notificationGlobalSended.html",
         });

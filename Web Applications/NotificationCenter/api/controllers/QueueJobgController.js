@@ -2,78 +2,21 @@ module.exports = {
     CreateGlobalNotifyJob: function(req, res) {
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> Global Notification");
         var body = req.body;
-        var delay = 0;
-
-        if (body.data) {
-            if (body.data.FirstDelay) delay = body.data.FirstDelay;
-        };
-
-        console.log(body);
-
-        if (!body.data) {
-            var payload = body;
-            QueueJobgService.CreateQueueJobg(payload).then(function(data) {
-                var job = {
-                    type: 'sendglobalnotify',
-                    payload: data.dataValues
-                }
-                BeansService.putJob('GLOBALNOTIFY', 0, delay, 20, JSON.stringify(job)).then(function(result) {
-                    console.log(result);
-                    res.ok(result);
-                }, function(err) {
-                    res.serverError(ErrorWrap(err));
-                })
+        console.log("body.FirstDelay",body.FirstDelay);
+        QueueJobgService.CreateQueueJobg(body).then(function(data) {
+            var job = {
+                type: 'sendglobalnotify',
+                payload: data.dataValues
+            }
+            BeansService.putJob('GLOBALNOTIFY', 0, body.FirstDelay, 20, JSON.stringify(job)).then(function(result) {
+                console.log(result);
+                res.ok(result);
             }, function(err) {
                 res.serverError(ErrorWrap(err));
-            });
-        } else {
-            for (var i = 0; i < body.data.Role.length; i++) {
-                var payload = {
-                    Subject: body.data.Subject,
-                    Receiver: body.data.Role[i],
-                    ReceiverType: body.data.Role[i],
-                    Queue: 'GLOBALNOTIFY',
-                    Read: 'N',
-                    Enable: 'Y',
-                    MsgContentType: 'JSON',
-                    MsgContent: {
-                        Display: {
-                            FirstName: '',
-                            LastName: '',
-                            Subject: body.data.UserName,
-                            Action: body.data.MsgContent
-                        },
-                        Command: {
-                            Note: 'NotifyMessage',
-                            Url_State: body.data.Url_State,
-                            Url_Redirect: body.data.Url_Redirect,
-                            Fun: body.data.Fun
-                        }
-                    },
-                    MsgKind: body.data.MsgKind,
-                    FirstDelay: body.data.FirstDelay,
-                    EndTime: body.data.EndTime,
-                    SenderUID: body.data.UID,
-                    EventName: 'globalnotify',
-                    SendFromServer: '3016',
-                };
-
-                QueueJobgService.CreateQueueJobg(payload).then(function(data) {
-                    var job = {
-                        type: 'sendglobalnotify',
-                        payload: data.dataValues
-                    }
-                    BeansService.putJob('GLOBALNOTIFY', 0, delay, 20, JSON.stringify(job)).then(function(result) {
-                        console.log(result);
-                        res.ok(result);
-                    }, function(err) {
-                        res.serverError(ErrorWrap(err));
-                    })
-                }, function(err) {
-                    res.serverError(ErrorWrap(err));
-                });
-            };
-        };
+            })
+        }, function(err) {
+            res.serverError(ErrorWrap(err));
+        });
     },
 
     LoadListQueueJobg: function(req, res) {

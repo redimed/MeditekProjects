@@ -37,6 +37,7 @@ module.exports={
 			this.type='sendnotify';
 			this.work=function(jobdata,callback)
 			{
+				console.log("|||||||||||||||||||||||||| sendnotify");
 				HandlerUtils.jobLifeCycle(jobdata,sendNotifyNonLoop,sendNotifyLoop)
                 .then(function(result){
                     if(result.status=='success')

@@ -1,5 +1,4 @@
 var globalNotifyHandlers=require('./handlers/GlobalNotifyHandlers');
-console.log("|||||||||||||||||||||||||||||||||||||globalNotifyHandlers:", globalNotifyHandlers);
 var GlobalNotifyWorker = require('fivebeans').worker;
 var config=sails.config.myconf;
 var options =

@@ -27,6 +27,7 @@ module.exports = {
                     SendFromServer: true,
                     SenderType: true,
                     SenderUID: true,
+                    Enable: true,
                 }
                 var requiredFields = {
                     Receiver: true,
@@ -225,8 +226,6 @@ module.exports = {
     },
 
     GetListQueueByRole: function(userUID, queue) {
-        console.log("||||||||||||||||||||||||||||||||| LoadListQueueByRole Service");
-
         var q = $q.defer();
 
         QueueJob.findAll({
@@ -271,8 +270,12 @@ module.exports = {
         if (data.Search.queue) {
             whereClause.Queue = data.Search.queue
         };
-        console.log(data.Search.SenderAccount);
-
+        if (data.Search.SenderUID) {
+            whereClause.SenderUID = data.Search.SenderUID
+        } else {
+            whereClause.Enable = 'Y';
+            whereClause.Status = 'HANDLED';
+        };
         if (data.Search.MsgContent) {
             whereClause.MsgContent = {
                 like: '%"Action":"%' + data.Search.MsgContent + '%"}%'
@@ -329,19 +332,42 @@ module.exports = {
             offset: offset,
             limit: limit,
             where: whereClause,
-            include: {
+            include: [{
                 model: UserAccount,
                 attributes: ['UserName'],
                 as: 'SenderAccount',
                 where: whereClauseAccount
-            },
+            }, {
+                model: UserAccount,
+                attributes: ['UserName'],
+                as: 'ReceiverAccount',
+            }],
             order: info.order
         }).then(function(data) {
-            q.resolve({
-                status: 'success',
-                data: data.rows,
-                count: data.count,
+            whereClause.Read = 'N';
+            QueueJob.count({
+                where: whereClause,
+                include: {
+                    model: UserAccount,
+                    attributes: ['UserName'],
+                    as: 'SenderAccount',
+                    where: whereClauseAccount
+                },
+            }).then(function(count) {
+                q.resolve({
+                    status: 'success',
+                    data: data.rows,
+                    count: count,
+                    countAll: data.count
+                });
+            }, function(err) {
+                console.log("GetListQueueByRoleCount", err);
             });
+            // q.resolve({
+            //     status: 'success',
+            //     data: data.rows,
+            //     count: data.count,
+            // });
         }, function(err) {
             console.log("GetListQueueByRole", err);
             q.reject(err);
@@ -350,7 +376,6 @@ module.exports = {
     },
 
     UpdateReadQueueJob: function(info) {
-        console.log("||||||||||||||||||||||||||||||||| UpdateReadQueueJob Service");
         var q = $q.defer();
         var userUID = info.userUID;
         var queue = info.queue;
@@ -375,5 +400,21 @@ module.exports = {
             q.reject(err);
         });
         return q.promise;
-    }
+    },
+
+    ChangeEnableQueueJob: function(info) {
+        var q = $q.defer();
+        QueueJob.update({
+            Enable: info.Enable
+        }, {
+            where: { ID: info.ID }
+        }).then(function(data) {
+            q.resolve({
+                status: 'success'
+            });
+        }, function(err) {
+            q.reject(err);
+        });
+        return q.promise;
+    },
 }

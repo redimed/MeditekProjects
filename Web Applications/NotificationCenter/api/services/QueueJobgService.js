@@ -402,23 +402,6 @@ module.exports = {
                     q.reject(err);
                 });
             };
-
-
-            // if (queuejobgs) {
-            //     queuejobgs.updateAttributes({
-            //         Read: Read ? info.UID : Read + ',' + info.UID
-            //     }).then(function(success) {
-            //         q.resolve({
-            //             status: 'success'
-            //         });
-            //     }, function(err) {
-            //          q.reject(err);
-            //     });
-            // } else {
-            //     defer.reject({
-            //         message: 'No Exists'
-            //     });
-            // }
         });
         return q.promise;
     }

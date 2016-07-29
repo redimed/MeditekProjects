@@ -1,4 +1,5 @@
-var app = angular.module('app.authentication.notification.directive.private', []);
+var app = angular.module('app.authentication.notification.directive.private', [
+]);
 
 app.directive('notificationPrivate', function() {
     return {
@@ -7,7 +8,7 @@ app.directive('notificationPrivate', function() {
         options: {
             scope: '='
         },
-        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state) {
+        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state, $uibModal) {
             var UserInfo = $cookies.getObject('userInfo');
             var userUID = UserInfo.UID;
             var queue = 'NOTIFY';
@@ -16,7 +17,7 @@ app.directive('notificationPrivate', function() {
                 userUID: userUID,
                 queue: queue
             };
-            
+
             $scope.fieldSort = {};
 
             $scope.itemSearch = [
@@ -43,7 +44,7 @@ app.directive('notificationPrivate', function() {
                     };
                     console.log("listNotifySearch", data.data);
                     $scope.listPrivateNotify = data.data;
-                    $scope.count = data.count;
+                    $scope.count = data.countAll;
                 });
             };
 
@@ -115,6 +116,29 @@ app.directive('notificationPrivate', function() {
 
             // Go to state
             $scope.gotoUrl = function(queuejob) {
+                if (queuejob.MsgContent.Command && queuejob.MsgContent.Command.Url_State) {
+                    $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+                } else {
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        size: 'lg', // windowClass: 'app-modal-window', 
+                        templateUrl: 'modules/notification/views/notificationPrivateDetail.html',
+                        resolve: {
+                            data: function() {
+                                return queuejob;
+                            }
+                        },
+                        controller: 'notificationPrivateDetailCtrl',
+                    });
+                    modalInstance.result.then(function(result) {
+                        if (result === 'close') {
+                            ioSocket.LoadListGlobalNotify();
+                        };
+                    }, function(err) {
+                        console.log("Global.Notification.Detail", err);
+                    });
+                };
+
                 if (queuejob.Read === 'N') {
                     var whereClause = {
                         userUID: userUID,
@@ -128,11 +152,34 @@ app.directive('notificationPrivate', function() {
                     }, function(err) {
                         console.log("updateReadQueueJob ", err);
                     });
+                    if (ioSocket.telehealthNotify()) {
+                        ioSocket.telehealthNotify('');
+                    };
                 };
-                $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
             };
 
-            ioSocket.LoadListNotify = function() {
+            $scope.create = function(data) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    size: 'lg', // windowClass: 'app-modal-window', 
+                    templateUrl: 'modules/notification/views/notificationPrivateCreate.html',
+                    resolve: {
+                        data: function() {
+                            return data;
+                        }
+                    },
+                    controller: 'notificationPrivateCreateCtrl',
+                });
+                modalInstance.result.then(function(result) {
+                    if (result === 'close') {
+                        ioSocket.LoadListPrivateNotify();
+                    };
+                }, function(err) {
+                    console.log("Private.Notification.Create", err);
+                });
+            };
+
+            ioSocket.LoadListPrivateNotify = function() {
                 $scope.init();
             };
 

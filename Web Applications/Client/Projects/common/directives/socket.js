@@ -99,15 +99,15 @@ socketAuth.on('globalnotify', function(msg) {
     };
 });
 
-socketAuth.on('privatenofify', function(msg) {
+socketAuth.on('privatenotify', function(msg) {
     var msgContent = JSON.parse(msg);
     switch (msgContent.Command.Note) {
         case "NotifyMessage":
-            if (ioSocket.telehealthGlobalNotify) {
-                ioSocket.telehealthGlobalNotify(msgContent);
+            if (ioSocket.telehealthPrivateNotify) {
+                ioSocket.telehealthPrivateNotify(msgContent);
             };
-            if (ioSocket.LoadListGlobalNotify) {
-                ioSocket.LoadListGlobalNotify();
+            if (ioSocket.LoadListPrivateNotify) {
+                ioSocket.LoadListPrivateNotify();
             };
             break;
         case "CreateAppointment":
@@ -118,8 +118,8 @@ socketAuth.on('privatenofify', function(msg) {
             if (ioSocket.LoadListAppointment) {
                 ioSocket.LoadListAppointment();
             };
-            if (ioSocket.LoadListGlobalNotify) {
-                ioSocket.LoadListGlobalNotify();
+            if (ioSocket.telehealthPrivateNotify) {
+                ioSocket.telehealthPrivateNotify(msgContent);
             };
             break;
         default:

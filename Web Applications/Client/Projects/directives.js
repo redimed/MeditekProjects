@@ -178,7 +178,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
             $scope.rolePatient = true
             var roles = $cookies.getObject('userInfo').roles;
             for (var i = 0; i < roles.length; i++) {
-                if(roles[i].RoleCode === "PATIENT")
+                if (roles[i].RoleCode === "PATIENT")
                     $scope.rolePatient = false;
             }
             $scope.info.setDataPatientDetail = function(data) {
@@ -198,97 +198,93 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                 };
             };
 
-            $scope.sendEmail = function(response){
+            $scope.sendEmail = function(response) {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     size: 'lg',
                     templateUrl: 'common/views/sendEmail.html',
-                    resolve: {
-                    },
-                    controller: function($scope, $stateParams, CommonService, FileUploader, toastr, $cookies){
-                        console.log("asiodhiaoshdoashdoias ",response);
+                    resolve: {},
+                    controller: function($scope, $stateParams, CommonService, FileUploader, toastr, $cookies) {
+                        console.log("asiodhiaoshdoashdoias ", response);
                         var self = $scope;
                         self.patientInfo = response;
                         self.ApptUID = $stateParams.UID;
-                        App.initAjax();                    
-                        self.data = {                            
-                            sender: "meditek.bk001@gmail.com",                            
-                            recipient:[],
+                        App.initAjax();
+                        self.data = {
+                            sender: "meditek.bk001@gmail.com",
+                            recipient: [],
                             bodyContent: "",
                             subject: "",
                         };
                         var userInfo = $cookies.getObject('userInfo');
                         console.log("userInfo", userInfo.UID);
                         self.uploadFile = {
-                                patientUID: $stateParams.UIDPatient,
-                                ApptUID: $stateParams.UID,
-                                userUID:  userInfo.UID
-                            }
-                                                             
-                        self.UIDTemplate = [];                         
+                            patientUID: $stateParams.UIDPatient,
+                            ApptUID: $stateParams.UID,
+                            userUID: userInfo.UID
+                        }
 
-                        self.cutstring = function(string){
-                            var string = string.split(", ");                            
+                        self.UIDTemplate = [];
+
+                        self.cutstring = function(string) {
+                            var string = string.split(", ");
                         };
 
                         if (response.Email1 != null) {
                             self.data.recipient.push(response.Email1);
-                        }
-                        else if (response.Email2 != null) {
+                        } else if (response.Email2 != null) {
                             self.data.recipient.push(response.Email2);
                         }
 
-                        self.checkUIDTemplate = function(Note,index) {
-                            console.log("index", index);                            
+                        self.checkUIDTemplate = function(Note, index) {
+                            console.log("index", index);
                             console.log("Note", Note);
                             console.log("Note", Note);
                             console.log("self.UIDTemplate", self.UIDTemplate);
                             var checkExit = 0
-                            for(key in self.UIDTemplate){
+                            for (key in self.UIDTemplate) {
                                 console.log("self.UIDTemplate>>>>>>>>", self.UIDTemplate[key]);
                             }
-                            if (self.UIDTemplate[Note] == ""){
+                            if (self.UIDTemplate[Note] == "") {
                                 delete self.UIDTemplate[Note]
                             }
                             console.log("self.UIDTemplate", self.UIDTemplate);
 
-                                                     
-                        };                        
 
-                        self.getEformTemplant = function(){
+                        };
+
+                        self.getEformTemplant = function() {
                             console.log("self.UIDTemplate", self.UIDTemplate);
                             console.log("..............", $stateParams);
                             self.info = {
                                 patientUID: $stateParams.UIDPatient,
-                                search:{
+                                search: {
                                     ApptUID: $stateParams.UID
                                 }
                             };
                             CommonService.getListEformTemplant(self.info).then(function(data) {
                                 console.log("|||||||||||||||||||||||||||||||||||", data);
-                                self.attach = data.rows;  
+                                self.attach = data.rows;
                                 for (var i = 0; i < self.attach.length; i++) {
-                                      self.attach[i].Note = ( self.attach[i].Note == null)? self.attach[i].UID :  self.attach[i].Note;
-                                  } 
+                                    self.attach[i].Note = (self.attach[i].Note == null) ? self.attach[i].UID : self.attach[i].Note;
+                                }
 
                             })
                         };
                         self.getEformTemplant();
 
-                        self.close = function(){
+                        self.close = function() {
                             modalInstance.close();
                         };
 
-                        self.submitted = false;                        
+                        self.submitted = false;
 
-                        self.send = function(){
+                        self.send = function() {
                             self.submitted = true;
                             // if (self.myForm.Subject.$invalid || self.myForm.email1.$dirty && self.myForm.email1.$invalid || self.myForm.Content.$invalid ) {
-                            if (self.myForm.$invalid){
-                                toastr.error("you must enter full information !!!!!");                            
-                            }
-                            else
-                            {
+                            if (self.myForm.$invalid) {
+                                toastr.error("you must enter full information !!!!!");
+                            } else {
                                 o.loadingPage(true);
                                 // if (self.data.bodyContent === null || self.data.bodyContent === undefined) {
                                 //     self.data.bodyContent = " ";
@@ -296,10 +292,10 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                                 // self.data.recipient = self.data.recipient[0].split(", ");                                                 
                                 self.attachments = [];
 
-                                for (var key in self.UIDTemplate){
-                                    console.log(key," here ", self.UIDTemplate[key]);
-                                    if(self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined){
-                                        console.log("this is the value - ",self.UIDTemplate[key]);
+                                for (var key in self.UIDTemplate) {
+                                    console.log(key, " here ", self.UIDTemplate[key]);
+                                    if (self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined) {
+                                        console.log("this is the value - ", self.UIDTemplate[key]);
                                         var subStrs = self.UIDTemplate[key].split(".");
                                         var name = '';
                                         for (var i = 0; i < self.attach.length; i++) {
@@ -309,40 +305,37 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                                         };
                                         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> aaaaaaaaa", name);
                                         tmp = {
-                                            type:subStrs.length>1?"fileupload":"report",
+                                            type: subStrs.length > 1 ? "fileupload" : "report",
                                             content: subStrs[0],
-                                            name:name,
-                                            extension:subStrs.length>1?subStrs[1]:"pdf"
+                                            name: name,
+                                            extension: subStrs.length > 1 ? subStrs[1] : "pdf"
                                         };
                                         self.attachments.push(tmp);
                                     }
-                                }                            
+                                }
                                 if (self.attachments.length > 0) {
                                     self.data.attachments = self.attachments;
-                                }
-                                else{
+                                } else {
                                     if (self.data.attachments) {
                                         delete self.data.attachments;
                                     }
                                 }
                                 // toastr.info('Sending...');                                                                                                                                                
-                                CommonService.sendEmail(self.data).then(function(data){
-                                     o.loadingPage(false);                              
-                                    modalInstance.close();                                                                                            
+                                CommonService.sendEmail(self.data).then(function(data) {
+                                    o.loadingPage(false);
+                                    modalInstance.close();
                                     toastr.success('Send successfully');
-                                }, function(err){
-                                     o.loadingPage(false);
-                                    toastr.error('Send failed',"Unexpected Error");
-                                })   
+                                }, function(err) {
+                                    o.loadingPage(false);
+                                    toastr.error('Send failed', "Unexpected Error");
+                                })
                             }
-                                         
+
                         };
                     },
                 });
                 modalInstance.result
-                    .then(function(result) {
-                    }, function(result) {
-                    });
+                    .then(function(result) {}, function(result) {});
             };
         },
     };
@@ -394,7 +387,7 @@ app.directive('appointmentDetailDirective', function() {
             $scope.rolePatient = true
             var roles = $cookies.getObject('userInfo').roles;
             for (var i = 0; i < roles.length; i++) {
-                if(roles[i].RoleCode === "PATIENT")
+                if (roles[i].RoleCode === "PATIENT")
                     $scope.rolePatient = false;
             }
             $scope.info.setDataApptDetail = function(data) {
@@ -561,7 +554,12 @@ app.directive("globalNotify", function() {
                     });
                     modalInstance.result.then(function(result) {
                         if (result === 'Close') {
-                            ioSocket.LoadListGlobalNotify();
+                            if (ioSocket.telehealthGlobalNotify) {
+                                ioSocket.telehealthGlobalNotify("msg");
+                            };
+                            if (ioSocket.LoadListGlobalNotify) {
+                                ioSocket.LoadListGlobalNotify();
+                            };
                         };
                     }, function(err) {
                         console.log("globalNotify.Directive", err);
@@ -576,7 +574,12 @@ app.directive("globalNotify", function() {
                         UserUID: UserInfo.UID
                     };
                     notificationServices.ChangeReadQueueJobg(info).then(function(data) {
-                        $scope.loadListGlobalNotify();
+                        if (ioSocket.telehealthGlobalNotify) {
+                            ioSocket.telehealthGlobalNotify("msg");
+                        };
+                        if (ioSocket.LoadListGlobalNotify) {
+                            ioSocket.LoadListGlobalNotify();
+                        };
                     }, function(err) {
                         console.log("GlobalNotify.ChangeReadQueueJobg", err);
                     });
@@ -591,7 +594,12 @@ app.directive("globalNotify", function() {
                         queue: 'GLOBALNOTIFY',
                     };
                     notificationServices.ChangeReadAllQueueJobg(info).then(function(data) {
-                        $scope.loadListGlobalNotify();
+                        if (ioSocket.telehealthGlobalNotify) {
+                            ioSocket.telehealthGlobalNotify("msg");
+                        };
+                        if (ioSocket.LoadListGlobalNotify) {
+                            ioSocket.LoadListGlobalNotify();
+                        };
                     });
                 };
             };
@@ -623,11 +631,16 @@ app.directive("privateNotify", function() {
                 var userUID = UserInfo.UID;
                 var queue = 'NOTIFY';
 
+                var info = {
+                    Search: {
+                        userUID: userUID,
+                        queue: queue
+                    },
+                    order: 'CreatedDate DESC',
+                };
+
                 console.log('%c loadListNotify!!!!!!!!!!!!!!!!!!!!!!! ', 'background: #222; color: #bada55');
-                AuthenticationService.getListNotify({
-                    userUID: userUID,
-                    queue: queue
-                }).then(function(data) {
+                notificationServices.getListNotifySearch(info).then(function(data) {
                     for (var i = 0; i < data.data.length; i++) {
                         data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
                         data.data[i].fromTime = moment(data.data[i].CreatedDate).fromNow();
@@ -646,7 +659,12 @@ app.directive("privateNotify", function() {
             function UpdateQueueJob(whereClause) {
                 AuthenticationService.updateReadQueueJob(whereClause).then(function(data) {
                     if (data.status === 'success') {
-                        $scope.loadListNotify();
+                        if (ioSocket.telehealthPrivateNotify) {
+                            ioSocket.telehealthPrivateNotify("msg");
+                        };
+                        if (ioSocket.LoadListPrivateNotify) {
+                            ioSocket.LoadListPrivateNotify();
+                        };
                     };
                 }, function(err) {
                     console.log("updateReadQueueJob ", err);
@@ -665,7 +683,33 @@ app.directive("privateNotify", function() {
                         whereClause.ID = queuejob.ID;
                         UpdateQueueJob(whereClause);
                     };
-                    $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+                    if (queuejob.MsgContent.Command && queuejob.MsgContent.Command.Url_State) {
+                        $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+                    } else {
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            size: 'lg', // windowClass: 'app-modal-window', 
+                            templateUrl: 'modules/notification/views/notificationPrivateDetail.html',
+                            resolve: {
+                                data: function() {
+                                    return queuejob;
+                                }
+                            },
+                            controller: 'notificationPrivateDetailCtrl',
+                        });
+                        modalInstance.result.then(function(result) {
+                            if (result === 'Close') {
+                                if (ioSocket.telehealthPrivateNotify) {
+                                    ioSocket.telehealthPrivateNotify("msg");
+                                };
+                                if (ioSocket.LoadListPrivateNotify) {
+                                    ioSocket.LoadListPrivateNotify();
+                                };
+                            };
+                        }, function(err) {
+                            console.log("globalNotify.Directive", err);
+                        });
+                    };
                 } else {
                     if ($scope.UnReadCount > 0) {
                         UpdateQueueJob(whereClause);
@@ -673,9 +717,12 @@ app.directive("privateNotify", function() {
                 };
             };
 
-            ioSocket.telehealthNotify = function(msg) {
+            ioSocket.telehealthPrivateNotify = function(msg) {
                 $scope.loadListNotify();
-                toastr.info(msg.Display.Subject + " " + msg.Display.Action + " " + msg.Display.Object.name, "Notification");
+                console.log(msg);
+                if (msg != 'msg') {
+                    toastr.info(msg.Display.Subject + " send you a message ", "Notification");
+                }
             };
         },
     };

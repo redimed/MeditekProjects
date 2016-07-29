@@ -1,4 +1,4 @@
-var env = 'meditekServer'; //local,meditekServer,testApp,app
+var env = 'local'; //local,meditekServer,testApp,app
 var noEFormAuth = false;
 var configRestBaseUrl = {
     'local': 'http://192.168.1.251:3005',

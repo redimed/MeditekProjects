@@ -52,6 +52,9 @@ app.directive('notificationGlobal', function() {
                 notificationServices.LoadListGlobalNotify(info).then(function(data) {
                     for (var i = 0; i < data.data.length; i++) {
                         data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                        if (data.data[i].Read.indexOf(UserInfo.UID) === -1) {
+                            data.data[i].iRead = 'N'
+                        };
                     };
                     console.log("LoadListGlobalNotify", data);
                     $scope.listGlobalNotify = data.data;

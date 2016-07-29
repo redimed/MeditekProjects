@@ -57,6 +57,11 @@ module.exports.routes = {
     action:'BuryQueueJob'
   },
 
+  'post /api/queue/changeenablequeuejob':{
+    controller:'QueueJobController',
+    action:'ChangeEnableQueueJob'
+  },
+
   'post /api/queue/loadlistqueue':{
     controller:'QueueJobController',
     action:'LoadListQueue'
@@ -74,7 +79,7 @@ module.exports.routes = {
 
   // QueueJobG 
 
-  'post /api/queueq/CreateGlobalNotifyJob':{
+  'post /CreateGlobalNotifyJob':{
     controller:'QueueJobgController',
     action:'CreateGlobalNotifyJob'
   },

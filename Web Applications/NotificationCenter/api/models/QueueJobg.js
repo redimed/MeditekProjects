@@ -106,7 +106,7 @@ module.exports={
         },
 
         Read:{
-            type:Sequelize.STRING(10)
+            type:Sequelize.TEXT
         }
 	},
 

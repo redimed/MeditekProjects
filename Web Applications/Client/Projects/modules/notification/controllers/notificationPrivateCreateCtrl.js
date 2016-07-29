@@ -1,28 +1,9 @@
-var app = angular.module("app.authentication.notification.global.create.controller", []);
+var app = angular.module("app.authentication.notification.private.create.controller", []);
 
-app.controller('notificationGlobalCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal) {
+app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal) {
     $scope.now = true;
     $scope.submitText = 'Create';
-
-    $scope.Role = [{
-        id: 'ADMIN',
-        role: 'Admin'
-    }, {
-        id: 'PATIENT',
-        role: 'Patient'
-    }, {
-        id: 'INTERNAL_PRACTITIONER',
-        role: 'Internal'
-    }, {
-        id: 'EXTERTAL_PRACTITIONER',
-        role: 'Extertal'
-    }, {
-        id: 'ASSISTANT',
-        role: 'Assistant'
-    }, {
-        id: 'ORGANIZATION',
-        role: 'Organization'
-    }];
+    $scope.ListUser = [];
 
     $modalInstance.rendered.then(function() {
         App.initAjax();
@@ -36,7 +17,9 @@ app.controller('notificationGlobalCreateCtrl', function($scope, $modalInstance, 
     };
 
     $scope.submit = function(info) {
-        notificationServices.validate(info, "global").then(function(data) {
+        info.lsUser = $scope.ListUser;
+        console.log(info);
+        notificationServices.validate(info, "private").then(function(data) {
             if (data.Status = 'success') {
                 if (info.FirstDelay) {
                     var Today = moment(new Date());
@@ -46,12 +29,11 @@ app.controller('notificationGlobalCreateCtrl', function($scope, $modalInstance, 
                 } else {
                     info.FirstDelay = 0;
                 };
-                info.lsUser = data.Role;
-                info.MsgKind = 'Global';
+                info.MsgKind = 'Private';
                 info.UID = userInfo.UID;
                 info.UserName = userInfo.UserName;
-                info.EndTime = moment(info.EndTime, 'DD/MM/YYYY 23:59').format('YYYY-MM-DD 23:59');
-                notificationServices.SendMsgGlobal(info).then(function(result) {
+                // info.EndTime = moment(info.EndTime, 'DD/MM/YYYY 23:59').format('YYYY-MM-DD 23:59');
+                notificationServices.SendMsgPrivate(info).then(function(result) {
                     toastr.success("Send message success", "Success");
                     $modalInstance.close('close');
                 });
@@ -60,6 +42,23 @@ app.controller('notificationGlobalCreateCtrl', function($scope, $modalInstance, 
             for (var i = 0; i < err.length; i++) {
                 toastr.error(err[i].field + " is " + err[i].message, "Error");
             };
+        });
+    };
+
+    $scope.loadListUser = function() {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            // size: 'lg', // windowClass: 'app-modal-window', 
+            templateUrl: 'modules/notification/views/notificationListUser.html',
+            resolve: {},
+            controller: 'notificationListUserCtrl',
+        });
+        modalInstance.result.then(function(result) {
+            if (result.message === "senddata") {
+                $scope.ListUser = result.userList;
+            };
+        }, function(err) {
+            console.log("Global.Notification.Create", err);
         });
     };
 });

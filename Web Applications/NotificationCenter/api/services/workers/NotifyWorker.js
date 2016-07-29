@@ -10,8 +10,8 @@ var options =
     {
         sendnotify: notifyHandlers.sendnotify()
     },
-    ignoreDefault: true
-}
+    ignoreDefault: true,
+};
 var notifyWorker = new NotifyWorker(options);
 //EVENTS
 notifyWorker

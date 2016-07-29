@@ -19,6 +19,12 @@
             <a href="javascript:;" class="btn btn-outline blue" ng-click="init()">
                 <i class="glyphicon glyphicon-refresh"></i> Refresh
             </a>
+            <a ui-sref="authentication.notification.sended({type:'private'})" class="btn btn-outline blue">
+                <i class="glyphicon glyphicon-send"></i> Sended
+            </a>
+            <a href="javascript:;" class="btn btn-outline blue" ng-click="create()">
+                <i class="glyphicon glyphicon-plus"></i> Create
+            </a>
         </div>
     </div>
     <div class="portlet-body">
@@ -45,7 +51,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="lsnc in listPrivateNotify" ng-click="gotoUrl(lsnc)">
+                    <tr ng-repeat="lsnc in listPrivateNotify" ng-click="gotoUrl(lsnc)" class="{{ lsnc.Read === 'Y' ? '' : 'info'}}">
                         <td>{{(($index + 1) + (searchObjectMap.limit * (searchObjectMap.currentPage - 1)))}}</td>
                         <td ng-repeat="ite in itemDefault">
                             {{ ite.field === 'MsgContent' ? (lsnc[ite.field]['Display']['Action'].length > 50 ? lsnc[ite.field]['Display']['Action'].substr(0, 50) + '...' : lsnc[ite.field]['Display']['Action']) : ite.field === 'Object' ? lsnc['MsgContent']['Display'][ite.field]['name'] : ite.field === 'CreatedDate' || ite.field === 'EndTime' ? (lsnc[ite.field] | date:"dd/MM/yyyy") : ite.field === 'SenderAccount' ? lsnc[ite.field]['UserName'] : lsnc[ite.field] }}

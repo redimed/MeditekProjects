@@ -48,23 +48,22 @@ module.exports = {
 
     CreateNotifyJob: function(req, res) {
         var body = req.body;
+        console.log("CreateNotifyJob");
+
         QueueJobService.CreateQueueJob(body)
             .then(function(data) {
-                // res.ok(data);
                 var job = {
                     type: 'sendnotify',
                     payload: data.dataValues
                 }
 
-                sails.sockets.broadcast(body.Receiver, body.EventName, body.MsgContent);
-
-                // BeansService.putJob('NOTIFY', 0, 0, 20, JSON.stringify(job))
-                //     .then(function(result) {
-                //         console.log(result);
-                //         res.ok(result);
-                //     }, function(err) {
-                //         res.serverError(ErrorWrap(err));
-                //     })
+                BeansService.putJob('NOTIFY', 0, body.FirstDelay, 20, JSON.stringify(job))
+                    .then(function(result) {
+                        console.log(result);
+                        res.ok(result);
+                    }, function(err) {
+                        res.serverError(ErrorWrap(err));
+                    })
 
             }, function(err) {
                 res.serverError(ErrorWrap(err));
@@ -124,6 +123,7 @@ module.exports = {
                     status: 'success',
                     data: data.data,
                     count: data.count,
+                    countAll: data.countAll,
                 });
             }, function(err) {
                 res.serverError(ErrorWrap(err));
@@ -147,6 +147,23 @@ module.exports = {
             });
         } catch (err) {
             console.log("UpdateReadQueueJob", err);
+        }
+    },
+
+    ChangeEnableQueueJob: function(req, res) {
+        try {
+            console.log("ChangEnableQueueJob");
+            var info = req.body.data;
+            QueueJobService.ChangeEnableQueueJob(info).then(function(data) {
+                res.ok({
+                    status: 'success',
+                    data: data.data
+                });
+            }, function(err) {
+                res.serverError(ErrorWrap(err));
+            });
+        } catch (err) {
+            console.log("ChangEnableQueueJob", err);
         }
     }
 }

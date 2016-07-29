@@ -1,13 +1,14 @@
 module.exports={
 	jobLifeCycle:function(jobdata,FuncNonLoop,FuncLoop)
 	{
+        console.log("jobLifeCycle |||||||||||||||||||||||||||||||||||");
 		var error=new Error("jobLifeCycle.Error");
 		return QueueJobService.GetQueueJob(jobdata.ID)
 		.then(function(queueJob){
 			if(queueJob)
 			{
 				if(['READY','DELAY'].indexOf(queueJob.Status)>=0)
-                {
+                {   
                     if (queueJob.Enable === 'N') {
                         error.pushError("sender.turnoffmessage");
                         return QueueJobService.BuryQueueJob(queueJob,ErrorWrap(error))
@@ -88,6 +89,7 @@ module.exports={
 
     jobgLifeCycle:function(jobgdata,FuncNonLoop,FuncLoop)
     {
+        console.log("jobgLifeCycle |||||||||||||||||||||||");
         var error=new Error("jobgLifeCycle.Error");
         return QueueJobgService.GetQueueJobg(jobgdata.ID)
         .then(function(queueJobg){
@@ -95,6 +97,13 @@ module.exports={
             {
                 if(['READY','DELAY'].indexOf(queueJobg.Status)>=0)
                 {
+                    if (queueJobg.Enable === 'N') {
+                        error.pushError("sender.turnoffmessage");
+                        return QueueJobgService.BuryQueueJobg(queueJobg,ErrorWrap(error))
+                            .then(function(success){
+                                return {status:'bury'};
+                        });
+                    };
                     if(queueJobg.MaxRelease==0)
                     {
                         //TRUONG HOP CHI GUI MESSAGE 1 LAN

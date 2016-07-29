@@ -8,7 +8,7 @@ app.controller('notificationGlobalDetailCtrl', function($scope, $modalInstance, 
     if (userInfo.UID === data.SenderUID) {
         if (data.Status === 'HANDLED') {
             $scope.submitText = 'Remove';
-        } else {
+        } else if (data.Status === 'DELAY') {
             $scope.submitText = 'Stop';
         }
     };

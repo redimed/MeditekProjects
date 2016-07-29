@@ -35,10 +35,10 @@ module.exports={
 	sendglobalnotify:function(){
 		function SendGlobalNotify()
 		{
-			console.log("||||||||||||||||||||||||||||| sendglobalnotify");
 			this.type='sendglobalnotify';
 			this.work=function(jobgdata,callback)
 			{
+				console.log("|||||||||||||||||||| sendglobalnotify");
 				HandlerUtils.jobgLifeCycle(jobgdata,sendGlobalNotifyNonLoop,sendGlobalNotifyLoop)
 				.then(function(result){
                     if(result.status=='success')

@@ -4,10 +4,27 @@ app.directive('globalSended', function() {
     return {
         restrict: 'EA',
         templateUrl: 'modules/notification/directives/templates/sended.html',
-        controller: function($scope, notificationServices, toastr, $cookies, $uibModal) {
+        controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $stateParams,$state) {
+            console.log($stateParams.type);
+
+            $scope.type = $stateParams.type;
+            var queue = '';
+            var templateUrl = '';
+            var templateCtrl = '';
+
+            if ($scope.type === 'private') {
+                queue = 'NOTIFY';
+                templateUrl = 'notificationPrivateDetail.html';
+                templateCtrl = 'notificationPrivateDetailCtrl';
+            } else if ($scope.type === 'global') {
+                queue = 'GLOBALNOTIFY';
+                templateUrl = 'notificationGlobalDetail.html';
+                templateCtrl = 'notificationGlobalDetailCtrl';
+            };
+
             var UserInfo = $cookies.getObject('userInfo');
             var SenderUID = UserInfo.UID;
-            var queue = 'GLOBALNOTIFY';
+
             $scope.toggle = false;
 
             $scope.search = {
@@ -41,15 +58,26 @@ app.directive('globalSended', function() {
                 $scope.toggle = $scope.toggle === true ? false : true;
             };
 
-            function LoadListGlobalNotify(info) {
-                notificationServices.LoadListGlobalNotify(info).then(function(data) {
-                    for (var i = 0; i < data.data.length; i++) {
-                        data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
-                    };
-                    console.log("LoadListGlobalNotify", data.data);
-                    $scope.listGlobalNotify = data.data;
-                    $scope.count = data.count;
-                });
+            function LoadListNotify(info) {
+                if ($scope.type === 'global') {
+                    notificationServices.LoadListGlobalNotify(info).then(function(data) {
+                        for (var i = 0; i < data.data.length; i++) {
+                            data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                        };
+                        console.log("LoadListGlobalNotify", data.data);
+                        $scope.listGlobalNotify = data.data;
+                        $scope.count = data.count;
+                    });
+                } else if ($scope.type === 'private') {
+                    notificationServices.getListNotifySearch(info).then(function(data) {
+                        for (var i = 0; i < data.data.length; i++) {
+                            data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                        };
+                        console.log("LoadListPrivateNotify", data.data);
+                        $scope.listGlobalNotify = data.data;
+                        $scope.count = data.count;
+                    });
+                };
             };
 
             $scope.init = function() {
@@ -67,21 +95,21 @@ app.directive('globalSended', function() {
                 };
                 // scope.search.Enable = null;
                 $scope.searchObjectMap = angular.copy($scope.searchObject);
-                LoadListGlobalNotify($scope.searchObjectMap);
+                LoadListNotify($scope.searchObjectMap);
             };
 
             $scope.init();
 
             $scope.setPage = function() {
                 $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-                LoadListGlobalNotify($scope.searchObjectMap);
+                LoadListNotify($scope.searchObjectMap);
             };
 
             $scope.Search = function(data) {
                 ($scope.fromCreateDate && $scope.fromCreateDate !== null) ? data.FromCreatedDate = moment($scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.FromCreatedDate = null;
                 ($scope.toCreateDate && $scope.toCreateDate !== null) ? data.ToCreatedDate = moment($scope.toCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.ToCreatedDate = null;
                 $scope.searchObjectMap.Search = data;
-                LoadListGlobalNotify($scope.searchObjectMap);
+                LoadListNotify($scope.searchObjectMap);
             };
 
             $scope.sort = function(field, sort) {
@@ -98,31 +126,32 @@ app.directive('globalSended', function() {
                 }
                 var data = field + ' ' + sort;
                 $scope.searchObjectMap.order = data;
-                LoadListGlobalNotify($scope.searchObjectMap);
+                LoadListNotify($scope.searchObjectMap);
             };
 
             $scope.openDetail = function(data) {
-                // if (data.SenderUID === UserInfo.UID) {
-                //     $scope.openCreate(data);
-                // } else {
-                var modalInstance = $uibModal.open({
-                    animation: true,
-                    size: 'lg', // windowClass: 'app-modal-window', 
-                    templateUrl: 'modules/notification/views/notificationGlobalDetail.html',
-                    resolve: {
-                        data: function() {
-                            return data;
-                        }
-                    },
-                    controller: 'notificationGlobalDetailCtrl',
-                });
-                modalInstance.result.then(function(result) {
-                    if (result === 'close') {
-                        ioSocket.LoadListGlobalNotify();
-                    };
-                }, function(err) {
-                    console.log("Global.Notification.Detail", err);
-                });
+                if (data.MsgContent.Command && data.MsgContent.Command.Url_State) {
+                    $state.go(data.MsgContent.Command.Url_State, { UID: data.MsgContent.Display.Object.UID });
+                } else {
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        size: 'lg', // windowClass: 'app-modal-window', 
+                        templateUrl: 'modules/notification/views/' + templateUrl,
+                        resolve: {
+                            data: function() {
+                                return data;
+                            }
+                        },
+                        controller: templateCtrl,
+                    });
+                    modalInstance.result.then(function(result) {
+                        if (result === 'close') {
+                            ioSocket.LoadListGlobalNotify();
+                        };
+                    }, function(err) {
+                        console.log($scope.type + ".Notification.Detail", err);
+                    });
+                }
             };
 
             ioSocket.LoadListGlobalNotify = function() {

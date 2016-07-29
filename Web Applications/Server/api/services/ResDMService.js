@@ -37,8 +37,6 @@ module.exports = {
             dmConfig.sendto = senderNull;
         return $q.all([dmConfig.payload(req, res), dmConfig.sendto(req, res)])
             .spread(function(payload, sendto) {
-                dmLog('payload:', payload);
-                dmLog('sendto:', sendto);
                 if (dmConfig.method === dmUtils.method.broadcast) {
                     if (sendto) {
                         if (dmConfig.eventName) {
@@ -59,7 +57,6 @@ module.exports = {
                         error.pushError("blast.eventName.null");
                     }
                 } else if (dmConfig.method === dmUtils.method.nc) {
-                    console.log("||||||||||||||||||||||||||||||||||||||||NC:");
                     for (var i = 0; i < payload.length; i++) {
                         var item = payload[i];
                         switch (item.Queue) {
@@ -70,6 +67,7 @@ module.exports = {
                                 NcService.pushSMS(item);
                                 break;
                             case dmUtils.ncQueue.NOTIFY:
+                                console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKk", item);
                                 NcService.pushNotify(item)
                                 break;
                             case dmUtils.ncQueue.GLOBALNOTIFY:

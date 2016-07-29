@@ -206,8 +206,10 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                     resolve: {
                     },
                     controller: function($scope, $stateParams, CommonService, FileUploader, toastr, $cookies){
-                        console.log("asiodhiaoshdoashdoias ",response.Email1);
+                        console.log("asiodhiaoshdoashdoias ",response);
                         var self = $scope;
+                        self.patientInfo = response;
+                        self.ApptUID = $stateParams.UID;
                         App.initAjax();                    
                         self.data = {                            
                             sender: "meditek.bk001@gmail.com",                            

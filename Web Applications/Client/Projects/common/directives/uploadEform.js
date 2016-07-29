@@ -95,6 +95,7 @@ angular.module('app.common.uploadEform',[])
 				if(scope.ApptUID != null && scope.ApptUID != '' && scope.ApptUID != undefined) {
 					scope.isShowListAppt = false;
 					scope.UID = scope.ApptUID;
+					scope.arr_ApptUID.push({UID:scope.UID});
 				}
 				else {
 					WAAppointmentService.loadListWAAppointment({

@@ -33,123 +33,12 @@
         <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-            <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" >
-                <!-- ng-click="updateReadQueueJob()" -->
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-default" ng-if="UnReadCount > 0 ? true : false"> {{UnReadCount > 9 ? '9+' : UnReadCount}} </span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="external">
-                        <h3>
-                            <span class="bold">Notifications</span>
-                        </h3>
-                        <a ng-click="updateReadQueueJob()" style="position:absolute;right:66px;">dissmiss all</a>
-                        <a ui-sref="authentication.notification.private">view all</a>
-                    </li>
-                    <li ng-if="listNotify.length > 0">
-                        <ul class="dropdown-menu-list scroller" style="height: 250px; overflow: auto; width: auto;" data-handle-color="#637283">
-                            <li ng-repeat="not in listNotify" ng-click="updateReadQueueJob(not)">
-                                <a href="javascript:;">
-                                   <!--  <span class="time">
-                                        {{not.time}}
-                                    </span> -->
-                                    <span class="details">
-                                       <!--  <span class="label label-sm label-icon label-success">
-                                            <i class="fa fa-calendar"></i>
-                                        </span> -->
-                                    <b>{{not.MsgContent.Display.Subject}}</b> {{not.MsgContent.Display.Action}} <b>{{not.MsgContent.Display.Object.name}}</b>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li ng-if="listNotify.length <= 0">
-                        <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                            <li class="margin-top-20 text-center">
-                                <span class="details">
-                                    You do not notification
-                                </span>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+            <li private-notify class="dropdown dropdown-extended dropdown-inbox" id="header_notification_bar">
             </li>
             <!-- END NOTIFICATION DROPDOWN -->
             <!-- BEGIN INBOX DROPDOWN -->
             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-            <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="fa fa-globe"></i>
-                    <span class="badge badge-default"> 4 </span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="external">
-                        <h3>You have
-                            <span class="bold">7 New</span> Messages</h3>
-                        <a ui-sref="authentication.notification.global">view all</a>
-                    </li>
-                    <li>
-                        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                            <li>
-                                <a href="#">
-                                    <span class="photo">
-                                        <img src="../assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
-                                    <span class="subject">
-                                        <span class="from"> Lisa Wong </span>
-                                    <span class="time">Just Now </span>
-                                    </span>
-                                    <span class="message"> Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo">
-                                        <img src="../assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt=""> </span>
-                                    <span class="subject">
-                                        <span class="from"> Richard Doe </span>
-                                    <span class="time">16 mins </span>
-                                    </span>
-                                    <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo">
-                                        <img src="../assets/layouts/layout3/img/avatar1.jpg" class="img-circle" alt=""> </span>
-                                    <span class="subject">
-                                        <span class="from"> Bob Nilson </span>
-                                    <span class="time">2 hrs </span>
-                                    </span>
-                                    <span class="message"> Vivamus sed nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo">
-                                        <img src="../assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
-                                    <span class="subject">
-                                        <span class="from"> Lisa Wong </span>
-                                    <span class="time">40 mins </span>
-                                    </span>
-                                    <span class="message"> Vivamus sed auctor 40% nibh congue nibh... </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo">
-                                        <img src="../assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt=""> </span>
-                                    <span class="subject">
-                                        <span class="from"> Richard Doe </span>
-                                    <span class="time">46 mins </span>
-                                    </span>
-                                    <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+            <li global-notify class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar"></li>
             <!-- END INBOX DROPDOWN -->
             <li class="dropdown dropdown-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">

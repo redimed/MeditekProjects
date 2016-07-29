@@ -19,6 +19,12 @@
             <a href="javascript:;" class="btn btn-outline blue" ng-click="init()">
                 <i class="glyphicon glyphicon-refresh"></i> Refresh
             </a>
+            <a ui-sref="authentication.notification.sended({type:'private'})" class="btn btn-outline blue">
+                <i class="glyphicon glyphicon-send"></i> Sended
+            </a>
+            <a href="javascript:;" class="btn btn-outline blue" ng-click="create()">
+                <i class="glyphicon glyphicon-plus"></i> Create
+            </a>
         </div>
     </div>
     <div class="portlet-body">
@@ -27,35 +33,29 @@
                 <thead>
                     <tr class="uppercase">
                         <th width="1">#</th>
-                        <th>
-                            Action
-                            <!-- <i class="fa fa-sort-asc" ng-click="sort('Action','ASC')" ng-show="fieldSort.Action === 'ASC'"></i>
-                            <i class="fa fa-sort-desc" ng-click="sort('Action','DESC')" ng-show="fieldSort.Action === 'DESC'"></i> -->
-                        </th>
-                        <th>
-                            Time
-                            <i class="fa fa-sort-asc" ng-click="sort('Time','ASC')" ng-show="fieldSort.Time==='ASC'"></i>
-                            <i class="fa fa-sort-desc" ng-click="sort('Time','DESC')" ng-show="fieldSort.Time==='DESC'"></i>
+                        <th ng-repeat="ite in itemDefault">
+                            {{ite.name}}
+                            <i class="fa fa-sort-asc" ng-click="sort(ite.field,'ASC')" ng-show="fieldSort[ite.field]=='ASC'"></i>
+                            <i class="fa fa-sort-desc" ng-click="sort(ite.field,'DESC')" ng-show="fieldSort[ite.field]=='DESC'"></i>
                         </th>
                     </tr>
                     <tr ng-show="toggle">
                         <td>#</td>
-                        <td>
-                            <input ng-model="search.Action" ng-enter="Search(search,$event.which)" type="text" class="form-control" />
+                        <td ng-repeat="ite in itemSearch">
+                            <input type="text" ng-model="search[ite.field]" class="form-control" ng-enter="Search(search)" />
                         </td>
                         <td>
-                            <input type="text" class="form-control date-picker input-small margin-bottom-5" style="width:100% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search,$event.which)" placeholder="From Date">
-                            <input type="text" class="form-control date-picker input-small" style="width:100% !important" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="Search(search,$event.which)" placeholder="To Date">
-                            <!--  <input ng-model="search.CreatedDate" ng-keypress="Search(search,$event.which)" type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" /> -->
+                            <input type="text" class="form-control date-picker margin-bottom-5" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search)" placeholder="From Date">
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="Search(search)" placeholder="To Date">
                         </td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="not in listNotify" ng-click="gotoUrl(not)" ng-class="not.Read == 'Y' ? 'blue' : ''">
-                        <td>{{($index + 1) * searchObjectMap.currentPage}}</td>
-                        <td>
-                            <a class="primary-link">{{not.MsgContent.Display.Subject}}</a> {{not.MsgContent.Display.Action}} <b>{{not.MsgContent.Display.Object.name}}</b></td>
-                        <td>{{not.CreatedDate | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+                    <tr ng-repeat="lsnc in listPrivateNotify" ng-click="gotoUrl(lsnc)" class="{{ lsnc.Read === 'Y' ? '' : 'info'}}">
+                        <td>{{(($index + 1) + (searchObjectMap.limit * (searchObjectMap.currentPage - 1)))}}</td>
+                        <td ng-repeat="ite in itemDefault">
+                            {{ ite.field === 'MsgContent' ? (lsnc[ite.field]['Display']['Action'].length > 50 ? lsnc[ite.field]['Display']['Action'].substr(0, 50) + '...' : lsnc[ite.field]['Display']['Action']) : ite.field === 'Object' ? lsnc['MsgContent']['Display'][ite.field]['name'] : ite.field === 'CreatedDate' || ite.field === 'EndTime' ? (lsnc[ite.field] | date:"dd/MM/yyyy") : ite.field === 'SenderAccount' ? lsnc[ite.field]['UserName'] : lsnc[ite.field] }}
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>

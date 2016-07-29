@@ -36,6 +36,7 @@
     "sails-disk": "~0.10.0",
     "sails-hook-sequelize": "^1.0.1",
     "sails-mysql": "^0.11.2",
+    "sequelize": "^3.14.2",
     "socket.io-redis": "^1.0.0",
     "twilio": "^2.8.0",
     "winston": "^0.8.3",

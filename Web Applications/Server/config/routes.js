@@ -97,4 +97,8 @@ _.extend(routes, StaffRoutes);
 var BillingRoutes = require('./routes/BillingRoutes');
 _.extend(routes, BillingRoutes);
 //end module Billing
+//begin module Notification
+var NotificationRoutes = require('./routes/NotificationRoutes');
+_.extend(routes, NotificationRoutes);
+//end module Notification
 module.exports.routes = routes;

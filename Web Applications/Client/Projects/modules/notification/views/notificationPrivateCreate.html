@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title text-primary">Notification Private Create</h4>
+</div>
+<div class="modal-body">
+    <form name="formglobal" class="form" novalidate>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-3 col-xs-4 text-right">Subject:</label>
+                <div class="col-md-8 col-xs-8">
+                    <input type="text" class="form-control" name="subject" ng-model="private.Subject" placeholder="Subject" required/>
+                    <span style="color:red" ng-show="formglobal.subject.$dirty && formglobal.subject.$invalid">
+                        <span ng-show="formglobal.subject.$dirty && formglobal.subject.$error.required">Subject is required.</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-xs-4 text-right">Content:</label>
+                <div class="col-md-8 col-xs-8">
+                    <textarea class="form-control" name="msgcontent" rows="10" ng-model="private.MsgContent" placeholder="Content..." required></textarea>
+                    <span style="color:red" ng-show="formglobal.msgcontent.$dirty && formglobal.msgcontent.$invalid">
+                        <span ng-show="formglobal.msgcontent.$error.required">MsgContent is required.</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-xs-4 text-right"></label>
+                <div class="col-md-8 col-xs-8">
+                    <a href="#" ng-click="loadListUser()">Choose User</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-xs-4 text-right">Send Time:</label>
+                <div class="col-md-2 col-xs-3">
+                    <div class="mt-checkbox-inline">
+                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                            <input type="checkbox" ng-model="now" />
+                            <span></span> Now
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-5" ng-hide="now">
+                    <input datetime-picker name="firsttime" ng-model="private.FirstDelay" placeholder="First Delay">
+                    <span style="color:red" ng-show="formglobal.firsttime.$dirty && formglobal.firsttime.$invalid">
+                        <span ng-show="formglobal.firsttime.$error.date">First Delay is date.</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+    <button type="button" class="btn btn-primary" ng-click="submit(private)">{{submitText}}</button>
+</div>

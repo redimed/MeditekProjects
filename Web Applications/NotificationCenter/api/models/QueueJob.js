@@ -106,6 +106,10 @@ module.exports={
 
         Read:{
             type:Sequelize.STRING(10)
+        },
+
+        Enable:{
+            type:Sequelize.STRING(10)
         }
 	},
 

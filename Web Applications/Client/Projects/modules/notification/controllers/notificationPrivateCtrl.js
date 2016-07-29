@@ -1,5 +1,6 @@
 var app = angular.module("app.authentication.notification.private.controller",[
     "app.authentication.notification.private.detail.controller",
+    "app.authentication.notification.private.create.controller",
 ]);
 
 app.controller('notificationPrivateCtrl', function($scope, $uibModal){

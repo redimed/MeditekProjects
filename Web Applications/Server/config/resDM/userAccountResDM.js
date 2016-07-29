@@ -10,6 +10,8 @@ var appointmentInfoPayload = require('../../api/services/resDM/payload/Appointme
 var testPostNcPayload = require('../../api/services/resDM/ncPayload/TestPostNcPayload');
 var nullPayLoad = require('../../api/services/resDM/payload/NullPayLoad');
 
+var UserNotify = require('../../api/services/resDM/ncPayload/UserNotifyPayload');
+var getDoctorInAppt = require('../../api/services/resDM/ncPayload/GetDoctorAppt');
 var userByRolePayload = require('../../api/services/resDM/ncPayload/GetUserByRolePayload');
 var ncSendto = require('../../api/services/resDM/sendto/NCSendto');
 var dmUtils = require('../../api/services/resDM/dmUtils');
@@ -35,6 +37,12 @@ module.exports = {
             eventName: 'nc',
             method: dmUtils.method.nc,
             payload: userByRolePayload,
+            sendto: ncSendto
+        },
+        'LinkAppointmentPatient': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: getDoctorInAppt,
             sendto: ncSendto
         },
         'RequestWAAppointmentPatientNew': {
@@ -74,6 +82,21 @@ module.exports = {
             eventName: 'nc',
             method: dmUtils.method.nc, //blast, broadcast
             payload: testPostNcPayload,
+            sendto: ncSendto
+        }
+    },
+
+    'Notification/NotificationController': {
+        'CreatePrivateNotify': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: UserNotify,
+            sendto: ncSendto
+        },
+        'CreateGlobalNotify': {
+            eventName: 'nc',
+            method: dmUtils.method.nc,
+            payload: UserNotify,
             sendto: ncSendto
         }
     },

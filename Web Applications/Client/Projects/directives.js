@@ -137,12 +137,12 @@ app.directive('timePicker', function($timeout) {
     };
 });
 
-app.directive('datetimePicker', function(){
+app.directive('datetimePicker', function() {
     return {
-        link: function(scope, elem, attr){
+        link: function(scope, elem, attr) {
             elem.datetimepicker({
                 // viewMode: 'years',
-                format: 'DD/MM/YYYY HH:mm',
+                format: 'dd/mm/yyyy hh:ii',
             });
             elem.addClass('form-control');
             elem.attr('type', 'text');
@@ -178,7 +178,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
             $scope.rolePatient = true
             var roles = $cookies.getObject('userInfo').roles;
             for (var i = 0; i < roles.length; i++) {
-                if(roles[i].RoleCode === "PATIENT")
+                if (roles[i].RoleCode === "PATIENT")
                     $scope.rolePatient = false;
             }
             $scope.info.setDataPatientDetail = function(data) {
@@ -198,97 +198,93 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                 };
             };
 
-            $scope.sendEmail = function(response){
+            $scope.sendEmail = function(response) {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     size: 'lg',
                     templateUrl: 'common/views/sendEmail.html',
-                    resolve: {
-                    },
-                    controller: function($scope, $stateParams, CommonService, FileUploader, toastr, $cookies){
-                        console.log("asiodhiaoshdoashdoias ",response);
+                    resolve: {},
+                    controller: function($scope, $stateParams, CommonService, FileUploader, toastr, $cookies) {
+                        console.log("asiodhiaoshdoashdoias ", response);
                         var self = $scope;
                         self.patientInfo = response;
                         self.ApptUID = $stateParams.UID;
-                        App.initAjax();                    
-                        self.data = {                            
-                            sender: "meditek.bk001@gmail.com",                            
-                            recipient:[],
+                        App.initAjax();
+                        self.data = {
+                            sender: "meditek.bk001@gmail.com",
+                            recipient: [],
                             bodyContent: "",
                             subject: "",
                         };
                         var userInfo = $cookies.getObject('userInfo');
                         console.log("userInfo", userInfo.UID);
                         self.uploadFile = {
-                                patientUID: $stateParams.UIDPatient,
-                                ApptUID: $stateParams.UID,
-                                userUID:  userInfo.UID
-                            }
-                                                             
-                        self.UIDTemplate = [];                         
+                            patientUID: $stateParams.UIDPatient,
+                            ApptUID: $stateParams.UID,
+                            userUID: userInfo.UID
+                        }
 
-                        self.cutstring = function(string){
-                            var string = string.split(", ");                            
+                        self.UIDTemplate = [];
+
+                        self.cutstring = function(string) {
+                            var string = string.split(", ");
                         };
 
                         if (response.Email1 != null) {
                             self.data.recipient.push(response.Email1);
-                        }
-                        else if (response.Email2 != null) {
+                        } else if (response.Email2 != null) {
                             self.data.recipient.push(response.Email2);
                         }
 
-                        self.checkUIDTemplate = function(Note,index) {
-                            console.log("index", index);                            
+                        self.checkUIDTemplate = function(Note, index) {
+                            console.log("index", index);
                             console.log("Note", Note);
                             console.log("Note", Note);
                             console.log("self.UIDTemplate", self.UIDTemplate);
                             var checkExit = 0
-                            for(key in self.UIDTemplate){
+                            for (key in self.UIDTemplate) {
                                 console.log("self.UIDTemplate>>>>>>>>", self.UIDTemplate[key]);
                             }
-                            if (self.UIDTemplate[Note] == ""){
+                            if (self.UIDTemplate[Note] == "") {
                                 delete self.UIDTemplate[Note]
                             }
                             console.log("self.UIDTemplate", self.UIDTemplate);
 
-                                                     
-                        };                        
 
-                        self.getEformTemplant = function(){
+                        };
+
+                        self.getEformTemplant = function() {
                             console.log("self.UIDTemplate", self.UIDTemplate);
                             console.log("..............", $stateParams);
                             self.info = {
                                 patientUID: $stateParams.UIDPatient,
-                                search:{
+                                search: {
                                     ApptUID: $stateParams.UID
                                 }
                             };
                             CommonService.getListEformTemplant(self.info).then(function(data) {
                                 console.log("|||||||||||||||||||||||||||||||||||", data);
-                                self.attach = data.rows;  
+                                self.attach = data.rows;
                                 for (var i = 0; i < self.attach.length; i++) {
-                                      self.attach[i].Note = ( self.attach[i].Note == null)? self.attach[i].UID :  self.attach[i].Note;
-                                  } 
+                                    self.attach[i].Note = (self.attach[i].Note == null) ? self.attach[i].UID : self.attach[i].Note;
+                                }
 
                             })
                         };
                         self.getEformTemplant();
 
-                        self.close = function(){
+                        self.close = function() {
                             modalInstance.close();
                         };
 
-                        self.submitted = false;                        
+                        self.submitted = false;
 
-                        self.send = function(){
+                        self.send = function() {
                             self.submitted = true;
                             // if (self.myForm.Subject.$invalid || self.myForm.email1.$dirty && self.myForm.email1.$invalid || self.myForm.Content.$invalid ) {
-                            if (self.myForm.$invalid){
-                                toastr.error("you must enter full information !!!!!");                            
-                            }
-                            else
-                            {
+                            if (self.myForm.$invalid) {
+                                toastr.error("you must enter full information !!!!!");
+                            } else {
                                 o.loadingPage(true);
                                 // if (self.data.bodyContent === null || self.data.bodyContent === undefined) {
                                 //     self.data.bodyContent = " ";
@@ -296,10 +292,10 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                                 // self.data.recipient = self.data.recipient[0].split(", ");                                                 
                                 self.attachments = [];
 
-                                for (var key in self.UIDTemplate){
-                                    console.log(key," here ", self.UIDTemplate[key]);
-                                    if(self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined){
-                                        console.log("this is the value - ",self.UIDTemplate[key]);
+                                for (var key in self.UIDTemplate) {
+                                    console.log(key, " here ", self.UIDTemplate[key]);
+                                    if (self.UIDTemplate[key] != "" && self.UIDTemplate[key] != null && self.UIDTemplate[key] != undefined) {
+                                        console.log("this is the value - ", self.UIDTemplate[key]);
                                         var subStrs = self.UIDTemplate[key].split(".");
                                         var name = '';
                                         for (var i = 0; i < self.attach.length; i++) {
@@ -309,40 +305,37 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                                         };
                                         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> aaaaaaaaa", name);
                                         tmp = {
-                                            type:subStrs.length>1?"fileupload":"report",
+                                            type: subStrs.length > 1 ? "fileupload" : "report",
                                             content: subStrs[0],
-                                            name:name,
-                                            extension:subStrs.length>1?subStrs[1]:"pdf"
+                                            name: name,
+                                            extension: subStrs.length > 1 ? subStrs[1] : "pdf"
                                         };
                                         self.attachments.push(tmp);
                                     }
-                                }                            
+                                }
                                 if (self.attachments.length > 0) {
                                     self.data.attachments = self.attachments;
-                                }
-                                else{
+                                } else {
                                     if (self.data.attachments) {
                                         delete self.data.attachments;
                                     }
                                 }
                                 // toastr.info('Sending...');                                                                                                                                                
-                                CommonService.sendEmail(self.data).then(function(data){
-                                     o.loadingPage(false);                              
-                                    modalInstance.close();                                                                                            
+                                CommonService.sendEmail(self.data).then(function(data) {
+                                    o.loadingPage(false);
+                                    modalInstance.close();
                                     toastr.success('Send successfully');
-                                }, function(err){
-                                     o.loadingPage(false);
-                                    toastr.error('Send failed',"Unexpected Error");
-                                })   
+                                }, function(err) {
+                                    o.loadingPage(false);
+                                    toastr.error('Send failed', "Unexpected Error");
+                                })
                             }
-                                         
+
                         };
                     },
                 });
                 modalInstance.result
-                    .then(function(result) {
-                    }, function(result) {
-                    });
+                    .then(function(result) {}, function(result) {});
             };
         },
     };
@@ -394,7 +387,7 @@ app.directive('appointmentDetailDirective', function() {
             $scope.rolePatient = true
             var roles = $cookies.getObject('userInfo').roles;
             for (var i = 0; i < roles.length; i++) {
-                if(roles[i].RoleCode === "PATIENT")
+                if (roles[i].RoleCode === "PATIENT")
                     $scope.rolePatient = false;
             }
             $scope.info.setDataApptDetail = function(data) {
@@ -503,3 +496,236 @@ app.directive("drawingDirective", function() {
         }
     };
 });
+
+// Notification
+app.directive("globalNotify", function() {
+    return {
+        restrict: 'A',
+        scope: {
+            scope: "="
+        },
+        templateUrl: 'common/views/globalNotify.html',
+        controller: function($scope, $cookies, notificationServices, toastr, $uibModal, $state) {
+            var UserInfo = $cookies.getObject('userInfo');
+            var Role = [];
+            var roles = UserInfo.roles;
+
+            for (var i = 0; i < roles.length; i++) {
+                Role.push(roles[i].RoleCode);
+            };
+
+            $scope.loadListGlobalNotify = function() {
+                var data = {
+                    Search: {
+                        queue: 'GLOBALNOTIFY',
+                        Role: Role,
+                        UID: UserInfo.UID
+                    },
+                    order: 'CreatedDate DESC',
+                };
+
+                notificationServices.LoadListGlobalNotify(data).then(function(data) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                        data.data[i].fromTime = moment(data.data[i].CreatedDate).fromNow();
+                        // data.data[i].CreatedDate = new Date(data.data[i].CreatedDate);
+                    };
+                    $scope.listGlobalNotify = data.data;
+                    $scope.globalCount = data.count;
+                    console.log("Count", data.count);
+                    console.log("$scope.listGlobalNotify", $scope.listGlobalNotify);
+                });
+            };
+
+            $scope.OpenDetail = function(global) {
+                if (global.MsgContent.Command && global.MsgContent.Command.Url_State) {
+                    $state.go(global.MsgContent.Command.Url_State, { UID: global.MsgContent.Display.Object.UID });
+                } else {
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        size: 'lg', // windowClass: 'app-modal-window', 
+                        templateUrl: 'modules/notification/views/notificationGlobalDetail.html',
+                        resolve: {
+                            data: function() {
+                                return global;
+                            }
+                        },
+                        controller: 'notificationGlobalDetailCtrl',
+                    });
+                    modalInstance.result.then(function(result) {
+                        if (result === 'Close') {
+                            if (ioSocket.telehealthGlobalNotify) {
+                                ioSocket.telehealthGlobalNotify("msg");
+                            };
+                            if (ioSocket.LoadListGlobalNotify) {
+                                ioSocket.LoadListGlobalNotify();
+                            };
+                        };
+                    }, function(err) {
+                        console.log("globalNotify.Directive", err);
+                    });
+                };
+
+                // Change Read Log
+                if (global.Read.indexOf(UserInfo.UID) === -1) {
+                    var info = {
+                        ID: global.ID,
+                        Read: global.Read,
+                        UserUID: UserInfo.UID
+                    };
+                    notificationServices.ChangeReadQueueJobg(info).then(function(data) {
+                        if (ioSocket.telehealthGlobalNotify) {
+                            ioSocket.telehealthGlobalNotify("msg");
+                        };
+                        if (ioSocket.LoadListGlobalNotify) {
+                            ioSocket.LoadListGlobalNotify();
+                        };
+                    }, function(err) {
+                        console.log("GlobalNotify.ChangeReadQueueJobg", err);
+                    });
+                };
+            };
+
+            $scope.dissMissAll = function() {
+                if ($scope.globalCount > 0) {
+                    var info = {
+                        Role: Role,
+                        UID: UserInfo.UID,
+                        queue: 'GLOBALNOTIFY',
+                    };
+                    notificationServices.ChangeReadAllQueueJobg(info).then(function(data) {
+                        if (ioSocket.telehealthGlobalNotify) {
+                            ioSocket.telehealthGlobalNotify("msg");
+                        };
+                        if (ioSocket.LoadListGlobalNotify) {
+                            ioSocket.LoadListGlobalNotify();
+                        };
+                    });
+                };
+            };
+
+            ioSocket.telehealthGlobalNotify = function(msg) {
+                $scope.loadListGlobalNotify();
+                if (msg != 'msg') {
+                    toastr.info(msg.Display.Subject + " send you a message ", "Notification");
+                }
+            };
+
+            $scope.loadListGlobalNotify();
+        },
+    };
+});
+
+app.directive("privateNotify", function() {
+    return {
+        restrict: 'A',
+        scope: {
+            scope: "="
+        },
+        templateUrl: 'common/views/privateNotify.html',
+        controller: function($scope, $cookies, notificationServices, AuthenticationService, toastr, $uibModal, $state) {
+            var UserInfo = $cookies.getObject('userInfo');;
+
+            $scope.loadListNotify = function() {
+                // var roles = UserInfo.roles;
+                var userUID = UserInfo.UID;
+                var queue = 'NOTIFY';
+
+                var info = {
+                    Search: {
+                        userUID: userUID,
+                        queue: queue
+                    },
+                    order: 'CreatedDate DESC',
+                };
+
+                console.log('%c loadListNotify!!!!!!!!!!!!!!!!!!!!!!! ', 'background: #222; color: #bada55');
+                notificationServices.getListNotifySearch(info).then(function(data) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
+                        data.data[i].fromTime = moment(data.data[i].CreatedDate).fromNow();
+                        // data.data[i].time = (Date.now() - data.data[i].CreatedDate).toHHMMSS();
+                        // console.log(typeof data.data[i].time);
+                    };
+                    console.log("listNotify", data.data);
+                    console.log("listNotify", data.count);
+                    $scope.listNotify = data.data;
+                    $scope.UnReadCount = data.count;
+                });
+            };
+
+            $scope.loadListNotify();
+
+            function UpdateQueueJob(whereClause) {
+                AuthenticationService.updateReadQueueJob(whereClause).then(function(data) {
+                    if (data.status === 'success') {
+                        if (ioSocket.telehealthPrivateNotify) {
+                            ioSocket.telehealthPrivateNotify("msg");
+                        };
+                        if (ioSocket.LoadListPrivateNotify) {
+                            ioSocket.LoadListPrivateNotify();
+                        };
+                    };
+                }, function(err) {
+                    console.log("updateReadQueueJob ", err);
+                });
+            };
+
+            $scope.updateReadQueueJob = function(queuejob) {
+                var userUID = UserInfo.UID;
+                var queue = 'NOTIFY';
+                var whereClause = {
+                    userUID: userUID,
+                    queue: queue
+                };
+                if (queuejob) {
+                    if (queuejob.Read === 'N') {
+                        whereClause.ID = queuejob.ID;
+                        UpdateQueueJob(whereClause);
+                    };
+                    if (queuejob.MsgContent.Command && queuejob.MsgContent.Command.Url_State) {
+                        $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+                    } else {
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            size: 'lg', // windowClass: 'app-modal-window', 
+                            templateUrl: 'modules/notification/views/notificationPrivateDetail.html',
+                            resolve: {
+                                data: function() {
+                                    return queuejob;
+                                }
+                            },
+                            controller: 'notificationPrivateDetailCtrl',
+                        });
+                        modalInstance.result.then(function(result) {
+                            if (result === 'Close') {
+                                if (ioSocket.telehealthPrivateNotify) {
+                                    ioSocket.telehealthPrivateNotify("msg");
+                                };
+                                if (ioSocket.LoadListPrivateNotify) {
+                                    ioSocket.LoadListPrivateNotify();
+                                };
+                            };
+                        }, function(err) {
+                            console.log("globalNotify.Directive", err);
+                        });
+                    };
+                } else {
+                    if ($scope.UnReadCount > 0) {
+                        UpdateQueueJob(whereClause);
+                    };
+                };
+            };
+
+            ioSocket.telehealthPrivateNotify = function(msg) {
+                $scope.loadListNotify();
+                console.log(msg);
+                if (msg != 'msg') {
+                    toastr.info(msg.Display.Subject + " send you a message ", "Notification");
+                }
+            };
+        },
+    };
+});
+
+// End Notification

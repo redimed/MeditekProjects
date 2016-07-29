@@ -1,4 +1,5 @@
-var app = angular.module('app.authentication.notification.directive.private', []);
+var app = angular.module('app.authentication.notification.directive.private', [
+]);
 
 app.directive('notificationPrivate', function() {
     return {
@@ -7,7 +8,7 @@ app.directive('notificationPrivate', function() {
         options: {
             scope: '='
         },
-        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state) {
+        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state, $uibModal) {
             var UserInfo = $cookies.getObject('userInfo');
             var userUID = UserInfo.UID;
             var queue = 'NOTIFY';
@@ -16,19 +17,34 @@ app.directive('notificationPrivate', function() {
                 userUID: userUID,
                 queue: queue
             };
+
             $scope.fieldSort = {};
 
-            $scope.fieldSort.Time = 'ASC';
-            // $scope.fieldSort.Action = 'ASC';
+            $scope.itemSearch = [
+                { field: "SenderAccount", name: "Sender" },
+                { field: "Subject", name: "Subject" },
+                { field: "MsgContent", name: "Content" },
+                { field: "Object", name: "Object" }
+            ];
 
-            $scope.loadListNotify = function(info) {
+            $scope.itemDefault = [
+                { field: "SenderAccount", name: "Sender" },
+                { field: "Subject", name: "Subject" },
+                { field: "MsgContent", name: "Content" },
+                { field: "Object", name: "Object" },
+                { field: "CreatedDate", name: "Created Date" }
+            ];
+
+            $scope.fieldSort['CreatedDate'] = 'ASC';
+
+            $scope.loadListPrivateNotify = function(info) {
                 notificationServices.getListNotifySearch(info).then(function(data) {
                     for (var i = 0; i < data.data.length; i++) {
                         data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
                     };
                     console.log("listNotifySearch", data.data);
-                    $scope.listNotify = data.data;
-                    $scope.count = data.count;
+                    $scope.listPrivateNotify = data.data;
+                    $scope.count = data.countAll;
                 });
             };
 
@@ -49,7 +65,7 @@ app.directive('notificationPrivate', function() {
                 };
                 // scope.search.Enable = null;
                 $scope.searchObjectMap = angular.copy($scope.searchObject);
-                $scope.loadListNotify($scope.searchObjectMap);
+                $scope.loadListPrivateNotify($scope.searchObjectMap);
             };
 
             $scope.init();
@@ -61,7 +77,7 @@ app.directive('notificationPrivate', function() {
 
             $scope.setPage = function() {
                 $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-                $scope.loadListNotify($scope.searchObjectMap);
+                $scope.loadListPrivateNotify($scope.searchObjectMap);
             };
 
             $scope.Search = function(data, e) {
@@ -69,7 +85,7 @@ app.directive('notificationPrivate', function() {
                     ($scope.fromCreateDate && $scope.fromCreateDate !== null) ? data.FromCreatedDate = moment($scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.FromCreatedDate = null;
                     ($scope.toCreateDate && $scope.toCreateDate !== null) ? data.ToCreatedDate = moment($scope.toCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.ToCreatedDate = null;
                     $scope.searchObjectMap.Search = data;
-                    $scope.loadListNotify($scope.searchObjectMap);
+                    $scope.loadListPrivateNotify($scope.searchObjectMap);
                 } catch (err) {
                     console.log(err);
                 };
@@ -95,11 +111,34 @@ app.directive('notificationPrivate', function() {
                 data = field + ' ' + sort;
 
                 $scope.searchObjectMap.order = data;
-                $scope.loadListNotify($scope.searchObjectMap);
+                $scope.loadListPrivateNotify($scope.searchObjectMap);
             };
 
             // Go to state
             $scope.gotoUrl = function(queuejob) {
+                if (queuejob.MsgContent.Command && queuejob.MsgContent.Command.Url_State) {
+                    $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
+                } else {
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        size: 'lg', // windowClass: 'app-modal-window', 
+                        templateUrl: 'modules/notification/views/notificationPrivateDetail.html',
+                        resolve: {
+                            data: function() {
+                                return queuejob;
+                            }
+                        },
+                        controller: 'notificationPrivateDetailCtrl',
+                    });
+                    modalInstance.result.then(function(result) {
+                        if (result === 'close') {
+                            ioSocket.LoadListGlobalNotify();
+                        };
+                    }, function(err) {
+                        console.log("Global.Notification.Detail", err);
+                    });
+                };
+
                 if (queuejob.Read === 'N') {
                     var whereClause = {
                         userUID: userUID,
@@ -113,11 +152,34 @@ app.directive('notificationPrivate', function() {
                     }, function(err) {
                         console.log("updateReadQueueJob ", err);
                     });
+                    if (ioSocket.telehealthNotify()) {
+                        ioSocket.telehealthNotify('');
+                    };
                 };
-                $state.go(queuejob.MsgContent.Command.Url_State, { UID: queuejob.MsgContent.Display.Object.UID });
             };
 
-            ioSocket.LoadListNotify = function() {
+            $scope.create = function(data) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    size: 'lg', // windowClass: 'app-modal-window', 
+                    templateUrl: 'modules/notification/views/notificationPrivateCreate.html',
+                    resolve: {
+                        data: function() {
+                            return data;
+                        }
+                    },
+                    controller: 'notificationPrivateCreateCtrl',
+                });
+                modalInstance.result.then(function(result) {
+                    if (result === 'close') {
+                        ioSocket.LoadListPrivateNotify();
+                    };
+                }, function(err) {
+                    console.log("Private.Notification.Create", err);
+                });
+            };
+
+            ioSocket.LoadListPrivateNotify = function() {
                 $scope.init();
             };
 

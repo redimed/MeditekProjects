@@ -27,6 +27,7 @@ module.exports = function(data) {
 	}
 	var promise = new Promise(function(a, b) {
 		var patient, eform;
+		var item_length = 0;
 		sequelize.transaction()
 		.then(function(t) {
 
@@ -99,32 +100,48 @@ module.exports = function(data) {
 					throw err;
 				}
 				else {
-					if(data.ApptUID && data.ApptUID != null && data.ApptUID != '') {
-						return Appointment.findOne({
+					if(data.arr_ApptUID && data.arr_ApptUID != null && data.arr_ApptUID != '') {
+						var arr_ApptUID = [];
+						for(var i = 0; i < data.arr_ApptUID.length; i++) {
+							data.arr_ApptUID[i].EFormID = eform.ID;
+							// data.arr_ApptUID[i].AppointmentID = data.arr_ApptUID[i].UID;
+							arr_ApptUID.push(data.arr_ApptUID[i].UID);
+							item_length++;
+						}
+						return Appointment.findAll({
 							attributes: ['ID','UID','Code'],
 							where : {
-								UID : data.ApptUID,
+								UID : { $in : arr_ApptUID }
 							},
-							transaction: t,
-						})
-						.then(function(got_appt) {
-							if(got_appt == '' || got_appt == null) {
-								var err = new Error('createFormByUpload.error');
-								err.pushError('CreateError.WhenCreateRelAppointmentEForm');
-								throw err;
-							}
-							else {
-								return eform.addAppointment(got_appt.ID,{
-		                               transaction: t
-		                        })
-							}
-						}, function(err) {
-							throw err;
-						})
+							transaction : t,
+						});
 					}
 					else {
 						return created_relEFormPatient;
 					}
+				}
+			}, function(err) {
+				throw err;
+			})
+			.then(function(got_appts) {
+				if(data.arr_ApptUID && data.arr_ApptUID != null && data.arr_ApptUID != '') {
+					if(got_appts == null || got_appts == '' || got_appts.length != item_length) {
+						var err = new Error('createFormByUpload.error');
+						err.pushError('Err.whenCheckAppt');
+						throw err;
+					}
+					else {
+						for(var i = 0; i < got_appts.length; i++) {
+							data.arr_ApptUID[i].AppointmentID = got_appts[i].ID;
+						}
+						return RelEFormAppointment.bulkCreate(data.arr_ApptUID,{
+							transaction: t,
+							individualHooks: true,
+						});
+					}
+				}
+				else {
+					return got_appts;
 				}
 			}, function(err) {
 				throw err;

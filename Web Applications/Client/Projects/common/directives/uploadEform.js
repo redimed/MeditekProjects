@@ -14,6 +14,7 @@ angular.module('app.common.uploadEform',[])
 		controller: function($scope, FileUploader) {
 			$scope.FormName;
 			$scope.UID;
+			$scope.arr_ApptUID = [];
 			function capitalizeFirstLetter(string) {
 			    return string.charAt(0).toUpperCase() + string.slice(1);
 			}
@@ -24,7 +25,7 @@ angular.module('app.common.uploadEform',[])
 		        	fileName:capitalizeFirstLetter($scope.FormName),
 		        	fileExt: Ext,
 		        	patientUID:$scope.PatientUID,
-		        	ApptUID: $scope.UID,
+		        	arr_ApptUID: $scope.arr_ApptUID,
 		        })
 		        .then(function(result) {
 		        	toastr.success('Upload Successfully.');
@@ -85,6 +86,7 @@ angular.module('app.common.uploadEform',[])
 		},
 		link:function(scope,element,attrs) {
 			scope.isChose = false;
+			scope.checkbox = {};
 			$timeout(function() {
 				scope.isShowListAppt = true;
 				scope.list = [];
@@ -105,19 +107,37 @@ angular.module('app.common.uploadEform',[])
 					})
 					.then(function(response) {
 						console.log("response ",response);
+						for(var i = 0; i < response.rows.length; i++) {
+							response.rows[i].CreatedDate = response.rows[i].CreatedDate ? 
+							moment(response.rows[i].CreatedDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY HH:mm:ss') : null;
+						}
 						scope.list = response.rows;
 					}, function(err) {
 						console.log("err ",err);
 					})
 				}
 			},2000);
+
+			scope.whenChange = function(item, data) {
+				if(scope.checkbox[item] === 'N') {
+					if(scope.arr_ApptUID.length > 0) {
+						scope.arr_ApptUID = scope.arr_ApptUID.filter(function(i) {
+							return i.UID !== data.UID;
+						});
+					}
+				}
+				else {
+					scope.arr_ApptUID.push({UID:data.UID});
+				}
+			};
+
 			scope.Add = function(model, data) {
 				var modalInstance = $uibModal.open({
 					templateUrl: 'ChoseFile',
 					scope : scope,
 					controller: function($scope, $modalInstance){
 						$scope.EFormName;
-						$scope.AppointmentUID = scope.UID;
+						$scope.AppointmentUID = scope.arr_ApptUID;
 						$scope.errorObj = {};
 						$scope.cancel = function(){
 							$modalInstance.dismiss('cancel');
@@ -141,17 +161,18 @@ angular.module('app.common.uploadEform',[])
 								o.loadingPage(false);
 								return ;
 							}
-							if($scope.AppointmentUID == '' || $scope.AppointmentUID == null) {
+							if($scope.AppointmentUID == '' || $scope.AppointmentUID == null || $scope.AppointmentUID.length == 0) {
 								toastr.error('Please chose Appointment.');
 								o.loadingPage(false);
 								return ;
 							}
 							else {
 								scope.FormName = $scope.EFormName;
-								scope.UID = $scope.AppointmentUID;
+								// scope.UID = $scope.AppointmentUID;
 								$scope.uploader.uploadAll();
 								$modalInstance.dismiss('cancel');
 							}
+							console.log("arr_ApptUID ",scope.arr_ApptUID);
 						};
 					},
 					size: 'lg',

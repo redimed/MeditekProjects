@@ -7,45 +7,142 @@
 <div class="modal-body">
     <form name="formglobal" class="form" novalidate>
         <div class="form-horizontal">
-            <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Subject:</label>
-                <div class="col-md-8 col-xs-8">
-                    <input type="text" class="form-control" name="subject" ng-model="private.Subject" placeholder="Subject" required/>
-                    <span style="color:red" ng-show="formglobal.subject.$dirty && formglobal.subject.$invalid">
-                        <span ng-show="formglobal.subject.$dirty && formglobal.subject.$error.required">Subject is required.</span>
-                    </span>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-xs-4 text-right">Subject:</label>
+                        <div class="col-md-8 col-xs-8">
+                            <input type="text" class="form-control" name="subject" ng-model="private.Subject" placeholder="Subject" required/>
+                            <span style="color:red" ng-show="formglobal.subject.$dirty && formglobal.subject.$invalid">
+                                <span ng-show="formglobal.subject.$dirty && formglobal.subject.$error.required">Subject is required.</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-xs-4 text-right">Content:</label>
+                        <div class="col-md-8 col-xs-8">
+                            <textarea class="form-control" name="msgcontent" ng-model="private.MsgContent" placeholder="Content..." required></textarea>
+                            <span style="color:red" ng-show="formglobal.msgcontent.$dirty && formglobal.msgcontent.$invalid">
+                                <span ng-show="formglobal.msgcontent.$error.required">MsgContent is required.</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label class="control-label col-md-3 col-xs-4 text-right"></label>
+                        <div class="col-md-8 col-xs-8">
+                            <a href="#" ng-click="loadListUser()">Choose User</a>
+                        </div>
+                    </div> -->
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Content:</label>
-                <div class="col-md-8 col-xs-8">
-                    <textarea class="form-control" name="msgcontent" rows="10" ng-model="private.MsgContent" placeholder="Content..." required></textarea>
-                    <span style="color:red" ng-show="formglobal.msgcontent.$dirty && formglobal.msgcontent.$invalid">
-                        <span ng-show="formglobal.msgcontent.$error.required">MsgContent is required.</span>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right"></label>
-                <div class="col-md-8 col-xs-8">
-                    <a href="#" ng-click="loadListUser()">Choose User</a>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Send Time:</label>
-                <div class="col-md-2 col-xs-3">
-                    <div class="mt-checkbox-inline">
-                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                            <input type="checkbox" ng-model="now" />
-                            <span></span> Now
-                        </label>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-xs-4 text-right">Send Time:</label>
+                        <div class="col-lg-2 col-md-2 col-xs-3">
+                            <div class="mt-checkbox-inline">
+                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                    <input type="checkbox" ng-model="now" />
+                                    <span></span> Now
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-hide="now">
+                        <div class="col-md-12 col-xs-12">
+                            <input datetime-picker name="firsttime" ng-model="private.FirstDelay" placeholder="First Delay">
+                            <span style="color:red" ng-show="formglobal.firsttime.$dirty && formglobal.firsttime.$invalid">
+                                <span ng-show="formglobal.firsttime.$error.date">First Delay is date.</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-5" ng-hide="now">
-                    <input datetime-picker name="firsttime" ng-model="private.FirstDelay" placeholder="First Delay">
-                    <span style="color:red" ng-show="formglobal.firsttime.$dirty && formglobal.firsttime.$invalid">
-                        <span ng-show="formglobal.firsttime.$error.date">First Delay is date.</span>
-                    </span>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="tabbable-custom" id="tabBable">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="@#doctor" data-toggle="tab" aria-expanded="true">Doctor</a></li>
+                            <li><a href="@#patient" data-toggle="tab" aria-expanded="true">Patient</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="doctor">
+                                <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive scroller-height">
+                                    <table class="table table-hover table-light table-checkable ">
+                                        <thead>
+                                            <tr class="uppercase">
+                                                <th colspan="2">Choose doctor</th>
+                                                <th width="1"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team1.jpg" /></td>
+                                                <td><a href="javascript:;" class="primary-link">Lý Liên Liệt</a></td>
+                                                <td>
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                        <input type="checkbox" class="group-checkable" />
+                                                        <span></span>
+                                                   </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team2.jpg" /></td>
+                                                <td><a href="javascript:;" class="primary-link">Phan Quốc Đại</a></td>
+                                                <td>
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                        <input type="checkbox" class="group-checkable" />
+                                                        <span></span>
+                                                   </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team1.jpg" /></td>
+                                                <td><a href="javascript:;" class="primary-link">Lý Liên Liệt</a></td>
+                                                <td>
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                        <input type="checkbox" class="group-checkable" />
+                                                        <span></span>
+                                                   </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team2.jpg" /></td>
+                                                <td><a href="javascript:;" class="primary-link">Phan Quốc Đại</a></td>
+                                                <td>
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                        <input type="checkbox" class="group-checkable" />
+                                                        <span></span>
+                                                   </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team1.jpg" /></td>
+                                                <td><a href="javascript:;" class="primary-link">Lý Liên Liệt</a></td>
+                                                <td>
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                        <input type="checkbox" class="group-checkable" />
+                                                        <span></span>
+                                                   </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team2.jpg" /></td>
+                                                <td><a href="javascript:;" class="primary-link">Phan Quốc Đại</a></td>
+                                                <td>
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                        <input type="checkbox" class="group-checkable" />
+                                                        <span></span>
+                                                   </label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="patient">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,3 +152,12 @@
     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
     <button type="button" class="btn btn-primary" ng-click="submit(private)">{{submitText}}</button>
 </div>
+
+
+<style type="text/css">
+   .scroller-height {
+       max-height: 500px;
+       overflow: scroll;
+       overflow-x: hidden;
+   }
+</style>

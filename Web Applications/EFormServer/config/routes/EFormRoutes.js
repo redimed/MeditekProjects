@@ -135,4 +135,13 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'GetListEFormTemplateByAppointment',
     },
+
+    'post /eformtemplate/v1/save': {
+        controller: 'EForm/EFormController',
+        action: 'PostV1SaveEFormTemplate'
+    },
+    'post /eform/v1/save': {
+        controller: 'EForm/EFormController',
+        action: 'PostV1Save'
+    }
 };

@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2 col-sm-12">EForm Name:</label>
                         <div class="col-md-8 col-sm-12">
-                            <input type="text" ng-model="EFormName" class="form-control" ng-style="errorObj" ng-change="setNull()" />
+                            <input type="text" ng-model="EFormName" class="form-control" ng-style="errorObj" />
                         </div>
                         <div class="col-md-2 col-sm-12">
                             <div ng-form name="checkInForm" novalidate>
@@ -52,7 +52,7 @@
                                         <tr ng-repeat="item in list" class="odd gradeX">
                                             <td>
                                                 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                    <input type="checkbox" class="checkboxes" value="1" id="{{item.Code}}" ng-model="checkbox[item.Code]" ng-change="whenChange(item.Code, item)" ng-true-value="'Y'" ng-false-value="'N'" />
+                                                    <input type="checkbox" class="checkboxes" value="1" id="{{item.Code}}" ng-model="checkbox[item.Code]" ng-change="whenChange(item.Code, item, arr_ApptUID)" ng-true-value="'Y'" ng-false-value="'N'" />
                                                     <span></span>
                                                 </label>
                                             </td>

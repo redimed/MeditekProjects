@@ -14,7 +14,13 @@ angular.module('app.common.uploadEform',[])
 		controller: function($scope, FileUploader) {
 			$scope.FormName;
 			$scope.UID;
-			$scope.arr_ApptUID = [];
+			$scope.init = function() {
+				$scope.arr_ApptUID = [];
+				$scope.uploader.queue = [];
+				$scope.checkbox = {};
+				$scope.isChose = false;
+				$scope.EFormName = null;
+			}
 			function capitalizeFirstLetter(string) {
 			    return string.charAt(0).toUpperCase() + string.slice(1);
 			}
@@ -38,7 +44,6 @@ angular.module('app.common.uploadEform',[])
 			//create reqeust uploader
 			$scope.fileType = 'MedicalImage';
 		    var uploader = $scope.uploader = new FileUploader({
-		        // url: 'http://192.168.1.2:3005/api/uploadFile',
 		        url: o.const.uploadFileUrl,
 		        autoUpload: false,
 		        withCredentials: true,
@@ -64,10 +69,10 @@ angular.module('app.common.uploadEform',[])
 		    uploader.onBeforeUploadItem = function(item) {
 		        item.headers.Authorization = 'Bearer ' + $cookies.get("token");
 		        item.headers.systemtype = 'WEB';
-		        console.info('onBeforeUploadItem', item);
+		        // console.info('onBeforeUploadItem', item);
 		    };
 		    uploader.onCompleteItem = function(fileItem, response, status, headers) {
-		        console.info('onCompleteItem', response);
+		        // console.info('onCompleteItem', response);
 		        if (Boolean(headers.requireupdatetoken) === true) {
 		            $rootScope.getNewToken();
 		            uploadEForm(response, fileItem);
@@ -78,20 +83,18 @@ angular.module('app.common.uploadEform',[])
 		        
 		    };
 		    uploader.onErrorItem = function(fileItem, response, status, headers) {
-		        console.info('onErrorItem', fileItem, response, status, headers);
+		        // console.info('onErrorItem', fileItem, response, status, headers);
 		        if (Boolean(headers.requireupdatetoken) === true) {
 		            $rootScope.getNewToken();
 		        }
 		    };
 		},
 		link:function(scope,element,attrs) {
-			scope.isChose = false;
-			scope.checkbox = {};
 			$timeout(function() {
 				scope.isShowListAppt = true;
 				scope.list = [];
-				console.log("ApptUID ",scope.ApptUID);
-				console.log("PatientUID ",scope.PatientUID);
+				// console.log("ApptUID ",scope.ApptUID);
+				// console.log("PatientUID ",scope.PatientUID);
 				if(scope.ApptUID != null && scope.ApptUID != '' && scope.ApptUID != undefined) {
 					scope.isShowListAppt = false;
 					scope.UID = scope.ApptUID;
@@ -107,7 +110,7 @@ angular.module('app.common.uploadEform',[])
 						}]
 					})
 					.then(function(response) {
-						console.log("response ",response);
+						// console.log("response ",response);
 						for(var i = 0; i < response.rows.length; i++) {
 							response.rows[i].CreatedDate = response.rows[i].CreatedDate ? 
 							moment(response.rows[i].CreatedDate, 'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY HH:mm:ss') : null;
@@ -131,13 +134,12 @@ angular.module('app.common.uploadEform',[])
 					scope.arr_ApptUID.push({UID:data.UID});
 				}
 			};
-
 			scope.Add = function(model, data) {
 				var modalInstance = $uibModal.open({
 					templateUrl: 'ChoseFile',
 					scope : scope,
 					controller: function($scope, $modalInstance){
-						$scope.EFormName;
+						$scope.init();
 						$scope.AppointmentUID = scope.arr_ApptUID;
 						$scope.errorObj = {};
 						$scope.cancel = function(){
@@ -169,15 +171,13 @@ angular.module('app.common.uploadEform',[])
 							}
 							else {
 								scope.FormName = $scope.EFormName;
-								// scope.UID = $scope.AppointmentUID;
 								$scope.uploader.uploadAll();
 								$modalInstance.dismiss('cancel');
 							}
-							console.log("arr_ApptUID ",scope.arr_ApptUID);
+							// console.log("arr_ApptUID ",scope.arr_ApptUID);
 						};
 					},
 					size: 'lg',
-					// windowClass: model=='Staff'?'app-modal-window':null
 				});
 			};
 

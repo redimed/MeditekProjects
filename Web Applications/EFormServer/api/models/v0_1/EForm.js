@@ -44,6 +44,10 @@ module.exports = {
         },
         ModifiedBy: {
             type: Sequelize.BIGINT(20)
+        },
+        Version: {
+            type: Sequelize.STRING(45),
+            defaultValue: '1.0'
         }
     }, 
     associations: function() {},

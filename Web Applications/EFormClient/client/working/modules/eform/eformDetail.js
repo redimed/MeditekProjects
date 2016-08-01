@@ -582,7 +582,6 @@ module.exports = React.createClass({
         return age;
     },
     _checkServerEFormDetail: function(){
-        console.log('after');
         var self = this;
         EFormService.eformCheckDetail({templateUID: this.templateUID, appointmentUID: this.appointmentUID})
         .then(function(response){

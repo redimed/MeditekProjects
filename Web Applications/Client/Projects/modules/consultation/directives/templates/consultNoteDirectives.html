@@ -59,6 +59,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-6">If YES, when was it diagnosed ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text" class="form-control" ng-disabled="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma.0'].Value!='Y'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.WhenWasItDiagnosed.0'].Value">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-6"> What was the depth ?</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text" class="form-control" ng-disabled="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Melanoma.0'].Value!='Y'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History. WhatWasTheDepth.0'].Value">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-md-6 col-sm-6">Have you had other skin cancer (eg. Basal Cell/Aquamous Cell Cancer) before ?</label>
                         <div class="col-md-6 col-sm-6">
                             <div class="mt-radio-inline">
@@ -171,6 +183,25 @@
                                     ng-false-value="'N'" 
                                     ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.Suspicious_Lesions.0'].Value"/>  No suspicious lesions identified <span></span>
                             </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-6">Lymph Node Check</label>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mt-radio-inline">
+                                <label class="mt-radio mt-radio-outline">
+                                    <input type="radio" 
+                                    name="IfYesNormalLymph" 
+                                    value="Normal" 
+                                    ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.LymphNodeCheck.0'].Value"> Normal <span></span>
+                                </label>
+                                <label class="mt-radio mt-radio-outline">
+                                    <input type="radio" 
+                                    name="IfYesNormalLymph" 
+                                    value="Abnormal" 
+                                    ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.History.LymphNodeCheck.0'].Value"> Abnormal <span></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <hr/>
@@ -842,6 +873,12 @@
 
                                 </div>
                             </div>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-12">Notes/Comments</label>
+                        <div class="col-md-8 col-sm-12">
+                            <textarea class="form-control" row="3" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Suithble__for.Skin_CheckinComment.0'].Value"></textarea>
                         </div>
                     </div>
 

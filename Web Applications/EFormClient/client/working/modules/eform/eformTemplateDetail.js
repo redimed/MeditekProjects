@@ -19,7 +19,12 @@ module.exports = React.createClass({
             this.refs.pageBar.setName(response.data.Name);
             var EFormTemplate = response.data;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
+
+            if(!content || content.length == 0)
+                return
+            
             this.setState(function(prevState) {
+
                 return {
                     name: EFormTemplate.Name,
                     sections: Immutable.fromJS(content.sections)
@@ -35,6 +40,7 @@ module.exports = React.createClass({
     },
     _onComponentPageBarAddNewSection: function() {
         var page = 1;
+        console.log(this.state.sections)
         var sectionRef = "section_"+this.state.sections.size;
         if(this.state.sections.size > 0){
             var prevSize = this.state.sections.size-1;
@@ -668,6 +674,7 @@ module.exports = React.createClass({
         swal("Updated!", "Your section " + name + " has been updated.", "success")
     },
     render: function(){
+        console.log(this.state.sections)
 	return (
 		<div className="page-content">
             <div className="col-md-3 col-md-push-9">

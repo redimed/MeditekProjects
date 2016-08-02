@@ -498,15 +498,15 @@
                                             <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$invalid}">
                                                 <label class="control-label col-lg-4 col-md-4">Contact number (H)</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9\s]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
-                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p>
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-disabled="ShowData.isLinkPatient">
+                                                   <!--  <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p> -->
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$invalid}">
                                                 <label class="control-label col-lg-4 col-md-4">Contact number (W)</label>
                                                 <div class="col-lg-8 col-md-8">
-                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.WorkPhoneNumber" name="TelehealthAppointment_PatientAppointment_WorkPhoneNumber" ng-pattern="/^[0-9\s]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
-                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$error.pattern" class="help-block">Work phone is a 4-10 digits number</p>
+                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.WorkPhoneNumber" name="TelehealthAppointment_PatientAppointment_WorkPhoneNumber"  ng-disabled="ShowData.isLinkPatient">
+                                                    <!-- <p ng-show="userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$error.pattern" class="help-block">Work phone is a 4-10 digits number</p> -->
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email1.$invalid}">

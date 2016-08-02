@@ -87,24 +87,25 @@ customLogger.add(Mail, {
 var log = {};
 if (process.argv.indexOf("--logtest") >= 0) {
     console.log("||||||||||||||||||||||| LOG: LOG TEST");
-    log['level'] = 'verbose';
+    log['level'] = 'debug';
 } else {
     if (process.env.NODE_ENV === 'production') {
         log['custom'] = customLogger;
     } else {
         log['custom'] = logstashLogger;
+        //log['level'] = 'verbose';
     }
 }
 
 
 
 // Override console.log. All console.log is now treated at debug level of winston log.
-function formatArgs(args){
-    return [util.format.apply(util.format, Array.prototype.slice.call(args))];
-}
+// function formatArgs(args){
+//     return [util.format.apply(util.format, Array.prototype.slice.call(args))];
+// }
 
-console.log = function(){
-    logstashLogger.debug.apply(logstashLogger, formatArgs(arguments));
-}
+// console.log = function(){
+//     logstashLogger.debug.apply(logstashLogger, formatArgs(arguments));
+// }
 
 module.exports.log = log;

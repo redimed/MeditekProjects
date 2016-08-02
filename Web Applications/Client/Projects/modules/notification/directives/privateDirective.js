@@ -70,11 +70,6 @@ app.directive('notificationPrivate', function() {
 
             $scope.init();
 
-            $scope.toggle = false;
-            $scope.toggleFilter = function() {
-                $scope.toggle = $scope.toggle === false ? true : false;
-            };
-
             $scope.setPage = function() {
                 $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
                 $scope.loadListPrivateNotify($scope.searchObjectMap);

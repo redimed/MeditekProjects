@@ -13,14 +13,11 @@
             <span class="caption-subject bold uppercase"> Notification Global</span>
         </div>
         <div class="actions">
-            <a href="javascript:;" class="btn btn-outline red" ng-click="toggleFilter()">
-                <i class="glyphicon glyphicon-filter"></i> Filter
-            </a>
             <a href="javascript:;" class="btn btn-outline blue" ng-click="init()">
                 <i class="glyphicon glyphicon-refresh"></i> Refresh
             </a>
             <a ui-sref="authentication.notification.sended({type:'global'})" class="btn btn-outline blue">
-                <i class="glyphicon glyphicon-send"></i> Sended
+                <i class="glyphicon glyphicon-send"></i> Sent Message
             </a>
             <a href="javascript:;" class="btn btn-outline blue" ng-click="openCreate()">
                 <i class="glyphicon glyphicon-plus"></i> Create
@@ -39,7 +36,7 @@
                             <i class="fa fa-sort-desc" ng-click="sort(ite.field,'DESC')" ng-show="fieldSort[ite.field]=='DESC'"></i>
                         </th>
                     </tr>
-                    <tr ng-show="toggle">
+                    <tr>
                         <td>#</td>
                         <td ng-repeat="ite in itemSearch">
                             <input type="text" ng-model="search[ite.field]" class="form-control" ng-enter="Search(search)" />

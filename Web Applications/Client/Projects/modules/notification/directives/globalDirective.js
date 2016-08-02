@@ -12,7 +12,6 @@ app.directive('notificationGlobal', function() {
             var roles = UserInfo.roles;
             var Role = [];
             var queue = 'GLOBALNOTIFY';
-            $scope.toggle = false;
 
             for (var i = 0; i < roles.length; i++) {
                 Role.push(roles[i].RoleCode);
@@ -43,10 +42,6 @@ app.directive('notificationGlobal', function() {
             $scope.items = $scope.items != null && $scope.items != undefined ? $scope.items : $scope.itemDefault;
 
             $scope.fieldSort['CreatedDate'] = 'ASC';
-
-            $scope.toggleFilter = function() {
-                $scope.toggle = $scope.toggle === true ? false : true;
-            };
 
             function LoadListGlobalNotify(info) {
                 notificationServices.LoadListGlobalNotify(info).then(function(data) {

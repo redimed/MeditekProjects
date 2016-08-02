@@ -10,7 +10,13 @@ angular.module('app.authentication.doctor.directive.list', [])
 			reload: '=',
 			uidReturn:'=',
 		},
+		scope:{
+			items: '=onItem',
+			isHaveCheckbox: '=onCheck',
+			whenChoose:'=onChoose'
+		},
 		link: function(scope, ele, attr) {
+			console.log("asd ",scope.isHaveCheckbox)
 			scope.islinkDoctorGroup = scope.isLink?scope.isLink:false;
 			scope.search = {};
 			scope.EnableChoose = [
@@ -191,6 +197,26 @@ angular.module('app.authentication.doctor.directive.list', [])
 							scope.uidReturn = doctor.UID;
 							openLinkDoctorGroup(doctor);
 						}
+					}
+				}
+			}
+
+			scope.selectDoctor = function(doctor) {
+				if(_.isEmpty(scope.uidReturn)) {
+					scope.uidReturn = doctor.UID;
+					// openLinkDoctorGroup(doctor);
+					if(scope.whenChoose !== undefined && typeof scope.whenChoose === 'function')
+						scope.whenChoose(doctor);
+				}
+				else {
+					if(scope.uidReturn == doctor.UID) {
+						scope.uidReturn = null;
+					}
+					else {
+						scope.uidReturn = doctor.UID;
+						if(scope.whenChoose !== undefined && typeof scope.whenChoose === 'function')
+							scope.whenChoose(doctor);
+						// openLinkDoctorGroup(doctor);
 					}
 				}
 			}

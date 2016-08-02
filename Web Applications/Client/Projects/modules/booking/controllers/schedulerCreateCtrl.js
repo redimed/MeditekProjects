@@ -2,6 +2,16 @@ var app = angular.module('app.authentication.booking.scheduler.create.controller
 
 app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr) {
     $modalInstance.rendered.then(function() {
+        function getDateCalendar() {
+            var date = $('#calendar').fullCalendar('getDate');
+            var today = moment(date).format('YYYY-MM-DD');
+            return today;            
+        }
+        var DateToday = getDateCalendar();
+        $('#calendar').fullCalendar( 'removeEvents', function(event) {
+            if(moment(event._start._i).format('YYYY-MM-DD') === DateToday)
+                return true;
+        });
         App.initAjax();
         ComponentsDateTimePickers.init();
     });
@@ -100,7 +110,7 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
             var toTime = appendFullCalendarDateTime(start, $scope.formData.toTime);
             var type = $scope.formData.type;
             var zone = moment().format('Z');
-            var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss') + " " + zone;
+            var requestDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss') + " " + zone;
             var serviceUID = $scope.formData.service.UID;
             var siteUID = $scope.formData.site.UID;
             var DoctorUID = event.UserAccounts[0].Doctor.UID;
@@ -154,13 +164,22 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
 });
 
 /*Thao*/
-app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr, type, date, time, $stateParams, $state) {
-    $scope.item = item;
-    $scope.type = type;
-    $scope.date = date;
+app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr, type, time, $stateParams, $state) {
+    $scope.item = item;     
     $scope.time = time;
     $scope.formData = {};
+    console.log("Type", type);
     $modalInstance.rendered.then(function() {
+        function getDateCalendar() {
+            var date = $('#calendar').fullCalendar('getDate');
+            var today = moment(date).format('YYYY-MM-DD');
+            return today;            
+        }
+        var DateToday = getDateCalendar();
+        $('#calendar').fullCalendar( 'removeEvents', function(event) {
+            if(moment(event._start._i).format('YYYY-MM-DD') === DateToday)
+                return true;
+        });
         App.initAjax();
         ComponentsDateTimePickers.init();
     });
@@ -173,12 +192,9 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
     $scope.formData = {};
     $scope.patient = {
         runIfSuccess: function(data) {
-            console.log(data);
-            // $scope.formData.Patient = data;
             $timeout(function() {
                 $scope.formData.Patient = data;
             }, 0);
-            console.log($scope.formData);
         },
         runIfClose: function() {
             $modalInstance.close();
@@ -186,14 +202,14 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
     };
 
 
-    /*function getListService() {
+    function getListService() {
         RosterService.GetListService()
             .then(function(response) {
                 $scope.listServices = response.data;
             }, function(error) {
 
             })
-    }*/
+    }
 
     function getListSite() {
         RosterService.GetListSite()
@@ -215,8 +231,8 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
     $scope.formData.service = event.Services[0];
     $scope.formData.site = event.Sites[0];
     $scope.formData.fromTime = moment(start).format('HH:mm'),
-        $scope.formData.toTime = moment(end).format('HH:mm');
-    $scope.formData.date = date; //moment(start).format('DD/MM/YYYY'),
+    $scope.formData.toTime = moment(end).format('HH:mm');
+    $scope.formData.apptDate = moment(start).format('DD/MM/YYYY');//moment(start).format('DD/MM/YYYY'),
     $scope.formData.Doctor = event.UserAccounts[0].Doctor;
     $scope.formData.Patient = item;
     $scope.formData.type = type;
@@ -247,33 +263,69 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
         return parseInt(split[0] + split[1]);
     };
 
+    $scope.selectDoctor = function(){
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'modules/booking/views/bookingSelectDoctor.html',
+            size: "lg",
+            resolve:{
+                
+            },
+            controller: "bookingSelectDoctorCtrl",
+        });
+        modalInstance.result.then(function(result) {
+           console.log(result);
+           if (result) {
+                $scope.formData.Doctor = result;
+           };
+        })
+    }
+
     $scope.submit = function() {
         var accept = true;
-
+        o.loadingPage(true);
         var fromTimeParse = convertToTime24($scope.formData.fromTime);
         var toTimeParse = convertToTime24($scope.formData.toTime);
         if (fromTimeParse >= toTimeParse) {
             toastr.error('From Time must be smaller than To Time !!!');
             accept = false;
+            o.loadingPage(false);
         } else if (PatientUID === '') {
             toastr.error('You must choose Patient');
             accept = false;
+            o.loadingPage(false);
         } else {
-            var fromTime = appendFullCalendarDateTime(start, $scope.formData.fromTime);
-            var toTime = appendFullCalendarDateTime(start, $scope.formData.toTime);
+            var apptDate = moment($scope.formData.apptDate,"DD/MM/YYYY")
+            var fromTime = appendFullCalendarDateTime(apptDate , $scope.formData.fromTime);
+            var toTime = appendFullCalendarDateTime(apptDate , $scope.formData.toTime);
             var type = $scope.formData.type;
             var zone = moment().format('Z');
-            var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss') + " " + zone;
+            var requestDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss') + " " + zone;
             var serviceUID = $scope.formData.service.UID;
             var siteUID = $scope.formData.site.UID;
-            var DoctorUID = event.UserAccounts[0].Doctor.UID;
+            // var DoctorUID = event.UserAccounts[0].Doctor.UID;
+            var DoctorUID = $scope.formData.Doctor.UID;
             var PatientUID = $scope.formData.Patient.UID;
             //var UID = data.UID;
 
             if (PatientUID === '')
-                toastr.error('You must choose Patient');
+                {
+                    toastr.error('You must choose Patient');
+                    o.loadingPage(false);
+                }
             else {
                 var postData = {
+                    "Appointment": {
+                        "FromTime": fromTime,
+                        "ToTime": toTime
+                    },
+                    "Doctor": {
+                        "UID": DoctorUID
+                    }
+                }
+                BookingService.CheckTimeBooking(postData)
+                .then(function(response){                    
+                    var postData = {
                         Appointment: {
                             UID: $stateParams.UID,
                             FromTime: fromTime,
@@ -294,28 +346,78 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
                             UID: PatientUID
                         }
                     }
-                    //console.log('kkkkkkkkkk', postData);
-                BookingService.UpdateBooking(postData)
-                    .then(function(response) {
-                        toastr.success('Update Booking Successfully');
-                        window.location.reload();
-                        //$state.go('authentication.onsite.appointment',{UID:$stateParams.UID},{reload:true});
-                    }, function(error) {
-                        if (typeof error.data !== 'undefined') {
-                            var type = error.data.status;
-                            switch (type) {
-                                case 'withoutRoster':
-                                    toastr.error('Booking Appointment Time Wrong !!!');
-                                    break;
-                            }
+                BookingService.CreateBooking(postData)
+                .then(function(response) {
+                    o.loadingPage(false);
+                    toastr.success('Update Booking Successfully');
+                    window.location.reload();
+                }, function(error) {
+                    o.loadingPage(false);
+                    if (typeof error.data !== 'undefined') {
+                        var type = error.data.status;
+                        switch (type) {
+                            case 'withoutRoster':
+                                toastr.error('Booking Appointment Time Wrong !!!');
+                                break;
                         }
-                    })
+                    }
+                })
+                }, function(error){
+                    if (error && error.data && error.data.status == "withoutRoster") {
+                        swal({
+                            title: "Warning",
+                            text: "Do you want Booking Appointment without Roster!!",
+                            type: "warning",
+                            showCancelButton: true,
+                            showLoaderOnConfirm: true,
+                        }, function() {
+                            var postData = {
+                                    Appointment: {
+                                        UID: $stateParams.UID,
+                                        FromTime: fromTime,
+                                        ToTime: toTime,
+                                        Type: type,
+                                        RequestDate: requestDate
+                                    },
+                                    Service: {
+                                        UID: serviceUID
+                                    },
+                                    Site: {
+                                        UID: siteUID
+                                    },
+                                    Doctor: {
+                                        UID: DoctorUID
+                                    },
+                                    Patient: {
+                                        UID: PatientUID
+                                    }
+                                }
+                                console.log("postData", postData);
+                            BookingService.CreateBooking(postData)
+                            .then(function(response) {
+                                o.loadingPage(false);
+                                toastr.success('Update Booking Successfully');
+                                window.location.reload();
+                            }, function(error) {
+                                o.loadingPage(false);
+                                if (typeof error.data !== 'undefined') {
+                                    var type = error.data.status;
+                                    switch (type) {
+                                        case 'withoutRoster':
+                                            toastr.error('Booking Appointment Time Wrong !!!');
+                                            break;
+                                    }
+                                }
+                            })
+                        });
+                    }
+                })
             }
         }
     };
 
     //INIT
     getListSite();
-    //getListService();
+    getListService();
 });
 /*Thao*/

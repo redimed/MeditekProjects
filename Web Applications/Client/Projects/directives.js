@@ -337,6 +337,26 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                 modalInstance.result
                     .then(function(result) {}, function(result) {});
             };
+            $scope.newAppointment = function(){                
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'common/views/newAppointment.html',
+                    size: "lg",
+                    resolve:{
+                        item: function() {
+                            return $scope.patientInfo;
+                        },
+                        type: function() {
+                            return $scope.apptdetail.Type;
+                        },
+
+                    },
+                    controller: function($scope, item, type){                                 
+                        $scope.item = item;
+                        $scope.type = type;
+                    }
+                });
+            };
         },
     };
 });

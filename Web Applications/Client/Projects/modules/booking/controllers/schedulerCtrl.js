@@ -123,9 +123,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
 
     if (typeof $cookies.getObject('userInfo')) {
         userRole = $cookies.getObject('userInfo').roles;
-        console.log("$cookies.getObject('userInfo').roles", $cookies.getObject('userInfo').roles);            
         _.forEach(userRole, function(role_v, role_i){
-            console.log("role_v", role_v);            
             if(role_v.RoleCode =='ADMIN' || 
                 role_v.RoleCode == 'ASSISTANT')
                  {
@@ -144,7 +142,19 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         id: ''
     };
 
+    
     function ServerListBooking(startDate) {
+        function getDateCalendar() {
+            var date = $('#calendar').fullCalendar('getDate');
+            var today = moment(date).format('YYYY-MM-DD');
+            return today;            
+        }
+        var DateToday = getDateCalendar();
+        $('#calendar').fullCalendar( 'removeEvents', function(event) {
+            if(moment(event._start._i).format('YYYY-MM-DD') === DateToday)
+                return true;
+        });
+        var events = [];
         var postData = {
             Filter: [{
                 Roster: {
@@ -162,90 +172,121 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                 }
             }]
         }
+        if (isDoctor) {
+            postData.Filter.push({
+                Doctor:{
+                    UserAccountID:$cookies.getObject("userInfo").ID
+                }
+            })
+        }
             
         RosterService.PostListRoster(postData)
-            .then(function(response) {
-                $('#calendar').fullCalendar('removeEvents');
-                var resources = $('#calendar').fullCalendar('getResources');
-                _.forEach(resources, function(resource, index) {
-                    $('#calendar').fullCalendar('removeResource', resource);
-                })
-                var events = [];
-                _.forEach(response.data.rows, function(roster, index) {
-                    var doctor = roster.UserAccounts[0].Doctor;
-                    var FromTime = moment(roster.FromTime).format('YYYY-MM-DDTHH:mm:ss');
-                    var EndTime = moment(roster.ToTime).format('YYYY-MM-DDTHH:mm:ss');
-                    var event = {
-                        id: roster.UID,
-                        resourceId: doctor.UID,
-                        start: FromTime,
-                        end: EndTime,
-                        enddate: EndTime,
-                        color: roster.Services[0].Colour,
-                        rendering: 'background',
-                        Services: roster.Services,
-                        Sites: roster.Sites,
-                        UserAccounts: roster.UserAccounts
-                    };
-                    $('#calendar').fullCalendar('addResource', {
-                        id: doctor.UID,
-                        title: doctor.FirstName + ' ' + doctor.LastName,
-                        Services: roster.Services,
-                        type1: doctor.UID
-                    });
-                    events.push(event);
-                });
-                $('#calendar').fullCalendar('addEventSource', events);
-
-                var bookingData = {
+            .then(function(responseRoster) {                            
+                var doctorApptBooking = {
                     Filter: [{
                         Appointment: {
-                            Enable: 'Y',
                             FromTime: startDate,
-                            Status: { $ne: 'Cancelled' }
-                        }
-                    }, {
-                        Site: {
-                            UID: $scope.search.site
+                            Enable: 'Y'
                         }
                     }]
                 }
                 if (isDoctor) {
-                    bookingData.Filter.push({
-                        Doctor: {
-                            UserAccountID: $cookies.getObject('userInfo').ID
+                    doctorApptBooking.Filter.push({
+                        Doctor:{
+                            UserAccountID:$cookies.getObject("userInfo").ID
                         }
                     })
                 }
-                var bookingEvents = [];
-                BookingService.LoadBooking(bookingData)
-                    .then(function(response) {
-                        _.forEach(response.data.rows, function(appointment, index) {
-                            var doctor = appointment.Doctors[0];
-                            var patient = appointment.Patients[0];
-                            var service = appointment.Services[0];
-                            var FromTime = moment(appointment.FromTime).format('YYYY-MM-DDTHH:mm:ss');
-                            var EndTime = moment(appointment.ToTime).format('YYYY-MM-DDTHH:mm:ss');
-                            var SiteID = appointment.Site.UID;
-                            var event = {
-                                id: appointment.UID,
-                                resourceId: doctor.UID,
-                                start: FromTime,
-                                end: EndTime,
-                                enddate: EndTime,
-                                color: statuses[appointment.Status],
-                                Patient: patient,
-                                Service: service,
-                                SiteID: SiteID
-                            };
-                            console.log('ppppppp', event.id);
-                            bookingEvents.push(event);
+                BookingService.GetDoctorApptBooking(doctorApptBooking)
+                .then(function(responseDoctorList){
+                    _.forEach(responseRoster.data.rows, function(roster, index) {
+                        var doctor = roster.UserAccounts[0].Doctor;
+                        var FromTime = moment(roster.FromTime).format('YYYY-MM-DDTHH:mm:ss');
+                        var EndTime = moment(roster.ToTime).format('YYYY-MM-DDTHH:mm:ss');
+                        var event = {
+                            id: roster.UID,
+                            resourceId: doctor.UID,
+                            start: FromTime,
+                            end: EndTime,
+                            enddate: EndTime,
+                            color: roster.Services[0].Colour,
+                            rendering: 'background',
+                            Services: roster.Services,
+                            Sites: roster.Sites,
+                            UserAccounts: roster.UserAccounts
+                        };
+                        $('#calendar').fullCalendar('addResource', {
+                            id: doctor.UID,
+                            title: doctor.FirstName + ' ' + doctor.LastName,
+                            Services: roster.Services,
+                            type1: doctor.UID
                         });
-                        $('#calendar').fullCalendar('addEventSource', bookingEvents);
+                        events.push(event);
+                    });
 
-                    })
+                    if (isAdmin) {
+                        _.forEach(responseDoctorList.data, function(doctor, index){
+                            $('#calendar').fullCalendar('addResource', {
+                                id: doctor.UID,
+                                title: doctor.FirstName + ' '+ doctor.LastName,
+                                Services:null,
+                                type1:doctor.UID
+                            })
+                        });
+                    }
+                    
+
+                    var bookingData = {
+                        Filter: [{
+                            Appointment: {
+                                Enable: 'Y',
+                                FromTime: startDate,
+                                Status: { $ne: 'Cancelled' }
+                            }
+                        }, {
+                            Site: {
+                                UID: $scope.search.site
+                            }
+                        }]
+                    }
+                    if (isDoctor) {
+                        bookingData.Filter.push({
+                            Doctor: {
+                                UserAccountID: $cookies.getObject('userInfo').ID
+                            }
+                        })
+                    }
+                    BookingService.LoadBooking(bookingData)
+                        .then(function(response) {
+                            _.forEach(response.data.rows, function(appointment, index) {
+                                var doctor = appointment.Doctors[0];
+                                var patient = appointment.Patients[0];
+                                var service = appointment.Services[0];
+                                var FromTime = moment(appointment.FromTime).format('YYYY-MM-DDTHH:mm:ss');
+                                var EndTime = moment(appointment.ToTime).format('YYYY-MM-DDTHH:mm:ss');
+                                var SiteID = appointment.Site.UID;
+                                var event = {
+                                    id: appointment.UID,
+                                    resourceId: doctor.UID,
+                                    start: FromTime,
+                                    end: EndTime,
+                                    enddate: EndTime,
+                                    color: statuses[appointment.Status],
+                                    Patient: patient,
+                                    Service: service,
+                                    SiteID: SiteID
+                                };
+                                events.push(event);
+                            });                         
+                            $('#calendar').fullCalendar('addEventSource', events);
+
+                        }) 
+                }, function(error){
+                    toastr.error("Load Booking Failed", "Error");
+                })
+                
             }, function(error) {
-
+                toastr.error("Load Booking Failed", "Error");
             })
 
     }
@@ -256,7 +297,8 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
 
     function formatTime(data) {
         return moment(data).subtract(0, 'time').format("hh:mm:ss a");
-    };
+    };    
+
     $scope.eventRender = function(event, element, view) {
         angular.element('.fc-other-month').css('background', '#eee');
         if (!startedViewRender)
@@ -267,11 +309,9 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         var events = $('#calendar').fullCalendar('clientEvents');
 
         if (events.length === 0) {
-            console.log('no events at all');
             //Set to default times?
             return;
         }
-
         var visibleAndNotAllDayEvents = events.filter(function(event) {
             //end not necessarily defined
             var endIsWithin = event.end ? event.end.isWithin(view.start, view.end) : false;
@@ -279,7 +319,6 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         });
 
         if (visibleAndNotAllDayEvents.length === 0) {
-            console.log('no visible not all day events');
             //Set to default times?
             return;
         }
@@ -293,12 +332,11 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
 
             return greaterTime(previousValue, end);
         }, moment('00:00:00', 'HH:mm:ss'));
-
-        if (calendarConfig.minTime !== earliest.format('HH:mm:ss') || calendarConfig.maxTime !== latest.format('HH:mm:ss')) {
+        if (calendarConfig.minTime !== earliest.format('HH:mm:ss') || 
+            calendarConfig.maxTime !== latest.format('HH:mm:ss')) {
             //Reinitialize the whole thing
-
-            var currentDate = $('#calendar').fullCalendar('getDate');
-
+            var currentDate = $('#calendar').fullCalendar('getDate');            
+            //Chi view thoi gian lam trong roster
             $('#calendar').fullCalendar('destroy');
             setTimeout(function() {
                 $('#calendar').fullCalendar($.extend(calendarConfig, {
@@ -307,7 +345,8 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                     maxTime: latest.format('HH:mm:ss')
                 }));
             }, 500)
-        }
+
+        }     
     };
 
     function getDateCalendar() {
@@ -318,7 +357,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
     }
 
     $scope.viewRender = function(view, element) {
-        startedViewRender = true;
+        // startedViewRender = true;
         var today = getDateCalendar();
         ServerListBooking(today);
     };
@@ -384,12 +423,21 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                                 var UID = opt.selector.split('_')[2];                                
                                 BookingService.GetDetailBooking({ UID: UID })
                                     .then(function(response) {
-                                        console.log('response', response);
                                         var modalInstance = $uibModal.open({
                                             animation: true,
                                             size: 'lg',
                                             templateUrl: 'modules/booking/views/schedulerCreate.html',
                                             controller: function($scope, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr) {                                                
+                                                function getDateCalendar() {
+                                                    var date = $('#calendar').fullCalendar('getDate');
+                                                    var today = moment(date).format('YYYY-MM-DD');
+                                                    return today;            
+                                                }
+                                                var DateToday = getDateCalendar();
+                                                $('#calendar').fullCalendar( 'removeEvents', function(event) {
+                                                    if(moment(event._start._i).format('YYYY-MM-DD') === DateToday)
+                                                        return true;
+                                                });
                                                 $scope.items = [
                                                     { field: "FirstName", name: "First Name" },
                                                     { field: "LastName", name: "Last Name" },
@@ -639,11 +687,12 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
             }
         }
     };
+        
     $scope.selectOverlap = function(event) {
-            currentEvent = event;
-            return true;
-        },
-        $scope.eventClick = function(event, jsEvent, view, start, end, element) {};
+        currentEvent = event;
+        return true;
+    },
+    $scope.eventClick = function(event, jsEvent, view, start, end, element) {};
 
     var todayNotTZ = moment().format('YYYY-MM-DD');
     var startedViewRender = true;
@@ -710,7 +759,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
     }
 
     $scope.scheduler = angular.element('#calendar').fullCalendar(calendarConfig);
-
+     
     //INIT
     getListSite();
 });

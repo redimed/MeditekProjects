@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title text-primary uppercase">Doctor List</h4>
+</div>
+
+<div class="modal-body">    
+    <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive margin-top-10 margin-bottom-10">
+        <table class="table table-hover "> <!--table-light-->
+            <thead>
+                <tr class="uppercase">
+                    <th>#</th>
+                    <th ng-repeat="item in display.doctor.item">
+                        {{item.name}}
+                        <i class="fa fa-sort-asc"  ng-click="display.doctor.sort(item.field,'ASC')" ng-show="display.doctor.fieldSort[item.field]=='ASC'"></i>
+                        <i class="fa fa-sort-desc" ng-click="display.doctor.sort(item.field,'DESC')" ng-show="display.doctor.fieldSort[item.field]=='DESC'"></i>
+                    </th>
+                    <!--<th>Last Name</th>
+                    <th>Department</th>
+                    <th>Contact Number</th>-->
+                    <th width="1"></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td ng-repeat="item in display.doctor.item">
+                        <input ng-model="searchObjectMap.doctor.Search[item.field]" ng-keypress="Search($event.which)" class="form-control" placeholder="{{item.name}}" />
+                    </td>
+                    <!--<td><input type="text" class="form-control"/></td>
+                    <td><input type="text" class="form-control"/></td>
+                    <td><input type="text" class="form-control"/></td>-->
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="doctor in info.listDoctorTreatingPractitioner" ng-click="selectDoctor(doctor)">
+                    <td>{{doctor.stt}}</td>
+                    <td>{{doctor.FirstName}}</td>
+                    <td>{{doctor.LastName}}</td>
+                    <td>{{doctor.Department?doctor.Department.DepartmentName:null}}</td>
+                    <td>{{doctor.UserAccount?doctor.UserAccount.PhoneNumber:null}}</td>
+                    <!-- <td>
+                        <label class="mt-checkbox mt-checkbox-outline">
+                            <input type="checkbox" ng-model="doctor.Selected" ng-true-value="'Y'" ng-false-value="'N'" ng-click="action.doctor.selectedDoctor(doctor)"/><span></span>
+                        </label>
+                    </td> -->
+                </tr>
+            </tbody>
+            <tfoot>
+                <th colspan="6">
+                    <div class="dataTables_paginate paging_bootstrap_number text-right pull-right" id="sample_1_paginate">
+                        <uib-pagination
+                                boundary-links="true"
+                                total-items="paging.doctor.count"
+                                ng-model="searchObjectMap.doctor.currentPage"
+                                class="pagination-md "
+                                previous-text="&lsaquo; "
+                                next-text="&rsaquo; "
+                                first-text="&laquo; "
+                                last-text="&raquo; "
+                                items-per-page="searchObjectMap.doctor.limit"
+                                max-size="searchObjectMap.doctor.maxSize"
+                                ng-change="paging.doctor.setPage()">
+                        </uib-pagination>
+                    </div>
+                </th>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Close</button>
+</div>

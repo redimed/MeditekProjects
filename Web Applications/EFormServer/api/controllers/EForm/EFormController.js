@@ -28,12 +28,12 @@ module.exports = {
                     value.base64Data = value.value.sub;
                     delete value.value;
                 }
-                var split = value.value.split(' ');
+                /*var split = value.value.split(' ');
                 if(split.length === 2){
                     var minor_split = split[0].split['-'];
                     if(minor_split.length === 3)
                         value.value = minor_split[2]+'/'+minor_split[1]+'/'+minor_split[0]
-                }
+                }*/
             });
             var result = {
                 printMethod:data.EFormTemplate.PrintType,

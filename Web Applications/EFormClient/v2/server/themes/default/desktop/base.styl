@@ -1,0 +1,165 @@
+@import 'nib'
+@import 'lib/variables'
+
+*
+    margin 0
+    padding 0
+    box-sizing border-box
+
+html, body
+    font-family sans-serif
+    line-height 1.5em
+    font-size 14px
+    
+body
+    width 100%
+    margin 0 auto
+
+a
+    outline 0
+    user-select none
+    
+ul
+    list-style-type none
+    
+html, input, select, textarea
+    font-weight 100
+    letter-spacing 0.01em
+    
+input, textarea
+    &:focus
+        outline 0
+    
+table
+    border-collapse collapse
+    
+.small-input
+    width 30px
+
+.editor
+    padding 10px
+    display inline-block
+    width 70%
+    font-size 12px
+    input[type="text"], textarea
+        width 100%
+    .fa 
+        padding-right 3px
+    button
+        background transparent
+        color white
+        border 0
+        outline 0
+        cursor pointer
+    input
+        font-size 12px
+        padding 3px
+        text-index 4px
+        &:focus
+            outline 0
+    .section
+        margin-bottom 25px
+        border 1px solid black
+        width 100%
+        ul.toolbar
+            background color_toolbar
+            color white
+            li
+                display inline-block
+                vertical-align middle
+                margin-right 5px
+                a
+                    display block
+                    margin 0 6px
+                    input
+                        background: transparent;
+                        color: #fff;
+                        border: none;
+                        border-bottom: 1px solid white;
+                        padding: 0;
+
+ .row
+    ul.toolbar-row
+        background color_toolbar_row
+        padding 5px
+        color white
+        border-bottom 1px solid white
+        li
+            display inline-block
+            vertical-align middle
+            margin-right 5px
+            a
+                display block
+                margin 0 6px
+                input
+                    background transparent
+                    color white
+                    border 0
+    .object
+        display inline-block
+        cursor pointer
+        padding 5px
+        vertical-align middle
+
+.detail
+    padding 10px
+    width 30%
+    display inline-block
+    vertical-align top
+    padding 10px
+    font-size 12px
+    input, textarea
+        font-size 12px
+        text-indent 4px
+        padding 3px
+        width 100%
+    button
+        background blue
+        color white
+        padding 5px
+        outline 0
+        border 0
+        cursor pointer
+    .form-detail
+        width 25%
+        position fixed
+    
+ul.navbar
+    position: fixed;
+    bottom: 5px;
+    right: 20px;
+    li
+        display inline-block
+        vertical-align middle
+        margin-right 5px
+        background color_action_form
+        color white
+        a
+            display block
+            padding 5px
+            cursor pointer
+            border-bottom 1px solid white
+
+.object-wrapper
+    position relative
+    .object-name
+        position absolute
+        text-align center
+        top -10px
+        right -10px
+        height 12px
+        line-height 12px
+        font-size 12px
+        background-color #008000
+        color #fff
+    .object-it
+        background-color blue    
+    .object-si
+        background-color brown
+    .object-id
+        background-color purple
+
+.toolbar-row-action
+    float right
+
+

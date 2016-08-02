@@ -237,6 +237,9 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 'Consultation__Details.Appointment.History.PleaseDescribe': 'string',//pleasedescribe
                 'Consultation__Details.Appointment.History.SkinCancer': 'radio',//skincancer
                 'Consultation__Details.Appointment.History.IfYesMelanoma': 'radio',//ifyesmelanoma
+                'Consultation__Details.Appointment.History.WhenWasItDiagnosed':'string',//if YES, when was it diagnosed ?
+                'Consultation__Details.Appointment.History.WhatWasTheDepth':'string',//What was the depth ?
+                'Consultation__Details.Appointment.History.LymphNodeCheck':'radio',
                 'Consultation__Details.Appointment.History.Suspicious_Lesions': 'checkbox', //suspicious_lesions
                 'Consultation__Details.Appointment.Relevant.Biopsiedproven': 'radio',//biopsiedproven
                 'Consultation__Details.Appointment.Relevant.Site':'string',//site
@@ -268,6 +271,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 'Consultation__Details.Appointment.Suithble__for.Specialist':'checkbox',//specialist
                 'Consultation__Details.Appointment.Suithble__for.TelehealthValue':'string',//telehealthvalue
                 'Consultation__Details.Appointment.Suithble__for.Telehealth':'checkbox',//telehealth
+                'Consultation__Details.Appointment.Suithble__for.Skin_CheckinComment':'string',
                 'Consultation__Details.Appointment.Suithble__for.Skin_Checkin': 'radio',
                 // 'Consultation__Details.Appointment.Relevant.FileUploads':'normal_image'//consult_note_image
                 'Consultation__Details.Appointment.Relevant.FileUploads':'image_array',//consult_note_image

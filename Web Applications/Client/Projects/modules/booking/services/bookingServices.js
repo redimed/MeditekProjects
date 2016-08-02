@@ -35,5 +35,17 @@ angular.module("app.authentication.booking.services", [])
                 return api.one("booking/detail/"+data.UID).get();
         }
 
+        services.CheckTimeBooking = function(data){
+            return api.all("booking/check-time").post({
+                data:data
+            })
+        }
+
+        services.GetDoctorApptBooking = function(data){
+            return api.all("booking/get-doctor-has-appt").post({
+                data:data
+            })
+        }
+
         return services;
 });

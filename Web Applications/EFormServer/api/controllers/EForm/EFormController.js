@@ -27,13 +27,16 @@ module.exports = {
                 if(value.type === 'eform_input_signature'){
                     value.base64Data = value.value.sub;
                     delete value.value;
+                }else if(value.type === 'table'){
+                    var split = value.value.split(' ');
+                    if(split.length === 3){
+                        var minor_split = split[0].toString().split('-');
+                        if(typeof minor_split !== 'undefined'){
+                            if(minor_split.length === 3)
+                                value.value = minor_split[2]+'/'+minor_split[1]+'/'+minor_split[0]
+                        }
+                    }
                 }
-                /*var split = value.value.split(' ');
-                if(split.length === 2){
-                    var minor_split = split[0].split['-'];
-                    if(minor_split.length === 3)
-                        value.value = minor_split[2]+'/'+minor_split[1]+'/'+minor_split[0]
-                }*/
             });
             var result = {
                 printMethod:data.EFormTemplate.PrintType,

@@ -12,16 +12,16 @@ module.exports = function(data, userInfo) {
         var objTelehealthAppt = null;
         sequelize.transaction()
             .then(function(t) {
-                var objCheckTimeRoster = {
-                    data: {
-                        FromTime: data.Appointment.FromTime,
-                        ToTime: data.Appointment.ToTime
-                    },
-                    where: data.Doctor,
-                    transaction: t
-                };
-                return Services.CheckTimeRoster(objCheckTimeRoster)
-                    .then(function(checkTimeRosterOk) {
+                // var objCheckTimeRoster = {
+                //     data: {
+                //         FromTime: data.Appointment.FromTime,
+                //         ToTime: data.Appointment.ToTime
+                //     },
+                //     where: data.Doctor,
+                //     transaction: t
+                // };
+                // return Services.CheckTimeRoster(objCheckTimeRoster)
+                //     .then(function(checkTimeRosterOk) {
                         var whereClauseSite = {};
                         _.forEach(data.Site, function(valueKey, indexKey) {
                             if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
@@ -334,12 +334,12 @@ module.exports = function(data, userInfo) {
                                     transaction: t
                                 });
                             });
-                    }, function(err) {
-                        defer.reject({
-                            error: err,
-                            transaction: t
-                        });
-                    });
+                    // }, function(err) {
+                    //     defer.reject({
+                    //         error: err,
+                    //         transaction: t
+                    //     });
+                    // });
             }, function(err) {
                 defer.reject(err);
             });

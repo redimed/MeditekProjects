@@ -129,6 +129,7 @@ module.exports = {
     CheckTimeRoster: require('./Booking/CheckTimeRoster'),
     GetListRosterAdmin: require('./Roster/GetListRosterAdmin'),
     GetListRosterStaff: require('./Roster/GetListRosterStaff'),
+    GetListDoctorHasAppt: require('./Booking/GetListDoctorHasAppt'),
     //begin Roster
     //Begin Company
     Company: require('./Company/Company'),

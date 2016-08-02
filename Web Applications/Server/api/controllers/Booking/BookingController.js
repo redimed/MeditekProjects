@@ -130,5 +130,41 @@ module.exports = {
                     res.serverError(ErrorWrap(err.error || err));
                 });
         }
+    },
+    CheckTimeBooking: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false ||
+            _.isEmpty(data) ||
+            _.isEmpty(data.Appointment) ||
+            _.isEmpty(data.Doctor)) {
+            res.serverError('data failed');
+        } else {
+            var objCheckTimeRoster = {
+                data: {
+                    FromTime: data.Appointment.FromTime,
+                    ToTime: data.Appointment.ToTime
+                },
+                where: data.Doctor,
+            };
+            Services.CheckTimeRoster(objCheckTimeRoster)
+                .then(function(checkTimeRosterOk) {
+                    res.ok({ status: 'success' });
+                }, function(err) {
+                    res.serverError(err);
+                });
+        }
+    },
+    GetListDoctorHasAppt: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.GetListDoctorHasAppt(data)
+                .then(function(success) {
+                    res.ok(success);
+                }, function(err) {
+                    res.serverError(err);
+                });
+        }
     }
 };

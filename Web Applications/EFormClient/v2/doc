@@ -1,0 +1,45 @@
+EFormTemplateData
+    sections
+        title (Name of Section) String
+        page () Number
+        rows (Rows of Section) Array
+        ref (Position of Section) String
+        dynamic (Dynamic Section) Default normal
+
+    Rows of Section
+        objects (Objects of Row) Array
+        ref (Position of Row) String
+
+    Objects of Row
+        There are many objects of Row: Input Text, Input Number, Radio, Checkbox, Textarea, Signature, Label ...
+        Exists attribute of objects:
+            type (Type of Object) (it, r, c, t, s, l)
+            name (Name of Object) If radio, name will be group
+            params
+                width (Width of Object, Calculate with pixel)
+                border (Border of Object, maybe left, right, bottom, top) default none
+
+        Example
+            object label
+                params
+                    title (Title of Label)
+            checkbox, radiol
+                params
+                    value (Value of Object)
+                    id (ID for per radio)
+
+    Calculation (Will be defined later)
+
+
+
+EFormData
+
+    obj
+        contains all objects with value is '', checkbox, and radio will get its value, except type lb
+        t (type)
+        v (value)
+        n (name)
+        if object is dynamic
+        d (if object belongs to dynamic section)
+            s: dynamic object belongs to section
+            d: check dynamic hide or show

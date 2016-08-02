@@ -1,0 +1,140 @@
+@import 'nib'
+@import 'lib/variables'
+
+*
+    margin 0
+    padding 0
+    box-sizing border-box
+
+button
+    outline 0
+
+ul
+    list-style-type none
+    
+body
+    font-size 13px
+    font-family Helvetica, Arial, Sans-Serif
+    line-height 1.5em
+    min-width 768px
+    max-width 768px
+    margin 0 auto
+    
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin 0
+
+input[type="radio"],input[type="checkbox"]
+    cursor pointer
+
+.client
+    ul.navbar
+        z-index 9995
+        background #FFF
+        border-bottom 1px solid #e9ecf3
+        height 40px
+        width 100%
+        top 0
+        margin-bottom 20px
+        li
+            display inline-block
+            float right
+            text-align center
+            vertical-align middle
+            a
+                min-width 100px
+                display block
+                height 40px
+                font-size 1.1em
+                padding 10px 0
+                cursor pointer
+        li.pagination
+            float left
+            text-align left
+            a
+                padding 0
+                select
+                    width 80px
+                    height 40px
+                    background black
+                    color white
+                    outline 0
+                    border 0
+    .content
+        .section
+            margin-bottom 20px
+            h3
+                text-transform uppercase
+                width 100%
+                background #32c5d2
+                color #FFF
+                padding 5px
+                margin-bottom 10px
+            ul.toolbar
+                width 100%
+                margin-bottom 10px
+                li
+                    display inline-block
+                    a
+                        display block
+                        background black
+                        color white
+                        min-width 60px
+                        text-align center
+                        height 30px
+                        line-height 30px
+                        cursor pointer
+            .row
+                width 100%
+                display table
+                .object.border
+                    padding 0
+                    padding-left 5px
+                    line-height 29px
+                    margin-bottom 0
+                    input[type="text"],input[type="number"]
+                        min-height 29px
+                        border 0
+                        text-indent 3px
+                        outline 0
+                        background white
+                .object.input
+                    padding-top 12px
+                    input
+                        border 0
+                        border-bottom 1px solid black
+                        outline 0
+                        background none
+                        border-radius none
+                .object.input.border
+                    padding 0
+                .object
+                    display table-cell
+                    padding 15px 10px 0 5px
+                    box-sizing border-box
+                    display inline-block
+                    vertical-align middle
+                    min-height 30px
+                    margin-bottom 15px
+                    input[type="text"],input[type="number"]
+                        width 100%
+                        text-indent 3px
+                        padding 3px
+                    canvas
+                        cursor pointer
+                    .canvas
+                        border 1px solid black
+                        ul.toolbar
+                            width 100%
+                            background #32c5d2
+                            li
+                                display inline-block
+                                a
+                                    display block
+                                    button
+                                        padding 5px
+                                        background none
+                                        color #fff
+                                        border 0
+                                        cursor pointer

@@ -177,8 +177,9 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
         controller: function($scope, WAAppointmentService) {
             $scope.rolePatient = true
             var roles = $cookies.getObject('userInfo').roles;
+            console.log("roles", roles);
             for (var i = 0; i < roles.length; i++) {
-                if (roles[i].RoleCode === "PATIENT")
+                if (roles[i].RoleCode === "ADMIN" || roles[i].RoleCode === "ASSISTANT" || roles[i].RoleCode === "INTERNAL_PRACTITIONER")
                     $scope.rolePatient = false;
             }
             $scope.info.setDataPatientDetail = function(data) {
@@ -303,7 +304,6 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                                                 name = self.attach[i].Name;
                                             };
                                         };
-                                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> aaaaaaaaa", name);
                                         tmp = {
                                             type: subStrs.length > 1 ? "fileupload" : "report",
                                             content: subStrs[0],
@@ -320,7 +320,6 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                                         delete self.data.attachments;
                                     }
                                 }
-                                // toastr.info('Sending...');                                                                                                                                                
                                 CommonService.sendEmail(self.data).then(function(data) {
                                     o.loadingPage(false);
                                     modalInstance.close();
@@ -337,7 +336,8 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                 modalInstance.result
                     .then(function(result) {}, function(result) {});
             };
-            $scope.newAppointment = function(){                
+            
+            $scope.newAppointment = function(){
                 var modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: 'common/views/newAppointment.html',
@@ -354,6 +354,9 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                     controller: function($scope, item, type){                                 
                         $scope.item = item;
                         $scope.type = type;
+                        $scope.close = function() {
+                            modalInstance.close();
+                        };
                     }
                 });
             };

@@ -2,17 +2,7 @@ var app = angular.module('app.authentication.booking.scheduler.edit.controller',
 
 app.controller('schedulerEditCtrl', function($scope, BookingService, RosterService, data, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr) {
     
-    $modalInstance.rendered.then(function() {
-        function getDateCalendar() {
-            var date = $('#calendar').fullCalendar('getDate');
-            var today = moment(date).format('YYYY-MM-DD');
-            return today;            
-        }
-        var DateToday = getDateCalendar();
-        $('#calendar').fullCalendar( 'removeEvents', function(event) {
-            if(moment(event._start._i).format('YYYY-MM-DD') === DateToday)
-                return true;
-        });
+    $modalInstance.rendered.then(function() {        
         App.initAjax();
         ComponentsDateTimePickers.init();
     });
@@ -83,6 +73,7 @@ app.controller('schedulerEditCtrl', function($scope, BookingService, RosterServi
     };
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
+
     };
 
     function appendTime(time) {

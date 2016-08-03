@@ -33,14 +33,6 @@ app.controller('bookingSelectDoctorCtrl', function($scope, doctorService,$modalI
                 $scope.info.listDoctorTreatingPractitioner = response.data;
                 for(var i = 0; i < response.data.length;i++){
                     $scope.info.listDoctorTreatingPractitioner[i].stt = $scope.searchObjectMap.doctor.offset*1 + i + 1;
-                    //Dong bo hien thi voi listDoctorSelected
-                    // if($scope.info.listDoctorSelected)
-                    // {
-                    //     for (var j = 0; j < $scope.info.listDoctorSelected.length; j++) {
-                    //         if($scope.info.listDoctorSelected[j].UID == $scope.info.listDoctorTreatingPractitioner[i].UID)
-                    //         $scope.info.listDoctorTreatingPractitioner[i].Selected = 'Y';
-                    //     }
-                    // }
                 }
                 $scope.paging.doctor.count= response.count;
             }
@@ -65,7 +57,6 @@ app.controller('bookingSelectDoctorCtrl', function($scope, doctorService,$modalI
             order: null,
             RoleID: [5]
         };
-        // scope.search.Enable = null;
         $scope.searchObjectMap.doctor = angular.copy($scope.searchObject.doctor);
         $scope.loadListDoctor($scope.searchObjectMap.doctor);
     };
@@ -78,10 +69,7 @@ app.controller('bookingSelectDoctorCtrl', function($scope, doctorService,$modalI
     $scope.initListDoctor();
 
     $scope.Search = function(e){
-        console.log(">>>>>>>>search");
         if(e==13){
-            // scope.searchObjectMap.Search = data;
-            console.log("searchObjectMap.doctor", $scope.searchObjectMap.doctor);
             $scope.loadListDoctor($scope.searchObjectMap.doctor);
         }
     };
@@ -91,7 +79,6 @@ app.controller('bookingSelectDoctorCtrl', function($scope, doctorService,$modalI
     };
 
     $scope.display.doctor.sort = function (field, sort) {
-        // alert(field+sort);
         if(sort === 'ASC') {
             $scope.display.doctor.fieldSort[field] = 'DESC';
             sort = 'DESC';

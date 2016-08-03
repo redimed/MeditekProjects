@@ -56,10 +56,21 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 listWaapointment: null,
                 toggle: false
             };
+            var userRole = 0;
+            if (typeof $cookies.getObject('userInfo')) {
+                userRole = $cookies.getObject('userInfo').roles;
+                _.forEach(userRole, function(role_v, role_i){
+                    if(role_v.RoleCode=='INTERNAL_PRACTITIONER')
+                        scope.info.data.Filter.push({
+                            Doctor: {
+                                UserAccountID:$cookies.getObject("userInfo").ID
+                            }
+                        });
+                });
+            }
             if ($stateParams.roleid == 'roleid') {
                 var today = new Date();
                 scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD 00:00:00 Z');
-                //console.log(moment().add(1,'days'));
             }
             scope.toggleFilter = function() {
                 scope.info.toggle = scope.info.toggle === false ? true : false;
@@ -106,7 +117,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
 
             scope.LoadData = function() {
-                //console.log(scope.info.data);
+                o.loadingPage(true);
                 WAAppointmentService.loadListWAAppointmentConsultation(scope.info.data).then(function(data) {
                     console.log('aaaaaaaa', scope.info.data);
                     for (var i = 0; i < data.rows.length; i++) {
@@ -134,6 +145,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
 
                             }
                             data.rows[i].DoctorsName = name;
+                            o.loadingPage(false);
                         }
                     }
                     scope.info.listWaapointment = data;

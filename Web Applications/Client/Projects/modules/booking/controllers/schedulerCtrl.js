@@ -342,7 +342,8 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                 $('#calendar').fullCalendar($.extend(calendarConfig, {
                     defaultDate: currentDate,
                     minTime: earliest.format('HH:mm:ss'),
-                    maxTime: latest.format('HH:mm:ss')
+                    maxTime: latest.format('HH:mm:ss'),
+                    height: "auto"
                 }));
             }, 500)
 
@@ -601,10 +602,10 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                                                 data: function() {
                                                     return response.data;
                                                 }
-                                            },
+                                            }
                                         });
                                         modalInstance.result
-                                            .then(function(result) {
+                                            .then(function(result) {                                              
                                                 var today = getDateCalendar();
                                                 ServerListBooking(today);
                                             }, function() {});

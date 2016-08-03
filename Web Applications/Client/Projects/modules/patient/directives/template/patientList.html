@@ -37,8 +37,7 @@
 					<tr class="uppercase">
 						<th width="1"></th>
 						<th ng-if="isShowSelectButton" width="1"></th>
-	 					
-						<th width="1"></th>
+						<th ng-if="isHaveCheckBox" width="1"></th>
 						<th width="1">#</th>
 						<th ng-repeat="i in items">
 							{{i.name}}
@@ -51,7 +50,7 @@
 					<tr style="width:100%;" ng-hide="toggle">
 						<th width="1"></th>
 						<th ng-if="isShowSelectButton" width="1"></th>
-						<th width="1"></th>
+						<th ng-if="isHaveCheckBox" width="1"></th>
 						<th></th>
 						<th ng-repeat="i in items">
 							<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" ng-if="i.field!='Gender'">

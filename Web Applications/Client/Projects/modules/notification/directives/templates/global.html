@@ -18,44 +18,58 @@
         </div>
     </div>
     <div class="portlet-body">
-        <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive">
-            <table class="table table-light table-hover table-striped">
-                <thead>
-                    <tr class="uppercase">
-                        <th width="1">#</th>
-                        <th ng-repeat="ite in itemDefaultg">
-                            {{ite.name}}
-                            <i class="fa fa-sort-asc" ng-click="sort(ite.field,'ASC')" ng-show="fieldSort[ite.field]=='ASC'"></i>
-                            <i class="fa fa-sort-desc" ng-click="sort(ite.field,'DESC')" ng-show="fieldSort[ite.field]=='DESC'"></i>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>#</td>
-                        <td ng-repeat="ite in itemSearchg">
-                            <input type="text" ng-model="searchg[ite.field]" class="form-control" ng-enter="Searchg(searchg)" />
-                        </td>
-                        <td>
-                            <input type="text" class="form-control date-picker margin-bottom-5" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search)" placeholder="From Date">
-                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="Search(search)" placeholder="To Date">
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="lsnc in listGlobalNotify" ng-click="openDetail(lsnc)" class="{{ lsnc.iRead === 'N' ? 'info' : ''}}">
-                        <td>{{(($index + 1) + (searchgObjectMap.limit * (searchgObjectMap.currentPage - 1)))}}</td>
-                        <td ng-repeat="ite in itemDefaultg">
-                            {{ ite.field === 'MsgContent' ? (lsnc[ite.field]['Display']['Action'].length > 50 ? lsnc[ite.field]['Display']['Action'].substr(0, 50) + '...' : lsnc[ite.field]['Display']['Action']) : ite.field === 'Object' ? lsnc['MsgContent']['Display'][ite.field]['name'] : ite.field === 'CreatedDate' || ite.field === 'EndTime' ? (lsnc[ite.field] | date:"dd/MM/yyyy") : ite.field === 'SenderAccount' ? lsnc[ite.field]['UserName'] : lsnc[ite.field] }}
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <th colspan="{{itemDefaultg.length+1}}" class="text-right">
-                        <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                            <uib-pagination boundary-links="true" total-items="countg" ng-model="searchgObjectMap.currentPage" class="pagination-md" previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchgObjectMap.limit" max-size="searchgObjectMap.maxSize" ng-change="setPage()"></uib-pagination>
-                        </div>
-                    </th>
-                </tfoot>
-            </table>
-        </div>
+        <div class="tabbable-custom" id="tabBable">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="@#tab_inbox" data-toggle="tab" aria-expanded="true">Inbox</a></li>
+                <li><a href="@#tab_sent" data-toggle="tab" aria-expanded="true">Sent message</a></li>
+            </ul>
+            <!-- content tab -->
+            <div class="tab-content" id="tabContent2">
+                <div class="tab-pane active" id="tab_inbox">
+                    <br/>
+                    <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive">
+                        <table class="table table-light table-hover table-striped">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="1">#</th>
+                                    <th ng-repeat="ite in itemDefaultg">
+                                        {{ite.name}}
+                                        <i class="fa fa-sort-asc" ng-click="sort(ite.field,'ASC')" ng-show="fieldSort[ite.field]=='ASC'"></i>
+                                        <i class="fa fa-sort-desc" ng-click="sort(ite.field,'DESC')" ng-show="fieldSort[ite.field]=='DESC'"></i>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>#</td>
+                                    <td ng-repeat="ite in itemSearchg">
+                                        <input type="text" ng-model="searchg[ite.field]" class="form-control" ng-enter="Searchg(searchg)" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control date-picker margin-bottom-5" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search)" placeholder="From Date">
+                                        <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="Search(search)" placeholder="To Date">
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="lsnc in listGlobalNotify" ng-click="openDetail(lsnc)" class="{{ lsnc.iRead === 'N' ? 'info' : ''}}">
+                                    <td>{{(($index + 1) + (searchgObjectMap.limit * (searchgObjectMap.currentPage - 1)))}}</td>
+                                    <td ng-repeat="ite in itemDefaultg">
+                                        {{ ite.field === 'MsgContent' ? (lsnc[ite.field]['Display']['Action'].length > 50 ? lsnc[ite.field]['Display']['Action'].substr(0, 50) + '...' : lsnc[ite.field]['Display']['Action']) : ite.field === 'Object' ? lsnc['MsgContent']['Display'][ite.field]['name'] : ite.field === 'CreatedDate' || ite.field === 'EndTime' ? (lsnc[ite.field] | date:"dd/MM/yyyy") : ite.field === 'SenderAccount' ? lsnc[ite.field]['UserName'] : lsnc[ite.field] }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <th colspan="{{itemDefaultg.length+1}}" class="text-right">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                                        <uib-pagination boundary-links="true" total-items="countg" ng-model="searchgObjectMap.currentPage" class="pagination-md" previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchgObjectMap.limit" max-size="searchgObjectMap.maxSize" ng-change="setPageg()"></uib-pagination>
+                                    </div>
+                                </th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_sent">
+                </div>
+            </div>
+        </div>        
     </div>
 </div>

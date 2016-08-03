@@ -25,5 +25,18 @@ app.config(function($stateProvider) {
             data: { pageTitle: 'Sent Message' },
             controller: "notificationGlobalSendedCtrl",
             templateUrl: "modules/notification/views/notificationGlobalSended.html",
-        });
+        })
+        .state("authentication.notification.todo", {
+            url: "/todo",
+            data: { pageTitle: 'Todo' },
+            controller: "notificationTodoCtrl",
+            templateUrl: "modules/notification/views/notificationTodo.html",
+        })
+        .state("authentication.notification.request", {
+            url: "/request",
+            data: { pageTitle: 'Request' },
+            controller: "notificationRequestCtrl",
+            templateUrl: "modules/notification/views/notificationRequest.html",
+        })
+        ;
 });

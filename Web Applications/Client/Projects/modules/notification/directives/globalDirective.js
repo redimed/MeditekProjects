@@ -65,7 +65,7 @@ app.directive('notificationGlobal', function() {
                 console.log("||||||||",self.itemDefault);
 
                 self.searchObject = {
-                    limit: 10,
+                    limit: 5,
                     offset: 0,
                     currentPage: 1,
                     maxSize: 5,
@@ -84,7 +84,7 @@ app.directive('notificationGlobal', function() {
 
             self.initg();
 
-            self.setPage = function() {
+            self.setPageg = function() {
                 self.searchgObjectMap.offset = (self.searchgObjectMap.currentPage - 1) * self.searchgObjectMap.limit;
                 LoadListGlobalNotify(self.searchgObjectMap);
             };

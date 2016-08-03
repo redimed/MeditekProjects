@@ -39,8 +39,8 @@
 						</th>
 					</tr>
 					<tr class="uppercase">
-						<th>#</th>
 						<th ng-if="isHaveCheckbox == true">&nbsp;</th>
+						<th>#</th>
 						<th ng-repeat="i in items">
 							{{i.name}}
 							<i class="fa fa-sort-asc"  ng-click="sort(i.field,'ASC')" ng-show="fieldSort[i.field]=='ASC'" ng-if="i.field!='Enable'&& i.field!='UserAccount'" ></i>
@@ -58,8 +58,8 @@
 	                    <th ng-if="islinkDoctorGroup == true || isHaveCheckbox == true">&nbsp;</th>
 					</tr>
 					<tr ng-hide="toggle">
-						<td>#</td>
 						<td ng-if="isHaveCheckbox == true" >&nbsp;</td>
+						<td></td>
 						<td ng-repeat="i in items">
 							<input ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="{{i.field}}" ng-if="i.field!='Gender'" />
 							<select class="form-control" ng-change="Search(search,'13')" ng-model="search[i.field]" ng-if="i.field=='Gender'">
@@ -101,11 +101,11 @@
 						</td>
 	                    <td> <button class="btn btn-info" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)"> View Detail </button> </td>
 					</tr>
-					<tr ng-repeat="d in doctors" ng-show="isHaveCheckbox == true" id="{{'tr'+d.stt}}" ng-class="{'is-Choose': d.UID === uidReturn && d.UID!==undefined && d.UID!==null && d.UID!==''}">
-						<td ng-click="selectDoctor(d)">{{d.stt}}</td>
-						<td ng-click="selectDoctor(d)" style="width:10%; text-align:center;" >
-							<i style="font-size:150%;" ng-class="{'fa fa-check-square-o':d.UID == uidReturn,'fa fa-square-o':d.UID != uidReturn}" id="{{'check'+d.stt}}"></i>
+					<tr ng-repeat="d in doctors" ng-show="isHaveCheckbox == true" id="{{'tr'+d.stt}}">
+						<td ng-click="selectDoctor(d)" style="width:10px; text-align:center;" >
+							<i style="font-size:150%;" ng-class="{'fa fa-check-square-o':arr_uid.indexOf(d.UserAccount.UID) !== -1,'fa fa-square-o':arr_uid.indexOf(d.UserAccount.UID) === -1}" id="{{'check'+d.stt}}"></i>
 						</td>
+						<td ng-click="selectDoctor(d)">{{d.stt}}</td>
 						<td ng-click="selectDoctor(d)" ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
 						<td ng-click="selectDoctor(d)">{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
 						<td ng-click="selectDoctor(d)">
@@ -113,7 +113,7 @@
 								<i class="fa fa-check"></i>
 							</span>
 						</td>
-	                    <td> <button class="btn btn-info" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)"> View Detail </button> </td>
+	                    <td> <a class="btn btn-info" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId,d)"> View Detail </a> </td>
 					</tr>
 				</tbody>
 				<tfoot>

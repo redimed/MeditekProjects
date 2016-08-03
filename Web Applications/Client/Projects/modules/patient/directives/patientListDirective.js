@@ -15,6 +15,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			iscompanycreate:'=isCompanyCreate',
 			company:'=onCompany',
 			autofilter:'=onAutofilter',
+			isHaveCheckBox:'=onCheck',
+			whenChoose:'=onChoose',
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
@@ -24,6 +26,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			scope.fieldSort={};
 			scope.search  = {};
 			scope.checked = {};
+			scope.arr_uid = [];
 			scope.flag = 13;
 			scope.fieldSort;
 			scope.itemDefault = [
@@ -290,6 +293,28 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				    });
 				}else{
 					$state.go('authentication.patient.create');
+				}
+			};
+
+			scope.choosePatient = function(patient) {
+				try{
+					var arr_temp = scope.arr_uid.filter(function(i) {
+						return i === patient.UserAccount.UID;
+					});
+
+					if(arr_temp.length == 0) {
+						scope.arr_uid.push(patient.UserAccount.UID);
+						if(scope.whenChoose !== undefined && typeof scope.whenChoose === 'function')
+							scope.whenChoose(scope.arr_uid);
+					}
+					else {
+						var index = scope.arr_uid.indexOf(patient.UserAccount.UID);
+						scope.arr_uid.splice(index, 1);
+						if(scope.whenChoose !== undefined && typeof scope.whenChoose === 'function')
+							scope.whenChoose(scope.arr_uid);
+					}
+				}catch(err){
+					console.log("err",err);
 				}
 			};
 

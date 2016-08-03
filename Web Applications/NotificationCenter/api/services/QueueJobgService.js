@@ -202,13 +202,6 @@ module.exports = {
     whereClause: function(data) {
         var whereClause = {};
         if (data.Search.Role) {
-            whereClause.Receiver = data.Search.Role;
-            // whereClause.$or = [
-            //     { EndTime: { $gte: moment(new Date()).format('YYYY-MM-DD HH:mm:ss Z'), }, },
-            //     { EndTime: null }
-            // ];
-            whereClause.Enable = 'Y';
-
             whereClause.$and = [{
                 $or: [
                     { Status: 'HANDLED' },
@@ -219,6 +212,10 @@ module.exports = {
                     { EndTime: { $gte: moment(new Date()).format('YYYY-MM-DD HH:mm:ss Z'), }, },
                     { EndTime: null }
                 ]
+            }, {
+                Enable: 'Y'
+            }, {
+                Receiver: data.Search.Role
             }];
         };
         if (data.Search.SenderUID) {
@@ -245,6 +242,11 @@ module.exports = {
         if (data.Search.Subject) {
             whereClause.Subject = {
                 like: '%' + data.Search.Subject + '%'
+            }
+        };
+        if (data.Search.Receiver) {
+            whereClause.Receiver = {
+                like: '%' + data.Search.Receiver + '%'
             }
         };
         if (data.Search.Status) {

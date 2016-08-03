@@ -38,6 +38,7 @@
 						<th width="1"></th>
 						<th ng-if="isShowSelectButton" width="1"></th>
 	 					
+						<th width="1"></th>
 						<th width="1">#</th>
 						<th ng-repeat="i in items">
 							{{i.name}}
@@ -50,7 +51,7 @@
 					<tr style="width:100%;" ng-hide="toggle">
 						<th width="1"></th>
 						<th ng-if="isShowSelectButton" width="1"></th>
-						
+						<th width="1"></th>
 						<th></th>
 						<th ng-repeat="i in items">
 							<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" ng-if="i.field!='Gender'">
@@ -68,7 +69,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn && p.UID!==undefined && p.UID!==null && p.UID!==''}" id="{{p.UID}}">
+					<tr ng-repeat="p in patients" ng-show="isHaveCheckBox!=true" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn && p.UID!==undefined && p.UID!==null && p.UID!==''}" id="{{p.UID}}">
 						<td>
 							<a ng-click="clickOpen(p.UID,p.UserAccount.Enable, p.UserAccount.Activated)" 
 								class=" btn btn-icon-only btn-circle btn-default">
@@ -83,6 +84,27 @@
 						<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{p.stt}}</td>
 						<td ng-repeat="i in items" ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='Male'?'Male':p[i.field]=='Female'?'Female':'Other'}}</td>
 						<td ng-click="selectPatient(p.UID,p.stt,p.UserAccount.Enable,p.FirstName,p.LastName)" style="text-align:center">
+							<span ng-if="p.UserAccount.Enable != 'N'">
+								<i class="fa fa-check fa-2x font-green-jungle"></i>
+							</span>
+						</td>
+						
+					</tr>
+					<tr ng-repeat="p in patients" ng-show="isHaveCheckBox==true" style="width:100%;margin-top: -50px;margin-left: -50px;" id="{{p.UID}}">
+						<td>
+							<a ng-click="clickOpen(p.UID,p.UserAccount.Enable, p.UserAccount.Activated)" 
+								class=" btn btn-icon-only btn-circle btn-default">
+								<i class="fa fa-search font-blue"></i>
+							</a>
+						</td>
+						<td >
+							<i ng-click="choosePatient(p)" style="font-size:150%;"  ng-class="{'fa fa-check-square-o':arr_uid.indexOf(p.UserAccount.UID) !== -1,'fa fa-square-o':arr_uid.indexOf(p.UserAccount.UID) === -1}" id="{{p.stt}}"></i>
+							<!-- <input type="checkbox" class="form-control" ng-model="checked" style="width:30%;" ng-click="selectPatient(p.UID)"/> -->
+						</td>
+						
+						<td ng-click="choosePatient(p)">{{p.stt}}</td>
+						<td ng-repeat="i in items" ng-click="choosePatient(p)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='Male'?'Male':p[i.field]=='Female'?'Female':'Other'}}</td>
+						<td ng-click="choosePatient(p)" style="text-align:center">
 							<span ng-if="p.UserAccount.Enable != 'N'">
 								<i class="fa fa-check fa-2x font-green-jungle"></i>
 							</span>

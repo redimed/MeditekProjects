@@ -14,21 +14,15 @@ app.config(function($stateProvider) {
             controller: "notificationCtrl",
             templateUrl: "modules/notification/views/notification.html",
         })
-        .state("authentication.notification.global", {
-            url: "/global",
+        .state("authentication.notification.list", {
+            url: "/list",
             data: { pageTitle: 'Notification' },
-            controller: "notificationGlobalCtrl",
-            templateUrl: "modules/notification/views/notificationGlobal.html",
-        })
-        .state("authentication.notification.private", {
-            url: "/private",
-            data: { pageTitle: 'Notification' },
-            controller: "notificationPrivateCtrl",
-            templateUrl: "modules/notification/views/notificationPrivate.html",
+            controller: "notificationListCtrl",
+            templateUrl: "modules/notification/views/notificationlist.html",
         })
         .state("authentication.notification.sended", {
             url: "/sended/:type",
-            data: { pageTitle: 'Sended' },
+            data: { pageTitle: 'Sent Message' },
             controller: "notificationGlobalSendedCtrl",
             templateUrl: "modules/notification/views/notificationGlobalSended.html",
         });

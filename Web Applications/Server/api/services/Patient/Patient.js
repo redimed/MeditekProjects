@@ -1765,7 +1765,7 @@ module.exports = {
         return Patient.findAndCountAll({
                 include: [{
                     model: UserAccount,
-                    attributes: ['PhoneNumber', 'Enable','Activated'],
+                    attributes: ['PhoneNumber', 'Enable','Activated','UID'],
                     required: true,
                     include: [{
                         include: [{

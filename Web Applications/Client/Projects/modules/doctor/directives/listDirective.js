@@ -13,10 +13,12 @@ angular.module('app.authentication.doctor.directive.list', [])
 		scope:{
 			items: '=onItem',
 			isHaveCheckbox: '=onCheck',
-			whenChoose:'=onChoose'
+			whenChoose:'=onChoose',
+			limit:'=onLimit',
 		},
 		link: function(scope, ele, attr) {
-			console.log("asd ",scope.isHaveCheckbox)
+			console.log("asd ",scope.isHaveCheckbox);
+			scope.arr_uid = [];
 			scope.islinkDoctorGroup = scope.isLink?scope.isLink:false;
 			scope.search = {};
 			scope.EnableChoose = [
@@ -64,7 +66,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 
 			scope.init = function() {
 	            scope.searchObject = {
-	                limit: 20,
+	                limit: isNaN(scope.limit)?20:scope.limit,
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,
@@ -202,23 +204,23 @@ angular.module('app.authentication.doctor.directive.list', [])
 			}
 
 			scope.selectDoctor = function(doctor) {
-				if(_.isEmpty(scope.uidReturn)) {
-					scope.uidReturn = doctor.UID;
-					// openLinkDoctorGroup(doctor);
+				var arr_temp = scope.arr_uid.filter(function(i) {
+					return i === doctor.UserAccount.UID;
+				});
+
+
+				if(arr_temp.length == 0) {
+					scope.arr_uid.push(doctor.UserAccount.UID);
 					if(scope.whenChoose !== undefined && typeof scope.whenChoose === 'function')
-						scope.whenChoose(doctor);
+						scope.whenChoose(scope.arr_uid);
 				}
 				else {
-					if(scope.uidReturn == doctor.UID) {
-						scope.uidReturn = null;
-					}
-					else {
-						scope.uidReturn = doctor.UID;
-						if(scope.whenChoose !== undefined && typeof scope.whenChoose === 'function')
-							scope.whenChoose(doctor);
-						// openLinkDoctorGroup(doctor);
-					}
+					var index = scope.arr_uid.indexOf(doctor.UserAccount.UID);
+					scope.arr_uid.splice(index, 1);
+					if(scope.whenChoose !== undefined && typeof scope.whenChoose === 'function')
+						scope.whenChoose(scope.arr_uid);
 				}
+				
 			}
 
 		} // end link

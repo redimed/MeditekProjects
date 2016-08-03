@@ -3,7 +3,9 @@ var app = angular.module("app.authentication.notification.private.create.control
 app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal) {
     $scope.now = true;
     $scope.submitText = 'Create';
-    $scope.ListUser = [];
+    $scope.lsDoctor = [];
+    $scope.lsPatient = [];
+    $scope.private = {};
 
     $modalInstance.rendered.then(function() {
         App.initAjax();
@@ -17,8 +19,13 @@ app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance,
     };
 
     $scope.submit = function(info) {
-        info.lsUser = $scope.ListUser;
-        console.log(info);
+        if ($scope.lsDoctor) {
+            info.lsUser = $scope.lsDoctor.concat($scope.lsPatient);
+        } else if ($scope.lsPatient) {
+            info.lsUser = $scope.lsPatient.concat($scope.lsDoctor);
+        };
+
+        console.log("List", info.lsUser);
         notificationServices.validate(info, "private").then(function(data) {
             if (data.Status = 'success') {
                 if (info.FirstDelay) {
@@ -60,5 +67,13 @@ app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance,
         }, function(err) {
             console.log("Global.Notification.Create", err);
         });
+    };
+
+    $scope.GetDoctor = function(arr) {
+        $scope.lsDoctor = arr;
+    };
+
+    $scope.GetPatient = function(arr) {
+        $scope.lsPatient = arr;
     };
 });

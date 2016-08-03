@@ -165,7 +165,7 @@ public class MainController {
                     String parsedString = out.toString().replace("\\n", "");
                     parsedString = parsedString.replace("\\", "");
 //                    parsedString = parsedString.replace("\\", "");
-                    parsedString = parsedString.replace(" ", "");
+
                     System.out.println("this is object our string, " + parsedString);
                     RequestDataModel formData = mapper.readValue(parsedString, RequestDataModel.class);
                     //Filling pdf file

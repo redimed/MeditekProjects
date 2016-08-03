@@ -1,22 +1,22 @@
 var app = angular.module('app.authentication.notification.directive.sended', []);
 
-app.directive('globalSended', function() {
+app.directive('notificationSend', function() {
     return {
-        restrict: 'EA',
+        restrict: "EA",
         templateUrl: 'modules/notification/directives/templates/sended.html',
-        controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $stateParams,$state) {
-            console.log($stateParams.type);
-
-            $scope.type = $stateParams.type;
+        scope:{
+            kind:'=onKind',
+        },
+        controller: function($scope,notificationServices, toastr, $cookies, $uibModal,$state) {
             var queue = '';
             var templateUrl = '';
             var templateCtrl = '';
 
-            if ($scope.type === 'private') {
+            if ($scope.kind === 'private') {
                 queue = 'NOTIFY';
                 templateUrl = 'notificationPrivateDetail.html';
                 templateCtrl = 'notificationPrivateDetailCtrl';
-            } else if ($scope.type === 'global') {
+            } else if ($scope.kind === 'global') {
                 queue = 'GLOBALNOTIFY';
                 templateUrl = 'notificationGlobalDetail.html';
                 templateCtrl = 'notificationGlobalDetailCtrl';
@@ -59,7 +59,7 @@ app.directive('globalSended', function() {
             };
 
             function LoadListNotify(info) {
-                if ($scope.type === 'global') {
+                if ($scope.kind === 'global') {
                     notificationServices.LoadListGlobalNotify(info).then(function(data) {
                         for (var i = 0; i < data.data.length; i++) {
                             data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
@@ -68,7 +68,7 @@ app.directive('globalSended', function() {
                         $scope.listGlobalNotify = data.data;
                         $scope.count = data.count;
                     });
-                } else if ($scope.type === 'private') {
+                } else if ($scope.kind === 'private') {
                     notificationServices.getListNotifySearch(info).then(function(data) {
                         for (var i = 0; i < data.data.length; i++) {
                             data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
@@ -82,7 +82,7 @@ app.directive('globalSended', function() {
 
             $scope.init = function() {
                 $scope.searchObject = {
-                    limit: 10,
+                    limit: 5,
                     offset: 0,
                     currentPage: 1,
                     maxSize: 5,
@@ -149,7 +149,7 @@ app.directive('globalSended', function() {
                             ioSocket.LoadListGlobalNotify();
                         };
                     }, function(err) {
-                        console.log($scope.type + ".Notification.Detail", err);
+                        console.log($scope.kind + ".Notification.Detail", err);
                     });
                 }
             };

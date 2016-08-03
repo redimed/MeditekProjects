@@ -20,12 +20,6 @@ app.config(function($stateProvider) {
             controller: "notificationListCtrl",
             templateUrl: "modules/notification/views/notificationlist.html",
         })
-        .state("authentication.notification.sended", {
-            url: "/sended/:type",
-            data: { pageTitle: 'Sent Message' },
-            controller: "notificationGlobalSendedCtrl",
-            templateUrl: "modules/notification/views/notificationGlobalSended.html",
-        })
         .state("authentication.notification.todo", {
             url: "/todo",
             data: { pageTitle: 'Todo' },

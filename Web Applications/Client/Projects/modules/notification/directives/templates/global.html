@@ -9,9 +9,6 @@
             <a href="javascript:;" class="btn btn-outline blue" ng-click="initg()">
                 <i class="glyphicon glyphicon-refresh"></i> Refresh
             </a>
-            <a ui-sref="authentication.notification.sended({type:'global'})" class="btn btn-outline blue">
-                <i class="glyphicon glyphicon-send"></i> Sent Message
-            </a>
             <a href="javascript:;" class="btn btn-outline blue" ng-click="openCreate()">
                 <i class="glyphicon glyphicon-plus"></i> Create
             </a>
@@ -68,6 +65,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tab_sent">
+                    <notification-send on-kind="'global'"></notification-send>
                 </div>
             </div>
         </div>        

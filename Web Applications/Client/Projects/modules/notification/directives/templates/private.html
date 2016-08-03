@@ -9,9 +9,6 @@
             <a href="javascript:;" class="btn btn-outline blue" ng-click="init()">
                 <i class="glyphicon glyphicon-refresh"></i> Refresh
             </a>
-            <a ui-sref="authentication.notification.sended({type:'private'})" class="btn btn-outline blue">
-                <i class="glyphicon glyphicon-send"></i> Sent Message
-            </a>
             <a href="javascript:;" class="btn btn-outline blue" ng-click="create()">
                 <i class="glyphicon glyphicon-plus"></i> Create
             </a>
@@ -75,6 +72,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tab_private_sent">
+                    <notification-send on-kind="'private'"></notification-send>
                 </div>
             </div>
         </div>        

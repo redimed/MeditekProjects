@@ -180,8 +180,8 @@ public class MainController {
                         baos = pdfPrinting.dynamicJasperPrinting(formData.getData(), baseUrl, formData.getPrintMethod());
                     }
                     if (baos!=null) {
-                        InputStream is = new ByteArrayInputStream(baos.toByteArray());
-                        is.close(); 
+//                        InputStream is = new ByteArrayInputStream(baos.toByteArray());
+//                        is.close(); 
                         helper.addAttachment(attachment.getName()+".pdf", new ByteArrayResource(baos.toByteArray()));
                     }
                     break;
@@ -193,6 +193,16 @@ public class MainController {
                             helper.addAttachment(attachment.getName()+"."+attachment.getExtension(), new ByteArrayResource(fileArr));
                         }
                         break;
+                    case "fixedreport":
+                        if(attachment.getFixedFormData()!=null){
+                            ByteArrayOutputStream fixedReportOS = NewPrintingMethod.printJasper(attachment.getFixedFormData().getData(), attachment.getFixedFormData().getTemplateUID(), baseUrl, "jasper");
+                            if(fixedReportOS!=null){
+//                                InputStream fixedReportIS = new ByteArrayInputStream(fixedReportOS.toByteArray());
+                                helper.addAttachment(attachment.getName()+".pdf", new ByteArrayResource(fixedReportOS.toByteArray()));
+                            }
+                        }
+                        //baos = NewPrintingMethod.printJasper(requestData.getData(), requestData.getTemplateUID(), baseUrl, printMethod);
+                        
             }
   
         }

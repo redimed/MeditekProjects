@@ -20,6 +20,10 @@ angular.module('app.common.uploadEform',[])
 				$scope.checkbox = {};
 				$scope.isChose = false;
 				$scope.EFormName = null;
+				if($scope.ApptUID != null && $scope.ApptUID != '' && $scope.ApptUID != undefined) {
+					$scope.UID = $scope.ApptUID;
+					$scope.arr_ApptUID.push({UID:$scope.UID});
+				}
 			}
 			function capitalizeFirstLetter(string) {
 			    return string.charAt(0).toUpperCase() + string.slice(1);
@@ -97,8 +101,7 @@ angular.module('app.common.uploadEform',[])
 				// console.log("PatientUID ",scope.PatientUID);
 				if(scope.ApptUID != null && scope.ApptUID != '' && scope.ApptUID != undefined) {
 					scope.isShowListAppt = false;
-					scope.UID = scope.ApptUID;
-					scope.arr_ApptUID.push({UID:scope.UID});
+					// scope.arr_ApptUID.push({UID:scope.UID});
 				}
 				else {
 					WAAppointmentService.loadListWAAppointment({

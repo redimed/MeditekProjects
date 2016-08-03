@@ -65,6 +65,14 @@
                                            <td>{{at.Name}}</td>
                                            <td>{{at.ModifiedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
                                         </tr>
+                                        <tr class="odd gradeX" ng-show="show_consult == true">
+                                            <td>
+                                                <input type="checkbox" ng-model="check_consult" ng-true-value="'{{consult.UID}}'" ng-false-value="''" ng-click="getConsultNote(consult.UID)" />
+                                            </td>
+                                            <td>{{consult.Code}}</td>
+                                            <td>Consult Note</td>
+                                            <td>{{consult.ModifiedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>                    

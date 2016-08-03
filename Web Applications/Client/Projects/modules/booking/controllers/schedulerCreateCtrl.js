@@ -1,17 +1,7 @@
 var app = angular.module('app.authentication.booking.scheduler.create.controller', []);
 
 app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr) {
-    $modalInstance.rendered.then(function() {
-        function getDateCalendar() {
-            var date = $('#calendar').fullCalendar('getDate');
-            var today = moment(date).format('YYYY-MM-DD');
-            return today;            
-        }
-        var DateToday = getDateCalendar();
-        $('#calendar').fullCalendar( 'removeEvents', function(event) {
-            if(moment(event._start._i).format('YYYY-MM-DD') === DateToday)
-                return true;
-        });
+    $modalInstance.rendered.then(function() {       
         App.initAjax();
         ComponentsDateTimePickers.init();
     });
@@ -168,18 +158,7 @@ app.controller('schedulerCreateDirectiveCtrl', function($scope, item, BookingSer
     $scope.item = item;     
     $scope.time = time;
     $scope.formData = {};
-    console.log("Type", type);
-    $modalInstance.rendered.then(function() {
-        function getDateCalendar() {
-            var date = $('#calendar').fullCalendar('getDate');
-            var today = moment(date).format('YYYY-MM-DD');
-            return today;            
-        }
-        var DateToday = getDateCalendar();
-        $('#calendar').fullCalendar( 'removeEvents', function(event) {
-            if(moment(event._start._i).format('YYYY-MM-DD') === DateToday)
-                return true;
-        });
+    $modalInstance.rendered.then(function() {       
         App.initAjax();
         ComponentsDateTimePickers.init();
     });

@@ -5,6 +5,8 @@
  */
 package com.meditek.jasper.model;
 
+import java.util.List;
+
 /**
  *
  * @author rockmanexe1994
@@ -14,6 +16,7 @@ public class NewAttachmentModel {
     String content;
     String name;
     String extension;
+    NewRequestDataModel fixedFormData;
 
     public String getType() {
         return type;
@@ -46,5 +49,20 @@ public class NewAttachmentModel {
     public void setExtension(String extension) {
         this.extension = extension;
     }
+
+    public NewRequestDataModel getFixedFormData() {
+        return fixedFormData;
+    }
+
+    public void setFixedFormData(NewRequestDataModel fixedFormData) {
+        this.fixedFormData = fixedFormData;
+    }
+
+    
+    
+
+    
+    
+    
     
 }

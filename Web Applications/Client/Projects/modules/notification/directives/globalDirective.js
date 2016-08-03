@@ -8,45 +8,44 @@ app.directive('notificationGlobal', function() {
             scope: '='
         },
         controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $state) {
+            var self = $scope;
+
             var UserInfo = $cookies.getObject('userInfo');
             var roles = UserInfo.roles;
             var Role = [];
             var queue = 'GLOBALNOTIFY';
-            $scope.toggle = false;
 
             for (var i = 0; i < roles.length; i++) {
                 Role.push(roles[i].RoleCode);
             };
 
-            $scope.search = {
+            self.searchg = {
                 UID: UserInfo.UID,
                 Role: Role,
                 queue: queue
             };
 
-            $scope.itemSearch = [
+            self.itemSearchg = [
                 { field: "SenderAccount", name: "Sender" },
+                { field: "Receiver", name: "Receiver" },
                 { field: "Subject", name: "Subject" },
                 { field: "MsgContent", name: "Content" },
                 { field: "Object", name: "Object" }
             ];
 
-            $scope.itemDefault = [
+            self.itemDefaultg = [
                 { field: "SenderAccount", name: "Sender" },
+                { field: "Receiver", name: "Receiver" },
                 { field: "Subject", name: "Subject" },
                 { field: "MsgContent", name: "Content" },
                 { field: "Object", name: "Object" },
                 { field: "CreatedDate", name: "Created Date" }
             ];
 
-            $scope.fieldSort = {};
-            $scope.items = $scope.items != null && $scope.items != undefined ? $scope.items : $scope.itemDefault;
+            self.fieldSort = {};
+            self.items = self.items != null && self.items != undefined ? self.items : self.itemDefault;
 
-            $scope.fieldSort['CreatedDate'] = 'ASC';
-
-            $scope.toggleFilter = function() {
-                $scope.toggle = $scope.toggle === true ? false : true;
-            };
+            self.fieldSort['CreatedDate'] = 'ASC';
 
             function LoadListGlobalNotify(info) {
                 notificationServices.LoadListGlobalNotify(info).then(function(data) {
@@ -57,13 +56,15 @@ app.directive('notificationGlobal', function() {
                         };
                     };
                     console.log("LoadListGlobalNotify", data);
-                    $scope.listGlobalNotify = data.data;
-                    $scope.count = data.countAll;
+                    self.listGlobalNotify = data.data;
+                    self.countg = data.countAll;
                 });
             };
 
-            $scope.init = function() {
-                $scope.searchObject = {
+            self.initg = function() {
+                console.log("||||||||",self.itemDefault);
+
+                self.searchObject = {
                     limit: 10,
                     offset: 0,
                     currentPage: 1,
@@ -77,42 +78,42 @@ app.directive('notificationGlobal', function() {
                     order: 'CreatedDate DESC'
                 };
                 // scope.search.Enable = null;
-                $scope.searchObjectMap = angular.copy($scope.searchObject);
-                LoadListGlobalNotify($scope.searchObjectMap);
+                self.searchgObjectMap = angular.copy(self.searchObject);
+                LoadListGlobalNotify(self.searchgObjectMap);
             };
 
-            $scope.init();
+            self.initg();
 
-            $scope.setPage = function() {
-                $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-                LoadListGlobalNotify($scope.searchObjectMap);
+            self.setPage = function() {
+                self.searchgObjectMap.offset = (self.searchgObjectMap.currentPage - 1) * self.searchgObjectMap.limit;
+                LoadListGlobalNotify(self.searchgObjectMap);
             };
 
-            $scope.Search = function(data) {
-                ($scope.fromCreateDate && $scope.fromCreateDate !== null) ? data.FromCreatedDate = moment($scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.FromCreatedDate = null;
-                ($scope.toCreateDate && $scope.toCreateDate !== null) ? data.ToCreatedDate = moment($scope.toCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.ToCreatedDate = null;
-                $scope.searchObjectMap.Search = data;
-                LoadListGlobalNotify($scope.searchObjectMap);
+            self.Searchg = function(data) {
+                (self.fromCreateDate && self.fromCreateDate !== null) ? data.FromCreatedDate = moment(self.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.FromCreatedDate = null;
+                (self.toCreateDate && self.toCreateDate !== null) ? data.ToCreatedDate = moment(self.toCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): data.ToCreatedDate = null;
+                self.searchgObjectMap.Search = data;
+                LoadListGlobalNotify(self.searchgObjectMap);
             };
 
-            $scope.sort = function(field, sort) {
-                $scope.isClickASC = false;
+            self.sort = function(field, sort) {
+                self.isClickASC = false;
                 if (sort === "ASC") {
-                    $scope.isClickASC = true;
-                    $scope.fieldSort[field] = 'DESC';
+                    self.isClickASC = true;
+                    self.fieldSort[field] = 'DESC';
                 } else {
-                    $scope.isClickASC = false;
-                    $scope.fieldSort[field] = 'ASC';
+                    self.isClickASC = false;
+                    self.fieldSort[field] = 'ASC';
                 }
                 if (field == 'SenderAccount') {
                     field = 'SenderAccount.UserName';
                 }
                 var data = field + ' ' + sort;
-                $scope.searchObjectMap.order = data;
-                LoadListGlobalNotify($scope.searchObjectMap);
+                self.searchgObjectMap.order = data;
+                LoadListGlobalNotify(self.searchgObjectMap);
             };
 
-            $scope.openCreate = function(data) {
+            self.openCreate = function(data) {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     size: 'lg', // windowClass: 'app-modal-window', 
@@ -133,7 +134,7 @@ app.directive('notificationGlobal', function() {
                 });
             };
 
-            $scope.openDetail = function(data) {
+            self.openDetail = function(data) {
                 if (data.MsgContent.Command && data.MsgContent.Command.Url_State) {
                     $state.go(data.MsgContent.Command.Url_State, { UID: data.MsgContent.Display.Object.UID });
                 } else {
@@ -165,7 +166,7 @@ app.directive('notificationGlobal', function() {
                         UserUID: UserInfo.UID
                     };
                     notificationServices.ChangeReadQueueJobg(info).then(function(info) {
-                        $scope.init();
+                        self.initg();
                         if (ioSocket.telehealthGlobalNotify()) {
                             ioSocket.telehealthGlobalNotify("msg");
                         }
@@ -176,7 +177,7 @@ app.directive('notificationGlobal', function() {
             };
 
             ioSocket.LoadListGlobalNotify = function() {
-                $scope.init();
+                self.initg();
             };
 
             ComponentsDateTimePickers.init();

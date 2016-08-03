@@ -1,10 +1,3 @@
-<!-- BEGIN PAGE HEADER-->
-<div class="page-bar margin-bottom-20">
-    <ul class="page-breadcrumb">
-        <li><a ui-sref="authentication.home.list">Homepage</a></li>
-        <li><i class="fa fa-circle"></i><span> Notification Global</span></li>
-    </ul>
-</div>
 <!-- END PAGE HEADER-->
 <div class="portlet portlet-fit light bordered">
     <div class="portlet-title">
@@ -13,14 +6,11 @@
             <span class="caption-subject bold uppercase"> Notification Global</span>
         </div>
         <div class="actions">
-            <a href="javascript:;" class="btn btn-outline red" ng-click="toggleFilter()">
-                <i class="glyphicon glyphicon-filter"></i> Filter
-            </a>
-            <a href="javascript:;" class="btn btn-outline blue" ng-click="init()">
+            <a href="javascript:;" class="btn btn-outline blue" ng-click="initg()">
                 <i class="glyphicon glyphicon-refresh"></i> Refresh
             </a>
             <a ui-sref="authentication.notification.sended({type:'global'})" class="btn btn-outline blue">
-                <i class="glyphicon glyphicon-send"></i> Sended
+                <i class="glyphicon glyphicon-send"></i> Sent Message
             </a>
             <a href="javascript:;" class="btn btn-outline blue" ng-click="openCreate()">
                 <i class="glyphicon glyphicon-plus"></i> Create
@@ -33,16 +23,16 @@
                 <thead>
                     <tr class="uppercase">
                         <th width="1">#</th>
-                        <th ng-repeat="ite in itemDefault">
+                        <th ng-repeat="ite in itemDefaultg">
                             {{ite.name}}
                             <i class="fa fa-sort-asc" ng-click="sort(ite.field,'ASC')" ng-show="fieldSort[ite.field]=='ASC'"></i>
                             <i class="fa fa-sort-desc" ng-click="sort(ite.field,'DESC')" ng-show="fieldSort[ite.field]=='DESC'"></i>
                         </th>
                     </tr>
-                    <tr ng-show="toggle">
+                    <tr>
                         <td>#</td>
-                        <td ng-repeat="ite in itemSearch">
-                            <input type="text" ng-model="search[ite.field]" class="form-control" ng-enter="Search(search)" />
+                        <td ng-repeat="ite in itemSearchg">
+                            <input type="text" ng-model="searchg[ite.field]" class="form-control" ng-enter="Searchg(searchg)" />
                         </td>
                         <td>
                             <input type="text" class="form-control date-picker margin-bottom-5" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="Search(search)" placeholder="From Date">
@@ -52,16 +42,16 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="lsnc in listGlobalNotify" ng-click="openDetail(lsnc)" class="{{ lsnc.iRead === 'N' ? 'info' : ''}}">
-                        <td>{{(($index + 1) + (searchObjectMap.limit * (searchObjectMap.currentPage - 1)))}}</td>
-                        <td ng-repeat="ite in itemDefault">
+                        <td>{{(($index + 1) + (searchgObjectMap.limit * (searchgObjectMap.currentPage - 1)))}}</td>
+                        <td ng-repeat="ite in itemDefaultg">
                             {{ ite.field === 'MsgContent' ? (lsnc[ite.field]['Display']['Action'].length > 50 ? lsnc[ite.field]['Display']['Action'].substr(0, 50) + '...' : lsnc[ite.field]['Display']['Action']) : ite.field === 'Object' ? lsnc['MsgContent']['Display'][ite.field]['name'] : ite.field === 'CreatedDate' || ite.field === 'EndTime' ? (lsnc[ite.field] | date:"dd/MM/yyyy") : ite.field === 'SenderAccount' ? lsnc[ite.field]['UserName'] : lsnc[ite.field] }}
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
-                    <th colspan="{{itemDefault.length+1}}" class="text-right">
+                    <th colspan="{{itemDefaultg.length+1}}" class="text-right">
                         <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                            <uib-pagination boundary-links="true" total-items="count" ng-model="searchObjectMap.currentPage" class="pagination-md" previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></uib-pagination>
+                            <uib-pagination boundary-links="true" total-items="countg" ng-model="searchgObjectMap.currentPage" class="pagination-md" previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchgObjectMap.limit" max-size="searchgObjectMap.maxSize" ng-change="setPage()"></uib-pagination>
                         </div>
                     </th>
                 </tfoot>

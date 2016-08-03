@@ -317,11 +317,19 @@ module.exports = {
 
         var whereClause = QueueJobService.whereClause(info);
 
-        var whereClauseAccount = {};
+        var whereClauseAccount = {
+            Sender: {},
+            Receiver: {},
+        };
 
         if (info.Search.SenderAccount) {
-            whereClauseAccount.UserName = {
+            whereClauseAccount.Sender.UserName = {
                 like: '%' + info.Search.SenderAccount + '%'
+            }
+        };
+        if (info.Search.ReceiverAccount) {
+            whereClauseAccount.Receiver.UserName = {
+                like: '%' + info.Search.ReceiverAccount + '%'
             }
         };
 
@@ -336,23 +344,29 @@ module.exports = {
                 model: UserAccount,
                 attributes: ['UserName'],
                 as: 'SenderAccount',
-                where: whereClauseAccount
+                where: whereClauseAccount.Sender
             }, {
                 model: UserAccount,
                 attributes: ['UserName'],
                 as: 'ReceiverAccount',
+                where: whereClauseAccount.Receiver
             }],
             order: info.order
         }).then(function(data) {
             whereClause.Read = 'N';
             QueueJob.count({
                 where: whereClause,
-                include: {
+                include: [{
                     model: UserAccount,
                     attributes: ['UserName'],
                     as: 'SenderAccount',
-                    where: whereClauseAccount
-                },
+                    where: whereClauseAccount.Sender
+                }, {
+                    model: UserAccount,
+                    attributes: ['UserName'],
+                    as: 'ReceiverAccount',
+                    where: whereClauseAccount.Receiver
+                }],
             }).then(function(count) {
                 q.resolve({
                     status: 'success',
@@ -363,11 +377,6 @@ module.exports = {
             }, function(err) {
                 console.log("GetListQueueByRoleCount", err);
             });
-            // q.resolve({
-            //     status: 'success',
-            //     data: data.rows,
-            //     count: data.count,
-            // });
         }, function(err) {
             console.log("GetListQueueByRole", err);
             q.reject(err);

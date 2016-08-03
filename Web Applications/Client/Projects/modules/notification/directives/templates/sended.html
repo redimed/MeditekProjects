@@ -3,7 +3,7 @@
     <ul class="page-breadcrumb">
         <li><a ui-sref="authentication.home.list">Homepage</a></li>
         <li><i class="fa fa-circle"></i><span> Notification {{type}}</span></li>
-        <li><i class="fa fa-circle"></i><span> Notification {{type}} sended</span></li>
+        <li><i class="fa fa-circle"></i><span> Notification {{type}} sent</span></li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
@@ -11,11 +11,11 @@
     <div class="portlet-title">
         <div class="caption bold uppercase font-blue">
             <i class="icon-list"></i>
-            <span class="caption-subject bold uppercase"> Notification {{type}} Sended</span>
+            <span class="caption-subject bold uppercase"> Notification {{type}} Sent</span>
         </div>
         <div class="actions">
-            <a ui-sref="authentication.notification.{{type}}" class="btn btn-outline blue">
-                <i class="glyphicon glyphicon-chevron-left"></i> Back
+            <a ui-sref="authentication.notification.list" class="btn btn-outline blue">
+                <i class="glyphicon glyphicon-chevron-left"></i> Received Message
             </a>
             <a href="javascript:;" class="btn btn-outline red" ng-click="toggleFilter()">
                 <i class="glyphicon glyphicon-filter"></i> Filter

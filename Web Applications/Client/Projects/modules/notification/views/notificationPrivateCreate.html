@@ -56,108 +56,35 @@
                     </div>
                 </div>
             </div>
-            <hr/>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="tabbable-custom" id="tabBable">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="@#doctor" data-toggle="tab" aria-expanded="true">Doctor</a></li>
-                            <li><a href="@#patient" data-toggle="tab" aria-expanded="true">Patient</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="doctor">
-                                <div class="table-scrollable table-scrollable-borderless table-responsive dt-responsive scroller-height">
-                                    <table class="table table-hover table-light table-checkable ">
-                                        <thead>
-                                            <tr class="uppercase">
-                                                <th colspan="2">Choose doctor</th>
-                                                <th width="1"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team1.jpg" /></td>
-                                                <td><a href="javascript:;" class="primary-link">Lý Liên Liệt</a></td>
-                                                <td>
-                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                        <input type="checkbox" class="group-checkable" />
-                                                        <span></span>
-                                                   </label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team2.jpg" /></td>
-                                                <td><a href="javascript:;" class="primary-link">Phan Quốc Đại</a></td>
-                                                <td>
-                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                        <input type="checkbox" class="group-checkable" />
-                                                        <span></span>
-                                                   </label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team1.jpg" /></td>
-                                                <td><a href="javascript:;" class="primary-link">Lý Liên Liệt</a></td>
-                                                <td>
-                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                        <input type="checkbox" class="group-checkable" />
-                                                        <span></span>
-                                                   </label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team2.jpg" /></td>
-                                                <td><a href="javascript:;" class="primary-link">Phan Quốc Đại</a></td>
-                                                <td>
-                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                        <input type="checkbox" class="group-checkable" />
-                                                        <span></span>
-                                                   </label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team1.jpg" /></td>
-                                                <td><a href="javascript:;" class="primary-link">Lý Liên Liệt</a></td>
-                                                <td>
-                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                        <input type="checkbox" class="group-checkable" />
-                                                        <span></span>
-                                                   </label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fit"><img class="user-pic" src="theme/assets/pages/img/avatars/team2.jpg" /></td>
-                                                <td><a href="javascript:;" class="primary-link">Phan Quốc Đại</a></td>
-                                                <td>
-                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                        <input type="checkbox" class="group-checkable" />
-                                                        <span></span>
-                                                   </label>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="patient">
-                            </div>
-                        </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="tabbable-custom" id="tabBable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="@#doctor" data-toggle="tab" aria-expanded="true">Doctor</a></li>
+                    <li><a href="@#patient" data-toggle="tab" aria-expanded="true">Patient</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="doctor">
+                        <doctor-list on-check="true" on-choose="GetDoctor" on-limit="5"></doctor-list>
+                    </div>
+                    <div class="tab-pane" id="patient">
+                        <patient-list on-check="true" on-choose="GetPatient" on-limit="5"></patient-list>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
     <button type="button" class="btn btn-primary" ng-click="submit(private)">{{submitText}}</button>
 </div>
-
-
 <style type="text/css">
-   .scroller-height {
-       max-height: 500px;
-       overflow: scroll;
-       overflow-x: hidden;
-   }
+.scroller-height {
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
 </style>

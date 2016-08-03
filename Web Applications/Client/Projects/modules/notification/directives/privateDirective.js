@@ -54,7 +54,7 @@ app.directive('notificationPrivate', function() {
 
             self.init = function() {
                 self.searchObject = {
-                    limit: 10,
+                    limit: 5,
                     offset: 0,
                     currentPage: 1,
                     maxSize: 5,

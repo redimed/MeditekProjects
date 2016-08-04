@@ -81,6 +81,16 @@ module.exports = {
                 }
             }
         },
+        ItemInfo: {
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
+        },
         CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true,

@@ -156,4 +156,7 @@ module.exports = {
     updatePassword: require('./UserAccount/updatePassword'),
     sendEmail: require('./UserAccount/sendEmail'),
     loadChildNode: require('./Patient/loadChildNode'),
+    //begin Billing
+    AddItem: require('./Billing/AddItem'),
+    //end Billing
 };

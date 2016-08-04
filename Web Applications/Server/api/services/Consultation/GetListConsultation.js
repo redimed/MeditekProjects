@@ -1,12 +1,13 @@
 module.exports = function(data, userInfo) {
     var $q = require('q');
     var defer = $q.defer();
-        var pagination = PaginationService(data, Consultation);
+    var pagination = PaginationService(data, Consultation);
     //add roles
     var role = HelperService.GetRole(userInfo.roles);
     if (role.isPatient &&
         !role.isAdmin &&
-        !role.isAssistant) {
+        !role.isAssistant &&
+        !role.isInternalPractitioner) {
         var filterRoleTemp = {
             '$and': {
                 UserAccountID: userInfo.ID
@@ -16,6 +17,18 @@ module.exports = function(data, userInfo) {
             pagination.Patient = [];
         }
         pagination.Patient.push(filterRoleTemp);
+    } else if (role.isInternalPractitioner &&
+        !role.isAdmin &&
+        !role.isAssistant) {
+        var filterRoleTemp = {
+            '$and': {
+                UserAccountID: userInfo.ID
+            }
+        };
+        if (!HelperService.CheckExistData(pagination.Doctor)) {
+            pagination.Doctor = [];
+        }
+        pagination.Doctor.push(filterRoleTemp);
     }
     Appointment.findAll({
             attributes: ['ID'],

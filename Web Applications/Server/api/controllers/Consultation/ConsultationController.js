@@ -44,9 +44,7 @@ module.exports = {
             res.serverError('data failed');
         } else {
             var role = HelperService.GetRole(req.user.roles);
-            if (role.isAdmin ||
-                role.isAssistant ||
-                role.isInternalPractitioner) {
+            if (role.isInternalPractitioner) {
                 Services.UpdateRequestConsultation(data, req.user)
                     .then(function(success) {
                         if (HelperService.CheckExistData(success) &&
@@ -62,7 +60,7 @@ module.exports = {
                         res.serverError(ErrorWrap(err.error || err));
                     });
             } else {
-                res.serverError('user.not(admin,assistant,internalPractitioner)');
+                res.serverError('user.not(internalPractitioner)');
             }
         }
     },

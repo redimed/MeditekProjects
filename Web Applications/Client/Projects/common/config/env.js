@@ -86,5 +86,5 @@ if (env == "local") {
 
 
 var _configStateBlank = [
-    "unAuthentication.login", "unAuthentication.register", "unAuthentication.activation", "unAuthentication.forgot", "unAuthentication.changepass", "unAuthentication.loginPatient", "unAuthentication.registerPatient", "unAuthentication.searchPatient", "blank.call", "blank.welcome", "blank.welcomeCampaign", "blank.registerPatient", "blank.searchPatient", "blank.drawing.home", "blank.registerPatientCampaign"
+    "unAuthentication.login", "unAuthentication.register", "unAuthentication.activation", "unAuthentication.forgot", "unAuthentication.changepass", "unAuthentication.loginPatient", "unAuthentication.registerPatient", "unAuthentication.searchPatient", "blank.call", "blank.welcome", "blank.welcomeCampaign", "blank.registerPatient", "blank.searchPatient", "blank.drawing.home", "blank.registerPatientCampaign","unAuthentication.registerlogin"
 ];

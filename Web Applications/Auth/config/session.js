@@ -54,7 +54,7 @@ module.exports.session = {
   ***************************************************************************/
 
   host: 'redis',
-  port: 6379,
+  port: 6380,
   // ttl (seconds) : thời hạn (expiration) của 1 session (1 key ) trong redis
   // nếu khoảng cách thời gian giữa 2 request lớn hơn ttl thì session (key) sẽ được remove khỏi redis
   //  

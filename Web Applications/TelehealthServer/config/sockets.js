@@ -41,7 +41,7 @@ module.exports.sockets = {
     //
     adapter: 'socket.io-redis',
     host: 'redis',
-    port: 6379,
+    port: 6378,
     db: 'sails',
     /***************************************************************************
      *                                                                          *

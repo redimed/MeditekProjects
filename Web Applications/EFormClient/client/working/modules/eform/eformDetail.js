@@ -37,6 +37,7 @@ module.exports = React.createClass({
         if(typeof locationParams.page !== 'undefined')
             this.page = locationParams.page;
         this._serverTemplateDetail();
+        this.is_doctor = true;
     },
 
     /**
@@ -139,6 +140,7 @@ module.exports = React.createClass({
                 setTimeout(function(refRow, refField, refSection){
                     EFormService.eformCheckDetail({templateName: preCalRes[1], appointmentCode: preCalRes[2]})
                         .then(function(eformRes){
+                            console.log(eformRes);
                             if(eformRes.data) {
                                 var formData = eformRes.data.EFormData.FormData?JSON.parse(eformRes.data.EFormData.FormData):null;
                                 for (var i = 0; i < formData.length; i++) {
@@ -211,9 +213,12 @@ module.exports = React.createClass({
                 var appointmentInfo = response.data.Appointment;
                 if(typeof response.data.Doctor !== 'undefined' && response.data.Doctor !== null){
                     self.signatureDoctor = response.data.Doctor.FileUpload;
+                    self.refs.pageBar.showFinalizeForm();
                 }
-                else
+                else{
                     self.signatureDoctor = '';
+                    self.is_doctor = false;
+                }
                 EFormService.eformGetPatient({data: {UID: self.patientUID} })
                 .then(function(responsePatient){
                     self.signaturePatient = responsePatient.data[0].Signature;
@@ -585,6 +590,7 @@ module.exports = React.createClass({
         var self = this;
         EFormService.eformCheckDetail({templateUID: this.templateUID, appointmentUID: this.appointmentUID})
         .then(function(response){
+            console.log(response);
             if(response.data){
                 self.EFormID = response.data.ID;
                 self.EFormStatus = response.data.Status;
@@ -819,10 +825,13 @@ module.exports = React.createClass({
         return p;
     },
     _onComponentPageBarSaveForm: function(){
-        this._onDetailSaveForm()
-        .then(function(){
-            window.location.reload();
-        })
+        if(this.EFormStatus !== 'finalized'){
+            this._onDetailSaveForm()
+            .then(function(){
+                window.location.reload();
+            })
+        }else
+            alert('Form has been finalized. You cannot save form.')
     },
     _onComponentPageBarPrintForm: function(){
         var self = this;
@@ -1138,6 +1147,19 @@ module.exports = React.createClass({
             })
         }
     },
+    _onComponentPageBarFinalizeForm: function(){
+            var self = this;
+            if(this.EFormStatus !== 'finalized'){
+                this._onDetailSaveForm()
+                .then(function(){
+                    EFormService.finalizeEForm({ID: self.EFormID})
+                    .then(function(response){
+                        window.location.reload();
+                    })
+                })
+            }else
+                alert('Form has been finalized. You cannot save form.')
+    },
     render: function(){
         var pageList = [];
         for (var i = 1; i <= this.maxPage; i++)
@@ -1152,6 +1174,7 @@ module.exports = React.createClass({
             <div className="page-content">
                 <ComponentPageBar ref="pageBar"
                         onSaveForm={this._onComponentPageBarSaveForm}
+                        onFinalizeForm={this._onComponentPageBarFinalizeForm}
                         onPrintForm={this._onComponentPageBarPrintForm}/>
                 <h3 className="page-title">{this.state.name}</h3>
                 <div className="row">

@@ -8,6 +8,21 @@ module.exports = {
             res.json(eForm)
         })
     },
+    PostEFormFinalize: function(req, res){
+        console.log('finalized', req.body)
+        EForm.findOne({
+            where: {Enable: 'Y', ID: req.body.ID},
+            attributes: ['ID']
+        })
+        .then(function(eform){
+            EForm.update({
+                Status: 'finalized'
+            }, {where: {ID: req.body.ID} })
+            .then(function(){
+                res.json({data: 'success'})
+            })
+        })
+    },
     PostEFormPrint: function(req, res){
         EForm.findOne({
             where: {Enable: 'Y', UID: req.body.EFormUID},
@@ -24,6 +39,7 @@ module.exports = {
         .then(function(data){
             var data_value = JSON.parse(data.EFormData.FormData);
             data_value.map(function(value){
+                console.log(value.value)
                 if(value.type === 'eform_input_signature'){
                     value.base64Data = value.value.sub;
                     delete value.value;

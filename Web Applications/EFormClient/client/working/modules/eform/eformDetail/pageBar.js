@@ -12,6 +12,10 @@ module.exports = React.createClass({
             patientUID: null,
             userUID: null,
             componentDidMount: function(){
+                
+            },
+            showFinalizeForm: function(){
+                $(this.refs.finalize).show()
             },
             _onPrintForm: function(){
                 this.props.onPrintForm();
@@ -28,6 +32,11 @@ module.exports = React.createClass({
                                     <i className="fa fa-save"></i>&nbsp;
                                     Save Form
         		      </button>
+                                &nbsp;
+                                <button type="button" className="btn green btn-sm" onClick={this.props.onFinalizeForm} style={{display: 'none'}} ref="finalize">
+                                    <i className="fa fa-save"></i>&nbsp;
+                                    Finalize Form
+                                </button>
                                 &nbsp;
                                 <button type="button" className="btn green btn-sm" onClick={this._onPrintForm}>
                                     <i className="fa fa-print"></i>&nbsp;

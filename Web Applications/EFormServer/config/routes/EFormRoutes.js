@@ -135,6 +135,11 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'GetListEFormTemplateByAppointment',
     },
+    'post /eform/finalize':{
+        controller: 'EForm/EFormController',
+        action: 'PostEFormFinalize'
+    },
+
 
     'post /eformtemplate/v1/save': {
         controller: 'EForm/EFormController',
@@ -143,5 +148,5 @@ module.exports = {
     'post /eform/v1/save': {
         controller: 'EForm/EFormController',
         action: 'PostV1Save'
-    }
+    }    
 };

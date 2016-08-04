@@ -1,6 +1,17 @@
 var Config = require('config');
 
 module.exports = {
+	finalizeEForm: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eform/finalize',
+				data: data,
+				success: resolve
+			})
+		});
+		return p;
+	},
 	saveEFormTemplateRole: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

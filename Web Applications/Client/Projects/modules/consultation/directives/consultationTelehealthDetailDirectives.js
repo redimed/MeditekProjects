@@ -1459,7 +1459,7 @@ app.directive('telehealthDetail', function(doctorService) {
                     $scope.ShowData.patient.MedicareExpiryDate =
                             $scope.wainformation.PatientAppointments[0].MedicareExpiryDate!=null
                             &&$scope.wainformation.PatientAppointments[0].MedicareExpiryDate ? 
-                            moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
+                            moment($scope.wainformation.PatientAppointments[0].MedicareExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('MM/YYYY'):null;
                     $scope.ShowData.patient.DVANumber = $scope.wainformation.PatientAppointments[0].DVANumber;
                     $scope.ShowData.patient.PatientKinFirstName = $scope.wainformation.PatientAppointments[0].PatientKinFirstName;
                     $scope.ShowData.patient.PatientKinLastName = $scope.wainformation.PatientAppointments[0].PatientKinLastName;
@@ -1484,7 +1484,7 @@ app.directive('telehealthDetail', function(doctorService) {
                                             $scope.ShowData.patient.MedicareReferenceNumber = tempData[key][0].MedicareReferenceNumber;
                                             $scope.ShowData.patient.MedicareExpiryDate = 
                                                 tempData[key][0].ExpiryDate!=null&&tempData[key].ExpiryDate!='' ? 
-                                                moment(tempData[key][0].ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('DD/MM/YYYY'):null;
+                                                moment(tempData[key][0].ExpiryDate,'YYYY-MM-DD HH:mm:ss Z').format('MM/YYYY'):null;
                                         }
                                     }
                                     else if(key == 'PatientDVA') {

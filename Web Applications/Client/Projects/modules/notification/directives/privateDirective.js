@@ -6,7 +6,11 @@ app.directive('notificationPrivate', function() {
         restrict: 'EA',
         templateUrl: 'modules/notification/directives/templates/private.html',
         options: {
-            scope: '='
+            scope: '=',
+        },
+        scope:{
+            kind: "=onKind",
+            limit: "=onLimit"
         },
         controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state, $uibModal) {
             var self = $scope;

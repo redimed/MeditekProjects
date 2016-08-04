@@ -41,6 +41,11 @@
 							<i class="fa fa-sort-asc"  ng-click="sort('CompanyName','ASC')" ng-show="fieldSort['CompanyName']=='ASC'" ></i>
                         	<i class="fa fa-sort-desc" ng-click="sort('CompanyName','DESC')" ng-show="fieldSort['CompanyName']=='DESC'"></i>
 						</th>
+						<th>
+							IDRefer
+							<i class="fa fa-sort-asc"  ng-click="sort('IDRefer','ASC')" ng-show="fieldSort['IDRefer']=='ASC'" ></i>
+                        	<i class="fa fa-sort-desc" ng-click="sort('IDRefer','DESC')" ng-show="fieldSort['IDRefer']=='DESC'"></i>
+						</th>
 	 					<th width="15%">
 	 						Status
 	 						<i class="fa fa-sort-asc"  ng-click="sort('Active','ASC')" ng-show="fieldSort['Active']=='ASC'" ></i>
@@ -49,6 +54,7 @@
 					</tr>
 					<tr ng-if="toggle">
 						<td>&nbsp;</td>
+						<td><input ng-model="search['IDRefer']" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="IDRefer" /></td>
 						<td><input ng-model="search['CompanyName']" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="CompanyName" /></td>
 						<td>
 							<select class="form-control" ng-change="Search(search,'13')" ng-model="search.Active">
@@ -61,6 +67,7 @@
 				<tbody>
 					<tr ng-repeat="c in companys" ng-click="detail(c.UID)" ng-if="patientuid==null">
 						<td>{{c.stt}}</td>
+						<td>{{c.IDRefer}}</td>
 						<td>{{c.CompanyName}}</td>
 						<td class="text-center">
 							<i class="glyphicon glyphicon-ok font-green" ng-if="c.Active=='Y'"></i>

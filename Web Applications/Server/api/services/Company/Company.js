@@ -19,6 +19,7 @@ var defaultAttr = [
 	'ID',
 	'UID',
 	'CompanyName',
+	'IDRefer',
 	'Enable',
 	'Active',
 	'Description',
@@ -218,6 +219,11 @@ module.exports = {
             if(data.Search.ID){
                 whereClause.Company.ID={
                     like:'%'+data.Search.ID+'%'
+                }
+            }
+            if(data.Search.IDRefer){
+                whereClause.Company.IDRefer={
+                    like:'%'+data.Search.IDRefer+'%'
                 }
             }
             if(data.Search.UID){

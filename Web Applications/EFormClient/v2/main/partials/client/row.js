@@ -6,6 +6,9 @@ import Checkbox from './object/checkbox'
 import Sign from './object/sign'
 import InputDate from './object/date'
 
+import CONSTANTS from '../../config/constants'
+const EFORM_CONST = CONSTANTS.EFORM
+
 class Row extends Component{
     constructor(){
         super()
@@ -25,7 +28,7 @@ class Row extends Component{
                 {
                     this.props.params.select('o').map(function(o, o_index){
                         var res = null
-                        if(o.get('type') === 'lb')
+                        if(EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type'))
                             var style = {
                                 width: o.get('params', 'width'),
                                 border: 'none'
@@ -57,7 +60,7 @@ class Row extends Component{
                             }
                         }
                         switch(o.get('type')){
-                            case 'lb':
+                            case EFORM_CONST.OBJECT_TYPE.LABEL:
                                 res = (
                                     <div className={className+' label'}
                                         style={style}>
@@ -65,7 +68,7 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
-                            case 'r':
+                            case EFORM_CONST.OBJECT_TYPE.RADIO:
                                 res = (
                                     <div className={className}
                                         style={style}>
@@ -75,7 +78,7 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
-                            case 'c':
+                            case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
                                 res = (
                                     <div className={className}
                                         style={style}>
@@ -85,7 +88,7 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
-                            case 'it':
+                            case EFORM_CONST.OBJECT_TYPE.TEXT:
                                 var disabled = (o.get('params').disabled) || false
                                 res = (
                                     <div className={className+' input'}
@@ -94,7 +97,7 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
-                            case 'in':
+                            case EFORM_CONST.OBJECT_TYPE.NUMBER:
                                 var disabled = (o.get('params').disabled) || false
                                 res = (
                                     <div className={className+' input'}
@@ -103,7 +106,7 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
-                            case 'id':
+                            case EFORM_CONST.OBJECT_TYPE.DATE:
                                 var disabled = (o.get('params').disabled) || false
                                 res = (
                                     <div className={className+' input'}
@@ -112,7 +115,7 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
-                            case 'si':
+                            case EFORM_CONST.OBJECT_TYPE.SIGN:
                                 this.objects_init.push(o.get('name') || '')
                                 res = (
                                     <div className={className} ref={o.get('name') || ''}

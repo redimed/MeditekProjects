@@ -2,7 +2,8 @@
 const server = 'http://localhost'
 
 const ip = {
-    EFormServer: server+':3015'
+    EFormServer: server+':3015',
+    ApiServerUrl: server + ':3005',
 }
 
 export default ip

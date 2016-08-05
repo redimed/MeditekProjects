@@ -4,6 +4,7 @@
   },
   "hooks": {
 	    "orm": false,
-	    "pubsub": false
+	    "pubsub": false,
+	    "socket": false
 	}
 }

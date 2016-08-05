@@ -51,7 +51,7 @@ var Services = {
                 type: 'POST',
                 data: data,
                 headers: window.userAccess||{},
-                url: IP.EFormServer+'/seform/save',
+                url: IP.EFormServer+'/eform/save',
                 success: resolve
             })
         })
@@ -65,6 +65,45 @@ var Services = {
                 headers: window.userAccess||{},
                 url: IP.EFormServer+'/eform/v1/save',
                 success: resolve
+            })
+        })
+        return p
+    },
+    EFormUpdate: function(data){
+        var p = new Promise(function(resolve, reject){
+            $.ajax({
+                type: 'POST',
+                data: data,
+                headers: window.userAccess||{},
+                url: IP.EFormServer+'/eform/update',
+                success: resolve
+            })
+        })
+        return p
+    },
+
+    EFormUploadSignImage: function (data) {
+        var formdata = data.formdata;
+        var p = new Promise(function(resolve, reject){
+             $.ajax({
+                url: IP.ApiServerUrl +'/api/uploadFileWithoutLogin',
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers:{
+                    //Authorization: ('Bearer ' + $cookies.get("token")),
+                    systemtype: 'WEB',
+                    userUID: '2d0626f3-e741-11e5-8fab-0050569f3a15',
+                    fileType: 'MedicalImage'
+                },
+                type: "POST",
+                data: formdata,
+                processData: false,
+                contentType: false,
+            }).done(function(respond){
+                resolve(respond)
+            }).fail(function(error) {
+                reject(error);
             })
         })
         return p

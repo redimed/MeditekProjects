@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import Baobab from 'baobab'
 
 class Row extends Component{
+    constructor() {
+        super()
+        this.isShowToolBar = true
+    }
     componentDidMount(){
         const self = this
         this._defaultValueForToolbar()
@@ -29,10 +33,25 @@ class Row extends Component{
     _onClone(){
         this.props.onClone(this.props.index)  
     }
+    _toggleToolBar(){
+        if(this.isShowToolBar){
+            $(this.refs.toolbar).hide()
+            $(this.refs.nottoolbar).show()
+        } else {
+            $(this.refs.toolbar).show()
+            $(this.refs.nottoolbar).hide()
+        }
+        this.isShowToolBar = !this.isShowToolBar
+    }
     render(){
         return (
             <div className="row">
-                <ul className="toolbar-row">
+                <ul ref="toolbar" className="toolbar-row">
+                    <li className="toolbar-row-action">
+                        <a>
+                            <button onClick={this._toggleToolBar.bind(this)}><i className="fa fa-check"></i> Done </button>
+                        </a>
+                    </li>
                     <li>
                         <a>
                             <b>Order</b><br/>
@@ -96,12 +115,17 @@ class Row extends Component{
                         </a>
                     </li>
                 </ul>
+                <div ref="nottoolbar"  style={{ display: 'none',  clear: 'both'}}>
+                    <button onClick={this._toggleToolBar.bind(this)} style={{ color: 'red', float: 'right',}}>Toolbar</button>
+                </div>
+
                 <div className="content-row">
                     {
                         this.props.params.select('o').map(function(o, o_index){
-                            console.log(o.serialize())
+                            // console.log(o.serialize())
                             var res = null
                             var width = o.get('params', 'width') || 'initial'
+
                             switch(o.get('type')){
                                 case 'lb':
                                     var title = o.get('params', 'title')||'<span style="color: yellow">Label</span>'

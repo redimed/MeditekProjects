@@ -120,7 +120,7 @@ class Section extends Component{
                     </li>
                     <li>
                         <a>
-                            <button onClick={this._onDown.bind(this)}>Down</button>
+                            <button onClick={this._onDown.bind(this)}>Toogle</button>
                         </a>
                     </li>
                     <li>

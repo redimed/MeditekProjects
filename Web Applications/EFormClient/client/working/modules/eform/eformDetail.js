@@ -590,10 +590,10 @@ module.exports = React.createClass({
         var self = this;
         EFormService.eformCheckDetail({templateUID: this.templateUID, appointmentUID: this.appointmentUID})
         .then(function(response){
-            console.log(response);
             if(response.data){
                 self.EFormID = response.data.ID;
                 self.EFormStatus = response.data.Status;
+                self.refs.pageBar.initStatus(self.EFormStatus);
                 self.formUID = response.data.UID;
                 var tempData = JSON.parse(response.data.EFormData.TempData);
                 self.allFields = self._mergeTwoObjects(self.allFields, tempData);
@@ -864,7 +864,7 @@ module.exports = React.createClass({
                                             if(field.checked === true)
                                                 temp_value = 'yes';
                                             else if(field.checked === false)
-                                                temp_value === 'no'
+                                                temp_value = 'no'
                                         }
                                         if(temp_value !== '' && temp_value !== null){
                                             fields.push(field); 
@@ -1148,17 +1148,38 @@ module.exports = React.createClass({
         }
     },
     _onComponentPageBarFinalizeForm: function(){
+        var txt;
+        var r = confirm("Are you accept finalizing!");
+        if (r == true) {
             var self = this;
             if(this.EFormStatus !== 'finalized'){
                 this._onDetailSaveForm()
                 .then(function(){
-                    EFormService.finalizeEForm({ID: self.EFormID})
+                    EFormService.finalizeEForm({ID: self.EFormID, UserUID: self.userUID})
                     .then(function(response){
                         window.location.reload();
                     })
                 })
             }else
                 alert('Form has been finalized. You cannot save form.')
+        }
+    },
+    _onComponentPageBarUnfinalizeForm: function(){
+       var txt;
+        var r = confirm("Are you accept unfinalizing!");
+        if (r == true) {
+            var self = this;
+            if(this.EFormStatus !== 'unfinalized'){
+                this._onDetailSaveForm()
+                .then(function(){
+                    EFormService.unfinalizeEForm({ID: self.EFormID, UserUID: self.userUID})
+                    .then(function(response){
+                        window.location.reload();
+                    })
+                })
+            }else
+                alert('Form has been finalized. You cannot save form.')
+        } 
     },
     render: function(){
         var pageList = [];
@@ -1175,6 +1196,7 @@ module.exports = React.createClass({
                 <ComponentPageBar ref="pageBar"
                         onSaveForm={this._onComponentPageBarSaveForm}
                         onFinalizeForm={this._onComponentPageBarFinalizeForm}
+                        onUnfinalizeForm={this._onComponentPageBarUnfinalizeForm}
                         onPrintForm={this._onComponentPageBarPrintForm}/>
                 <h3 className="page-title">{this.state.name}</h3>
                 <div className="row">
@@ -1247,7 +1269,7 @@ module.exports = React.createClass({
                                         onRemoveTableDynamicRow={this._onComponentSectionRemoveTableDynamicRow}
                                         rows={section.get('rows')}
                                         name={section.get('name')}
-                                         handleReloadDoctor = {this._handleReloadDoctor.bind(this, section)}
+                                        handleReloadDoctor = {this._handleReloadDoctor.bind(this, section)}
                                     />
                                 else
                                     return null;

@@ -615,6 +615,12 @@ module.exports = {
 				where:whereClause,
 				attributes:attributes,
 				transaction:transaction,
+				include: [
+					{
+						model: Role, 
+						required: true
+					}
+				]
 			})
 			.then(function(user){
 				return user;

@@ -9,18 +9,47 @@ module.exports = {
         })
     },
     PostEFormFinalize: function(req, res){
-        console.log('finalized', req.body)
-        EForm.findOne({
-            where: {Enable: 'Y', ID: req.body.ID},
-            attributes: ['ID']
+        Services.UserAccount.GetUserAccountDetails({UID: req.body.UserUID})
+        .then(function(response){
+            var RoleId = response.dataValues.Roles[0].dataValues.RelUserRole.RoleId;
+            if(RoleId === 5){
+                EForm.findOne({
+                    where: {Enable: 'Y', ID: req.body.ID},
+                    attributes: ['ID']
+                })
+                .then(function(eform){
+                    EForm.update({
+                        Status: 'finalized'
+                    }, {where: {ID: req.body.ID} })
+                    .then(function(){
+                        res.json({data: 'success'})
+                    })
+                })
+            }else{
+                res.json(400, {data: 'error'})
+            }
         })
-        .then(function(eform){
-            EForm.update({
-                Status: 'finalized'
-            }, {where: {ID: req.body.ID} })
-            .then(function(){
-                res.json({data: 'success'})
-            })
+    },
+    PostEFormUnfinalize: function(req, res){
+        Services.UserAccount.GetUserAccountDetails({UID: req.body.UserUID})
+        .then(function(response){
+            var RoleId = response.dataValues.Roles[0].dataValues.RelUserRole.RoleId;
+            if(RoleId === 5){
+                EForm.findOne({
+                    where: {Enable: 'Y', ID: req.body.ID},
+                    attributes: ['ID']
+                })
+                .then(function(eform){
+                    EForm.update({
+                        Status: 'saved'
+                    }, {where: {ID: req.body.ID} })
+                    .then(function(){
+                        res.json({data: 'success'})
+                    })
+                })
+            }else{
+                res.json(400, {data: 'error'})
+            }
         })
     },
     PostEFormPrint: function(req, res){
@@ -39,7 +68,6 @@ module.exports = {
         .then(function(data){
             var data_value = JSON.parse(data.EFormData.FormData);
             data_value.map(function(value){
-                console.log(value.value)
                 if(value.type === 'eform_input_signature'){
                     value.base64Data = value.value.sub;
                     delete value.value;
@@ -88,7 +116,6 @@ module.exports = {
                     res.serverError(ErrorWrap(err));
                 }
             });
-
     },
     PostSaveRolesEFormTemplate: function(req, res){
         RelEFormTemplateRole.findOne({
@@ -779,7 +806,11 @@ module.exports = {
     },
     PostHistoryDetail: function(req, res){
         EForm.findAndCountAll({
-            where: {Status: 'saved'},
+            where: {
+                Status: {
+                    $ne: 'unsaved'
+                }
+            },
             include: [
                 {
                     model: Patient,

@@ -12,6 +12,17 @@ module.exports = {
 		});
 		return p;
 	},
+	unfinalizeEForm: function(data){
+		var p = new Promise(function(resolve, reject){
+			$.ajax({
+				type: 'POST',
+				url: Config.apiUrl+'eform/unfinalize',
+				data: data,
+				success: resolve
+			})
+		});
+		return p;
+	},
 	saveEFormTemplateRole: function(data){
 		var p = new Promise(function(resolve, reject){
 			$.ajax({

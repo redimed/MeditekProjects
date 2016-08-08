@@ -23,7 +23,7 @@ if (process.argv.indexOf('--dblocal') >=0) {
             port: 3306,
             user: 'meditek_db',
             // user: 'root',
-            password: 'meditekdb123456',
+            password: 'meditek123456',
             // password: 'root',
             // password: 'tz!@9\8$3a?=G].T',
             database: 'Redimed',

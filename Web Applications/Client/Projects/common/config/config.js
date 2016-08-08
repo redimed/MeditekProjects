@@ -48,7 +48,8 @@ var o = {
 
         eformStatus: {
             saved: 'saved',
-            unsaved: 'unsaved'
+            unsaved: 'unsaved',
+            finalized: 'finalized'
         },
 
         externalTokenInterval: 10 * 60 * 1000, //milisecond. ~ 15 * 60 in server

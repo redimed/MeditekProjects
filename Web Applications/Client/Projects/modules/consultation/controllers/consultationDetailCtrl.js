@@ -84,12 +84,27 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                 for (var j = 0; j < Appointments.length; j++) {
                     var Appointment = Appointments[j];
                     if (Appointment.UID === $stateParams.UID && EForm.Status ==o.const.eformStatus.saved) {
-                        check = true;
+                        check = 1;
+                        break;
+                    }
+                    if (Appointment.UID === $stateParams.UID && EForm.Status ==o.const.eformStatus.finalized) {
+                        check = 2;
                         break;
                     }
                 }
             }
-            return (check) ? 'label-green' : 'label-info';
+            switch(check) {
+                case 1: 
+                    return 'label-green';
+                    break;
+                case 2:
+                    return 'label-warning';
+                    break;
+                default:
+                    return 'label-info';
+                    break;
+            }
+            // return (check) ? 'label-green' : 'label-info';
         }
         /* END EFORM */
         //

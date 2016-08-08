@@ -593,7 +593,8 @@ module.exports = React.createClass({
             if(response.data){
                 self.EFormID = response.data.ID;
                 self.EFormStatus = response.data.Status;
-                self.refs.pageBar.initStatus(self.EFormStatus);
+                if(typeof self.refs.pageBar.initStatus === 'function')
+                    self.refs.pageBar.initStatus(self.EFormStatus);
                 self.formUID = response.data.UID;
                 var tempData = JSON.parse(response.data.EFormData.TempData);
                 self.allFields = self._mergeTwoObjects(self.allFields, tempData);
@@ -1148,38 +1149,31 @@ module.exports = React.createClass({
         }
     },
     _onComponentPageBarFinalizeForm: function(){
-        var txt;
-        var r = confirm("Are you accept finalizing!");
-        if (r == true) {
-            var self = this;
-            if(this.EFormStatus !== 'finalized'){
-                this._onDetailSaveForm()
-                .then(function(){
-                    EFormService.finalizeEForm({ID: self.EFormID, UserUID: self.userUID})
-                    .then(function(response){
-                        window.location.reload();
-                    })
+        var self = this;
+        if(this.EFormStatus !== 'finalized'){
+            this._onDetailSaveForm()
+            .then(function(){
+                EFormService.finalizeEForm({ID: self.EFormID, UserUID: self.userUID})
+                .then(function(response){
+                    window.location.reload();
                 })
-            }else
-                alert('Form has been finalized. You cannot save form.')
-        }
+            })
+        }else
+            alert('Form has been finalized. You cannot save form.')
     },
     _onComponentPageBarUnfinalizeForm: function(){
-       var txt;
-        var r = confirm("Are you accept unfinalizing!");
-        if (r == true) {
-            var self = this;
-            if(this.EFormStatus !== 'unfinalized'){
-                this._onDetailSaveForm()
-                .then(function(){
-                    EFormService.unfinalizeEForm({ID: self.EFormID, UserUID: self.userUID})
-                    .then(function(response){
-                        window.location.reload();
-                    })
+        var self = this;
+        console.log(EFormService);
+        if(this.EFormStatus !== 'unfinalized'){
+            this._onDetailSaveForm()
+            .then(function(){
+                EFormService.unfinalizeEForm({ID: self.EFormID, UserUID: self.userUID})
+                .then(function(response){
+                    window.location.reload();
                 })
-            }else
-                alert('Form has been finalized. You cannot save form.')
-        } 
+            })
+        }else
+            alert('Form has been finalized. You cannot save form.')
     },
     render: function(){
         var pageList = [];

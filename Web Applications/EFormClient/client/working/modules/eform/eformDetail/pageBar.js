@@ -15,7 +15,13 @@ module.exports = React.createClass({
                 
             },
             showFinalizeForm: function(){
-                $(this.refs.finalize).show()
+                $(this.refs.group_finalized).show()
+            },
+            initStatus: function(status){
+                if(status === 'finalized')
+                    $(this.refs.unfinalize).show()
+                else
+                    $(this.refs.finalize).show()
             },
             _onPrintForm: function(){
                 this.props.onPrintForm();
@@ -33,10 +39,16 @@ module.exports = React.createClass({
                                     Save Form
         		      </button>
                                 &nbsp;
-                                <button type="button" className="btn green btn-sm" onClick={this.props.onFinalizeForm} style={{display: 'none'}} ref="finalize">
-                                    <i className="fa fa-save"></i>&nbsp;
-                                    Finalize Form
-                                </button>
+                                <span ref="group_finalized" style={{display: 'none'}}>
+                                    <button type="button" className="btn green btn-sm" onClick={this.props.onFinalizeForm} style={{display: 'none'}} ref="finalize">
+                                        <i className="fa fa-save"></i>&nbsp;
+                                        Finalize Form
+                                    </button>
+                                    <button type="button" className="btn green btn-sm" onClick={this.props.onUnfinalizeForm} style={{display: 'none'}} ref="unfinalize">
+                                        <i className="fa fa-save"></i>&nbsp;
+                                        Unfinalize Form
+                                    </button>
+                                </span>
                                 &nbsp;
                                 <button type="button" className="btn green btn-sm" onClick={this._onPrintForm}>
                                     <i className="fa fa-print"></i>&nbsp;

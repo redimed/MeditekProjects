@@ -139,7 +139,10 @@ module.exports = {
         controller: 'EForm/EFormController',
         action: 'PostEFormFinalize'
     },
-
+    'post /eform/unfinalize':{
+        controller: 'EForm/EFormController',
+        action: 'PostEFormUnfinalize'
+    },
 
     'post /eformtemplate/v1/save': {
         controller: 'EForm/EFormController',

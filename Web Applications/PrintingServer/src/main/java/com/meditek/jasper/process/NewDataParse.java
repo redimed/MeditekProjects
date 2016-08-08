@@ -58,7 +58,7 @@ public final class NewDataParse {
                 parsedObj=imageArrayParsing(obj.getValue(), baseUrl, printMethod);
                 break;
             default:
-                parsedObj=obj.getValue();
+                parsedObj=obj.getValue()==null?"":obj.getValue();
                 break;
         }
         return parsedObj;

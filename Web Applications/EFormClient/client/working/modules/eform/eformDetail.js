@@ -832,7 +832,7 @@ module.exports = React.createClass({
                 window.location.reload();
             })
         }else
-            alert('Form has been finalized. You cannot save form.')
+            toastr.error('Form has been finalized. You cannot save form.');
     },
     _onComponentPageBarPrintForm: function(){
         var self = this;

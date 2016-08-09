@@ -12,7 +12,7 @@ class Date extends Component{
     }
     render(){
         return (
-            <input type="text" id={this.props.name}/>
+            <input type="text" name={this.props.name} id={this.props.name}/>
         )
     }
 }

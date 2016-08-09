@@ -32,7 +32,11 @@ class EFormTemplateDetail extends Component{
         Service.EFormTemplateDetail({uid: this.template_uid})
         .then(function(response){
             var TempData = JSON.parse(response.data.EFormTemplateData.TemplateData)
-            self.list.set('sections', TempData.sections)
+            if(TempData.hasOwnProperty('sections')) {
+                 self.list.set('sections', TempData.sections)
+            } else {
+                 self.list.set('sections', []);
+            }
             self._register_navbar_add_section()
             self._clearAllDetail()
             self.forceUpdate()
@@ -538,7 +542,7 @@ class EFormTemplateDetail extends Component{
                         &nbsp;
                         <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
                         &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                        <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
                     <div className="form-detail" ref="chart">
                         <b>Width</b><br/>

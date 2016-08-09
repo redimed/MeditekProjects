@@ -58,15 +58,15 @@
 
 	var _reactDom = __webpack_require__(39);
 
-	var _section = __webpack_require__(182);
+	var _section = __webpack_require__(183);
 
 	var _section2 = _interopRequireDefault(_section);
 
-	var _math = __webpack_require__(179);
+	var _math = __webpack_require__(180);
 
 	var _math2 = _interopRequireDefault(_math);
 
-	var _main = __webpack_require__(180);
+	var _main = __webpack_require__(181);
 
 	var _main2 = _interopRequireDefault(_main);
 
@@ -18239,152 +18239,10 @@
 	};
 
 	module.exports = ReactChildReconciler;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
 
 /***/ },
-/* 121 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	// shim for using process in browser
-	var process = module.exports = {};
-
-	// cached from whatever global is present so that test runners that stub it
-	// don't break things.  But we need to wrap it in a try catch in case it is
-	// wrapped in strict mode code which doesn't define any globals.  It's inside a
-	// function because try/catches deoptimize in certain engines.
-
-	var cachedSetTimeout;
-	var cachedClearTimeout;
-
-	(function () {
-	    try {
-	        cachedSetTimeout = setTimeout;
-	    } catch (e) {
-	        cachedSetTimeout = function cachedSetTimeout() {
-	            throw new Error('setTimeout is not defined');
-	        };
-	    }
-	    try {
-	        cachedClearTimeout = clearTimeout;
-	    } catch (e) {
-	        cachedClearTimeout = function cachedClearTimeout() {
-	            throw new Error('clearTimeout is not defined');
-	        };
-	    }
-	})();
-	function runTimeout(fun) {
-	    if (cachedSetTimeout === setTimeout) {
-	        return setTimeout(fun, 0);
-	    } else {
-	        return cachedSetTimeout.call(null, fun, 0);
-	    }
-	}
-	function runClearTimeout(marker) {
-	    if (cachedClearTimeout === clearTimeout) {
-	        clearTimeout(marker);
-	    } else {
-	        cachedClearTimeout.call(null, marker);
-	    }
-	}
-	var queue = [];
-	var draining = false;
-	var currentQueue;
-	var queueIndex = -1;
-
-	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
-	    draining = false;
-	    if (currentQueue.length) {
-	        queue = currentQueue.concat(queue);
-	    } else {
-	        queueIndex = -1;
-	    }
-	    if (queue.length) {
-	        drainQueue();
-	    }
-	}
-
-	function drainQueue() {
-	    if (draining) {
-	        return;
-	    }
-	    var timeout = runTimeout(cleanUpNextTick);
-	    draining = true;
-
-	    var len = queue.length;
-	    while (len) {
-	        currentQueue = queue;
-	        queue = [];
-	        while (++queueIndex < len) {
-	            if (currentQueue) {
-	                currentQueue[queueIndex].run();
-	            }
-	        }
-	        queueIndex = -1;
-	        len = queue.length;
-	    }
-	    currentQueue = null;
-	    draining = false;
-	    runClearTimeout(timeout);
-	}
-
-	process.nextTick = function (fun) {
-	    var args = new Array(arguments.length - 1);
-	    if (arguments.length > 1) {
-	        for (var i = 1; i < arguments.length; i++) {
-	            args[i - 1] = arguments[i];
-	        }
-	    }
-	    queue.push(new Item(fun, args));
-	    if (queue.length === 1 && !draining) {
-	        runTimeout(drainQueue);
-	    }
-	};
-
-	// v8 likes predictible objects
-	function Item(fun, array) {
-	    this.fun = fun;
-	    this.array = array;
-	}
-	Item.prototype.run = function () {
-	    this.fun.apply(null, this.array);
-	};
-	process.title = 'browser';
-	process.browser = true;
-	process.env = {};
-	process.argv = [];
-	process.version = ''; // empty string to avoid regexp issues
-	process.versions = {};
-
-	function noop() {}
-
-	process.on = noop;
-	process.addListener = noop;
-	process.once = noop;
-	process.off = noop;
-	process.removeListener = noop;
-	process.removeAllListeners = noop;
-	process.emit = noop;
-
-	process.binding = function (name) {
-	    throw new Error('process.binding is not supported');
-	};
-
-	process.cwd = function () {
-	    return '/';
-	};
-	process.chdir = function (dir) {
-	    throw new Error('process.chdir is not supported');
-	};
-	process.umask = function () {
-	    return 0;
-	};
-
-/***/ },
+/* 121 */,
 /* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -19626,7 +19484,7 @@
 	}
 
 	module.exports = checkReactTypeSpec;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
 
 /***/ },
 /* 126 */
@@ -20169,7 +20027,7 @@
 	}
 
 	module.exports = flattenChildren;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
 
 /***/ },
 /* 132 */
@@ -25074,7 +24932,8 @@
 /* 176 */,
 /* 177 */,
 /* 178 */,
-/* 179 */
+/* 179 */,
+/* 180 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25110,7 +24969,7 @@
 	exports.default = Functions;
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25119,7 +24978,7 @@
 	    value: true
 	});
 
-	var _ip = __webpack_require__(181);
+	var _ip = __webpack_require__(182);
 
 	var _ip2 = _interopRequireDefault(_ip);
 
@@ -25176,7 +25035,7 @@
 	                type: 'POST',
 	                data: data,
 	                headers: window.userAccess || {},
-	                url: _ip2.default.EFormServer + '/seform/save',
+	                url: _ip2.default.EFormServer + '/eform/save',
 	                success: resolve
 	            });
 	        });
@@ -25193,13 +25052,52 @@
 	            });
 	        });
 	        return p;
+	    },
+	    EFormUpdate: function EFormUpdate(data) {
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'POST',
+	                data: data,
+	                headers: window.userAccess || {},
+	                url: _ip2.default.EFormServer + '/eform/update',
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
+	    EFormUploadSignImage: function EFormUploadSignImage(data) {
+	        var formdata = data.formdata;
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: _ip2.default.ApiServerUrl + '/api/uploadFileWithoutLogin',
+	                xhrFields: {
+	                    withCredentials: true
+	                },
+	                headers: {
+	                    //Authorization: ('Bearer ' + $cookies.get("token")),
+	                    systemtype: 'WEB',
+	                    userUID: '2d0626f3-e741-11e5-8fab-0050569f3a15',
+	                    fileType: 'MedicalImage'
+	                },
+	                type: "POST",
+	                data: formdata,
+	                processData: false,
+	                contentType: false
+	            }).done(function (respond) {
+	                resolve(respond);
+	            }).fail(function (error) {
+	                reject(error);
+	            });
+	        });
+	        return p;
 	    }
 	};
 
 	exports.default = Services;
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25211,13 +25109,14 @@
 	var server = 'http://localhost';
 
 	var ip = {
-	    EFormServer: server + ':3015'
+	    EFormServer: server + ':3015',
+	    ApiServerUrl: server + ':3005'
 	};
 
 	exports.default = ip;
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25236,7 +25135,7 @@
 
 	var _baobab2 = _interopRequireDefault(_baobab);
 
-	var _row = __webpack_require__(183);
+	var _row = __webpack_require__(184);
 
 	var _row2 = _interopRequireDefault(_row);
 
@@ -25482,7 +25381,7 @@
 	                            _react2.default.createElement(
 	                                'button',
 	                                { onClick: this._onDown.bind(this) },
-	                                'Down'
+	                                'Toogle'
 	                            )
 	                        )
 	                    ),
@@ -25533,7 +25432,7 @@
 	exports.default = Section;
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25566,7 +25465,10 @@
 	    function Row() {
 	        _classCallCheck(this, Row);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Row).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Row).call(this));
+
+	        _this.isShowToolBar = true;
+	        return _this;
 	    }
 
 	    _createClass(Row, [{
@@ -25611,6 +25513,18 @@
 	            this.props.onClone(this.props.index);
 	        }
 	    }, {
+	        key: '_toggleToolBar',
+	        value: function _toggleToolBar() {
+	            if (this.isShowToolBar) {
+	                $(this.refs.toolbar).hide();
+	                $(this.refs.nottoolbar).show();
+	            } else {
+	                $(this.refs.toolbar).show();
+	                $(this.refs.nottoolbar).hide();
+	            }
+	            this.isShowToolBar = !this.isShowToolBar;
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -25618,7 +25532,21 @@
 	                { className: 'row' },
 	                _react2.default.createElement(
 	                    'ul',
-	                    { className: 'toolbar-row' },
+	                    { ref: 'toolbar', className: 'toolbar-row' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        { className: 'toolbar-row-action' },
+	                        _react2.default.createElement(
+	                            'a',
+	                            null,
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this._toggleToolBar.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-check' }),
+	                                ' Done '
+	                            )
+	                        )
+	                    ),
 	                    _react2.default.createElement(
 	                        'li',
 	                        null,
@@ -25790,11 +25718,21 @@
 	                ),
 	                _react2.default.createElement(
 	                    'div',
+	                    { ref: 'nottoolbar', style: { display: 'none', clear: 'both' } },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this._toggleToolBar.bind(this), style: { color: 'red', float: 'right' } },
+	                        'Toolbar'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
 	                    { className: 'content-row' },
 	                    this.props.params.select('o').map(function (o, o_index) {
-	                        console.log(o.serialize());
+	                        // console.log(o.serialize())
 	                        var res = null;
 	                        var width = o.get('params', 'width') || 'initial';
+
 	                        switch (o.get('type')) {
 	                            case 'lb':
 	                                var title = o.get('params', 'title') || '<span style="color: yellow">Label</span>';

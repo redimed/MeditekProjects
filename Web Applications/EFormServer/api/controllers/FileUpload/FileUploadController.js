@@ -191,5 +191,6 @@ module.exports = {
                 // console.log(err);
                 res.serverError(ErrorWrap(err));
             });
-    }
+    },
+    
 }

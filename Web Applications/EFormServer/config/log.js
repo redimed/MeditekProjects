@@ -93,7 +93,7 @@ if (process.argv.indexOf("--logtest") >= 0) {
         log['custom'] = customLogger;
     } else {
         log['custom'] = logstashLogger;
-        //log['level'] = 'verbose';
+        log['level'] = 'verbose';
     }
 }
 

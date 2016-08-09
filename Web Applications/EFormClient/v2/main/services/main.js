@@ -82,11 +82,20 @@ var Services = {
         return p
     },
 
-    EFormUploadSignImage: function (data) {
-        var formdata = data.formdata;
+    EFormUploadSignImage: function (blob, meta) {
+        // var formdata = data.formdata;
+        var formdata = new FormData();
+        var fileName = 'DEFAULTSIGN.png'
+        var contentType = 'MedicalImage';
+        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15')
+        formdata.append('fileType', contentType);            
+        formdata.append('uploadFile', blob, fileName);
+
+
         var p = new Promise(function(resolve, reject){
              $.ajax({
                 url: IP.ApiServerUrl +'/api/uploadFileWithoutLogin',
+                // url: IP.EFormServer +'/eform/test-upload-sign',
                 xhrFields: {
                     withCredentials: true
                 },
@@ -100,13 +109,50 @@ var Services = {
                 data: formdata,
                 processData: false,
                 contentType: false,
-            }).done(function(respond){
-                resolve(respond)
+            }).done(function(response){
+                resolve({response: response, meta: meta})
             }).fail(function(error) {
                 reject(error);
             })
         })
         return p
+    },
+
+    EFormDownloadSignImage: function(fileUID){
+        var p = new Promise(function(resolve, reject){
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'arraybuffer';
+            xhr.open('GET', IP.ApiServerUrl +'/api/downloadFileWithoutLogin/'+ fileUID, true);
+            xhr.onload = function(e) {
+                var blob = new Blob([this.response],{type: 'image/png'});
+                var objectUrl = URL.createObjectURL(blob);
+                // var img = new Image;
+                // img.src = objectUrl;
+                resolve(objectUrl)
+            };
+            xhr.send();
+        })
+        return p
+
+
+        /*
+        var p = new Promise(function(resolve, reject){
+            $.ajax({
+                url: IP.ApiServerUrl +'/api/downloadFileWithoutLogin/' + fileUID,
+                xhrFields: { withCredentials: true },
+                type: "GET",
+                processData: false,
+                contentType: false,
+                responseType:'arraybuffer'
+            }).done(function(response){
+                resolve(response)
+            }).fail(function(error) {
+                console.log("error download sign ne", error)
+                reject(error);
+            })
+        })
+        return p
+        */
     }
 }
 

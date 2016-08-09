@@ -1,4 +1,8 @@
 var o = require("../../services/HelperService");
+
+var $q = require('q');
+var _ = require('lodash');
+
 module.exports = {
     GetStatus: function(req, res){
         EForm.findOne({
@@ -633,16 +637,15 @@ module.exports = {
         if (req.body.appointmentUID) {
             whereClause.appointment.UID = req.body.appointmentUID;
         };
-        if (req.body.appointmentCode) {
-            whereClause.appointment.Code = req.body.appointmentCode;
-        };
+        // if (req.body.appointmentCode) {
+        //     whereClause.appointment.Code = req.body.appointmentCode;
+        // };
         if (req.body.templateUID) {
             whereClause.eformTemplate.UID = req.body.templateUID;
         };
         if (req.body.templateName) {
             whereClause.eformTemplate.Name = req.body.templateName;
         };
-
         Appointment.findOne({
             where: o.sqlParam(whereClause.appointment)
         })
@@ -905,6 +908,7 @@ module.exports = {
         var eform = null;
         var userAccount = null;
         var eformTemplate = null;
+
         EFormTemplate.find({where:  {UID: req.body.templateUID}})
         .then(function(EFormTemplate){
             eformTemplate = EFormTemplate;
@@ -914,8 +918,7 @@ module.exports = {
                         where: {UID: req.body.userUID},
                         attributes: ['ID'],
                         transaction: t
-                    })
-                    .then(function(UserAccount){
+                    }).then(function(UserAccount){
                         userAccount = UserAccount;
                         return EForm.create({
                             Name: req.body.name,
@@ -990,12 +993,79 @@ module.exports = {
                             return res.json({data: data});
                         })
                     }, function(err){
-                        res.status(400).json({err: err});
+                        console.log(err)
+
+                        res.status(400).json({err: JSON.stringify( err)});
                         return t.rollback();
                     })
                 })
             }
         })
+    }, 
+
+    PostTestUploadSign: function(req, res){
+       /*
+        var rootPath = process.cwd();
+        console.log(params)
+        var initFolder = function(path){
+            var defer = $q.defer();
+            mkdirp(path, function(err) {
+                if (err) {
+                    return defer.reject(err);
+                }
+                defer.resolve({ status: 'success'});
+            }
+            return defer.promise;
+        }
+
+
+        var uploadSign = function (){
+            var defer = $q.defer();
+            try {
+                var params = req.params.all();
+                if (!params.userUID || !params.fileType) {
+                    params.userUID = req.headers.useruid;
+                    params.fileType = req.headers.filetype;
+                };
+
+                  // || !_.contains(constFileType, params.fileType)
+                    if (!params.userUID || !params.fileType ) {
+                        fs.access(uploadedFiles[0].fd, function(err) {
+                            if (!err) {
+                                fs.unlink(uploadedFiles[0].fd);
+                            } else {
+                                return defer.reject(err);
+                            }
+                        })
+                        var err = new Error("FileUpload.UploadFile.Error");
+                        err.pushError("Invalid Params!");
+                        return defer.reject(err);
+                    }
+
+                var maxFileSize = 15 * 1000 * 1000; //in MB
+                req.file('uploadFile').upload({
+                    maxBytes: maxFileSize,
+                    dirname: uploadDir
+                }, function whenDone(err, uploadedFiles) {
+                    if (err) {
+                        return defer.reject(err);
+                    }
+                    if (uploadedFiles.length == 0) {
+                        var err = new Error("FileUpload.UploadFile.Error");
+                        err.pushError("No File Was Uploaded!");
+                        return defer.reject(err);
+                    }
+                  
+                }
+            } catch (catchError) {
+                defer.reject(catchError);
+            }
+        }
+
+*/
     }
+
+
+
 
 }

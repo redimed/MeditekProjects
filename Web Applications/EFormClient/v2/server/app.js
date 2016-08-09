@@ -26,7 +26,9 @@ app.use('/', router);
 
 var server = http.createServer(app);
 
-server.listen(3020);
-server.on('listening', ()=>{
-    console.log('Listening on 3020');
+var port  = 3020;
+server.listen(port);
+
+server.on('listening', function(){
+    console.log('Listening on ' + port);
 });

@@ -21,7 +21,7 @@ if (process.argv.indexOf("--dblocal") >= 0) {
         adapter: 'sails-mysql',
         port: 3306,
         user: 'meditek_db',
-        password: 'meditekdb123456',
+        password: 'meditek123456',
         database: 'Redimed',
         charset: 'utf8',
         collation: 'utf8-general_ci',

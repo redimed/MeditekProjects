@@ -62,11 +62,11 @@
 
 	var _section2 = _interopRequireDefault(_section);
 
-	var _math = __webpack_require__(179);
+	var _math = __webpack_require__(180);
 
 	var _math2 = _interopRequireDefault(_math);
 
-	var _main = __webpack_require__(180);
+	var _main = __webpack_require__(181);
 
 	var _main2 = _interopRequireDefault(_main);
 
@@ -17629,152 +17629,10 @@
 	};
 
 	module.exports = ReactChildReconciler;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
 
 /***/ },
-/* 121 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	// shim for using process in browser
-	var process = module.exports = {};
-
-	// cached from whatever global is present so that test runners that stub it
-	// don't break things.  But we need to wrap it in a try catch in case it is
-	// wrapped in strict mode code which doesn't define any globals.  It's inside a
-	// function because try/catches deoptimize in certain engines.
-
-	var cachedSetTimeout;
-	var cachedClearTimeout;
-
-	(function () {
-	    try {
-	        cachedSetTimeout = setTimeout;
-	    } catch (e) {
-	        cachedSetTimeout = function cachedSetTimeout() {
-	            throw new Error('setTimeout is not defined');
-	        };
-	    }
-	    try {
-	        cachedClearTimeout = clearTimeout;
-	    } catch (e) {
-	        cachedClearTimeout = function cachedClearTimeout() {
-	            throw new Error('clearTimeout is not defined');
-	        };
-	    }
-	})();
-	function runTimeout(fun) {
-	    if (cachedSetTimeout === setTimeout) {
-	        return setTimeout(fun, 0);
-	    } else {
-	        return cachedSetTimeout.call(null, fun, 0);
-	    }
-	}
-	function runClearTimeout(marker) {
-	    if (cachedClearTimeout === clearTimeout) {
-	        clearTimeout(marker);
-	    } else {
-	        cachedClearTimeout.call(null, marker);
-	    }
-	}
-	var queue = [];
-	var draining = false;
-	var currentQueue;
-	var queueIndex = -1;
-
-	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
-	    draining = false;
-	    if (currentQueue.length) {
-	        queue = currentQueue.concat(queue);
-	    } else {
-	        queueIndex = -1;
-	    }
-	    if (queue.length) {
-	        drainQueue();
-	    }
-	}
-
-	function drainQueue() {
-	    if (draining) {
-	        return;
-	    }
-	    var timeout = runTimeout(cleanUpNextTick);
-	    draining = true;
-
-	    var len = queue.length;
-	    while (len) {
-	        currentQueue = queue;
-	        queue = [];
-	        while (++queueIndex < len) {
-	            if (currentQueue) {
-	                currentQueue[queueIndex].run();
-	            }
-	        }
-	        queueIndex = -1;
-	        len = queue.length;
-	    }
-	    currentQueue = null;
-	    draining = false;
-	    runClearTimeout(timeout);
-	}
-
-	process.nextTick = function (fun) {
-	    var args = new Array(arguments.length - 1);
-	    if (arguments.length > 1) {
-	        for (var i = 1; i < arguments.length; i++) {
-	            args[i - 1] = arguments[i];
-	        }
-	    }
-	    queue.push(new Item(fun, args));
-	    if (queue.length === 1 && !draining) {
-	        runTimeout(drainQueue);
-	    }
-	};
-
-	// v8 likes predictible objects
-	function Item(fun, array) {
-	    this.fun = fun;
-	    this.array = array;
-	}
-	Item.prototype.run = function () {
-	    this.fun.apply(null, this.array);
-	};
-	process.title = 'browser';
-	process.browser = true;
-	process.env = {};
-	process.argv = [];
-	process.version = ''; // empty string to avoid regexp issues
-	process.versions = {};
-
-	function noop() {}
-
-	process.on = noop;
-	process.addListener = noop;
-	process.once = noop;
-	process.off = noop;
-	process.removeListener = noop;
-	process.removeAllListeners = noop;
-	process.emit = noop;
-
-	process.binding = function (name) {
-	    throw new Error('process.binding is not supported');
-	};
-
-	process.cwd = function () {
-	    return '/';
-	};
-	process.chdir = function (dir) {
-	    throw new Error('process.chdir is not supported');
-	};
-	process.umask = function () {
-	    return 0;
-	};
-
-/***/ },
+/* 121 */,
 /* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -19016,7 +18874,7 @@
 	}
 
 	module.exports = checkReactTypeSpec;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
 
 /***/ },
 /* 126 */
@@ -19559,7 +19417,7 @@
 	}
 
 	module.exports = flattenChildren;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
 
 /***/ },
 /* 132 */
@@ -24613,6 +24471,10 @@
 
 	var _date2 = _interopRequireDefault(_date);
 
+	var _constants = __webpack_require__(179);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24620,6 +24482,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EFORM_CONST = _constants2.default.EFORM;
 
 	var Row = function (_Component) {
 	    _inherits(Row, _Component);
@@ -24651,7 +24515,7 @@
 	                { className: 'row' },
 	                this.props.params.select('o').map(function (o, o_index) {
 	                    var res = null;
-	                    if (o.get('type') === 'lb') var style = {
+	                    if (EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type')) var style = {
 	                        width: o.get('params', 'width'),
 	                        border: 'none'
 	                    };else var style = {
@@ -24672,7 +24536,7 @@
 	                        }
 	                    }
 	                    switch (o.get('type')) {
-	                        case 'lb':
+	                        case EFORM_CONST.OBJECT_TYPE.LABEL:
 	                            res = _react2.default.createElement(
 	                                'div',
 	                                { className: className + ' label',
@@ -24680,7 +24544,7 @@
 	                                _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: o.get('params', 'title') } })
 	                            );
 	                            break;
-	                        case 'r':
+	                        case EFORM_CONST.OBJECT_TYPE.RADIO:
 	                            res = _react2.default.createElement(
 	                                'div',
 	                                { className: className,
@@ -24694,7 +24558,7 @@
 	                                )
 	                            );
 	                            break;
-	                        case 'c':
+	                        case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
 	                            res = _react2.default.createElement(
 	                                'div',
 	                                { className: className,
@@ -24708,7 +24572,7 @@
 	                                )
 	                            );
 	                            break;
-	                        case 'it':
+	                        case EFORM_CONST.OBJECT_TYPE.TEXT:
 	                            var disabled = o.get('params').disabled || false;
 	                            res = _react2.default.createElement(
 	                                'div',
@@ -24717,7 +24581,7 @@
 	                                _react2.default.createElement('input', { type: 'text', id: o.get('name') || '', disabled: disabled })
 	                            );
 	                            break;
-	                        case 'in':
+	                        case EFORM_CONST.OBJECT_TYPE.NUMBER:
 	                            var disabled = o.get('params').disabled || false;
 	                            res = _react2.default.createElement(
 	                                'div',
@@ -24726,7 +24590,7 @@
 	                                _react2.default.createElement('input', { type: 'number', id: o.get('name') || '', disabled: disabled })
 	                            );
 	                            break;
-	                        case 'id':
+	                        case EFORM_CONST.OBJECT_TYPE.DATE:
 	                            var disabled = o.get('params').disabled || false;
 	                            res = _react2.default.createElement(
 	                                'div',
@@ -24735,7 +24599,7 @@
 	                                _react2.default.createElement(_date2.default, { name: o.get('name') })
 	                            );
 	                            break;
-	                        case 'si':
+	                        case EFORM_CONST.OBJECT_TYPE.SIGN:
 	                            this.objects_init.push(o.get('name') || '');
 	                            res = _react2.default.createElement(
 	                                'div',
@@ -25047,6 +24911,40 @@
 /* 179 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var CONSTANTS = {
+	    EFORM: {
+	        SHORT: {
+	            SECTION_ROW: 'r',
+	            ROW_OBJECT: 'o'
+	        },
+	        OBJECT_TYPE: {
+	            LABEL: 'lb',
+	            RADIO: 'r',
+	            CHECKBOX: 'c',
+	            TEXT: 'it',
+	            NUMBER: 'in',
+	            DATE: 'id',
+	            SIGN: 'si',
+	            DYNAMIC_TABLE: 'di'
+	        },
+	        DEFAULT_VALUE: {
+	            SIGN: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMCIgaGVpZ2h0PSIwIj48L3N2Zz4='
+	        }
+
+	    }
+	};
+
+	exports.default = CONSTANTS;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -25080,7 +24978,7 @@
 	exports.default = Functions;
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25089,7 +24987,7 @@
 	    value: true
 	});
 
-	var _ip = __webpack_require__(181);
+	var _ip = __webpack_require__(182);
 
 	var _ip2 = _interopRequireDefault(_ip);
 
@@ -25146,7 +25044,7 @@
 	                type: 'POST',
 	                data: data,
 	                headers: window.userAccess || {},
-	                url: _ip2.default.EFormServer + '/seform/save',
+	                url: _ip2.default.EFormServer + '/eform/save',
 	                success: resolve
 	            });
 	        });
@@ -25163,13 +25061,52 @@
 	            });
 	        });
 	        return p;
+	    },
+	    EFormUpdate: function EFormUpdate(data) {
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'POST',
+	                data: data,
+	                headers: window.userAccess || {},
+	                url: _ip2.default.EFormServer + '/eform/update',
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
+	    EFormUploadSignImage: function EFormUploadSignImage(data) {
+	        var formdata = data.formdata;
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: _ip2.default.ApiServerUrl + '/api/uploadFileWithoutLogin',
+	                xhrFields: {
+	                    withCredentials: true
+	                },
+	                headers: {
+	                    //Authorization: ('Bearer ' + $cookies.get("token")),
+	                    systemtype: 'WEB',
+	                    userUID: '2d0626f3-e741-11e5-8fab-0050569f3a15',
+	                    fileType: 'MedicalImage'
+	                },
+	                type: "POST",
+	                data: formdata,
+	                processData: false,
+	                contentType: false
+	            }).done(function (respond) {
+	                resolve(respond);
+	            }).fail(function (error) {
+	                reject(error);
+	            });
+	        });
+	        return p;
 	    }
 	};
 
 	exports.default = Services;
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25181,7 +25118,8 @@
 	var server = 'http://localhost';
 
 	var ip = {
-	    EFormServer: server + ':3015'
+	    EFormServer: server + ':3015',
+	    ApiServerUrl: server + ':3005'
 	};
 
 	exports.default = ip;

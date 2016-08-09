@@ -151,5 +151,13 @@ module.exports = {
     'post /eform/v1/save': {
         controller: 'EForm/EFormController',
         action: 'PostV1Save'
-    }    
+    },
+    'post /eform/v1/test-upload-sign': {
+        controller: 'EForm/EFormController',
+        action: 'PostTestUploadSign'
+    },
+
+
+
+
 };

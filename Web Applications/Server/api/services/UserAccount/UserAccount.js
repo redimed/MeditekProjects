@@ -569,9 +569,9 @@ module.exports = {
 			try{
 				if(criteria.UID)
 					whereClause.UID=criteria.UID;
-				if(criteria.UserName)
+				else if(criteria.UserName)
 					whereClause.UserName=criteria.UserName;
-				if(criteria.Email)
+				else if(criteria.Email)
 				{
 					if(o.isValidEmail(criteria.Email))
 					{
@@ -582,7 +582,7 @@ module.exports = {
 						error.pushError("GetUserAccountDetails.emailInvalid");
 					}
 				}
-				if(criteria.PhoneNumber)
+				else if(criteria.PhoneNumber)
 				{
 					criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
 					console.log(criteria.PhoneNumber);

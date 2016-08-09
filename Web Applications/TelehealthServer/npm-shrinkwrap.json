@@ -3852,9 +3852,9 @@
       }
     },
     "sails": {
-      "version": "0.12.4",
+      "version": "0.12.3",
       "from": "sails@>=0.12.3 <0.13.0",
-      "resolved": "https://registry.npmjs.org/sails/-/sails-0.12.4.tgz",
+      "resolved": "https://registry.npmjs.org/sails/-/sails-0.12.3.tgz",
       "dependencies": {
         "anchor": {
           "version": "0.10.5",

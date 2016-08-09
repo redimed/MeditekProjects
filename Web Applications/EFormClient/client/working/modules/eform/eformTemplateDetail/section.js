@@ -166,10 +166,12 @@ module.exports = React.createClass({
             for(var i = 0; i < rows.length; i++){
                 var row = rows[i];
                 var rowRef = row.ref;
-                var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
-                tempFields.map(function(field, index){
-                    fields.push(field);
-                })
+                if(typeof this.refs[rowRef] !== 'undefined'){
+                    var tempFields = this.refs[rowRef].getAllFieldValueWithValidation(stringType);
+                    tempFields.map(function(field, index){
+                        fields.push(field);
+                    })
+                }
             }
         }else{
             if(stringType !== 'print'){

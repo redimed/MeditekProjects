@@ -285,7 +285,11 @@ module.exports={
 				var userRoleCondition={Enable:'Y'};
 				if(o.checkData(criteria.SiteId)) userRoleCondition.SiteId=criteria.SiteId;
 				return user.getRelUserRoles({
-					where:userRoleCondition
+					where:userRoleCondition,
+					include:[{
+						model:Role,
+						required:false,
+					}]
 				})
 				.then(function(roles){
 					return {roles:roles};

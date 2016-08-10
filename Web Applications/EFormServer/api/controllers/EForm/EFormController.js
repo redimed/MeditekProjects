@@ -289,11 +289,15 @@ module.exports = {
         })
     },
     PostDetailEFormTemplate: function(req, res){
+        console.log("run here ?")
         EFormTemplate.find({ where: {UID: req.body.uid},
             include: [{
                 model: EFormTemplateData,
                 required: false,
                 as: 'EFormTemplateData'
+            },{
+                model: Role,
+                required: false
             }]
         })
         .then(function(EFormTemplate){

@@ -21,6 +21,8 @@ module.exports = React.createClass({
     allFields: [],
     calculation: [],
     field_age: [],
+    role_code: '',
+    role_code_arr: [],
     getInitialState: function(){
         return {
             name: '',
@@ -140,7 +142,6 @@ module.exports = React.createClass({
                 setTimeout(function(refRow, refField, refSection){
                     EFormService.eformCheckDetail({templateName: preCalRes[1], appointmentCode: preCalRes[2]})
                         .then(function(eformRes){
-                            console.log(eformRes);
                             if(eformRes.data) {
                                 var formData = eformRes.data.EFormData.FormData?JSON.parse(eformRes.data.EFormData.FormData):null;
                                 for (var i = 0; i < formData.length; i++) {
@@ -208,6 +209,7 @@ module.exports = React.createClass({
 
         EFormService.getUserRoles({UID: this.userUID})
         .then(function(responseRoles){
+            self.role_code = responseRoles.roles[0].Role.RoleCode;
             EFormService.preFormDetail({UID: self.appointmentUID, UserUID: self.userUID})
             .then(function(response){
                 var appointmentInfo = response.data.Appointment;
@@ -662,6 +664,7 @@ module.exports = React.createClass({
         EFormService.eformTemplateDetail({uid: this.templateUID})
         .then(function(response){
             var EFormTemplate = self.EFormTemplate = response.data;
+            self.role_code_arr = response.data.Roles;
             var content = JSON.parse(response.data.EFormTemplateData.TemplateData);
             self.content = content;
             var page_content = [];
@@ -826,6 +829,21 @@ module.exports = React.createClass({
         return p;
     },
     _onComponentPageBarSaveForm: function(){
+        var self = this
+        var is_save = false
+        for(var i = 0; i < this.role_code_arr.length; i++){
+            var role_code_obj = this.role_code_arr[i];
+            if(role_code_obj.RoleCode === self.role_code){
+                console.log(role_code_obj.RelEFormTemplateRole)
+                is_save = (role_code_obj.RelEFormTemplateRole.Edit === 'Y')?true:false
+                break
+            }
+        }
+        if(!is_save){
+            toastr.error('You cannot save because of your permission')
+            return
+        }
+
         if(this.EFormStatus !== 'finalized'){
             this._onDetailSaveForm()
             .then(function(){
@@ -835,7 +853,20 @@ module.exports = React.createClass({
             toastr.error('Form has been finalized. You cannot save form.');
     },
     _onComponentPageBarPrintForm: function(){
-        var self = this;
+        var self = this
+        var is_print = false
+        for(var i = 0; i < this.role_code_arr.length; i++){
+            var role_code_obj = this.role_code_arr[i];
+            if(role_code_obj.RoleCode === self.role_code){
+                console.log(role_code_obj.RelEFormTemplateRole.Print)
+                is_print = (role_code_obj.RelEFormTemplateRole.Print === 'Y')?true:false
+                break
+            }
+        }
+        if(!is_print){
+            toastr.error('You cannot print because of your permission')
+            return
+        }
 
         var fields = [];
         var chart_flag = false;
@@ -1005,8 +1036,6 @@ module.exports = React.createClass({
                 templateUID: self.templateUID
             }
 
-            //console.log(data);
-
             EFormService.createPDFForm(data)
             .then(function(response){
                 var fileName = 'report_'+moment().format('X');
@@ -1121,7 +1150,7 @@ module.exports = React.createClass({
                                 }
                                 if(cal.field_ref === content[i].ref)
                                     field_index = i;
-                            } 
+                            }
                         })
                         content[field_index].value = value;
                         content[field_index].checked = checked;
@@ -1163,7 +1192,6 @@ module.exports = React.createClass({
     },
     _onComponentPageBarUnfinalizeForm: function(){
         var self = this;
-        console.log(EFormService);
         if(this.EFormStatus !== 'unfinalized'){
             this._onDetailSaveForm()
             .then(function(){

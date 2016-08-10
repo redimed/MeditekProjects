@@ -58,7 +58,7 @@
 
 	var _reactDom = __webpack_require__(39);
 
-	var _section = __webpack_require__(183);
+	var _section = __webpack_require__(187);
 
 	var _section2 = _interopRequireDefault(_section);
 
@@ -70,6 +70,10 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
+	var _constants = __webpack_require__(179);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -77,6 +81,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EFORM_CONST = _constants2.default.EFORM;
 
 	var EFormTemplateDetail = function (_Component) {
 	    _inherits(EFormTemplateDetail, _Component);
@@ -91,7 +97,13 @@
 	            obj: []
 	        });
 	        _this.selected_obj = null;
-	        _this.align_arr = [{ code: 'left', name: 'Left' }, { code: 'center', name: 'Center' }, { code: 'right', name: 'Right' }];
+	        // this.align_arr = [
+	        //     {code: 'left', name: 'Left'},
+	        //     {code: 'center', name: 'Center'},
+	        //     {code: 'right', name: 'Right'}
+	        // ]
+	        _this.align_arr = EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR;
+	        _this.suggest_width = EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH;
 	        _this.user_uid = '';
 	        _this.template_uid = '';
 	        _this.dynamic_obj = [];
@@ -107,11 +119,30 @@
 	            this.template_uid = _math2.default.parseQueryString(window.location.href).templateUID;
 	            _main2.default.EFormTemplateDetail({ uid: this.template_uid }).then(function (response) {
 	                var TempData = JSON.parse(response.data.EFormTemplateData.TemplateData);
-	                self.list.set('sections', TempData.sections);
+	                if (TempData.hasOwnProperty('sections')) {
+	                    self.list.set('sections', TempData.sections);
+	                } else {
+	                    self.list.set('sections', []);
+	                }
 	                self._register_navbar_add_section();
 	                self._clearAllDetail();
 	                self.forceUpdate();
 	            });
+	        }
+	    }, {
+	        key: '_addSection',
+	        value: function _addSection(section) {
+	            section.ref = 's_' + this._getCurrentRef();
+	            var section_list = this.list.select('sections').push(section);
+	            this.list.sections = section_list;
+	            this.forceUpdate();
+	        }
+	    }, {
+	        key: '_addRow',
+	        value: function _addRow(row, s_index) {
+	            row.ref = 'r_' + s_index + '_' + this._getCurrentRow(s_index);
+	            this.list.select('sections', s_index, 'r').push(row);
+	            this.forceUpdate();
 	        }
 	    }, {
 	        key: '_register_navbar_add_section',
@@ -440,21 +471,6 @@
 	            }
 	        }
 	    }, {
-	        key: '_addSection',
-	        value: function _addSection(section) {
-	            section.ref = 's_' + this._getCurrentRef();
-	            var section_list = this.list.select('sections').push(section);
-	            this.list.sections = section_list;
-	            this.forceUpdate();
-	        }
-	    }, {
-	        key: '_addRow',
-	        value: function _addRow(row, s_index) {
-	            row.ref = 'r_' + s_index + '_' + this._getCurrentRow(s_index);
-	            this.list.select('sections', s_index, 'r').push(row);
-	            this.forceUpdate();
-	        }
-	    }, {
 	        key: '_onSave',
 	        value: function _onSave() {
 	            var res_obj = [];
@@ -494,6 +510,32 @@
 	        key: '_onClickDynamicObject',
 	        value: function _onClickDynamicObject(type) {
 	            if (type === 'it') {}
+	        }
+	    }, {
+	        key: '_onChangeSuggestWidth',
+	        value: function _onChangeSuggestWidth(type) {
+	            console.log('log log', type);
+
+	            console.log(val, EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0]);
+	            if (EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0] === val) return;
+
+	            switch (type) {
+	                case 'input':
+	                    var val = $(this.refs.suggest_input_width).val();
+	                    $(this.refs.input_width).val(val);
+	                    // $(this.refs.s)
+	                    break;
+	                case 'label':
+	                    var val = $(this.refs.suggest_label_width).val();
+	                    $(this.refs.label_width).val(val);
+	                    break;
+
+	                default:
+	                    var val = $(this.refs.suggest_default_width).val();
+	                    $(this.refs.default_width).val(val);
+	            }
+
+	            // $(this.refs.default_width).val('asssa');
 	        }
 	    }, {
 	        key: 'render',
@@ -676,7 +718,19 @@
 	                            'Width'
 	                        ),
 	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Width', ref: 'default_width' }),
+	                        _react2.default.createElement('input', { style: { width: '30%' }, type: 'text', placeholder: 'Width', ref: 'default_width' }),
+	                        'Suggest: ',
+	                        _react2.default.createElement(
+	                            'select',
+	                            { onChange: this._onChangeSuggestWidth.bind(this, 'default'), ref: 'suggest_default_width' },
+	                            this.suggest_width.map(function (width) {
+	                                return _react2.default.createElement(
+	                                    'option',
+	                                    { value: width },
+	                                    width
+	                                );
+	                            })
+	                        ),
 	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement(
 	                            'b',
@@ -777,7 +831,19 @@
 	                            'Width'
 	                        ),
 	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Width', ref: 'input_width' }),
+	                        _react2.default.createElement('input', { style: { width: '30%' }, type: 'text', placeholder: 'Width', ref: 'input_width' }),
+	                        'Suggest: ',
+	                        _react2.default.createElement(
+	                            'select',
+	                            { onChange: this._onChangeSuggestWidth.bind(this, 'input'), ref: 'suggest_input_width' },
+	                            this.suggest_width.map(function (width) {
+	                                return _react2.default.createElement(
+	                                    'option',
+	                                    { value: width },
+	                                    width
+	                                );
+	                            })
+	                        ),
 	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement(
 	                            'b',
@@ -862,7 +928,19 @@
 	                            'Width'
 	                        ),
 	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Width', ref: 'label_width' }),
+	                        _react2.default.createElement('input', { style: { width: '30%' }, type: 'text', placeholder: 'Width', ref: 'label_width' }),
+	                        'Suggest: ',
+	                        _react2.default.createElement(
+	                            'select',
+	                            { onChange: this._onChangeSuggestWidth.bind(this, 'label'), ref: 'suggest_label_width' },
+	                            this.suggest_width.map(function (width) {
+	                                return _react2.default.createElement(
+	                                    'option',
+	                                    { value: width },
+	                                    width
+	                                );
+	                            })
+	                        ),
 	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement(
 	                            'b',
@@ -908,7 +986,7 @@
 	                        ' ',
 	                        _react2.default.createElement(
 	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onCloneObject.bind(this) },
+	                            { style: { background: 'green' }, onClick: this._onCloneObject.bind(this) },
 	                            'Clone'
 	                        )
 	                    ),
@@ -18239,10 +18317,152 @@
 	};
 
 	module.exports = ReactChildReconciler;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
 
 /***/ },
-/* 121 */,
+/* 121 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// shim for using process in browser
+	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	    try {
+	        cachedSetTimeout = setTimeout;
+	    } catch (e) {
+	        cachedSetTimeout = function cachedSetTimeout() {
+	            throw new Error('setTimeout is not defined');
+	        };
+	    }
+	    try {
+	        cachedClearTimeout = clearTimeout;
+	    } catch (e) {
+	        cachedClearTimeout = function cachedClearTimeout() {
+	            throw new Error('clearTimeout is not defined');
+	        };
+	    }
+	})();
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        return setTimeout(fun, 0);
+	    } else {
+	        return cachedSetTimeout.call(null, fun, 0);
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        clearTimeout(marker);
+	    } else {
+	        cachedClearTimeout.call(null, marker);
+	    }
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while (len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () {
+	    return '/';
+	};
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function () {
+	    return 0;
+	};
+
+/***/ },
 /* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -19484,7 +19704,7 @@
 	}
 
 	module.exports = checkReactTypeSpec;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
 
 /***/ },
 /* 126 */
@@ -20027,7 +20247,7 @@
 	}
 
 	module.exports = flattenChildren;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
 
 /***/ },
 /* 132 */
@@ -24932,7 +25152,49 @@
 /* 176 */,
 /* 177 */,
 /* 178 */,
-/* 179 */,
+/* 179 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var CONSTANTS = {
+	    VALUES: {
+	        TRUE: 'true',
+	        FALSE: 'false'
+	    },
+	    EFORM: {
+	        SHORT: {
+	            SECTION_ROW: 'r',
+	            ROW_OBJECT: 'o'
+	        },
+	        OBJECT_TYPE: {
+	            LABEL: 'lb',
+	            RADIO: 'r',
+	            CHECKBOX: 'c',
+	            TEXT: 'it',
+	            NUMBER: 'in',
+	            DATE: 'id',
+	            SIGN: 'si',
+	            DYNAMIC_TABLE: 'di'
+	        },
+	        DEFAULT_VALUE: {
+	            ALIGN_ARR: [{ code: 'left', name: 'Left' }, { code: 'center', name: 'Center' }, { code: 'right', name: 'Right' }],
+	            SUGGEST_WIDTH: ['NONE', '768px', '576px', '384px', '192px']
+	        }
+	    },
+	    EFORM_CLIENT: {
+	        DEFAULT_VALUE: {
+	            PAGE: 1
+	        }
+	    }
+	};
+
+	exports.default = CONSTANTS;
+
+/***/ },
 /* 180 */
 /***/ function(module, exports) {
 
@@ -25066,11 +25328,19 @@
 	        return p;
 	    },
 
-	    EFormUploadSignImage: function EFormUploadSignImage(data) {
-	        var formdata = data.formdata;
+	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
+	        // var formdata = data.formdata;
+	        var formdata = new FormData();
+	        var fileName = 'DEFAULTSIGN.png';
+	        var contentType = 'MedicalImage';
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
+
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
 	                url: _ip2.default.ApiServerUrl + '/api/uploadFileWithoutLogin',
+	                // url: IP.EFormServer +'/eform/test-upload-sign',
 	                xhrFields: {
 	                    withCredentials: true
 	                },
@@ -25084,13 +25354,49 @@
 	                data: formdata,
 	                processData: false,
 	                contentType: false
-	            }).done(function (respond) {
-	                resolve(respond);
+	            }).done(function (response) {
+	                resolve({ response: response, meta: meta });
 	            }).fail(function (error) {
 	                reject(error);
 	            });
 	        });
 	        return p;
+	    },
+
+	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	        var p = new Promise(function (resolve, reject) {
+	            var xhr = new XMLHttpRequest();
+	            xhr.responseType = 'arraybuffer';
+	            xhr.open('GET', _ip2.default.ApiServerUrl + '/api/downloadFileWithoutLogin/' + fileUID, true);
+	            xhr.onload = function (e) {
+	                var blob = new Blob([this.response], { type: 'image/png' });
+	                var objectUrl = URL.createObjectURL(blob);
+	                // var img = new Image;
+	                // img.src = objectUrl;
+	                resolve(objectUrl);
+	            };
+	            xhr.send();
+	        });
+	        return p;
+
+	        /*
+	        var p = new Promise(function(resolve, reject){
+	            $.ajax({
+	                url: IP.ApiServerUrl +'/api/downloadFileWithoutLogin/' + fileUID,
+	                xhrFields: { withCredentials: true },
+	                type: "GET",
+	                processData: false,
+	                contentType: false,
+	                responseType:'arraybuffer'
+	            }).done(function(response){
+	                resolve(response)
+	            }).fail(function(error) {
+	                console.log("error download sign ne", error)
+	                reject(error);
+	            })
+	        })
+	        return p
+	        */
 	    }
 	};
 
@@ -25116,7 +25422,11 @@
 	exports.default = ip;
 
 /***/ },
-/* 183 */
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25135,7 +25445,7 @@
 
 	var _baobab2 = _interopRequireDefault(_baobab);
 
-	var _row = __webpack_require__(184);
+	var _row = __webpack_require__(188);
 
 	var _row2 = _interopRequireDefault(_row);
 
@@ -25432,7 +25742,7 @@
 	exports.default = Section;
 
 /***/ },
-/* 184 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

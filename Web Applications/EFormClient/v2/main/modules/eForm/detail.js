@@ -10,10 +10,10 @@ import Service from '../../services/main'
 import Helper from '../../config/helper'
 import CONSTANTS from '../../config/constants'
 
-import _ from 'lodash'
 
 const EFORM_CLIENT_CONST = CONSTANTS.EFORM_CLIENT
 var EFORM_CONST = CONSTANTS.EFORM
+
 
 
 class EFormDetail extends Component{
@@ -136,11 +136,6 @@ class EFormDetail extends Component{
             else if(EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
                 if(o.v) {
                     Service.EFormDownloadSignImage(o.v).then(function(response){
-                        // console.log(response)
-                       
-                        // var blob = new Blob([response],{type: 'image/png'});
-                        //  console.log(blob)
-                        // var objectUrl = URL.createObjectURL(blob);
                         var objectUrl = response
                         $('#'+o.n+'_image').attr('src', objectUrl);
                     }, function(error){
@@ -191,7 +186,7 @@ class EFormDetail extends Component{
         }
         Service.EFormCreate(data)
         .then(function(response){
-            // location.reload();
+            location.reload();
         })
     }
     __updateEFormDate(){
@@ -202,7 +197,8 @@ class EFormDetail extends Component{
         }
         Service.EFormUpdate(data)
         .then(function(response){
-            // location.reload();
+
+            location.reload();
          })
     }
 
@@ -218,8 +214,9 @@ class EFormDetail extends Component{
                     else o.c = false
                 }
             }else if(EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
-                const value = $('#'+o.n).jSignature("getData")
-                if(EFORM_CONST.DEFAULT_VALUE.EMPTY_SIGN != value) {
+                const changed = $('#'+o.n).data('changed')
+                if( CONSTANTS.VALUES.TRUE === changed) {
+                    const value = $('#'+o.n).jSignature("getData")
                     arrSign.push({ object: o, value: value });
                 }
             }else if(EFORM_CONST.OBJECT_TYPE.DATE === o.t){
@@ -232,8 +229,7 @@ class EFormDetail extends Component{
         })
 
         let arrPromise = self.__getSignPromiseArr(arrSign)
-
-
+        console.log('Arr Promise: ', arrPromise.length)
         if(arrPromise.length > 0) {
             Promise.all(arrPromise).then(
             values => {   

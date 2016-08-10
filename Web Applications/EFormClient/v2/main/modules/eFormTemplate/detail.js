@@ -6,6 +6,8 @@ import Section from '../../partials/template/section'
 import MeMath from '../../config/math'
 
 import Service from '../../services/main'
+import CONSTANTS from '../../config/constants'
+const EFORM_CONST = CONSTANTS.EFORM
 
 class EFormTemplateDetail extends Component{
     constructor(){
@@ -15,11 +17,13 @@ class EFormTemplateDetail extends Component{
             obj: []
         })
         this.selected_obj = null
-        this.align_arr = [
-            {code: 'left', name: 'Left'},
-            {code: 'center', name: 'Center'},
-            {code: 'right', name: 'Right'}
-        ]
+        // this.align_arr = [
+        //     {code: 'left', name: 'Left'},
+        //     {code: 'center', name: 'Center'},
+        //     {code: 'right', name: 'Right'}
+        // ]
+        this.align_arr = EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR
+        this.suggest_width = EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH
         this.user_uid = ''
         this.template_uid = ''
         this.dynamic_obj = []
@@ -41,6 +45,17 @@ class EFormTemplateDetail extends Component{
             self._clearAllDetail()
             self.forceUpdate()
         })
+    }
+    _addSection(section){
+        section.ref = 's_'+this._getCurrentRef()
+        let section_list = this.list.select('sections').push(section)
+        this.list.sections = section_list
+        this.forceUpdate()
+    }
+    _addRow(row, s_index){
+        row.ref = 'r_'+s_index+'_'+this._getCurrentRow(s_index)
+        this.list.select('sections', s_index, 'r').push(row)        
+        this.forceUpdate()  
     }
     _register_navbar_add_section(){
         const self = this
@@ -339,17 +354,7 @@ class EFormTemplateDetail extends Component{
             this.forceUpdate()
         }  
     }
-    _addSection(section){
-        section.ref = 's_'+this._getCurrentRef()
-        let section_list = this.list.select('sections').push(section)
-        this.list.sections = section_list
-        this.forceUpdate()
-    }
-    _addRow(row, s_index){
-        row.ref = 'r_'+s_index+'_'+this._getCurrentRow(s_index)
-        this.list.select('sections', s_index, 'r').push(row)        
-        this.forceUpdate()  
-    }
+   
     _onSave(){
         let res_obj = []
         const sections = this.list.select('sections')
@@ -391,6 +396,36 @@ class EFormTemplateDetail extends Component{
             
         }
     }
+    _onChangeSuggestWidth(type){
+         console.log('log log', type)
+        
+       
+        console.log(val, EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0])
+        if(EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0] === val) 
+            return
+
+        switch(type) {
+            case 'input':
+                 var val = $(this.refs.suggest_input_width).val();
+                $(this.refs.input_width).val(val);
+                // $(this.refs.s)
+                break;
+            case 'label':
+                 var val = $(this.refs.suggest_label_width).val();
+                $(this.refs.label_width).val(val);
+                break;
+
+            default:
+                var val = $(this.refs.suggest_default_width).val();
+                 $(this.refs.default_width).val(val);
+        }    
+            
+
+
+         // $(this.refs.default_width).val('asssa');
+       
+    }
+
     render(){
         return (
             <div>
@@ -471,7 +506,15 @@ class EFormTemplateDetail extends Component{
                         <b>Title</b><br/>
                         <input type="text" placeholder="Title" ref="default_title"/><br/>
                         <b>Width</b><br/>
-                        <input type="text" placeholder="Width" ref="default_width"/><br/>
+                        <input style={{width: '30%'}} type="text" placeholder="Width" ref="default_width"/>
+                         Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'default')} ref="suggest_default_width">
+                            {
+                                this.suggest_width.map(function(width){
+                                    return <option value={width}>{width}</option>
+                                })
+                            }
+                        </select>
+                        <br/>
                         <b>Name</b><br/>
                         <input type="text" placeholder="Name" ref="default_name"/><br/>
                         <b>Id</b><br/>
@@ -502,7 +545,15 @@ class EFormTemplateDetail extends Component{
                     </div>
                     <div className="form-detail" ref="input">
                         <b>Width</b><br/>
-                        <input type="text" placeholder="Width" ref="input_width"/><br/>
+                        <input style={{width: '30%'}} type="text" placeholder="Width" ref="input_width"/> 
+                        Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'input')} ref="suggest_input_width">
+                            {
+                                this.suggest_width.map(function(width){
+                                    return <option value={width}>{width}</option>
+                                })
+                            }
+                        </select>
+                        <br/>
                         <b>Name</b><br/>
                         <input type="text" placeholder="Name" ref="input_name"/><br/>
                         <b>Border</b><br/>
@@ -529,7 +580,14 @@ class EFormTemplateDetail extends Component{
                     </div>
                     <div className="form-detail" ref="label">
                         <b>Width</b><br/>
-                        <input type="text" placeholder="Width" ref="label_width"/><br/>
+                        <input style={{width: '30%'}} type="text" placeholder="Width" ref="label_width"/>
+                           Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'label')} ref="suggest_label_width">
+                            {
+                                this.suggest_width.map(function(width){
+                                    return <option value={width}>{width}</option>
+                                })
+                            }
+                        </select><br/>
                         <b>Value</b><br/>
                         <textarea placeholder="Value" ref="label_value" rows="10"/><br/>
                         <b>Border</b><br/>

@@ -20,6 +20,25 @@ class Helper{
         var blob = new Blob(byteArrays, {type: contentType});
         return blob;
     }
+    
+    static toStyleBorder(attrBorder, toStyle){
+        if(!toStyle) 
+            toStyle = {}
+        if(attrBorder !== 'none'){
+            var split_p_border = attrBorder.split('-')
+            split_p_border.map(function(b){
+                if(b === 't')
+                    toStyle.borderTop = '1px solid black'
+                else if(b === 'l')
+                    toStyle.borderLeft = '1px solid black'
+                else if(b === 'r')
+                    toStyle.borderRight = '1px solid black'
+                else if(b === 'b')
+                    toStyle.borderBottom = '1px solid black'
+            })
+        }
+        return toStyle
+    }
 
 }
 

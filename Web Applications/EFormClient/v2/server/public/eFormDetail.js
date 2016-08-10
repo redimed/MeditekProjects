@@ -70,6 +70,14 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
+	var _helper = __webpack_require__(183);
+
+	var _helper2 = _interopRequireDefault(_helper);
+
+	var _constants = __webpack_require__(179);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -77,6 +85,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EFORM_CLIENT_CONST = _constants2.default.EFORM_CLIENT;
+	var EFORM_CONST = _constants2.default.EFORM;
 
 	var EFormDetail = function (_Component) {
 	    _inherits(EFormDetail, _Component);
@@ -93,7 +104,7 @@
 	            sections: []
 	        });
 	        _this.pages = [];
-	        _this.current_page = 1;
+	        _this.current_page = EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE;
 	        _this.md = null;
 	        _this.appointment_uid = '';
 	        _this.patient_uid = '';
@@ -109,7 +120,8 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var self = this;
-	            this.current_page = parseInt(_math2.default.parseQueryString(window.location.href).page);
+	            var p = _math2.default.parseQueryString(window.location.href).page;
+	            this.current_page = p == undefined ? EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE : parseInt(p);
 	            this.appointment_uid = _math2.default.parseQueryString(window.location.href).appointmentUID;
 	            this.patient_uid = _math2.default.parseQueryString(window.location.href).patientUID;
 	            this.user_uid = _math2.default.parseQueryString(window.location.href).userUID;
@@ -119,15 +131,24 @@
 	            _main2.default.EFormTemplateDetail({ uid: this.template_uid }).then(function (response) {
 	                self.eform_name = response.data.Name;
 	                var TemplateData = JSON.parse(response.data.EFormTemplateData.TemplateData);
+	                // console.log(TemplateData)
+
 	                self.list.set('sections', TemplateData.sections);
+
+	                // GET ALL SECTIONS WILL DISPLAY IN PAGE
 	                self.list.select('sections').map(function (s, s_index) {
 	                    if (parseInt(s.get('page')) === self.current_page) self.page_list.select('sections').push(s.serialize());
 	                });
+	                // END
+	                // GET LARGEST PAGE TO GET LIST6 
 	                var sections_length = self.list.select('sections').serialize().length;
 	                var pages = self.list.select('sections', sections_length - 1).get('page');
+	                // sections was sorted by page on server
 	                for (var i = 1; i <= pages; i++) {
 	                    self.pages.push({ text: 'Page ' + i, code: i });
-	                }self.forceUpdate(function () {
+	                } // END
+
+	                self.forceUpdate(function () {
 	                    $(self.refs.page).val(self.current_page);
 	                    $(self.refs.page).on('change', function (event) {
 	                        window.location.href = '/eform/detail?page=' + event.target.value;
@@ -149,39 +170,33 @@
 	                        }
 	                    })*/
 	                    // END DYNAMIC MODULE
-
+	                    // console.log('EFORM DATA: ', TemplateData)
 	                    _main2.default.EFormCheckData({ templateUID: self.template_uid, appointmentUID: self.appointment_uid }).then(function (response) {
 	                        if (response.data) {
 	                            self.is_data = true;
-	                            self.obj_data = JSON.parse(response.data.EFormData.TempData);
+	                            self.eform_uid = response.data.UID;
+
+	                            var last_data = JSON.parse(response.data.EFormData.TempData);
 	                            // MERGE DATA VS. OBJECT DATA
-	                            self.obj_data.map(function (eo) {
+	                            last_data.map(function (eo) {
 	                                for (var i = 0; i < TemplateData.obj.length; i++) {
 	                                    var doj = TemplateData.obj[i];
-	                                    if (doj.t === 'r') {
+	                                    if (EFORM_CONST.OBJECT_TYPE.RADIO === doj.t) {
 	                                        if (eo.v === doj.v) {
 	                                            doj.c = eo.c;
 	                                            break;
 	                                        }
-	                                    } else {
-	                                        if (eo.n === doj.n) {
-	                                            doj.v = eo.v;
-	                                            break;
-	                                        }
+	                                    } else if (eo.n === doj.n) {
+	                                        doj.v = eo.v;
+	                                        break;
 	                                    }
 	                                }
 	                            });
+
+	                            self.obj_data = TemplateData.obj;
 	                            // END MERGE DATA VS. OBJECT DATA
 	                            // LOAD DATA
-	                            self.obj_data.map(function (o) {
-	                                if (o.t === 'r') $('input[name=' + o.n + '][value=' + o.v + ']').prop('checked', o.c);else if (o.t === 'si') {
-	                                    if (typeof o.v !== 'undefined' && o.v) $('#' + o.n + '_image').attr('src', 'data:' + o.v[0] + ',' + o.v[1]);
-	                                } else if (o.t === 'id') {
-	                                    $('#' + o.n).val(o.v);
-	                                } else {
-	                                    $('#' + o.n).val(o.v);
-	                                }
-	                            });
+	                            self.__loadSavedData();
 	                            //END LOAD DATA
 	                        } else {
 	                            self.obj_data = TemplateData.obj;
@@ -191,31 +206,130 @@
 	            });
 	        }
 	    }, {
+	        key: '__loadSavedData',
+	        value: function __loadSavedData() {
+	            console.log('LOAD SAVED DATA');
+	            this.obj_data.map(function (o) {
+	                if (EFORM_CONST.OBJECT_TYPE.RADIO === o.t) $('input[name=' + o.n + '][value=' + o.v + ']').prop('checked', o.c);else if (EFORM_CONST.OBJECT_TYPE.SIGN === o.t) {
+	                    if (o.v) {
+	                        _main2.default.EFormDownloadSignImage(o.v).then(function (response) {
+	                            var objectUrl = response;
+	                            $('#' + o.n + '_image').attr('src', objectUrl);
+	                        }, function (error) {
+	                            alert("Cannot load image !!!");
+	                        });
+	                    }
+	                    // if(typeof o.v !== 'undefined' && o.v)
+	                    //     $('#'+o.n+'_image').attr('src', 'data:'+o.v[0]+','+o.v[1])
+	                } else if (EFORM_CONST.OBJECT_TYPE.DATE === o.t) {
+	                    $('#' + o.n).val(o.v);
+	                } else {
+	                    $('#' + o.n).val(o.v);
+	                }
+	            });
+	        }
+	    }, {
+	        key: '__getSignPromiseArr',
+	        value: function __getSignPromiseArr(arrSign) {
+	            var arrPromise = [];
+	            arrSign.map(function (sign) {
+	                // sign.value starts with 'data:image/png;base64,...'
+	                var val = sign.value.split(',')[1];
+	                var blob = _helper2.default.b64toBlob(val, 'image/png');
+	                /* TEST */
+	                // var blobUrl = URL.createObjectURL(blob);
+	                // var img = document.createElement('img');
+	                // img.src = blobUrl;
+	                // document.body.appendChild(img);
+	                /* END TEST */
+	                var p = _main2.default.EFormUploadSignImage(blob, sign.object);
+	                arrPromise.push(p);
+	            });
+	            return arrPromise;
+	        }
+	    }, {
+	        key: '__saveEFormData',
+	        value: function __saveEFormData() {
+	            this.is_data ? this.__updateEFormDate() : this.__createEFormData();
+	        }
+	    }, {
+	        key: '__createEFormData',
+	        value: function __createEFormData() {
+	            console.log('CREATE EFORM DATA');
+	            var data = {
+	                templateUID: this.template_uid,
+	                appointmentUID: this.appointment_uid,
+	                tempData: JSON.stringify(this.obj_data),
+	                name: this.eform_name,
+	                patientUID: this.patient_uid, userUID: this.user_uid
+	            };
+	            _main2.default.EFormCreate(data).then(function (response) {
+	                location.reload();
+	            });
+	        }
+	    }, {
+	        key: '__updateEFormDate',
+	        value: function __updateEFormDate() {
+	            console.log('UPDATE EFORM DATA');
+	            var data = {
+	                UID: this.eform_uid,
+	                content: JSON.stringify(this.obj_data)
+	            };
+	            _main2.default.EFormUpdate(data).then(function (response) {
+
+	                location.reload();
+	            });
+	        }
+	    }, {
 	        key: '_onSave',
 	        value: function _onSave() {
-	            if (this.is_data) {
-	                console.log('is_data');
-	            } else {
-	                this.obj_data.map(function (o) {
-	                    if (o.t === 'r') {
-	                        if ($('input[type=radio][name=' + o.n + ']').length) {
-	                            var value = $('input[type=radio][name=' + o.n + ']:checked').val();
-	                            if (value === o.v) o.c = true;else o.c = false;
-	                        }
-	                    } else if (o.t === 'si') {
-	                        var _value = $('#' + o.n).jSignature("getData", "svgbase64");
-	                        if (_value[1] !== 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMCIgaGVpZ2h0PSIwIj48L3N2Zz4=') o.v = _value;
-	                    } else if (o.t === 'id') {
-	                        var _value2 = $('#' + o.n).val();
-	                        o.v = _value2;
-	                    } else {
-	                        var _value3 = $('#' + o.n).val();
-	                        o.v = _value3;
+	            // get all signs to upload 
+	            var arrSign = [];
+	            var self = this;
+	            this.obj_data.map(function (o) {
+	                if (EFORM_CONST.OBJECT_TYPE.RADIO === o.t) {
+	                    if ($('input[type=radio][name=' + o.n + ']').length) {
+	                        var value = $('input[type=radio][name=' + o.n + ']:checked').val();
+	                        if (value === o.v) o.c = true;else o.c = false;
 	                    }
+	                } else if (EFORM_CONST.OBJECT_TYPE.SIGN === o.t) {
+	                    var changed = $('#' + o.n).data('changed');
+	                    if (_constants2.default.VALUES.TRUE === changed) {
+	                        var _value = $('#' + o.n).jSignature("getData");
+	                        arrSign.push({ object: o, value: _value });
+	                    }
+	                } else if (EFORM_CONST.OBJECT_TYPE.DATE === o.t) {
+	                    var _value2 = $('#' + o.n).val();
+	                    o.v = _value2;
+	                } else {
+	                    var _value3 = $('#' + o.n).val();
+	                    o.v = _value3;
+	                }
+	            });
+
+	            var arrPromise = self.__getSignPromiseArr(arrSign);
+	            console.log('Arr Promise: ', arrPromise.length);
+	            if (arrPromise.length > 0) {
+	                Promise.all(arrPromise).then(function (values) {
+	                    // console.log('VALUE PROMISE: ', values)
+	                    console.log('PASSED SIGNATURE OK !!!!!');
+	                    for (var i = 0; i < values.length; ++i) {
+	                        var value = values[i];
+	                        if (value.response && value.response.status && value.response.status === 'success') {
+	                            // set value to object
+	                            value.meta.v = value.response.fileUID;
+	                        } else {
+	                            alert('SIGN WASNT UPLOADED!!!');
+	                        }
+	                    }
+	                    // console.log('FORM DATA: ', self.obj_data)
+	                    self.__saveEFormData();
+	                }, function (reason) {
+	                    alert('Upload file server is down !!!');
+	                    console.log(reason);
 	                });
-	                _main2.default.EFormCreate({ templateUID: this.template_uid, appointmentUID: this.appointment_uid, tempData: JSON.stringify(this.obj_data), name: this.eform_name, patientUID: this.patient_uid, userUID: this.user_uid }).then(function (response) {
-	                    console.log(response);
-	                });
+	            } else {
+	                self.__saveEFormData();
 	            }
 	        }
 	    }, {
@@ -253,6 +367,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            // console.log(this.page_list.serialize())
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'client' },
@@ -17629,10 +17744,152 @@
 	};
 
 	module.exports = ReactChildReconciler;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
 
 /***/ },
-/* 121 */,
+/* 121 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// shim for using process in browser
+	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	    try {
+	        cachedSetTimeout = setTimeout;
+	    } catch (e) {
+	        cachedSetTimeout = function cachedSetTimeout() {
+	            throw new Error('setTimeout is not defined');
+	        };
+	    }
+	    try {
+	        cachedClearTimeout = clearTimeout;
+	    } catch (e) {
+	        cachedClearTimeout = function cachedClearTimeout() {
+	            throw new Error('clearTimeout is not defined');
+	        };
+	    }
+	})();
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        return setTimeout(fun, 0);
+	    } else {
+	        return cachedSetTimeout.call(null, fun, 0);
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        clearTimeout(marker);
+	    } else {
+	        cachedClearTimeout.call(null, marker);
+	    }
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while (len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () {
+	    return '/';
+	};
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function () {
+	    return 0;
+	};
+
+/***/ },
 /* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -18874,7 +19131,7 @@
 	}
 
 	module.exports = checkReactTypeSpec;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
 
 /***/ },
 /* 126 */
@@ -19417,7 +19674,7 @@
 	}
 
 	module.exports = flattenChildren;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"/usr/local/lib/node_modules/webpack/node_modules/node-libs-browser/node_modules/process/browser.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)))
 
 /***/ },
 /* 132 */
@@ -24471,6 +24728,10 @@
 
 	var _date2 = _interopRequireDefault(_date);
 
+	var _helper = __webpack_require__(183);
+
+	var _helper2 = _interopRequireDefault(_helper);
+
 	var _constants = __webpack_require__(179);
 
 	var _constants2 = _interopRequireDefault(_constants);
@@ -24527,10 +24788,7 @@
 	                    if (typeof o.select('params').get('border') !== 'undefined') {
 	                        var p_border = o.select('params').get('border');
 	                        if (p_border !== 'none') {
-	                            var split_p_border = p_border.split('-');
-	                            split_p_border.map(function (b) {
-	                                if (b === 't') style.borderTop = '1px solid black';else if (b === 'l') style.borderLeft = '1px solid black';else if (b === 'r') style.borderRight = '1px solid black';else if (b === 'b') style.borderBottom = '1px solid black';
-	                            });
+	                            _helper2.default.toStyleBorder(p_border, style);
 	                            className += ' border';
 	                            if (o.get('type') === 'it') style.padding = 0;
 	                        }
@@ -24740,6 +24998,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _constants = __webpack_require__(179);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24773,12 +25035,14 @@
 	    }, {
 	        key: '_onSign',
 	        value: function _onSign() {
+	            $('#' + this.props.name).data('changed', _constants2.default.VALUES.TRUE);
 	            $(this.refs.real).show();
 	            $(this.refs.preview).hide();
 	        }
 	    }, {
 	        key: '_onCancel',
 	        value: function _onCancel() {
+	            $('#' + this.props.name).data('changed', _constants2.default.VALUES.FALSE);
 	            $(this.refs.real).hide();
 	            $(this.refs.preview).show();
 	        }
@@ -24821,7 +25085,7 @@
 	                            )
 	                        )
 	                    ),
-	                    _react2.default.createElement('div', { id: this.props.name })
+	                    _react2.default.createElement('div', { 'data-changed': 'false', id: this.props.name })
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -24898,7 +25162,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('input', { type: 'text', id: this.props.name });
+	            return _react2.default.createElement('input', { type: 'text', name: this.props.name, id: this.props.name });
 	        }
 	    }]);
 
@@ -24917,6 +25181,10 @@
 	    value: true
 	});
 	var CONSTANTS = {
+	    VALUES: {
+	        TRUE: 'true',
+	        FALSE: 'false'
+	    },
 	    EFORM: {
 	        SHORT: {
 	            SECTION_ROW: 'r',
@@ -24933,9 +25201,14 @@
 	            DYNAMIC_TABLE: 'di'
 	        },
 	        DEFAULT_VALUE: {
-	            SIGN: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMCIgaGVpZ2h0PSIwIj48L3N2Zz4='
+	            ALIGN_ARR: [{ code: 'left', name: 'Left' }, { code: 'center', name: 'Center' }, { code: 'right', name: 'Right' }],
+	            SUGGEST_WIDTH: ['NONE', '768px', '576px', '384px', '192px']
 	        }
-
+	    },
+	    EFORM_CLIENT: {
+	        DEFAULT_VALUE: {
+	            PAGE: 1
+	        }
 	    }
 	};
 
@@ -25075,11 +25348,19 @@
 	        return p;
 	    },
 
-	    EFormUploadSignImage: function EFormUploadSignImage(data) {
-	        var formdata = data.formdata;
+	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
+	        // var formdata = data.formdata;
+	        var formdata = new FormData();
+	        var fileName = 'DEFAULTSIGN.png';
+	        var contentType = 'MedicalImage';
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
+
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
 	                url: _ip2.default.ApiServerUrl + '/api/uploadFileWithoutLogin',
+	                // url: IP.EFormServer +'/eform/test-upload-sign',
 	                xhrFields: {
 	                    withCredentials: true
 	                },
@@ -25093,13 +25374,49 @@
 	                data: formdata,
 	                processData: false,
 	                contentType: false
-	            }).done(function (respond) {
-	                resolve(respond);
+	            }).done(function (response) {
+	                resolve({ response: response, meta: meta });
 	            }).fail(function (error) {
 	                reject(error);
 	            });
 	        });
 	        return p;
+	    },
+
+	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	        var p = new Promise(function (resolve, reject) {
+	            var xhr = new XMLHttpRequest();
+	            xhr.responseType = 'arraybuffer';
+	            xhr.open('GET', _ip2.default.ApiServerUrl + '/api/downloadFileWithoutLogin/' + fileUID, true);
+	            xhr.onload = function (e) {
+	                var blob = new Blob([this.response], { type: 'image/png' });
+	                var objectUrl = URL.createObjectURL(blob);
+	                // var img = new Image;
+	                // img.src = objectUrl;
+	                resolve(objectUrl);
+	            };
+	            xhr.send();
+	        });
+	        return p;
+
+	        /*
+	        var p = new Promise(function(resolve, reject){
+	            $.ajax({
+	                url: IP.ApiServerUrl +'/api/downloadFileWithoutLogin/' + fileUID,
+	                xhrFields: { withCredentials: true },
+	                type: "GET",
+	                processData: false,
+	                contentType: false,
+	                responseType:'arraybuffer'
+	            }).done(function(response){
+	                resolve(response)
+	            }).fail(function(error) {
+	                console.log("error download sign ne", error)
+	                reject(error);
+	            })
+	        })
+	        return p
+	        */
 	    }
 	};
 
@@ -25123,6 +25440,70 @@
 	};
 
 	exports.default = ip;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Helper = function () {
+	    function Helper() {
+	        _classCallCheck(this, Helper);
+	    }
+
+	    _createClass(Helper, null, [{
+	        key: 'b64toBlob',
+	        value: function b64toBlob(b64Data) {
+	            var contentType = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	            var sliceSize = arguments.length <= 2 || arguments[2] === undefined ? 512 : arguments[2];
+
+
+	            var byteCharacters = atob(b64Data);
+	            var byteArrays = [];
+
+	            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+	                var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+	                var byteNumbers = new Array(slice.length);
+	                for (var i = 0; i < slice.length; i++) {
+	                    byteNumbers[i] = slice.charCodeAt(i);
+	                }
+
+	                var byteArray = new Uint8Array(byteNumbers);
+
+	                byteArrays.push(byteArray);
+	            }
+
+	            var blob = new Blob(byteArrays, { type: contentType });
+	            return blob;
+	        }
+	    }, {
+	        key: 'toStyleBorder',
+	        value: function toStyleBorder(attrBorder, toStyle) {
+	            if (!toStyle) toStyle = {};
+	            if (attrBorder !== 'none') {
+	                var split_p_border = attrBorder.split('-');
+	                split_p_border.map(function (b) {
+	                    if (b === 't') toStyle.borderTop = '1px solid black';else if (b === 'l') toStyle.borderLeft = '1px solid black';else if (b === 'r') toStyle.borderRight = '1px solid black';else if (b === 'b') toStyle.borderBottom = '1px solid black';
+	                });
+	            }
+	            return toStyle;
+	        }
+	    }]);
+
+	    return Helper;
+	}();
+
+	exports.default = Helper;
 
 /***/ }
 /******/ ]);

@@ -6,6 +6,8 @@ import Checkbox from './object/checkbox'
 import Sign from './object/sign'
 import InputDate from './object/date'
 
+import Helper from '../../config/helper'
+
 import CONSTANTS from '../../config/constants'
 const EFORM_CONST = CONSTANTS.EFORM
 
@@ -43,17 +45,7 @@ class Row extends Component{
                         if(typeof o.select('params').get('border') !== 'undefined'){
                             const p_border = o.select('params').get('border')
                             if(p_border !== 'none'){
-                                var split_p_border = p_border.split('-')
-                                split_p_border.map(function(b){
-                                    if(b === 't')
-                                        style.borderTop = '1px solid black'
-                                    else if(b === 'l')
-                                        style.borderLeft = '1px solid black'
-                                    else if(b === 'r')
-                                        style.borderRight = '1px solid black'
-                                    else if(b === 'b')
-                                        style.borderBottom = '1px solid black'
-                                })
+                                Helper.toStyleBorder(p_border, style)
                                 className += ' border'
                                 if(o.get('type') === 'it')
                                     style.padding = 0

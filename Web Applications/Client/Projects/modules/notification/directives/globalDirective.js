@@ -1,13 +1,13 @@
 var app = angular.module('app.authentication.notification.directive.global', []);
 
-app.directive('notificationGlobal', function() {
+app.directive('notificationGlobal', function($uibModal) {
     return {
         restrict: 'EA',
         templateUrl: 'modules/notification/directives/templates/global.html',
         options: {
             scope: '='
         },
-        controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $state) {
+        controller: function($scope, notificationServices, toastr, $cookies, $state) {
             var self = $scope;
 
             var UserInfo = $cookies.getObject('userInfo');
@@ -62,7 +62,7 @@ app.directive('notificationGlobal', function() {
             };
 
             self.initg = function() {
-                console.log("||||||||",self.itemDefault);
+                console.log("||||||||", self.itemDefault);
 
                 self.searchObject = {
                     limit: 5,
@@ -113,6 +113,10 @@ app.directive('notificationGlobal', function() {
                 LoadListGlobalNotify(self.searchgObjectMap);
             };
 
+            socketNcFunction.LoadListGlobal = function() {
+                self.initg();
+            };
+
             self.openCreate = function(data) {
                 var modalInstance = $uibModal.open({
                     animation: true,
@@ -121,13 +125,18 @@ app.directive('notificationGlobal', function() {
                     resolve: {
                         data: function() {
                             return data;
-                        }
+                        },
                     },
                     controller: 'notificationGlobalCreateCtrl',
                 });
                 modalInstance.result.then(function(result) {
-                    if (result === 'close') {
-                        ioSocket.LoadListGlobalNotify();
+                    if (result.message === 'success') {
+                        if (socketNcFunction.LoadListGlobal) {
+                            socketNcFunction.LoadListGlobal();
+                        };
+                        if (socketNcFunction.LoadListSendedGlobal) {
+                            socketNcFunction.LoadListSendedGlobal();
+                        };
                     };
                 }, function(err) {
                     console.log("Global.Notification.Create", err);
@@ -151,7 +160,7 @@ app.directive('notificationGlobal', function() {
                     });
                     modalInstance.result.then(function(result) {
                         if (result === 'close') {
-                            ioSocket.LoadListGlobalNotify();
+                            socketNcFunction.LoadListGlobal();
                         };
                     }, function(err) {
                         console.log("Global.Notification.Detail", err);
@@ -167,17 +176,13 @@ app.directive('notificationGlobal', function() {
                     };
                     notificationServices.ChangeReadQueueJobg(info).then(function(info) {
                         self.initg();
-                        if (ioSocket.telehealthGlobalNotify()) {
-                            ioSocket.telehealthGlobalNotify("msg");
-                        }
+                        if (socketNcFunction.LoadGlobalNotify) {
+                            socketNcFunction.LoadGlobalNotify("msg");
+                        };
                     }, function(err) {
                         console.log("GlobalNotify.ChangeReadQueueJobg", err);
                     });
                 };
-            };
-
-            ioSocket.LoadListGlobalNotify = function() {
-                self.initg();
             };
 
             ComponentsDateTimePickers.init();

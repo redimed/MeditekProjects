@@ -52,8 +52,8 @@ app.controller('notificationGlobalCreateCtrl', function($scope, $modalInstance, 
                 info.UserName = userInfo.UserName;
                 info.EndTime = moment(info.EndTime, 'DD/MM/YYYY 23:59').format('YYYY-MM-DD 23:59');
                 notificationServices.SendMsgGlobal(info).then(function(result) {
-                    toastr.success("Send message success", "Success");
-                    $modalInstance.close('close');
+                    // toastr.success("Send message success", "Success");
+                    // $modalInstance.close('close');
                 });
             };
         }, function(err) {
@@ -62,4 +62,14 @@ app.controller('notificationGlobalCreateCtrl', function($scope, $modalInstance, 
             };
         });
     };
+
+    socketAuth.on('LoadList', function(msg) {
+        if (msg.message === 'success') {
+            toastr.success("Sent message success", "Success");
+            $modalInstance.close(msg);
+            socketAuth._raw._callbacks.$LoadList = null;
+        } else {
+            toastr.error("Sent message error", "Error");
+        };
+    });
 });

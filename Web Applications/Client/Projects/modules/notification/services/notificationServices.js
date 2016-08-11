@@ -35,6 +35,12 @@ app.factory('notificationServices', function(NcRestangular, $q, Restangular) {
         });
     };
 
+    services.UpdateStatusQueueJob = function(data) {
+        return ncApi.all("queue/updatestatusqueuejob").post({
+            data: data
+        });
+    };
+
     services.LoadListGlobalNotify = function(data) {
         return ncApi.all("queueq/loadlistglobalnotify").post({
             data: data
@@ -59,6 +65,8 @@ app.factory('notificationServices', function(NcRestangular, $q, Restangular) {
         });
     };
 
+   
+
     services.validate = function(info, msg) {
         var error = [];
         var q = $q.defer();
@@ -66,6 +74,10 @@ app.factory('notificationServices', function(NcRestangular, $q, Restangular) {
             //validate Subject
             if (!info.Subject) {
                 error.push({ field: "Subject", message: "required" });
+            };
+
+            if (info.Subject && info.Subject.length > 50) {
+                error.push({ field: "Subject", message: "length" });
             };
 
             //validate MsgContent
@@ -136,13 +148,20 @@ app.factory('notificationServices', function(NcRestangular, $q, Restangular) {
                 if (info.FirstDelay && moment(info.FirstDelay, 'DD/MM/YYYY').format('YYYY-MM-DD') > moment(info.EndTime, 'DD/MM/YYYY').format('YYYY-MM-DD')) {
                     error.push({ field: "FirstDelay", message: "invalid value (FirstDelay < EndTime)" });
                 };
-            } else if (msg === 'private') {
+            } else if (msg === 'Private') {
+                // validate UserList in Private
+                if (info.lsUser <= 0) {
+                    error.push({ field: "User", message: "required" });
+                };
+            } else if (msg === 'ToDo' || msg === 'Request') {
+                // validate Status in todolist
+                if (!info.MsgState) {
+                    error.push({ field: "Status", message: "required" });
+                };
                 if (info.lsUser <= 0) {
                     error.push({ field: "User", message: "required" });
                 };
             };
-
-            console.log(error.length);
 
             if (error.length > 0) {
                 throw error;

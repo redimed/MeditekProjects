@@ -219,7 +219,10 @@ module.exports = {
             }];
         };
         if (data.Search.SenderUID) {
-            whereClause.SenderUID = data.Search.SenderUID
+            whereClause.SenderUID = data.Search.SenderUID;
+            whereClause.MsgKind = {
+                ne: 'Reference'
+            };
         };
         if (data.Search.Sender) {
             whereClause.SenderAccount.UserName = {

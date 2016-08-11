@@ -2,8 +2,10 @@ module.exports = {
     CreateGlobalNotifyJob: function(req, res) {
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> Global Notification");
         var body = req.body;
-        console.log("body.FirstDelay",body.FirstDelay);
         QueueJobgService.CreateQueueJobg(body).then(function(data) {
+            if (body.MsgKind != "Reference") {
+                sails.sockets.broadcast(body.SenderUID, "LoadList", { message: 'success', data: data });
+            };
             var job = {
                 type: 'sendglobalnotify',
                 payload: data.dataValues

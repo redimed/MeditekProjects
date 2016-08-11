@@ -62,6 +62,7 @@ module.exports = function(req, res) {
                         SendFromServer: dmUtils.currentServer,
                         Enable: 'Y',
                         Subject: dmObj.Action,
+                        FirstDelay : 0,
                     };
                     payloads.push(payload);
                     if (payloads) {
@@ -121,6 +122,7 @@ module.exports = function(req, res) {
                         SendFromServer: dmUtils.currentServer,
                         Enable: 'Y',
                         Subject: dmObj.Action,
+                        FirstDelay : 0,
                     };
                     payloads.push(payload);
                     if (payloads) {

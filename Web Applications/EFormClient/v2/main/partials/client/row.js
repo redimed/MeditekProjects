@@ -5,6 +5,7 @@ import Radio from './object/radio'
 import Checkbox from './object/checkbox'
 import Sign from './object/sign'
 import InputDate from './object/date'
+import Draw from './object/draw'
 
 import Helper from '../../config/helper'
 
@@ -51,6 +52,7 @@ class Row extends Component{
                                     style.padding = 0
                             }
                         }
+                        // console.log(o.serialize())
                         switch(o.get('type')){
                             case EFORM_CONST.OBJECT_TYPE.LABEL:
                                 res = (
@@ -116,6 +118,16 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
+                            case EFORM_CONST.OBJECT_TYPE.DRAWING:
+                                // this.objects_init.push(o.get('name') || '')
+                                res = (
+                                    <div className={className} ref={o.get('name') || ''}
+                                        style={style}>
+                                        <Draw ref={o.get('name')+'_draw'} name={o.get('name')}/>
+                                    </div>
+                                )
+                                break   
+
                         }
                         return res
                     }, this)

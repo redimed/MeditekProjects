@@ -81,19 +81,9 @@ var Services = {
         })
         return p
     },
-
-    EFormUploadSignImage: function (blob, meta) {
-        // var formdata = data.formdata;
-        var formdata = new FormData();
-        var fileName = 'DEFAULTSIGN.png'
-        var contentType = 'MedicalImage';
-        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15')
-        formdata.append('fileType', contentType);            
-        formdata.append('uploadFile', blob, fileName);
-
-
+    uploadFile: function(formdata, meta){
         var p = new Promise(function(resolve, reject){
-             $.ajax({
+            $.ajax({
                 url: IP.ApiServerUrl +'/api/uploadFileWithoutLogin',
                 // url: IP.EFormServer +'/eform/test-upload-sign',
                 xhrFields: {
@@ -117,42 +107,45 @@ var Services = {
         })
         return p
     },
+    EFormUploadSignImage: function (blob, meta) {
+        // var formdata = data.formdata;
+        var formdata = new FormData();
+        var fileName = 'DEFAULTSIGN.png'
+        var contentType = 'MedicalImage';
+        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15')
+        formdata.append('fileType', contentType);            
+        formdata.append('uploadFile', blob, fileName);
 
-    EFormDownloadSignImage: function(fileUID){
+        return this.uploadFile(formdata, meta)
+    },
+
+    EFormUploadDrawing: function(blob, fileName){
+        var formdata = new FormData();
+        var contentType = 'MedicalImage';
+        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+        formdata.append('fileType', contentType);
+        formdata.append('uploadFile', blob, fileName);
+
+        return this.uploadFile(formdata)
+    },
+    EFormDownloadImage: function(fileUID){
         var p = new Promise(function(resolve, reject){
-            var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
             xhr.responseType = 'arraybuffer';
             xhr.open('GET', IP.ApiServerUrl +'/api/downloadFileWithoutLogin/'+ fileUID, true);
             xhr.onload = function(e) {
-                var blob = new Blob([this.response],{type: 'image/png'});
-                var objectUrl = URL.createObjectURL(blob);
-                // var img = new Image;
-                // img.src = objectUrl;
-                resolve(objectUrl)
+                    var blob = new Blob([this.response],{type: 'image/png'});
+                    var objectUrl = URL.createObjectURL(blob);
+                    // var img = new Image;
+                    // img.src = objectUrl;
+                    resolve(objectUrl)
             };
             xhr.send();
         })
         return p
-
-
-        /*
-        var p = new Promise(function(resolve, reject){
-            $.ajax({
-                url: IP.ApiServerUrl +'/api/downloadFileWithoutLogin/' + fileUID,
-                xhrFields: { withCredentials: true },
-                type: "GET",
-                processData: false,
-                contentType: false,
-                responseType:'arraybuffer'
-            }).done(function(response){
-                resolve(response)
-            }).fail(function(error) {
-                console.log("error download sign ne", error)
-                reject(error);
-            })
-        })
-        return p
-        */
+    },
+    EFormDownloadSignImage: function(fileUID){
+        return this.EFormDownloadImage(fileUID)
     }
 }
 

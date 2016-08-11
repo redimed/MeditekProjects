@@ -116,6 +116,7 @@ class EFormDetail extends Component{
                         })
 
                         self.obj_data = TemplateData.obj;
+                        console.log(self.obj_data)
                         // END MERGE DATA VS. OBJECT DATA
                         // LOAD DATA
                         self.__loadSavedData();
@@ -135,7 +136,7 @@ class EFormDetail extends Component{
                 $('input[name='+o.n+'][value='+o.v+']').prop('checked', o.c)
             else if(EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
                 if(o.v) {
-                    Service.EFormDownloadSignImage(o.v).then(function(response){
+                    Service.EFormDownloadImage(o.v).then(function(response){
                         var objectUrl = response
                         $('#'+o.n+'_image').attr('src', objectUrl);
                     }, function(error){
@@ -254,9 +255,6 @@ class EFormDetail extends Component{
             self.__saveEFormData()
         }
     }
-
-
-
     _onShowSection(s_params){
         const ref = s_params.get('ref')
         Data.obj.map(function(o){

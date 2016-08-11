@@ -76,16 +76,16 @@ public interface UrgentRequest {
     @POST("/api/telehealth/user/update")
     void updatePatient(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
-    @POST("/api/telehealth/appointment/updateFile")
-    void addAppointmentFile(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    @POST("/api/appointment-wa-request/company")
+    void makeAppointmentCompany(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
-    /* 3005 */
     @Multipart
     @POST("/api/uploadFile")
-    void uploadFileModel(@Part("userUID") String userUID, @Part("fileType") String fileType, @Part("bodyPart") String bodyPart,
-                         @Part("description") String description, @Part("uploadFile") TypedFile uploadFile,
-                         Callback<JsonObject> callback);
+    void uploadFile(@Part("userUID") String userUID,
+                    @Part("fileType") String fileType,
+                    @Part("uploadFile") TypedFile uploadFile,
+                    Callback<JsonObject> callback);
 
-    @GET("/api/telehealth/user/WAAppointmentDetails/{apptUID}")
-    void getAppointmentDetails(@Path("apptUID") String apptUID, Callback<JsonObject> callback);
+    @POST("/eform/saveWithData")
+    void submitRedisite(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 }

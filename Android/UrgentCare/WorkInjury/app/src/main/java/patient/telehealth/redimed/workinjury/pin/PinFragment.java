@@ -1,7 +1,5 @@
 package patient.telehealth.redimed.workinjury.pin;
 
-
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -24,6 +20,7 @@ import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.pin.presenter.IPinPresenter;
 import patient.telehealth.redimed.workinjury.pin.presenter.PinPresenter;
 import patient.telehealth.redimed.workinjury.pin.view.IPinView;
+import patient.telehealth.redimed.workinjury.utils.DialogConnection;
 import patient.telehealth.redimed.workinjury.utils.Key;
 
 public class PinFragment extends Fragment implements IPinView, View.OnClickListener {
@@ -42,13 +39,13 @@ public class PinFragment extends Fragment implements IPinView, View.OnClickListe
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         iPinPresenter = new PinPresenter(this);
         application = MyApplication.getInstance();
-        progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-        //progressDialog.getProgressHelper().setBarColor(Color.alpha(R.color.progressDialogBarColor));
-        //progressDialog.setTitleText(getString(R.string.loadding));
+        progressDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.getProgressHelper().setBarColor(Color.alpha(R.color.progressDialogBarColor));
+        progressDialog.setTitleText(getString(R.string.loadding));
         progressDialog.setCancelable(false);
     }
 
@@ -86,7 +83,7 @@ public class PinFragment extends Fragment implements IPinView, View.OnClickListe
     public void onLoadError(String msg) {
         try {
             if (msg.equalsIgnoreCase(Key.networkError)) {
-                //new DialogConnection(getActivity()).show();
+                new DialogConnection(getActivity()).show();
             } else if (msg.equalsIgnoreCase(Key.tokenExpiredError)) {
                 new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                         .setContentText(getResources().getString(R.string.token_expired))

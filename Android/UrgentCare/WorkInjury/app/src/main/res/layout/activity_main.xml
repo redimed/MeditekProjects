@@ -3,12 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="patient.telehealth.redimed.workinjury.main.MainActivity">
-
-    <FrameLayout
-        android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+    tools:context="patient.telehealth.redimed.workinjury.main.MainActivity"
+    android:id="@+id/frame_container">
 
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package patient.telehealth.redimed.workinjury.setting;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import patient.telehealth.redimed.workinjury.MyApplication;
@@ -20,7 +18,7 @@ import patient.telehealth.redimed.workinjury.pin.PinFragment;
 import patient.telehealth.redimed.workinjury.setting.presenter.ISettingPresenter;
 import patient.telehealth.redimed.workinjury.setting.presenter.SettingPresenter;
 import patient.telehealth.redimed.workinjury.setting.view.SettingView;
-import patient.telehealth.redimed.workinjury.site.SiteListFragment;
+import patient.telehealth.redimed.workinjury.company.site.SiteListFragment;
 import patient.telehealth.redimed.workinjury.utils.Key;
 
 
@@ -53,8 +51,9 @@ public class SettingFragment extends Fragment implements SettingView, View.OnCli
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         iSettingPresenter = new SettingPresenter(this, getActivity());
         application = MyApplication.getInstance();
 

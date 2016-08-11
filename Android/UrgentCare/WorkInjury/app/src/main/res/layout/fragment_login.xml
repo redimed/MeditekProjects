@@ -1,50 +1,23 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="patient.telehealth.redimed.workinjury.login.LoginFragment">
+    tools:context=".login.LoginFragment">
 
     <RelativeLayout
         android:id="@+id/activationLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/slider2">
+        android:layout_height="wrap_content"
+        android:background="@drawable/slider5">
 
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/tool_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp">
-
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/back_icon" />
-
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/title_action_bar_login"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#FFFFFF"
-                android:textSize="21sp" />
-
-        </android.support.v7.widget.Toolbar>
+        <include layout="@layout/tool_bar" />
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="270dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/tool_bar"
+            android:layout_below="@+id/app_bar_layout"
             android:layout_centerHorizontal="true"
             android:background="@drawable/logo_work_injury"
             android:contentDescription="@string/welcome"/>
@@ -52,7 +25,7 @@
         <ViewFlipper
             android:id="@+id/layoutContainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
@@ -61,77 +34,246 @@
                 android:id="@+id/layoutRegisterFone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:text="@string/text_contains"
-                    android:textColor="@color/lightFont" />
-
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/radioGroupTypeLogin"
                     android:layout_width="320dp"
-                    android:layout_height="?android:actionBarSize">
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@+id/loginPerson"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/textColorPrimary"
+                    android:layout_marginBottom="30dp">
 
-                    <RelativeLayout
+                    <RadioButton
+                        android:id="@+id/loginPerson"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_login_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="Person"
+                        android:textColor="@color/lightFont"/>
+
+                    <RadioButton
+                        android:id="@+id/loginCompany"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_login_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="Company"
+                        android:textColor="@color/lightFont"/>
+                </RadioGroup>
+
+
+                <ViewFlipper
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/layoutLogin">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#41000000"
-                        android:descendantFocusability="beforeDescendants"
-                        android:focusableInTouchMode="true">
+                        android:orientation="vertical"
+                        android:id="@+id/layoutPerson"
+                        android:layout_gravity="center">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:orientation="horizontal">
+                            android:layout_width="320dp"
+                            android:layout_height="45dp">
 
-                            <TextView
-                                android:id="@+id/lblPhoneCode"
-                                android:layout_width="?android:actionBarSize"
-                                android:layout_height="match_parent"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:text="@string/phone_code"
-                                android:textColor="@android:color/black"
-                                android:textSize="17sp"
-                                android:visibility="gone"/>
-
-                            <EditText
-                                android:id="@+id/txtPhone"
+                            <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@android:color/white"
-                                android:fontFamily="sans-serif-light"
-                                android:hint="@string/hint_phone"
-                                android:gravity="center"
-                                android:inputType="phone"
-                                android:maxLength="15"
-                                android:maxLines="1"
-                                android:singleLine="true"
-                                android:textColor="@android:color/black"
-                                android:textColorHint="@android:color/black"
-                                android:textSize="17sp"
-                                android:paddingLeft="5dp"/>
+                                android:background="@drawable/border_edit_text_white"
+                                android:descendantFocusability="beforeDescendants"
+                                android:focusableInTouchMode="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/lblPhoneCode"
+                                        android:layout_width="?android:actionBarSize"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="@string/phone_code"
+                                        android:textColor="@android:color/black"
+                                        android:textSize="17sp"
+                                        android:visibility="gone"/>
+
+                                    <EditText
+                                        android:id="@+id/txtPhone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/textColorPrimary"
+                                        android:fontFamily="sans-serif-light"
+                                        android:hint="@string/hint_phone"
+                                        android:gravity="center"
+                                        android:inputType="phone"
+                                        android:maxLength="15"
+                                        android:maxLines="1"
+                                        android:singleLine="true"
+                                        android:textColor="@android:color/black"
+                                        android:textColorHint="@android:color/black"
+                                        android:textSize="@dimen/abc_text_size_subhead_material"
+                                        android:paddingLeft="5dp"/>
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
                         </LinearLayout>
 
-                    </RelativeLayout>
+                        <Button
+                            android:id="@+id/btnCheckActivation"
+                            android:layout_width="320dp"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="sans-serif-light"
+                            android:text="@string/btn_requestCode"
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/btn_type_login"
+                            android:allowUndo="false" />
 
-                </LinearLayout>
+                    </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnCheckActivation"
-                    android:layout_width="320dp"
-                    android:layout_height="?android:actionBarSize"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/btn_requestCode"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/layoutCompany"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="320dp"
+                            android:layout_height="45dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_edit_text_white"
+                                android:descendantFocusability="beforeDescendants"
+                                android:focusableInTouchMode="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/lblUserName"
+                                        android:layout_width="?android:actionBarSize"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="@string/phone_code"
+                                        android:textColor="@android:color/black"
+                                        android:textSize="17sp"
+                                        android:visibility="gone"/>
+
+                                    <EditText
+                                        android:id="@+id/txtUserName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/textColorPrimary"
+                                        android:fontFamily="sans-serif-light"
+                                        android:hint="@string/username"
+                                        android:gravity="center"
+                                        android:inputType="text"
+                                        android:maxLength="20"
+                                        android:maxLines="1"
+                                        android:singleLine="true"
+                                        android:textColor="@android:color/black"
+                                        android:textColorHint="@android:color/black"
+                                        android:textSize="@dimen/abc_text_size_subhead_material"
+                                        android:paddingLeft="5dp"/>
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="320dp"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="20dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border_edit_text_white"
+                                android:descendantFocusability="beforeDescendants"
+                                android:focusableInTouchMode="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/lblPassWord"
+                                        android:layout_width="?android:actionBarSize"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="@string/phone_code"
+                                        android:textColor="@android:color/black" 
+                                        android:textSize="17sp"
+                                        android:visibility="gone"/>
+
+                                    <EditText
+                                        android:id="@+id/txtPassWord"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/textColorPrimary"
+                                        android:fontFamily="sans-serif-light"
+                                        android:hint="@string/password"
+                                        android:gravity="center"
+                                        android:inputType="text"
+                                        android:maxLength="20"
+                                        android:maxLines="1"
+                                        android:singleLine="true"
+                                        android:textColor="@android:color/black"
+                                        android:textColorHint="@android:color/black"
+                                        android:textSize="@dimen/abc_text_size_subhead_material"
+                                        android:paddingLeft="5dp"/>
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnLoginCompany"
+                            android:layout_width="320dp"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="sans-serif-light"
+                            android:text="@string/login"
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/btn_type_login"
+                            android:allowUndo="false"/>
+
+                    </LinearLayout>
+
+
+                </ViewFlipper>
 
             </LinearLayout>
 
@@ -139,69 +281,72 @@
                 android:id="@+id/layoutVerifyCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
+                android:orientation="vertical"
+                android:layout_gravity="center">
+            <LinearLayout
+                android:layout_width="320dp"
+                android:layout_height="45dp">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?android:actionBarSize"
-                    android:background="#41000000"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_edit_text_white"
                     android:descendantFocusability="beforeDescendants"
                     android:focusableInTouchMode="true">
 
-                    <EditText
-                        android:id="@+id/txtVerifyCode"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/white"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="center"
-                        android:hint="@string/hint_code"
-                        android:inputType="number"
-                        android:maxLength="6"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@android:color/black"
-                        android:textColorHint="@android:color/black"
-                        android:textSize="17sp"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"/>
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/lblVerifyCode"
+                            android:layout_width="?android:actionBarSize"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/phone_code"
+                            android:textColor="@android:color/black"
+                            android:textSize="17sp"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/txtVerifyCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/textColorPrimary"
+                            android:fontFamily="sans-serif-light"
+                            android:hint="@string/hint_code"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="6"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:textSize="@dimen/abc_text_size_subhead_material"
+                            android:paddingLeft="5dp"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="?android:actionBarSize"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal">
-
-                    <!--<RelativeLayout-->
-                    <!--android:id="@+id/btnBack"-->
-                    <!--android:layout_width="?android:actionBarSize"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:background="#6fff0003"-->
-                    <!--android:clickable="true">-->
-
-                    <!--<com.redimed.telehealth.patient.font.MaterialDesignIconsTextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerInParent="true"-->
-                    <!--android:text="@string/material_icon_back"-->
-                    <!--android:textColor="@android:color/white"-->
-                    <!--android:textSize="30sp" />-->
-
-                    <!--</RelativeLayout>-->
 
                     <Button
                         android:id="@+id/btnSubmitPinNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:background="@drawable/btn_type_login"
+                        android:layout_width="320dp"
+                        android:layout_height="45dp"
                         android:fontFamily="sans-serif-light"
                         android:text="@string/btn_VerifyCode"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/white"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -210,34 +355,17 @@
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal">
 
-                    <!--<RelativeLayout-->
-                    <!--android:id="@+id/btnBack"-->
-                    <!--android:layout_width="?android:actionBarSize"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:background="#6fff0003"-->
-                    <!--android:clickable="true">-->
-
-                    <!--<com.redimed.telehealth.patient.font.MaterialDesignIconsTextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerInParent="true"-->
-                    <!--android:text="@string/material_icon_back"-->
-                    <!--android:textColor="@android:color/white"-->
-                    <!--android:textSize="30sp" />-->
-
-                    <!--</RelativeLayout>-->
-
                     <Button
                         android:id="@+id/btnForgetPin"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="320dp"
+                        android:layout_height="45dp"
                         android:fontFamily="sans-serif-light"
                         android:text="@string/btn_ForgetPin"
+                        android:background="@drawable/btn_type_login"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/white"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
             </LinearLayout>

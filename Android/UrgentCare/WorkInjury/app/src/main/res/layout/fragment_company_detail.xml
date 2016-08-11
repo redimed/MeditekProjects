@@ -1,13 +1,172 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="patient.telehealth.redimed.workinjury.company.CompanyDetailFragment">
+    android:orientation="vertical"
+    tools:context=".company.detail.CompanyDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/tool_bar" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/company_information"
+        android:id="@+id/lblCompanyInformation"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:background="@color/default_circle_indicator_stroke_color"
+        android:textSize="18dp"/>
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--Name-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Name"
+                    android:layout_gravity="left|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="left"
+                    android:textStyle="italic"
+                    android:textAlignment="gravity"
+                    android:paddingLeft="10dp"
+                    android:textColor="#88555555"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="N/A"
+                    android:id="@+id/lblName"
+                    android:layout_gravity="right|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="right"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="1dp"
+                android:background="#28979797"/>
+            <!--Address-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Address"
+                    android:layout_gravity="left|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="left"
+                    android:textStyle="italic"
+                    android:textAlignment="gravity"
+                    android:paddingLeft="10dp"
+                    android:textColor="#88555555"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="N/A"
+                    android:id="@+id/lblAddress"
+                    android:layout_gravity="right|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="right"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="1dp"
+                android:background="#28979797"/>
+            <!--Suburb-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Suburb"
+                    android:layout_gravity="left|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="left"
+                    android:textStyle="italic"
+                    android:textAlignment="gravity"
+                    android:paddingLeft="10dp"
+                    android:textColor="#88555555"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="N/A"
+                    android:id="@+id/lblSuburb"
+                    android:layout_gravity="right|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="right"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="1dp"
+                android:background="#28979797"/>
+            <!--PostCode-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="PostCode"
+                    android:layout_gravity="left|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="left"
+                    android:textStyle="italic"
+                    android:textAlignment="gravity"
+                    android:paddingLeft="10dp"
+                    android:textColor="#88555555"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="N/A"
+                    android:id="@+id/lblPostCode"
+                    android:layout_gravity="right|center_vertical"
+                    android:textSize="16dp"
+                    android:gravity="right"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="1dp"
+                android:background="#28979797"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

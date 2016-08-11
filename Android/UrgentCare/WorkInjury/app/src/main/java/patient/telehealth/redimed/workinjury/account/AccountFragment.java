@@ -2,12 +2,15 @@ package patient.telehealth.redimed.workinjury.account;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.google.gson.JsonObject;
 
 import org.jdeferred.DoneCallback;
 import org.jdeferred.FailCallback;
@@ -20,47 +23,33 @@ import patient.telehealth.redimed.workinjury.R;
 import patient.telehealth.redimed.workinjury.account.presenter.AccountPresenter;
 import patient.telehealth.redimed.workinjury.account.presenter.IAccountPresenter;
 import patient.telehealth.redimed.workinjury.account.view.IAccountView;
-import patient.telehealth.redimed.workinjury.models.ModelAccount;
+import patient.telehealth.redimed.workinjury.model.ModelAccount;
 import patient.telehealth.redimed.workinjury.utils.Key;
+import patient.telehealth.redimed.workinjury.utils.Key.Account;
 
 
 public class AccountFragment extends Fragment implements IAccountView, View.OnClickListener {
 
     private MyApplication application;
     private IAccountPresenter iAccountPresenter;
-    private String TAG = "AccountFragment";
+    private String TAG = Account.TAG;
     private ModelAccount modelAccount;
 
-    @Bind(R.id.lblName)
-    TextView lblName;
-    @Bind(R.id.lblBookingPerson)
-    TextView lblBookingPerson;
-    @Bind(R.id.lblMobile)
-    TextView lblMobile;
-    @Bind(R.id.lblEmail)
-    TextView lblEmail;
-    @Bind(R.id.txtFirstName)
-    TextView txtFirstName;
-    @Bind(R.id.txtMiddleName)
-    TextView txtMiddleName;
-    @Bind(R.id.txtLastName)
-    TextView txtLastName;
-    @Bind(R.id.txtHomePhone)
-    TextView txtHomePhone;
-    @Bind(R.id.txtDOB)
-    TextView txtDOB;
-    @Bind(R.id.txtEmail)
-    TextView txtEmail;
-    @Bind(R.id.txtAddress)
-    TextView txtAddress;
-    @Bind(R.id.txtSuburb)
-    TextView txtSuburb;
-    @Bind(R.id.txtPostCode)
-    TextView txtPostCode;
-    @Bind(R.id.txtCountry)
-    TextView txtCountry;
-    @Bind(R.id.btnUpdatePatient)
-    TextView btnUpdatePatient;
+    @Bind(R.id.lblName) TextView lblName;
+    @Bind(R.id.lblBookingPerson) TextView lblBookingPerson;
+    @Bind(R.id.lblMobile) TextView lblMobile;
+    @Bind(R.id.lblEmail) TextView lblEmail;
+    @Bind(R.id.txtFirstName) TextView txtFirstName;
+    @Bind(R.id.txtMiddleName) TextView txtMiddleName;
+    @Bind(R.id.txtLastName) TextView txtLastName;
+    @Bind(R.id.txtHomePhone) TextView txtHomePhone;
+    @Bind(R.id.txtDOB) TextView txtDOB;
+    @Bind(R.id.txtEmail) TextView txtEmail;
+    @Bind(R.id.txtAddress) TextView txtAddress;
+    @Bind(R.id.txtSuburb) TextView txtSuburb;
+    @Bind(R.id.txtPostCode) TextView txtPostCode;
+    @Bind(R.id.txtCountry) TextView txtCountry;
+    @Bind(R.id.btnUpdatePatient) TextView btnUpdatePatient;
 
     public AccountFragment() {
 
@@ -151,8 +140,8 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
                     public void onDone(Object result) {
                         lDialog.dismiss();
                         final SweetAlertDialog sDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE);
-                        sDialog.setContentText(Key.Account.updatePatientSuccess)
-                                .setTitleText(Key.Account.success)
+                        sDialog.setContentText(Account.updatePatientSuccess)
+                                .setTitleText(Account.success)
                                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                     @Override
                                     public void onClick(SweetAlertDialog sDialog) {
@@ -165,10 +154,13 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
                 }, new FailCallback() {
                     @Override
                     public void onFail(Object result) {
+                        JsonObject o = (JsonObject) result;
+
+                        Log.d("updatepatienthe", o+"");
                         lDialog.dismiss();
                         new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
-                                .setTitleText(Key.Account.error)
-                                .setContentText(Key.Account.updatePatientError)
+                                .setTitleText(Account.error)
+                                .setContentText(Account.updatePatientError)
                                 .show();
                     }
                 });

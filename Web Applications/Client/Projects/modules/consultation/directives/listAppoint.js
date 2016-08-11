@@ -149,6 +149,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                         }
                     }
                     scope.info.listWaapointment = data;
+                    o.loadingPage(false);
                 });
             };
             scope.LoadData();

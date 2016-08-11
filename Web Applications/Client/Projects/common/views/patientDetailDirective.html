@@ -52,7 +52,7 @@
                     <span ng-if="!patientInfo.UserAccount || patientInfo.UserAccount.PhoneNumber == null">N/A</span>
                 </a>
             </li>
-            <li>
+            <li ng-hide="rolePatient">
                 <p class="text-right margin-top-10 margin-right-40"><upload-eform patient-uid="patientInfo.UID" user-uid="patientInfo.UserAccount.UID"></upload-eform></p>
     
             </li>

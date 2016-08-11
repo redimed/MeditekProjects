@@ -33,18 +33,17 @@ module.exports = {
             payload: appointmentInfoPayload,
             sendto: doctorRoomsFromAppointmentSendto
         },
-        'LinkAppointmentPatient': {
+        'LinkAppointmentPatient': [{
             eventName: 'nc',
             method: dmUtils.method.nc,
             payload: userByRolePayload,
             sendto: ncSendto
-        },
-        'LinkAppointmentPatient': {
+        }, {
             eventName: 'nc',
             method: dmUtils.method.nc,
             payload: getDoctorInAppt,
             sendto: ncSendto
-        },
+        }],
         'RequestWAAppointmentPatientNew': {
             eventName: 'nc',
             method: dmUtils.method.nc,

@@ -110,7 +110,11 @@ module.exports={
 
         Enable:{
             type:Sequelize.STRING(10)
-        }
+        },
+
+        MsgState:{
+            type:Sequelize.STRING(45)
+        },
 	},
 
 	associations: function() {},

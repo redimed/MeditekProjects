@@ -5,15 +5,30 @@ module.exports = function(req, res) {
     var q = $q.defer();
     var dmObj = req.dmObj;
 
+    console.log(" ||||||||||||| dmObj", dmObj);
+
     var payloads = [];
+    var Note = '';
     var Queue = '';
     var EventName = '';
     var ReceiverType = '';
 
     if (dmObj.MsgKind === 'Global') {
+        Note = 'NotifyMessage';
         Queue = 'GLOBALNOTIFY';
         EventName = 'globalnotify';
     } else if (dmObj.MsgKind === 'Private') {
+        Note = 'NotifyMessage';
+        Queue = 'NOTIFY';
+        EventName = 'privatenotify';
+        ReceiverType = 'USER_ACCOUNT';
+    } else if (dmObj.MsgKind === 'ToDo') {
+        Note = 'TodoMessage';
+        Queue = 'NOTIFY';
+        EventName = 'privatenotify';
+        ReceiverType = 'USER_ACCOUNT';
+    } else if (dmObj.MsgKind === 'Request') {
+        Note = 'RequestMessage';
         Queue = 'NOTIFY';
         EventName = 'privatenotify';
         ReceiverType = 'USER_ACCOUNT';
@@ -29,7 +44,7 @@ module.exports = function(req, res) {
                 Subject: dmObj.Subject,
                 Receiver: dmObj.lsUser[i],
                 ReceiverType: ReceiverType,
-                ReceiverUID: dmObj.MsgKind === 'Private' ? dmObj.lsUser[i] : null,
+                ReceiverUID: dmObj.MsgKind != 'Global' ? dmObj.lsUser[i] : null,
                 Queue: Queue,
                 Read: 'N',
                 Enable: 'Y',
@@ -42,12 +57,13 @@ module.exports = function(req, res) {
                         Action: dmObj.MsgContent
                     },
                     Command: {
-                        Note: 'NotifyMessage',
+                        Note: Note,
                         Url_State: '',
                         Url_Redirect: '',
                     }
                 },
                 MsgKind: dmObj.MsgKind,
+                MsgState: dmObj.MsgState ? dmObj.MsgState : null,
                 FirstDelay: dmObj.FirstDelay,
                 SenderUID: dmObj.UID,
                 EventName: EventName,

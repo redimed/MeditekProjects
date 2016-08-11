@@ -179,9 +179,9 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
 
             scope.init();
 
-            ioSocket.LoadListAppointment = function() {
+            socketNcFunction.LoadListAppointment = function() {
                 scope.init();
-            }
+            };
             
             scope.hightLight = function(type){
                 var r = '';

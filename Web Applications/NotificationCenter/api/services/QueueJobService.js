@@ -28,6 +28,7 @@ module.exports = {
                     SenderType: true,
                     SenderUID: true,
                     Enable: true,
+                    MsgState: true,
                 }
                 var requiredFields = {
                     Receiver: true,
@@ -270,11 +271,14 @@ module.exports = {
         if (data.Search.queue) {
             whereClause.Queue = data.Search.queue
         };
+        if (data.Search.kind) {
+            whereClause.MsgKind = data.Search.kind
+        };
         if (data.Search.SenderUID) {
             whereClause.SenderUID = data.Search.SenderUID
         } else {
             whereClause.Enable = 'Y';
-            whereClause.Status = 'HANDLED';
+            whereClause.Status = o.const.jobStatus.HANDLED;
         };
         if (data.Search.MsgContent) {
             whereClause.MsgContent = {
@@ -415,6 +419,22 @@ module.exports = {
         var q = $q.defer();
         QueueJob.update({
             Enable: info.Enable
+        }, {
+            where: { ID: info.ID }
+        }).then(function(data) {
+            q.resolve({
+                status: 'success'
+            });
+        }, function(err) {
+            q.reject(err);
+        });
+        return q.promise;
+    },
+
+    UpdateStateQueueJob: function(info) {
+        var q = $q.defer();
+        QueueJob.update({
+            MsgState: info.MsgState
         }, {
             where: { ID: info.ID }
         }).then(function(data) {

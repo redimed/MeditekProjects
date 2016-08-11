@@ -3,7 +3,7 @@
     <div class="portlet-title">
         <div class="caption bold uppercase font-blue">
             <i class="icon-list"></i>
-            <span class="caption-subject bold uppercase"> Notification Private</span>
+            <span class="caption-subject bold uppercase"> {{kind}}</span>
         </div>
         <div class="actions">
             <a href="javascript:;" class="btn btn-outline blue" ng-click="init()">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tab_private_sent">
-                    <notification-send on-kind="'private'"></notification-send>
+                    <notification-send on-kind="kind"></notification-send>
                 </div>
             </div>
         </div>        

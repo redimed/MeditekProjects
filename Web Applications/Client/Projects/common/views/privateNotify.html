@@ -13,8 +13,8 @@
     </li>
     <li ng-if="listNotify.length > 0">
         <ul class="dropdown-menu-list scroller" style="height: 250px; overflow: auto; width: auto;" data-handle-color="#637283">
-            <li ng-repeat="not in listNotify" ng-click="updateReadQueueJob(not)">
-                <a href="#">
+            <li ng-repeat="not in listNotify" ng-click="updateReadQueueJob(not)" class="{{ not.Read === 'N' ? 'bg-info' : ''}}">
+                <a href="#" >
                     <span class="subject" style="margin-left:0px">
                         <span class="from" > {{not.MsgContent.Display.Subject}} </span>
                         <span class="time">{{not.fromTime}} </span>
@@ -34,3 +34,11 @@
         </ul>
     </li>
 </ul>
+
+<style type="text/css">
+    .bg-info {
+        display: block;
+        width: 100%;
+        background-color: rgba(53,120,220,.125);
+    }
+</style>

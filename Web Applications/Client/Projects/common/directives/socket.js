@@ -2,12 +2,16 @@ var ioSocket = {
     Auth: null,
     Rest: null,
     Telehealth: null,
-    Nc: null
+    Nc: {
+        socket: null,
+        function: {}
+    }
 };
 var socketAuth = ioSocket.Auth;
 var socketRest = ioSocket.Rest;
 var socketTelehealth = ioSocket.Telehealth;
-var socketNc = ioSocket.Nc;
+var socketNc = ioSocket.Nc.socket;
+var socketNcFunction = ioSocket.Nc.function;
 socketJoinRoom = function(server, api, obj) {
     server.request({
         method: 'get',
@@ -73,25 +77,27 @@ socketAuth.on('notification', function(msg) {
 
 socketAuth.on('globalnotify', function(msg) {
     var msgContent = JSON.parse(msg);
+    console.log("|||||| globalnotify", msg);
     switch (msgContent.Command.Note) {
         case "NotifyMessage":
-            if (ioSocket.telehealthGlobalNotify) {
-                ioSocket.telehealthGlobalNotify(msgContent);
+            if (socketNcFunction.telehealthGlobalNotify) {
+                socketNcFunction.telehealthGlobalNotify(msgContent);
             };
-            if (ioSocket.LoadListGlobalNotify) {
-                ioSocket.LoadListGlobalNotify();
+            if (socketNcFunction.LoadListGlobalNotify) {
+                socketNcFunction.LoadListGlobalNotify();
             };
             break;
         case "CreateAppointment":
         case "LinkPatient":
-            if (ioSocket.telehealthNotify) {
-                ioSocket.telehealthNotify(msgContent);
+            console.log("socketNcFunction", socketNcFunction);
+            if (socketNcFunction.LoadGlobalNotify) {
+                socketNcFunction.LoadGlobalNotify(msgContent);
             };
-            if (ioSocket.LoadListAppointment) {
-                ioSocket.LoadListAppointment();
+            if (socketNcFunction.LoadListAppointment) {
+                socketNcFunction.LoadListAppointment();
             };
-            if (ioSocket.LoadListGlobalNotify) {
-                ioSocket.LoadListGlobalNotify();
+            if (socketNcFunction.LoadListGlobal) {
+                socketNcFunction.LoadListGlobal();
             };
             break;
         default:
@@ -103,23 +109,39 @@ socketAuth.on('privatenotify', function(msg) {
     var msgContent = JSON.parse(msg);
     switch (msgContent.Command.Note) {
         case "NotifyMessage":
-            if (ioSocket.telehealthPrivateNotify) {
-                ioSocket.telehealthPrivateNotify(msgContent);
+            if (socketNcFunction.LoadPrivateNotify) {
+                socketNcFunction.LoadPrivateNotify(msgContent);
             };
-            if (ioSocket.LoadListPrivateNotify) {
-                ioSocket.LoadListPrivateNotify();
+            if (socketNcFunction.LoadListPrivate) {
+                socketNcFunction.LoadListPrivate();
+            };
+            break;
+        case "TodoMessage":
+            if (socketNcFunction.LoadTodoNotify) {
+                socketNcFunction.LoadTodoNotify(msgContent);
+            };
+            if (socketNcFunction.LoadListPrivate) {
+                socketNcFunction.LoadListPrivate();
+            };
+            break;
+        case "RequestMessage":
+            if (socketNcFunction.LoadRequestNotify) {
+                socketNcFunction.LoadRequestNotify(msgContent);
+            };
+            if (socketNcFunction.LoadListPrivate) {
+                socketNcFunction.LoadListPrivate();
             };
             break;
         case "CreateAppointment":
         case "LinkPatient":
-            if (ioSocket.telehealthNotify) {
-                ioSocket.telehealthNotify(msgContent);
+            if (socketNcFunction.LoadListAppointment) {
+                socketNcFunction.LoadListAppointment();
             };
-            if (ioSocket.LoadListAppointment) {
-                ioSocket.LoadListAppointment();
+            if (socketNcFunction.LoadPrivateNotify) {
+                socketNcFunction.LoadPrivateNotify(msgContent);
             };
-            if (ioSocket.telehealthPrivateNotify) {
-                ioSocket.telehealthPrivateNotify(msgContent);
+            if (socketNcFunction.LoadListPrivate) {
+                socketNcFunction.LoadListPrivate();
             };
             break;
         default:

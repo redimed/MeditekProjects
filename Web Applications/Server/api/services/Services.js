@@ -158,5 +158,8 @@ module.exports = {
     loadChildNode: require('./Patient/loadChildNode'),
     //begin Billing
     AddItem: require('./Billing/AddItem'),
+    GenerateItem: require('./Billing/GenerateItem'),
+    AddItemTemp: require('./Billing/AddItemTemp'),
+    ImportItem: require('./Billing/ImportItem'),
     //end Billing
 };

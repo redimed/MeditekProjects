@@ -10,11 +10,11 @@ module.exports = {
         if (data === false) {
             return res.badRequest("data failed");
         } else {
-            Services.AddItem(data, req.user)
+            Services.ImportItem(data, req.user)
                 .then(function(success) {
-                    res.ok(success.data);
+                    res.ok(success);
                 }, function(err) {
-                    res.serverError(err.error);
+                    res.serverError(err);
                 });
         }
     }

@@ -1,30 +1,17 @@
 <resources>
-    <!-- Base application theme. -->
+
     <style name="MyTheme" parent="MyTheme.Base">
-
-        <item name="buttonStyle">@style/AppTheme.Button</item>
-
-        <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
-
+        <!-- Customize your theme here. -->
     </style>
 
-    <style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
-
-        <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
-        <item name="windowNoTitle">true</item>
-        <!--We will be using the toolbar so no need to show ActionBar-->
-        <item name="windowActionBar">false</item>
-        <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
-        <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!-- colorAccent is used as the default value for colorControlActivated
-             which is used to tint widgets -->
-        <item name="colorAccent">@color/colorAccent</item>
-        <!-- You can also set colorControlNormal, colorControlActivated
-            colorControlHighlight and colorSwitchThumbNormal. -->
-
+    <style name="TabStyle" parent="TabPageIndicator">
+        <!--<item name="android:textColor">#FF33AA33</item>-->
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
     </style>
 
     <style name="TabPageIndicator">
@@ -37,20 +24,25 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="TabStyle" parent="TabPageIndicator">
-    	<item name="android:textColor">#FF33AA33</item>
-	<item name="android:textSize">14sp</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:fadingEdgeLength">8dp</item>
+    <style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
+        <item name="windowNoTitle">true</item>
+        <!--We will be using the toolbar so no need to show ActionBar-->
+        <item name="windowActionBar">false</item>
+        <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/colorPrimaryNew</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/colorPrimaryNew</item>
+        <!-- colorAccent is used as the default value for colorControlActivated which is used to tint widgets -->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!-- You can also set colorControlNormal, colorControlActivated
+            colorControlHighlight and colorSwitchThumbNormal. -->
     </style>
 
-   <style name="AppTheme.Button" parent="android:Widget.Button">
-        <item name="android:background">#2196f3</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
+    <style name="MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
 
@@ -66,6 +58,9 @@
         <item name="android:textStyle">normal</item>
         <!--<item name="android:textSize">@dimen/event_title_text_size</item>-->
     </style>
-    <style name="MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <style name="MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">#B71C1C</item>
+        <item name="android:textColor">#fff</item>
+    </style>
 </resources>

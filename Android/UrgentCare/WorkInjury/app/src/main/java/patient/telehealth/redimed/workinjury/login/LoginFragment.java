@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.ViewFlipper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,9 +28,13 @@ import patient.telehealth.redimed.workinjury.utils.Key;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment implements ILoginView, View.OnClickListener {
+public class LoginFragment extends Fragment implements ILoginView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     @Bind(R.id.logo) ImageView mLogo;
+    @Bind(R.id.radioGroupTypeLogin) RadioGroup radioGroupTypeLogin;
+    @Bind(R.id.btnLoginCompany) Button btnLoginCompany;
+    @Bind(R.id.txtPassWord) EditText txtPassWord;
+    @Bind(R.id.txtUserName) EditText txtUserName;
 
     //=======Layout 1=========
     @Bind(R.id.btnCheckActivation) Button btnCheckActivation;
@@ -41,7 +46,12 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
     @Bind(R.id.txtVerifyCode) EditText txtVerifyCode;
 
     @Bind(R.id.layoutContainer) ViewFlipper layoutContainer;
+    @Bind(R.id.layoutLogin) ViewFlipper layoutLogin;
     @Bind(R.id.layoutRegisterFone) LinearLayout layoutRegisterFone;
+    @Bind(R.id.layoutPerson) LinearLayout layoutPerson;
+    @Bind(R.id.layoutCompany) LinearLayout layoutCompany;
+
+
 
     private Context context;
     private ILoginPresenter iLoginPresenter;
@@ -50,13 +60,13 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
         // Required empty public constructor
     }
 
+
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         application = MyApplication.getInstance();
         iLoginPresenter = new LoginPresenter(this, getActivity());
-        this.context = context;
-
+        this.context = getContext();
     }
 
     @Override
@@ -67,19 +77,24 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
 
         setHasOptionsMenu(true);
         application.createTooBar(view,getActivity(), Key.fmLogin);
+        application.hidenKeyboard(view);
 
         layoutContainer.setAnimateFirstView(true);
         layoutContainer.setAlpha(0.0f);
         layoutContainer.setDisplayedChild(layoutContainer.indexOfChild(layoutRegisterFone));
 
+        layoutLogin.setDisplayedChild(layoutLogin.indexOfChild(layoutPerson));
+
         //init function
-        animationLogo();
+        //animationLogo();
         animationContainer();
 
         //set listener
         btnSubmitPinNumber.setOnClickListener(this);
         btnCheckActivation.setOnClickListener(this);
         btnForgetPin.setOnClickListener(this);
+        radioGroupTypeLogin.setOnCheckedChangeListener(this);
+        btnLoginCompany.setOnClickListener(this);
 
         return view;
     }
@@ -90,7 +105,7 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
     }
 
     public void animationContainer() {
-        layoutContainer.animate().setStartDelay(1700).setDuration(500).alpha(1.0f);
+        layoutContainer.animate().setStartDelay(200).setDuration(500).alpha(1.0f);
     }
 
     public void switchView(int inAnimation, int outAnimation, View v) {
@@ -107,16 +122,21 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
         String phone = txtPhone.getText().toString();
         switch (v.getId()) {
             case R.id.btnCheckActivation:
-                application.hidenKeyboard(getView());
+                application.hidenKeyboard(txtPhone);
                 iLoginPresenter.CheckActivation(phone);
                 break;
             case R.id.btnSubmitPinNumber:
-                application.hidenKeyboard(getView());
+                application.hidenKeyboard(txtVerifyCode);
                 String verityCode = txtVerifyCode.getText().toString();
                 iLoginPresenter.Login(verityCode);
                 break;
             case R.id.btnForgetPin:
                 iLoginPresenter.ForgetPin(phone);
+                break;
+            case R.id.btnLoginCompany:
+                String username = String.valueOf(txtUserName.getText());
+                String password = String.valueOf(txtPassWord.getText());
+                iLoginPresenter.LoginAccount(username, password);
                 break;
         }
     }
@@ -139,6 +159,20 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (i) {
+            case R.id.loginPerson:
+                layoutLogin.showPrevious();
+                break;
+            case R.id.loginCompany:
+                layoutLogin.showNext();
+                break;
+            default:
+                break;
         }
     }
 }

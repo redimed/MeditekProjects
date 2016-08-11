@@ -1,21 +1,22 @@
 {
   "project_info": {
-    "project_id": "redimed-health-work-injury",
-    "project_number": "247846524188",
-    "name": "REDIMED Health Work Injury"
+    "project_number": "296998186967",
+    "project_id": "redimed-work-injury"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "telehealth.redimed.workinjury",
+        "mobilesdk_app_id": "1:296998186967:android:5c9c4f26d812ce0f",
         "android_client_info": {
-          "package_name": "telehealth.redimed.workinjury"
+          "package_name": "au.redimed.com.UCWork"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCClu79RQ4ADRktMxWYtyiT4o0AC9FwOns"
+          "current_key": "AIzaSyDD5yXHaRXfQ4P9Bd_00crYAywvnUl92dg"
         }
       ],
       "services": {
@@ -24,7 +25,9 @@
         },
         "appinvite_service": {
           "status": 1,
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            
+          ]
         },
         "ads_service": {
           "status": 1

@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Baobab from 'baobab'
+import CONSTANTS from '../../config/constants'
+const EFORM_CONST = CONSTANTS.EFORM
 
 class Row extends Component{
     constructor() {
@@ -76,42 +78,47 @@ class Row extends Component{
                     </li>
                     <li>
                         <a><i className="fa fa-tag"></i> 
-                            <button onClick={this._onChoose.bind(this, 'lb')}>Label</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.LABEL)}>Label</button>
                         </a>
                     </li>
                     <li>
                         <a><i className="fa fa-circle-o"></i> 
-                            <button onClick={this._onChoose.bind(this, 'r')}>Radio</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.RADIO)}>Radio</button>
                         </a>
                     </li>
                     <li>
                         <a><i className="fa fa-check-square-o"></i> 
-                            <button onClick={this._onChoose.bind(this, 'c')}>Checkbox</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.CHECKBOX)}>Checkbox</button>
                         </a>
                     </li>
                     <li>
                         <a>
-                            <button onClick={this._onChoose.bind(this, 'it')}>Text</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.TEXT)}>Text</button>
                         </a>
                     </li>
                     <li>
                         <a>
-                            <button onClick={this._onChoose.bind(this, 'in')}>Number</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.NUMBER)}>Number</button>
                         </a>
                     </li>
                     <li>
                         <a><i className="fa fa-calendar-o"></i> 
-                            <button onClick={this._onChoose.bind(this, 'id')}>Date</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DATE)}>Date</button>
                         </a>
                     </li>
                     <li>
                         <a><i className="fa fa-pencil"></i> 
-                            <button onClick={this._onChoose.bind(this, 'si')}>Signature</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.SIGN)}>Signature</button>
+                        </a>
+                    </li>
+                    <li>
+                        <a><i className="fa fa-paint-brush"></i> 
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DRAWING)}>Drawing</button>
                         </a>
                     </li>
                     <li>
                         <a><i className="fa fa-table"></i> 
-                            <button onClick={this._onChoose.bind(this, 'di')}>Dynamic Table</button>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE)}>Dynamic Table</button>
                         </a>
                     </li>
                 </ul>
@@ -127,7 +134,7 @@ class Row extends Component{
                             var width = o.get('params', 'width') || 'initial'
 
                             switch(o.get('type')){
-                                case 'lb':
+                                case EFORM_CONST.OBJECT_TYPE.LABEL:
                                     var title = o.get('params', 'title')||'<span style="color: yellow">Label</span>'
                                     res = (
                                         <div className="object" style={{width: width}}
@@ -136,7 +143,7 @@ class Row extends Component{
                                         </div>
                                     )
                                     break
-                                case 'r':
+                                case EFORM_CONST.OBJECT_TYPE.RADIO:
                                     var nameHtml = o.get('name')
                                     // let title = o.get('params', 'title')||'<span style="color: yellow">Label</span>'
                                     res = (
@@ -149,7 +156,7 @@ class Row extends Component{
                                         </div>
                                     )
                                     break
-                                case 'c':
+                                case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
                                     var nameHtml = o.get('name')
                                     res = (
                                         <div className="object"  style={{width: width}}
@@ -161,7 +168,7 @@ class Row extends Component{
                                         </div>
                                     )
                                     break
-                                case 'it':
+                                case EFORM_CONST.OBJECT_TYPE.TEXT:
                                     var nameHtml = o.get('name')
                                     res = (
                                         <div className="object" style={{width: width}}
@@ -173,7 +180,7 @@ class Row extends Component{
                                         </div>
                                     )
                                     break
-                                case 'in':
+                                case EFORM_CONST.OBJECT_TYPE.NUMBER:
                                     res = (
                                         <div className="object"  style={{width: width}}
                                             onClick={this._onClickObject.bind(this, o, o_index)}>
@@ -181,7 +188,7 @@ class Row extends Component{
                                         </div>
                                     )
                                     break
-                                case 'id':
+                                case EFORM_CONST.OBJECT_TYPE.DATE:
                                     var nameHtml = o.get('name')
                                     res = (
                                          <div className="object" style={{width: width}}
@@ -193,7 +200,7 @@ class Row extends Component{
                                         </div>
                                     )
                                     break
-                                case 'si':
+                                case EFORM_CONST.OBJECT_TYPE.SIGN:
                                     var nameHtml = o.get('name')
                                     res = (
                                         <div className="object"  style={{width: width}}
@@ -205,7 +212,19 @@ class Row extends Component{
                                         </div>
                                     )
                                     break
-                                case 'di':
+                                 case EFORM_CONST.OBJECT_TYPE.DRAWING:
+                                    var nameHtml = o.get('name')
+                                    res = (
+                                        <div className="object"  style={{width: width}}
+                                            onClick={this._onClickObject.bind(this, o, o_index)}>
+                                             <div className="object-wrapper">
+                                                <div className="object-name object-dr">{nameHtml}</div>
+                                                <input type="text" disabled placeholder="Drawing"/>
+                                            </div>
+                                        </div>
+                                    )
+                                    break    
+                                case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:
                                     res = (
                                         <div className="object" style={{width: width}}
                                             onClick={this._onClickObject.bind(this, o, o_index)}>

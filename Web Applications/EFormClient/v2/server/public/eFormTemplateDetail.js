@@ -58,19 +58,19 @@
 
 	var _reactDom = __webpack_require__(39);
 
-	var _section = __webpack_require__(187);
+	var _section = __webpack_require__(186);
 
 	var _section2 = _interopRequireDefault(_section);
 
-	var _math = __webpack_require__(180);
+	var _math = __webpack_require__(183);
 
 	var _math2 = _interopRequireDefault(_math);
 
-	var _main = __webpack_require__(181);
+	var _main = __webpack_require__(184);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _constants = __webpack_require__(179);
+	var _constants = __webpack_require__(178);
 
 	var _constants2 = _interopRequireDefault(_constants);
 
@@ -299,7 +299,9 @@
 	    }, {
 	        key: '_onSelectObject',
 	        value: function _onSelectObject(s_index, r_index, type) {
-	            if (type === 'lb') this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '150px', title: 'Label' } });else if (type === 'r' || type === 'c') this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '150px', title: 'Title', value: '' } });else if (type === 'di') this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '768px', objects: [] } });else this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '150px' } });
+	            var get_object = this.list.select('sections', s_index, 'r', r_index, 'o');
+
+	            if (type === EFORM_CONST.OBJECT_TYPE.LABEL) get_object.push({ type: type, name: '', params: { width: '150px', title: 'Label' } });else if (type === EFORM_CONST.OBJECT_TYPE.RADIO || type === EFORM_CONST.OBJECT_TYPE.CHECKBOX) get_object.push({ type: type, name: '', params: { width: '150px', title: 'Title', value: '' } });else if (type === EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE) get_object.push({ type: type, name: '', params: { width: '768px', objects: [] } });else if (type === EFORM_CONST.OBJECT_TYPE.DRAW) get_object.push({ type: type, name: '', params: { width: '250px' } });else get_object.push({ type: type, name: '', params: { width: '150px' } });
 	            this.forceUpdate();
 	        }
 	    }, {
@@ -529,13 +531,10 @@
 	                    var val = $(this.refs.suggest_label_width).val();
 	                    $(this.refs.label_width).val(val);
 	                    break;
-
 	                default:
 	                    var val = $(this.refs.suggest_default_width).val();
 	                    $(this.refs.default_width).val(val);
 	            }
-
-	            // $(this.refs.default_width).val('asssa');
 	        }
 	    }, {
 	        key: 'render',
@@ -582,6 +581,7 @@
 	                                onChangeSectionOrder: this._onChangeSectionOrder.bind(this),
 	                                onRemoveSection: this._onRemoveSection.bind(this),
 	                                onCloneSection: this._onCloneSection.bind(this),
+
 	                                onAddRow: this._onAddRow.bind(this),
 	                                onSelectObject: this._onSelectObject.bind(this),
 	                                onClickObject: this._onClickObject.bind(this),
@@ -25151,8 +25151,7 @@
 /* 175 */,
 /* 176 */,
 /* 177 */,
-/* 178 */,
-/* 179 */
+/* 178 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25178,11 +25177,20 @@
 	            NUMBER: 'in',
 	            DATE: 'id',
 	            SIGN: 'si',
+	            DRAWING: 'dr',
 	            DYNAMIC_TABLE: 'di'
 	        },
 	        DEFAULT_VALUE: {
 	            ALIGN_ARR: [{ code: 'left', name: 'Left' }, { code: 'center', name: 'Center' }, { code: 'right', name: 'Right' }],
 	            SUGGEST_WIDTH: ['NONE', '768px', '576px', '384px', '192px']
+	        },
+	        DRAWING: {
+	            COLORS: [{ 'color': 'blue-ebonyclay' }, { 'color': 'green' }, { 'color': 'blue' }, { 'color': 'red' }],
+	            SIZES: [{ 'width': 550, 'height': 500, desc: 'Canvas 550x500' }, { 'width': 750, 'height': 650, desc: 'Canvas 750x650' },
+	            // {'width':650,'height':650,desc:'Canvas 750x650'},
+	            { 'width': 900, 'height': 750, desc: 'Canvas 900x750' }, { 'width': 1000, 'height': 900, desc: 'Canvas 1100x900' }],
+	            FONT_SIZES: [{ size: 12, desc: 'Font 12px' }, { size: 15, desc: 'Font 15px' }, { size: 20, desc: 'Font 20px' }, { size: 25, desc: 'Font 25px' }, { size: 30, desc: 'Font 30px' }],
+	            LINE_WIDTHS: [{ width: 1, desc: 'Line 1' }, { width: 2, desc: 'Line 2' }, { width: 3, desc: 'Line 3' }, { width: 4, desc: 'Line 4' }, { width: 5, desc: 'Line 5' }]
 	        }
 	    },
 	    EFORM_CLIENT: {
@@ -25195,7 +25203,11 @@
 	exports.default = CONSTANTS;
 
 /***/ },
-/* 180 */
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25231,7 +25243,7 @@
 	exports.default = Functions;
 
 /***/ },
-/* 181 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25240,7 +25252,7 @@
 	    value: true
 	});
 
-	var _ip = __webpack_require__(182);
+	var _ip = __webpack_require__(185);
 
 	var _ip2 = _interopRequireDefault(_ip);
 
@@ -25327,16 +25339,7 @@
 	        });
 	        return p;
 	    },
-
-	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
-	        // var formdata = data.formdata;
-	        var formdata = new FormData();
-	        var fileName = 'DEFAULTSIGN.png';
-	        var contentType = 'MedicalImage';
-	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
-	        formdata.append('fileType', contentType);
-	        formdata.append('uploadFile', blob, fileName);
-
+	    uploadFile: function uploadFile(formdata, meta) {
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
 	                url: _ip2.default.ApiServerUrl + '/api/uploadFileWithoutLogin',
@@ -25362,8 +25365,28 @@
 	        });
 	        return p;
 	    },
+	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
+	        // var formdata = data.formdata;
+	        var formdata = new FormData();
+	        var fileName = 'DEFAULTSIGN.png';
+	        var contentType = 'MedicalImage';
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
 
-	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	        return this.uploadFile(formdata, meta);
+	    },
+
+	    EFormUploadDrawing: function EFormUploadDrawing(blob, fileName) {
+	        var formdata = new FormData();
+	        var contentType = 'MedicalImage';
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
+
+	        return this.uploadFile(formdata);
+	    },
+	    EFormDownloadImage: function EFormDownloadImage(fileUID) {
 	        var p = new Promise(function (resolve, reject) {
 	            var xhr = new XMLHttpRequest();
 	            xhr.responseType = 'arraybuffer';
@@ -25378,32 +25401,16 @@
 	            xhr.send();
 	        });
 	        return p;
-
-	        /*
-	        var p = new Promise(function(resolve, reject){
-	            $.ajax({
-	                url: IP.ApiServerUrl +'/api/downloadFileWithoutLogin/' + fileUID,
-	                xhrFields: { withCredentials: true },
-	                type: "GET",
-	                processData: false,
-	                contentType: false,
-	                responseType:'arraybuffer'
-	            }).done(function(response){
-	                resolve(response)
-	            }).fail(function(error) {
-	                console.log("error download sign ne", error)
-	                reject(error);
-	            })
-	        })
-	        return p
-	        */
+	    },
+	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	        return this.EFormDownloadImage(fileUID);
 	    }
 	};
 
 	exports.default = Services;
 
 /***/ },
-/* 182 */
+/* 185 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25422,11 +25429,7 @@
 	exports.default = ip;
 
 /***/ },
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25445,7 +25448,7 @@
 
 	var _baobab2 = _interopRequireDefault(_baobab);
 
-	var _row = __webpack_require__(188);
+	var _row = __webpack_require__(187);
 
 	var _row2 = _interopRequireDefault(_row);
 
@@ -25742,7 +25745,7 @@
 	exports.default = Section;
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25761,6 +25764,10 @@
 
 	var _baobab2 = _interopRequireDefault(_baobab);
 
+	var _constants = __webpack_require__(178);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25768,6 +25775,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EFORM_CONST = _constants2.default.EFORM;
 
 	var Row = function (_Component) {
 	    _inherits(Row, _Component);
@@ -25924,7 +25933,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-tag' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'lb') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.LABEL) },
 	                                'Label'
 	                            )
 	                        )
@@ -25938,7 +25947,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-circle-o' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'r') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.RADIO) },
 	                                'Radio'
 	                            )
 	                        )
@@ -25952,7 +25961,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-check-square-o' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'c') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.CHECKBOX) },
 	                                'Checkbox'
 	                            )
 	                        )
@@ -25965,7 +25974,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'it') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.TEXT) },
 	                                'Text'
 	                            )
 	                        )
@@ -25978,7 +25987,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'in') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.NUMBER) },
 	                                'Number'
 	                            )
 	                        )
@@ -25992,7 +26001,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-calendar-o' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'id') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DATE) },
 	                                'Date'
 	                            )
 	                        )
@@ -26006,8 +26015,22 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-pencil' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'si') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.SIGN) },
 	                                'Signature'
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'fa fa-paint-brush' }),
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DRAWING) },
+	                                'Drawing'
 	                            )
 	                        )
 	                    ),
@@ -26020,7 +26043,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-table' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'di') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE) },
 	                                'Dynamic Table'
 	                            )
 	                        )
@@ -26044,7 +26067,7 @@
 	                        var width = o.get('params', 'width') || 'initial';
 
 	                        switch (o.get('type')) {
-	                            case 'lb':
+	                            case EFORM_CONST.OBJECT_TYPE.LABEL:
 	                                var title = o.get('params', 'title') || '<span style="color: yellow">Label</span>';
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -26053,7 +26076,7 @@
 	                                    _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: title } })
 	                                );
 	                                break;
-	                            case 'r':
+	                            case EFORM_CONST.OBJECT_TYPE.RADIO:
 	                                var nameHtml = o.get('name');
 	                                // let title = o.get('params', 'title')||'<span style="color: yellow">Label</span>'
 	                                res = _react2.default.createElement(
@@ -26074,7 +26097,7 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'c':
+	                            case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -26094,7 +26117,7 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'it':
+	                            case EFORM_CONST.OBJECT_TYPE.TEXT:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -26112,7 +26135,7 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'in':
+	                            case EFORM_CONST.OBJECT_TYPE.NUMBER:
 	                                res = _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'object', style: { width: width },
@@ -26120,7 +26143,7 @@
 	                                    _react2.default.createElement('input', { type: 'number', disabled: true, placeholder: 'Number' })
 	                                );
 	                                break;
-	                            case 'id':
+	                            case EFORM_CONST.OBJECT_TYPE.DATE:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -26138,7 +26161,7 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'si':
+	                            case EFORM_CONST.OBJECT_TYPE.SIGN:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -26156,7 +26179,25 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'di':
+	                            case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                                var nameHtml = o.get('name');
+	                                res = _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'object', style: { width: width },
+	                                        onClick: this._onClickObject.bind(this, o, o_index) },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'object-wrapper' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'object-name object-dr' },
+	                                            nameHtml
+	                                        ),
+	                                        _react2.default.createElement('input', { type: 'text', disabled: true, placeholder: 'Drawing' })
+	                                    )
+	                                );
+	                                break;
+	                            case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:
 	                                res = _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'object', style: { width: width },

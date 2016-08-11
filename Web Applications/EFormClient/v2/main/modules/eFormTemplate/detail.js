@@ -188,14 +188,18 @@ class EFormTemplateDetail extends Component{
         }
     }
     _onSelectObject(s_index, r_index, type){
-        if(type === 'lb')
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '150px', title: 'Label'}})
-        else if(type === 'r' || type === 'c')
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '150px', title: 'Title', value: ''}})
-        else if(type === 'di')
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '768px', objects:[]}})
+        var get_object = this.list.select('sections', s_index, 'r', r_index, 'o');
+
+        if(type === EFORM_CONST.OBJECT_TYPE.LABEL)
+            get_object.push({type: type, name: '', params: {width: '150px', title: 'Label'}})
+        else if(type === EFORM_CONST.OBJECT_TYPE.RADIO || type ===  EFORM_CONST.OBJECT_TYPE.CHECKBOX)
+            get_object.push({type: type, name: '', params: {width: '150px', title: 'Title', value: ''}})
+        else if(type === EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE)
+            get_object.push({type: type, name: '', params: {width: '768px', objects:[]}})
+        else if(type === EFORM_CONST.OBJECT_TYPE.DRAW)
+            get_object.push({type: type, name: '', params: {width: '250px'}})
         else
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '150px'}})
+            get_object.push({type: type, name: '', params: {width: '150px'}})
         this.forceUpdate()
     }
     _onClickObject(s_index, r_index, o_index, o){
@@ -414,16 +418,10 @@ class EFormTemplateDetail extends Component{
                  var val = $(this.refs.suggest_label_width).val();
                 $(this.refs.label_width).val(val);
                 break;
-
             default:
                 var val = $(this.refs.suggest_default_width).val();
                  $(this.refs.default_width).val(val);
         }    
-            
-
-
-         // $(this.refs.default_width).val('asssa');
-       
     }
 
     render(){
@@ -454,6 +452,7 @@ class EFormTemplateDetail extends Component{
                                         onChangeSectionOrder={this._onChangeSectionOrder.bind(this)}
                                         onRemoveSection={this._onRemoveSection.bind(this)}
                                         onCloneSection={this._onCloneSection.bind(this)}
+
                                         onAddRow={this._onAddRow.bind(this)}
                                         onSelectObject={this._onSelectObject.bind(this)}
                                         onClickObject={this._onClickObject.bind(this)}
@@ -467,6 +466,7 @@ class EFormTemplateDetail extends Component{
                     </div>
                 </div>
                 <div className="detail">
+
                     <div className="form-detail" ref="dynamic">
                         <b>Width</b><br/>
                         <input type="text" placeholder="Width" ref="dynamic_width"/><br/>
@@ -502,6 +502,7 @@ class EFormTemplateDetail extends Component{
                         &nbsp;
                         <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
+
                     <div className="form-detail" ref="default">
                         <b>Title</b><br/>
                         <input type="text" placeholder="Title" ref="default_title"/><br/>
@@ -543,6 +544,7 @@ class EFormTemplateDetail extends Component{
                         &nbsp;
                         <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
+
                     <div className="form-detail" ref="input">
                         <b>Width</b><br/>
                         <input style={{width: '30%'}} type="text" placeholder="Width" ref="input_width"/> 
@@ -578,6 +580,7 @@ class EFormTemplateDetail extends Component{
                         &nbsp;
                         <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
+
                     <div className="form-detail" ref="label">
                         <b>Width</b><br/>
                         <input style={{width: '30%'}} type="text" placeholder="Width" ref="label_width"/>
@@ -602,6 +605,7 @@ class EFormTemplateDetail extends Component{
                         &nbsp;
                         <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
+
                     <div className="form-detail" ref="chart">
                         <b>Width</b><br/>
                         <input type="text" placeholder="Width"/><br/>

@@ -251,7 +251,7 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
         var arr_role = $cookies.getObject('userInfo').roles;
         if(arr_role.length > 0) {
             if(arr_role.length == 1) {
-                return arr_role;
+                return arr_role[0];
             }
             else {
                 for(var i = 0; i < arr_role.length; i++) {

@@ -120,6 +120,7 @@ class Row extends Component{
                                 break
                             case EFORM_CONST.OBJECT_TYPE.DRAWING:
                                 // this.objects_init.push(o.get('name') || '')
+                                console.log(o.serialize())
                                 res = (
                                     <div className={className} ref={o.get('name') || ''}
                                         style={style}>

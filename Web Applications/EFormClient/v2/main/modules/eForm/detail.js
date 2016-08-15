@@ -134,8 +134,9 @@ class EFormDetail extends Component{
         this.obj_data.map(function(o){
             if(EFORM_CONST.OBJECT_TYPE.RADIO === o.t)
                 $('input[name='+o.n+'][value='+o.v+']').prop('checked', o.c)
-            else if(EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
+            else if(EFORM_CONST.OBJECT_TYPE.DRAWING === o.t || EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
                 if(o.v) {
+                    // console.log(o)
                     Service.EFormDownloadImage(o.v).then(function(response){
                         var objectUrl = response
                         $('#'+o.n+'_image').attr('src', objectUrl);
@@ -153,6 +154,27 @@ class EFormDetail extends Component{
         })
     }
 
+    __getDrawingPromiseArr(arrDrawing) {
+        var p = new Promise( function(resolve, reject) {
+            let arrPromise = []
+            arrDrawing.map(function(draw){
+                var canvas = $('#'+draw.object.n)[0]
+                // console.log(canvas)
+                if(canvas.toBlob) {
+                    canvas.toBlob(function(blob){
+                        var p2 = Service.EFormUploadDrawing(blob, draw.object);
+                        arrPromise.push(p2)
+                        if(arrPromise.length == arrDrawing.length) {
+                            resolve(arrPromise)
+                        }
+                    })
+                } else {
+                    reject({err: "CANVAS IS NOT IN DOM"})
+                }
+            })
+        });
+        return p
+    }
 
     __getSignPromiseArr(arrSign){
         let arrPromise = []
@@ -198,7 +220,6 @@ class EFormDetail extends Component{
         }
         Service.EFormUpdate(data)
         .then(function(response){
-
             location.reload();
          })
     }
@@ -206,33 +227,48 @@ class EFormDetail extends Component{
     _onSave(){
         // get all signs to upload 
         let arrSign = []
+        let arrDrawing = []
+
         const self = this;
+
+        // PARSE DATA
         this.obj_data.map(function(o){
-            if(EFORM_CONST.OBJECT_TYPE.RADIO === o.t){
-                if($('input[type=radio][name='+o.n+']').length){
-                    const value = $('input[type=radio][name='+o.n+']:checked').val()
-                    if(value === o.v) o.c = true
-                    else o.c = false
-                }
-            }else if(EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
-                const changed = $('#'+o.n).data('changed')
-                if( CONSTANTS.VALUES.TRUE === changed) {
-                    const value = $('#'+o.n).jSignature("getData")
-                    arrSign.push({ object: o, value: value });
-                }
-            }else if(EFORM_CONST.OBJECT_TYPE.DATE === o.t){
-                let value = $('#'+o.n).val()
-                o.v = value
-            }else{
-                const value = $('#'+o.n).val()
-                o.v = value
+            let changed;
+            switch(o.t) {
+                case EFORM_CONST.OBJECT_TYPE.RADIO:
+                    if($('input[type=radio][name='+o.n+']').length){
+                        const value = $('input[type=radio][name='+o.n+']:checked').val()
+                        if(value === o.v) o.c = true
+                        else o.c = false
+                    }
+                    break;
+                case EFORM_CONST.OBJECT_TYPE.SIGN: 
+                    changed = $('#'+o.n).data('changed')
+                    if( CONSTANTS.VALUES.TRUE === changed) {
+                        const value = $('#'+o.n).jSignature("getData")
+                        arrSign.push({ object: o, value: value });
+                    }
+                    break;
+                 case EFORM_CONST.OBJECT_TYPE.DRAWING:
+                    changed = $('#'+o.n).data('changed')
+                    if( CONSTANTS.VALUES.TRUE === changed) {
+                        arrDrawing.push({object: o})
+                    }
+                    break;
+                case EFORM_CONST.OBJECT_TYPE.DATE:
+                default:
+                    const value = $('#'+o.n).val()
+                    o.v = value
+
             }
         })
 
-        let arrPromise = self.__getSignPromiseArr(arrSign)
-        console.log('Arr Promise: ', arrPromise.length)
-        if(arrPromise.length > 0) {
-            Promise.all(arrPromise).then(
+
+        let isUploadDrawing = false, isUploadSign = false
+
+        if(arrSign.length > 0) {
+            let arrPromiseSign = self.__getSignPromiseArr(arrSign)
+            Promise.all(arrPromiseSign).then(
             values => {   
                 // console.log('VALUE PROMISE: ', values)
                 console.log('PASSED SIGNATURE OK !!!!!'); 
@@ -245,13 +281,52 @@ class EFormDetail extends Component{
                         alert('SIGN WASNT UPLOADED!!!')
                     }
                 }
-                // console.log('FORM DATA: ', self.obj_data)
-                self.__saveEFormData() 
+                isUploadSign = true
+                if(isUploadSign && isUploadDrawing) {
+                    self.__saveEFormData()
+                }
             } , reason => {
                 alert('Upload file server is down !!!')
                 console.log(reason)
             });
+        }  else {
+            isUploadSign = true
+        } 
+
+
+        if(arrDrawing.length > 0) {
+            self.__getDrawingPromiseArr(arrDrawing).then(function(arrPromiseDrawing){
+                Promise.all(arrPromiseDrawing).then(
+                values => {   
+                    // console.log('VALUE PROMISE: ', values)
+                    console.log(values)
+                    console.log('PASSED DRAWING OK !!!!!'); 
+                    for(let i =0; i < values.length; ++i) {
+                        let value = values[i]
+                        if(value.response && value.response.status && value.response.status === 'success') {
+                            // set value to object
+                            value.meta.v = value.response.fileUID;
+                        } else {
+                            alert('DRAWING WASNT UPLOADED!!!')
+                        }
+                    }
+                    isUploadDrawing = true
+                    if(isUploadSign && isUploadDrawing) {
+                        self.__saveEFormData()
+                    }
+                } , reason => {
+                    alert('Upload file server is down !!!')
+                    console.log(reason)
+                });
+            }, function(error){
+                console.log(error)
+            })
         } else {
+            isUploadDrawing = true
+        }
+        
+        // let arrPromiseDrawing = self.__getDrawingPromiseArr(arrDrawing)
+        if(isUploadSign && isUploadDrawing) {
             self.__saveEFormData()
         }
     }

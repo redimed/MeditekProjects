@@ -25186,11 +25186,12 @@
 	        },
 	        DRAWING: {
 	            COLORS: [{ 'color': 'blue-ebonyclay' }, { 'color': 'green' }, { 'color': 'blue' }, { 'color': 'red' }],
-	            SIZES: [{ 'width': 550, 'height': 500, desc: 'Canvas 550x500' }, { 'width': 750, 'height': 650, desc: 'Canvas 750x650' },
+	            SIZES: [{ 'width': 550, 'height': 500, desc: 'Canvas 550x500' }, { 'width': 750, 'height': 650, desc: 'Canvas 750x650' }, { 'width': 300, 'height': 300, desc: 'Canvas 300x300' },
 	            // {'width':650,'height':650,desc:'Canvas 750x650'},
 	            { 'width': 900, 'height': 750, desc: 'Canvas 900x750' }, { 'width': 1000, 'height': 900, desc: 'Canvas 1100x900' }],
 	            FONT_SIZES: [{ size: 12, desc: 'Font 12px' }, { size: 15, desc: 'Font 15px' }, { size: 20, desc: 'Font 20px' }, { size: 25, desc: 'Font 25px' }, { size: 30, desc: 'Font 30px' }],
-	            LINE_WIDTHS: [{ width: 1, desc: 'Line 1' }, { width: 2, desc: 'Line 2' }, { width: 3, desc: 'Line 3' }, { width: 4, desc: 'Line 4' }, { width: 5, desc: 'Line 5' }]
+	            LINE_WIDTHS: [{ width: 1, desc: 'Line 1' }, { width: 2, desc: 'Line 2' }, { width: 3, desc: 'Line 3' }, { width: 4, desc: 'Line 4' }, { width: 5, desc: 'Line 5' }],
+	            MAX_WIDTH_CANVAS: 748
 	        }
 	    },
 	    EFORM_CLIENT: {
@@ -25377,14 +25378,15 @@
 	        return this.uploadFile(formdata, meta);
 	    },
 
-	    EFormUploadDrawing: function EFormUploadDrawing(blob, fileName) {
+	    EFormUploadDrawing: function EFormUploadDrawing(blob, meta) {
 	        var formdata = new FormData();
 	        var contentType = 'MedicalImage';
+	        var fileName = "DEFAULTDRAWING.png";
 	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
 	        formdata.append('fileType', contentType);
 	        formdata.append('uploadFile', blob, fileName);
 
-	        return this.uploadFile(formdata);
+	        return this.uploadFile(formdata, meta);
 	    },
 	    EFormDownloadImage: function EFormDownloadImage(fileUID) {
 	        var p = new Promise(function (resolve, reject) {

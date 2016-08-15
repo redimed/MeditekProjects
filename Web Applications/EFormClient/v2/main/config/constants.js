@@ -37,8 +37,10 @@ const CONSTANTS = {
                 {'color': 'red'}
             ],
             SIZES: [
+               
                 {'width':550,'height':500,desc:'Canvas 550x500'},
                 {'width':750,'height':650,desc:'Canvas 750x650'},
+                  {'width':300,'height':300,desc:'Canvas 300x300'},
                 // {'width':650,'height':650,desc:'Canvas 750x650'},
                 {'width':900,'height':750,desc:'Canvas 900x750'},
                 {'width':1000,'height':900,desc:'Canvas 1100x900'},
@@ -56,12 +58,13 @@ const CONSTANTS = {
                 {width:3, desc:'Line 3'},
                 {width:4, desc:'Line 4'},
                 {width:5, desc:'Line 5'},
-            ]
+            ],
+            MAX_WIDTH_CANVAS: 748
         }
     },
     EFORM_CLIENT:{
         DEFAULT_VALUE: {
-            PAGE: 1
+            PAGE: 1,
         }
     }
 }

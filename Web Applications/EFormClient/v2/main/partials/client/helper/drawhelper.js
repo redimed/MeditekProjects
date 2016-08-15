@@ -1,21 +1,28 @@
 import React, {Component} from 'react'
 // import CONSTANTS from '../../../config/constants'
 
-var Drawing = {
-    canvas: null,
-    ctx: null,
-    color: null,
-    size: {},
-    fontSize: null,
-    lineWidth:{},
-    cStep: -1,
-    cPushArray: [],
-    cPush: function(){
+class Drawing {
+    constructor() {
+        this.canvas = null
+        this.ctx = null
+        this.color = null
+        this.size = {}
+        this.fontSize = 15
+        this.lineWidth = {}
+        this.cStep = -1
+        this.cPushArray = []
+    }
+
+    cReset(){
+        this.cStep = -1
+        this.cPushArray = []
+    }
+
+    cPush(){
         var self = this;
         this.cStep++;
 
         if(this.cStep < this.cPushArray.length) {
-            // remove some elements 
             this.cPushArray.length = this.cStep;
         }
 
@@ -25,8 +32,10 @@ var Drawing = {
                 self.cPushArray.push(objectUrl);
             })
         }
-    },
-    cUndo: function() {
+    }
+
+
+    cUndo() {
         var self = this;
         if(this.cStep>0) {
             this.cStep--;
@@ -37,8 +46,9 @@ var Drawing = {
             }
             img.src= this.cPushArray[this.cStep];
         }
-    },
-    cRedo: function() {
+    }
+
+    cRedo() {
         var self = this;
         if(this.cStep<this.cPushArray.length-1) {
             this.cStep++;
@@ -49,8 +59,9 @@ var Drawing = {
             }
             img.src=this.cPushArray[this.cStep];
         }
-    },
-    draw: function(lX, lY, cX, cY) {
+    }
+
+    draw(lX, lY, cX, cY) {
         this.ctx.lineCap = "round";
         this.ctx.fillStyle = "solid";
         this.ctx.strokeStyle = this.color;
@@ -58,13 +69,15 @@ var Drawing = {
         this.ctx.moveTo(lX,lY);
         this.ctx.lineTo(cX,cY);
         this.ctx.stroke();
-    },
-    drawText: function(currentX, currentY) {
+    }
+
+    drawText(text, currentX, currentY) {
         this.ctx.fillStyle = this.color  //this.color;
-        this.ctx.font = this.fontSize.size +"px Arial"; // this.fontSize.size+"px Arial";
-        this.ctx.fillText(this.cText, currentX, currentY);
-    },
-    clearCanvas: function() {
+        this.ctx.font = this.fontSize +"px Arial"; // this.fontSize.size+"px Arial";
+        this.ctx.fillText(text, currentX, currentY);
+    }
+
+    clearCanvas() {
         //Store the current transformation matrix
         this.ctx.save();
         //Use the identity matrix while clearing the canvas
@@ -72,7 +85,13 @@ var Drawing = {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         //Restore the transform
         this.ctx.restore();
-    },
+    }
+    static makeFileName() {
+        var fileName= "Drawing_"
+            .concat(moment().format("YYYY-MM-DD_HHmmss.SSS"))
+            .concat('.png');
+        return fileName;
+    }
 }
 
 export default Drawing

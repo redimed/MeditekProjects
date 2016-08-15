@@ -110,7 +110,7 @@ var Services = {
     EFormUploadSignImage: function (blob, meta) {
         // var formdata = data.formdata;
         var formdata = new FormData();
-        var fileName = 'DEFAULTSIGN.png'
+        var fileName = 'DEFAULTSIGN.png';
         var contentType = 'MedicalImage';
         formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15')
         formdata.append('fileType', contentType);            
@@ -119,14 +119,15 @@ var Services = {
         return this.uploadFile(formdata, meta)
     },
 
-    EFormUploadDrawing: function(blob, fileName){
+    EFormUploadDrawing: function(blob, meta){
         var formdata = new FormData();
         var contentType = 'MedicalImage';
+        var fileName = "DEFAULTDRAWING.png";
         formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
         formdata.append('fileType', contentType);
         formdata.append('uploadFile', blob, fileName);
 
-        return this.uploadFile(formdata)
+        return this.uploadFile(formdata, meta)
     },
     EFormDownloadImage: function(fileUID){
         var p = new Promise(function(resolve, reject){

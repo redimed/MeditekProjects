@@ -4,5 +4,8 @@ module.exports = {
     },
     getEFormDetail: function(req, res){
         res.render('main/eFormDetail');
+    },
+    getEFormTemplateList: function(req, res) {
+    	res.render('main/eFormTemplateList');
     }
 }

@@ -23,6 +23,22 @@ var Services = {
         })
         return p
     },
+
+    EFormTemplateList: function(data){
+        var p = new Promise(function(resolve, reject){
+            $.ajax({
+                type: 'GET',
+                data: data,
+                url: IP.EFormServer+'/eformtemplate/list',
+                success: resolve
+            })
+        })
+        return p
+    },
+
+
+
+
     EFormPreData: function(data){
         var p = new Promise(function(resolve, reject){
             $.ajax({

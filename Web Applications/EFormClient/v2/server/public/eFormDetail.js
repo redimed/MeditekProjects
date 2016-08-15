@@ -26207,6 +26207,19 @@
 	        });
 	        return p;
 	    },
+
+	    EFormTemplateList: function EFormTemplateList(data) {
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'GET',
+	                data: data,
+	                url: _ip2.default.EFormServer + '/eformtemplate/list',
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
 	    EFormPreData: function EFormPreData(data) {
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
@@ -26350,7 +26363,8 @@
 
 	var ip = {
 	    EFormServer: server + ':3015',
-	    ApiServerUrl: server + ':3005'
+	    ApiServerUrl: server + ':3005',
+	    Host: server + ':3020'
 	};
 
 	exports.default = ip;

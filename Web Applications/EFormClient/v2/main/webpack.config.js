@@ -3,7 +3,9 @@ var webpack = require('webpack')
 module.exports = {
   entry: {
     'eFormTemplateDetail': path.join(process.cwd(), 'modules/eFormTemplate/detail'),
-    'eFormDetail': path.join(process.cwd(), 'modules/eForm/detail')
+    'eFormDetail': path.join(process.cwd(), 'modules/eForm/detail'),
+    'eFormTemplateList': path.join(process.cwd(), 'modules/eFormTemplate/list'),
+
   },
   output: {
     path: '../server/public/',

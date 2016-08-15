@@ -581,18 +581,25 @@ app.directive('onsiteAppointment', function(){
                             console.log('saveWaAppointment', data);
                             toastr.success("Update appointment successfully !");
                             swal.close();
-                            $state.go("authentication.onsite.appointment", { UID:$stateParams.UID }, {
-                                reload: true
-                            });
+                            if(!$scope.runWhenFinish) {
+                                $state.go("authentication.onsite.appointment", { UID:$stateParams.UID }, {
+                                    reload: true
+                                });
+                            }
+                            else {
+                                $scope.runWhenFinish.success();
+                            }
                         }, function(err) {
                             if (err.status == 401) {
                                 swal.close();
                             } else {
                                 swal.close();
                                 toastr.error('Update Appointment Failed');
-                                $state.go("authentication.onsite.appointment", { UID : $stateParams.UID }, {
-                                    reload: true
-                                });
+                                if(!$scope.runWhenFinish) {
+                                    $state.go("authentication.onsite.appointment", { UID : $stateParams.UID }, {
+                                        reload: true
+                                    });
+                                }
                             }
                         });
 
@@ -613,18 +620,25 @@ app.directive('onsiteAppointment', function(){
                             console.log('saveWaAppointment', data);
                             toastr.success("Update appointment successfully !");
                             swal.close();
-                            $state.go("authentication.consultation.detail.Onsite", {}, {
-                                reload: true
-                            });
+                            if(!$scope.runWhenFinish) {
+                                $state.go("authentication.onsite.appointment", { UID:$stateParams.UID }, {
+                                    reload: true
+                                });
+                            }
+                            else {
+                                $scope.runWhenFinish.success();
+                            }
                         }, function(err) {
                             if (err.status == 401) {
                                 swal.close();
                             } else {
                                 swal.close();
                                 toastr.error('Update Appointment Failed');
-                                $state.go("authentication.consultation.detail.Onsite", {}, {
-                                    reload: true
-                                });
+                                if(!$scope.runWhenFinish) {
+                                    $state.go("authentication.consultation.detail.Onsite", {}, {
+                                        reload: true
+                                    });
+                                }
                             }
                         })
                     }

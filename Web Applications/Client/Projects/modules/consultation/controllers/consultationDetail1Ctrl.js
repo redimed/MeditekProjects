@@ -22,7 +22,6 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
 	};
 
 	//xu ly chon tab de view thong tin
-    // $scope.showEForm = [];
 	$scope.type;
 	$scope.typeAppt;
 
@@ -31,7 +30,7 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
     };
 
 	$scope.init = function(url) {
-		console.log("state ",$state.current)
+        $scope.filter = '';
 		$scope.type = '';
 		$scope.typeAppt = '';
 		if($state.current.name.indexOf('admission') != -1 && url != 'admission') {
@@ -44,8 +43,8 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
                 getReferralForm()
                 .then(function(Eform) {
                     $timeout(function() {
-                        console.log("referral ",Eform);
-                        $scope.showEForm = Eform;
+                        $scope.showEForm = JSON.parse(JSON.stringify(Eform));
+                        $scope.tempEForm = JSON.parse(JSON.stringify(Eform));
                         o.loadingPage(false);
                     },0);
                 }, function(err) {
@@ -56,13 +55,12 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
 
 			case 'workcover':
                 o.loadingPage(true);
-                $scope.showEForm = [];
 				$scope.type = 'workcover';
                 getWorkCoverForm()
                 .then(function(Eform) {
                     $timeout(function() {
-                        console.log("workcover ",Eform);
-                        $scope.showEForm = Eform;
+                        $scope.showEForm = JSON.parse(JSON.stringify(Eform));
+                        $scope.tempEForm = JSON.parse(JSON.stringify(Eform));
                         o.loadingPage(false);
                     },0);
                 }, function(err) {
@@ -77,8 +75,8 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
                 getInternalForm()
                 .then(function(Eform) {
                     $timeout(function() {
-                        console.log("internal ",Eform);
-                        $scope.showEForm = Eform;
+                        $scope.showEForm = JSON.parse(JSON.stringify(Eform));
+                        $scope.tempEForm = JSON.parse(JSON.stringify(Eform));
                         o.loadingPage(false);
                     },0);
                 }, function(err) {
@@ -113,8 +111,8 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
                 getConsentForm()
                 .then(function(Eform) {
                     $timeout(function() {
-                        console.log("consent ",Eform);
-                        $scope.showEForm = Eform;
+                        $scope.showEForm = JSON.parse(JSON.stringify(Eform));
+                        $scope.tempEForm = JSON.parse(JSON.stringify(Eform));
                         o.loadingPage(false);
                     },0);
                 }, function(err) {
@@ -346,12 +344,11 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
             $scope.dataDirective.setDataApptDetail($scope.wainformation);
             getEForm(postData)
             .then(function(res) {
-                console.log("response ",res);
                 $scope.eformTemplates = res;
+                o.loadingPage(false);
             }, function(err) {
                 console.log("err ",err);
             })
-            o.loadingPage(false);
         }, function(err) {
             console.log("err ",err);
         });
@@ -475,7 +472,6 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
 
     $scope.runWhenFinish = {
         success:function () {
-        	console.log("?????????? caasdasdasdiuasdhausidhadasduadiuahsiudhasiudhuai")
             $state.go("authentication.consultation.detail1", { UID: $stateParams.UID, UIDPatient: $stateParams.UIDPatient }, { reload: true });
         }
     };
@@ -483,6 +479,12 @@ app.controller('consultationDetail1Ctrl', function($timeout, $scope, $cookies, $
         show: function(uid) {
             $scope.consultationuid = uid;
         }
+    }
+
+    $scope.filterEform = function() {
+        $scope.showEForm = $scope.tempEForm.filter(function(item) {
+            return item.Name.toUpperCase().indexOf($scope.filter.toUpperCase()) !== -1;
+        });
     }
 
 });

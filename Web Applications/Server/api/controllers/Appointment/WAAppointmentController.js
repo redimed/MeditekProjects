@@ -535,6 +535,12 @@ module.exports = {
                             Type: 'BookingCandidate',
                             Name: 'AppointmentDescription',
                             Value: candidateInfo.AppointmentDescription || null
+                        }, {
+                            Category: 'Appointment',
+                            Section: 'MedicalBooking',
+                            Type: 'BookingCandidate',
+                            Name: 'ResultEmail',
+                            Value: candidateInfo.ResultEmail || null
                         }]
 
                     }

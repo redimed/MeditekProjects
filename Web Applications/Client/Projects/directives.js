@@ -1136,6 +1136,14 @@ app.directive("privateNotify", function() {
                     toastr.info(msg.Display.Subject + " sent you a message in Request ", "Notification");
                 }
             };
+
+            socketNcFunction.LoadReviewNotify = function(msg) {
+                $scope.loadListNotify();
+                console.log(msg);
+                if (msg != 'msg') {
+                    toastr.info(msg.Display.Subject + " sent you a message in Review ", "Notification");
+                }
+            };
         },
     };
 });

@@ -2,7 +2,7 @@ var app = angular.module("app.authentication.notification.private.create.control
 
 app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal, kind) {
     $scope.now = true;
-    $scope.status = kind === 'ToDo' || kind === 'Request' ? true : false;
+    // $scope.status = kind === 'ToDo' || kind === 'Request' ? true : false;
     $scope.submitText = 'Sent';
     $scope.lsDoctor = [];
     $scope.lsPatient = [];
@@ -16,13 +16,17 @@ app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance,
             { field: "Pending", name: "Pending" },
             { field: "Cancel", name: "Cancel" },
         ];
-    } else if (kind === 'Request') {
+    } else if (kind === 'Request' || kind === 'Review') {
         $scope.status = [
             { field: "WaitingApproval", name: "Waiting Approval" },
             { field: "Approval", name: "Approval" },
             { field: "Disapproval", name: "Disapproval" },
             { field: "Cancel", name: "Cancel" },
         ];
+        if (kind === 'Review') {
+            $scope.private.Subject = 'Dictation';
+            $scope.DisabledSub = true;
+        };
     };
 
     $modalInstance.rendered.then(function() {

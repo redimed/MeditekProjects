@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label class="control-label col-md-3 col-xs-3 text-right">Subject:</label>
                 <div class="col-md-8 col-xs-9">
-                    <input type="text" class="form-control" name="subject" ng-model="private.Subject" placeholder="Subject" required/>
+                    <input type="text" class="form-control" name="subject" ng-model="private.Subject" placeholder="Subject" required ng-disabled="DisabledSub" />
                     <span style="color:red" ng-show="formglobal.subject.$dirty && formglobal.subject.$invalid">
                         <span ng-show="formglobal.subject.$dirty && formglobal.subject.$error.required">Subject is required.</span>
                     </span>

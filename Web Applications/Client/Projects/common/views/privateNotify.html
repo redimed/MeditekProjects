@@ -6,8 +6,8 @@
 <ul class="dropdown-menu">
     <li class="external">
         <h3>
-                            <span class="bold">Notifications</span>
-                        </h3>
+            <span class="bold">Notifications</span>
+        </h3>
         <a ng-click="updateReadQueueJob()" style="position:absolute;right:66px;">dissmiss all</a>
         <a ui-sref="authentication.notification.list">view all</a>
     </li>
@@ -17,9 +17,9 @@
                 <a href="#" >
                     <span class="subject" style="margin-left:0px">
                         <span class="from" > {{not.MsgContent.Display.Subject}} </span>
-                        <span class="time">{{not.fromTime}} </span>
+                        <!-- <span class="time">{{not.fromTime}} </span> -->
                     </span>
-                    <span class="message" style="margin-left:0px"> {{not.Subject}} </span>
+                    <span class="message" style="margin-left:0px"> {{not.Subject}} {{not.MsgContent.Display.Object ? not.MsgContent.Display.Object.name : ''}}</span>
                 </a>
             </li>
         </ul>

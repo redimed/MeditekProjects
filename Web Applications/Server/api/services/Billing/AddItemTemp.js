@@ -54,7 +54,8 @@ module.exports = function(objAddItemTemp) {
         //create if not exist table
         queryInterface.createTable(data.Name, objCreateTable, {
                 engine: 'InnoDB',
-                charset: 'latin1'
+                charset: 'latin1',
+                transaction: objAddItemTemp.transaction
             })
             .then(function(tableCreated) {
                 //insert data to table
@@ -70,7 +71,8 @@ module.exports = function(objAddItemTemp) {
                 return currentModel.findOne({
                     attributes: ['*'],
                     limit: 1,
-                    raw: true
+                    raw: true,
+                    transaction: objAddItemTemp.transaction
                 });
             }, function(err) {
                 defer.reject(err);
@@ -90,8 +92,22 @@ module.exports = function(objAddItemTemp) {
                         }
                     });
                     if (!_.isEmpty(arrColumnAdd)) {
+                        //overwrite function addColumn apply transaction
+                        queryInterface.addColumn = function(table, key, attribute, options) {
+                            if (!table || !key || !attribute) {
+                                throw new Error('addColumn takes atleast 3 arguments (table, attribute name, attribute definition)');
+                            }
+                            options = options || {};
+                            attribute = this.sequelize.normalizeAttribute(attribute);
+                            return this.sequelize.query(this.QueryGenerator.addColumnQuery(table, key, attribute), { logging: options.logging, transaction: options.transaction });
+                        }
                         return sequelize.Promise.each(arrColumnAdd, function(columnName, indexColumn) {
-                            return queryInterface.addColumn(data.Name, columnName, Sequelize.TEXT);
+                            return queryInterface.addColumn(
+                                data.Name,
+                                columnName,
+                                Sequelize.TEXT, {
+                                    transaction: objAddItemTemp.transaction
+                                });
                         });
                     }
                 }
@@ -106,7 +122,9 @@ module.exports = function(objAddItemTemp) {
                     items[index].CreatedDate = new Date();
                     items[index].CreatedBy = userInfo ? userInfo.ID : null;
                 });
-                return currentModel.bulkCreate(items);
+                return currentModel.bulkCreate(items, {
+                    transaction: objAddItemTemp.transaction
+                });
             }, function(err) {
                 defer.reject(err);
             })

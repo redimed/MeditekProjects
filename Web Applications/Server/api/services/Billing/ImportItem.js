@@ -6,7 +6,7 @@ module.exports = function(data, userInfo) {
         _.isArray(data.Items) &&
         HelperService.CheckExistData(data.Name) &&
         HelperService.CheckExistData(data.Type)) {
-        sequelize.transaction()
+        sequelize.transaction({ autocommit: false })
             .then(function(t) {
                 var objAddItemTemp = {
                     data: data,
@@ -19,9 +19,11 @@ module.exports = function(data, userInfo) {
                     transaction: t
                 };
                 $q.all([Services.AddItemTemp(objAddItemTemp), Services.AddItem(objAddItem)])
-                    .then(function(success) {
-                        console.log('success');
-                        defer.resolve(success);
+                    .then(function(successAll) {
+                        defer.resolve({
+                            data: successAll,
+                            transaction: t
+                        });
                     }, function(err) {
                         defer.reject({ error: err });
                     });

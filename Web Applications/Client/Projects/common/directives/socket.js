@@ -80,8 +80,8 @@ socketAuth.on('globalnotify', function(msg) {
     console.log("|||||| globalnotify", msg);
     switch (msgContent.Command.Note) {
         case "NotifyMessage":
-            if (socketNcFunction.telehealthGlobalNotify) {
-                socketNcFunction.telehealthGlobalNotify(msgContent);
+            if (socketNcFunction.LoadGlobalNotify) {
+                socketNcFunction.LoadGlobalNotify(msgContent);
             };
             if (socketNcFunction.LoadListGlobalNotify) {
                 socketNcFunction.LoadListGlobalNotify();
@@ -127,6 +127,14 @@ socketAuth.on('privatenotify', function(msg) {
         case "RequestMessage":
             if (socketNcFunction.LoadRequestNotify) {
                 socketNcFunction.LoadRequestNotify(msgContent);
+            };
+            if (socketNcFunction.LoadListPrivate) {
+                socketNcFunction.LoadListPrivate();
+            };
+            break;
+        case "ReviewMessage":
+            if (socketNcFunction.LoadReviewNotify) {
+                socketNcFunction.LoadReviewNotify(msgContent);
             };
             if (socketNcFunction.LoadListPrivate) {
                 socketNcFunction.LoadListPrivate();

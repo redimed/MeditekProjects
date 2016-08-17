@@ -32,6 +32,11 @@ module.exports = function(req, res) {
         Queue = 'NOTIFY';
         EventName = 'privatenotify';
         ReceiverType = 'USER_ACCOUNT';
+    } else if (dmObj.MsgKind === 'Review') {
+        Note = 'ReviewMessage';
+        Queue = 'NOTIFY';
+        EventName = 'privatenotify';
+        ReceiverType = 'USER_ACCOUNT';
     };
 
     if (dmObj) {

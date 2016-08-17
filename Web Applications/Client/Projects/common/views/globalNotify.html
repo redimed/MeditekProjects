@@ -17,9 +17,9 @@
                 <a href="#">
                     <span class="subject" style="margin-left:0px">
                         <span class="from" > {{global.MsgContent.Display.Subject}} </span>
-                    <span class="time">{{global.fromTime}} </span>
+                        <!-- <span class="time">{{global.fromTime}} </span> -->
                     </span>
-                    <span class="message" style="margin-left:0px"> {{global.Subject}} </span>
+                    <span class="message" style="margin-left:0px"> {{global.Subject}} {{global.MsgContent.Display.Object ? global.MsgContent.Display.Object.name : ''}}</span>
                 </a>
             </li>
         </ul>

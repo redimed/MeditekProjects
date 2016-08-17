@@ -32,5 +32,11 @@ app.config(function($stateProvider) {
             controller: "notificationRequestCtrl",
             templateUrl: "modules/notification/views/notificationRequest.html",
         })
+        .state("authentication.notification.review", {
+            url: "/review",
+            data: { pageTitle: 'Review' },
+            controller: "notificationReviewCtrl",
+            templateUrl: "modules/notification/views/notificationReview.html",
+        })
         ;
 });

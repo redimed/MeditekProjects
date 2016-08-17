@@ -12,7 +12,7 @@ app.directive('notificationSend', function() {
             var templateUrl = '';
             var templateCtrl = '';
 
-            if ($scope.kind === 'Private' || $scope.kind === 'ToDo' || $scope.kind === 'Request') {
+            if ($scope.kind === 'Private' || $scope.kind === 'ToDo' || $scope.kind === 'Request' || $scope.kind === 'Review') {
                 queue = 'NOTIFY';
                 templateUrl = 'notificationPrivateDetail.html';
                 templateCtrl = 'notificationPrivateDetailCtrl';
@@ -77,7 +77,7 @@ app.directive('notificationSend', function() {
                         $scope.listGlobalNotify = data.data;
                         $scope.count = data.count;
                     });
-                } else if ($scope.kind === 'Private' || $scope.kind === 'ToDo' || $scope.kind === 'Request') {
+                } else if ($scope.kind === 'Private' || $scope.kind === 'ToDo' || $scope.kind === 'Request' || $scope.kind === 'Review') {
                     console.log("|||||", info);
                     notificationServices.getListNotifySearch(info).then(function(data) {
                         console.log("length", data.countAll);

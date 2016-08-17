@@ -747,7 +747,7 @@ module.exports = React.createClass({
                                 <img ref ="imageViewable" style ={{maxWidth: "100%"}}/>
                             </div>
                             <div className="col-xs-12" >
-                                <button ref="modal-edit-drawing-btn" type="button" className="btn btn-default" data-toggle="modal" data-target={'.image-object'+this.props.refTemp} onClick = {this.loadDrawingForEdit}>Add/Edit Drawing</button>
+                                <a ref="modal-edit-drawing-btn" type="button" className="btn btn-default" data-toggle="modal" data-target={'.image-object'+this.props.refTemp} onClick = {this.loadDrawingForEdit}>Add/Edit Drawing</a>
 
                                 <div className={"modal fade image-object" +this.props.refTemp} tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style={{overflowY:'scroll'}}>
                                     <div className="modal-dialog modal-lg" style = {{width: "80vw"}}>

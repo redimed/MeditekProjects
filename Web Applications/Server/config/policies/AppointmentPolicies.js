@@ -17,5 +17,6 @@ module.exports = {
         'RequestAppointmentMedicalBooking': ['isIp'],
         'RequestWAAppointmentPatientNew': true,
         'LinkAppointmentDoctor': ['isIp'],
+        'LinkAppointmentPatient': ['isIp'],
     }
 };

@@ -1,6 +1,6 @@
 
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title text-primary uppercase">
         <i class="fa fa-envelope"></i> Send Email</h4>
         
@@ -21,12 +21,12 @@
                                     <span class="font-red" ng-if="myForm.email1.$error.email">Invalid From address.</span>                                
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.email2.$invalid]">
+                            <div class="form-group">
                                 <label class="control-label col-xs-3 text-right">To:</label>
                                 <div class="col-xs-8">
-                                    <input type="email" name="email2" class="form-control" ng-model="data.recipient[0]" ng-change="cutstring(data.recipient[0])" required /> 
-                                    <span class="help-block" ng-if="submitted && myForm.email2.$error.required">Required</span>
-                                    <span class="font-red" ng-if="myForm.email2.$error.email">Invalid From address.</span>                                
+                                    <input type="email" name="email2" class="form-control" ng-model="data.recipient[0]" ng-change="cutstring(data.recipient[0])" /> 
+                                    <!-- <span class="help-block" ng-if="submitted && myForm.email2.$error.required">Required</span>
+                                    <span class="font-red" ng-if="myForm.email2.$error.email">Invalid From address.</span> -->                                
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{true: 'has-error'}[submitted && myForm.Subject.$invalid]">

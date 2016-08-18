@@ -82,5 +82,9 @@ module.exports = {
     'post /api/appointment-link-patient': {
         controller: 'Appointment/WAAppointmentController',
         action: 'LinkAppointmentPatient'
+    },
+    'post /api/appointment-link-doctor': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'LinkAppointmentDoctor'
     }
 };

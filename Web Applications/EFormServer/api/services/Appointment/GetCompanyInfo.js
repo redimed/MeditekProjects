@@ -76,8 +76,11 @@ module.exports = function (PatientID, AppointmentID)
     }
 
     return q.spread([getCompany(),getCompanySite()],function(company, companySite){
-        var CompanySites=_.cloneDeep(company.CompanySites);
-        delete company['CompanySites'];
+        var CompanySites = [];
+        if(company) {
+            CompanySites=_.cloneDeep(company.CompanySites);
+            delete company['CompanySites'];
+        }
         result.company = company;
         result.companySite = null;
         if(companySite) {

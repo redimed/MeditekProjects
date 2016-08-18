@@ -60,7 +60,8 @@ app.controller('notificationPrivateDetailCtrl', function($scope, $modalInstance,
                 if (isConfirm) {
                     var info = {
                         ID: $scope.data.ID,
-                        Enable: 'N'
+                        Enable: 'N',
+                        UserUID: userInfo.UID
                     };
                     notificationServices.ChangeEnableQueueJob(info).then(function(info) {
                         $modalInstance.close('close');
@@ -78,6 +79,7 @@ app.controller('notificationPrivateDetailCtrl', function($scope, $modalInstance,
             var info = {
                 ID: $scope.data.ID,
                 MsgState: $scope.data.MsgState,
+                UserUID: userInfo.UID
             };
             notificationServices.UpdateStatusQueueJob(info).then(function(info) {
                 $modalInstance.close('close');

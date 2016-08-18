@@ -400,7 +400,7 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
-
+    
     Logout: function(req, res) {
         var err = new Error("Telehealth.Logout.Error");
 

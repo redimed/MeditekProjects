@@ -274,8 +274,11 @@ module.exports = {
         if (data.Search.kind) {
             whereClause.MsgKind = data.Search.kind
         };
+        if (data.Search.kind === 'Review' && data.Search.type) {
+            whereClause.Subject = data.Search.type
+        };
         if (data.Search.SenderUID) {
-            whereClause.SenderUID = data.Search.SenderUID
+            whereClause.SenderUID = data.Search.SenderUID;
         } else {
             whereClause.Enable = 'Y';
             whereClause.Status = o.const.jobStatus.HANDLED;
@@ -354,6 +357,10 @@ module.exports = {
                 attributes: ['UserName'],
                 as: 'ReceiverAccount',
                 where: whereClauseAccount.Receiver
+            },{
+                model: UserAccount,
+                attributes: ['UserName'],
+                as: 'ModifiedAccount'
             }],
             order: info.order
         }).then(function(data) {
@@ -417,13 +424,23 @@ module.exports = {
 
     ChangeEnableQueueJob: function(info) {
         var q = $q.defer();
-        QueueJob.update({
-            Enable: info.Enable
-        }, {
-            where: { ID: info.ID }
-        }).then(function(data) {
-            q.resolve({
-                status: 'success'
+        UserAccount.findOne({
+            where: {
+                UID: info.UserUID
+            },
+            attributes: ['ID'],
+        }).then(function(data0) {
+            QueueJob.update({
+                Enable: info.Enable,
+                ModifiedBy: data0.ID
+            }, {
+                where: { ID: info.ID }
+            }).then(function(data) {
+                q.resolve({
+                    status: 'success'
+                });
+            }, function(err) {
+                q.reject(err);
             });
         }, function(err) {
             q.reject(err);
@@ -433,13 +450,23 @@ module.exports = {
 
     UpdateStateQueueJob: function(info) {
         var q = $q.defer();
-        QueueJob.update({
-            MsgState: info.MsgState
-        }, {
-            where: { ID: info.ID }
-        }).then(function(data) {
-            q.resolve({
-                status: 'success'
+        UserAccount.findOne({
+            where: {
+                UID: info.UserUID
+            },
+            attributes: ['ID'],
+        }).then(function(data0) {
+            QueueJob.update({
+                MsgState: info.MsgState,
+                ModifiedBy: data0.ID
+            }, {
+                where: { ID: info.ID }
+            }).then(function(data) {
+                q.resolve({
+                    status: 'success'
+                });
+            }, function(err) {
+                q.reject(err);
             });
         }, function(err) {
             q.reject(err);

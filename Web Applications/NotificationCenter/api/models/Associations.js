@@ -22,6 +22,17 @@ module.exports = {
             as: 'SenderAccount'
         });
 
+        //association QueueJob - UserAccount(ModifiedBy)
+        UserAccount.hasMany(QueueJob, {
+            foreignKey: 'ModifiedBy',
+            targetKey: 'ID'
+        });
+        QueueJob.belongsTo(UserAccount, {
+            foreignKey: 'ModifiedBy',
+            targetKey: 'ID',
+            as: 'ModifiedAccount'
+        });
+
          //association QueueJobg - UserAccount(Receiver)
         UserAccount.hasMany(QueueJobg, {
             foreignKey: 'ReceiverUID',

@@ -7,7 +7,7 @@ app.directive('notificationSend', function() {
         scope: {
             kind: '=onKind',
         },
-        controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $state) {
+        controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $state, $stateParams) {
             var queue = '';
             var templateUrl = '';
             var templateCtrl = '';
@@ -39,6 +39,10 @@ app.directive('notificationSend', function() {
                 SenderUID: SenderUID,
                 queue: queue,
                 kind: $scope.kind,
+            };
+
+            if ($stateParams.type) {
+                $scope.search.type = $stateParams.type;
             };
 
             $scope.itemSearch = [
@@ -105,6 +109,9 @@ app.directive('notificationSend', function() {
                         kind: $scope.kind,
                     },
                     order: 'CreatedDate DESC'
+                };
+                if ($stateParams.type) {
+                    $scope.searchObject.Search.type = $stateParams.type;
                 };
                 console.log("$scope.searchObject", $scope.searchObject);
                 $scope.searchObjectMap = angular.copy($scope.searchObject);

@@ -153,7 +153,7 @@ app.factory('notificationServices', function(NcRestangular, $q, Restangular) {
                 if (info.lsUser <= 0) {
                     error.push({ field: "User", message: "required" });
                 };
-            } else if (msg === 'ToDo' || msg === 'Request') {
+            } else if (msg === 'ToDo' || msg === 'Request' || msg === 'Review') {
                 // validate Status in todolist
                 if (!info.MsgState) {
                     error.push({ field: "Status", message: "required" });

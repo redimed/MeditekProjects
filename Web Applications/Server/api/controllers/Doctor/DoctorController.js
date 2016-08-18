@@ -591,4 +591,21 @@ module.exports = {
 			res.serverError(ErrorWrap(err));
 		});
 	},
+
+	LoadlistDoctorForOnlineBooking: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.LoadlistDoctor(data)
+		.then(function(result){
+			if(result!==undefined && result!==null && result!=='')
+				res.ok({message:"success",data:result.rows,count:result.count});
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushError("No data result");
+				res.ok({message:ErrorWrap(err)});
+			}
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		});
+	}
 };

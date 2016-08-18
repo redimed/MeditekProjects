@@ -3,7 +3,8 @@ module.exports={
 
 		'ListCountry': true,
 		'LoadlistDoctor':true,
-		'CreateDoctorByNewAccount': ['isAuthenticated','isAdmin']
+		'CreateDoctorByNewAccount': ['isAuthenticated','isAdmin'],
+		'LoadlistDoctorForOnlineBooking':'isIp',
 		
 	}
 }

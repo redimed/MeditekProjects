@@ -682,29 +682,36 @@ module.exports = {
             .then(function(t) {
                 Services.Patient.validation(data, true)
                     .then(function(success) {
-                        if (data.Email && data.PhoneNumber) {
-                            isCreateByPhoneAndEmail = true;
-                            userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
-                            userInfo.PhoneNumber = data.PhoneNumber;
-                            userInfo.Email = data.Email;
-                            return success;
-                        } else if (data.Email) {
-                            isCreateByEmail = true;
-                            userInfo.UserName = data.UserName?data.UserName:data.Email;
-                            userInfo.Email = data.Email;
-                            return success;
-                        } else if (data.PhoneNumber) {
-                            isCreateByPhoneNumber = true;
-                            userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
-                            userInfo.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
-                            return success;
-                        } else {
-                            isCreateByName = true;
-                            var FirstName = data.FirstName.replace(/[\s]/g,'');
-                            var LastName = data.LastName.replace(/[\s]/g,'');
-                            userInfo.UserName = data.UserName?data.UserName: FirstName[0] + "." + LastName;
-                            return success;
-                        }
+                        // if (data.Email && data.PhoneNumber) {
+                        //     isCreateByPhoneAndEmail = true;
+                        //     userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
+                        //     userInfo.PhoneNumber = data.PhoneNumber;
+                        //     userInfo.Email = data.Email;
+                        //     return success;
+                        // } else if (data.Email) {
+                        //     isCreateByEmail = true;
+                        //     userInfo.UserName = data.UserName?data.UserName:data.Email;
+                        //     userInfo.Email = data.Email;
+                        //     return success;
+                        // } else if (data.PhoneNumber) {
+                        //     isCreateByPhoneNumber = true;
+                        //     userInfo.UserName = data.UserName?data.UserName:check.parseAuMobilePhone(data.PhoneNumber);
+                        //     userInfo.PhoneNumber = check.parseAuMobilePhone(data.PhoneNumber);
+                        //     return success;
+                        // } else {
+                        //     isCreateByName = true;
+                        //     var FirstName = data.FirstName.replace(/[\s]/g,'');
+                        //     var LastName = data.LastName.replace(/[\s]/g,'');
+                        //     userInfo.UserName = data.UserName?data.UserName: FirstName[0] + "." + LastName;
+                        //     userInfo.UserName = userInfo.UserName.replace(/[\s]/g,'');
+                        //     return success;
+                        // }
+                        isCreateByName = true;
+                        var FirstName = data.FirstName.replace(/[\s]/g,'');
+                        var LastName = data.LastName.replace(/[\s]/g,'');
+                        userInfo.UserName = data.UserName?data.UserName: FirstName[0] + "." + LastName;
+                        userInfo.UserName = userInfo.UserName.replace(/[\s]/g,'');
+                        return success;
                     }, function(err) {
                         // t.rollback();
                         throw err;
@@ -713,16 +720,16 @@ module.exports = {
                         if (validated && validated.status == 'success') {
                             userInfo.Password = generatePassword(6, false,/^[A-Za-z0-9]$/);
                             userInfo.PinNumber = data.PinNumber ? data.PinNumber : generatePassword(6, false,/^[0-9]$/);
-                            userInfo.UserName = userInfo.UserName.replace(/[\s]/g,'');
                             // return Services.UserAccount.CreateUserAccount(userInfo, t);
-                            if(!data.PhoneNumber && !data.Email) {
-                                function checkUser(arr, numb){
+                            // if(!data.PhoneNumber && !data.Email) {
+                                function checkUser(arr, numb, name){
+                                    console.log("name ",name);
                                     var promise = new Promise(function(a,b) {
                                         for(var i = 0; i < arr.length; i++) {
                                             if(arr[i].UserName == userInfo.UserName) {
-                                                userInfo.UserName += numb;
+                                                userInfo.UserName = name + numb.toString();
                                                 numb++;
-                                                checkUser(arr, numb);
+                                                checkUser(arr, numb, name);
                                             }
                                         }
                                         a();
@@ -741,8 +748,9 @@ module.exports = {
                                         return validated;
                                     }
                                     else {
-                                        var number = 1;
-                                        checkUser(got_user, number)
+                                        var number = 0;
+                                        var Name = userInfo.UserName;
+                                        checkUser(got_user, number, Name)
                                         .then(function() {
                                             return validated;
                                         });
@@ -750,10 +758,7 @@ module.exports = {
                                 }, function(err) {
                                     throw err;
                                 })
-                            }
-                            else {
-                                return validated;
-                            }
+                            // }
                         } else {
                             return validated;
                         }

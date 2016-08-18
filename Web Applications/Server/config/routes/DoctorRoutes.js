@@ -128,7 +128,11 @@ module.exports = {
 	'post /api/getOneDepartment': {
 		controller:'Doctor/DoctorController',
 		action:'GetOneDepartment'
-	}
+	},
+	'post /api/doctor/loadlist-doctor-for-onlinebooking': {
+		controller:'Doctor/DoctorController',
+    	action:'LoadlistDoctorForOnlineBooking'
+	},
 
 
 };

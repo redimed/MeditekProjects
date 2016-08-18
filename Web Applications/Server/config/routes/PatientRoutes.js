@@ -92,4 +92,9 @@ module.exports={
 		controller: 'Patient/PatientController',
 		action: 'LoadChildNode'
 	},
+
+	'post /api/patient/create-patient-for-onlinebooking': {
+		controller: 'Patient/PatientController',
+		action: 'CreatePatientForOnlineBooking'
+	}
 }

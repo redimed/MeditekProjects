@@ -20,7 +20,8 @@ module.exports = {
         'CheckPatient': true,
         'SearchPatient': true,
         'RegisterPatient': true,
-        'GetPatient': true
+        'GetPatient': true,
+        'CreatePatientForOnlineBooking':'isIp',
 
     }
 }

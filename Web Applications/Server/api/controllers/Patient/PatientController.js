@@ -513,9 +513,7 @@ module.exports = {
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.serverError({
-                        message: ErrorWrap(err)
-                    });
+                    res.serverError(ErrorWrap(err));
                 }
             })
             .catch(function(err) {

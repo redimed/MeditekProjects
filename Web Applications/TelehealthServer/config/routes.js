@@ -1,138 +1,31 @@
-module.exports.routes = {
-    //=================Telehealth User Routes======================
-    // khong xai nua
-    'POST /api/telehealth/user/updateToken': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'UpdateDeviceToken'
-    },
+var routes = {};
+var _ = require('lodash');
 
-    //khong xai nua
-    'POST /api/telehealth/user/requestActivationCode': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'RequestActivationCode'
-    },
-    //khong xai nua
-    'POST /api/telehealth/user/verifyActivationCode': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'VerifyActivationCode'
-    },
 
-    //=================Login====================
-    'POST /api/telehealth/checkActivation': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'CheckActivation'
-    },
-    'POST /api/telehealth/updatePinNumber': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'UpdatePinNumber'
-    },
-    //=====================================
+// Begin Module File Doctor
+var DoctorRoutes = require('./routes/DoctorRoutes');
+_.extend(routes, DoctorRoutes);
+// End Module File Doctor
 
-    'GET /api/telehealth/user/:uid': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetTelehealthUser'
-    },
-    'POST /api/telehealth/user': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetTelehealthUserNew'
-    },
-    'GET /api/telehealth/user/details/:uid': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetPatientDetails'
-    },
-    'POST /api/telehealth/user/update': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'UpdatePatientDetails'
-    },
-    'POST /api/telehealth/user/enableFile': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'ChangeEnableFile'
-    },
-    'POST /api/telehealth/user/appointments': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetUserAppointments'
-    },
-    'GET /api/telehealth/user/telehealthAppointmentDetails/:uid': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetTelehealthAppointmentDetails'
-    },
-    'GET /api/telehealth/user/WAAppointmentDetails/:uid': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetWAAppointmentDetails'
-    },
-    'POST /api/telehealth/user/pushNotification': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'PushNotification'
-    },
-    'POST /api/telehealth/user/forgetPin': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'ForgetPIN'
-    },
-    'POST /api/telehealth/listDoctor': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetListDoctor'
-    },
-    'GET /api/telehealth/listCountry': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetListCountry'
-    },
-    'POST /api/telehealth/sendCoreServer': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'SendCoreServer'
-    },
-    '/api/telehealth/logout': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'Logout'
-    },
-    //================Telehealth Socket Routes==========================
-     '/api/telehealth/socket/joinRoom': {
-        controller: 'SocketController',
-        action: 'JoinConferenceRoom'
-    },
-    '/api/telehealth/socket/messageTransfer': {
-        controller: 'SocketController',
-        action: 'MessageTransfer'
-    },
-    '/api/telehealth/socket/addDoctor': {
-        controller: 'SocketController',
-        action: 'AddDoctor'
-    },
-    'GET /api/telehealth/socket/generateSession': {
-        controller: 'SocketController',
-        action: 'GenerateConferenceSession'
-    },
-    'GET /api/telehealth/socket/listRoom': {
-        controller: 'SocketController',
-        action: 'ListRoomSocket'
-    },
-    'POST /api/telehealth/socket/totalUserInRoom': {
-        controller: 'SocketController',
-        action: 'TotalUserInRoom'
-    },
-    //=================Telehealth Appointment============================
-    'POST /api/telehealth/appointment/updateFile': {
-        controller: 'Telehealth/v1_0/AppointmentController',
-        action: 'UpdateFile'
-    },
-    'POST /api/telehealth/appointment/list': {
-        controller: 'Telehealth/v1_0/AppointmentController',
-        action: 'ListAppointment'
-    },
-    'POST /api/telehealth/appointment/request': {
-        controller: 'Telehealth/v1_0/AppointmentController',
-        action: 'RequestAppointmentPatient'
-    },
-    //=================Test Push Notification=============================
-    'GET /api/testTelehealthPushAPN/:badge': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TestTelehealthPushAPN'
-    },
-    'GET /api/testTelehealthPushGCM': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TestTelehealthPushGCM'
-    },
-    'GET /api/testGCM/:device': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TestGCM'
-    }
-};
+// Begin Module File Telehealth
+var TelehealthRoutes = require('./routes/TelehealthRoutes');
+_.extend(routes, TelehealthRoutes);
+// End Module File Telehealth
+
+// Begin Module File WorkInjury
+var WorkInjuryRoutes = require('./routes/WorkInjuryRoutes');
+_.extend(routes, WorkInjuryRoutes);
+// End Module File WorkInjury
+
+// Begin Module File Socket
+var SocketRoutes = require('./routes/SocketRoutes');
+_.extend(routes, SocketRoutes);
+// End Module File Socket
+
+// Begin Module File WorkInjury
+var WorkInjuryRoutes = require('./routes/WorkInjuryRoutes');
+_.extend(routes, WorkInjuryRoutes);
+// End Module File WorkInjury
+
+
+module.exports.routes = routes;

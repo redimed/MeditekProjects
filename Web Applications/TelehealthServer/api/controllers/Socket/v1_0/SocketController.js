@@ -51,8 +51,7 @@ module.exports = {
             err.pushError("Socket Request Only!");
             return res.serverError(ErrorWrap(err));
         }
-        console.log("aaaaaaa", req.param('uid'), req.isSocket);
-        console.log("headers", req.headers);
+        console.log("JoinRoom", req.param('uid'), req.isSocket);
         var uid = req.param('uid');
         var error = null;
         if (uid) {
@@ -60,10 +59,12 @@ module.exports = {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
-                    console.log("roomList", sails.sockets.rooms());
+                    var roomNames = JSON.stringify(sails.sockets.rooms());
+                    console.log("roomList", roomNames);
                     sails.sockets.leave(req.socket, req.socket.id);
                     console.log("JoinConferenceRoom Successfully", uid);
-                    console.log("roomList", sails.sockets.rooms());
+                    var roomNames1 = JSON.stringify(sails.sockets.rooms());
+                    console.log("roomList", roomNames1);
                     RedisWrap.hget(redisKey, uid).then(function(data) {
                         if (data != null) {
                             var awaitTime = moment(new Date()) - moment(data.timeCall);

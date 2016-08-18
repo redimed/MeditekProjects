@@ -2,7 +2,7 @@ var rootPath = process.cwd();
 var gcm = require('node-gcm');
 var telehealthApiKey = 'AIzaSyAo_sOEWtIEoNgGJxsdd8Fywkep-c5FbB0';
 // var telehealthApiKey = 'AIzaSyBdHCijDr0RNRzYYjvImikY8ZmMWibiYkc';
-var workinjuryApiKey = 'AIzaSyAX5704J8-KtexZHaPoFFglzneoPKwv5cs';
+var workinjuryApiKey = 'AIzaSyAg1tnh5akORy2ZhgJR2qZByHjS3F4G4fw';
 var gcmTelehealth = new gcm.Sender(telehealthApiKey);
 var gcmWorkInjury = new gcm.Sender(workinjuryApiKey);
 module.exports.myconf = {
@@ -33,6 +33,7 @@ module.exports.myconf = {
     // AuthAPI: 'http://testapp.redimed.com.au:3006',
     // CoreAPI: 'http://telehealthvietnam.com.vn:3005',
     CoreAPI: 'http://localhost:3005',
+    EformAPI: 'http://localhost:3015',
     // AuthAPI: 'http://telehealthvietnam.com.vn:3006'
     AuthAPI: 'http://localhost:3006'
 };

@@ -196,6 +196,13 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                         $scope.patientInfo = $scope.apptdetail.TelehealthAppointment.PatientAppointment;
                         console.log('$scope.patientInfo', $scope.patientInfo);
                     }
+                    if($scope.apptdetail.AppointmentData.length > 0) {                        
+                        for (var i = 0; i < $scope.apptdetail.AppointmentData.length; i++) {                                                       
+                            if($scope.apptdetail.AppointmentData[i].Name =='ResultEmail')
+                            $scope.patientInfo.resultEmail = $scope.apptdetail.AppointmentData[i].Value;
+
+                        }
+                    }
                 };
             };
 
@@ -245,7 +252,9 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                             var string = string.split(", ");
                         };
 
-                        if (response.Email1 != null) {
+                        if (response.resultEmail != null) {
+                            self.data.recipient.push(response.resultEmail);
+                        } else if (response.Email1 != null) {
                             self.data.recipient.push(response.Email1);
                         } else if (response.Email2 != null) {
                             self.data.recipient.push(response.Email2);
@@ -288,7 +297,7 @@ app.directive('patientDetailDirective', function($uibModal, $timeout, $cookies) 
                                         console.log("response ", response);
                                         self.show_consult = true;
                                         self.consult = response.rows[0];
-                                        self.consult.Code = self.attach[0].Appointments[0].Code;
+                                       self.consult.Code = self.attach[0].Appointments[0].Code;
                                     }, function(err) {
                                         console.log("err ", err);
                                     })

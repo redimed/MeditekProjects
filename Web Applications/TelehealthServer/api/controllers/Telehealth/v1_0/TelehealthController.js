@@ -184,6 +184,9 @@ module.exports = {
         })
     },
     GetTelehealthUserNew: function(req, res) {
+        console.log("GetTelehealthUserNew", typeof req.body);
+        console.log("GetTelehealthUserNew",HelperService.toJson(req.body));
+        console.log("GetTelehealthUserNew",req.headers);
         if (typeof req.body == 'undefined' || !HelperService.toJson(req.body)) {
             var err = new Error("Telehealth.PushNotification.Error");
             err.pushError("Invalid Params");
@@ -239,7 +242,7 @@ module.exports = {
                                 }).then(function() {
                                     return TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
                                         if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-                                        res.ok({
+                                        return res.ok({
                                             message: "success",
                                             data: {
                                                 TelehealthUser: teleUser,
@@ -248,7 +251,13 @@ module.exports = {
                                             }
                                         });
                                     }, function(err) {
-                                        res.json(err.getCode(), err.getBody());
+                                        return res.ok({
+                                            message: "success",
+                                            data: {
+                                                TelehealthUser: teleUser,
+                                                TelehealthDevice: teleDevice
+                                            }
+                                        });
                                     });
                                 }).catch(function(err) {
                                     res.serverError(ErrorWrap(err));
@@ -848,7 +857,6 @@ module.exports = {
         });
     },
     CheckActivation: function(req, res) {
-        console.log("Activation", JSON.stringify(req.body));
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
             var err = new Error("Telehealth.Activation.Error");
             err.pushError("Invalid Params");
@@ -900,6 +908,7 @@ module.exports = {
                     }
                 })
         } else {
+            console.log("=========================", "Activation");
             var err = new Error("Telehealth.Activation.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
@@ -908,7 +917,7 @@ module.exports = {
     CheckActivationNew: function(req, res) {
         console.log("Activation", JSON.stringify(req.body));
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.Activation.Error");
+            var err = new Error("Telehealth.CheckActivationNew.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
             return;
@@ -945,7 +954,7 @@ module.exports = {
                 res.serverError(err.getBody());
             });
         } else {
-            var err = new Error("Telehealth.Activation.Error");
+            var err = new Error("Telehealth.CheckActivationNew.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
         }

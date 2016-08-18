@@ -27,13 +27,26 @@ var policies = {
 var telehealthPolicies = require('./policies/TelehealthPolicies');
 _.extend(policies, telehealthPolicies);
 //End module Telehealth
+
 //Begin module Socket
 var socketPolicies = require('./policies/SocketPolicies');
 _.extend(policies, socketPolicies);
 // End module Socket
+
 //Begin module Appointment
 var appointmentPolicies = require('./policies/AppointmentPolicies');
 _.extend(policies, appointmentPolicies);
 //End module Appointment
+
+//Begin module Doctor
+var doctorPolicies = require('./policies/DoctorPolicies');
+_.extend(policies, doctorPolicies);
+//End module Doctor
+
+//Begin module WorkInjury
+var workInjuryPolicies = require('./policies/WorkInjuryPolicies');
+_.extend(policies, workInjuryPolicies);
+//End module WorkInjury
+
 module.exports.policies = policies;
 //

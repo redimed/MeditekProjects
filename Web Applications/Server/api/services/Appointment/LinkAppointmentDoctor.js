@@ -82,7 +82,7 @@ module.exports = function(data) {
                 defer.reject({ error: err });
             });
     } else {
-        defer.reject({ error: 'data.isEmpty' });
+        defer.reject({ error: new Error('data.isEmpty') });
     }
     return defer.promise;
 };

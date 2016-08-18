@@ -608,32 +608,29 @@ module.exports = {
             req.dmObj = {
                 RoleCode: 'ADMIN',
                 ReceiverType: 'ALL_ADMINS',
-                apptUID: data.Appointment.UID,
+                apptUID: data.Appointment ? data.Appointment.UID : null,
                 Message: 'LinkPatient',
                 Action: 'link a patient in appointment',
                 Url_State: 'authentication.WAAppointment.detail'
             };
-            var role = HelperService.GetRole(req.user.roles);
-            if (role.isInternalPractitioner ||
-                role.isAdmin ||
-                role.isAssistant ||
-                role.isOrganization) {
-                Services.LinkAppointmentPatient(data, req.user)
-                    .then(function(success) {
-                        res.ok('success');
-                    }, function(err) {
-                        if (HelperService.CheckExistData(err) &&
-                            HelperService.CheckExistData(err.transaction) &&
-                            HelperService.CheckExistData(err.error)) {
-                            err.transaction.rollback();
-                            res.serverError(ErrorWrap(err.error));
-                        } else {
+            Services.LinkAppointmentPatient(data, req.user)
+                .then(function(success) {
+                    success.transaction.commit()
+                        .then(function(cm) {
+                            res.ok({ status: 'success' });
+                        }, function(err) {
                             res.serverError(ErrorWrap(err));
-                        }
-                    });
-            } else {
-                res.serverError('user.not(interalPractitioner,admin,assistant, isOrganization)');
-            }
+                        });
+                }, function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
+                        err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err.error));
+                    }
+                });
         }
     },
     LinkAppointmentDoctor: function(req, res) {
@@ -644,7 +641,7 @@ module.exports = {
             req.dmObj = {
                 RoleCode: 'ADMIN',
                 ReceiverType: 'ALL_ADMINS',
-                apptUID: data.Appointment.UID,
+                apptUID: data.Appointment ? data.Appointment.UID : null,
                 Message: 'LinkDoctor',
                 Action: 'link a doctor in appointment',
                 Url_State: 'authentication.WAAppointment.detail'
@@ -664,7 +661,7 @@ module.exports = {
                         err.transaction.rollback();
                         res.serverError(ErrorWrap(err.error));
                     } else {
-                        res.serverError(ErrorWrap(err));
+                        res.serverError(ErrorWrap(err.error));
                     }
                 });
         }

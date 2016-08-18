@@ -2,31 +2,31 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
         <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title text-primary">Notification Private Detail</h4>
+    <h4 class="modal-title text-primary">{{data.MsgKind}} {{data.MsgKind === 'Review' ? data.Subject : ''}} Detail</h4>
 </div>
 <div class="modal-body">
     <form name="formglobal" class="form" novalidate>
         <div class="form-horizontal">
             <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Sender:</label>
+                <label class="control-label bold col-md-3 col-xs-4 text-right">Sender:</label>
                 <div class="col-md-8 col-xs-8">
                     <div class="form-control-static bold font-blue">{{data.SenderAccount.UserName}}</div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Receiver:</label>
+                <label class="control-label bold col-md-3 col-xs-4 text-right">Receiver:</label>
                 <div class="col-md-8 col-xs-8">
                     <div class="form-control-static">{{data.ReceiverAccount.UserName}}</div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Subject:</label>
+                <label class="control-label bold col-md-3 col-xs-4 text-right">Subject:</label>
                 <div class="col-md-8 col-xs-8">
                     <div class="form-control-static bold">{{data.Subject}}</div>
                 </div>
             </div>
             <div class="form-group" ng-if="data.MsgState">
-                <label class="control-label col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">Status:</label>
+                <label class="control-label bold col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">Status:</label>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <div class="mt-radio-inline">
                         <label class="mt-radio mt-radio-outline" ng-repeat="sta in status">
@@ -36,15 +36,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Content:</label>
+                <label class="control-label bold col-md-3 col-xs-4 text-right">Content:</label>
                 <div class="col-md-8 col-xs-8">
                     <div class="form-control-static">{{data.MsgContent.Display.Action}}</div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-3 col-xs-4 text-right">Created Date:</label>
+                <label class="control-label bold col-md-3 col-xs-4 text-right">Created Date:</label>
                 <div class="col-md-8 col-xs-8">
-                    <div class="form-control-static">{{data.CreatedDate | date:'dd/MM/yyyy'}}</div>
+                    <div class="form-control-static">{{data.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label bold col-md-3 col-xs-4 text-right">Modified By:</label>
+                <div class="col-md-8 col-xs-8">
+                    <div class="form-control-static">{{data.ModifiedAccount.UserName}}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label bold col-md-3 col-xs-4 text-right">Modified Date:</label>
+                <div class="col-md-8 col-xs-8">
+                    <div class="form-control-static">{{data.ModifiedDate | date:"MM/dd/yyyy 'at' h:mma"}}</div>
                 </div>
             </div>
         </div>

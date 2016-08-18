@@ -11,7 +11,7 @@ app.directive('notificationPrivate', function() {
             kind: "=onKind",
             limit: "=onLimit"
         },
-        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state, $uibModal) {
+        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state, $stateParams, $uibModal) {
             var self = $scope;
 
             var UserInfo = $cookies.getObject('userInfo');
@@ -22,6 +22,10 @@ app.directive('notificationPrivate', function() {
                 userUID: userUID,
                 queue: queue,
                 kind: $scope.kind,
+            };
+
+            if ($stateParams.type) {
+                self.search.type = $stateParams.type;
             };
 
             self.fieldSort = {};
@@ -69,6 +73,9 @@ app.directive('notificationPrivate', function() {
                         kind: $scope.kind,
                     },
                     order: 'CreatedDate DESC'
+                };
+                if ($stateParams.type) {
+                    self.searchObject.Search.type = $stateParams.type;
                 };
                 // scope.search.Enable = null;
                 self.searchObjectMap = angular.copy(self.searchObject);

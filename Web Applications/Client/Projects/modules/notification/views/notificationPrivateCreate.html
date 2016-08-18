@@ -2,7 +2,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
         <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title text-primary">Notification</h4>
+    <h4 class="modal-title text-primary">{{kind + ' ' + type}}</h4>
 </div>
 <div class="modal-body">
     <form name="formglobal" class="form" novalidate>
@@ -10,8 +10,9 @@
             <div class="form-group">
                 <label class="control-label col-md-3 col-xs-3 text-right">Subject:</label>
                 <div class="col-md-8 col-xs-9">
-                    <input type="text" class="form-control" name="subject" ng-model="private.Subject" placeholder="Subject" required ng-disabled="DisabledSub" />
-                    <span style="color:red" ng-show="formglobal.subject.$dirty && formglobal.subject.$invalid">
+                    <input type="text" class="form-control" name="subject" ng-model="private.Subject" placeholder="Subject" required ng-if="!DisabledSub" />
+                    <div class="form-control-static bold" ng-if="DisabledSub">{{private.Subject}}</div>
+                    <span style="color:red" ng-show="formglobal.subject.$dirty && formglobal.subject.$invalid" ng-if="!DisabledSub">
                         <span ng-show="formglobal.subject.$dirty && formglobal.subject.$error.required">Subject is required.</span>
                     </span>
                 </div>

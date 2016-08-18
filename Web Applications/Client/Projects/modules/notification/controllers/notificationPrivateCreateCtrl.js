@@ -1,8 +1,8 @@
 var app = angular.module("app.authentication.notification.private.create.controller", []);
 
-app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal, kind) {
+app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal, kind, $stateParams) {
     $scope.now = true;
-    // $scope.status = kind === 'ToDo' || kind === 'Request' ? true : false;
+    $scope.kind = kind;
     $scope.submitText = 'Sent';
     $scope.lsDoctor = [];
     $scope.lsPatient = [];
@@ -24,7 +24,10 @@ app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance,
             { field: "Cancel", name: "Cancel" },
         ];
         if (kind === 'Review') {
-            $scope.private.Subject = 'Dictation';
+            if ($stateParams.type) {
+                $scope.private.Subject = $stateParams.type;
+                $scope.type = $stateParams.type;
+            };
             $scope.DisabledSub = true;
         };
     };

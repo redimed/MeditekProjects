@@ -115,17 +115,21 @@ module.exports={
         MsgState:{
             type:Sequelize.STRING(45)
         },
+
+        ModifiedDate:{
+            type:Sequelize.DATE
+        },
+
+        ModifiedBy:{
+            type:Sequelize.BIGINT(20)
+        },
 	},
 
 	associations: function() {},
-	options: {
+    options: {
         tableName: 'QueueJob',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(queuejob, options, callback) {
-                queuejob.CreatedDate = new Date();
-                callback();
-            }
-        }
+        createdAt: 'CreatedDate',
+        updatedAt: 'ModifiedDate',
+        hooks: {}
     }
 }

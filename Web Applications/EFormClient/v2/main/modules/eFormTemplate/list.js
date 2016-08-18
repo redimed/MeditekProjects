@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import Service from '../../services/main'
 import IP from '../../config/ip'
+import Helper from '../../config/helper'
 
 class EFormTemplateList extends Component{
 	constructor(){
@@ -22,11 +23,12 @@ class EFormTemplateList extends Component{
    		return IP.Host + '/eformtemplate/detail?templateUID=' + item.UID
    	}
    	link2eform(item) {
-   		var appt_uid = '7f188a68-eee8-4c15-af77-d256ecef7929'
-   		// var user_uid = ''
-   		// var patient_uid = ''
 
-   		return IP.Host + '/eform/detail?templateUID=' + item.UID + '&appointmentUID=' + appt_uid 
+   		var appt_uid = 'b7b9fd84-8c8e-423d-836e-b7a2e14e415f'
+   	  var user_uid = '96ac29c9-5de1-11e6-ae53-0242ac130003'
+   		var patient_uid = '4eb681ec-15cf-4382-95f8-499d100732d4'
+      return Helper.linkEForm( 1 , item.UID , appt_uid, patient_uid, user_uid)
+   		// return IP.Host + '/eform/detail?templateUID=' + item.UID + '&appointmentUID=' + appt_uid 
    	}
 
    	render(){

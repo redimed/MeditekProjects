@@ -1,13 +1,20 @@
 const CONSTANTS = {
     VALUES: {
         TRUE: 'true',
-        FALSE: 'false'
+        FALSE: 'false',
+        DATE_FORMAT: 'DD/MM/YYYY'
     },
     EFORM: {
     	SHORT: {
 	    	SECTION_ROW: 'r',
 	    	ROW_OBJECT: 'o',
     	},
+        GROUP_OBJECT: {
+            CHECKBOX: 'default',
+            LABEL: 'label',
+            INPUT: 'input',
+            DYNAMIC: 'dynamic'
+        },
     	OBJECT_TYPE: {
     		LABEL: 'lb',
     		RADIO: 'r',

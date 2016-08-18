@@ -66,7 +66,7 @@ class Row extends Component{
                                 res = (
                                     <div className={className}
                                         style={style}>
-                                        <Radio name={o.get('name' || '')} id={o.get('params', 'id' || '')} value={o.get('params','value')}/>
+                                        <Radio name={o.get('name')  || '' } id={o.get('params', 'id')  || ''} value={o.get('params','value')}/>
                                         &nbsp;&nbsp;
                                         <label htmlFor={o.get('params', 'id' || '')}>{o.get('params', 'title')}</label>
                                     </div>
@@ -76,9 +76,9 @@ class Row extends Component{
                                 res = (
                                     <div className={className}
                                         style={style}>
-                                        <Checkbox name={o.get('name' || '')} id={o.get('params', 'id' || '')}/>
+                                        <Checkbox name={o.get('name')  || ''} id={o.get('params', 'id') || ''}  value={o.get('params','value')}/>
                                         &nbsp;&nbsp;
-                                        <label htmlFor={o.get('params', 'id' || '')}>{o.get('params', 'title')}</label>
+                                        <label htmlFor={o.get('params', 'id')  || ''}>{o.get('params', 'title')}</label>
                                     </div>
                                 )
                                 break

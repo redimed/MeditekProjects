@@ -123,6 +123,30 @@ var Services = {
         })
         return p
     },
+
+
+    
+
+    /*
+    *   API 4 PRE LOAD A.K.A DEFAULT DATA
+    */
+    EFormGetApptInfo: function(appt_uid, user_uid){
+        /*
+        *   GET INFO OF APPOINTMENT 
+        */
+        var p = new Promise(function(resolve, reject){
+            $.ajax({
+                type: 'GET',
+                url: `${IP.EFormServer}/api/appointment-wa-detail/${appt_uid}/${user_uid}`,
+                success: resolve
+            })
+        })
+        return p;
+    },
+
+    /*
+    *   UPLOAD IMAGE USING 4 SIGNATURE + DRAWING
+    */
     EFormUploadSignImage: function (blob, meta) {
         // var formdata = data.formdata;
         var formdata = new FormData();

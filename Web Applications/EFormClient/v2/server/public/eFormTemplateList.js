@@ -54,13 +54,17 @@
 
 	var _reactDom = __webpack_require__(39);
 
-	var _main = __webpack_require__(184);
+	var _main = __webpack_require__(185);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _ip = __webpack_require__(185);
+	var _ip = __webpack_require__(183);
 
 	var _ip2 = _interopRequireDefault(_ip);
+
+	var _helper = __webpack_require__(182);
+
+	var _helper2 = _interopRequireDefault(_helper);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -100,11 +104,12 @@
 	    }, {
 	        key: 'link2eform',
 	        value: function link2eform(item) {
-	            var appt_uid = '7f188a68-eee8-4c15-af77-d256ecef7929';
-	            // var user_uid = ''
-	            // var patient_uid = ''
 
-	            return _ip2.default.Host + '/eform/detail?templateUID=' + item.UID + '&appointmentUID=' + appt_uid;
+	            var appt_uid = 'b7b9fd84-8c8e-423d-836e-b7a2e14e415f';
+	            var user_uid = '96ac29c9-5de1-11e6-ae53-0242ac130003';
+	            var patient_uid = '4eb681ec-15cf-4382-95f8-499d100732d4';
+	            return _helper2.default.linkEForm(1, item.UID, appt_uid, patient_uid, user_uid);
+	            // return IP.Host + '/eform/detail?templateUID=' + item.UID + '&appointmentUID=' + appt_uid 
 	        }
 	    }, {
 	        key: 'render',
@@ -20572,9 +20577,7 @@
 /* 179 */,
 /* 180 */,
 /* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20583,7 +20586,118 @@
 	    value: true
 	});
 
-	var _ip = __webpack_require__(185);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _ip = __webpack_require__(183);
+
+	var _ip2 = _interopRequireDefault(_ip);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Helper = function () {
+	    function Helper() {
+	        _classCallCheck(this, Helper);
+	    }
+
+	    _createClass(Helper, null, [{
+	        key: 'selectorUI',
+	        value: function selectorUI(object) {
+	            switch (o.t) {
+	                case EFORM_CONST.OBJECT_TYPE.RADIO:
+	                    return 'input[type=radio][name=' + o.n + ']';
+	                case EFORM_CONST.OBJECT_TYPE.SIGN:
+	                case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                case EFORM_CONST.OBJECT_TYPE.DATE:
+	                default:
+	                    return '#' + o.n;
+	            }
+	        }
+	    }, {
+	        key: 'linkEForm',
+	        value: function linkEForm(page, temp_uid, appt_uid, patient_uid, user_uid) {
+	            var str = _ip2.default.Host + '/eform/detail?templateUID=' + temp_uid + '&appointmentUID=' + appt_uid + '&patientUID=' + patient_uid + '&userUID=' + user_uid + '&page=' + page;
+	            return str;
+	        }
+	    }, {
+	        key: 'b64toBlob',
+	        value: function b64toBlob(b64Data) {
+	            var contentType = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	            var sliceSize = arguments.length <= 2 || arguments[2] === undefined ? 512 : arguments[2];
+
+
+	            var byteCharacters = atob(b64Data);
+	            var byteArrays = [];
+
+	            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+	                var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+	                var byteNumbers = new Array(slice.length);
+	                for (var i = 0; i < slice.length; i++) {
+	                    byteNumbers[i] = slice.charCodeAt(i);
+	                }
+
+	                var byteArray = new Uint8Array(byteNumbers);
+
+	                byteArrays.push(byteArray);
+	            }
+
+	            var blob = new Blob(byteArrays, { type: contentType });
+	            return blob;
+	        }
+	    }, {
+	        key: 'toStyleBorder',
+	        value: function toStyleBorder(attrBorder, toStyle) {
+	            if (!toStyle) toStyle = {};
+	            if (attrBorder !== 'none') {
+	                var split_p_border = attrBorder.split('-');
+	                split_p_border.map(function (b) {
+	                    if (b === 't') toStyle.borderTop = '1px solid black';else if (b === 'l') toStyle.borderLeft = '1px solid black';else if (b === 'r') toStyle.borderRight = '1px solid black';else if (b === 'b') toStyle.borderBottom = '1px solid black';
+	                });
+	            }
+	            return toStyle;
+	        }
+	    }]);
+
+	    return Helper;
+	}();
+
+	exports.default = Helper;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var server = 'https://meditek.redimed.com.au';
+	// const server = 'http://localhost'
+	var local = 'http://localhost';
+
+	var ip = {
+	    EFormServer: local + ':3015',
+	    ApiServerUrl: local + ':3005',
+	    Host: local + ':3020'
+	};
+
+	exports.default = ip;
+
+/***/ },
+/* 184 */,
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _ip = __webpack_require__(183);
 
 	var _ip2 = _interopRequireDefault(_ip);
 
@@ -20709,6 +20823,27 @@
 	        });
 	        return p;
 	    },
+
+	    /*
+	    *   API 4 PRE LOAD A.K.A DEFAULT DATA
+	    */
+	    EFormGetApptInfo: function EFormGetApptInfo(appt_uid, user_uid) {
+	        /*
+	        *   GET INFO OF APPOINTMENT 
+	        */
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'GET',
+	                url: _ip2.default.EFormServer + '/api/appointment-wa-detail/' + appt_uid + '/' + user_uid,
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
+	    /*
+	    *   UPLOAD IMAGE USING 4 SIGNATURE + DRAWING
+	    */
 	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
 	        // var formdata = data.formdata;
 	        var formdata = new FormData();
@@ -20753,26 +20888,6 @@
 	};
 
 	exports.default = Services;
-
-/***/ },
-/* 185 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	//const server = 'https://meditek.redimed.com.au'
-	var server = 'http://localhost';
-
-	var ip = {
-	    EFormServer: server + ':3015',
-	    ApiServerUrl: server + ':3005',
-	    Host: server + ':3020'
-	};
-
-	exports.default = ip;
 
 /***/ }
 /******/ ]);

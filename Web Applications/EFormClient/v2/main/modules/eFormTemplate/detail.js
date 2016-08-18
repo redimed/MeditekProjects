@@ -14,7 +14,8 @@ class EFormTemplateDetail extends Component{
         super()
         this.list = new Baobab({
             sections: [],
-            obj: []
+            obj: [],
+            defVal: []
         })
         this.selected_obj = null
         // this.align_arr = [
@@ -36,32 +37,20 @@ class EFormTemplateDetail extends Component{
         Service.EFormTemplateDetail({uid: this.template_uid})
         .then(function(response){
             var TempData = JSON.parse(response.data.EFormTemplateData.TemplateData)
+            console.log(TempData)
             if(TempData.hasOwnProperty('sections')) {
                  self.list.set('sections', TempData.sections)
             } else {
                  self.list.set('sections', []);
             }
+            if(TempData.hasOwnProperty('defVal')) {
+                 self.list.set('defVal', TempData.defVal)
+            }
+
             self._register_navbar_add_section()
             self._clearAllDetail()
             self.forceUpdate()
         })
-    }
-    _addSection(section){
-        section.ref = 's_'+this._getCurrentRef()
-        let section_list = this.list.select('sections').push(section)
-        this.list.sections = section_list
-        this.forceUpdate()
-    }
-    _addRow(row, s_index){
-        row.ref = 'r_'+s_index+'_'+this._getCurrentRow(s_index)
-        this.list.select('sections', s_index, 'r').push(row)        
-        this.forceUpdate()  
-    }
-    _register_navbar_add_section(){
-        const self = this
-        this.refs.navbar_add_section.addEventListener('click', function(event){
-            self._addSection({title: '', page: 1, r: []})
-        }, false)
     }
     _getCurrentRef(){
         let res = 0
@@ -74,6 +63,12 @@ class EFormTemplateDetail extends Component{
             res++
         return res
     }
+    _addSection(section){
+        section.ref = 's_'+this._getCurrentRef()
+        let section_list = this.list.select('sections').push(section)
+        this.list.sections = section_list
+        this.forceUpdate()
+    }
     _getCurrentRow(s_index){
         let res = 0
         this.list.select('sections', s_index, 'r').map(function(r, r_index){
@@ -85,6 +80,19 @@ class EFormTemplateDetail extends Component{
             res++
         return res
     }
+    _addRow(row, s_index){
+        row.ref = 'r_'+s_index+'_'+this._getCurrentRow(s_index)
+        this.list.select('sections', s_index, 'r').push(row)        
+        this.forceUpdate()  
+    }
+    _register_navbar_add_section(){
+        const self = this
+        this.refs.navbar_add_section.addEventListener('click', function(event){
+            self._addSection({title: '', page: 1, r: []})
+        }, false)
+    }
+    
+    
     _onChangeSectionDynamic(s_index, value){
         this.list.select('sections', s_index).set('dynamic', value)
         this.forceUpdate()
@@ -189,54 +197,80 @@ class EFormTemplateDetail extends Component{
     }
     _onSelectObject(s_index, r_index, type){
         var get_object = this.list.select('sections', s_index, 'r', r_index, 'o');
-
-        if(type === EFORM_CONST.OBJECT_TYPE.LABEL)
-            get_object.push({type: type, name: '', params: {width: '150px', title: 'Label'}})
-        else if(type === EFORM_CONST.OBJECT_TYPE.RADIO || type ===  EFORM_CONST.OBJECT_TYPE.CHECKBOX)
-            get_object.push({type: type, name: '', params: {width: '150px', title: 'Title', value: ''}})
-        else if(type === EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE)
-            get_object.push({type: type, name: '', params: {width: '768px', objects:[]}})
-        else if(type === EFORM_CONST.OBJECT_TYPE.DRAW)
-            get_object.push({type: type, name: '', params: {width: '250px'}})
-        else
-            get_object.push({type: type, name: '', params: {width: '150px'}})
+        switch(type) {
+            case EFORM_CONST.OBJECT_TYPE.LABEL:
+                get_object.push({type: type, name: '', params: {width: '150px', title: 'Label'}})
+                break;
+            case EFORM_CONST.OBJECT_TYPE.RADIO:
+            case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
+                get_object.push({type: type, name: '', params: {width: '150px', title: 'Title', value: ''}})
+                break;
+            case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:
+                get_object.push({type: type, name: '', params: {width: '768px', objects:[]}})
+                break;
+            case EFORM_CONST.OBJECT_TYPE.DRAW:
+                get_object.push({type: type, name: '', params: {width: '250px'}})
+                break;    
+            default:
+                get_object.push({type: type, name: '', params: {width: '150px'}})
+        }
         this.forceUpdate()
     }
+
+ 
+
+
     _onClickObject(s_index, r_index, o_index, o){
         this._clearAllDetail()
+
+
         const type = o.get('type')
-        if(type === 'lb'){
-            this.refs.label.style.display = 'inline-block'
-            this.refs.label_width.value = o.select('params').get('width')
-            this.refs.label_value.value = o.select('params').get('title')
-            this.refs.label_order.value = o_index
-            this.refs.label_border.value = o.select('params').get('border') || 'none'
-        }else if(type === 'r' || type === 'c'){
-            this.refs.default.style.display = 'inline-block'
-            this.refs.default_title.value = o.select('params').get('title')
-            this.refs.default_width.value = o.select('params').get('width')
-            this.refs.default_name.value = o.get('name') || ''
-            this.refs.default_value.value = o.select('params').get('value')
-            this.refs.default_order.value = o_index
-            this.refs.default_id.value = o.select('params').get('id') || ''
-            this.refs.default_border.value = o.select('params').get('border') || 'none'
-            this.refs.default_align.value = o.select('params').get('align') || 'left'
-            this.refs.default_disabled.checked = o.select('params').get('disabled') || false
-        }else if(type === 'di'){
-            this.refs.dynamic.style.display = 'inline-block'
-            this.refs.dynamic_width.value = o.select('params').get('width')
-            this.refs.dynamic_name.value = o.get('name') || ''
-            this.refs.dynamic_border.value = o.select('params').get('border') || 'none'
-            this.refs.dynamic_order.value = o_index
-        }else{
-            this.refs.input.style.display = 'inline-block'
-            this.refs.input_width.value = o.select('params').get('width')
-            this.refs.input_name.value = o.get('name') || ''
-            this.refs.input_order.value = o_index
-            this.refs.input_border.value = o.select('params').get('border') || 'none'
-            this.refs.input_align.value = o.select('params').get('align') || 'left'
-            this.refs.input_disabled.checked = o.select('params').get('disabled') || false
+        switch(type) {
+            case EFORM_CONST.OBJECT_TYPE.LABEL:
+                this.refs.label.style.display = 'inline-block'
+                this.refs.label_width.value = o.select('params').get('width')
+                this.refs.label_value.value = o.select('params').get('title')
+                this.refs.label_order.value = o_index
+                this.refs.label_border.value = o.select('params').get('border') || 'none'
+                break;
+            case EFORM_CONST.OBJECT_TYPE.RADIO:
+            case EFORM_CONST.OBJECT_TYPE.CHECKBOX:    
+                this.refs.default.style.display = 'inline-block'
+                this.refs.default_title.value = o.select('params').get('title')
+                this.refs.default_width.value = o.select('params').get('width')
+                this.refs.default_name.value = o.get('name') || ''
+                this.refs.default_value.value = o.select('params').get('value')
+                this.refs.default_order.value = o_index
+                this.refs.default_id.value = o.select('params').get('id') || ''
+                this.refs.default_border.value = o.select('params').get('border') || 'none'
+                this.refs.default_align.value = o.select('params').get('align') || 'left'
+                this.refs.default_disabled.checked = o.select('params').get('disabled') || false
+                break;
+            case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:     
+                this.refs.dynamic.style.display = 'inline-block'
+                this.refs.dynamic_width.value = o.select('params').get('width')
+                this.refs.dynamic_name.value = o.get('name') || ''
+                this.refs.dynamic_border.value = o.select('params').get('border') || 'none'
+                this.refs.dynamic_order.value = o_index
+                break;
+            default:
+                var value =  this.__getDefaultValue(o.get('name'))
+
+                if(value) {
+                    this.refs.input_default_value.value = value.v
+                } else { 
+                    this.refs.input_default_value.value = o.select('params').get('default_value') || ''
+                }
+
+                this.refs.input.style.display = 'inline-block'
+                this.refs.input_width.value = o.select('params').get('width')
+                this.refs.input_name.value = o.get('name') || ''
+                this.refs.input_order.value = o_index
+                this.refs.input_border.value = o.select('params').get('border') || 'none'
+                this.refs.input_align.value = o.select('params').get('align') || 'left'
+                this.refs.input_disabled.checked = o.select('params').get('disabled') || false
         }
+
         this.selected_obj = {s_index: s_index, r_index: r_index, o_index: o_index, o: o}
     }
     _clearAllDetail(){
@@ -247,11 +281,13 @@ class EFormTemplateDetail extends Component{
         this.refs.input.style.display = 'none'
         this.refs.dynamic.style.display = 'none'
     }
-    _onSubmitObject(type){
+    _onSubmitObject(group_type){
         let params = null
-        let object = null
-        switch(type){
-            case 'label':
+        let object = null; // this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
+      
+        switch(group_type){
+            case EFORM_CONST.GROUP_OBJECT.LABEL:
+            // case 'label':
                 params = {
                     width: this.refs.label_width.value,
                     value: this.refs.label_value.value,
@@ -262,7 +298,8 @@ class EFormTemplateDetail extends Component{
                 object.select('params').set('title', params.value)
                 object.select('params').set('border', params.border)
                 break
-            case 'default':
+            case EFORM_CONST.GROUP_OBJECT.CHECKBOX:    
+            // case 'default':
                 params = {
                     width: this.refs.default_width.value,
                     value: this.refs.default_value.value,
@@ -274,31 +311,37 @@ class EFormTemplateDetail extends Component{
                     disabled: this.refs.default_disabled.checked
                 }
                 object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
+                // console.log(object.serialize())
+                object.set('name', params.name)
                 object.select('params').set('width', params.width)
                 object.select('params').set('value', params.value)
                 object.select('params').set('title', params.title)
-                object.set('name', params.name)
                 object.select('params').set('id', params.id)
                 object.select('params').set('border', params.border)
                 object.select('params').set('align', params.align)
                 object.select('params').set('disabled', params.disabled)
                 break
-            case 'input':
+            case EFORM_CONST.GROUP_OBJECT.INPUT:      
+            // case 'input':
                 params = {
                     width: this.refs.input_width.value,
                     name: this.refs.input_name.value,
+                    default_value: this.refs.input_default_value.value,
                     border: this.refs.input_border.value,
                     align: this.refs.input_align.value,
                     disabled: this.refs.input_disabled.checked
                 }
                 object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
-                object.select('params').set('width', params.width)
                 object.set('name', params.name)
-                object.select('params').set('align', params.align)
+                object.select('params').set('width', params.width)
+                object.select('params').set('value', params.value)
                 object.select('params').set('border', params.border)
+                object.select('params').set('align', params.align)
                 object.select('params').set('disabled', params.disabled)
+                object.select('params').set('default_value', params.default_value)
                 break
-            case 'dynamic':
+            case EFORM_CONST.GROUP_OBJECT.DYNAMIC:    
+            // case 'dynamic':
                 params = {
                     width: this.refs.input_width.value,
                     name: this.refs.input_name.value,
@@ -359,17 +402,41 @@ class EFormTemplateDetail extends Component{
         }  
     }
    
+    __getDefaultValue(name){
+        // console.log(this.list.select('defVal').serialize(), name)
+        return this.list.select('defVal', {n: name}).serialize()
+    }
+
+
     _onSave(){
         let res_obj = []
+        let newDefVal = []  
+        let defVal = this.list.select('defVal').serialize();
+
+        var getIndexDefaultValue = function(name) {
+            for(var i=0, len = defVal.length; i < len ; ++i) {
+                if(defVal[i].n == name)
+                    return i;
+            }
+            return -1;
+        }
+        var removeDefaultValue = function(index) {
+            return defVal.splice(index, 1);
+        }
+
+
+
         const sections = this.list.select('sections')
         sections.map(function(section, s_index){
             section.select('r').map(function(row){
                 row.select('o').map(function(object){
                     var obj = object.serialize()
-                    if(obj.type === 'r' || obj.type === 'c'){
+      
+                    if(obj.type === EFORM_CONST.OBJECT_TYPE.RADIO || obj.type === EFORM_CONST.OBJECT_TYPE.CHECKBOX){
                         obj.v = obj.params.value
-                    }
-                    if(obj.type !== 'lb'){
+                    } 
+
+                    if(obj.type !== EFORM_CONST.OBJECT_TYPE.LABEL){
                         if(section.get('dynamic') === 'd'){
                             obj.d = {
                                 s: section.get('ref'),
@@ -381,6 +448,22 @@ class EFormTemplateDetail extends Component{
                     }
                     obj.n = obj.name
                     obj.t = obj.type
+
+                    /** DEFAULT VALUE **/
+                    let index = getIndexDefaultValue(obj.n)
+                    if(index != -1) {
+                        let t = removeDefaultValue(index);
+                        // REMOVE OLD ITEM IN defVal
+                        if(obj.params.default_value) {
+                            newDefVal.push({n: obj.n, v: obj.params.default_value, t: obj.t})
+                        } else {
+                            newDefVal.push(t)
+                        }
+                    } else if(obj.params.default_value) {
+                        newDefVal.push({n: obj.n, v: obj.params.default_value, t: obj.t})
+                    }
+                    /** END DEFAULT VALUE **/
+
                     delete obj.params
                     delete obj.align
                     delete obj.name
@@ -388,7 +471,13 @@ class EFormTemplateDetail extends Component{
                 })
             })
         })
+        console.log(res_obj)
+
+        var newArray = newDefVal;
+
         this.list.set('obj', res_obj)
+        this.list.set('defVal', newArray)
+
         Service.EFormTemplateSave({ uid: this.template_uid, content: JSON.stringify(this.list.serialize()), userUID: this.user_uid })
         .then(function(response) {
             alert("Success")
@@ -400,7 +489,7 @@ class EFormTemplateDetail extends Component{
             
         }
     }
-    _onChangeSuggestWidth(type){
+    _onChangeSuggestWidth(group_type){
          console.log('log log', type)
         
        
@@ -408,13 +497,13 @@ class EFormTemplateDetail extends Component{
         if(EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0] === val) 
             return
 
-        switch(type) {
-            case 'input':
+        switch(group_type) {
+            case EFORM_CONST.GROUP_OBJECT.INPUT:
                  var val = $(this.refs.suggest_input_width).val();
                 $(this.refs.input_width).val(val);
                 // $(this.refs.s)
                 break;
-            case 'label':
+            case EFORM_CONST.GROUP_OBJECT.LABEL:
                  var val = $(this.refs.suggest_label_width).val();
                 $(this.refs.label_width).val(val);
                 break;
@@ -503,12 +592,13 @@ class EFormTemplateDetail extends Component{
                         <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
 
+                    {/*    RADIO & CHECKBOX   */}
                     <div className="form-detail" ref="default">
                         <b>Title</b><br/>
                         <input type="text" placeholder="Title" ref="default_title"/><br/>
                         <b>Width</b><br/>
                         <input style={{width: '30%'}} type="text" placeholder="Width" ref="default_width"/>
-                         Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'default')} ref="suggest_default_width">
+                         Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX)} ref="suggest_default_width">
                             {
                                 this.suggest_width.map(function(width){
                                     return <option value={width}>{width}</option>
@@ -545,19 +635,27 @@ class EFormTemplateDetail extends Component{
                         <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
 
+                    {/*    INPUT TEXT, NUMBER, DATE , SIGNATURE, DRAWING  */}
                     <div className="form-detail" ref="input">
-                        <b>Width</b><br/>
-                        <input style={{width: '30%'}} type="text" placeholder="Width" ref="input_width"/> 
-                        Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'input')} ref="suggest_input_width">
-                            {
-                                this.suggest_width.map(function(width){
-                                    return <option value={width}>{width}</option>
-                                })
-                            }
-                        </select>
-                        <br/>
-                        <b>Name</b><br/>
-                        <input type="text" placeholder="Name" ref="input_name"/><br/>
+                        <div>
+                            <b>Width</b><br/>
+                            <input style={{width: '30%'}} type="text" placeholder="Width" ref="input_width"/> 
+                            Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT)} ref="suggest_input_width">
+                                {
+                                    this.suggest_width.map(function(width){
+                                        return <option value={width}>{width}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <b>Name</b><br/>
+                            <input type="text" placeholder="Name" ref="input_name"/>
+                        </div>
+
+                        <b>Default Value</b><br/>
+                        <input type="text" placeholder="Default value" ref="input_default_value"/><br/>
                         <b>Border</b><br/>
                         <input type="text" placeholder="Border" ref="input_border"/><br/>
                         <b>Align</b><br/>
@@ -581,10 +679,12 @@ class EFormTemplateDetail extends Component{
                         <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
 
+
+                     {/*    LABEL   */}
                     <div className="form-detail" ref="label">
                         <b>Width</b><br/>
                         <input style={{width: '30%'}} type="text" placeholder="Width" ref="label_width"/>
-                           Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'label')} ref="suggest_label_width">
+                           Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL)} ref="suggest_label_width">
                             {
                                 this.suggest_width.map(function(width){
                                     return <option value={width}>{width}</option>
@@ -606,6 +706,7 @@ class EFormTemplateDetail extends Component{
                         <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
 
+                    {/*    CHART   */}
                     <div className="form-detail" ref="chart">
                         <b>Width</b><br/>
                         <input type="text" placeholder="Width"/><br/>

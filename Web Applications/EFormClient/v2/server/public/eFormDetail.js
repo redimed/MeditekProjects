@@ -62,11 +62,11 @@
 
 	var _section2 = _interopRequireDefault(_section);
 
-	var _math = __webpack_require__(183);
+	var _math = __webpack_require__(184);
 
 	var _math2 = _interopRequireDefault(_math);
 
-	var _main = __webpack_require__(184);
+	var _main = __webpack_require__(185);
 
 	var _main2 = _interopRequireDefault(_main);
 
@@ -77,6 +77,14 @@
 	var _constants = __webpack_require__(178);
 
 	var _constants2 = _interopRequireDefault(_constants);
+
+	var _loaddatahelper = __webpack_require__(188);
+
+	var _loaddatahelper2 = _interopRequireDefault(_loaddatahelper);
+
+	var _toast = __webpack_require__(189);
+
+	var _toast2 = _interopRequireDefault(_toast);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -106,10 +114,11 @@
 	        _this.pages = [];
 	        _this.current_page = EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE;
 	        _this.md = null;
+
 	        _this.appointment_uid = '';
-	        _this.patient_uid = '';
-	        _this.template_uid = '';
-	        _this.user_uid = '';
+	        _this.patient_uid = ''; // 4 create EFormData
+	        _this.template_uid = ''; // load 
+	        _this.user_uid = ''; // 4 create EFormData
 	        _this.obj_data = [];
 	        _this.is_data = false;
 	        _this.eform_name = '';
@@ -117,22 +126,43 @@
 	    }
 
 	    _createClass(EFormDetail, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
+	        key: '_getRequiredData',
+	        value: function _getRequiredData() {
 	            var p = _math2.default.parseQueryString(window.location.href).page;
 	            this.current_page = p == undefined ? EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE : parseInt(p);
 	            this.appointment_uid = _math2.default.parseQueryString(window.location.href).appointmentUID;
-	            this.patient_uid = _math2.default.parseQueryString(window.location.href).patientUID;
 	            this.user_uid = _math2.default.parseQueryString(window.location.href).userUID;
 	            this.template_uid = _math2.default.parseQueryString(window.location.href).templateUID;
+	            this.patient_uid = _math2.default.parseQueryString(window.location.href).patientUID;
+	            if (!this.template_uid) {
+	                _toast2.default.error('Missing Template uid');
+	                return false;
+	            } else if (!this.appointment_uid) {
+	                _toast2.default.error('Missing Appointment uid');
+	                return false;
+	            } else if (!this.user_uid) {
+	                _toast2.default.error('Missing User uid');
+	                return false;
+	            } else if (!this.patient_uid) {
+	                _toast2.default.error('Missing Patient UID ');
+	                return false;
+	            }
+	            return true;
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            if (!this._getRequiredData()) {
+	                return;
+	            }
+	            var self = this;
 	            this.md = new MobileDetect(window.navigator.userAgent);
 
 	            _main2.default.EFormTemplateDetail({ uid: this.template_uid }).then(function (response) {
 	                self.eform_name = response.data.Name;
 	                var TemplateData = JSON.parse(response.data.EFormTemplateData.TemplateData);
+	                self.defVal = TemplateData.defVal; // SET DEFAULT VALUE
 	                // console.log(TemplateData)
-
 	                self.list.set('sections', TemplateData.sections);
 
 	                // GET ALL SECTIONS WILL DISPLAY IN PAGE
@@ -151,7 +181,8 @@
 	                self.forceUpdate(function () {
 	                    $(self.refs.page).val(self.current_page);
 	                    $(self.refs.page).on('change', function (event) {
-	                        window.location.href = '/eform/detail?page=' + event.target.value;
+	                        var page = event.target.value;
+	                        window.location.href = _helper2.default.linkEForm(page, self.template_uid, self.appointment_uid, self.patient_uid, self.user_uid); //'/eform/detail?page='+event.target.value
 	                    });
 	                    var body = new Hammer(document.body);
 	                    body.on('tap', function (event) {
@@ -172,6 +203,7 @@
 	                    // END DYNAMIC MODULE
 	                    // console.log('EFORM DATA: ', TemplateData)
 	                    _main2.default.EFormCheckData({ templateUID: self.template_uid, appointmentUID: self.appointment_uid }).then(function (response) {
+
 	                        if (response.data) {
 	                            self.is_data = true;
 	                            self.eform_uid = response.data.UID;
@@ -181,7 +213,8 @@
 	                            last_data.map(function (eo) {
 	                                for (var i = 0; i < TemplateData.obj.length; i++) {
 	                                    var doj = TemplateData.obj[i];
-	                                    if (EFORM_CONST.OBJECT_TYPE.RADIO === doj.t) {
+	                                    if (EFORM_CONST.OBJECT_TYPE.RADIO === doj.t || EFORM_CONST.OBJECT_TYPE.CHECKBOX === doj.t) {
+	                                        // console.log(eo , doj)
 	                                        if (eo.v === doj.v) {
 	                                            doj.c = eo.c;
 	                                            break;
@@ -193,17 +226,58 @@
 	                                }
 	                            });
 
+	                            console.log(last_data);
+
 	                            self.obj_data = TemplateData.obj;
-	                            console.log(self.obj_data);
+
 	                            // END MERGE DATA VS. OBJECT DATA
 	                            // LOAD DATA
 	                            self.__loadSavedData();
 	                            //END LOAD DATA
 	                        } else {
+	                            // console.log('HAS NO DATA')
 	                            self.obj_data = TemplateData.obj;
 	                        }
+	                        self._getApptInfo();
 	                    });
 	                });
+	            });
+	        }
+	    }, {
+	        key: '_getApptInfo',
+	        value: function _getApptInfo() {
+	            var self = this;
+	            _main2.default.EFormGetApptInfo(this.appointment_uid, this.user_uid).then(function (response) {
+	                console.log('APPT INFO : ', response);
+	                _loaddatahelper2.default.setDBData(response.data);
+	                self.__loadDefaultValue();
+	            });
+	        }
+	    }, {
+	        key: '__loadDefaultValue',
+	        value: function __loadDefaultValue() {
+	            var self = this;
+	            this.defVal.map(function (defValObj) {
+	                var index = _.findIndex(self.obj_data, { n: defValObj.n });
+	                if (index < 0) {
+	                    console.error('Name ' + defValObj.n + ' is not Exists!');
+	                    return;
+	                }
+	                var tObj = self.obj_data[index];
+	                if (!tObj.v) {
+	                    // EMPTY DATA 
+	                    // console.log('LOAD HERE', tObj, defValObj)
+	                    switch (tObj.t) {
+	                        case EFORM_CONST.OBJECT_TYPE.DATE:
+	                        case EFORM_CONST.OBJECT_TYPE.TEXT:
+	                        case EFORM_CONST.OBJECT_TYPE.NUMBER:
+	                            var value = _loaddatahelper2.default.value(defValObj.v);
+	                            // console.log(value);
+	                            $('#' + defValObj.n).val(value);
+	                            tObj.v = value;
+	                            break;
+	                    }
+	                }
 	            });
 	        }
 	    }, {
@@ -211,7 +285,10 @@
 	        value: function __loadSavedData() {
 	            console.log('LOAD SAVED DATA');
 	            this.obj_data.map(function (o) {
-	                if (EFORM_CONST.OBJECT_TYPE.RADIO === o.t) $('input[name=' + o.n + '][value=' + o.v + ']').prop('checked', o.c);else if (EFORM_CONST.OBJECT_TYPE.DRAWING === o.t || EFORM_CONST.OBJECT_TYPE.SIGN === o.t) {
+	                if (EFORM_CONST.OBJECT_TYPE.RADIO === o.t || EFORM_CONST.OBJECT_TYPE.CHECKBOX === o.t) {
+	                    console.log($('input[name=' + o.n + '][value=' + o.v + ']'), o);
+	                    $('input[name=' + o.n + '][value=' + o.v + ']').attr('checked', o.c);
+	                } else if (EFORM_CONST.OBJECT_TYPE.DRAWING === o.t || EFORM_CONST.OBJECT_TYPE.SIGN === o.t) {
 	                    if (o.v) {
 	                        // console.log(o)
 	                        _main2.default.EFormDownloadImage(o.v).then(function (response) {
@@ -288,8 +365,11 @@
 	                name: this.eform_name,
 	                patientUID: this.patient_uid, userUID: this.user_uid
 	            };
+	            console.log('SUBMIT DATA ', data);
 	            _main2.default.EFormCreate(data).then(function (response) {
 	                location.reload();
+	            }, function (errr) {
+	                console.log(errr);
 	            });
 	        }
 	    }, {
@@ -305,8 +385,33 @@
 	            });
 	        }
 	    }, {
+	        key: '__validateB4Save',
+	        value: function __validateB4Save() {
+	            for (var i = 0; i < this.obj_data.length; i++) {
+	                // CHECK RADIO BUTTON MUST BE CHOSEN 1
+	                var obj = this.obj_data[i];
+	                if (EFORM_CONST.OBJECT_TYPE.RADIO === obj.t) {
+	                    /// check has in dom
+	                    if ($('input[type=radio][name=' + obj.n + ']').length) {
+	                        var v = $('input[type=radio][name=' + obj.n + ']:checked').val();
+	                        if (!v) {
+	                            _toast2.default.error('Radio Button must be choose 1!!!');
+	                            return false;
+	                        }
+	                    }
+	                }
+	            }
+
+	            return true;
+	        }
+	    }, {
 	        key: '_onSave',
 	        value: function _onSave() {
+	            if (!this.__validateB4Save()) {
+	                // ERROR TO PASS
+	                return;
+	            }
+
 	            // get all signs to upload 
 	            var arrSign = [];
 	            var arrDrawing = [];
@@ -319,28 +424,43 @@
 	                switch (o.t) {
 	                    case EFORM_CONST.OBJECT_TYPE.RADIO:
 	                        if ($('input[type=radio][name=' + o.n + ']').length) {
-	                            var _value = $('input[type=radio][name=' + o.n + ']:checked').val();
-	                            if (_value === o.v) o.c = true;else o.c = false;
+	                            var value = $('input[type=radio][name=' + o.n + ']:checked').val();
+	                            if (value === o.v) o.c = true;else o.c = false;
+	                        }
+	                        break;
+	                    case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
+	                        if ($('input[type=checkbox][name=' + o.n + ']').length) {
+	                            var _value = $('input[name=' + o.n + '][value=' + o.v + ']').prop('checked');
+	                            o.c = _value;
+	                            // console.log($('input[type=checkbox][name='+o.n+']:checked').length, value)
+	                            // if(value === o.v) o.c = true
+	                            // else o.c = false
 	                        }
 	                        break;
 	                    case EFORM_CONST.OBJECT_TYPE.SIGN:
-	                        changed = $('#' + o.n).data('changed');
-	                        if (_constants2.default.VALUES.TRUE === changed) {
-	                            var _value2 = $('#' + o.n).jSignature("getData");
-	                            arrSign.push({ object: o, value: _value2 });
+	                        if ($('#' + o.n).length) {
+	                            changed = $('#' + o.n).data('changed');
+	                            if (_constants2.default.VALUES.TRUE === changed) {
+	                                var _value2 = $('#' + o.n).jSignature("getData");
+	                                arrSign.push({ object: o, value: _value2 });
+	                            }
 	                        }
 	                        break;
 	                    case EFORM_CONST.OBJECT_TYPE.DRAWING:
-	                        changed = $('#' + o.n).data('changed');
-	                        if (_constants2.default.VALUES.TRUE === changed) {
-	                            arrDrawing.push({ object: o });
+	                        if ($('#' + o.n).length) {
+	                            changed = $('#' + o.n).data('changed');
+	                            if (_constants2.default.VALUES.TRUE === changed) {
+	                                arrDrawing.push({ object: o });
+	                            }
 	                        }
 	                        break;
 	                    case EFORM_CONST.OBJECT_TYPE.DATE:
 	                    default:
-	                        var value = $('#' + o.n).val();
-	                        o.v = value;
-
+	                        // CHECK IN DOM
+	                        if ($('#' + o.n).length) {
+	                            var _value3 = $('#' + o.n).val();
+	                            o.v = _value3;
+	                        }
 	                }
 	            });
 
@@ -24888,7 +25008,7 @@
 	                                'div',
 	                                { className: className,
 	                                    style: style },
-	                                _react2.default.createElement(_radio2.default, { name: o.get('name' || ''), id: o.get('params', 'id' || ''), value: o.get('params', 'value') }),
+	                                _react2.default.createElement(_radio2.default, { name: o.get('name') || '', id: o.get('params', 'id') || '', value: o.get('params', 'value') }),
 	                                '  ',
 	                                _react2.default.createElement(
 	                                    'label',
@@ -24902,11 +25022,11 @@
 	                                'div',
 	                                { className: className,
 	                                    style: style },
-	                                _react2.default.createElement(_checkbox2.default, { name: o.get('name' || ''), id: o.get('params', 'id' || '') }),
+	                                _react2.default.createElement(_checkbox2.default, { name: o.get('name') || '', id: o.get('params', 'id') || '', value: o.get('params', 'value') }),
 	                                '  ',
 	                                _react2.default.createElement(
 	                                    'label',
-	                                    { htmlFor: o.get('params', 'id' || '') },
+	                                    { htmlFor: o.get('params', 'id') || '' },
 	                                    o.get('params', 'title')
 	                                )
 	                            );
@@ -25026,7 +25146,7 @@
 /* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -25056,16 +25176,16 @@
 	    }
 
 	    _createClass(Checkbox, [{
-	        key: 'componentDidMount',
+	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            $(this.refs.root).iCheck({
-	                checkboxClass: 'icheckbox_square-green'
-	            });
+	            // $(this.refs.root).iCheck({
+	            //     checkboxClass: 'icheckbox_square-green'
+	            // })
 	        }
 	    }, {
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
-	            return _react2.default.createElement('input', { type: 'checkbox', name: this.props.name, id: this.props.id, ref: 'root' });
+	            return _react2.default.createElement("input", { type: "checkbox", name: this.props.name, id: this.props.id, value: this.props.value, ref: "root" });
 	        }
 	    }]);
 
@@ -25222,12 +25342,19 @@
 	var CONSTANTS = {
 	    VALUES: {
 	        TRUE: 'true',
-	        FALSE: 'false'
+	        FALSE: 'false',
+	        DATE_FORMAT: 'DD/MM/YYYY'
 	    },
 	    EFORM: {
 	        SHORT: {
 	            SECTION_ROW: 'r',
 	            ROW_OBJECT: 'o'
+	        },
+	        GROUP_OBJECT: {
+	            CHECKBOX: 'default',
+	            LABEL: 'label',
+	            INPUT: 'input',
+	            DYNAMIC: 'dynamic'
 	        },
 	        OBJECT_TYPE: {
 	            LABEL: 'lb',
@@ -25941,7 +26068,7 @@
 
 /***/ },
 /* 181 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	"use strict";
 
@@ -25951,15 +26078,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	// import CONSTANTS from '../../../config/constants'
 
 	var Drawing = function () {
 	    function Drawing() {
@@ -26070,7 +26189,7 @@
 
 /***/ },
 /* 182 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26080,6 +26199,12 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _ip = __webpack_require__(183);
+
+	var _ip2 = _interopRequireDefault(_ip);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Helper = function () {
@@ -26088,6 +26213,25 @@
 	    }
 
 	    _createClass(Helper, null, [{
+	        key: 'selectorUI',
+	        value: function selectorUI(object) {
+	            switch (o.t) {
+	                case EFORM_CONST.OBJECT_TYPE.RADIO:
+	                    return 'input[type=radio][name=' + o.n + ']';
+	                case EFORM_CONST.OBJECT_TYPE.SIGN:
+	                case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                case EFORM_CONST.OBJECT_TYPE.DATE:
+	                default:
+	                    return '#' + o.n;
+	            }
+	        }
+	    }, {
+	        key: 'linkEForm',
+	        value: function linkEForm(page, temp_uid, appt_uid, patient_uid, user_uid) {
+	            var str = _ip2.default.Host + '/eform/detail?templateUID=' + temp_uid + '&appointmentUID=' + appt_uid + '&patientUID=' + patient_uid + '&userUID=' + user_uid + '&page=' + page;
+	            return str;
+	        }
+	    }, {
 	        key: 'b64toBlob',
 	        value: function b64toBlob(b64Data) {
 	            var contentType = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
@@ -26136,6 +26280,27 @@
 /* 183 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var server = 'https://meditek.redimed.com.au';
+	// const server = 'http://localhost'
+	var local = 'http://localhost';
+
+	var ip = {
+	    EFormServer: local + ':3015',
+	    ApiServerUrl: local + ':3005',
+	    Host: local + ':3020'
+	};
+
+	exports.default = ip;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -26169,7 +26334,7 @@
 	exports.default = Functions;
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26178,7 +26343,7 @@
 	    value: true
 	});
 
-	var _ip = __webpack_require__(185);
+	var _ip = __webpack_require__(183);
 
 	var _ip2 = _interopRequireDefault(_ip);
 
@@ -26304,6 +26469,27 @@
 	        });
 	        return p;
 	    },
+
+	    /*
+	    *   API 4 PRE LOAD A.K.A DEFAULT DATA
+	    */
+	    EFormGetApptInfo: function EFormGetApptInfo(appt_uid, user_uid) {
+	        /*
+	        *   GET INFO OF APPOINTMENT 
+	        */
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'GET',
+	                url: _ip2.default.EFormServer + '/api/appointment-wa-detail/' + appt_uid + '/' + user_uid,
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
+	    /*
+	    *   UPLOAD IMAGE USING 4 SIGNATURE + DRAWING
+	    */
 	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
 	        // var formdata = data.formdata;
 	        var formdata = new FormData();
@@ -26350,24 +26536,192 @@
 	exports.default = Services;
 
 /***/ },
-/* 185 */
+/* 186 */,
+/* 187 */,
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _constants = __webpack_require__(178);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var LoadData = function () {
+		function LoadData() {
+			_classCallCheck(this, LoadData);
+		}
+
+		_createClass(LoadData, [{
+			key: 'setDBData',
+			value: function setDBData(data) {
+				this.db_data = data;
+			}
+		}, {
+			key: 'valueField',
+			value: function valueField(field) {
+				// remove _ 
+				field = field.substring(1);
+
+				var hasDot = field.indexOf('.');
+				if (hasDot < 0) return this.db_data[field];
+
+				// extract .
+				var pieces = field.split('.');
+
+				var value = this.db_data;
+				for (var i = 0; i < pieces.length; i++) {
+					if (value.hasOwnProperty(pieces[i])) value = value[pieces[i]];else console.log('ERROR HERE: doesnt exists ' + pieces[i] + ' attributes!');
+				}
+				return value;
+			}
+		}, {
+			key: 'valueDBData',
+			value: function valueDBData(val) {
+				if (!this.db_data) {
+					console.log(' DIDN\'T SET VALUE DB');
+				}
+
+				var hasContenate = val.indexOf('+');
+				if (hasContenate < 0) {
+					// ex: _Patient.Address1 goes here
+					return this.valueField(val);
+				}
+
+				// BEGIN TO CONTENATE STRING
+				// ex: _Patient.FirstName+ +_Patient.LastName goes here
+				var params = val.split('+');
+
+				var str = "";
+				for (var i = 0; i < params.length; i++) {
+					var param = params[i].trim();
+					var v = "";
+					if (LoadData.isFieldFromDB(param)) {
+						v = this.valueField(param);
+					} else {
+						v = param.substr(1, param.length - 2); // "Hello world!" -> Hello world!
+					}
+					str += v;
+				}
+				return str;
+			}
+		}, {
+			key: 'value',
+			value: function value(val) {
+				// val = val.replace(/ /g,'')
+
+				if (LoadData.isRaw(val)) {
+					return val;
+				}
+
+				if (LoadData.isFormula(val)) {
+					var val2 = val.substring(1);
+					return LoadData.valueFormula(val2);
+				}
+
+				if (LoadData.isFromDB(val)) {
+					return this.valueDBData(val);
+				}
+				// moment().format('DD/MM/YYYY'); 
+			}
+		}], [{
+			key: 'isFormula',
+			value: function isFormula(val) {
+				return val.startsWith('=');
+			}
+		}, {
+			key: 'isFromDB',
+			value: function isFromDB(val) {
+				// check val has _  
+				return val.indexOf('*') >= 0; //val.startsWith("_")
+			}
+		}, {
+			key: 'isRaw',
+			value: function isRaw(val) {
+				return !(LoadData.isFormula(val) || LoadData.isFromDB(val));
+			}
+		}, {
+			key: 'isFieldFromDB',
+			value: function isFieldFromDB(field) {
+				return field.startsWith('*');
+			}
+		}, {
+			key: 'valueFormula',
+			value: function valueFormula(val) {
+				switch (val.toLowerCase()) {
+					case 'now()':
+						return moment().format(_constants2.default.VALUES.DATE_FORMAT);
+					default:
+						return '';
+				}
+			}
+		}]);
+
+		return LoadData;
+	}();
+
+	var loadingData = new LoadData();
+	exports.default = loadingData;
+
+/***/ },
+/* 189 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+		value: true
 	});
-	//const server = 'https://meditek.redimed.com.au'
-	var server = 'http://localhost';
 
-	var ip = {
-	    EFormServer: server + ':3015',
-	    ApiServerUrl: server + ':3005',
-	    Host: server + ':3020'
-	};
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	exports.default = ip;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Alert = function () {
+		function Alert() {
+			_classCallCheck(this, Alert);
+		}
+
+		_createClass(Alert, [{
+			key: 'error',
+			value: function error(message) {
+				$.toast({
+					heading: 'Error',
+					text: message,
+					showHideTransition: 'plain',
+					hideAfter: 5000,
+					position: 'top-left',
+					icon: 'error'
+				});
+			}
+		}, {
+			key: 'success',
+			value: function success(message) {
+				$.toast({
+					heading: 'Success',
+					text: message,
+					showHideTransition: 'plain',
+					hideAfter: 3000,
+					position: 'top-left',
+					icon: 'success'
+				});
+			}
+		}]);
+
+		return Alert;
+	}();
+
+	exports.default = new Alert();
 
 /***/ }
 /******/ ]);

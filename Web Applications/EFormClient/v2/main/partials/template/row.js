@@ -181,10 +181,14 @@ class Row extends Component{
                                     )
                                     break
                                 case EFORM_CONST.OBJECT_TYPE.NUMBER:
+                                    var nameHtml = o.get('name')
                                     res = (
                                         <div className="object"  style={{width: width}}
                                             onClick={this._onClickObject.bind(this, o, o_index)}>
-                                            <input type="number" disabled placeholder="Number"/>
+                                            <div className="object-wrapper">
+                                                <div className="object-name object-in">{nameHtml}</div>
+                                                <input type="number" disabled placeholder="Number"/>
+                                            </div>
                                         </div>
                                     )
                                     break

@@ -10,11 +10,22 @@ module.exports = {
         if (data === false) {
             return res.badRequest("data failed");
         } else {
-            Services.AddItem(data, req.user)
+            Services.ImportItem(data, req.user)
                 .then(function(success) {
-                    res.ok(success.data);
+                    success.transaction.commit()
+                        .then(function(commitSuccess) {
+                            res.ok(success.data);
+                        }, function(err) {
+                            res.serverError(err);
+                        });
                 }, function(err) {
-                    res.serverError(err.error);
+                    success.transaction.rollback()
+                        .then(function(commitSuccess) {
+                            res.serverError(err.error);
+                        }, function(err) {
+                            res.serverError(err);
+                        });
+                    success.transaction.rollback();
                 });
         }
     }

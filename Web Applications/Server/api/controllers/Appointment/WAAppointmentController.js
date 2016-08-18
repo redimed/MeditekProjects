@@ -635,5 +635,38 @@ module.exports = {
                 res.serverError('user.not(interalPractitioner,admin,assistant, isOrganization)');
             }
         }
+    },
+    LinkAppointmentDoctor: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            req.dmObj = {
+                RoleCode: 'ADMIN',
+                ReceiverType: 'ALL_ADMINS',
+                apptUID: data.Appointment.UID,
+                Message: 'LinkDoctor',
+                Action: 'link a doctor in appointment',
+                Url_State: 'authentication.WAAppointment.detail'
+            };
+            Services.LinkAppointmentDoctor(data)
+                .then(function(success) {
+                    success.transaction.commit()
+                        .then(function(cm) {
+                            res.ok({ status: 'success' });
+                        }, function(err) {
+                            res.serverError(ErrorWrap(err));
+                        });
+                }, function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
+                        err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
+                    }
+                });
+        }
     }
 };

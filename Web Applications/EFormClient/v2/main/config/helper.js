@@ -1,4 +1,24 @@
+import IP from './ip'
+
 class Helper{
+
+    static selectorUI(object) {
+        switch(o.t) {
+            case EFORM_CONST.OBJECT_TYPE.RADIO:
+                return 'input[type=radio][name='+o.n+']'
+            case EFORM_CONST.OBJECT_TYPE.SIGN: 
+            case EFORM_CONST.OBJECT_TYPE.DRAWING:
+            case EFORM_CONST.OBJECT_TYPE.DATE:
+            default:
+                return '#' + o.n
+        }
+    }
+
+    static linkEForm(page, temp_uid, appt_uid, patient_uid, user_uid){
+        var str =  `${IP.Host}/eform/detail?templateUID=${temp_uid}&appointmentUID=${appt_uid}&patientUID=${patient_uid}&userUID=${user_uid}&page=${page}`
+        return  str;
+    }
+
     static b64toBlob(b64Data, contentType = '', sliceSize = 512) {
 
         var byteCharacters = atob(b64Data);

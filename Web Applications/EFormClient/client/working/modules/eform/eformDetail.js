@@ -64,7 +64,7 @@ module.exports = React.createClass({
                     if(typeof field.preCal !== 'undefined'){
                         preCalArray = field.preCal.split('|');
                     }
-
+                    console.log(preCalArray)
                     preCalArray.map(function(preCal){
                         /* CONCAT PREFIX */
                         if(Config.getPrefixField(preCal,'CONCAT') > -1){

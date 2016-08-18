@@ -10,11 +10,12 @@ import Service from '../../services/main'
 import Helper from '../../config/helper'
 import CONSTANTS from '../../config/constants'
 
+import loadDataHelper from '../../partials/client/helper/loaddatahelper'
+
+import Toast from '../../config/toast'
 
 const EFORM_CLIENT_CONST = CONSTANTS.EFORM_CLIENT
 var EFORM_CONST = CONSTANTS.EFORM
-
-
 
 class EFormDetail extends Component{
     constructor(){
@@ -28,30 +29,53 @@ class EFormDetail extends Component{
         this.pages = []
         this.current_page = EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE
         this.md = null
+
         this.appointment_uid = ''
-        this.patient_uid = ''
-        this.template_uid = ''
-        this.user_uid = ''
-        this.obj_data = []
+        this.patient_uid = '' // 4 create EFormData
+        this.template_uid = '' // load 
+        this.user_uid = ''  // 4 create EFormData
+        this.obj_data = [] 
         this.is_data = false
         this.eform_name = ''
     }
-    componentDidMount(){
-        const self = this
+
+    _getRequiredData(){
         let p = MeMath.parseQueryString(window.location.href).page
         this.current_page = (p==undefined) ? EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE  : parseInt(p)
         this.appointment_uid = MeMath.parseQueryString(window.location.href).appointmentUID
-        this.patient_uid = MeMath.parseQueryString(window.location.href).patientUID
         this.user_uid = MeMath.parseQueryString(window.location.href).userUID
         this.template_uid = MeMath.parseQueryString(window.location.href).templateUID
+        this.patient_uid = MeMath.parseQueryString(window.location.href).patientUID
+        if(!this.template_uid) {
+            Toast.error('Missing Template uid')
+            return false
+        } else if(!this.appointment_uid) {
+            Toast.error('Missing Appointment uid')
+            return false
+        } else if(!this.user_uid) {
+            Toast.error('Missing User uid')
+            return false
+        } else if (!this.patient_uid) {
+            Toast.error('Missing Patient UID ')
+            return false
+        } 
+        return true
+    }
+    
+
+    componentDidMount(){
+        if(!this._getRequiredData()) {
+            return
+        }
+        const self = this
         this.md = new MobileDetect(window.navigator.userAgent)
 
         Service.EFormTemplateDetail({uid: this.template_uid})
         .then(function(response){
             self.eform_name = response.data.Name
             var TemplateData = JSON.parse(response.data.EFormTemplateData.TemplateData)
-            // console.log(TemplateData)
-            
+            self.defVal = TemplateData.defVal; // SET DEFAULT VALUE
+              // console.log(TemplateData)
             self.list.set('sections', TemplateData.sections)
     
             // GET ALL SECTIONS WILL DISPLAY IN PAGE
@@ -71,7 +95,8 @@ class EFormDetail extends Component{
             self.forceUpdate(function(){
                 $(self.refs.page).val(self.current_page)
                 $(self.refs.page).on('change', function(event){
-                    window.location.href = '/eform/detail?page='+event.target.value
+                    var page = event.target.value
+                    window.location.href =  Helper.linkEForm(page,self.template_uid, self.appointment_uid, self.patient_uid, self.user_uid)  //'/eform/detail?page='+event.target.value
                 })
                 var body = new Hammer(document.body)
                 body.on('tap', function(event){
@@ -94,6 +119,7 @@ class EFormDetail extends Component{
                 // console.log('EFORM DATA: ', TemplateData)
                 Service.EFormCheckData({templateUID: self.template_uid, appointmentUID: self.appointment_uid})
                 .then(function(response){
+
                     if(response.data){
                         self.is_data = true
                         self.eform_uid = response.data.UID
@@ -103,7 +129,8 @@ class EFormDetail extends Component{
                         last_data.map(function(eo){
                             for(var i = 0; i < TemplateData.obj.length; i++){
                                 var doj = TemplateData.obj[i]
-                                if(EFORM_CONST.OBJECT_TYPE.RADIO  ===doj.t){
+                                if(EFORM_CONST.OBJECT_TYPE.RADIO  === doj.t || EFORM_CONST.OBJECT_TYPE.CHECKBOX  === doj.t ){
+                                    // console.log(eo , doj)
                                     if(eo.v === doj.v){
                                         doj.c = eo.c
                                         break
@@ -115,26 +142,65 @@ class EFormDetail extends Component{
                             }
                         })
 
+                         console.log(last_data)
+
                         self.obj_data = TemplateData.obj;
-                        console.log(self.obj_data)
+
                         // END MERGE DATA VS. OBJECT DATA
                         // LOAD DATA
                         self.__loadSavedData();
                         //END LOAD DATA
                     }else{
+                        // console.log('HAS NO DATA')
                         self.obj_data = TemplateData.obj
                     }
+                    self._getApptInfo();                
                 })
             })
+        })
+    }
+
+    _getApptInfo(){
+        var self = this;
+        Service.EFormGetApptInfo(this.appointment_uid, this.user_uid).then(function(response){
+            console.log('APPT INFO : ', response)
+            loadDataHelper.setDBData(response.data)
+            self.__loadDefaultValue()
+        })
+    }
+
+    __loadDefaultValue() {
+        let self = this
+        this.defVal.map(function(defValObj){
+            let index = _.findIndex(self.obj_data, {n: defValObj.n}) 
+            if(index < 0) {
+                console.error(`Name ${defValObj.n} is not Exists!`)
+                return;
+            }
+            let tObj = self.obj_data[index]
+            if(!tObj.v) { // EMPTY DATA 
+                // console.log('LOAD HERE', tObj, defValObj)
+                switch(tObj.t) {
+                    case EFORM_CONST.OBJECT_TYPE.DATE:
+                    case EFORM_CONST.OBJECT_TYPE.TEXT:
+                    case EFORM_CONST.OBJECT_TYPE.NUMBER:
+                        var value = loadDataHelper.value(defValObj.v)
+                        // console.log(value);
+                        $('#'+defValObj.n).val(value)
+                        tObj.v = value
+                        break;    
+                }
+            }
         })
     }
 
     __loadSavedData(){
         console.log('LOAD SAVED DATA')
         this.obj_data.map(function(o){
-            if(EFORM_CONST.OBJECT_TYPE.RADIO === o.t)
-                $('input[name='+o.n+'][value='+o.v+']').prop('checked', o.c)
-            else if(EFORM_CONST.OBJECT_TYPE.DRAWING === o.t || EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
+            if(EFORM_CONST.OBJECT_TYPE.RADIO === o.t || EFORM_CONST.OBJECT_TYPE.CHECKBOX === o.t) {
+                console.log($('input[name='+o.n+'][value='+o.v+']'), o)
+                $('input[name='+o.n+'][value='+o.v+']').attr('checked', o.c)
+            }  else if(EFORM_CONST.OBJECT_TYPE.DRAWING === o.t || EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
                 if(o.v) {
                     // console.log(o)
                     Service.EFormDownloadImage(o.v).then(function(response){
@@ -207,10 +273,11 @@ class EFormDetail extends Component{
             name: this.eform_name, 
             patientUID: this.patient_uid, userUID: this.user_uid
         }
+        console.log('SUBMIT DATA ', data)
         Service.EFormCreate(data)
         .then(function(response){
             location.reload();
-        })
+        }, function(errr){console.log(errr)})
     }
     __updateEFormDate(){
         console.log('UPDATE EFORM DATA');
@@ -223,8 +290,31 @@ class EFormDetail extends Component{
             location.reload();
          })
     }
+    __validateB4Save() {
+        for(let i=0; i  < this.obj_data.length; i++) {
+            // CHECK RADIO BUTTON MUST BE CHOSEN 1
+            var obj = this.obj_data[i]
+            if(EFORM_CONST.OBJECT_TYPE.RADIO === obj.t) {
+                /// check has in dom
+                if($('input[type=radio][name='+obj.n+']').length){
+                    let  v = $('input[type=radio][name='+obj.n+']:checked').val()
+                    if(!v) { 
+                        Toast.error('Radio Button must be choose 1!!!')
+                        return false 
+                    }
+                }
+            }
+        }
+    
+        return true;
+    }
 
     _onSave(){
+        if(!this.__validateB4Save()) { // ERROR TO PASS
+            return
+        }
+        
+
         // get all signs to upload 
         let arrSign = []
         let arrDrawing = []
@@ -242,24 +332,39 @@ class EFormDetail extends Component{
                         else o.c = false
                     }
                     break;
+                case EFORM_CONST.OBJECT_TYPE.CHECKBOX:          
+                    if($('input[type=checkbox][name='+o.n+']').length){
+                        const value = $('input[name='+o.n+'][value='+  o.v + ']').prop('checked')
+                        o.c = value
+                        // console.log($('input[type=checkbox][name='+o.n+']:checked').length, value)
+                        // if(value === o.v) o.c = true
+                        // else o.c = false
+                    }
+                    break;
                 case EFORM_CONST.OBJECT_TYPE.SIGN: 
-                    changed = $('#'+o.n).data('changed')
-                    if( CONSTANTS.VALUES.TRUE === changed) {
-                        const value = $('#'+o.n).jSignature("getData")
-                        arrSign.push({ object: o, value: value });
+                    if($('#' + o.n).length) {
+                        changed = $('#'+o.n).data('changed')
+                        if( CONSTANTS.VALUES.TRUE === changed) {
+                            const value = $('#'+o.n).jSignature("getData")
+                            arrSign.push({ object: o, value: value });
+                        }
                     }
                     break;
                  case EFORM_CONST.OBJECT_TYPE.DRAWING:
-                    changed = $('#'+o.n).data('changed')
-                    if( CONSTANTS.VALUES.TRUE === changed) {
-                        arrDrawing.push({object: o})
+                    if($('#' + o.n).length) {
+                        changed = $('#'+o.n).data('changed')
+                        if( CONSTANTS.VALUES.TRUE === changed) {
+                            arrDrawing.push({object: o})
+                        }
                     }
                     break;
                 case EFORM_CONST.OBJECT_TYPE.DATE:
                 default:
-                    const value = $('#'+o.n).val()
-                    o.v = value
-
+                    // CHECK IN DOM
+                    if($('#' + o.n).length) {
+                        const value = $('#' + o.n).val()
+                        o.v = value
+                    }
             }
         })
 
@@ -406,6 +511,7 @@ class EFormDetail extends Component{
                     }
                 </div>
                 <ul className="navbar" style={{marginTop: '20px'}}>
+                    
                     <li>
                         <a onClick={this._onSave.bind(this)}>
                             Save

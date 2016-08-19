@@ -76,9 +76,13 @@ app
                                 alert("401:0xx : Error");
                             }
                         }
+                        if($rootScope.pushTrack) {
+                            $rootScope.pushTrack({name: 'interceptors:unauthorization', content: response.data});
+                        }
                         $location.path('/login');
                     } else {
                         if (Boolean(response.headers().requireupdatetoken) === true) {
+                            $rootScope.pushTrack({name: 'requireupdatetoken', content: "requireupdatetoken"});
                             $rootScope.getNewToken();
                         }
                     }
@@ -92,6 +96,7 @@ app
                         $rootScope.getNewToken();
                     }*/
                     if (Boolean(response.headers().requireupdatetoken) === true) {
+                        $rootScope.pushTrack({name: 'requireupdatetoken', content: "requireupdatetoken"});
                         $rootScope.getNewToken();
                     }
 
@@ -277,6 +282,29 @@ app
         });
         $rootScope.$on("$stateChangeStart", function() {});
 
+        $rootScope.pushTrack = function (info) {
+            alert(JSON.stringify($cookies.getObject("userInfo")))
+            var postData = {
+                UserAccountID: $cookies.getObject("userInfo")?$cookies.getObject("userInfo").ID: null,
+                SystemType: 'WEB',
+                TrackingName: info.name,
+                Content: info.content
+            }
+            $.ajax({
+                type: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                url: o.const.authBaseUrl + '/api/pushTrack',
+                data: JSON.stringify(postData),
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log("====================pushTrack=======================");
+                },
+            });
+        }
+
+
         //Get New Token
         $rootScope.getNewToken = function() {
             $.ajax({
@@ -292,7 +320,7 @@ app
                 data: {
                     refreshCode: $rootScope.refreshCode
                 },
-                success: function(data) {
+                success: function(data, status, xhr) {
                     //STANDARD
                     /*if(data && data.status=='hasToken')
                     {
@@ -309,7 +337,11 @@ app
                             $rootScope.refreshCode = data.refreshCode;
                         }
                     }
+                    $rootScope.pushTrack({name: 'getNewToken', content: data});
                 },
+                error: function(xhr,status,error) {
+                    $rootScope.pushTrack({name: 'getNewToken', content: error});
+                }
             });
         }
         if ($cookies.get('token')) {

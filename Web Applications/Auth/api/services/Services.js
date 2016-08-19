@@ -9,4 +9,5 @@ module.exports = {
     Role: require('./Authorization/v0_1/Role'),
     UserRole: require('./Authorization/v0_1/UserRole'),
     Register: require('./Register/Register'),
+    PushTracking: require('./PushTracking/PushTracking')
 };

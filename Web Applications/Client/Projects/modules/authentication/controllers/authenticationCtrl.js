@@ -16,6 +16,12 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     $scope.info = {};
     $scope.logout = function() {
         AuthenticationService.logout().then(function() {
+            $rootScope.pushTrack({name:'logout', content: 'logout success'});
+            socketJoinRoom(socketTelehealth, '/api/telehealth/logout', {
+                uid: $cookies.getObject('userInfo').TelehealthUser.UID,
+                deviceid: "30f56b7cb6a4abbc0a1ca359deb",
+                systemtype: "ARD"
+            });
             var cookies = $cookies.getAll();
             angular.forEach(cookies, function(v, k) {
                 if (k != 'remember')
@@ -25,8 +31,10 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
                 location: "replace",
                 reload: true
             });
+
         }, function(err) {
             toastr.error(err.data.message, "Error");
+            $rootScope.pushTrack({name:'logout', content: err.data});
         })
     };
     AuthenticationService.getListCountry().then(function(result) {

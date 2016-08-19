@@ -283,7 +283,6 @@ app
         $rootScope.$on("$stateChangeStart", function() {});
 
         $rootScope.pushTrack = function (info) {
-            alert(JSON.stringify($cookies.getObject("userInfo")))
             var postData = {
                 UserAccountID: $cookies.getObject("userInfo")?$cookies.getObject("userInfo").ID: null,
                 SystemType: 'WEB',

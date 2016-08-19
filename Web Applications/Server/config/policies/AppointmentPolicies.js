@@ -16,7 +16,33 @@ module.exports = {
         'RequestWAAppointmentPatient': true,
         'RequestAppointmentMedicalBooking': ['isIp'],
         'RequestWAAppointmentPatientNew': true,
-        'LinkAppointmentDoctor': ['isIp'],
-        'LinkAppointmentPatient': ['isIp'],
+        'LinkAppointmentDoctorOnlineBooking': ['isIp'],
+        'LinkAppointmentPatientOnlineBooking': ['isIp'],
+        'LinkAppointmentDoctor': ['isAuthenticated', function(req, res, next) {
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isInternalPractitioner ||
+                role.isAdmin ||
+                role.isAssistant ||
+                role.isOrganization) {
+                return next();
+            } else {
+                var error = new Error("Policies.Error");
+                error.pushError("Policies.permissionDenied");
+                return res.unauthor(error);
+            }
+        }],
+        'LinkAppointmentPatient': ['isAuthenticated', function(req, res, next) {
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isInternalPractitioner ||
+                role.isAdmin ||
+                role.isAssistant ||
+                role.isOrganization) {
+                return next();
+            } else {
+                var error = new Error("Policies.Error");
+                error.pushError("Policies.permissionDenied");
+                return res.unauthor(error);
+            }
+        }],
     }
 };

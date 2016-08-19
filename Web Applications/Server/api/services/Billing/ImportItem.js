@@ -18,9 +18,9 @@ module.exports = function(data, userInfo) {
                     userInfo: userInfo,
                     transaction: t
                 };
-                $q.all([
-                    // Services.AddItemTemp(objAddItemTemp), 
-                    Services.AddItem(objAddItem)])
+                $q.all([Services.AddItemTemp(objAddItemTemp),
+                        Services.AddItem(objAddItem)
+                    ])
                     .then(function(successAll) {
                         defer.resolve({
                             data: successAll,

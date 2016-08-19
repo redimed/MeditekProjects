@@ -96,5 +96,9 @@ module.exports={
 	'post /api/patient/create-patient-for-onlinebooking': {
 		controller: 'Patient/PatientController',
 		action: 'CreatePatientForOnlineBooking'
+	},
+	'post /api/patient/list-telehealth': {
+		controller: 'Patient/PatientController',
+		action: 'GetListPatientTelehealth'
 	}
 }

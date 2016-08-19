@@ -878,5 +878,17 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         })
     },
-
+    GetListPatientTelehealth: function(req, res) {
+         var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.GetListPatientTelehealth(data, req.user)
+                .then(function(listPatient){
+                    res.ok(listPatient);
+                }, function(err){
+                    res.serverError(ErrorWrap(err.error || err));
+                });
+        }
+    }
 };

@@ -63,7 +63,7 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
             }, function(err) {
                 $scope.laddaLoading = false;
                 toastr.error(!err.data.message ? err.data.ErrorType : err.data.message, "Error");
-                $rootScope.pushTrack({name:'login', content:err.data});
+                $rootScope.pushTrack({name:'login', content:err});
             })
         }
     };

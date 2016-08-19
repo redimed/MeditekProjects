@@ -34,7 +34,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
         }, function(err) {
             toastr.error(err.data.message, "Error");
-            $rootScope.pushTrack({name:'logout', content: err.data});
+            $rootScope.pushTrack({name:'logout', content: err});
         })
     };
     AuthenticationService.getListCountry().then(function(result) {

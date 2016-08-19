@@ -94,5 +94,9 @@ module.exports = {
     'post /api/online-booking/appointment-link-doctor': {
         controller: 'Appointment/WAAppointmentController',
         action: 'LinkAppointmentDoctorOnlineBooking'
+    },
+    'get /api/appointment/check-has-consult/:UID': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'CheckApptHasConsultation'
     }
 };

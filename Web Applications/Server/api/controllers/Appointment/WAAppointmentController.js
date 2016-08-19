@@ -731,5 +731,14 @@ module.exports = {
                     }
                 });
         }
+    },
+    CheckApptHasConsultation: function(req, res) {
+        var UID = req.param('UID');
+        Services.CheckApptHasConsultation(UID)
+            .then(function(success) {
+                res.ok(success);
+            }, function(err) {
+                res.serverError(ErrorWrap(err.error || err));
+            });
     }
 };

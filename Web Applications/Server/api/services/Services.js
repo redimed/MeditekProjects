@@ -164,4 +164,7 @@ module.exports = {
     AddItemTemp: require('./Billing/AddItemTemp'),
     ImportItem: require('./Billing/ImportItem'),
     //end Billing
+    //begin Patient
+    GetListPatientTelehealth: require('./Patient/GetListPatientTelehealth'),
+    //end Patient
 };

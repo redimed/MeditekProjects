@@ -61,6 +61,23 @@ class EFormDetail extends Component{
         } 
         return true
     }
+
+    _initAutoSave() {
+        console.log('STARTING: ACTIVE AUTO SAVE !!!')
+        // EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME
+        var self = this;
+        this.autoSaveFunc = setInterval(function(){ 
+            // alert("Hello");
+            // DISABLED SAVE BUTTON HERE
+            $( '.btnSave' ).prop( "disabled", true );
+            // CALL SAVE get GET PROMISE
+            self._onSave(false, function(){
+                 // ENABLED SAVE BUTTON
+                $( '.btnSave' ).prop( "disabled", false );
+            })
+           
+        }, EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME  );
+    }
     
 
     componentDidMount(){
@@ -141,20 +158,15 @@ class EFormDetail extends Component{
                                 }
                             }
                         })
-
-                         console.log(last_data)
-
+                         // console.log(last_data)
                         self.obj_data = TemplateData.obj;
-
-                        // END MERGE DATA VS. OBJECT DATA
-                        // LOAD DATA
-                        self.__loadSavedData();
-                        //END LOAD DATA
+                        self.__loadSavedData(); // synchornize func
                     }else{
                         // console.log('HAS NO DATA')
                         self.obj_data = TemplateData.obj
                     }
-                    self._getApptInfo();                
+
+                    self._getApptInfo();              
                 })
             })
         })
@@ -166,6 +178,7 @@ class EFormDetail extends Component{
             console.log('APPT INFO : ', response)
             loadDataHelper.setDBData(response.data)
             self.__loadDefaultValue()
+            self._initAutoSave();  
         })
     }
 
@@ -188,7 +201,10 @@ class EFormDetail extends Component{
                         // console.log(value);
                         $('#'+defValObj.n).val(value)
                         tObj.v = value
-                        break;    
+                        break;
+                    case EFORM_CONST.OBJECT_TYPE.SIGN:
+                        console.log('SIGNATURE LOAD HERE')
+                        break
                 }
             }
         })
@@ -198,8 +214,9 @@ class EFormDetail extends Component{
         console.log('LOAD SAVED DATA')
         this.obj_data.map(function(o){
             if(EFORM_CONST.OBJECT_TYPE.RADIO === o.t || EFORM_CONST.OBJECT_TYPE.CHECKBOX === o.t) {
-                console.log($('input[name='+o.n+'][value='+o.v+']'), o)
-                $('input[name='+o.n+'][value='+o.v+']').attr('checked', o.c)
+                if(o.n) { // check object has name or not
+                    $('input[name='+o.n+'][value='+o.v+']').attr('checked', o.c)
+                }
             }  else if(EFORM_CONST.OBJECT_TYPE.DRAWING === o.t || EFORM_CONST.OBJECT_TYPE.SIGN === o.t){
                 if(o.v) {
                     // console.log(o)
@@ -260,11 +277,12 @@ class EFormDetail extends Component{
         return arrPromise
     }
 
-    __saveEFormData(){
-        this.is_data ? this.__updateEFormDate() : this.__createEFormData() 
+    __saveEFormData(cbDone){
+        this.is_data ? this.__updateEFormData(cbDone) : this.__createEFormData(cbDone) 
     }
 
-    __createEFormData(){
+    /** FOR CLICK SAVE & AUTO SAVE */
+    __createEFormData(cbDone){
         console.log('CREATE EFORM DATA');
         let data = {
             templateUID: this.template_uid, 
@@ -276,10 +294,13 @@ class EFormDetail extends Component{
         console.log('SUBMIT DATA ', data)
         Service.EFormCreate(data)
         .then(function(response){
-            location.reload();
+            if(cbDone) {
+                cbDone() // 
+            }
+            // location.reload();
         }, function(errr){console.log(errr)})
     }
-    __updateEFormDate(){
+    __updateEFormData(cbDone){
         console.log('UPDATE EFORM DATA');
         let data = {
             UID: this.eform_uid, 
@@ -287,7 +308,10 @@ class EFormDetail extends Component{
         }
         Service.EFormUpdate(data)
         .then(function(response){
-            location.reload();
+            if(cbDone) {
+                cbDone() // 
+            }
+            // location.reload();
          })
     }
     __validateB4Save() {
@@ -308,32 +332,40 @@ class EFormDetail extends Component{
     
         return true;
     }
+    _onSave(isClickSave = true, cbDone){
+        const self = this;
+       if(isClickSave) {
+            if(!this.__validateB4Save()) { // ERROR TO PASS
+                return
+            }
+            // STOP AUTOSAVE
+            clearInterval(this.autoSaveFunc);
 
-    _onSave(){
-        if(!this.__validateB4Save()) { // ERROR TO PASS
-            return
+            cbDone = function() {
+                Toast.success('Saved!')
+                self._initAutoSave()
+            }
         }
-        
 
-        // get all signs to upload 
+        
+        // get all signs & drawing to upload 
         let arrSign = []
         let arrDrawing = []
+        
 
-        const self = this;
-
-        // PARSE DATA
+        // GET DATA FROM DOM 
         this.obj_data.map(function(o){
             let changed;
             switch(o.t) {
                 case EFORM_CONST.OBJECT_TYPE.RADIO:
-                    if($('input[type=radio][name='+o.n+']').length){
+                    if(o.n && $('input[type=radio][name='+o.n+']').length){
                         const value = $('input[type=radio][name='+o.n+']:checked').val()
                         if(value === o.v) o.c = true
                         else o.c = false
                     }
                     break;
                 case EFORM_CONST.OBJECT_TYPE.CHECKBOX:          
-                    if($('input[type=checkbox][name='+o.n+']').length){
+                    if(o.n && $('input[type=checkbox][name='+o.n+']').length){
                         const value = $('input[name='+o.n+'][value='+  o.v + ']').prop('checked')
                         o.c = value
                         // console.log($('input[type=checkbox][name='+o.n+']:checked').length, value)
@@ -368,9 +400,7 @@ class EFormDetail extends Component{
             }
         })
 
-
         let isUploadDrawing = false, isUploadSign = false
-
         if(arrSign.length > 0) {
             let arrPromiseSign = self.__getSignPromiseArr(arrSign)
             Promise.all(arrPromiseSign).then(
@@ -397,8 +427,6 @@ class EFormDetail extends Component{
         }  else {
             isUploadSign = true
         } 
-
-
         if(arrDrawing.length > 0) {
             self.__getDrawingPromiseArr(arrDrawing).then(function(arrPromiseDrawing){
                 Promise.all(arrPromiseDrawing).then(
@@ -432,7 +460,8 @@ class EFormDetail extends Component{
         
         // let arrPromiseDrawing = self.__getDrawingPromiseArr(arrDrawing)
         if(isUploadSign && isUploadDrawing) {
-            self.__saveEFormData()
+         
+            self.__saveEFormData(cbDone)
         }
     }
     _onShowSection(s_params){
@@ -479,21 +508,9 @@ class EFormDetail extends Component{
                             </select>
                         </a>
                     </li>
-                    <li>
-                        <a onClick={this._onSave.bind(this)}>
-                            Save
-                        </a>
-                    </li>
-                    <li>
-                        <a>
-                            Print
-                        </a>
-                    </li>
-                    <li>
-                        <a>
-                            Refresh
-                        </a>
-                    </li>
+                    <li><button className="btnSave btn-success" onClick={this._onSave.bind(this, true)}><i className="fa fa-save"></i> Save </button></li>
+                    <li><a>Print</a></li>
+                    <li><a>Refresh</a></li>
                 </ul>
                 <div className="content">
                     {
@@ -511,22 +528,9 @@ class EFormDetail extends Component{
                     }
                 </div>
                 <ul className="navbar" style={{marginTop: '20px'}}>
-                    
-                    <li>
-                        <a onClick={this._onSave.bind(this)}>
-                            Save
-                        </a>
-                    </li>
-                    <li>
-                        <a>
-                            Print
-                        </a>
-                    </li>
-                    <li>
-                        <a>
-                            Refresh
-                        </a>
-                    </li>
+                    <li><button className="btnSave btn-success" onClick={this._onSave.bind(this, true)}><i className="fa fa-save"></i> Save </button></li>
+                    <li><a>Print</a></li>
+                    <li><a>Refresh</a></li>
                 </ul>
             </div>
         )

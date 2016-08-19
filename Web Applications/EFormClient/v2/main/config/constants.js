@@ -14,7 +14,9 @@ const CONSTANTS = {
             LABEL: 'label',
             INPUT: 'input',
             TEXTAREA: 'textarea',
-            DYNAMIC: 'dynamic'
+            DYNAMIC: 'dynamic',
+            SIGN: 'signature',
+            CHART: 'chart'
         },
     	OBJECT_TYPE: {
     		LABEL: 'lb',
@@ -72,7 +74,9 @@ const CONSTANTS = {
         }
     },
     EFORM_CLIENT:{
+        AUTO_SAVE_INTERVAL_TIME: 1 * 60000 / 6,  // 10 s
         DEFAULT_VALUE: {
+          
             PAGE: 1,
         }
     }

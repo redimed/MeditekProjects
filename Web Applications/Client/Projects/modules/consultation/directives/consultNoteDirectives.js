@@ -8,34 +8,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
             var userInfo = $cookies.getObject('userInfo');
-            if(userInfo) {
-                doctorService.getDoctor({UID: userInfo.UID})
-                .then(function(response){
-                    if(response.data) {
-                        // FileUID_sign
-                        $scope.doctorInfo = response.data;
-                        var doctorName = $scope.doctorInfo.FirstName + ' ' + $scope.doctorInfo.LastName;
-                        if(!$scope.requestInfo) {
-                            $scope.requestInfo = {};
-                            $scope.requestInfo.Consultations = [];
-                            $scope.requestInfo.Consultations[0].ConsultationData = {};
-
-                        }
-                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Name.0']={
-                            Value: doctorName
-                        };
-                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Date.0']={
-                            Value: moment().format("DD/MM/YYYY")
-                        };
-                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Signature.0']={
-                            Value: $scope.doctorInfo.FileUID_sign
-                        };
-
-                    }
-                },function(err){
-                    console.log(err);
-                })
-            }
+            
 
 
             $scope.relevantGroup = {
@@ -117,6 +90,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 fileItem.relevantGroupKey = $scope.currentRelevantGroupKey;
                 fileItem.relevantFileUploadKey = $scope.currentRelevantFileUploadKey;
                 console.info('onAfterAddingFile', fileItem);
+                $scope.SendRequestUploadFile();
             };
             uploader.onAfterAddingAll = function(addedFileItems) {
                 //console.info('onAfterAddingAll', addedFileItems);
@@ -741,6 +715,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             $scope.Create = function() {
                 (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.createConsultation());
             }
+            
             $scope.Update = function() {
                 (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
             }
@@ -995,6 +970,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                                 $scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey].FileUploads.length;
                         }
                     }
+                    (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
                 }
 
 
@@ -1016,6 +992,58 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                     Window.focus();
                 }
             }
+            $('#ctrl *').filter(':input').each(function(key){
+                $(this).blur(function() {
+                    (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
+                })
+            });
+            $scope.autoSave = function() {
+                $scope.updateConsultation();
+            };
+            $scope.init = function() {
+                consultationServices.checkconsultnote($stateParams.UID)
+                .then(function(result) {
+                    if(result.data && result.data.Consultations.length > 0) {
+                        var index = result.data.Consultations.length - 1;
+                        $scope.consultationuid = result.data.Consultations[index].UID;
+                    }
+                    else {
+                        $scope.Create();
+                    }
+                }, function(err) {
+
+                })
+            }
+            if(userInfo) {
+                doctorService.getDoctor({UID: userInfo.UID})
+                .then(function(response){
+                    if(response.data) {
+                        // FileUID_sign
+                        $scope.doctorInfo = response.data;
+                        var doctorName = $scope.doctorInfo.FirstName + ' ' + $scope.doctorInfo.LastName;
+                        if(!$scope.requestInfo) {
+                            $scope.requestInfo = {};
+                            $scope.requestInfo.Consultations = [];
+                            $scope.requestInfo.Consultations[0].ConsultationData = {};
+
+                        }
+                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Name.0']={
+                            Value: doctorName
+                        };
+                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Date.0']={
+                            Value: moment().format("DD/MM/YYYY")
+                        };
+                        $scope.requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DoctorInfo.D_Signature.0']={
+                            Value: $scope.doctorInfo.FileUID_sign
+                        };
+                        $scope.init();
+
+                    }
+                },function(err){
+                    console.log(err);
+                })
+            }
+            
         }
     };
 });

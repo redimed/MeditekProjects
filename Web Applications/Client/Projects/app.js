@@ -297,7 +297,6 @@ app
                 Content: info.content,
                 ClientTime: moment().format("DD/MM/YYYY HH:mm:ss")
             }
-
             $.ajax({
                 type: "POST",
                 xhrFields: {
@@ -349,6 +348,7 @@ app
                 },
                 error: function(xhr,status,error) {
                     tracklog.log({name: 'getNewToken', content: error});
+
                 }
             });
         }

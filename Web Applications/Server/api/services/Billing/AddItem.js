@@ -28,6 +28,12 @@ module.exports = function(objAddItem) {
                                 userInfo: userInfo
                             };
                             var dataUpdate = Services.GenerateItem.Update(objGenerate);
+                            return BillingItem.update(dataUpdate, {
+                                where: {
+                                    ID: itemResult.ID
+                                },
+                                transaction: objAddItem.transaction
+                            });
                         } else {
                             //create new item
                             var objGenerate = {
@@ -41,7 +47,7 @@ module.exports = function(objAddItem) {
                             });
                         }
                     }, function(err) {
-                        defer.reject({ error: err });
+                        defer.reject(err);
                     })
                     .then(function(billingCreatedorUpdated) {
                         return billingCreatedorUpdated;
@@ -52,10 +58,10 @@ module.exports = function(objAddItem) {
             .then(function(dataAdded) {
                 defer.resolve(dataAdded);
             }, function(err) {
-                defer.reject({ error: err });
+                defer.reject(err);
             });
     } else {
-        defer.reject({ error: 'AddItem.data.isEmpty' });
+        defer.reject(new Error('AddItem.data.isEmpty'));
     }
     return defer.promise;
 };

@@ -78,7 +78,7 @@ module.exports = {
     'post /api/appointment-wa-update/company': {
         controller: 'Appointment/WAAppointmentController',
         action: 'UpdateRequestWAAppointmentCompany'
-    }, 
+    },
     'post /api/appointment-link-patient': {
         controller: 'Appointment/WAAppointmentController',
         action: 'LinkAppointmentPatient'
@@ -86,5 +86,13 @@ module.exports = {
     'post /api/appointment-link-doctor': {
         controller: 'Appointment/WAAppointmentController',
         action: 'LinkAppointmentDoctor'
+    },
+    'post /api/online-booking/appointment-link-patient': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'LinkAppointmentPatientOnlineBooking'
+    },
+    'post /api/online-booking/appointment-link-doctor': {
+        controller: 'Appointment/WAAppointmentController',
+        action: 'LinkAppointmentDoctorOnlineBooking'
     }
 };

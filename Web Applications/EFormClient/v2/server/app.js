@@ -6,10 +6,6 @@ var fs = require('fs');
 var compress = require('compression');
 
 
-var ssl_options = {
-        key: fs.readFileSync('key/star_redimed_com_au.key'),
-        cert: fs.readFileSync('key/star_redimed_com_au.pem')
-};
 
 app.use(compress({
     threshold : 0, // or whatever you want the lower threshold to be
@@ -39,11 +35,17 @@ var port  = 3020;
 if (process.argv.indexOf("--nossl") >= 0) {
     console.log("============================== development");
     http.createServer(app).listen(port, function() {
-        console.log('Express server listening on port http 3014');
+        console.log('Express server listening on port http ' + port);
     });
 } else {
+
+    var ssl_options = {
+        key: fs.readFileSync('key/star_redimed_com_au.key'),
+        cert: fs.readFileSync('key/star_redimed_com_au.pem')
+    };
+
     console.log("============================== production");
     https.createServer(ssl_options, app).listen(port, function() {
-        console.log('Express server listening on port https 3014');
+        console.log('Express server listening on port https ' + port);
     });
 }

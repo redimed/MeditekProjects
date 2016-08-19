@@ -13,6 +13,7 @@ const CONSTANTS = {
             CHECKBOX: 'default',
             LABEL: 'label',
             INPUT: 'input',
+            TEXTAREA: 'textarea',
             DYNAMIC: 'dynamic'
         },
     	OBJECT_TYPE: {
@@ -20,6 +21,7 @@ const CONSTANTS = {
     		RADIO: 'r',
     		CHECKBOX: 'c',
     		TEXT: 'it',
+            TEXTAREA: 'ta',
     		NUMBER: 'in',
     		DATE: 'id',
     		SIGN: 'si',

@@ -31,17 +31,18 @@ class Row extends Component{
                 {
                     this.props.params.select('o').map(function(o, o_index){
                         var res = null
-                        if(EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type'))
-                            var style = {
-                                width: o.get('params', 'width'),
-                                border: 'none'
-                            }
-                        else
-                            var style = {
-                                width: o.get('params', 'width'),
-                                border: 'none',
-                                textAlign: o.get('params', 'align') || 'left'
-                            }
+                        // if(EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type'))
+                        //     var style = {
+                        //         width: o.get('params', 'width'),
+                        //         border: 'none',
+                        //         textAlign: o.get('params', 'align') || 'left'
+                        //     }
+                        // else
+                        var style = {
+                            width: o.get('params', 'width'),
+                            border: 'none',
+                            textAlign: o.get('params', 'align') || 'left'
+                        }
                         var className = 'object'
                         if(typeof o.select('params').get('border') !== 'undefined'){
                             const p_border = o.select('params').get('border')
@@ -82,6 +83,16 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
+                            case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+                                res = (
+                                    <div className={className}
+                                        style={style}>
+                                        <div className={className+' textarea'} style={style}>
+                                        <textarea rows={o.get('params', 'rows') || 2} name={o.get('name')  || ''}  id={o.get('name')  || ''}></textarea>
+                                    </div>
+                                    </div>
+                                )
+                                break    
                             case EFORM_CONST.OBJECT_TYPE.TEXT:
                                 var disabled = (o.get('params').disabled) || false
                                 res = (

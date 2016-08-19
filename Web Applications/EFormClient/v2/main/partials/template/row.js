@@ -98,6 +98,11 @@ class Row extends Component{
                     </li>
                     <li>
                         <a>
+                            <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.TEXTAREA)}>TextArea</button>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
                             <button onClick={this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.NUMBER)}>Number</button>
                         </a>
                     </li>
@@ -140,6 +145,19 @@ class Row extends Component{
                                         <div className="object" style={{width: width}}
                                             onClick={this._onClickObject.bind(this, o, o_index)}>
                                             <div dangerouslySetInnerHTML={{__html: title}}/>
+                                        </div>
+                                    )
+                                    break
+                                case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+                                    var nameHtml = o.get('name')
+                                    var rows = o.get('params', 'rows') || 2
+                                    res = (
+                                        <div className="object" style={{width: width}}
+                                            onClick={this._onClickObject.bind(this, o, o_index)}>
+                                             <div className="object-wrapper">
+                                                <div className="object-name">{nameHtml}</div>
+                                                <textarea disabled rows={rows}></textarea>
+                                            </div>
                                         </div>
                                     )
                                     break
@@ -187,7 +205,7 @@ class Row extends Component{
                                             onClick={this._onClickObject.bind(this, o, o_index)}>
                                             <div className="object-wrapper">
                                                 <div className="object-name object-in">{nameHtml}</div>
-                                                <input type="number" disabled placeholder="Number"/>
+                                                <input type="text" disabled placeholder="Number"/>
                                             </div>
                                         </div>
                                     )

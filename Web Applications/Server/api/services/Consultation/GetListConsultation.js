@@ -80,7 +80,8 @@ module.exports = function(data, userInfo) {
                 }],
                 order: pagination.order,
                 limit: pagination.limit,
-                offset: pagination.offset
+                offset: pagination.offset,
+                subQuery:false,
             });
         })
         .then(function(consultList) {

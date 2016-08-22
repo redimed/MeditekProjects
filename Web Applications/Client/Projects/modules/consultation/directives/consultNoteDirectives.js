@@ -657,9 +657,9 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $scope.loadData = function(data) {
                 console.log("loadData:data", data);
-                $timeout(function() {
-                    $.uniform.update();
-                }, 0);
+                // $timeout(function() {
+                //     $.uniform.update();
+                // }, 0);
                 $scope.CheckUpdate = false;
                 $scope.FileUploads = angular.copy(data.FileUploads);
                 //tan custom
@@ -770,28 +770,31 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                     toastr.error("Please input data");
                 };
             }
+            $scope.isUpdating = false;
             $scope.updateConsultation = function() {
-                $scope.ConsultationUpdate();
+                var objUpdate = $scope.ConsultationUpdate();
                 var UID = angular.copy($scope.requestInfo.Consultations[0].UID);
-                o.loadingPage(true);
-                consultationServices.updateConsultation($scope.requestInfo).then(function(response) {
+                // o.loadingPage(true);
+                consultationServices.updateConsultation(objUpdate).then(function(response) {
                     if (response == 'success') {
-                        o.loadingPage(false);
-                        consultationServices.detailConsultation(UID).then(function(response) {
-                            $scope.uploader.clearQueue();
-                            $scope.requestInfo = null;
-                            $scope.requestOther = {};
-                            if (response.data !== null) {
-                                toastr.success('Update Success');
-                                $scope.loadData(response.data);
-                            } else {
-                                toastr.error("data error");
-                            };
-                        });
+                        // o.loadingPage(false);
+                        // consultationServices.detailConsultation(UID).then(function(response) {
+                        //     $scope.uploader.clearQueue();
+                        //     $scope.requestInfo = null;
+                        //     $scope.requestOther = {};
+                        //     if (response.data !== null) {
+                        //         // toastr.success('Update Success');
+                        //         $scope.loadData(response.data);
+                        //     } else {
+                        //         // toastr.error("data error");
+                        //         toastr.error("Auto Update Fail");
+                        //     };
+                        // });
                     };
                 }, function(err) {
                     o.loadingPage(false);
-                    toastr.error('update Consultation Fail');
+                    toastr.error("Auto Update Fail")
+                    // toastr.error('update Consultation Fail');
                 });
             }
             $scope.ConsultationDataCreate = function() {
@@ -836,8 +839,18 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $scope.ConsultationUpdate = function() {
                 var ConsultationDataTemp = [];
-                console.log("ConsultationUpdate: $scope.requestInfo.Consultations[0].ConsultationData", $scope.requestInfo.Consultations[0].ConsultationData);
-                for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
+                // var objUpdate = $.extend({}, $scope.requestInfo.Consultations[0].ConsultationData);
+                var objUpdate = $.extend({}, $scope.requestInfo);
+                
+                // for(key in $scope.requestInfo.Consultations[0].ConsultationData) {
+                //     console.log("tempObj ", tempObj)
+                //     var tempObj = $.extend({}, $scope.requestInfo.Consultations[0].ConsultationData[key]);
+                //     objUpdate[key] = tempObj;
+                // }
+                console.log("ConsultationUpdate: $scope.requestInfo.Consultations[0].ConsultationData", $scope.requestInfo);
+                console.log(": $scope ", objUpdate);
+                for (var key in objUpdate.Consultations[0].ConsultationData) {
+                    console.log("key ", key)
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");
                     var otherkey = res[2] + res[3] + res[4] + 'Other';
@@ -847,11 +860,11 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         Type: res[2],
                         Name: res[3],
                         Description: res[4],
-                        Value: ($scope.requestInfo.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : $scope.requestInfo.Consultations[0].ConsultationData[key].Value,
-                        FileUploads: $scope.requestInfo.Consultations[0].ConsultationData[key].FileUploads
+                        Value: (objUpdate.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : objUpdate.Consultations[0].ConsultationData[key].Value,
+                        FileUploads: objUpdate.Consultations[0].ConsultationData[key].FileUploads
                     };
                     var isExist = false;
-                    $scope.ConsultationData.forEach(function(valueTemp, keyTemp) {
+                    objUpdate.Consultations[0].ConsultationData.forEach(function(valueTemp, keyTemp) {
                         if (valueTemp.Section == object.Section &&
                             valueTemp.Category == object.Category &&
                             valueTemp.Type == object.Type &&
@@ -861,7 +874,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                                 valueTemp.Value = object.Value;
                                 valueTemp.FileUploads = object.FileUploads;
                                 object = valueTemp;
-                                ConsultationDataTemp.push(object);
+                                objUpdate.Consultations[0].ConsultationData.push(object);
                             };
 
                         };
@@ -886,8 +899,9 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         };
                     };
                 };
-                $scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTemp;
-                console.log("update:$scope.requestInfo.Consultations[0].ConsultationData",$scope.requestInfo.Consultations[0].ConsultationData)
+                objUpdate.Consultations[0].ConsultationData = ConsultationDataTemp;
+                console.log("update:$scope.requestInfo.Consultations[0].ConsultationData",objUpdate)
+                return objUpdate;
             }
             $scope.cancel = function() {
                 $state.go("authentication.consultation.detail", {
@@ -992,8 +1006,18 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                     Window.focus();
                 }
             }
+            function setStatusInput(isDisabled) {
+                $('#ctrl *').filter(':input').each(function(key){
+                    if(isDisabled == true) {
+                        $(this).attr("disabled", true);
+                    }
+                    else if(isDisabled == false) {
+                        $(this).attr("disabled", false);
+                    }
+                });
+            }
             $('#ctrl *').filter(':input').each(function(key){
-                $(this).blur(function() {
+                $(this).focusout(function() {
                     (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
                 })
             });

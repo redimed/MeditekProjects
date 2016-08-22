@@ -282,9 +282,9 @@ module.exports = React.createClass({
                                 <InputRecChart ref="inputRecChart" onChangeInput={this._onChangeInput}/>
                             </div>
                             <center>
-                                <span style={{width: '50px', background: 'red', height: '5px', display: 'inline-block'}}></span> Left Ear
+                                <span style={{width: '50px', background: 'red', height: '5px', display: 'inline-block'}}></span> Right Ear
                                 &nbsp;
-                                <span style={{width: '50px', background: 'blue', height: '5px', display: 'inline-block'}}></span> Right Ear
+                                <span style={{width: '50px', background: 'blue', height: '5px', display: 'inline-block'}}></span> Left Ear
                             </center>
                             <br/>
                             <div ref="chart" id="chart"/>

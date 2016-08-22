@@ -171,8 +171,8 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                             $scope.DataPrintPDF = angular.copy(response.data)
                             $scope.loadData(response.data);
                         } else {
-                            toastr.error("Detail Empty");
-                            $scope.Reset();
+                            // toastr.error("Detail Empty");
+                            // $scope.Reset();
                         };
                     }, function(err) {
                         o.loadingPage(false);
@@ -657,9 +657,9 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $scope.loadData = function(data) {
                 console.log("loadData:data", data);
-                // $timeout(function() {
-                //     $.uniform.update();
-                // }, 0);
+                $timeout(function() {
+                    $.uniform.update();
+                }, 0);
                 $scope.CheckUpdate = false;
                 $scope.FileUploads = angular.copy(data.FileUploads);
                 //tan custom
@@ -747,8 +747,8 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                                 $scope.DataPrintPDF = angular.copy(response.data)
                                 $scope.loadData(response.data);
                             } else {
-                                toastr.error("Detail Empty");
-                                $scope.Reset();
+                                // toastr.error("Detail Empty");
+                                // $scope.Reset();
                             };
                         }, function(err) {
                             o.loadingPage(false);
@@ -770,12 +770,18 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                     toastr.error("Please input data");
                 };
             }
-            $scope.isUpdating = false;
             $scope.updateConsultation = function() {
-                var objUpdate = $scope.ConsultationUpdate();
+                var obj = $scope.ConsultationUpdate();
+                console.log("obj ",obj);
+                console.log("asdasd ",$scope.requestInfo)
+                var objectUpdate = angular.copy($scope.requestInfo);
+                console.log("bebe objectUpdate")
+                objectUpdate.Consultations[0].ConsultationData = obj;
+                console.log("afff ",objectUpdate)
+
                 var UID = angular.copy($scope.requestInfo.Consultations[0].UID);
                 // o.loadingPage(true);
-                consultationServices.updateConsultation(objUpdate).then(function(response) {
+                consultationServices.updateConsultation(objectUpdate).then(function(response) {
                     if (response == 'success') {
                         // o.loadingPage(false);
                         // consultationServices.detailConsultation(UID).then(function(response) {
@@ -783,18 +789,16 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         //     $scope.requestInfo = null;
                         //     $scope.requestOther = {};
                         //     if (response.data !== null) {
-                        //         // toastr.success('Update Success');
+                        //         toastr.success('Update Success');
                         //         $scope.loadData(response.data);
                         //     } else {
-                        //         // toastr.error("data error");
-                        //         toastr.error("Auto Update Fail");
+                        //         toastr.error("data error");
                         //     };
                         // });
                     };
                 }, function(err) {
                     o.loadingPage(false);
-                    toastr.error("Auto Update Fail")
-                    // toastr.error('update Consultation Fail');
+                    toastr.error('update Consultation Fail');
                 });
             }
             $scope.ConsultationDataCreate = function() {
@@ -839,18 +843,8 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $scope.ConsultationUpdate = function() {
                 var ConsultationDataTemp = [];
-                // var objUpdate = $.extend({}, $scope.requestInfo.Consultations[0].ConsultationData);
-                var objUpdate = $.extend({}, $scope.requestInfo);
-                
-                // for(key in $scope.requestInfo.Consultations[0].ConsultationData) {
-                //     console.log("tempObj ", tempObj)
-                //     var tempObj = $.extend({}, $scope.requestInfo.Consultations[0].ConsultationData[key]);
-                //     objUpdate[key] = tempObj;
-                // }
-                console.log("ConsultationUpdate: $scope.requestInfo.Consultations[0].ConsultationData", $scope.requestInfo);
-                console.log(": $scope ", objUpdate);
-                for (var key in objUpdate.Consultations[0].ConsultationData) {
-                    console.log("key ", key)
+                console.log("ConsultationUpdate: $scope.requestInfo.Consultations[0].ConsultationData", $scope.requestInfo.Consultations[0].ConsultationData);
+                for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");
                     var otherkey = res[2] + res[3] + res[4] + 'Other';
@@ -860,11 +854,11 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         Type: res[2],
                         Name: res[3],
                         Description: res[4],
-                        Value: (objUpdate.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : objUpdate.Consultations[0].ConsultationData[key].Value,
-                        FileUploads: objUpdate.Consultations[0].ConsultationData[key].FileUploads
+                        Value: ($scope.requestInfo.Consultations[0].ConsultationData[key].Value == 'OtherProvider') ? $scope.requestOther[otherkey] : $scope.requestInfo.Consultations[0].ConsultationData[key].Value,
+                        FileUploads: $scope.requestInfo.Consultations[0].ConsultationData[key].FileUploads
                     };
                     var isExist = false;
-                    objUpdate.Consultations[0].ConsultationData.forEach(function(valueTemp, keyTemp) {
+                    $scope.ConsultationData.forEach(function(valueTemp, keyTemp) {
                         if (valueTemp.Section == object.Section &&
                             valueTemp.Category == object.Category &&
                             valueTemp.Type == object.Type &&
@@ -874,7 +868,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                                 valueTemp.Value = object.Value;
                                 valueTemp.FileUploads = object.FileUploads;
                                 object = valueTemp;
-                                objUpdate.Consultations[0].ConsultationData.push(object);
+                                ConsultationDataTemp.push(object);
                             };
 
                         };
@@ -899,9 +893,9 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         };
                     };
                 };
-                objUpdate.Consultations[0].ConsultationData = ConsultationDataTemp;
-                console.log("update:$scope.requestInfo.Consultations[0].ConsultationData",objUpdate)
-                return objUpdate;
+                // $scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTemp;
+                return ConsultationDataTemp;
+                console.log("update:$scope.requestInfo.Consultations[0].ConsultationData",$scope.requestInfo.Consultations[0].ConsultationData)
             }
             $scope.cancel = function() {
                 $state.go("authentication.consultation.detail", {
@@ -1006,18 +1000,8 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                     Window.focus();
                 }
             }
-            function setStatusInput(isDisabled) {
-                $('#ctrl *').filter(':input').each(function(key){
-                    if(isDisabled == true) {
-                        $(this).attr("disabled", true);
-                    }
-                    else if(isDisabled == false) {
-                        $(this).attr("disabled", false);
-                    }
-                });
-            }
             $('#ctrl *').filter(':input').each(function(key){
-                $(this).focusout(function() {
+                $(this).blur(function() {
                     (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
                 })
             });

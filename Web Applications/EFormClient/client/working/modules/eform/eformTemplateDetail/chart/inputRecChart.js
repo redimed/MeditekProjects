@@ -33,13 +33,6 @@ module.exports = React.createClass({
     setSeries: function(field){
         var self = this;
         this.series = $.extend([], this.series, field.series);
-        this.series.map(function(serie, serieIndex){
-            if(self.axisX.categories.length > serie.data.length){
-                for(var i = serie.data.length; i  < self.axisX.categories.length; i++){
-                    self.series[serieIndex].data.push(0);
-                }
-            }
-        })
         this.forceUpdate();
     },
     render: function(){
@@ -71,7 +64,7 @@ module.exports = React.createClass({
                                                     <td key={inputIndex}>
                                                         <CommonInputText ref={"serie_"+index+"_"+inputIndex}
                                                             onChange={this._onChangeInput.bind(this, index, inputIndex)}
-                                                            defaultValue={0} className="default" style={{width: '60px', fontSize: '14px', paddingLeft: '3px'}}/>
+                                                            defaultValue={input || 0} className="default" style={{width: '60px', fontSize: '14px', paddingLeft: '3px'}}/>
                                                     </td>
                                                 )
                                             }, this)

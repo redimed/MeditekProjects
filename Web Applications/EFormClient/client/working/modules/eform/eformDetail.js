@@ -627,6 +627,9 @@ module.exports = React.createClass({
                                 if(field.type === 'line_chart'){
                                     self.refs[section_ref].setValueForChart(row_ref, field_ref, field, 'line');
                                 }
+                                else if(field.type === 'rec_chart'){
+                                    self.refs[section_ref].setValueForChart(row_ref, field_ref, field, 'rec');
+                                }
                                 else if(field.type !== 'eform_input_image_doctor'){
                                     if(typeof self.refs[section_ref] !== 'undefined'){
                                         
@@ -813,8 +816,6 @@ module.exports = React.createClass({
 
             content = JSON.stringify(content);
 
-            console.log(content);
-
             if(self.EFormStatus === 'unsaved'){
                 EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){
@@ -849,7 +850,7 @@ module.exports = React.createClass({
         if(this.EFormStatus !== 'finalized'){
             this._onDetailSaveForm()
             .then(function(){
-                //window.location.reload();
+                window.location.reload();
             })
         }else
             toastr.error('Form has been finalized. You cannot save form.');

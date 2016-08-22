@@ -26,6 +26,7 @@ module.exports = React.createClass({
     image: null,
     image_header: null,
     paper: null,
+    data: [],
     componentDidMount: function(){
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
@@ -143,7 +144,12 @@ module.exports = React.createClass({
         var data = this.refs.inputRecChart.getValue();
         var self = this;
 
+        self.data.map(function(d){
+            d.path.remove();
+        });
+
         var v_index = 0;
+        var path = null;
         data.map(function(v){
             var distance_y = 30;
             var distance_x = 180;
@@ -171,51 +177,87 @@ module.exports = React.createClass({
                 }
                 d_index++;
             })
-            if(v_index === 0)
-                self.paper.path(d_array)
+            if(v_index === 0){
+                path = self.paper.path(d_array)
                 .attr({
                     'stroke-width': 3,
                     'stroke': 'red'
                 });
-            else
-                self.paper.path(d_array)
+                self.data.push({path: path});
+            }else{
+                path = self.paper.path(d_array)
                 .attr({
                     'stroke-width': 3,
                     'stroke': 'blue'
                 });
+                self.data.push({path: path});
+            }
             v_index++;
         })
     },
     getAllValue: function(){
-        if(this.props.permission !== 'eformDev')
-            var series = this.refs.inputAxisX.getValue();
-        else
-            var series = '';
+        var data = this.refs.inputRecChart.getValue();
         var type = 'line_chart';
         var name = this.props.name;
         var ref = this.props.refTemp;
-        return {series: series, type: type, ref: ref, name: name};
-    },
-    getBase64Value: function(){
-        var type = 'line_chart';
-        var name = this.props.name;
-        var ref = this.props.refTemp;
-        var value = this.image;
-        var value_header = this.image_header;
-        return {value: value, type: type, ref: ref, name: name, base64DataHeader: value_header};
+        return {series: data, type: type, ref: ref, name: name};
     },
     setValue: function(field, chartType){
-        var chart = $(this.refs.line_chart).highcharts();
+        var data = field.series;
         var self = this;
-        if(typeof field.series !== 'undefined' && field.series !== ''){
-            field.series.map(function(serie, index){
-                chart.series[index].update({
-                    data: serie.data
-                }, true);
-                self._onUpdateBase64();
+
+        this.refs.inputRecChart.setSeries(field);
+
+        self.data.map(function(d){
+            d.path.remove();
+        });
+
+        var v_index = 0;
+        var path = null;
+        data.map(function(v){
+            var distance_y = 30;
+            var distance_x = 180;
+            var d_index = 0;
+            var d_array = ['M'];
+            v.data.map(function(d){
+                if(d >= 0)
+                    var d_y = (d*4)+30+40;
+                else{
+                    if(d === -10)
+                        var d_y = 30;
+                    else
+                        var d_y = Math.abs((d*4))+30;
+                }
+                if(d_index === 0){
+                    d_array.push(distance_x);
+                    d_array.push(d_y);
+                    distance_x += 150;
+                }
+                else{
+                    d_array.push('L');
+                    d_array.push(distance_x);
+                    d_array.push(d_y);
+                    distance_x += 75;
+                }
+                d_index++;
             })
-            this.refs.inputAxisX.setSeries(field);
-        }
+            if(v_index === 0){
+                path = self.paper.path(d_array)
+                .attr({
+                    'stroke-width': 3,
+                    'stroke': 'red'
+                });
+                self.data.push({path: path});
+            }else{
+                path = self.paper.path(d_array)
+                .attr({
+                    'stroke-width': 3,
+                    'stroke': 'blue'
+                });
+                self.data.push({path: path});
+            }
+            v_index++;
+        })
     },
     render: function(){
         if(this.props.permission === 'eformDev'){
@@ -239,6 +281,12 @@ module.exports = React.createClass({
                             <div ref="header" id="line_chart_header">
                                 <InputRecChart ref="inputRecChart" onChangeInput={this._onChangeInput}/>
                             </div>
+                            <center>
+                                <span style={{width: '50px', background: 'red', height: '5px', display: 'inline-block'}}></span> Left Ear
+                                &nbsp;
+                                <span style={{width: '50px', background: 'blue', height: '5px', display: 'inline-block'}}></span> Right Ear
+                            </center>
+                            <br/>
                             <div ref="chart" id="chart"/>
                         </div>
                     </div>

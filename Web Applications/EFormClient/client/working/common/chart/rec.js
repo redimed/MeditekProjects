@@ -196,7 +196,10 @@ module.exports = React.createClass({
         })
     },
     getAllValue: function(){
-        var data = this.refs.inputRecChart.getValue();
+        if(typeof this.refs.inputRecChart === 'undefined'){
+            var data = '';
+        }else
+            var data = this.refs.inputRecChart.getValue();
         var type = 'line_chart';
         var name = this.props.name;
         var ref = this.props.refTemp;

@@ -4,7 +4,6 @@ module.exports = React.createClass({
     image: null,
     image_header: null,
     componentDidMount: function(){
-        var self = this;
         if(typeof this.refs.group !== 'undefined' && this.props.context !== 'none'){
             $(this.refs.group).contextmenu({
                 target: '#'+this.props.context,
@@ -17,81 +16,86 @@ module.exports = React.createClass({
                 }.bind(this)
             })
         }
-        var series = this.props.series.toJS();
-        if(series[1])
-            series[1].color = 'blue';
-        if(series[0])
-            series[0].color = 'red';
-        $(this.refs.line_chart).highcharts({
-            chart: {
-                height: 700,
-                width: 1200,
-                backgroundColor: '#FFFFFF',
-                marginTop: 90
-            },
-            title: {
-                text: ''
-            },
-            xAxis: {
-                categories: this.props.axisX.toJS().categories,
-                tickmarkPlacement: 'on',
-                type: 'datetime',
-                labels: {
-                  y: -580,
-                  x: -20,
-                  align: 'left',
-                  style: {
-                        color: 'black',
-                        fontSize: '16px'
-                    }
+        if(this.props.permission !== 'eformDev'){
+            var self = this;
+            var series = this.props.series.toJS();
+            if(series[1])
+                series[1].color = 'blue';
+            if(series[0])
+                series[0].color = 'red';
+            $(this.refs.line_chart).highcharts({
+                chart: {
+                    height: 700,
+                    width: 1200,
+                    backgroundColor: '#FFFFFF',
+                    marginTop: 90
                 },
-                gridLineWidth: 2,
-                gridLineColor: 'black',
-                lineColor: 'black',
-                lineWidth: 2
-            },
-            yAxis: {
                 title: {
-                    text: 'Hearing Level in Decibels (dB)'
+                    text: ''
                 },
-                labels: {
+                xAxis: {
+                    categories: this.props.axisX.toJS().categories,
+                    tickmarkPlacement: 'on',
+                    type: 'datetime',
+                    labels: {
+                      y: -580,
+                      x: -20,
+                      align: 'left',
+                      style: {
+                            color: 'black',
+                            fontSize: '16px'
+                        }
+                    },
+                    gridLineWidth: 2,
+                    gridLineColor: 'black',
+                    lineColor: 'black',
+                    lineWidth: 2
+                },
+                yAxis: {
+                    title: {
+                        text: 'Hearing Level in Decibels (dB)'
+                    },
+                    labels: {
+                        style: {
+                            color: 'black',
+                            fontSize: '16px'
+                        }
+                    },
+                    reversed: true,
+                    max: 120,
+                    min: -10,
+                    minRange: 5,
+                    tickInterval: 10,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: 'black'
+                    }],
+                    gridLineWidth: 2,
+                    gridLineColor: 'black',
+                    lineColor: 'black',
+                    lineWidth: 2
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    borderWidth: 0,
                     style: {
                         color: 'black',
                         fontSize: '16px'
                     }
                 },
-                reversed: true,
-                max: 120,
-                min: -10,
-                minRange: 5,
-                tickInterval: 10,
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: 'black'
-                }],
-                gridLineWidth: 2,
-                gridLineColor: 'black',
-                lineColor: 'black',
-                lineWidth: 2
-            },
-            tooltip: {
-                valueSuffix: ''
-            },
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom',
-                borderWidth: 0,
-                style: {
-                    color: 'black',
-                    fontSize: '16px'
-                }
-            },
-            series: series
-        })
+                series: series
+            })
+        }
         if(this.props.permission !== 'eformDev'){
             this.refs.inputAxisX.init(this.props.axisX.toJS(), this.props.series.toJS());
+            console.log(this.props.axisX.toJS());
+            console.log(this.props.series.toJS());
             this._onUpdateBase64();
         }
     },
@@ -189,7 +193,7 @@ module.exports = React.createClass({
                 <div className={"col-xs-"+this.props.size} ref="group">
                     <div className="form-group" id={this.props.groupId}>
                         <div className="col-xs-12">
-                            <div ref="line_chart"/>
+                            Line Chart
                         </div>
                     </div>
                 </div>

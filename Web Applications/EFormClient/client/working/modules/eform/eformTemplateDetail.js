@@ -193,6 +193,24 @@ module.exports = React.createClass({
                     ))
                 }
             })
+        }else if(typeField === 'rec_chart'){
+            this.setState(function(prevState){
+                return {
+                    sections: prevState.sections.updateIn([codeSection,'rows',codeRow,'fields'], val => val.push(
+                        Immutable.fromJS({
+                            code: typeField,
+                            type: typeField,
+                            name: '',
+                            axisX: Immutable.fromJS({categories: []}),
+                            title: 'Rec Chart',
+                            subtitle: 'Hearing Level (dB)',
+                            series: Immutable.List(),
+                            size: '12',
+                            ref: ref
+                        })
+                    ))
+                }
+            })
         }
         //swal("Success!", "Add field successfully.", "success")
     },

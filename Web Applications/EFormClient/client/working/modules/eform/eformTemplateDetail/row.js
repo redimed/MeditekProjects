@@ -13,6 +13,7 @@ var CommonTableDynamic = require('common/dynamicTable');
 var CommonSignatureDoctor = require('common/signatureDoctor');
 var CommonSignaturePatient = require('common/signaturePatient');
 var CommonLineChart = require('common/chart/line');
+var CommonRecChart = require('common/chart/rec');
 var ComponentFormUpdateSection = require('modules/eform/eformTemplateDetail/formUpdateSection');
 var ComponentListField = require('modules/eform/eformTemplateDetail/listField');
 var ComponentFieldDetail = require('modules/eform/eformTemplateDetail/fieldDetail');
@@ -278,7 +279,7 @@ module.exports = React.createClass({
             if(typeof this.refs[fieldRef] !== 'undefined'){
                 var type = this.refs[fieldRef].getType();
                 if(type !== 'table' && type !== 'dynamic_table' &&
-                    type !== 'line_chart' &&
+                    type !== 'line_chart' && type !== 'rec_chart' &&
                     Config.getPrefixField(type, 'label') === -1 && 
                     Config.getPrefixField(type, 'check') === -1 && 
                     Config.getPrefixField(type, 'date') === -1 &&
@@ -329,6 +330,25 @@ module.exports = React.createClass({
                         results.push(tableField);
                     })      
                 }else if(type === 'line_chart'){
+                    if(stringType !== 'print'){
+                        var series = this.refs[fieldRef].getAllValue();
+                        series.refRow = this.props.refTemp;
+                        results.push(series);
+                    }else{
+                        var series = this.refs[fieldRef].getBase64Value();
+                        var base64DataHeader = series.base64DataHeader;
+                        series.refRow = this.props.refTemp;
+                        series.base64Data = series.value;
+                        series.value = '';
+                        series.moduleID = this.props.moduleID;
+                        delete series.base64DataHeader;
+                        results.push(series);
+                        var series_1 = $.extend({}, series);
+                        series_1.base64Data = base64DataHeader;
+                        series_1.name = series_1.name+'_1';
+                        results.push(series_1);
+                    }
+                }else if(type === 'rec_chart'){
                     if(stringType !== 'print'){
                         var series = this.refs[fieldRef].getAllValue();
                         series.refRow = this.props.refTemp;
@@ -810,6 +830,24 @@ module.exports = React.createClass({
                                                                 roles={field.get('roles')}
                                                                 height={field.get('height')}
                                                                 onRightClickItem={this._onRightClickChartItem}/>
+                                                        else if(type === 'rec_chart'){
+                                                            return <CommonRecChart type={type} key={index}
+                                                                groupId={groupId}
+                                                                permission={this.props.permission}
+                                                                name={field.get('name')}
+                                                                size={field.get('size')}
+                                                                context={displayContextChartMenu}
+                                                                ref={field.get('ref')}
+                                                                refTemp={field.get('ref')}
+                                                                axisX={field.get('axisX')}
+                                                                series={field.get('series')}
+                                                                title={field.get('title')}
+                                                                subtitle={field.get('subtitle')}
+                                                                code={index}
+                                                                roles={field.get('roles')}
+                                                                height={field.get('height')}
+                                                                onRightClickItem={this._onRightClickChartItem}/>
+                                                        }
                                                 }, this)
                                             }
                                         </div>
@@ -1010,6 +1048,23 @@ module.exports = React.createClass({
                                         onRightClickItem={this._onRightClickItem}/>
                                 else if(type === 'line_chart')
                                     return <CommonLineChart key={index} type={type}
+                                        groupId={groupId}
+                                        permission={this.props.permission}
+                                        name={field.get('name')}
+                                        size={field.get('size')}
+                                        context={displayContextChartMenu}
+                                        ref={field.get('ref')}
+                                        refTemp={field.get('ref')}
+                                        axisX={field.get('axisX')}
+                                        series={field.get('series')}
+                                        title={field.get('title')}
+                                        subtitle={field.get('subtitle')}
+                                        code={index}
+                                        roles={field.get('roles')}
+                                        height={field.get('height')}
+                                        onRightClickItem={this._onRightClickChartItem}/>
+                                else if(type === 'rec_chart')
+                                    return <CommonRecChart key={index} type={type}
                                         groupId={groupId}
                                         permission={this.props.permission}
                                         name={field.get('name')}

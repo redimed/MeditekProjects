@@ -55,7 +55,7 @@ module.exports = React.createClass({
         }
         return output;
     },
-    setValue: function(value){        
+    setValue: function(value){ 
         this.imageSignature = value;
         if(this.imageSignature){
             var self = this;

@@ -813,6 +813,8 @@ module.exports = React.createClass({
 
             content = JSON.stringify(content);
 
+            console.log(content);
+
             if(self.EFormStatus === 'unsaved'){
                 EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
                 .then(function(){
@@ -847,7 +849,7 @@ module.exports = React.createClass({
         if(this.EFormStatus !== 'finalized'){
             this._onDetailSaveForm()
             .then(function(){
-                window.location.reload();
+                //window.location.reload();
             })
         }else
             toastr.error('Form has been finalized. You cannot save form.');

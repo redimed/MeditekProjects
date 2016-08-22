@@ -1,12 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Base application theme. -->
     <style name="MyTheme" parent="MyTheme.Base">
 
-        <item name="android:colorButtonNormal">#B42047</item>
-
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryNew</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNew</item>
 
         <item name="android:typeface">serif</item>
 
@@ -15,7 +12,6 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-
     </style>
 
     <style name="ActivationTheme" parent="MyTheme">

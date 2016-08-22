@@ -10,4 +10,5 @@ public interface ILoginPresenter {
     void Login(String verityCode);
     void GetTelehealthUser(String uid);
     void ForgetPin(String phone);
+    void LoginAccount(String user, String pass);
 }

@@ -1,9 +1,11 @@
-//const server = 'https://meditek.redimed.com.au'
-const server = 'http://localhost'
+const server = 'https://meditek.redimed.com.au'
+// const server = 'http://localhost'
+const local = 'http://localhost'
 
 const ip = {
-    EFormServer: server+':3015',
-    ApiServerUrl: server + ':3005',
+    EFormServer: local+':3015',
+    ApiServerUrl: local + ':3005',
+    Host: local + ':3020'
 }
 
 export default ip

@@ -42,7 +42,7 @@ input[type="radio"],input[type="checkbox"]
             float right
             text-align center
             vertical-align middle
-            a
+            a, .btnSave
                 min-width 100px
                 display block
                 height 40px
@@ -93,7 +93,7 @@ input[type="radio"],input[type="checkbox"]
                     padding-left 5px
                     line-height 29px
                     margin-bottom 0
-                    input[type="text"],input[type="number"]
+                    input[type="text"],input[type="number"], textarea
                         min-height 29px
                         border 0
                         text-indent 3px
@@ -117,7 +117,7 @@ input[type="radio"],input[type="checkbox"]
                     vertical-align middle
                     min-height 30px
                     margin-bottom 15px
-                    input[type="text"],input[type="number"]
+                    input[type="text"],input[type="number"],textarea
                         width 100%
                         text-indent 3px
                         padding 3px
@@ -138,3 +138,42 @@ input[type="radio"],input[type="checkbox"]
                                         color #fff
                                         border 0
                                         cursor pointer
+
+.drawing-control-wrapper
+    margin-top 10px
+.drawing-inline
+    margin-bottom 10px
+.drawing-control
+    height 34px
+    display inline-block
+    line-height: 34px;
+    font-size 14px
+    border 1px solid #ccc
+    margin 0 7px
+    padding 0
+.drawing-control.active
+    background-color #54acd2
+.btn.drawing-control:hover
+    cursor pointer
+a.drawing-control
+    text-decoration none
+    color black
+.btn.drawing-control
+    padding-right 3px
+    padding-left 3px
+.btn-success.drawing-control   
+    border none
+    color white
+.btn-success
+    background-color #41a85f
+
+.my_canvas
+    border 1px solid #ccc
+
+.btnSave
+    border none
+    color white
+
+
+
+

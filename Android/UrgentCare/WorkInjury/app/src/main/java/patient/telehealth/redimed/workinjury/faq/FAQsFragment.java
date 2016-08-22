@@ -3,6 +3,7 @@ package patient.telehealth.redimed.workinjury.faq;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,8 +34,8 @@ public class FAQsFragment extends Fragment implements IFAQsView {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ifaQsPresenter = new FAQsPresenter(this);
         application = MyApplication.getInstance();
     }

@@ -73,6 +73,9 @@ angular.module("app.authentication.consultation.services", [])
         services.generatepassword = function(data) {
             return api.all('user-account/generate-password').post({ data: data });
         }
+        services.checkconsultnote = function(apptUID) {
+            return api.one('appointment/check-has-consult/' + apptUID).get();
+        }
         return services;
 
     });

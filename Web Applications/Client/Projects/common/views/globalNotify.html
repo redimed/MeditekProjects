@@ -13,13 +13,13 @@
     </li>
     <li ng-if="listGlobalNotify.length > 0">
         <ul class="dropdown-menu-list scroller" style="height: 275px; overflow: auto;" data-handle-color="#637283">
-            <li ng-repeat="global in listGlobalNotify" ng-click="OpenDetail(global)">
+            <li ng-repeat="global in listGlobalNotify" ng-click="OpenDetail(global)" class="{{ global.iRead === 'N' ? 'bg-info' : ''}}">
                 <a href="#">
                     <span class="subject" style="margin-left:0px">
                         <span class="from" > {{global.MsgContent.Display.Subject}} </span>
-                        <span class="time">{{global.fromTime}} </span>
+                        <!-- <span class="time">{{global.fromTime}} </span> -->
                     </span>
-                    <span class="message" style="margin-left:0px"> {{global.Subject}} </span>
+                    <span class="message" style="margin-left:0px"> {{global.Subject}} {{global.MsgContent.Display.Object ? global.MsgContent.Display.Object.name : ''}}</span>
                 </a>
             </li>
         </ul>

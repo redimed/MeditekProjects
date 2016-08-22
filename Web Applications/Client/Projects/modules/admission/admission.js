@@ -13,6 +13,14 @@ app.config(function($stateProvider){
 			controller: 'admissionCtrl',
 		})
 
+		.state('authentication.consultation.detail1.admission',{
+			abstract: true,
+			data: {title: 'Admission', pageTitle: 'Admission'},
+			url: '/admission1',
+			templateUrl: 'modules/admission/views/admission.html',
+			controller: 'admissionCtrl',
+		})
+
 		// request
 		.state('authentication.consultation.detail.admission.request',{
 			data: {title: 'Admission Requests', pageTitle: 'Admission Requests'},
@@ -43,6 +51,13 @@ app.config(function($stateProvider){
 		.state('authentication.consultation.detail.admission.detail',{
 			data: {title: 'Admission details', pageTitle: 'Admission details'},
 			url: '/detail',
+			templateUrl: 'modules/admission/views/admissionDetail.html',
+			controller: 'admissionDetailCtrl',
+		})
+
+		.state('authentication.consultation.detail1.admission.detail',{
+			data: {title: 'Admission details', pageTitle: 'Admission details'},
+			url: '/detail1',
 			templateUrl: 'modules/admission/views/admissionDetail.html',
 			controller: 'admissionDetailCtrl',
 		})

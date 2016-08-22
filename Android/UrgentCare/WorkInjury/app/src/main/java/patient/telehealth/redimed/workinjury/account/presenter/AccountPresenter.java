@@ -9,7 +9,7 @@ import org.jdeferred.impl.DeferredObject;
 
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.account.view.IAccountView;
-import patient.telehealth.redimed.workinjury.models.ModelAccount;
+import patient.telehealth.redimed.workinjury.model.ModelAccount;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.utils.Key;
 import retrofit.Callback;

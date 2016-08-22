@@ -23,6 +23,7 @@ import patient.telehealth.redimed.workinjury.api.UrgentRequest;
 import patient.telehealth.redimed.workinjury.faq.FAQsFragment;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.utils.Key;
+import patient.telehealth.redimed.workinjury.work.WorkFragment;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -131,6 +132,17 @@ public class HomePresenter implements IHomepresenter {
         bundle.putString(Key.Home.msg, content);
         fragment.setArguments(bundle);
         application.replaceFragment(activity, fragment, Key.fmFAQs, Key.fmHome);
+    }
+
+    @Override
+    public void dispalyWork(String content) {
+        application.setDataModelPatient(null);
+        application.setDataModelCompany(null);
+        WorkFragment fragment = new WorkFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Key.Work.workType, content);
+        fragment.setArguments(bundle);
+        application.replaceFragment(activity, fragment, Key.fmWork, Key.fmHome);
     }
 
 }

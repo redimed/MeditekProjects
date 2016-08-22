@@ -62,21 +62,29 @@
 
 	var _section2 = _interopRequireDefault(_section);
 
-	var _math = __webpack_require__(181);
+	var _math = __webpack_require__(184);
 
 	var _math2 = _interopRequireDefault(_math);
 
-	var _main = __webpack_require__(182);
+	var _main = __webpack_require__(185);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _helper = __webpack_require__(180);
+	var _helper = __webpack_require__(182);
 
 	var _helper2 = _interopRequireDefault(_helper);
 
 	var _constants = __webpack_require__(178);
 
 	var _constants2 = _interopRequireDefault(_constants);
+
+	var _loaddatahelper = __webpack_require__(186);
+
+	var _loaddatahelper2 = _interopRequireDefault(_loaddatahelper);
+
+	var _toast = __webpack_require__(187);
+
+	var _toast2 = _interopRequireDefault(_toast);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -106,10 +114,11 @@
 	        _this.pages = [];
 	        _this.current_page = EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE;
 	        _this.md = null;
+
 	        _this.appointment_uid = '';
-	        _this.patient_uid = '';
-	        _this.template_uid = '';
-	        _this.user_uid = '';
+	        _this.patient_uid = ''; // 4 create EFormData
+	        _this.template_uid = ''; // load 
+	        _this.user_uid = ''; // 4 create EFormData
 	        _this.obj_data = [];
 	        _this.is_data = false;
 	        _this.eform_name = '';
@@ -117,22 +126,60 @@
 	    }
 
 	    _createClass(EFormDetail, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
+	        key: '_getRequiredData',
+	        value: function _getRequiredData() {
 	            var p = _math2.default.parseQueryString(window.location.href).page;
 	            this.current_page = p == undefined ? EFORM_CLIENT_CONST.DEFAULT_VALUE.PAGE : parseInt(p);
 	            this.appointment_uid = _math2.default.parseQueryString(window.location.href).appointmentUID;
-	            this.patient_uid = _math2.default.parseQueryString(window.location.href).patientUID;
 	            this.user_uid = _math2.default.parseQueryString(window.location.href).userUID;
 	            this.template_uid = _math2.default.parseQueryString(window.location.href).templateUID;
+	            this.patient_uid = _math2.default.parseQueryString(window.location.href).patientUID;
+	            if (!this.template_uid) {
+	                _toast2.default.error('Missing Template uid');
+	                return false;
+	            } else if (!this.appointment_uid) {
+	                _toast2.default.error('Missing Appointment uid');
+	                return false;
+	            } else if (!this.user_uid) {
+	                _toast2.default.error('Missing User uid');
+	                return false;
+	            } else if (!this.patient_uid) {
+	                _toast2.default.error('Missing Patient UID ');
+	                return false;
+	            }
+	            return true;
+	        }
+	    }, {
+	        key: '_initAutoSave',
+	        value: function _initAutoSave() {
+	            console.log('STARTING: ACTIVE AUTO SAVE !!!');
+	            // EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME
+	            var self = this;
+	            this.autoSaveFunc = setInterval(function () {
+	                // alert("Hello");
+	                // DISABLED SAVE BUTTON HERE
+	                $('.btnSave').prop("disabled", true);
+	                // CALL SAVE get GET PROMISE
+	                self._onSave(false, function () {
+	                    // ENABLED SAVE BUTTON
+	                    $('.btnSave').prop("disabled", false);
+	                });
+	            }, EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME);
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            if (!this._getRequiredData()) {
+	                return;
+	            }
+	            var self = this;
 	            this.md = new MobileDetect(window.navigator.userAgent);
 
 	            _main2.default.EFormTemplateDetail({ uid: this.template_uid }).then(function (response) {
 	                self.eform_name = response.data.Name;
 	                var TemplateData = JSON.parse(response.data.EFormTemplateData.TemplateData);
+	                self.defVal = TemplateData.defVal; // SET DEFAULT VALUE
 	                // console.log(TemplateData)
-
 	                self.list.set('sections', TemplateData.sections);
 
 	                // GET ALL SECTIONS WILL DISPLAY IN PAGE
@@ -151,7 +198,8 @@
 	                self.forceUpdate(function () {
 	                    $(self.refs.page).val(self.current_page);
 	                    $(self.refs.page).on('change', function (event) {
-	                        window.location.href = '/eform/detail?page=' + event.target.value;
+	                        var page = event.target.value;
+	                        window.location.href = _helper2.default.linkEForm(page, self.template_uid, self.appointment_uid, self.patient_uid, self.user_uid); //'/eform/detail?page='+event.target.value
 	                    });
 	                    var body = new Hammer(document.body);
 	                    body.on('tap', function (event) {
@@ -172,6 +220,7 @@
 	                    // END DYNAMIC MODULE
 	                    // console.log('EFORM DATA: ', TemplateData)
 	                    _main2.default.EFormCheckData({ templateUID: self.template_uid, appointmentUID: self.appointment_uid }).then(function (response) {
+
 	                        if (response.data) {
 	                            self.is_data = true;
 	                            self.eform_uid = response.data.UID;
@@ -181,7 +230,8 @@
 	                            last_data.map(function (eo) {
 	                                for (var i = 0; i < TemplateData.obj.length; i++) {
 	                                    var doj = TemplateData.obj[i];
-	                                    if (EFORM_CONST.OBJECT_TYPE.RADIO === doj.t) {
+	                                    if (EFORM_CONST.OBJECT_TYPE.RADIO === doj.t || EFORM_CONST.OBJECT_TYPE.CHECKBOX === doj.t) {
+	                                        // console.log(eo , doj)
 	                                        if (eo.v === doj.v) {
 	                                            doj.c = eo.c;
 	                                            break;
@@ -192,17 +242,58 @@
 	                                    }
 	                                }
 	                            });
-
+	                            // console.log(last_data)
 	                            self.obj_data = TemplateData.obj;
-	                            // END MERGE DATA VS. OBJECT DATA
-	                            // LOAD DATA
-	                            self.__loadSavedData();
-	                            //END LOAD DATA
+	                            self.__loadSavedData(); // synchornize func
 	                        } else {
+	                            // console.log('HAS NO DATA')
 	                            self.obj_data = TemplateData.obj;
 	                        }
+
+	                        self._getApptInfo();
 	                    });
 	                });
+	            });
+	        }
+	    }, {
+	        key: '_getApptInfo',
+	        value: function _getApptInfo() {
+	            var self = this;
+	            _main2.default.EFormGetApptInfo(this.appointment_uid, this.user_uid).then(function (response) {
+	                console.log('APPT INFO : ', response);
+	                _loaddatahelper2.default.setDBData(response.data);
+	                self.__loadDefaultValue();
+	                self._initAutoSave();
+	            });
+	        }
+	    }, {
+	        key: '__loadDefaultValue',
+	        value: function __loadDefaultValue() {
+	            var self = this;
+	            this.defVal.map(function (defValObj) {
+	                var index = _.findIndex(self.obj_data, { n: defValObj.n });
+	                if (index < 0) {
+	                    console.error('Name ' + defValObj.n + ' is not Exists!');
+	                    return;
+	                }
+	                var tObj = self.obj_data[index];
+	                if (!tObj.v) {
+	                    // EMPTY DATA 
+	                    // console.log('LOAD HERE', tObj, defValObj)
+	                    switch (tObj.t) {
+	                        case EFORM_CONST.OBJECT_TYPE.DATE:
+	                        case EFORM_CONST.OBJECT_TYPE.TEXT:
+	                        case EFORM_CONST.OBJECT_TYPE.NUMBER:
+	                            var value = _loaddatahelper2.default.value(defValObj.v);
+	                            // console.log(value);
+	                            $('#' + defValObj.n).val(value);
+	                            tObj.v = value;
+	                            break;
+	                        case EFORM_CONST.OBJECT_TYPE.SIGN:
+	                            console.log('SIGNATURE LOAD HERE');
+	                            break;
+	                    }
+	                }
 	            });
 	        }
 	    }, {
@@ -210,9 +301,15 @@
 	        value: function __loadSavedData() {
 	            console.log('LOAD SAVED DATA');
 	            this.obj_data.map(function (o) {
-	                if (EFORM_CONST.OBJECT_TYPE.RADIO === o.t) $('input[name=' + o.n + '][value=' + o.v + ']').prop('checked', o.c);else if (EFORM_CONST.OBJECT_TYPE.SIGN === o.t) {
+	                if (EFORM_CONST.OBJECT_TYPE.RADIO === o.t || EFORM_CONST.OBJECT_TYPE.CHECKBOX === o.t) {
+	                    if (o.n) {
+	                        // check object has name or not
+	                        $('input[name=' + o.n + '][value=' + o.v + ']').attr('checked', o.c);
+	                    }
+	                } else if (EFORM_CONST.OBJECT_TYPE.DRAWING === o.t || EFORM_CONST.OBJECT_TYPE.SIGN === o.t) {
 	                    if (o.v) {
-	                        _main2.default.EFormDownloadSignImage(o.v).then(function (response) {
+	                        // console.log(o)
+	                        _main2.default.EFormDownloadImage(o.v).then(function (response) {
 	                            var objectUrl = response;
 	                            $('#' + o.n + '_image').attr('src', objectUrl);
 	                        }, function (error) {
@@ -227,6 +324,29 @@
 	                    $('#' + o.n).val(o.v);
 	                }
 	            });
+	        }
+	    }, {
+	        key: '__getDrawingPromiseArr',
+	        value: function __getDrawingPromiseArr(arrDrawing) {
+	            var p = new Promise(function (resolve, reject) {
+	                var arrPromise = [];
+	                arrDrawing.map(function (draw) {
+	                    var canvas = $('#' + draw.object.n)[0];
+	                    // console.log(canvas)
+	                    if (canvas.toBlob) {
+	                        canvas.toBlob(function (blob) {
+	                            var p2 = _main2.default.EFormUploadDrawing(blob, draw.object);
+	                            arrPromise.push(p2);
+	                            if (arrPromise.length == arrDrawing.length) {
+	                                resolve(arrPromise);
+	                            }
+	                        });
+	                    } else {
+	                        reject({ err: "CANVAS IS NOT IN DOM" });
+	                    }
+	                });
+	            });
+	            return p;
 	        }
 	    }, {
 	        key: '__getSignPromiseArr',
@@ -249,12 +369,15 @@
 	        }
 	    }, {
 	        key: '__saveEFormData',
-	        value: function __saveEFormData() {
-	            this.is_data ? this.__updateEFormDate() : this.__createEFormData();
+	        value: function __saveEFormData(cbDone) {
+	            this.is_data ? this.__updateEFormData(cbDone) : this.__createEFormData(cbDone);
 	        }
+
+	        /** FOR CLICK SAVE & AUTO SAVE */
+
 	    }, {
 	        key: '__createEFormData',
-	        value: function __createEFormData() {
+	        value: function __createEFormData(cbDone) {
 	            console.log('CREATE EFORM DATA');
 	            var data = {
 	                templateUID: this.template_uid,
@@ -263,54 +386,127 @@
 	                name: this.eform_name,
 	                patientUID: this.patient_uid, userUID: this.user_uid
 	            };
+	            console.log('SUBMIT DATA ', data);
 	            _main2.default.EFormCreate(data).then(function (response) {
-	                location.reload();
+	                if (cbDone) {
+	                    cbDone(); // 
+	                }
+	                // location.reload();
+	            }, function (errr) {
+	                console.log(errr);
 	            });
 	        }
 	    }, {
-	        key: '__updateEFormDate',
-	        value: function __updateEFormDate() {
+	        key: '__updateEFormData',
+	        value: function __updateEFormData(cbDone) {
 	            console.log('UPDATE EFORM DATA');
 	            var data = {
 	                UID: this.eform_uid,
 	                content: JSON.stringify(this.obj_data)
 	            };
 	            _main2.default.EFormUpdate(data).then(function (response) {
-
-	                location.reload();
+	                if (cbDone) {
+	                    cbDone(); // 
+	                }
+	                // location.reload();
 	            });
+	        }
+	    }, {
+	        key: '__validateB4Save',
+	        value: function __validateB4Save() {
+	            for (var i = 0; i < this.obj_data.length; i++) {
+	                // CHECK RADIO BUTTON MUST BE CHOSEN 1
+	                var obj = this.obj_data[i];
+	                if (EFORM_CONST.OBJECT_TYPE.RADIO === obj.t) {
+	                    /// check has in dom
+	                    if ($('input[type=radio][name=' + obj.n + ']').length) {
+	                        var v = $('input[type=radio][name=' + obj.n + ']:checked').val();
+	                        if (!v) {
+	                            _toast2.default.error('Radio Button must be choose 1!!!');
+	                            return false;
+	                        }
+	                    }
+	                }
+	            }
+
+	            return true;
 	        }
 	    }, {
 	        key: '_onSave',
 	        value: function _onSave() {
-	            // get all signs to upload 
-	            var arrSign = [];
+	            var isClickSave = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+	            var cbDone = arguments[1];
+
 	            var self = this;
+	            if (isClickSave) {
+	                if (!this.__validateB4Save()) {
+	                    // ERROR TO PASS
+	                    return;
+	                }
+	                // STOP AUTOSAVE
+	                clearInterval(this.autoSaveFunc);
+
+	                cbDone = function cbDone() {
+	                    _toast2.default.success('Saved!');
+	                    self._initAutoSave();
+	                };
+	            }
+
+	            // get all signs & drawing to upload 
+	            var arrSign = [];
+	            var arrDrawing = [];
+
+	            // GET DATA FROM DOM 
 	            this.obj_data.map(function (o) {
-	                if (EFORM_CONST.OBJECT_TYPE.RADIO === o.t) {
-	                    if ($('input[type=radio][name=' + o.n + ']').length) {
-	                        var value = $('input[type=radio][name=' + o.n + ']:checked').val();
-	                        if (value === o.v) o.c = true;else o.c = false;
-	                    }
-	                } else if (EFORM_CONST.OBJECT_TYPE.SIGN === o.t) {
-	                    var changed = $('#' + o.n).data('changed');
-	                    if (_constants2.default.VALUES.TRUE === changed) {
-	                        var _value = $('#' + o.n).jSignature("getData");
-	                        arrSign.push({ object: o, value: _value });
-	                    }
-	                } else if (EFORM_CONST.OBJECT_TYPE.DATE === o.t) {
-	                    var _value2 = $('#' + o.n).val();
-	                    o.v = _value2;
-	                } else {
-	                    var _value3 = $('#' + o.n).val();
-	                    o.v = _value3;
+	                var changed = void 0;
+	                switch (o.t) {
+	                    case EFORM_CONST.OBJECT_TYPE.RADIO:
+	                        if (o.n && $('input[type=radio][name=' + o.n + ']').length) {
+	                            var value = $('input[type=radio][name=' + o.n + ']:checked').val();
+	                            if (value === o.v) o.c = true;else o.c = false;
+	                        }
+	                        break;
+	                    case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
+	                        if (o.n && $('input[type=checkbox][name=' + o.n + ']').length) {
+	                            var _value = $('input[name=' + o.n + '][value=' + o.v + ']').prop('checked');
+	                            o.c = _value;
+	                            // console.log($('input[type=checkbox][name='+o.n+']:checked').length, value)
+	                            // if(value === o.v) o.c = true
+	                            // else o.c = false
+	                        }
+	                        break;
+	                    case EFORM_CONST.OBJECT_TYPE.SIGN:
+	                        if ($('#' + o.n).length) {
+	                            changed = $('#' + o.n).data('changed');
+	                            if (_constants2.default.VALUES.TRUE === changed) {
+	                                var _value2 = $('#' + o.n).jSignature("getData");
+	                                arrSign.push({ object: o, value: _value2 });
+	                            }
+	                        }
+	                        break;
+	                    case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                        if ($('#' + o.n).length) {
+	                            changed = $('#' + o.n).data('changed');
+	                            if (_constants2.default.VALUES.TRUE === changed) {
+	                                arrDrawing.push({ object: o });
+	                            }
+	                        }
+	                        break;
+	                    case EFORM_CONST.OBJECT_TYPE.DATE:
+	                    default:
+	                        // CHECK IN DOM
+	                        if ($('#' + o.n).length) {
+	                            var _value3 = $('#' + o.n).val();
+	                            o.v = _value3;
+	                        }
 	                }
 	            });
 
-	            var arrPromise = self.__getSignPromiseArr(arrSign);
-	            console.log('Arr Promise: ', arrPromise.length);
-	            if (arrPromise.length > 0) {
-	                Promise.all(arrPromise).then(function (values) {
+	            var isUploadDrawing = false,
+	                isUploadSign = false;
+	            if (arrSign.length > 0) {
+	                var arrPromiseSign = self.__getSignPromiseArr(arrSign);
+	                Promise.all(arrPromiseSign).then(function (values) {
 	                    // console.log('VALUE PROMISE: ', values)
 	                    console.log('PASSED SIGNATURE OK !!!!!');
 	                    for (var i = 0; i < values.length; ++i) {
@@ -322,14 +518,51 @@
 	                            alert('SIGN WASNT UPLOADED!!!');
 	                        }
 	                    }
-	                    // console.log('FORM DATA: ', self.obj_data)
-	                    self.__saveEFormData();
+	                    isUploadSign = true;
+	                    if (isUploadSign && isUploadDrawing) {
+	                        self.__saveEFormData();
+	                    }
 	                }, function (reason) {
 	                    alert('Upload file server is down !!!');
 	                    console.log(reason);
 	                });
 	            } else {
-	                self.__saveEFormData();
+	                isUploadSign = true;
+	            }
+	            if (arrDrawing.length > 0) {
+	                self.__getDrawingPromiseArr(arrDrawing).then(function (arrPromiseDrawing) {
+	                    Promise.all(arrPromiseDrawing).then(function (values) {
+	                        // console.log('VALUE PROMISE: ', values)
+	                        console.log(values);
+	                        console.log('PASSED DRAWING OK !!!!!');
+	                        for (var i = 0; i < values.length; ++i) {
+	                            var value = values[i];
+	                            if (value.response && value.response.status && value.response.status === 'success') {
+	                                // set value to object
+	                                value.meta.v = value.response.fileUID;
+	                            } else {
+	                                alert('DRAWING WASNT UPLOADED!!!');
+	                            }
+	                        }
+	                        isUploadDrawing = true;
+	                        if (isUploadSign && isUploadDrawing) {
+	                            self.__saveEFormData();
+	                        }
+	                    }, function (reason) {
+	                        alert('Upload file server is down !!!');
+	                        console.log(reason);
+	                    });
+	                }, function (error) {
+	                    console.log(error);
+	                });
+	            } else {
+	                isUploadDrawing = true;
+	            }
+
+	            // let arrPromiseDrawing = self.__getDrawingPromiseArr(arrDrawing)
+	            if (isUploadSign && isUploadDrawing) {
+
+	                self.__saveEFormData(cbDone);
 	            }
 	        }
 	    }, {
@@ -397,9 +630,10 @@
 	                        'li',
 	                        null,
 	                        _react2.default.createElement(
-	                            'a',
-	                            { onClick: this._onSave.bind(this) },
-	                            'Save'
+	                            'button',
+	                            { className: 'btnSave btn-success', onClick: this._onSave.bind(this, true) },
+	                            _react2.default.createElement('i', { className: 'fa fa-save' }),
+	                            ' Save '
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -441,9 +675,10 @@
 	                        'li',
 	                        null,
 	                        _react2.default.createElement(
-	                            'a',
-	                            { onClick: this._onSave.bind(this) },
-	                            'Save'
+	                            'button',
+	                            { className: 'btnSave btn-success', onClick: this._onSave.bind(this, true) },
+	                            _react2.default.createElement('i', { className: 'fa fa-save' }),
+	                            ' Save '
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -24533,7 +24768,11 @@
 
 	var _date2 = _interopRequireDefault(_date);
 
-	var _helper = __webpack_require__(180);
+	var _draw = __webpack_require__(180);
+
+	var _draw2 = _interopRequireDefault(_draw);
+
+	var _helper = __webpack_require__(182);
 
 	var _helper2 = _interopRequireDefault(_helper);
 
@@ -24581,10 +24820,14 @@
 	                { className: 'row' },
 	                this.props.params.select('o').map(function (o, o_index) {
 	                    var res = null;
-	                    if (EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type')) var style = {
-	                        width: o.get('params', 'width'),
-	                        border: 'none'
-	                    };else var style = {
+	                    // if(EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type'))
+	                    //     var style = {
+	                    //         width: o.get('params', 'width'),
+	                    //         border: 'none',
+	                    //         textAlign: o.get('params', 'align') || 'left'
+	                    //     }
+	                    // else
+	                    var style = {
 	                        width: o.get('params', 'width'),
 	                        border: 'none',
 	                        textAlign: o.get('params', 'align') || 'left'
@@ -24598,6 +24841,7 @@
 	                            if (o.get('type') === 'it') style.padding = 0;
 	                        }
 	                    }
+	                    // console.log(o.serialize())
 	                    switch (o.get('type')) {
 	                        case EFORM_CONST.OBJECT_TYPE.LABEL:
 	                            res = _react2.default.createElement(
@@ -24612,7 +24856,7 @@
 	                                'div',
 	                                { className: className,
 	                                    style: style },
-	                                _react2.default.createElement(_radio2.default, { name: o.get('name' || ''), id: o.get('params', 'id' || ''), value: o.get('params', 'value') }),
+	                                _react2.default.createElement(_radio2.default, { name: o.get('name') || '', id: o.get('params', 'id') || '', value: o.get('params', 'value') }),
 	                                '  ',
 	                                _react2.default.createElement(
 	                                    'label',
@@ -24626,12 +24870,24 @@
 	                                'div',
 	                                { className: className,
 	                                    style: style },
-	                                _react2.default.createElement(_checkbox2.default, { name: o.get('name' || ''), id: o.get('params', 'id' || '') }),
+	                                _react2.default.createElement(_checkbox2.default, { name: o.get('name') || '', id: o.get('params', 'id') || '', value: o.get('params', 'value') }),
 	                                '  ',
 	                                _react2.default.createElement(
 	                                    'label',
-	                                    { htmlFor: o.get('params', 'id' || '') },
+	                                    { htmlFor: o.get('params', 'id') || '' },
 	                                    o.get('params', 'title')
+	                                )
+	                            );
+	                            break;
+	                        case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+	                            res = _react2.default.createElement(
+	                                'div',
+	                                { className: className,
+	                                    style: style },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: className + ' textarea', style: style },
+	                                    _react2.default.createElement('textarea', { rows: o.get('params', 'rows') || 2, name: o.get('name') || '', id: o.get('name') || '' })
 	                                )
 	                            );
 	                            break;
@@ -24671,6 +24927,17 @@
 	                                _react2.default.createElement(_sign2.default, { ref: o.get('name') + '_obj', name: o.get('name') })
 	                            );
 	                            break;
+	                        case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                            // this.objects_init.push(o.get('name') || '')
+	                            console.log(o.serialize());
+	                            res = _react2.default.createElement(
+	                                'div',
+	                                { className: className, ref: o.get('name') || '',
+	                                    style: style },
+	                                _react2.default.createElement(_draw2.default, { ref: o.get('name') + '_draw', name: o.get('name') })
+	                            );
+	                            break;
+
 	                    }
 	                    return res;
 	                }, this)
@@ -24739,7 +25006,7 @@
 /* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -24769,16 +25036,16 @@
 	    }
 
 	    _createClass(Checkbox, [{
-	        key: 'componentDidMount',
+	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            $(this.refs.root).iCheck({
-	                checkboxClass: 'icheckbox_square-green'
-	            });
+	            // $(this.refs.root).iCheck({
+	            //     checkboxClass: 'icheckbox_square-green'
+	            // })
 	        }
 	    }, {
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
-	            return _react2.default.createElement('input', { type: 'checkbox', name: this.props.name, id: this.props.id, ref: 'root' });
+	            return _react2.default.createElement("input", { type: "checkbox", name: this.props.name, id: this.props.id, value: this.props.value, ref: "root" });
 	        }
 	    }]);
 
@@ -24935,30 +25202,53 @@
 	var CONSTANTS = {
 	    VALUES: {
 	        TRUE: 'true',
-	        FALSE: 'false'
+	        FALSE: 'false',
+	        DATE_FORMAT: 'DD/MM/YYYY'
 	    },
 	    EFORM: {
 	        SHORT: {
 	            SECTION_ROW: 'r',
 	            ROW_OBJECT: 'o'
 	        },
+	        GROUP_OBJECT: {
+	            CHECKBOX: 'default',
+	            LABEL: 'label',
+	            INPUT: 'input',
+	            TEXTAREA: 'textarea',
+	            DYNAMIC: 'dynamic',
+	            SIGN: 'signature',
+	            CHART: 'chart'
+	        },
 	        OBJECT_TYPE: {
 	            LABEL: 'lb',
 	            RADIO: 'r',
 	            CHECKBOX: 'c',
 	            TEXT: 'it',
+	            TEXTAREA: 'ta',
 	            NUMBER: 'in',
 	            DATE: 'id',
 	            SIGN: 'si',
+	            DRAWING: 'dr',
 	            DYNAMIC_TABLE: 'di'
 	        },
 	        DEFAULT_VALUE: {
 	            ALIGN_ARR: [{ code: 'left', name: 'Left' }, { code: 'center', name: 'Center' }, { code: 'right', name: 'Right' }],
 	            SUGGEST_WIDTH: ['NONE', '768px', '576px', '384px', '192px']
+	        },
+	        DRAWING: {
+	            COLORS: [{ 'color': 'blue-ebonyclay' }, { 'color': 'green' }, { 'color': 'blue' }, { 'color': 'red' }],
+	            SIZES: [{ 'width': 550, 'height': 500, desc: 'Canvas 550x500' }, { 'width': 750, 'height': 650, desc: 'Canvas 750x650' }, { 'width': 300, 'height': 300, desc: 'Canvas 300x300' },
+	            // {'width':650,'height':650,desc:'Canvas 750x650'},
+	            { 'width': 900, 'height': 750, desc: 'Canvas 900x750' }, { 'width': 1000, 'height': 900, desc: 'Canvas 1100x900' }],
+	            FONT_SIZES: [{ size: 12, desc: 'Font 12px' }, { size: 15, desc: 'Font 15px' }, { size: 20, desc: 'Font 20px' }, { size: 25, desc: 'Font 25px' }, { size: 30, desc: 'Font 30px' }],
+	            LINE_WIDTHS: [{ width: 1, desc: 'Line 1' }, { width: 2, desc: 'Line 2' }, { width: 3, desc: 'Line 3' }, { width: 4, desc: 'Line 4' }, { width: 5, desc: 'Line 5' }],
+	            MAX_WIDTH_CANVAS: 748
 	        }
 	    },
 	    EFORM_CLIENT: {
+	        AUTO_SAVE_INTERVAL_TIME: 1 * 60000 / 6, // 10 s
 	        DEFAULT_VALUE: {
+
 	            PAGE: 1
 	        }
 	    }
@@ -25021,7 +25311,7 @@
 
 /***/ },
 /* 180 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25031,6 +25321,756 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _constants = __webpack_require__(178);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
+	var _drawhelper = __webpack_require__(181);
+
+	var _drawhelper2 = _interopRequireDefault(_drawhelper);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DRAWING_CONST = _constants2.default.EFORM.DRAWING;
+
+	var DEFAULT_INDEX = 2;
+
+	var Draw = function (_Component) {
+	    _inherits(Draw, _Component);
+
+	    function Draw() {
+	        _classCallCheck(this, Draw);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Draw).call(this));
+
+	        _this.drawingHelper = new _drawhelper2.default();
+	        return _this;
+	    }
+
+	    _createClass(Draw, [{
+	        key: 'undo',
+	        value: function undo() {
+	            this.drawingHelper.cUndo();
+	        }
+	    }, {
+	        key: 'redo',
+	        value: function redo() {
+	            this.drawingHelper.cRedo();
+	        }
+	    }, {
+	        key: 'clear',
+	        value: function clear() {
+	            this.drawingHelper.clearCanvas();
+	            this.drawingHelper.cPush();
+	        }
+	    }, {
+	        key: 'erase',
+	        value: function erase(e) {
+	            this.erasing = !this.erasing;
+	            if (this.erasing) {
+	                $(e.target).addClass('active');
+	                this.drawingHelper.color = 'white'; //$(DrawingHelper.canvas).css('background-color');
+	                this.drawingHelper.lineWidth = { width: 50, desc: 'Erase' };
+	                return;
+	            }
+	            $(e.target).removeClass('active');
+	            this.drawingHelper.color = $(this.refs.inputColor).val();
+	            this.drawingHelper.lineWidth = JSON.parse($(this.refs.inputLineWidth).val());
+	        }
+	    }, {
+	        key: 'changeLineWidth',
+	        value: function changeLineWidth(e) {
+	            var canvasLineWidth = JSON.parse(e.target.value);
+	            if (canvasLineWidth) {
+	                this.drawingHelper.lineWidth = canvasLineWidth;
+	            }
+	        }
+	    }, {
+	        key: 'changeColor',
+	        value: function changeColor(e) {
+	            this.drawingHelper.color = e.target.value;
+	        }
+	    }, {
+	        key: 'capture',
+	        value: function capture() {
+	            var dt = this.drawingHelper.canvas.toDataURL('image/png');
+	            this.refs.actionCapture.href = dt;
+	            this.refs.actionCapture.download = _drawhelper2.default.makeFileName();
+	        }
+	    }, {
+	        key: 'changeFontSize',
+	        value: function changeFontSize(e) {
+	            this.drawingHelper.fontSize = e.target.value;
+	        }
+	    }, {
+	        key: 'changeCanvasText',
+	        value: function changeCanvasText(e) {
+	            this.cText = e.target.value;
+	            if (this.cText) {
+	                $(this.refs['getTextBtn']).show();
+	            } else {
+	                $(this.refs['getTextBtn']).hide();
+	            }
+	        }
+	    }, {
+	        key: 'cUnsaveTypingState',
+	        value: function cUnsaveTypingState() {
+	            var self = this;
+	            var typingState = self.typingState;
+	            var img = new Image();
+	            img.onload = function () {
+	                self.drawingHelper.clearCanvas();
+	                self.drawingHelper.ctx.drawImage(img, 0, 0);
+	                self.typingState = null;
+	            };
+	            img.src = typingState;
+	        }
+	    }, {
+	        key: 'cSaveTypingState',
+	        value: function cSaveTypingState() {
+	            var self = this;
+	            this.drawingHelper.canvas.toBlob(function (blob) {
+	                var objectUrl = URL.createObjectURL(blob);
+	                self.typingState = objectUrl;
+	            });
+	        }
+	    }, {
+	        key: 'rotateImageLoader',
+	        value: function rotateImageLoader() {
+	            if (!this.degrees) this.degrees = 90;
+	            // else 
+	            //     this.degrees += 45
+
+
+	            var self = this;
+	            var image = new Image();
+	            image.src = self.drawingHelper.canvas.toDataURL("image/png");
+	            // console.log(image.src)
+	            image.onload = function () {
+	                // 
+	                self.drawingHelper.ctx.save();
+	                self.drawingHelper.clearCanvas();
+	                self.drawingHelper.ctx.translate(self.drawingHelper.canvas.width / 2, self.drawingHelper.canvas.height / 2);
+	                self.drawingHelper.ctx.rotate(self.degrees * Math.PI / 180);
+	                self.drawingHelper.ctx.drawImage(image, -image.width / 2, -image.height / 2);
+	                self.drawingHelper.ctx.restore();
+
+	                // self.drawingHelper.canvas.width = image.width
+	                // self.drawingHelper.canvas.height = image.height
+	                // self.drawingHelper.ctx.clearRect(0,0,self.drawingHelper.canvas.width,self.drawingHelper.canvas.height);
+
+	                // this.drawingHelper.ctx.drawImage(img, 0,0, image.width, image.height);
+
+	                // console.log(self.drawingHelper.canvas.width/2, self.drawingHelper.canvas.height/2)
+	                //  console.log('DRAW IMAGE: ', image.width, ' degrees: ',  self.degrees)
+	            };
+
+	            // context.fillStyle = "red";
+	            // context.fillRect(canvasWidth/4, canvasWidth/4, canvasWidth/2, canvasHeight/4);
+	            // context.fillStyle = "blue";
+	            // context.fillRect(canvasWidth/4, canvasWidth/2, canvasWidth/2, canvasHeight/4);
+	        }
+
+	        // CLICK CANCEL BUTTON
+
+	    }, {
+	        key: 'cCancelText',
+	        value: function cCancelText() {
+	            this.typing = false;
+	            this.textMove = false;
+
+	            $(this.refs.inputText).attr('disabled', false);
+	            $(this.refs.applyTextBtn).hide();
+	            $(this.refs.cancelTextBtn).hide();
+
+	            this.refs.inputText.value = '';
+	            this.cUnsaveTypingState();
+	        }
+
+	        // CLICK APPLY BUTTON
+
+	    }, {
+	        key: 'cGetText',
+	        value: function cGetText() {
+	            this.cText = this.refs.inputText.value;
+	            $(this.refs.inputText).attr('disabled', true);
+	            $(this.refs.getTextBtn).hide();
+	            $(this.refs.applyTextBtn).show();
+	            $(this.refs.cancelTextBtn).show();
+	            this.typing = true;
+	            this.textMove = true;
+	            this.cSaveTypingState();
+	        }
+
+	        // CLICK TICK BUTTON
+
+	    }, {
+	        key: 'cApplyText',
+	        value: function cApplyText() {
+	            $(this.refs.inputText).attr('disabled', false);
+	            $(this.refs.applyTextBtn).hide();
+	            $(this.refs.cancelTextBtn).hide();
+	            this.typing = false;
+	            this.textMove = false;
+	            this.refs.inputText.value = '';
+	            this.drawingHelper.cPush();
+	        }
+
+	        /// CLICK SAVE BUTTON -> CLOSE MODAL 
+
+	    }, {
+	        key: 'saveDrawing',
+	        value: function saveDrawing() {
+	            var self = this;
+	            if (this.drawingHelper.canvas.toBlob) {
+	                this.drawingHelper.canvas.toBlob(function (blob) {
+	                    $(self.refs.myCanvas).data('changed', _constants2.default.VALUES.TRUE);
+	                    var blobUrl = URL.createObjectURL(blob);
+	                    $(self.refs.preview_image).attr('src', blobUrl);
+	                    self.modal.close();
+	                });
+	            }
+	        }
+	        /***** END EVENT **********/
+
+	    }, {
+	        key: 'updateCanvasUI',
+	        value: function updateCanvasUI() {
+	            $(this.refs.canvasWidth).html(this.drawingHelper.canvas.width);
+	            $(this.refs.canvasHeight).html(this.drawingHelper.canvas.height);
+	        }
+	    }, {
+	        key: 'initDrawing',
+	        value: function initDrawing() {
+	            // this.colors = DRAWING_CONST.COLORS
+	            // this.sizes  = DRAWING_CONST.SIZES[DEFAULT_INDEX]
+	            // this.fontSizes = DRAWING_CONST.FONT_SIZES
+	            // this.lineWidths = DRAWING_CONST.LINE_WIDTHS
+
+
+	            this.drawingHelper.color = 'black';
+	            this.drawingHelper.size = DRAWING_CONST.SIZES[DEFAULT_INDEX];
+	            this.drawingHelper.lineWidth = DRAWING_CONST.LINE_WIDTHS[DEFAULT_INDEX]; //this.lineWidths[3];
+
+	            this.currentImageLoaderFile = null;
+	            this.currentImageLoaderFileUrl = null;
+	            this.rotateAngle = 0;
+
+	            this.erasing = false;
+	            this.drawing = false;
+	            this.typing = false;
+	            this.textMove = false;
+
+	            this.lastX = null;
+	            this.lastY = null;
+	            this.typingState = null;
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.initDrawing();
+	        }
+	    }, {
+	        key: 'loadImage',
+	        value: function loadImage(img) {
+	            // console.log(img)
+	            /* OLD TYPE
+	            var displayWidth, displayHeight = null;
+	            var ratio = null;
+	            if(img.height>img.width) {
+	                //Hình đứng
+	                displayHeight = DrawingHelper.canvas.height ;
+	                ratio = img.height/DrawingHelper.canvas.height;
+	                displayWidth = Math.floor(img.width / ratio);
+	            } else {
+	                //Hình ngang
+	                displayWidth = DrawingHelper.canvas.width;
+	                ratio = img.width/DrawingHelper.canvas.width;
+	                displayHeight = Math.floor(img.height/ratio);
+	            }
+	            DrawingHelper.clearCanvas()
+	            DrawingHelper.ctx.drawImage(img, (DrawingHelper.canvas.width-displayWidth)/2,(DrawingHelper.canvas.height-displayHeight)/2, displayWidth, displayHeight);
+	            DrawingHelper.cPush();
+	            */
+
+	            var displayWidth, displayHeight;
+	            if (img.width > DRAWING_CONST.MAX_WIDTH_CANVAS) {
+	                displayWidth = DRAWING_CONST.MAX_WIDTH_CANVAS;
+	                displayHeight = Math.floor(img.height / (img.width / displayWidth));
+	            } else {
+	                displayWidth = img.width;
+	                displayHeight = img.height;
+	            }
+
+	            this.drawingHelper.canvas.width = displayWidth;
+	            this.drawingHelper.canvas.height = displayHeight;
+
+	            this.drawingHelper.clearCanvas();
+	            this.drawingHelper.ctx.drawImage(img, 0, 0, displayWidth, displayHeight);
+
+	            this.drawingHelper.cPush();
+	            this.updateCanvasUI();
+	        }
+	    }, {
+	        key: 'setEvent',
+	        value: function setEvent() {
+	            var self = this;
+
+	            // LOAD IMAGE TO CANVAS WHEN OPEN MODAL --- DONE
+	            // $(document).on('opening', this.refs.modal, function () {
+	            //     console.log(self)
+	            //     var img = $(self.refs.preview_image)[0]
+	            //     var src = $(img).attr('src')
+	            //     console.log('src', src)
+	            //     if(!src) return
+	            //     DrawingHelper.cReset();
+	            //     self.loadImage(img).bind(self)
+	            //     console.log("PreDrawing");
+	            // });
+	            /// END LOAD IMAGE  WHEN OPEN MODAL 
+
+	            $(this.imageLoader).on('change', function (e) {
+	                var file = e.target.files[0];
+	                if (!file) return;
+
+	                var img = new Image();
+	                img.onload = function () {
+	                    self.loadImage(img);
+	                };
+
+	                self.currentImageLoaderFile = file;
+	                var objectUrl = URL.createObjectURL(file);
+	                self.currentImageLoaderFileUrl = objectUrl;
+	                img.src = objectUrl;
+
+	                // $(self.refs['imageLoaderPreview']).attr('src',self.currentImageLoaderFileUrl)
+	            });
+
+	            $(this.drawingHelper.canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', function (event) {
+	                if (event.type === 'mousemove' && !self.drawing && !self.typing) {
+	                    return;
+	                }
+	                event.preventDefault();
+	                switch (event.type) {
+	                    case 'mousedown':
+	                    case 'touchstart':
+	                        if (event.offsetX) {
+	                            self.lastX = event.offsetX;
+	                            self.lastY = event.offsetY;
+	                        } else if (event.originalEvent) {
+	                            self.lastX = event.originalEvent.targetTouches[0].pageX - $(self.drawingHelper.canvas).offset().left;
+	                            self.lastY = event.originalEvent.targetTouches[0].pageY - $(self.drawingHelper.canvas).offset().top;
+	                        } else {
+	                            self.lastX = event.pageX - $(self.drawingHelper.canvas).offset().left;
+	                            self.lastY = event.pageY - $(self.drawingHelper.canvas).offset().top;
+	                        }
+	                        self.drawingHelper.ctx.beginPath();
+	                        if (!self.typing) {
+	                            self.drawing = true;
+	                        }
+	                        break;
+
+	                    case 'mousemove':
+	                    case 'touchmove':
+	                        if (self.typing || self.drawing) {
+	                            if (event.offsetX) {
+	                                self.currentX = event.offsetX;
+	                                self.currentY = event.offsetY;
+	                            } else if (event.originalEvent) {
+	                                self.currentX = event.originalEvent.targetTouches[0].pageX - $(self.drawingHelper.canvas).offset().left;
+	                                self.currentY = event.originalEvent.targetTouches[0].pageY - $(self.drawingHelper.canvas).offset().top;
+	                            } else {
+	                                self.currentX = event.pageX - $(self.drawingHelper.canvas).offset().left;
+	                                self.currentY = event.pageY - $(self.drawingHelper.canvas).offset().top;
+	                            }
+	                        }
+	                        if (self.drawing) {
+	                            self.drawingHelper.draw(self.lastX, self.lastY, self.currentX, self.currentY);
+	                            self.lastX = self.currentX;
+	                            self.lastY = self.currentY;
+	                        }
+	                        if (self.typing && self.textMove) {
+	                            var img = new Image();
+	                            img.onload = function () {
+	                                self.drawingHelper.clearCanvas();
+	                                self.drawingHelper.ctx.drawImage(img, 0, 0);
+	                                self.drawingHelper.drawText(self.cText, self.currentX, self.currentY);
+	                            };
+	                            img.src = self.typingState;
+	                        }
+	                        break;
+	                    case 'mouseup':
+	                    case 'touchend':
+	                        if (self.typing) {
+	                            self.textMove = !self.textMove;
+	                        } else {
+	                            self.drawingHelper.cPush();
+	                        }
+	                    case 'mouseout':
+	                        self.drawing = false;
+
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'openModal',
+	        value: function openModal() {
+	            var img = $(this.refs.preview_image)[0];
+	            var src = $(img).attr('src');
+	            this.modal.open();
+	            // self.drawingHelper.canvas = this.canvas
+	            // self.drawingHelper.ctx = this.ctx
+
+	            if (src.indexOf('nosign.gif') > 0) return;
+
+	            this.drawingHelper.cReset();
+	            this.loadImage(img);
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            // set event to modal
+	            this.modal = $(this.refs.modal).remodal();
+
+	            this.drawingHelper.canvas = $(this.refs.myCanvas)[0];
+	            this.drawingHelper.ctx = this.drawingHelper.canvas.getContext("2d");
+
+	            this.drawingHelper.canvas.width = this.drawingHelper.size.width;
+	            this.drawingHelper.canvas.height = this.drawingHelper.size.height;
+	            this.drawingHelper.cPush();
+
+	            // this.canvas = DrawingHelper.canvas
+	            // this.ctx = DrawingHelper.ctx
+
+	            this.imageLoader = $(this.refs.imageLoader);
+	            this.setEvent();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { ref: 'drawing_wrapper', className: 'drawing_wrapper' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { 'data-remodal-id': "modal_" + this.props.name, ref: 'modal' },
+	                    _react2.default.createElement('button', { 'data-remodal-action': 'close', className: 'remodal-close' }),
+	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        ' Drawing Editor'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'drawing-control-wrapper' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'drawing-inline' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'drawing-control' },
+	                                ' W: ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { ref: 'canvasWidth' },
+	                                    '300'
+	                                ),
+	                                'px | H: ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { ref: 'canvasHeight' },
+	                                    '300'
+	                                ),
+	                                'px '
+	                            ),
+	                            _react2.default.createElement(
+	                                'select',
+	                                { ref: 'inputLineWidth', className: 'drawing-control form-control',
+	                                    onChange: this.changeLineWidth.bind(this), defaultValue: JSON.stringify(DRAWING_CONST.LINE_WIDTHS[DEFAULT_INDEX]) },
+	                                DRAWING_CONST.LINE_WIDTHS.map(function (lineWidthItem, index) {
+	                                    return _react2.default.createElement(
+	                                        'option',
+	                                        { key: index, value: JSON.stringify(lineWidthItem) },
+	                                        lineWidthItem.desc
+	                                    );
+	                                })
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { className: 'drawing-control btn btn-default', onClick: this.undo.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-undo' }),
+	                                ' Undo'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { className: 'drawing-control btn btn-default', onClick: this.redo.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-repeat' }),
+	                                ' Redo'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { className: 'drawing-control btn btn-default', onClick: this.erase.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-eraser' }),
+	                                ' Erase'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { className: 'drawing-control btn btn-default', onClick: this.clear.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-trash-o' }),
+	                                ' Clear'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { download: 'capture.png', ref: 'actionCapture', className: 'drawing-control btn btn-default', onClick: this.capture.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-camera' }),
+	                                ' Capture'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { className: 'drawing-control btn btn-success', onClick: this.saveDrawing.bind(this), 'data-dismiss': 'modal' },
+	                                _react2.default.createElement('i', { className: 'fa fa-floppy-o' }),
+	                                ' Save'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'drawing-inline' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'drawing-control btn btn-default' },
+	                                'Color: ',
+	                                _react2.default.createElement('input', { onChange: this.changeColor.bind(this), ref: 'inputColor', type: 'color' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'drawing-control btn btn-default btn-file' },
+	                                'Load Picture',
+	                                _react2.default.createElement('input', { type: 'file', ref: 'imageLoader', accept: 'image/*' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { className: 'drawing-control btn btn-default', onClick: this.rotateImageLoader.bind(this), href: 'javascript:;' },
+	                                _react2.default.createElement('i', { className: 'fa fa-repeat' }),
+	                                ' Rotate & Apply'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'drawing-inline' },
+	                            _react2.default.createElement(
+	                                'select',
+	                                { className: 'drawing-control', onChange: this.changeFontSize.bind(this), defaultValue: DRAWING_CONST.FONT_SIZES[DEFAULT_INDEX] },
+	                                DRAWING_CONST.FONT_SIZES.map(function (fontSizeItem, index) {
+	                                    return _react2.default.createElement(
+	                                        'option',
+	                                        { key: index, value: fontSizeItem.size },
+	                                        fontSizeItem.desc
+	                                    );
+	                                })
+	                            ),
+	                            _react2.default.createElement('input', { className: 'drawing-control', style: { 'padding-left': '7px' }, type: 'text', ref: 'inputText', onChange: this.changeCanvasText.bind(this) }),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { ref: 'getTextBtn', style: { display: 'none', color: 'blue' }, className: 'drawing-control btn btn-default', onClick: this.cGetText.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-send' }),
+	                                ' Apply Text'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { ref: 'applyTextBtn', style: { display: 'none', color: 'green' }, className: 'drawing-control btn btn-default', onClick: this.cApplyText.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-check' }),
+	                                ' Save Text'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { ref: 'cancelTextBtn', style: { display: 'none', color: 'red' }, className: 'drawing-control btn btn-default', onClick: this.cCancelText.bind(this) },
+	                                _react2.default.createElement('i', { className: 'fa fa-times' }),
+	                                'Cancel Text'
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement('canvas', { 'data-changed': _constants2.default.VALUES.FALSE, id: this.props.name, ref: 'myCanvas', className: 'my_canvas' })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement('img', { id: this.props.name + '_image', style: { width: '100%' }, ref: 'preview_image', src: '/images/nosign.gif' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { className: 'drawing-control', onClick: this.openModal.bind(this) },
+	                            'Add / Edit Drawing'
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Draw;
+	}(_react.Component);
+
+	exports.default = Draw;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Drawing = function () {
+	    function Drawing() {
+	        _classCallCheck(this, Drawing);
+
+	        this.canvas = null;
+	        this.ctx = null;
+	        this.color = null;
+	        this.size = {};
+	        this.fontSize = 15;
+	        this.lineWidth = {};
+	        this.cStep = -1;
+	        this.cPushArray = [];
+	    }
+
+	    _createClass(Drawing, [{
+	        key: "cReset",
+	        value: function cReset() {
+	            this.cStep = -1;
+	            this.cPushArray = [];
+	        }
+	    }, {
+	        key: "cPush",
+	        value: function cPush() {
+	            var self = this;
+	            this.cStep++;
+
+	            if (this.cStep < this.cPushArray.length) {
+	                this.cPushArray.length = this.cStep;
+	            }
+
+	            if (this.canvas.toBlob) {
+	                this.canvas.toBlob(function (blob) {
+	                    var objectUrl = URL.createObjectURL(blob);
+	                    self.cPushArray.push(objectUrl);
+	                });
+	            }
+	        }
+	    }, {
+	        key: "cUndo",
+	        value: function cUndo() {
+	            var self = this;
+	            if (this.cStep > 0) {
+	                this.cStep--;
+	                var img = new Image();
+	                img.onload = function () {
+	                    self.clearCanvas();
+	                    self.ctx.drawImage(img, 0, 0);
+	                };
+	                img.src = this.cPushArray[this.cStep];
+	            }
+	        }
+	    }, {
+	        key: "cRedo",
+	        value: function cRedo() {
+	            var self = this;
+	            if (this.cStep < this.cPushArray.length - 1) {
+	                this.cStep++;
+	                var img = new Image();
+	                img.onload = function () {
+	                    self.clearCanvas();
+	                    self.ctx.drawImage(img, 0, 0);
+	                };
+	                img.src = this.cPushArray[this.cStep];
+	            }
+	        }
+	    }, {
+	        key: "draw",
+	        value: function draw(lX, lY, cX, cY) {
+	            this.ctx.lineCap = "round";
+	            this.ctx.fillStyle = "solid";
+	            this.ctx.strokeStyle = this.color;
+	            this.ctx.lineWidth = this.lineWidth.width;
+	            this.ctx.moveTo(lX, lY);
+	            this.ctx.lineTo(cX, cY);
+	            this.ctx.stroke();
+	        }
+	    }, {
+	        key: "drawText",
+	        value: function drawText(text, currentX, currentY) {
+	            this.ctx.fillStyle = this.color; //this.color;
+	            this.ctx.font = this.fontSize + "px Arial"; // this.fontSize.size+"px Arial";
+	            this.ctx.fillText(text, currentX, currentY);
+	        }
+	    }, {
+	        key: "clearCanvas",
+	        value: function clearCanvas() {
+	            //Store the current transformation matrix
+	            this.ctx.save();
+	            //Use the identity matrix while clearing the canvas
+	            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+	            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	            //Restore the transform
+	            this.ctx.restore();
+	        }
+	    }], [{
+	        key: "makeFileName",
+	        value: function makeFileName() {
+	            var fileName = "Drawing_".concat(moment().format("YYYY-MM-DD_HHmmss.SSS")).concat('.png');
+	            return fileName;
+	        }
+	    }]);
+
+	    return Drawing;
+	}();
+
+	exports.default = Drawing;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _ip = __webpack_require__(183);
+
+	var _ip2 = _interopRequireDefault(_ip);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Helper = function () {
@@ -25039,6 +26079,50 @@
 	    }
 
 	    _createClass(Helper, null, [{
+	        key: 'largerEq',
+	        value: function largerEq(n1, n2) {
+	            var res = false;
+
+	            n1 = parseFloat(n1);
+	            n2 = parseFloat(n2);
+
+	            if (isFinite(String(n1)) || isFinite(String(n2))) {
+	                res = n1 >= n2 ? true : false;
+	            }
+
+	            return res;
+	        }
+	    }, {
+	        key: 'parseQueryString',
+	        value: function parseQueryString(location) {
+	            var params = location.split('?');
+	            var str = params[1];
+	            var objURL = {};
+	            str.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function ($0, $1, $2, $3) {
+	                objURL[$1] = $3;
+	            });
+	            return objURL;
+	        }
+	    }, {
+	        key: 'selectorUI',
+	        value: function selectorUI(object) {
+	            switch (o.t) {
+	                case EFORM_CONST.OBJECT_TYPE.RADIO:
+	                    return 'input[type=radio][name=' + o.n + ']';
+	                case EFORM_CONST.OBJECT_TYPE.SIGN:
+	                case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                case EFORM_CONST.OBJECT_TYPE.DATE:
+	                default:
+	                    return '#' + o.n;
+	            }
+	        }
+	    }, {
+	        key: 'linkEForm',
+	        value: function linkEForm(page, temp_uid, appt_uid, patient_uid, user_uid) {
+	            var str = _ip2.default.Host + '/eform/detail?templateUID=' + temp_uid + '&appointmentUID=' + appt_uid + '&patientUID=' + patient_uid + '&userUID=' + user_uid + '&page=' + page;
+	            return str;
+	        }
+	    }, {
 	        key: 'b64toBlob',
 	        value: function b64toBlob(b64Data) {
 	            var contentType = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
@@ -25084,7 +26168,28 @@
 	exports.default = Helper;
 
 /***/ },
-/* 181 */
+/* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var server = 'https://meditek.redimed.com.au';
+	// const server = 'http://localhost'
+	var local = 'http://localhost';
+
+	var ip = {
+	    EFormServer: local + ':3015',
+	    ApiServerUrl: local + ':3005',
+	    Host: local + ':3020'
+	};
+
+	exports.default = ip;
+
+/***/ },
+/* 184 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25120,7 +26225,7 @@
 	exports.default = Functions;
 
 /***/ },
-/* 182 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25158,6 +26263,19 @@
 	        });
 	        return p;
 	    },
+
+	    EFormTemplateList: function EFormTemplateList(data) {
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'GET',
+	                data: data,
+	                url: _ip2.default.EFormServer + '/eformtemplate/list',
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
 	    EFormPreData: function EFormPreData(data) {
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
@@ -25216,16 +26334,7 @@
 	        });
 	        return p;
 	    },
-
-	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
-	        // var formdata = data.formdata;
-	        var formdata = new FormData();
-	        var fileName = 'DEFAULTSIGN.png';
-	        var contentType = 'MedicalImage';
-	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
-	        formdata.append('fileType', contentType);
-	        formdata.append('uploadFile', blob, fileName);
-
+	    uploadFile: function uploadFile(formdata, meta) {
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
 	                url: _ip2.default.ApiServerUrl + '/api/uploadFileWithoutLogin',
@@ -25252,7 +26361,49 @@
 	        return p;
 	    },
 
-	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	    /*
+	    *   API 4 PRE LOAD A.K.A DEFAULT DATA
+	    */
+	    EFormGetApptInfo: function EFormGetApptInfo(appt_uid, user_uid) {
+	        /*
+	        *   GET INFO OF APPOINTMENT 
+	        */
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'GET',
+	                url: _ip2.default.EFormServer + '/api/appointment-wa-detail/' + appt_uid + '/' + user_uid,
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
+	    /*
+	    *   UPLOAD IMAGE USING 4 SIGNATURE + DRAWING
+	    */
+	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
+	        // var formdata = data.formdata;
+	        var formdata = new FormData();
+	        var fileName = 'DEFAULTSIGN.png';
+	        var contentType = 'MedicalImage';
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
+
+	        return this.uploadFile(formdata, meta);
+	    },
+
+	    EFormUploadDrawing: function EFormUploadDrawing(blob, meta) {
+	        var formdata = new FormData();
+	        var contentType = 'MedicalImage';
+	        var fileName = "DEFAULTDRAWING.png";
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
+
+	        return this.uploadFile(formdata, meta);
+	    },
+	    EFormDownloadImage: function EFormDownloadImage(fileUID) {
 	        var p = new Promise(function (resolve, reject) {
 	            var xhr = new XMLHttpRequest();
 	            xhr.responseType = 'arraybuffer';
@@ -25267,48 +26418,199 @@
 	            xhr.send();
 	        });
 	        return p;
-
-	        /*
-	        var p = new Promise(function(resolve, reject){
-	            $.ajax({
-	                url: IP.ApiServerUrl +'/api/downloadFileWithoutLogin/' + fileUID,
-	                xhrFields: { withCredentials: true },
-	                type: "GET",
-	                processData: false,
-	                contentType: false,
-	                responseType:'arraybuffer'
-	            }).done(function(response){
-	                resolve(response)
-	            }).fail(function(error) {
-	                console.log("error download sign ne", error)
-	                reject(error);
-	            })
-	        })
-	        return p
-	        */
+	    },
+	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	        return this.EFormDownloadImage(fileUID);
 	    }
 	};
 
 	exports.default = Services;
 
 /***/ },
-/* 183 */
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _constants = __webpack_require__(178);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var LoadData = function () {
+		function LoadData() {
+			_classCallCheck(this, LoadData);
+		}
+
+		_createClass(LoadData, [{
+			key: 'setDBData',
+			value: function setDBData(data) {
+				this.db_data = data;
+			}
+		}, {
+			key: 'valueField',
+			value: function valueField(field) {
+				// remove _ 
+				field = field.substring(1);
+
+				var hasDot = field.indexOf('.');
+				if (hasDot < 0) return this.db_data[field];
+
+				// extract .
+				var pieces = field.split('.');
+
+				var value = this.db_data;
+				for (var i = 0; i < pieces.length; i++) {
+					if (value.hasOwnProperty(pieces[i])) value = value[pieces[i]];else console.log('ERROR HERE: doesnt exists ' + pieces[i] + ' attributes!');
+				}
+				return value;
+			}
+		}, {
+			key: 'valueDBData',
+			value: function valueDBData(val) {
+				if (!this.db_data) {
+					console.log(' DIDN\'T SET VALUE DB');
+				}
+
+				var hasContenate = val.indexOf('+');
+				if (hasContenate < 0) {
+					// ex: _Patient.Address1 goes here
+					return this.valueField(val);
+				}
+
+				// BEGIN TO CONTENATE STRING
+				// ex: _Patient.FirstName+ +_Patient.LastName goes here
+				var params = val.split('+');
+
+				var str = "";
+				for (var i = 0; i < params.length; i++) {
+					var param = params[i].trim();
+					var v = "";
+					if (LoadData.isFieldFromDB(param)) {
+						v = this.valueField(param);
+					} else {
+						v = param.substr(1, param.length - 2); // "Hello world!" -> Hello world!
+					}
+					str += v;
+				}
+				return str;
+			}
+		}, {
+			key: 'value',
+			value: function value(val) {
+				// val = val.replace(/ /g,'')
+
+				if (LoadData.isRaw(val)) {
+					return val;
+				}
+
+				if (LoadData.isFormula(val)) {
+					var val2 = val.substring(1);
+					return LoadData.valueFormula(val2);
+				}
+
+				if (LoadData.isFromDB(val)) {
+					return this.valueDBData(val);
+				}
+				// moment().format('DD/MM/YYYY'); 
+			}
+		}], [{
+			key: 'isFormula',
+			value: function isFormula(val) {
+				return val.startsWith('=');
+			}
+		}, {
+			key: 'isFromDB',
+			value: function isFromDB(val) {
+				// check val has _  
+				return val.indexOf('*') >= 0; //val.startsWith("_")
+			}
+		}, {
+			key: 'isRaw',
+			value: function isRaw(val) {
+				return !(LoadData.isFormula(val) || LoadData.isFromDB(val));
+			}
+		}, {
+			key: 'isFieldFromDB',
+			value: function isFieldFromDB(field) {
+				return field.startsWith('*');
+			}
+		}, {
+			key: 'valueFormula',
+			value: function valueFormula(val) {
+				switch (val.toLowerCase()) {
+					case 'now()':
+						return moment().format(_constants2.default.VALUES.DATE_FORMAT);
+					default:
+						return '';
+				}
+			}
+		}]);
+
+		return LoadData;
+	}();
+
+	var loadingData = new LoadData();
+	exports.default = loadingData;
+
+/***/ },
+/* 187 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+		value: true
 	});
-	//const server = 'https://meditek.redimed.com.au'
-	var server = 'http://localhost';
 
-	var ip = {
-	    EFormServer: server + ':3015',
-	    ApiServerUrl: server + ':3005'
-	};
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	exports.default = ip;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Alert = function () {
+		function Alert() {
+			_classCallCheck(this, Alert);
+		}
+
+		_createClass(Alert, [{
+			key: 'error',
+			value: function error(message) {
+				$.toast({
+					heading: 'Error',
+					text: message,
+					showHideTransition: 'plain',
+					hideAfter: 5000,
+					position: 'top-left',
+					icon: 'error'
+				});
+			}
+		}, {
+			key: 'success',
+			value: function success(message) {
+				$.toast({
+					heading: 'Success',
+					text: message,
+					showHideTransition: 'plain',
+					hideAfter: 3000,
+					position: 'top-left',
+					icon: 'success'
+				});
+			}
+		}]);
+
+		return Alert;
+	}();
+
+	exports.default = new Alert();
 
 /***/ }
 /******/ ]);

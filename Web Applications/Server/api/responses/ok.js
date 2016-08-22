@@ -22,12 +22,23 @@ module.exports = function sendOK (data, options) {
   //Config ResDM Begin-------------------------------------------
   var dm=ResDMService.loadDMConfig(req);
   if(dm) {
-    ResDMService.sendDM(dm, req)
-    .then(function(status){
-      dmLog('Send Direct Message Success: ', status);
-    },function(err){
-      dmLog('Send Direct Message Error:', err);
-    })
+    if (_.isArray(dm)) {
+      for (var i = 0; i < dm.length; i++) {
+        ResDMService.sendDM(dm[i], req)
+        .then(function(status){
+          dmLog('Send Direct Message Success: ', status);
+        },function(err){
+          dmLog('Send Direct Message Error:', err);
+        })
+      };
+    }else{
+      ResDMService.sendDM(dm, req)
+      .then(function(status){
+        dmLog('Send Direct Message Success: ', status);
+      },function(err){
+        dmLog('Send Direct Message Error:', err);
+      })
+    };   
   }
 
   //Config ResDM End---------------------------------------------

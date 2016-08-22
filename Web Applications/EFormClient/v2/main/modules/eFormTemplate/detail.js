@@ -3,18 +3,19 @@ import Baobab from 'baobab'
 import {render} from 'react-dom'
 
 import Section from '../../partials/template/section'
-import MeMath from '../../config/math'
-
+import Helper from '../../config/helper'
 import Service from '../../services/main'
 import CONSTANTS from '../../config/constants'
 const EFORM_CONST = CONSTANTS.EFORM
-
+const MAX_WIDTH = 768
+const MAX_SEGMENT = 10
 class EFormTemplateDetail extends Component{
     constructor(){
         super()
         this.list = new Baobab({
             sections: [],
-            obj: []
+            obj: [],
+            defVal: []
         })
         this.selected_obj = null
         // this.align_arr = [
@@ -23,34 +24,140 @@ class EFormTemplateDetail extends Component{
         //     {code: 'right', name: 'Right'}
         // ]
         this.align_arr = EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR
-        this.suggest_width = EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH
+        this.suggest_width = [] //EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH
         this.user_uid = ''
         this.template_uid = ''
         this.dynamic_obj = []
         this.dynamic_id = ''
+
+        this.user_uid = Helper.parseQueryString(window.location.href).userUID
+        this.template_uid = Helper.parseQueryString(window.location.href).templateUID
+
+        this.detailAreas = [
+            {
+                area: EFORM_CONST.GROUP_OBJECT.LABEL
+            }, 
+            {
+                area: EFORM_CONST.GROUP_OBJECT.CHECKBOX
+            }, 
+            {
+                area: EFORM_CONST.GROUP_OBJECT.INPUT
+            }, 
+            {
+                area: EFORM_CONST.GROUP_OBJECT.TEXTAREA
+            }, 
+            {
+                area: EFORM_CONST.GROUP_OBJECT.SIGN
+            }, 
+            {
+                area: EFORM_CONST.GROUP_OBJECT.DYNAMIC
+            }, 
+            {
+                area: EFORM_CONST.GROUP_OBJECT.CHART
+            },
+        ]
+    }
+
+    _showDetail(groupName){
+        var index = _.findIndex(this.detailAreas, {area: groupName});
+        if(index < 0) {
+            console.log(`ERROR HERE: doesnt exist Detail area:  ${groupName}`)
+        }
+        this.refs[this.detailAreas[index].area].style.display = 'inline-block'
+    }
+
+    _clearAllDetail(){
+        this.selected_obj = null
+        for (var i = this.detailAreas.length - 1; i >= 0; --i) {
+            this.refs[this.detailAreas[i].area].style.display = 'none'
+        }
+
+        // this.refs.default.style.display = 'none'
+        // this.refs.chart.style.display = 'none'
+        // this.refs.label.style.display = 'none'
+        // this.refs.input.style.display = 'none'
+        // this.refs.dynamic.style.display = 'none'
+        // this.refs.textarea.style.display = 'none'
+    }
+
+    __getDefaultValue(name){
+        // console.log(this.list.select('defVal').serialize(), name)
+        return this.list.select('defVal', {n: name}).serialize()
+    }
+
+    _initSuggestWidth(){ 
+        var self = this
+        var addEventToObject = function(srcObj, targetObj) {
+            srcObj.addEventListener('keyup', function(event){
+                if(event.keyCode === 13){
+                    var v = $(srcObj).val()
+                    var value = parseFloat(MAX_WIDTH*v/MAX_SEGMENT ).toFixed(2)+"px"
+                    $(targetObj).val(value)
+                }
+            }, false)
+        }
+        var arr = [
+            {src: this.refs.label_suggest_width, tar: this.refs.label_width},
+            {src: this.refs.textarea_suggest_width, tar: this.refs.textarea_width},
+            {src: this.refs.input_suggest_width, tar: this.refs.input_width},
+            {src: this.refs.default_suggest_width, tar: this.refs.default_width},
+            {src: this.refs.sign_suggest_width, tar: this.refs.sign_width},
+        ]
+
+        for(let i =0, len = arr.length; i < len; ++i) {
+            var obj = arr[i]
+            addEventToObject(obj.src, obj.tar);
+        }   
     }
     componentDidMount(){
         const self = this
-        this.user_uid = MeMath.parseQueryString(window.location.href).userUID
-        this.template_uid = MeMath.parseQueryString(window.location.href).templateUID
         Service.EFormTemplateDetail({uid: this.template_uid})
         .then(function(response){
             var TempData = JSON.parse(response.data.EFormTemplateData.TemplateData)
+            console.log(TempData)
             if(TempData.hasOwnProperty('sections')) {
                  self.list.set('sections', TempData.sections)
             } else {
                  self.list.set('sections', []);
             }
+            self._initSuggestWidth()
+            if(TempData.hasOwnProperty('defVal')) {
+                 self.list.set('defVal', TempData.defVal)
+            }
+
             self._register_navbar_add_section()
+
             self._clearAllDetail()
             self.forceUpdate()
         })
+    }
+    _getCurrentRef(){
+        let res = 0
+        this.list.select('sections').map(function(s, s_index){
+            let ref_num = s.get('ref').split('_')[1]
+            if(Helper.largerEq(ref_num, res))
+                res = ref_num
+        })
+        if(this.list.select('sections').get().length > 0)
+            res++
+        return res
     }
     _addSection(section){
         section.ref = 's_'+this._getCurrentRef()
         let section_list = this.list.select('sections').push(section)
         this.list.sections = section_list
         this.forceUpdate()
+    }
+    _getCurrentRow(s_index){
+        let res = 0
+        this.list.select('sections', s_index, 'r').map(function(r, r_index){
+            let ref_num = r.get('ref').split('_')[2]
+            if(Helper.largerEq(ref_num, res))
+                res = ref_num 
+        })        
+        if(this.list.select('sections', s_index, 'r').get().length > 0)
+            res++
+        return res
     }
     _addRow(row, s_index){
         row.ref = 'r_'+s_index+'_'+this._getCurrentRow(s_index)
@@ -63,28 +170,8 @@ class EFormTemplateDetail extends Component{
             self._addSection({title: '', page: 1, r: []})
         }, false)
     }
-    _getCurrentRef(){
-        let res = 0
-        this.list.select('sections').map(function(s, s_index){
-            let ref_num = s.get('ref').split('_')[1]
-            if(MeMath.largerEq(ref_num, res))
-                res = ref_num
-        })
-        if(this.list.select('sections').get().length > 0)
-            res++
-        return res
-    }
-    _getCurrentRow(s_index){
-        let res = 0
-        this.list.select('sections', s_index, 'r').map(function(r, r_index){
-            let ref_num = r.get('ref').split('_')[2]
-            if(MeMath.largerEq(ref_num, res))
-                res = ref_num 
-        })        
-        if(this.list.select('sections', s_index, 'r').get().length > 0)
-            res++
-        return res
-    }
+    
+    
     _onChangeSectionDynamic(s_index, value){
         this.list.select('sections', s_index).set('dynamic', value)
         this.forceUpdate()
@@ -188,77 +275,150 @@ class EFormTemplateDetail extends Component{
         }
     }
     _onSelectObject(s_index, r_index, type){
-        if(type === 'lb')
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '150px', title: 'Label'}})
-        else if(type === 'r' || type === 'c')
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '150px', title: 'Title', value: ''}})
-        else if(type === 'di')
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '768px', objects:[]}})
-        else
-            this.list.select('sections', s_index, 'r', r_index, 'o').push({type: type, name: '', params: {width: '150px'}})
+        var get_object = this.list.select('sections', s_index, 'r', r_index, 'o');
+        switch(type) {
+            case EFORM_CONST.OBJECT_TYPE.LABEL:
+                get_object.push({type: type, name: '', params: {width: '150px', title: 'Label'}})
+                break;
+            case EFORM_CONST.OBJECT_TYPE.RADIO:
+            case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
+                get_object.push({type: type, name: '', params: {width: '150px', title: 'Title', value: ''}})
+                break;
+            case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:
+                get_object.push({type: type, name: '', params: {width: '768px', objects:[]}})
+                break;
+            case EFORM_CONST.OBJECT_TYPE.DRAWING:
+                get_object.push({type: type, name: '', params: {width: '300px'}})
+                break;
+            case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+                get_object.push({type: type, name: '', params: {width: '400px'}})
+                break;
+            case EFORM_CONST.GROUP_OBJECT.SIGN:
+                get_object.push({type: type, name: '', params: {width: '250px'}})
+                break;
+            default:
+                get_object.push({type: type, name: '', params: {width: '150px'}})
+        }
         this.forceUpdate()
     }
+
     _onClickObject(s_index, r_index, o_index, o){
         this._clearAllDetail()
         const type = o.get('type')
-        if(type === 'lb'){
-            this.refs.label.style.display = 'inline-block'
-            this.refs.label_width.value = o.select('params').get('width')
-            this.refs.label_value.value = o.select('params').get('title')
-            this.refs.label_order.value = o_index
-            this.refs.label_border.value = o.select('params').get('border') || 'none'
-        }else if(type === 'r' || type === 'c'){
-            this.refs.default.style.display = 'inline-block'
-            this.refs.default_title.value = o.select('params').get('title')
-            this.refs.default_width.value = o.select('params').get('width')
-            this.refs.default_name.value = o.get('name') || ''
-            this.refs.default_value.value = o.select('params').get('value')
-            this.refs.default_order.value = o_index
-            this.refs.default_id.value = o.select('params').get('id') || ''
-            this.refs.default_border.value = o.select('params').get('border') || 'none'
-            this.refs.default_align.value = o.select('params').get('align') || 'left'
-            this.refs.default_disabled.checked = o.select('params').get('disabled') || false
-        }else if(type === 'di'){
-            this.refs.dynamic.style.display = 'inline-block'
-            this.refs.dynamic_width.value = o.select('params').get('width')
-            this.refs.dynamic_name.value = o.get('name') || ''
-            this.refs.dynamic_border.value = o.select('params').get('border') || 'none'
-            this.refs.dynamic_order.value = o_index
-        }else{
-            this.refs.input.style.display = 'inline-block'
-            this.refs.input_width.value = o.select('params').get('width')
-            this.refs.input_name.value = o.get('name') || ''
-            this.refs.input_order.value = o_index
-            this.refs.input_border.value = o.select('params').get('border') || 'none'
-            this.refs.input_align.value = o.select('params').get('align') || 'left'
-            this.refs.input_disabled.checked = o.select('params').get('disabled') || false
+        const name = o.get('name') || ''
+        const params = o.select('params')
+        const width = params.get('width')
+        const border = params.get('border') || 'none'
+        var width2suggest = function(width) {
+            return parseFloat(width)/(MAX_WIDTH/MAX_SEGMENT)
         }
+        console.log(width, border)
+
+        switch(type) {
+            case EFORM_CONST.OBJECT_TYPE.LABEL:
+                this._showDetail(EFORM_CONST.GROUP_OBJECT.LABEL)
+                // this.refs.label.style.display = 'inline-block'
+                this.refs.label_order.value = o_index
+                this.refs.label_width.value = width
+                this.refs.label_suggest_width.value = width2suggest(width) // parse to suggest
+                this.refs.label_border.value = border
+                // this.refs.label_width.value = o.select('params').get('width')
+                this.refs.label_value.value = params.get('title')
+                this.refs.label_align.value = params.get('align') || 'left'
+                break;
+            case EFORM_CONST.OBJECT_TYPE.RADIO:
+            case EFORM_CONST.OBJECT_TYPE.CHECKBOX:    
+                this._showDetail(EFORM_CONST.GROUP_OBJECT.CHECKBOX)
+                this.refs.default_name.value = name // o.get('name') || ''
+                // this.refs.default.style.display = 'inline-block'
+                this.refs.default_order.value = o_index
+                this.refs.default_width.value = width
+                this.refs.default_suggest_width.value = width2suggest(width) // parse to suggest
+                this.refs.default_border.value = border
+
+                this.refs.default_title.value = params.get('title')
+                this.refs.default_value.value = params.get('value')
+                this.refs.default_id.value = params.get('id') || ''
+                this.refs.default_align.value = params.get('align') || 'left'
+                this.refs.default_disabled.checked = params.get('disabled') || false
+                break;
+            
+            case EFORM_CONST.OBJECT_TYPE.SIGN:
+                this._showDetail(EFORM_CONST.GROUP_OBJECT.SIGN)            
+                this.refs.sign_name.value  = name // o.get('name') || ''
+                // this.refs.sign.style.display = 'inline-block'
+                this.refs.sign_order.value = o_index
+                this.refs.sign_width.value = width
+                this.refs.sign_suggest_width.value = width2suggest(width) 
+                // SIGN NO NEED BORDER
+
+                //  ///
+                //  add some thing to recognize signature of doctor, patient .... 
+                //  /// 
+                this.refs.sign_disabled.value = params.get('disabled') || false
+                break      
+
+            case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+                this._showDetail(EFORM_CONST.GROUP_OBJECT.TEXTAREA)
+                this.refs.textarea_name.value = name// o.get('name') || ''
+                // this.refs.textarea.style.display = 'inline-block'
+                this.refs.textarea_order.value = o_index
+                this.refs.textarea_width.value = width
+                this.refs.textarea_suggest_width.value = width2suggest(width) 
+                this.refs.textarea_border.value = border
+                
+                this.refs.textarea_rows.value = params.get('rows') || 2
+                break    
+            /* WHAT IS IT, MR.VUONG ? =))  */
+            case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:     
+                this.refs.dynamic.style.display = 'inline-block'
+                this.refs.dynamic_width.value = params.get('width')
+                this.refs.dynamic_name.value = o.get('name') || ''
+                this.refs.dynamic_border.value = params.get('border') || 'none'
+                this.refs.dynamic_order.value = o_index
+                break;    
+            // TEXT, NUMBER, DATE, DRAW GOES HERE
+            default:
+                this._showDetail(EFORM_CONST.GROUP_OBJECT.INPUT)
+                // this.refs.input.style.display = 'inline-block'
+                this.refs.input_order.value = o_index
+                this.refs.input_width.value = width
+                this.refs.input_suggest_width.value = width2suggest(width)
+                this.refs.input_border.value = border
+
+                this.refs.input_name.value =  name //o.get('name') || ''
+                this.refs.input_align.value = params.get('align') || 'left'
+                this.refs.input_disabled.checked = params.get('disabled') || false
+
+                // JUST GROUP OBJECTS HERE HAVE DEFAULT VALUE
+                var value =  this.__getDefaultValue(o.get('name'))
+                this.refs.input_default_value.value = (!!value && !!value.v) ? value.v : (params.get('default_value') || '')
+        }
+
         this.selected_obj = {s_index: s_index, r_index: r_index, o_index: o_index, o: o}
     }
-    _clearAllDetail(){
-        this.selected_obj = null
-        this.refs.default.style.display = 'none'
-        this.refs.chart.style.display = 'none'
-        this.refs.label.style.display = 'none'
-        this.refs.input.style.display = 'none'
-        this.refs.dynamic.style.display = 'none'
-    }
-    _onSubmitObject(type){
+    
+    _onSubmitObject(group_type){
         let params = null
-        let object = null
-        switch(type){
-            case 'label':
+        let object = null; // this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
+      
+        switch(group_type){
+            case EFORM_CONST.GROUP_OBJECT.LABEL:
+            // case 'label':
                 params = {
                     width: this.refs.label_width.value,
                     value: this.refs.label_value.value,
-                    border: this.refs.label_border.value
+                    border: this.refs.label_border.value,
+                    align: this.refs.label_align.value
                 }
                 object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
                 object.select('params').set('width', params.width)
                 object.select('params').set('title', params.value)
                 object.select('params').set('border', params.border)
+                object.select('params').set('align', params.align)                
                 break
-            case 'default':
+            case EFORM_CONST.GROUP_OBJECT.CHECKBOX:    
+            // case 'default':
                 params = {
                     width: this.refs.default_width.value,
                     value: this.refs.default_value.value,
@@ -270,31 +430,51 @@ class EFormTemplateDetail extends Component{
                     disabled: this.refs.default_disabled.checked
                 }
                 object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
+                // console.log(object.serialize())
+                object.set('name', params.name)
                 object.select('params').set('width', params.width)
                 object.select('params').set('value', params.value)
                 object.select('params').set('title', params.title)
-                object.set('name', params.name)
                 object.select('params').set('id', params.id)
                 object.select('params').set('border', params.border)
                 object.select('params').set('align', params.align)
                 object.select('params').set('disabled', params.disabled)
                 break
-            case 'input':
+            case EFORM_CONST.GROUP_OBJECT.INPUT:      
+            // case 'input':
                 params = {
                     width: this.refs.input_width.value,
                     name: this.refs.input_name.value,
+                    default_value: this.refs.input_default_value.value,
                     border: this.refs.input_border.value,
                     align: this.refs.input_align.value,
                     disabled: this.refs.input_disabled.checked
                 }
                 object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
-                object.select('params').set('width', params.width)
                 object.set('name', params.name)
-                object.select('params').set('align', params.align)
+                object.select('params').set('width', params.width)
+                object.select('params').set('value', params.value)
                 object.select('params').set('border', params.border)
+                object.select('params').set('align', params.align)
                 object.select('params').set('disabled', params.disabled)
+                object.select('params').set('default_value', params.default_value)
                 break
-            case 'dynamic':
+            case EFORM_CONST.GROUP_OBJECT.TEXTAREA:
+                params = {
+                    name: this.refs.textarea_name.value,
+                    rows: this.refs.textarea_rows.value,
+                    width: this.refs.textarea_width.value,
+                    border: this.refs.textarea_border.value,
+                }
+                object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
+                object.set('name', params.name)
+                object.select('params').set('width', params.width)
+                object.select('params').set('rows', params.rows)
+                object.select('params').set('border', params.border)
+
+                break
+            case EFORM_CONST.GROUP_OBJECT.DYNAMIC:    
+            // case 'dynamic':
                 params = {
                     width: this.refs.input_width.value,
                     name: this.refs.input_name.value,
@@ -355,17 +535,38 @@ class EFormTemplateDetail extends Component{
         }  
     }
    
+    
+
+
     _onSave(){
         let res_obj = []
+        let newDefVal = []  
+        let defVal = this.list.select('defVal').serialize();
+
+        var getIndexDefaultValue = function(name) {
+            for(var i=0, len = defVal.length; i < len ; ++i) {
+                if(defVal[i].n == name)
+                    return i;
+            }
+            return -1;
+        }
+        var removeDefaultValue = function(index) {
+            return defVal.splice(index, 1);
+        }
+
+
+
         const sections = this.list.select('sections')
         sections.map(function(section, s_index){
             section.select('r').map(function(row){
                 row.select('o').map(function(object){
                     var obj = object.serialize()
-                    if(obj.type === 'r' || obj.type === 'c'){
+      
+                    if(obj.type === EFORM_CONST.OBJECT_TYPE.RADIO || obj.type === EFORM_CONST.OBJECT_TYPE.CHECKBOX){
                         obj.v = obj.params.value
-                    }
-                    if(obj.type !== 'lb'){
+                    } 
+
+                    if(obj.type !== EFORM_CONST.OBJECT_TYPE.LABEL){
                         if(section.get('dynamic') === 'd'){
                             obj.d = {
                                 s: section.get('ref'),
@@ -377,6 +578,22 @@ class EFormTemplateDetail extends Component{
                     }
                     obj.n = obj.name
                     obj.t = obj.type
+
+                    /** DEFAULT VALUE **/
+                    let index = getIndexDefaultValue(obj.n)
+                    if(index != -1) {
+                        let t = removeDefaultValue(index);
+                        // REMOVE OLD ITEM IN defVal
+                        if(obj.params.default_value) {
+                            newDefVal.push({n: obj.n, v: obj.params.default_value, t: obj.t})
+                        } else {
+                            newDefVal.push(t)
+                        }
+                    } else if(obj.params.default_value) {
+                        newDefVal.push({n: obj.n, v: obj.params.default_value, t: obj.t})
+                    }
+                    /** END DEFAULT VALUE **/
+
                     delete obj.params
                     delete obj.align
                     delete obj.name
@@ -384,7 +601,11 @@ class EFormTemplateDetail extends Component{
                 })
             })
         })
+        var newArray = newDefVal;
+
         this.list.set('obj', res_obj)
+        this.list.set('defVal', newArray)
+
         Service.EFormTemplateSave({ uid: this.template_uid, content: JSON.stringify(this.list.serialize()), userUID: this.user_uid })
         .then(function(response) {
             alert("Success")
@@ -396,35 +617,7 @@ class EFormTemplateDetail extends Component{
             
         }
     }
-    _onChangeSuggestWidth(type){
-         console.log('log log', type)
-        
-       
-        console.log(val, EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0])
-        if(EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0] === val) 
-            return
 
-        switch(type) {
-            case 'input':
-                 var val = $(this.refs.suggest_input_width).val();
-                $(this.refs.input_width).val(val);
-                // $(this.refs.s)
-                break;
-            case 'label':
-                 var val = $(this.refs.suggest_label_width).val();
-                $(this.refs.label_width).val(val);
-                break;
-
-            default:
-                var val = $(this.refs.suggest_default_width).val();
-                 $(this.refs.default_width).val(val);
-        }    
-            
-
-
-         // $(this.refs.default_width).val('asssa');
-       
-    }
 
     render(){
         return (
@@ -454,6 +647,7 @@ class EFormTemplateDetail extends Component{
                                         onChangeSectionOrder={this._onChangeSectionOrder.bind(this)}
                                         onRemoveSection={this._onRemoveSection.bind(this)}
                                         onCloneSection={this._onCloneSection.bind(this)}
+
                                         onAddRow={this._onAddRow.bind(this)}
                                         onSelectObject={this._onSelectObject.bind(this)}
                                         onClickObject={this._onClickObject.bind(this)}
@@ -467,7 +661,209 @@ class EFormTemplateDetail extends Component{
                     </div>
                 </div>
                 <div className="detail">
-                    <div className="form-detail" ref="dynamic">
+                    
+
+                    {/*    RADIO & CHECKBOX   */}
+                    <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.CHECKBOX}>
+                        <div className="eform-row">
+                            <b>Title</b><br/>
+                            <input type="text" placeholder="Title" ref="default_title"/><br/>
+                        </div>
+                        <div className="eform-row">
+                            <b>Width</b>:  <input style={{width: '25%'}} type="text" placeholder="Width" ref="default_width"/>&nbsp;   
+                            <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="default_suggest_width"  /> &nbsp;
+                             Max width : {MAX_WIDTH}px
+                        </div>
+                        <div className="eform-row">
+                            <b>Name</b><br/>
+                            <input type="text" placeholder="Name" ref="default_name"/>
+                        </div>
+                        <div className="eform-row">
+                            <b>Id</b><br/> 
+                            <input type="text" placeholder="Id" ref="default_id"/>
+                        </div>
+                        <div className="eform-row">
+                            <b>Value</b><br/>
+                            <input type="text" placeholder="Value" ref="default_value"/>
+                        </div>  
+                         <div className="eform-row">
+                            <b>Border</b><br/>
+                            <input type="text" placeholder="Border" ref="default_border"/>
+                        </div>
+                        <div className="eform-row">
+                            <b>Align: </b>
+                            <select ref="default_align">
+                                {
+                                    EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function(align){
+                                        return <option value={align.code}>{align.name}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
+                        <div className="eform-row">
+                            <b>Disabled</b><br/>
+                            <input type="checkbox" ref="default_disabled"/><br/>
+                        </div>
+                        <div className="eform-row">
+                            <b>Order</b><br/>
+                            <input type="text" ref="default_order" style={{width: '60%'}}/>
+                            <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX)}>Change</button><br/>
+                        </div>
+                        <div>
+                            <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX)}>Submit</button>&nbsp;
+                            <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>&nbsp;
+                            <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                        </div>
+                    </div>
+
+                    {/*    INPUT TEXT, NUMBER, DATE , DRAWING  */}
+                    <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.INPUT}>
+                        <div className={'eform-row'}>
+                            <b>Width</b>: <input style={{width: '25%'}} type="text" placeholder="Width" ref="input_width"/> &nbsp;   
+                            <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="input_suggest_width"  /> &nbsp;
+                             Max width : {MAX_WIDTH}px
+                        </div>
+                        
+                        <div className={'eform-row'}>
+                            <b>Name</b><br/>
+                            <input type="text" placeholder="Name" ref="input_name"/>
+                        </div>
+
+                        <b>Default Value</b><br/>
+                        <input type="text" placeholder="Default value" ref="input_default_value"/><br/>
+                        <b>Border</b><br/>
+                        <input type="text" placeholder="Border" ref="input_border"/><br/>
+                        <b>Align</b><br/>
+                        <select ref="input_align">
+                            {
+                                EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function(align){
+                                    return <option value={align.code}>{align.name}</option>
+                                })
+                            }
+                        </select><br/>
+                        <b>Disabled</b><br/>
+                        <input type="checkbox" ref="input_disabled"/><br/>
+                        <b>Order</b><br/>
+                        <input type="text" ref="input_order" style={{width: '60%'}}/>
+                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT)}>Change</button><br/>
+                        <br/>
+                        <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT)}>Submit</button>
+                        &nbsp;
+                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
+                        &nbsp;
+                        <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                    </div>
+
+                    {/*  SIGN  */}
+                    <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.SIGN}>
+                        <div className={'eform-row'}>
+                            <b>Width</b>: <input style={{width: '25%'}} type="text" placeholder="Width" ref="sign_width"/> &nbsp;   
+                            <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="sign_suggest_width"  /> &nbsp;
+                             Max width : {MAX_WIDTH}px
+                        </div>
+                        
+                        <div className={'eform-row'}>
+                            <b>Name</b><br/>
+                            <input type="text" placeholder="Name" ref="sign_name"/>
+                        </div>
+
+                        <div className={'eform-row'}>
+                            <b>Default Value</b><br/>
+                            <input type="text" placeholder="Default value" ref="sign_default_value"/><br/>
+                        </div>
+                        <div className={'eform-row'}>
+                            <b>Disabled</b><br/>
+                            <input type="checkbox" ref="sign_disabled"/>
+                        </div>
+                        <b>Order</b><br/>
+                        <input type="text" ref="sign_order" style={{width: '60%'}}/>
+                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN)}>Change</button><br/>
+                        <br/>
+                        <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN)}>Submit</button>
+                        &nbsp;
+                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
+                        &nbsp;
+                        <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                    </div>
+
+                    {/*    TEXTAREA  */}
+                    <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.TEXTAREA}>
+                         <div>
+                            <div>
+                                <b>Width</b>:  <input style={{width: '25%'}} type="text" placeholder="Width" ref="textarea_width"/> &nbsp;   
+                                <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="textarea_suggest_width"  /> &nbsp;
+                                 Max width : {MAX_WIDTH}px
+                            </div>
+                       </div>
+                        <div>
+                            <b>Name</b><br/>
+                            <input type="text" placeholder="Name" ref="textarea_name"/>
+                        </div>
+                        <b>Rows</b><br/>
+                        <input type="number" min="2" placeholder="Rows" ref="textarea_rows"/><br/>
+                        <b>Border</b><br/>
+                        <input type="text" placeholder="Border" ref="textarea_border"/><br/>
+
+                        <b>Order</b><br/>
+                        <input type="text" ref="textarea_order" style={{width: '60%'}}/>
+                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA)}>Change</button><br/>
+                        <br/>
+                        <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA)}>Submit</button>
+                        &nbsp;
+                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
+                        &nbsp;
+                        <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                    </div>
+
+
+                    {/*    LABEL   */}
+                    <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.LABEL}>
+                        <div>
+                            <div>
+                                <b>Width</b>:  <input style={{width: '25%'}} type="text" placeholder="Width" ref="label_width"/>&nbsp;   
+                                <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="label_suggest_width"  />&nbsp;
+                                 Max width : {MAX_WIDTH}px
+                            </div>
+                       </div>
+                        <b>Value</b><br/>
+                        <textarea placeholder="Value" ref="label_value" rows="10"/><br/>
+                        <b>Border</b><br/>
+                        <input type="text" placeholder="Border" ref="label_border"/><br/>
+                        <b>Align</b><br/>
+                        <select ref="label_align">
+                            {
+                                EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function(align){
+                                    return <option value={align.code}>{align.name}</option>
+                                })
+                            }
+                        </select><br/>
+                        <b>Order</b><br/>
+                        <input type="text" ref="label_order" style={{width: '60%'}}/>
+                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL)}>Change</button><br/>
+                        <br/>
+                        <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL)}>Submit</button>
+                        &nbsp;
+                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
+                        &nbsp;
+                        <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                    </div>
+
+                    {/*    CHART   */}
+                    <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.CHART}>
+                        <b>Width</b><br/>
+                        <input type="text" placeholder="Width"/><br/>
+                        <b>Name</b><br/>
+                        <input type="text" placeholder="Name"/><br/>
+                        <b>Value</b><br/>
+                        <input type="text" placeholder="Value"/><br/>
+                        <b>Order</b><br/>
+                        <input type="text"/><br/>
+                        <br/>
+                        <button>Submit</button>
+                        <button style={{background: 'red'}}>Remove</button>
+                    </div>
+                     {/*    DYNAMIC   */}
+                    <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.DYNAMIC}>
                         <b>Width</b><br/>
                         <input type="text" placeholder="Width" ref="dynamic_width"/><br/>
                         <b>Name</b><br/>
@@ -502,119 +898,7 @@ class EFormTemplateDetail extends Component{
                         &nbsp;
                         <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
-                    <div className="form-detail" ref="default">
-                        <b>Title</b><br/>
-                        <input type="text" placeholder="Title" ref="default_title"/><br/>
-                        <b>Width</b><br/>
-                        <input style={{width: '30%'}} type="text" placeholder="Width" ref="default_width"/>
-                         Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'default')} ref="suggest_default_width">
-                            {
-                                this.suggest_width.map(function(width){
-                                    return <option value={width}>{width}</option>
-                                })
-                            }
-                        </select>
-                        <br/>
-                        <b>Name</b><br/>
-                        <input type="text" placeholder="Name" ref="default_name"/><br/>
-                        <b>Id</b><br/>
-                        <input type="text" placeholder="Id" ref="default_id"/><br/>
-                        <b>Value</b><br/>
-                        <input type="text" placeholder="Value" ref="default_value"/><br/>
-                        <b>Border</b><br/>
-                        <input type="text" placeholder="Border" ref="default_border"/><br/>
-                        <b>Align</b><br/>
-                        <select ref="default_align">
-                            {
-                                this.align_arr.map(function(align){
-                                    return <option value={align.code}>{align.name}</option>
-                                })
-                            }
-                        </select><br/>
-                        <b>Disabled</b><br/>
-                        <input type="checkbox" ref="default_disabled"/><br/>
-                        <b>Order</b><br/>
-                        <input type="text" ref="default_order" style={{width: '60%'}}/>
-                        <button onClick={this._onChangeObjectOrder.bind(this, 'default')}>Change</button><br/>
-                        <br/>
-                        <button onClick={this._onSubmitObject.bind(this, 'default')}>Submit</button>
-                        &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
-                        &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
-                    </div>
-                    <div className="form-detail" ref="input">
-                        <b>Width</b><br/>
-                        <input style={{width: '30%'}} type="text" placeholder="Width" ref="input_width"/> 
-                        Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'input')} ref="suggest_input_width">
-                            {
-                                this.suggest_width.map(function(width){
-                                    return <option value={width}>{width}</option>
-                                })
-                            }
-                        </select>
-                        <br/>
-                        <b>Name</b><br/>
-                        <input type="text" placeholder="Name" ref="input_name"/><br/>
-                        <b>Border</b><br/>
-                        <input type="text" placeholder="Border" ref="input_border"/><br/>
-                        <b>Align</b><br/>
-                        <select ref="input_align">
-                            {
-                                this.align_arr.map(function(align){
-                                    return <option value={align.code}>{align.name}</option>
-                                })
-                            }
-                        </select><br/>
-                        <b>Disabled</b><br/>
-                        <input type="checkbox" ref="input_disabled"/><br/>
-                        <b>Order</b><br/>
-                        <input type="text" ref="input_order" style={{width: '60%'}}/>
-                        <button onClick={this._onChangeObjectOrder.bind(this, 'input')}>Change</button><br/>
-                        <br/>
-                        <button onClick={this._onSubmitObject.bind(this, 'input')}>Submit</button>
-                        &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
-                        &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
-                    </div>
-                    <div className="form-detail" ref="label">
-                        <b>Width</b><br/>
-                        <input style={{width: '30%'}} type="text" placeholder="Width" ref="label_width"/>
-                           Suggest: <select onChange={this._onChangeSuggestWidth.bind(this, 'label')} ref="suggest_label_width">
-                            {
-                                this.suggest_width.map(function(width){
-                                    return <option value={width}>{width}</option>
-                                })
-                            }
-                        </select><br/>
-                        <b>Value</b><br/>
-                        <textarea placeholder="Value" ref="label_value" rows="10"/><br/>
-                        <b>Border</b><br/>
-                        <input type="text" placeholder="Border" ref="label_border"/><br/>
-                        <b>Order</b><br/>
-                        <input type="text" ref="label_order" style={{width: '60%'}}/>
-                        <button onClick={this._onChangeObjectOrder.bind(this, 'label')}>Change</button><br/>
-                        <br/>
-                        <button onClick={this._onSubmitObject.bind(this, 'label')}>Submit</button>
-                        &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
-                        &nbsp;
-                        <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
-                    </div>
-                    <div className="form-detail" ref="chart">
-                        <b>Width</b><br/>
-                        <input type="text" placeholder="Width"/><br/>
-                        <b>Name</b><br/>
-                        <input type="text" placeholder="Name"/><br/>
-                        <b>Value</b><br/>
-                        <input type="text" placeholder="Value"/><br/>
-                        <b>Order</b><br/>
-                        <input type="text"/><br/>
-                        <br/>
-                        <button>Submit</button>
-                        <button style={{background: 'red'}}>Remove</button>
-                    </div>
+                {/*    END DYNAMIC   */}
                 </div>
             </div>
         )

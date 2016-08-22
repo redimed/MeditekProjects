@@ -1,11 +1,36 @@
 var app = angular.module("app.authentication.notification.private.create.controller", []);
 
-app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal) {
+app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance, toastr, notificationServices, $cookies, $uibModal, kind, $stateParams) {
     $scope.now = true;
-    $scope.submitText = 'Create';
+    $scope.kind = kind;
+    $scope.submitText = 'Sent';
     $scope.lsDoctor = [];
     $scope.lsPatient = [];
     $scope.private = {};
+
+    if (kind === 'ToDo') {
+        $scope.status = [
+            { field: "Create", name: "Create" },
+            { field: "InProcess", name: "In Process" },
+            { field: "Done", name: "Done" },
+            { field: "Pending", name: "Pending" },
+            { field: "Cancel", name: "Cancel" },
+        ];
+    } else if (kind === 'Request' || kind === 'Review') {
+        $scope.status = [
+            { field: "WaitingApproval", name: "Waiting Approval" },
+            { field: "Approval", name: "Approval" },
+            { field: "Disapproval", name: "Disapproval" },
+            { field: "Cancel", name: "Cancel" },
+        ];
+        if (kind === 'Review') {
+            if ($stateParams.type) {
+                $scope.private.Subject = $stateParams.type;
+                $scope.type = $stateParams.type;
+            };
+            $scope.DisabledSub = true;
+        };
+    };
 
     $modalInstance.rendered.then(function() {
         App.initAjax();
@@ -24,9 +49,7 @@ app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance,
         } else if ($scope.lsPatient) {
             info.lsUser = $scope.lsPatient.concat($scope.lsDoctor);
         };
-
-        console.log("List", info.lsUser);
-        notificationServices.validate(info, "private").then(function(data) {
+        notificationServices.validate(info, kind).then(function(data) {
             if (data.Status = 'success') {
                 if (info.FirstDelay) {
                     var Today = moment(new Date());
@@ -36,13 +59,13 @@ app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance,
                 } else {
                     info.FirstDelay = 0;
                 };
-                info.MsgKind = 'Private';
+                info.MsgKind = kind;
                 info.UID = userInfo.UID;
                 info.UserName = userInfo.UserName;
                 // info.EndTime = moment(info.EndTime, 'DD/MM/YYYY 23:59').format('YYYY-MM-DD 23:59');
                 notificationServices.SendMsgPrivate(info).then(function(result) {
-                    toastr.success("Send message success", "Success");
-                    $modalInstance.close('close');
+                    // toastr.success("Send message success", "Success");
+                    // $modalInstance.close('close');
                 });
             };
         }, function(err) {
@@ -76,4 +99,16 @@ app.controller('notificationPrivateCreateCtrl', function($scope, $modalInstance,
     $scope.GetPatient = function(arr) {
         $scope.lsPatient = arr;
     };
+
+    socketAuth.on('LoadList', function(msg) {
+        if (msg.message === 'success') {
+            toastr.success("Sent message success", "Success");
+            $modalInstance.close(msg);
+            socketAuth._raw._callbacks.$LoadList = null;
+        } else {
+            toastr.error("Sent message error", "Error");
+        };
+    });
+
+    console.log(socketAuth);
 });

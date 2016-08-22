@@ -25,46 +25,226 @@
                 <div class="my-list-ui-view">
                     <ul class="title">
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.group">Group</a>
-                        </li>
-                        <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.workCover">WorkCover forms</a>
+                            <a ng-click="init('workcover')">WorkCover forms</a>
                         </li>
                         <li ui-sref-active="active">
-                            <a ui-sref="authentication.consultation.detail1.referral">Referrals forms</a>
+                            <a ng-click="init('referral')">Referrals forms</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.internal">Internal Referrals</a>
+                            <a ng-click="init('internal')">Internal Referrals</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.clinic">Clinic Op Notes</a>
+                            <a ng-click="init('clinic')">Clinic Op Notes</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.drawing">Drawing</a>
+                            <a ng-click="init('drawing')">Drawing</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.prescription">Prescription</a>
+                            <a ng-click="init('prescription')">Prescription</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.dictation">Dictation</a>
+                            <a ng-click="init('dictation')">Dictation</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.image">Image Capture</a>
+                            <a ng-click="init('image')">Image Capture</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.consent">Consent forms</a>
+                            <a ng-click="init('consent')">Consent forms</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.admission">Admission forms</a>
+                            <a ng-click="init('admission')">Admission forms</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.billing">Billing Code</a>
+                            <a ng-click="init('billing')">Billing Code</a>
                         </li>
                         <li ui-sref-active="active" class="">
-                            <a ui-sref="authentication.consultation.detail1.appointment">Appointment</a>
+                            <a ng-click="init('appointment')">Appointment</a>
                         </li>
                     </ul>
-                    <div class="content" ui-view>
+                    <div class="content">
+                        <div ng-show="type=='referral'">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="filter" ng-change="filterEform()" placeholder="Search..."/></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="feeds">
+                                    <li ng-repeat="item in showEForm"
+                                        ng-click="eFormTemplate(item)">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label " ng-class="styleFunction(item.EForms)">
+                                                        <i class="fa fa-file-text-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">{{item.Name}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date">View</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div ng-show="type=='workcover'">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="filter" ng-change="filterEform()" placeholder="Search..."/></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="feeds">
+                                    <li ng-repeat="item in showEForm"
+                                        ng-click="eFormTemplate(item)">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label " ng-class="styleFunction(item.EForms)">
+                                                        <i class="fa fa-file-text-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">{{item.Name}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date">View</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div ng-show="type=='internal'">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="filter" ng-change="filterEform()" placeholder="Search..."/></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="feeds">
+                                    <li ng-repeat="item in showEForm"
+                                        ng-click="eFormTemplate(item)">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label " ng-class="styleFunction(item.EForms)">
+                                                        <i class="fa fa-file-text-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">{{item.Name}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date">View</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div ng-show="type=='clinic'">
+                            <div class="row" ng-if="type=='clinic'">
+                                <div class="col-md-3 col-md-push-9">
+                                    <listpatient-consultation uid="uid"></listpatient-consultation>
+                                </div>
+
+                                <div class="col-md-9 col-md-pull-3">
+                                    <consult-note consultationuid="consultationuid"></consult-note>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div ng-show="type=='drawing'">drawing</div>
+                        <div ng-show="type=='prescription'">prescription</div>
+                        <div ng-show="type=='dictation'">dictation</div>
+                        <div ng-show="type=='image'">image</div>
+                        <div ng-show="type=='consent'">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="filter" ng-change="filterEform()" placeholder="Search..."/></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="feeds">
+                                    <li ng-repeat="item in showEForm"
+                                        ng-click="eFormTemplate(item)">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label " ng-class="styleFunction(item.EForms)">
+                                                        <i class="fa fa-file-text-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">{{item.Name}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date">View</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                        <div ng-show="type=='admission'">
+                            <div ng-show="ischooseAdmission==false">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-8 col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" ng-model="filter" ng-change="filterEform()" placeholder="Search..."/></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <ul class="feeds">
+                                        <li ng-click="admission()">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-green">
+                                                            <i class="fa fa-file-text-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> Patient Admission</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date"> View </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div ui-view></div>
+                        </div>
+                        <div ng-show="type=='billing'">billing</div>
+                        <div ng-show="type=='appointment'">
+                            <div ng-if="typeAppt!='Onsite' && type=='appointment'">
+                                <telehealth-detail run-when-finish="runWhenFinish"></telehealth-detail>
+                            </div>
+                            <div ng-if="typeAppt=='Onsite' && type=='appointment'">
+                                <onsite-appointment run-when-finish="runWhenFinish"></onsite-appointment>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

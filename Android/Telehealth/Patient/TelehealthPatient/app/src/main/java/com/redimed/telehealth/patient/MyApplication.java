@@ -20,8 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -31,7 +29,6 @@ import com.redimed.telehealth.patient.models.Singleton;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.network.RetrofitErrorHandler;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;

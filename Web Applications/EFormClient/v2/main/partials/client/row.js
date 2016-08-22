@@ -5,6 +5,7 @@ import Radio from './object/radio'
 import Checkbox from './object/checkbox'
 import Sign from './object/sign'
 import InputDate from './object/date'
+import Draw from './object/draw'
 
 import Helper from '../../config/helper'
 
@@ -30,17 +31,18 @@ class Row extends Component{
                 {
                     this.props.params.select('o').map(function(o, o_index){
                         var res = null
-                        if(EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type'))
-                            var style = {
-                                width: o.get('params', 'width'),
-                                border: 'none'
-                            }
-                        else
-                            var style = {
-                                width: o.get('params', 'width'),
-                                border: 'none',
-                                textAlign: o.get('params', 'align') || 'left'
-                            }
+                        // if(EFORM_CONST.OBJECT_TYPE.LABEL === o.get('type'))
+                        //     var style = {
+                        //         width: o.get('params', 'width'),
+                        //         border: 'none',
+                        //         textAlign: o.get('params', 'align') || 'left'
+                        //     }
+                        // else
+                        var style = {
+                            width: o.get('params', 'width'),
+                            border: 'none',
+                            textAlign: o.get('params', 'align') || 'left'
+                        }
                         var className = 'object'
                         if(typeof o.select('params').get('border') !== 'undefined'){
                             const p_border = o.select('params').get('border')
@@ -51,6 +53,7 @@ class Row extends Component{
                                     style.padding = 0
                             }
                         }
+                        // console.log(o.serialize())
                         switch(o.get('type')){
                             case EFORM_CONST.OBJECT_TYPE.LABEL:
                                 res = (
@@ -64,7 +67,7 @@ class Row extends Component{
                                 res = (
                                     <div className={className}
                                         style={style}>
-                                        <Radio name={o.get('name' || '')} id={o.get('params', 'id' || '')} value={o.get('params','value')}/>
+                                        <Radio name={o.get('name')  || '' } id={o.get('params', 'id')  || ''} value={o.get('params','value')}/>
                                         &nbsp;&nbsp;
                                         <label htmlFor={o.get('params', 'id' || '')}>{o.get('params', 'title')}</label>
                                     </div>
@@ -74,12 +77,22 @@ class Row extends Component{
                                 res = (
                                     <div className={className}
                                         style={style}>
-                                        <Checkbox name={o.get('name' || '')} id={o.get('params', 'id' || '')}/>
+                                        <Checkbox name={o.get('name')  || ''} id={o.get('params', 'id') || ''}  value={o.get('params','value')}/>
                                         &nbsp;&nbsp;
-                                        <label htmlFor={o.get('params', 'id' || '')}>{o.get('params', 'title')}</label>
+                                        <label htmlFor={o.get('params', 'id')  || ''}>{o.get('params', 'title')}</label>
                                     </div>
                                 )
                                 break
+                            case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+                                res = (
+                                    <div className={className}
+                                        style={style}>
+                                        <div className={className+' textarea'} style={style}>
+                                        <textarea rows={o.get('params', 'rows') || 2} name={o.get('name')  || ''}  id={o.get('name')  || ''}></textarea>
+                                    </div>
+                                    </div>
+                                )
+                                break    
                             case EFORM_CONST.OBJECT_TYPE.TEXT:
                                 var disabled = (o.get('params').disabled) || false
                                 res = (
@@ -116,6 +129,17 @@ class Row extends Component{
                                     </div>
                                 )
                                 break
+                            case EFORM_CONST.OBJECT_TYPE.DRAWING:
+                                // this.objects_init.push(o.get('name') || '')
+                                console.log(o.serialize())
+                                res = (
+                                    <div className={className} ref={o.get('name') || ''}
+                                        style={style}>
+                                        <Draw ref={o.get('name')+'_draw'} name={o.get('name')}/>
+                                    </div>
+                                )
+                                break   
+
                         }
                         return res
                     }, this)

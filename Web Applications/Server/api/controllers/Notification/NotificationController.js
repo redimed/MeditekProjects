@@ -4,6 +4,9 @@ module.exports = {
         if (body.data) {
             req.dmObj = body.data;
             res.ok('success');
+            socketAuth.on('notify', function(msg) {
+                res.ok('success');
+            });
         } else {
             error.pushError('data.null');
             throw error;
@@ -15,6 +18,9 @@ module.exports = {
         if (body.data) {
             req.dmObj = body.data;
             res.ok('success');
+            // socketAuth.on('notify', function(msg) {
+            //     res.ok('success');
+            // });
         } else {
             error.pushError('data.null');
             throw error;

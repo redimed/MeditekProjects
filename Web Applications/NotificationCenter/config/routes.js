@@ -77,6 +77,11 @@ module.exports.routes = {
     action:'UpdateReadQueueJob'
   },
 
+  'post /api/queue/updatestatusqueuejob':{
+    controller:'QueueJobController',
+    action:'UpdateStateQueueJob'
+  },
+
   // QueueJobG 
 
   'post /CreateGlobalNotifyJob':{

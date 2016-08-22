@@ -6,20 +6,20 @@
 <ul class="dropdown-menu">
     <li class="external">
         <h3>
-                            <span class="bold">Notifications</span>
-                        </h3>
+            <span class="bold">Notifications</span>
+        </h3>
         <a ng-click="updateReadQueueJob()" style="position:absolute;right:66px;">dissmiss all</a>
         <a ui-sref="authentication.notification.list">view all</a>
     </li>
     <li ng-if="listNotify.length > 0">
         <ul class="dropdown-menu-list scroller" style="height: 250px; overflow: auto; width: auto;" data-handle-color="#637283">
-            <li ng-repeat="not in listNotify" ng-click="updateReadQueueJob(not)">
-                <a href="#">
+            <li ng-repeat="not in listNotify" ng-click="updateReadQueueJob(not)" class="{{ not.Read === 'N' ? 'bg-info' : ''}}">
+                <a href="#" >
                     <span class="subject" style="margin-left:0px">
                         <span class="from" > {{not.MsgContent.Display.Subject}} </span>
-                        <span class="time">{{not.fromTime}} </span>
+                        <!-- <span class="time">{{not.fromTime}} </span> -->
                     </span>
-                    <span class="message" style="margin-left:0px"> {{not.Subject}} </span>
+                    <span class="message" style="margin-left:0px"> {{not.Subject}} {{not.MsgContent.Display.Object ? not.MsgContent.Display.Object.name : ''}}</span>
                 </a>
             </li>
         </ul>
@@ -34,3 +34,11 @@
         </ul>
     </li>
 </ul>
+
+<style type="text/css">
+    .bg-info {
+        display: block;
+        width: 100%;
+        background-color: rgba(53,120,220,.125);
+    }
+</style>

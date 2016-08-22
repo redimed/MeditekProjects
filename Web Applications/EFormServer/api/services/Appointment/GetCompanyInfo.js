@@ -22,6 +22,12 @@ module.exports = function (PatientID, AppointmentID)
                             Active: 'Y'
                         }
                     },
+                    include: [
+                        {
+                            model: CompanySite,
+                            required: false,
+                        }
+                    ]
                 }
             ]
         })
@@ -70,8 +76,18 @@ module.exports = function (PatientID, AppointmentID)
     }
 
     return q.spread([getCompany(),getCompanySite()],function(company, companySite){
+        var CompanySites = [];
+        if(company) {
+            CompanySites=_.cloneDeep(company.CompanySites);
+            delete company['CompanySites'];
+        }
         result.company = company;
-        result.companySite = companySite;
+        result.companySite = null;
+        if(companySite) {
+            result.companySite = companySite;
+        } else {
+            result.companySite = (CompanySites && CompanySites[0])?CompanySites[0].dataValues:null;
+        }
         return result;
     },function(err){
         throw err;

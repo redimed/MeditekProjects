@@ -327,6 +327,52 @@ module.exports = {
 
             });
     },
+
+    CreatePatientForOnlineBooking: function(req, res) {
+        var data = req.body.data;
+        for (var key in data) {
+            if (data[key] == null || data[key] == '') {
+                delete data[key];
+            }
+        }
+        var otherData = req.body.otherData ? req.body.otherData : null;
+        Services.Patient.CreatePatient(data, otherData, false)
+            .then(function(patient) {
+
+                if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
+                    patient.transaction.commit();
+                    var info = {
+                        UID: patient.UID,
+                        FirstName: patient.FirstName,
+                        LastName: patient.LastName,
+                        DOB: patient.DOB,
+                        Address1: patient.Address1,
+                        Address2: patient.Address2,
+                        UserAccountUID: patient.UserAccountUID
+                    };
+                    res.ok({
+                        status: 200,
+                        message: "success",
+                        data: info
+                    });
+                } else {
+                    var err = new Error("SERVER ERROR");
+                    err.pushError("No data result");
+                    res.notFound({
+                        status: 200,
+                        message: ErrorWrap(err)
+                    });
+                }
+            })
+            .catch(function(err) {
+                err.transaction.rollback();
+                res.serverError({
+                    status: 500,
+                    message: ErrorWrap(err.err)
+                });
+
+            });
+    },
     /*
         SearchPatient : find patient with condition
         input: Patient's name or PhoneNumber
@@ -467,9 +513,7 @@ module.exports = {
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.serverError({
-                        message: ErrorWrap(err)
-                    });
+                    res.serverError(ErrorWrap(err));
                 }
             })
             .catch(function(err) {
@@ -834,5 +878,17 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         })
     },
-
+    GetListPatientTelehealth: function(req, res) {
+         var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.GetListPatientTelehealth(data, req.user)
+                .then(function(listPatient){
+                    res.ok(listPatient);
+                }, function(err){
+                    res.serverError(ErrorWrap(err.error || err));
+                });
+        }
+    }
 };

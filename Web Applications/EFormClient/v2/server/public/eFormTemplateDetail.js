@@ -58,15 +58,15 @@
 
 	var _reactDom = __webpack_require__(39);
 
-	var _section = __webpack_require__(184);
+	var _section = __webpack_require__(188);
 
 	var _section2 = _interopRequireDefault(_section);
 
-	var _math = __webpack_require__(181);
+	var _helper = __webpack_require__(182);
 
-	var _math2 = _interopRequireDefault(_math);
+	var _helper2 = _interopRequireDefault(_helper);
 
-	var _main = __webpack_require__(182);
+	var _main = __webpack_require__(185);
 
 	var _main2 = _interopRequireDefault(_main);
 
@@ -83,6 +83,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var EFORM_CONST = _constants2.default.EFORM;
+	var MAX_WIDTH = 768;
+	var MAX_SEGMENT = 10;
 
 	var EFormTemplateDetail = function (_Component) {
 	    _inherits(EFormTemplateDetail, _Component);
@@ -94,7 +96,8 @@
 
 	        _this.list = new _baobab2.default({
 	            sections: [],
-	            obj: []
+	            obj: [],
+	            defVal: []
 	        });
 	        _this.selected_obj = null;
 	        // this.align_arr = [
@@ -103,31 +106,116 @@
 	        //     {code: 'right', name: 'Right'}
 	        // ]
 	        _this.align_arr = EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR;
-	        _this.suggest_width = EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH;
+	        _this.suggest_width = []; //EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH
 	        _this.user_uid = '';
 	        _this.template_uid = '';
 	        _this.dynamic_obj = [];
 	        _this.dynamic_id = '';
+
+	        _this.user_uid = _helper2.default.parseQueryString(window.location.href).userUID;
+	        _this.template_uid = _helper2.default.parseQueryString(window.location.href).templateUID;
+
+	        _this.detailAreas = [{
+	            area: EFORM_CONST.GROUP_OBJECT.LABEL
+	        }, {
+	            area: EFORM_CONST.GROUP_OBJECT.CHECKBOX
+	        }, {
+	            area: EFORM_CONST.GROUP_OBJECT.INPUT
+	        }, {
+	            area: EFORM_CONST.GROUP_OBJECT.TEXTAREA
+	        }, {
+	            area: EFORM_CONST.GROUP_OBJECT.SIGN
+	        }, {
+	            area: EFORM_CONST.GROUP_OBJECT.DYNAMIC
+	        }, {
+	            area: EFORM_CONST.GROUP_OBJECT.CHART
+	        }];
 	        return _this;
 	    }
 
 	    _createClass(EFormTemplateDetail, [{
+	        key: '_showDetail',
+	        value: function _showDetail(groupName) {
+	            var index = _.findIndex(this.detailAreas, { area: groupName });
+	            if (index < 0) {
+	                console.log('ERROR HERE: doesnt exist Detail area:  ' + groupName);
+	            }
+	            this.refs[this.detailAreas[index].area].style.display = 'inline-block';
+	        }
+	    }, {
+	        key: '_clearAllDetail',
+	        value: function _clearAllDetail() {
+	            this.selected_obj = null;
+	            for (var i = this.detailAreas.length - 1; i >= 0; --i) {
+	                this.refs[this.detailAreas[i].area].style.display = 'none';
+	            }
+
+	            // this.refs.default.style.display = 'none'
+	            // this.refs.chart.style.display = 'none'
+	            // this.refs.label.style.display = 'none'
+	            // this.refs.input.style.display = 'none'
+	            // this.refs.dynamic.style.display = 'none'
+	            // this.refs.textarea.style.display = 'none'
+	        }
+	    }, {
+	        key: '__getDefaultValue',
+	        value: function __getDefaultValue(name) {
+	            // console.log(this.list.select('defVal').serialize(), name)
+	            return this.list.select('defVal', { n: name }).serialize();
+	        }
+	    }, {
+	        key: '_initSuggestWidth',
+	        value: function _initSuggestWidth() {
+	            var self = this;
+	            var addEventToObject = function addEventToObject(srcObj, targetObj) {
+	                srcObj.addEventListener('keyup', function (event) {
+	                    if (event.keyCode === 13) {
+	                        var v = $(srcObj).val();
+	                        var value = parseFloat(MAX_WIDTH * v / MAX_SEGMENT).toFixed(2) + "px";
+	                        $(targetObj).val(value);
+	                    }
+	                }, false);
+	            };
+	            var arr = [{ src: this.refs.label_suggest_width, tar: this.refs.label_width }, { src: this.refs.textarea_suggest_width, tar: this.refs.textarea_width }, { src: this.refs.input_suggest_width, tar: this.refs.input_width }, { src: this.refs.default_suggest_width, tar: this.refs.default_width }, { src: this.refs.sign_suggest_width, tar: this.refs.sign_width }];
+
+	            for (var i = 0, len = arr.length; i < len; ++i) {
+	                var obj = arr[i];
+	                addEventToObject(obj.src, obj.tar);
+	            }
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var self = this;
-	            this.user_uid = _math2.default.parseQueryString(window.location.href).userUID;
-	            this.template_uid = _math2.default.parseQueryString(window.location.href).templateUID;
 	            _main2.default.EFormTemplateDetail({ uid: this.template_uid }).then(function (response) {
 	                var TempData = JSON.parse(response.data.EFormTemplateData.TemplateData);
+	                console.log(TempData);
 	                if (TempData.hasOwnProperty('sections')) {
 	                    self.list.set('sections', TempData.sections);
 	                } else {
 	                    self.list.set('sections', []);
 	                }
+	                self._initSuggestWidth();
+	                if (TempData.hasOwnProperty('defVal')) {
+	                    self.list.set('defVal', TempData.defVal);
+	                }
+
 	                self._register_navbar_add_section();
+
 	                self._clearAllDetail();
 	                self.forceUpdate();
 	            });
+	        }
+	    }, {
+	        key: '_getCurrentRef',
+	        value: function _getCurrentRef() {
+	            var res = 0;
+	            this.list.select('sections').map(function (s, s_index) {
+	                var ref_num = s.get('ref').split('_')[1];
+	                if (_helper2.default.largerEq(ref_num, res)) res = ref_num;
+	            });
+	            if (this.list.select('sections').get().length > 0) res++;
+	            return res;
 	        }
 	    }, {
 	        key: '_addSection',
@@ -136,6 +224,17 @@
 	            var section_list = this.list.select('sections').push(section);
 	            this.list.sections = section_list;
 	            this.forceUpdate();
+	        }
+	    }, {
+	        key: '_getCurrentRow',
+	        value: function _getCurrentRow(s_index) {
+	            var res = 0;
+	            this.list.select('sections', s_index, 'r').map(function (r, r_index) {
+	                var ref_num = r.get('ref').split('_')[2];
+	                if (_helper2.default.largerEq(ref_num, res)) res = ref_num;
+	            });
+	            if (this.list.select('sections', s_index, 'r').get().length > 0) res++;
+	            return res;
 	        }
 	    }, {
 	        key: '_addRow',
@@ -151,28 +250,6 @@
 	            this.refs.navbar_add_section.addEventListener('click', function (event) {
 	                self._addSection({ title: '', page: 1, r: [] });
 	            }, false);
-	        }
-	    }, {
-	        key: '_getCurrentRef',
-	        value: function _getCurrentRef() {
-	            var res = 0;
-	            this.list.select('sections').map(function (s, s_index) {
-	                var ref_num = s.get('ref').split('_')[1];
-	                if (_math2.default.largerEq(ref_num, res)) res = ref_num;
-	            });
-	            if (this.list.select('sections').get().length > 0) res++;
-	            return res;
-	        }
-	    }, {
-	        key: '_getCurrentRow',
-	        value: function _getCurrentRow(s_index) {
-	            var res = 0;
-	            this.list.select('sections', s_index, 'r').map(function (r, r_index) {
-	                var ref_num = r.get('ref').split('_')[2];
-	                if (_math2.default.largerEq(ref_num, res)) res = ref_num;
-	            });
-	            if (this.list.select('sections', s_index, 'r').get().length > 0) res++;
-	            return res;
 	        }
 	    }, {
 	        key: '_onChangeSectionDynamic',
@@ -299,7 +376,30 @@
 	    }, {
 	        key: '_onSelectObject',
 	        value: function _onSelectObject(s_index, r_index, type) {
-	            if (type === 'lb') this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '150px', title: 'Label' } });else if (type === 'r' || type === 'c') this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '150px', title: 'Title', value: '' } });else if (type === 'di') this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '768px', objects: [] } });else this.list.select('sections', s_index, 'r', r_index, 'o').push({ type: type, name: '', params: { width: '150px' } });
+	            var get_object = this.list.select('sections', s_index, 'r', r_index, 'o');
+	            switch (type) {
+	                case EFORM_CONST.OBJECT_TYPE.LABEL:
+	                    get_object.push({ type: type, name: '', params: { width: '150px', title: 'Label' } });
+	                    break;
+	                case EFORM_CONST.OBJECT_TYPE.RADIO:
+	                case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
+	                    get_object.push({ type: type, name: '', params: { width: '150px', title: 'Title', value: '' } });
+	                    break;
+	                case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:
+	                    get_object.push({ type: type, name: '', params: { width: '768px', objects: [] } });
+	                    break;
+	                case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                    get_object.push({ type: type, name: '', params: { width: '300px' } });
+	                    break;
+	                case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+	                    get_object.push({ type: type, name: '', params: { width: '400px' } });
+	                    break;
+	                case EFORM_CONST.GROUP_OBJECT.SIGN:
+	                    get_object.push({ type: type, name: '', params: { width: '250px' } });
+	                    break;
+	                default:
+	                    get_object.push({ type: type, name: '', params: { width: '150px' } });
+	            }
 	            this.forceUpdate();
 	        }
 	    }, {
@@ -307,68 +407,121 @@
 	        value: function _onClickObject(s_index, r_index, o_index, o) {
 	            this._clearAllDetail();
 	            var type = o.get('type');
-	            if (type === 'lb') {
-	                this.refs.label.style.display = 'inline-block';
-	                this.refs.label_width.value = o.select('params').get('width');
-	                this.refs.label_value.value = o.select('params').get('title');
-	                this.refs.label_order.value = o_index;
-	                this.refs.label_border.value = o.select('params').get('border') || 'none';
-	            } else if (type === 'r' || type === 'c') {
-	                this.refs.default.style.display = 'inline-block';
-	                this.refs.default_title.value = o.select('params').get('title');
-	                this.refs.default_width.value = o.select('params').get('width');
-	                this.refs.default_name.value = o.get('name') || '';
-	                this.refs.default_value.value = o.select('params').get('value');
-	                this.refs.default_order.value = o_index;
-	                this.refs.default_id.value = o.select('params').get('id') || '';
-	                this.refs.default_border.value = o.select('params').get('border') || 'none';
-	                this.refs.default_align.value = o.select('params').get('align') || 'left';
-	                this.refs.default_disabled.checked = o.select('params').get('disabled') || false;
-	            } else if (type === 'di') {
-	                this.refs.dynamic.style.display = 'inline-block';
-	                this.refs.dynamic_width.value = o.select('params').get('width');
-	                this.refs.dynamic_name.value = o.get('name') || '';
-	                this.refs.dynamic_border.value = o.select('params').get('border') || 'none';
-	                this.refs.dynamic_order.value = o_index;
-	            } else {
-	                this.refs.input.style.display = 'inline-block';
-	                this.refs.input_width.value = o.select('params').get('width');
-	                this.refs.input_name.value = o.get('name') || '';
-	                this.refs.input_order.value = o_index;
-	                this.refs.input_border.value = o.select('params').get('border') || 'none';
-	                this.refs.input_align.value = o.select('params').get('align') || 'left';
-	                this.refs.input_disabled.checked = o.select('params').get('disabled') || false;
+	            var name = o.get('name') || '';
+	            var params = o.select('params');
+	            var width = params.get('width');
+	            var border = params.get('border') || 'none';
+	            var width2suggest = function width2suggest(width) {
+	                return parseFloat(width) / (MAX_WIDTH / MAX_SEGMENT);
+	            };
+	            console.log(width, border);
+
+	            switch (type) {
+	                case EFORM_CONST.OBJECT_TYPE.LABEL:
+	                    this._showDetail(EFORM_CONST.GROUP_OBJECT.LABEL);
+	                    // this.refs.label.style.display = 'inline-block'
+	                    this.refs.label_order.value = o_index;
+	                    this.refs.label_width.value = width;
+	                    this.refs.label_suggest_width.value = width2suggest(width); // parse to suggest
+	                    this.refs.label_border.value = border;
+	                    // this.refs.label_width.value = o.select('params').get('width')
+	                    this.refs.label_value.value = params.get('title');
+	                    this.refs.label_align.value = params.get('align') || 'left';
+	                    break;
+	                case EFORM_CONST.OBJECT_TYPE.RADIO:
+	                case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
+	                    this._showDetail(EFORM_CONST.GROUP_OBJECT.CHECKBOX);
+	                    this.refs.default_name.value = name; // o.get('name') || ''
+	                    // this.refs.default.style.display = 'inline-block'
+	                    this.refs.default_order.value = o_index;
+	                    this.refs.default_width.value = width;
+	                    this.refs.default_suggest_width.value = width2suggest(width); // parse to suggest
+	                    this.refs.default_border.value = border;
+
+	                    this.refs.default_title.value = params.get('title');
+	                    this.refs.default_value.value = params.get('value');
+	                    this.refs.default_id.value = params.get('id') || '';
+	                    this.refs.default_align.value = params.get('align') || 'left';
+	                    this.refs.default_disabled.checked = params.get('disabled') || false;
+	                    break;
+
+	                case EFORM_CONST.OBJECT_TYPE.SIGN:
+	                    this._showDetail(EFORM_CONST.GROUP_OBJECT.SIGN);
+	                    this.refs.sign_name.value = name; // o.get('name') || ''
+	                    // this.refs.sign.style.display = 'inline-block'
+	                    this.refs.sign_order.value = o_index;
+	                    this.refs.sign_width.value = width;
+	                    this.refs.sign_suggest_width.value = width2suggest(width);
+	                    // SIGN NO NEED BORDER
+
+	                    //  ///
+	                    //  add some thing to recognize signature of doctor, patient .... 
+	                    //  /// 
+	                    this.refs.sign_disabled.value = params.get('disabled') || false;
+	                    break;
+
+	                case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+	                    this._showDetail(EFORM_CONST.GROUP_OBJECT.TEXTAREA);
+	                    this.refs.textarea_name.value = name; // o.get('name') || ''
+	                    // this.refs.textarea.style.display = 'inline-block'
+	                    this.refs.textarea_order.value = o_index;
+	                    this.refs.textarea_width.value = width;
+	                    this.refs.textarea_suggest_width.value = width2suggest(width);
+	                    this.refs.textarea_border.value = border;
+
+	                    this.refs.textarea_rows.value = params.get('rows') || 2;
+	                    break;
+	                /* WHAT IS IT, MR.VUONG ? =))  */
+	                case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:
+	                    this.refs.dynamic.style.display = 'inline-block';
+	                    this.refs.dynamic_width.value = params.get('width');
+	                    this.refs.dynamic_name.value = o.get('name') || '';
+	                    this.refs.dynamic_border.value = params.get('border') || 'none';
+	                    this.refs.dynamic_order.value = o_index;
+	                    break;
+	                // TEXT, NUMBER, DATE, DRAW GOES HERE
+	                default:
+	                    this._showDetail(EFORM_CONST.GROUP_OBJECT.INPUT);
+	                    // this.refs.input.style.display = 'inline-block'
+	                    this.refs.input_order.value = o_index;
+	                    this.refs.input_width.value = width;
+	                    this.refs.input_suggest_width.value = width2suggest(width);
+	                    this.refs.input_border.value = border;
+
+	                    this.refs.input_name.value = name; //o.get('name') || ''
+	                    this.refs.input_align.value = params.get('align') || 'left';
+	                    this.refs.input_disabled.checked = params.get('disabled') || false;
+
+	                    // JUST GROUP OBJECTS HERE HAVE DEFAULT VALUE
+	                    var value = this.__getDefaultValue(o.get('name'));
+	                    this.refs.input_default_value.value = !!value && !!value.v ? value.v : params.get('default_value') || '';
 	            }
+
 	            this.selected_obj = { s_index: s_index, r_index: r_index, o_index: o_index, o: o };
 	        }
 	    }, {
-	        key: '_clearAllDetail',
-	        value: function _clearAllDetail() {
-	            this.selected_obj = null;
-	            this.refs.default.style.display = 'none';
-	            this.refs.chart.style.display = 'none';
-	            this.refs.label.style.display = 'none';
-	            this.refs.input.style.display = 'none';
-	            this.refs.dynamic.style.display = 'none';
-	        }
-	    }, {
 	        key: '_onSubmitObject',
-	        value: function _onSubmitObject(type) {
+	        value: function _onSubmitObject(group_type) {
 	            var params = null;
-	            var object = null;
-	            switch (type) {
-	                case 'label':
+	            var object = null; // this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
+
+	            switch (group_type) {
+	                case EFORM_CONST.GROUP_OBJECT.LABEL:
+	                    // case 'label':
 	                    params = {
 	                        width: this.refs.label_width.value,
 	                        value: this.refs.label_value.value,
-	                        border: this.refs.label_border.value
+	                        border: this.refs.label_border.value,
+	                        align: this.refs.label_align.value
 	                    };
 	                    object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index);
 	                    object.select('params').set('width', params.width);
 	                    object.select('params').set('title', params.value);
 	                    object.select('params').set('border', params.border);
+	                    object.select('params').set('align', params.align);
 	                    break;
-	                case 'default':
+	                case EFORM_CONST.GROUP_OBJECT.CHECKBOX:
+	                    // case 'default':
 	                    params = {
 	                        width: this.refs.default_width.value,
 	                        value: this.refs.default_value.value,
@@ -380,31 +533,51 @@
 	                        disabled: this.refs.default_disabled.checked
 	                    };
 	                    object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index);
+	                    // console.log(object.serialize())
+	                    object.set('name', params.name);
 	                    object.select('params').set('width', params.width);
 	                    object.select('params').set('value', params.value);
 	                    object.select('params').set('title', params.title);
-	                    object.set('name', params.name);
 	                    object.select('params').set('id', params.id);
 	                    object.select('params').set('border', params.border);
 	                    object.select('params').set('align', params.align);
 	                    object.select('params').set('disabled', params.disabled);
 	                    break;
-	                case 'input':
+	                case EFORM_CONST.GROUP_OBJECT.INPUT:
+	                    // case 'input':
 	                    params = {
 	                        width: this.refs.input_width.value,
 	                        name: this.refs.input_name.value,
+	                        default_value: this.refs.input_default_value.value,
 	                        border: this.refs.input_border.value,
 	                        align: this.refs.input_align.value,
 	                        disabled: this.refs.input_disabled.checked
 	                    };
 	                    object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index);
-	                    object.select('params').set('width', params.width);
 	                    object.set('name', params.name);
-	                    object.select('params').set('align', params.align);
+	                    object.select('params').set('width', params.width);
+	                    object.select('params').set('value', params.value);
 	                    object.select('params').set('border', params.border);
+	                    object.select('params').set('align', params.align);
 	                    object.select('params').set('disabled', params.disabled);
+	                    object.select('params').set('default_value', params.default_value);
 	                    break;
-	                case 'dynamic':
+	                case EFORM_CONST.GROUP_OBJECT.TEXTAREA:
+	                    params = {
+	                        name: this.refs.textarea_name.value,
+	                        rows: this.refs.textarea_rows.value,
+	                        width: this.refs.textarea_width.value,
+	                        border: this.refs.textarea_border.value
+	                    };
+	                    object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index);
+	                    object.set('name', params.name);
+	                    object.select('params').set('width', params.width);
+	                    object.select('params').set('rows', params.rows);
+	                    object.select('params').set('border', params.border);
+
+	                    break;
+	                case EFORM_CONST.GROUP_OBJECT.DYNAMIC:
+	                    // case 'dynamic':
 	                    params = {
 	                        width: this.refs.input_width.value,
 	                        name: this.refs.input_name.value,
@@ -474,15 +647,30 @@
 	        key: '_onSave',
 	        value: function _onSave() {
 	            var res_obj = [];
+	            var newDefVal = [];
+	            var defVal = this.list.select('defVal').serialize();
+
+	            var getIndexDefaultValue = function getIndexDefaultValue(name) {
+	                for (var i = 0, len = defVal.length; i < len; ++i) {
+	                    if (defVal[i].n == name) return i;
+	                }
+	                return -1;
+	            };
+	            var removeDefaultValue = function removeDefaultValue(index) {
+	                return defVal.splice(index, 1);
+	            };
+
 	            var sections = this.list.select('sections');
 	            sections.map(function (section, s_index) {
 	                section.select('r').map(function (row) {
 	                    row.select('o').map(function (object) {
 	                        var obj = object.serialize();
-	                        if (obj.type === 'r' || obj.type === 'c') {
+
+	                        if (obj.type === EFORM_CONST.OBJECT_TYPE.RADIO || obj.type === EFORM_CONST.OBJECT_TYPE.CHECKBOX) {
 	                            obj.v = obj.params.value;
 	                        }
-	                        if (obj.type !== 'lb') {
+
+	                        if (obj.type !== EFORM_CONST.OBJECT_TYPE.LABEL) {
 	                            if (section.get('dynamic') === 'd') {
 	                                obj.d = {
 	                                    s: section.get('ref'),
@@ -493,6 +681,22 @@
 	                        }
 	                        obj.n = obj.name;
 	                        obj.t = obj.type;
+
+	                        /** DEFAULT VALUE **/
+	                        var index = getIndexDefaultValue(obj.n);
+	                        if (index != -1) {
+	                            var t = removeDefaultValue(index);
+	                            // REMOVE OLD ITEM IN defVal
+	                            if (obj.params.default_value) {
+	                                newDefVal.push({ n: obj.n, v: obj.params.default_value, t: obj.t });
+	                            } else {
+	                                newDefVal.push(t);
+	                            }
+	                        } else if (obj.params.default_value) {
+	                            newDefVal.push({ n: obj.n, v: obj.params.default_value, t: obj.t });
+	                        }
+	                        /** END DEFAULT VALUE **/
+
 	                        delete obj.params;
 	                        delete obj.align;
 	                        delete obj.name;
@@ -500,7 +704,11 @@
 	                    });
 	                });
 	            });
+	            var newArray = newDefVal;
+
 	            this.list.set('obj', res_obj);
+	            this.list.set('defVal', newArray);
+
 	            _main2.default.EFormTemplateSave({ uid: this.template_uid, content: JSON.stringify(this.list.serialize()), userUID: this.user_uid }).then(function (response) {
 	                alert("Success");
 	            });
@@ -510,32 +718,6 @@
 	        key: '_onClickDynamicObject',
 	        value: function _onClickDynamicObject(type) {
 	            if (type === 'it') {}
-	        }
-	    }, {
-	        key: '_onChangeSuggestWidth',
-	        value: function _onChangeSuggestWidth(type) {
-	            console.log('log log', type);
-
-	            console.log(val, EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0]);
-	            if (EFORM_CONST.DEFAULT_VALUE.SUGGEST_WIDTH[0] === val) return;
-
-	            switch (type) {
-	                case 'input':
-	                    var val = $(this.refs.suggest_input_width).val();
-	                    $(this.refs.input_width).val(val);
-	                    // $(this.refs.s)
-	                    break;
-	                case 'label':
-	                    var val = $(this.refs.suggest_label_width).val();
-	                    $(this.refs.label_width).val(val);
-	                    break;
-
-	                default:
-	                    var val = $(this.refs.suggest_default_width).val();
-	                    $(this.refs.default_width).val(val);
-	            }
-
-	            // $(this.refs.default_width).val('asssa');
 	        }
 	    }, {
 	        key: 'render',
@@ -582,6 +764,7 @@
 	                                onChangeSectionOrder: this._onChangeSectionOrder.bind(this),
 	                                onRemoveSection: this._onRemoveSection.bind(this),
 	                                onCloneSection: this._onCloneSection.bind(this),
+
 	                                onAddRow: this._onAddRow.bind(this),
 	                                onSelectObject: this._onSelectObject.bind(this),
 	                                onClickObject: this._onClickObject.bind(this),
@@ -597,7 +780,590 @@
 	                    { className: 'detail' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-detail', ref: 'dynamic' },
+	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.CHECKBOX },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Title'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Title', ref: 'default_title' }),
+	                            _react2.default.createElement('br', null)
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Width'
+	                            ),
+	                            ':  ',
+	                            _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'default_width' }),
+	                            ' ',
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Segment'
+	                            ),
+	                            ': ',
+	                            _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'default_suggest_width' }),
+	                            '   Max width : ',
+	                            MAX_WIDTH,
+	                            'px'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Name'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'default_name' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Id'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Id', ref: 'default_id' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Value'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Value', ref: 'default_value' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Border'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'default_border' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Align: '
+	                            ),
+	                            _react2.default.createElement(
+	                                'select',
+	                                { ref: 'default_align' },
+	                                EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function (align) {
+	                                    return _react2.default.createElement(
+	                                        'option',
+	                                        { value: align.code },
+	                                        align.name
+	                                    );
+	                                })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Disabled'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'checkbox', ref: 'default_disabled' }),
+	                            _react2.default.createElement('br', null)
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Order'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', ref: 'default_order', style: { width: '60%' } }),
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX) },
+	                                'Change'
+	                            ),
+	                            _react2.default.createElement('br', null)
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX) },
+	                                'Submit'
+	                            ),
+	                            ' ',
+	                            _react2.default.createElement(
+	                                'button',
+	                                { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
+	                                'Remove'
+	                            ),
+	                            ' ',
+	                            _react2.default.createElement(
+	                                'button',
+	                                { style: { background: 'green' }, onClick: this._onCloneObject.bind(this) },
+	                                'Clone'
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.INPUT },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Width'
+	                            ),
+	                            ': ',
+	                            _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'input_width' }),
+	                            '  ',
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Segment'
+	                            ),
+	                            ': ',
+	                            _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'input_suggest_width' }),
+	                            '   Max width : ',
+	                            MAX_WIDTH,
+	                            'px'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Name'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'input_name' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Default Value'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Default value', ref: 'input_default_value' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Border'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'input_border' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Align'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'select',
+	                            { ref: 'input_align' },
+	                            EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function (align) {
+	                                return _react2.default.createElement(
+	                                    'option',
+	                                    { value: align.code },
+	                                    align.name
+	                                );
+	                            })
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Disabled'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'checkbox', ref: 'input_disabled' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Order'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', ref: 'input_order', style: { width: '60%' } }),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT) },
+	                            'Change'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT) },
+	                            'Submit'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
+	                            'Remove'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'red' }, onClick: this._onCloneObject.bind(this) },
+	                            'Clone'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.SIGN },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Width'
+	                            ),
+	                            ': ',
+	                            _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'sign_width' }),
+	                            '  ',
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Segment'
+	                            ),
+	                            ': ',
+	                            _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'sign_suggest_width' }),
+	                            '   Max width : ',
+	                            MAX_WIDTH,
+	                            'px'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Name'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'sign_name' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Default Value'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Default value', ref: 'sign_default_value' }),
+	                            _react2.default.createElement('br', null)
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Disabled'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'checkbox', ref: 'sign_disabled' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Order'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', ref: 'sign_order', style: { width: '60%' } }),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN) },
+	                            'Change'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN) },
+	                            'Submit'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
+	                            'Remove'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'green' }, onClick: this._onCloneObject.bind(this) },
+	                            'Clone'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.TEXTAREA },
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'b',
+	                                    null,
+	                                    'Width'
+	                                ),
+	                                ':  ',
+	                                _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'textarea_width' }),
+	                                '  ',
+	                                _react2.default.createElement(
+	                                    'b',
+	                                    null,
+	                                    'Segment'
+	                                ),
+	                                ': ',
+	                                _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'textarea_suggest_width' }),
+	                                '   Max width : ',
+	                                MAX_WIDTH,
+	                                'px'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Name'
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'textarea_name' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Rows'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'number', min: '2', placeholder: 'Rows', ref: 'textarea_rows' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Border'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'textarea_border' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Order'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', ref: 'textarea_order', style: { width: '60%' } }),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA) },
+	                            'Change'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA) },
+	                            'Submit'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
+	                            'Remove'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'green' }, onClick: this._onCloneObject.bind(this) },
+	                            'Clone'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.LABEL },
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'b',
+	                                    null,
+	                                    'Width'
+	                                ),
+	                                ':  ',
+	                                _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'label_width' }),
+	                                ' ',
+	                                _react2.default.createElement(
+	                                    'b',
+	                                    null,
+	                                    'Segment'
+	                                ),
+	                                ': ',
+	                                _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'label_suggest_width' }),
+	                                '  Max width : ',
+	                                MAX_WIDTH,
+	                                'px'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Value'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('textarea', { placeholder: 'Value', ref: 'label_value', rows: '10' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Border'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'label_border' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Align'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'select',
+	                            { ref: 'label_align' },
+	                            EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function (align) {
+	                                return _react2.default.createElement(
+	                                    'option',
+	                                    { value: align.code },
+	                                    align.name
+	                                );
+	                            })
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Order'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', ref: 'label_order', style: { width: '60%' } }),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL) },
+	                            'Change'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL) },
+	                            'Submit'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
+	                            'Remove'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'green' }, onClick: this._onCloneObject.bind(this) },
+	                            'Clone'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.CHART },
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Width'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Width' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Name'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Name' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Value'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Value' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Order'
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('input', { type: 'text' }),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'button',
+	                            null,
+	                            'Submit'
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { style: { background: 'red' } },
+	                            'Remove'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.DYNAMIC },
 	                        _react2.default.createElement(
 	                            'b',
 	                            null,
@@ -699,342 +1465,6 @@
 	                            'button',
 	                            { style: { background: 'red' }, onClick: this._onCloneObject.bind(this) },
 	                            'Clone'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-detail', ref: 'default' },
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Title'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Title', ref: 'default_title' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Width'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { style: { width: '30%' }, type: 'text', placeholder: 'Width', ref: 'default_width' }),
-	                        'Suggest: ',
-	                        _react2.default.createElement(
-	                            'select',
-	                            { onChange: this._onChangeSuggestWidth.bind(this, 'default'), ref: 'suggest_default_width' },
-	                            this.suggest_width.map(function (width) {
-	                                return _react2.default.createElement(
-	                                    'option',
-	                                    { value: width },
-	                                    width
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Name'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'default_name' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Id'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Id', ref: 'default_id' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Value'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Value', ref: 'default_value' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Border'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'default_border' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Align'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'select',
-	                            { ref: 'default_align' },
-	                            this.align_arr.map(function (align) {
-	                                return _react2.default.createElement(
-	                                    'option',
-	                                    { value: align.code },
-	                                    align.name
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Disabled'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'checkbox', ref: 'default_disabled' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', ref: 'default_order', style: { width: '60%' } }),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onChangeObjectOrder.bind(this, 'default') },
-	                            'Change'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onSubmitObject.bind(this, 'default') },
-	                            'Submit'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
-	                            'Remove'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onCloneObject.bind(this) },
-	                            'Clone'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-detail', ref: 'input' },
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Width'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { style: { width: '30%' }, type: 'text', placeholder: 'Width', ref: 'input_width' }),
-	                        'Suggest: ',
-	                        _react2.default.createElement(
-	                            'select',
-	                            { onChange: this._onChangeSuggestWidth.bind(this, 'input'), ref: 'suggest_input_width' },
-	                            this.suggest_width.map(function (width) {
-	                                return _react2.default.createElement(
-	                                    'option',
-	                                    { value: width },
-	                                    width
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Name'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'input_name' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Border'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'input_border' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Align'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'select',
-	                            { ref: 'input_align' },
-	                            this.align_arr.map(function (align) {
-	                                return _react2.default.createElement(
-	                                    'option',
-	                                    { value: align.code },
-	                                    align.name
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Disabled'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'checkbox', ref: 'input_disabled' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', ref: 'input_order', style: { width: '60%' } }),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onChangeObjectOrder.bind(this, 'input') },
-	                            'Change'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onSubmitObject.bind(this, 'input') },
-	                            'Submit'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
-	                            'Remove'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onCloneObject.bind(this) },
-	                            'Clone'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-detail', ref: 'label' },
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Width'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { style: { width: '30%' }, type: 'text', placeholder: 'Width', ref: 'label_width' }),
-	                        'Suggest: ',
-	                        _react2.default.createElement(
-	                            'select',
-	                            { onChange: this._onChangeSuggestWidth.bind(this, 'label'), ref: 'suggest_label_width' },
-	                            this.suggest_width.map(function (width) {
-	                                return _react2.default.createElement(
-	                                    'option',
-	                                    { value: width },
-	                                    width
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Value'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('textarea', { placeholder: 'Value', ref: 'label_value', rows: '10' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Border'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'label_border' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', ref: 'label_order', style: { width: '60%' } }),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onChangeObjectOrder.bind(this, 'label') },
-	                            'Change'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onSubmitObject.bind(this, 'label') },
-	                            'Submit'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
-	                            'Remove'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'green' }, onClick: this._onCloneObject.bind(this) },
-	                            'Clone'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-detail', ref: 'chart' },
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Width'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Width' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Name'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Name' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Value'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Value' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'button',
-	                            null,
-	                            'Submit'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' } },
-	                            'Remove'
 	                        )
 	                    )
 	                )
@@ -24967,30 +25397,53 @@
 	var CONSTANTS = {
 	    VALUES: {
 	        TRUE: 'true',
-	        FALSE: 'false'
+	        FALSE: 'false',
+	        DATE_FORMAT: 'DD/MM/YYYY'
 	    },
 	    EFORM: {
 	        SHORT: {
 	            SECTION_ROW: 'r',
 	            ROW_OBJECT: 'o'
 	        },
+	        GROUP_OBJECT: {
+	            CHECKBOX: 'default',
+	            LABEL: 'label',
+	            INPUT: 'input',
+	            TEXTAREA: 'textarea',
+	            DYNAMIC: 'dynamic',
+	            SIGN: 'signature',
+	            CHART: 'chart'
+	        },
 	        OBJECT_TYPE: {
 	            LABEL: 'lb',
 	            RADIO: 'r',
 	            CHECKBOX: 'c',
 	            TEXT: 'it',
+	            TEXTAREA: 'ta',
 	            NUMBER: 'in',
 	            DATE: 'id',
 	            SIGN: 'si',
+	            DRAWING: 'dr',
 	            DYNAMIC_TABLE: 'di'
 	        },
 	        DEFAULT_VALUE: {
 	            ALIGN_ARR: [{ code: 'left', name: 'Left' }, { code: 'center', name: 'Center' }, { code: 'right', name: 'Right' }],
 	            SUGGEST_WIDTH: ['NONE', '768px', '576px', '384px', '192px']
+	        },
+	        DRAWING: {
+	            COLORS: [{ 'color': 'blue-ebonyclay' }, { 'color': 'green' }, { 'color': 'blue' }, { 'color': 'red' }],
+	            SIZES: [{ 'width': 550, 'height': 500, desc: 'Canvas 550x500' }, { 'width': 750, 'height': 650, desc: 'Canvas 750x650' }, { 'width': 300, 'height': 300, desc: 'Canvas 300x300' },
+	            // {'width':650,'height':650,desc:'Canvas 750x650'},
+	            { 'width': 900, 'height': 750, desc: 'Canvas 900x750' }, { 'width': 1000, 'height': 900, desc: 'Canvas 1100x900' }],
+	            FONT_SIZES: [{ size: 12, desc: 'Font 12px' }, { size: 15, desc: 'Font 15px' }, { size: 20, desc: 'Font 20px' }, { size: 25, desc: 'Font 25px' }, { size: 30, desc: 'Font 30px' }],
+	            LINE_WIDTHS: [{ width: 1, desc: 'Line 1' }, { width: 2, desc: 'Line 2' }, { width: 3, desc: 'Line 3' }, { width: 4, desc: 'Line 4' }, { width: 5, desc: 'Line 5' }],
+	            MAX_WIDTH_CANVAS: 748
 	        }
 	    },
 	    EFORM_CLIENT: {
+	        AUTO_SAVE_INTERVAL_TIME: 1 * 60000 / 6, // 10 s
 	        DEFAULT_VALUE: {
+
 	            PAGE: 1
 	        }
 	    }
@@ -25001,43 +25454,144 @@
 /***/ },
 /* 179 */,
 /* 180 */,
-/* 181 */
-/***/ function(module, exports) {
+/* 181 */,
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var Functions = {
-	    largerEq: function largerEq(n1, n2) {
-	        var res = false;
 
-	        n1 = parseFloat(n1);
-	        n2 = parseFloat(n2);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	        if (isFinite(String(n1)) || isFinite(String(n2))) {
-	            res = n1 >= n2 ? true : false;
-	        }
+	var _ip = __webpack_require__(183);
 
-	        return res;
-	    },
-	    parseQueryString: function parseQueryString(location) {
-	        var params = location.split('?');
-	        var str = params[1];
-	        var objURL = {};
+	var _ip2 = _interopRequireDefault(_ip);
 
-	        str.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function ($0, $1, $2, $3) {
-	            objURL[$1] = $3;
-	        });
-	        return objURL;
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Helper = function () {
+	    function Helper() {
+	        _classCallCheck(this, Helper);
 	    }
-	};
 
-	exports.default = Functions;
+	    _createClass(Helper, null, [{
+	        key: 'largerEq',
+	        value: function largerEq(n1, n2) {
+	            var res = false;
+
+	            n1 = parseFloat(n1);
+	            n2 = parseFloat(n2);
+
+	            if (isFinite(String(n1)) || isFinite(String(n2))) {
+	                res = n1 >= n2 ? true : false;
+	            }
+
+	            return res;
+	        }
+	    }, {
+	        key: 'parseQueryString',
+	        value: function parseQueryString(location) {
+	            var params = location.split('?');
+	            var str = params[1];
+	            var objURL = {};
+	            str.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function ($0, $1, $2, $3) {
+	                objURL[$1] = $3;
+	            });
+	            return objURL;
+	        }
+	    }, {
+	        key: 'selectorUI',
+	        value: function selectorUI(object) {
+	            switch (o.t) {
+	                case EFORM_CONST.OBJECT_TYPE.RADIO:
+	                    return 'input[type=radio][name=' + o.n + ']';
+	                case EFORM_CONST.OBJECT_TYPE.SIGN:
+	                case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                case EFORM_CONST.OBJECT_TYPE.DATE:
+	                default:
+	                    return '#' + o.n;
+	            }
+	        }
+	    }, {
+	        key: 'linkEForm',
+	        value: function linkEForm(page, temp_uid, appt_uid, patient_uid, user_uid) {
+	            var str = _ip2.default.Host + '/eform/detail?templateUID=' + temp_uid + '&appointmentUID=' + appt_uid + '&patientUID=' + patient_uid + '&userUID=' + user_uid + '&page=' + page;
+	            return str;
+	        }
+	    }, {
+	        key: 'b64toBlob',
+	        value: function b64toBlob(b64Data) {
+	            var contentType = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	            var sliceSize = arguments.length <= 2 || arguments[2] === undefined ? 512 : arguments[2];
+
+
+	            var byteCharacters = atob(b64Data);
+	            var byteArrays = [];
+
+	            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+	                var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+	                var byteNumbers = new Array(slice.length);
+	                for (var i = 0; i < slice.length; i++) {
+	                    byteNumbers[i] = slice.charCodeAt(i);
+	                }
+
+	                var byteArray = new Uint8Array(byteNumbers);
+
+	                byteArrays.push(byteArray);
+	            }
+
+	            var blob = new Blob(byteArrays, { type: contentType });
+	            return blob;
+	        }
+	    }, {
+	        key: 'toStyleBorder',
+	        value: function toStyleBorder(attrBorder, toStyle) {
+	            if (!toStyle) toStyle = {};
+	            if (attrBorder !== 'none') {
+	                var split_p_border = attrBorder.split('-');
+	                split_p_border.map(function (b) {
+	                    if (b === 't') toStyle.borderTop = '1px solid black';else if (b === 'l') toStyle.borderLeft = '1px solid black';else if (b === 'r') toStyle.borderRight = '1px solid black';else if (b === 'b') toStyle.borderBottom = '1px solid black';
+	                });
+	            }
+	            return toStyle;
+	        }
+	    }]);
+
+	    return Helper;
+	}();
+
+	exports.default = Helper;
 
 /***/ },
-/* 182 */
+/* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var server = 'https://meditek.redimed.com.au';
+	// const server = 'http://localhost'
+	var local = 'http://localhost';
+
+	var ip = {
+	    EFormServer: local + ':3015',
+	    ApiServerUrl: local + ':3005',
+	    Host: local + ':3020'
+	};
+
+	exports.default = ip;
+
+/***/ },
+/* 184 */,
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25075,6 +25629,19 @@
 	        });
 	        return p;
 	    },
+
+	    EFormTemplateList: function EFormTemplateList(data) {
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'GET',
+	                data: data,
+	                url: _ip2.default.EFormServer + '/eformtemplate/list',
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
 	    EFormPreData: function EFormPreData(data) {
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
@@ -25133,16 +25700,7 @@
 	        });
 	        return p;
 	    },
-
-	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
-	        // var formdata = data.formdata;
-	        var formdata = new FormData();
-	        var fileName = 'DEFAULTSIGN.png';
-	        var contentType = 'MedicalImage';
-	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
-	        formdata.append('fileType', contentType);
-	        formdata.append('uploadFile', blob, fileName);
-
+	    uploadFile: function uploadFile(formdata, meta) {
 	        var p = new Promise(function (resolve, reject) {
 	            $.ajax({
 	                url: _ip2.default.ApiServerUrl + '/api/uploadFileWithoutLogin',
@@ -25169,7 +25727,49 @@
 	        return p;
 	    },
 
-	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	    /*
+	    *   API 4 PRE LOAD A.K.A DEFAULT DATA
+	    */
+	    EFormGetApptInfo: function EFormGetApptInfo(appt_uid, user_uid) {
+	        /*
+	        *   GET INFO OF APPOINTMENT 
+	        */
+	        var p = new Promise(function (resolve, reject) {
+	            $.ajax({
+	                type: 'GET',
+	                url: _ip2.default.EFormServer + '/api/appointment-wa-detail/' + appt_uid + '/' + user_uid,
+	                success: resolve
+	            });
+	        });
+	        return p;
+	    },
+
+	    /*
+	    *   UPLOAD IMAGE USING 4 SIGNATURE + DRAWING
+	    */
+	    EFormUploadSignImage: function EFormUploadSignImage(blob, meta) {
+	        // var formdata = data.formdata;
+	        var formdata = new FormData();
+	        var fileName = 'DEFAULTSIGN.png';
+	        var contentType = 'MedicalImage';
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
+
+	        return this.uploadFile(formdata, meta);
+	    },
+
+	    EFormUploadDrawing: function EFormUploadDrawing(blob, meta) {
+	        var formdata = new FormData();
+	        var contentType = 'MedicalImage';
+	        var fileName = "DEFAULTDRAWING.png";
+	        formdata.append('userUID', '2d0626f3-e741-11e5-8fab-0050569f3a15');
+	        formdata.append('fileType', contentType);
+	        formdata.append('uploadFile', blob, fileName);
+
+	        return this.uploadFile(formdata, meta);
+	    },
+	    EFormDownloadImage: function EFormDownloadImage(fileUID) {
 	        var p = new Promise(function (resolve, reject) {
 	            var xhr = new XMLHttpRequest();
 	            xhr.responseType = 'arraybuffer';
@@ -25184,51 +25784,18 @@
 	            xhr.send();
 	        });
 	        return p;
-
-	        /*
-	        var p = new Promise(function(resolve, reject){
-	            $.ajax({
-	                url: IP.ApiServerUrl +'/api/downloadFileWithoutLogin/' + fileUID,
-	                xhrFields: { withCredentials: true },
-	                type: "GET",
-	                processData: false,
-	                contentType: false,
-	                responseType:'arraybuffer'
-	            }).done(function(response){
-	                resolve(response)
-	            }).fail(function(error) {
-	                console.log("error download sign ne", error)
-	                reject(error);
-	            })
-	        })
-	        return p
-	        */
+	    },
+	    EFormDownloadSignImage: function EFormDownloadSignImage(fileUID) {
+	        return this.EFormDownloadImage(fileUID);
 	    }
 	};
 
 	exports.default = Services;
 
 /***/ },
-/* 183 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	//const server = 'https://meditek.redimed.com.au'
-	var server = 'http://localhost';
-
-	var ip = {
-	    EFormServer: server + ':3015',
-	    ApiServerUrl: server + ':3005'
-	};
-
-	exports.default = ip;
-
-/***/ },
-/* 184 */
+/* 186 */,
+/* 187 */,
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25247,7 +25814,7 @@
 
 	var _baobab2 = _interopRequireDefault(_baobab);
 
-	var _row = __webpack_require__(185);
+	var _row = __webpack_require__(189);
 
 	var _row2 = _interopRequireDefault(_row);
 
@@ -25544,7 +26111,7 @@
 	exports.default = Section;
 
 /***/ },
-/* 185 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25563,6 +26130,10 @@
 
 	var _baobab2 = _interopRequireDefault(_baobab);
 
+	var _constants = __webpack_require__(178);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25570,6 +26141,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EFORM_CONST = _constants2.default.EFORM;
 
 	var Row = function (_Component) {
 	    _inherits(Row, _Component);
@@ -25726,7 +26299,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-tag' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'lb') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.LABEL) },
 	                                'Label'
 	                            )
 	                        )
@@ -25740,7 +26313,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-circle-o' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'r') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.RADIO) },
 	                                'Radio'
 	                            )
 	                        )
@@ -25754,7 +26327,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-check-square-o' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'c') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.CHECKBOX) },
 	                                'Checkbox'
 	                            )
 	                        )
@@ -25767,7 +26340,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'it') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.TEXT) },
 	                                'Text'
 	                            )
 	                        )
@@ -25780,7 +26353,20 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'in') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.TEXTAREA) },
+	                                'TextArea'
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            null,
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.NUMBER) },
 	                                'Number'
 	                            )
 	                        )
@@ -25794,7 +26380,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-calendar-o' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'id') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DATE) },
 	                                'Date'
 	                            )
 	                        )
@@ -25808,8 +26394,22 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-pencil' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'si') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.SIGN) },
 	                                'Signature'
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            null,
+	                            _react2.default.createElement('i', { className: 'fa fa-paint-brush' }),
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DRAWING) },
+	                                'Drawing'
 	                            )
 	                        )
 	                    ),
@@ -25822,7 +26422,7 @@
 	                            _react2.default.createElement('i', { className: 'fa fa-table' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this._onChoose.bind(this, 'di') },
+	                                { onClick: this._onChoose.bind(this, EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE) },
 	                                'Dynamic Table'
 	                            )
 	                        )
@@ -25846,7 +26446,7 @@
 	                        var width = o.get('params', 'width') || 'initial';
 
 	                        switch (o.get('type')) {
-	                            case 'lb':
+	                            case EFORM_CONST.OBJECT_TYPE.LABEL:
 	                                var title = o.get('params', 'title') || '<span style="color: yellow">Label</span>';
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -25855,7 +26455,26 @@
 	                                    _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: title } })
 	                                );
 	                                break;
-	                            case 'r':
+	                            case EFORM_CONST.OBJECT_TYPE.TEXTAREA:
+	                                var nameHtml = o.get('name');
+	                                var rows = o.get('params', 'rows') || 2;
+	                                res = _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'object', style: { width: width },
+	                                        onClick: this._onClickObject.bind(this, o, o_index) },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'object-wrapper' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'object-name' },
+	                                            nameHtml
+	                                        ),
+	                                        _react2.default.createElement('textarea', { disabled: true, rows: rows })
+	                                    )
+	                                );
+	                                break;
+	                            case EFORM_CONST.OBJECT_TYPE.RADIO:
 	                                var nameHtml = o.get('name');
 	                                // let title = o.get('params', 'title')||'<span style="color: yellow">Label</span>'
 	                                res = _react2.default.createElement(
@@ -25876,7 +26495,7 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'c':
+	                            case EFORM_CONST.OBJECT_TYPE.CHECKBOX:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -25896,7 +26515,7 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'it':
+	                            case EFORM_CONST.OBJECT_TYPE.TEXT:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -25914,15 +26533,25 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'in':
+	                            case EFORM_CONST.OBJECT_TYPE.NUMBER:
+	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'object', style: { width: width },
 	                                        onClick: this._onClickObject.bind(this, o, o_index) },
-	                                    _react2.default.createElement('input', { type: 'number', disabled: true, placeholder: 'Number' })
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'object-wrapper' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'object-name object-in' },
+	                                            nameHtml
+	                                        ),
+	                                        _react2.default.createElement('input', { type: 'text', disabled: true, placeholder: 'Number' })
+	                                    )
 	                                );
 	                                break;
-	                            case 'id':
+	                            case EFORM_CONST.OBJECT_TYPE.DATE:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -25940,7 +26569,7 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'si':
+	                            case EFORM_CONST.OBJECT_TYPE.SIGN:
 	                                var nameHtml = o.get('name');
 	                                res = _react2.default.createElement(
 	                                    'div',
@@ -25958,7 +26587,25 @@
 	                                    )
 	                                );
 	                                break;
-	                            case 'di':
+	                            case EFORM_CONST.OBJECT_TYPE.DRAWING:
+	                                var nameHtml = o.get('name');
+	                                res = _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'object', style: { width: width },
+	                                        onClick: this._onClickObject.bind(this, o, o_index) },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'object-wrapper' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'object-name object-dr' },
+	                                            nameHtml
+	                                        ),
+	                                        _react2.default.createElement('input', { type: 'text', disabled: true, placeholder: 'Drawing' })
+	                                    )
+	                                );
+	                                break;
+	                            case EFORM_CONST.OBJECT_TYPE.DYNAMIC_TABLE:
 	                                res = _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'object', style: { width: width },

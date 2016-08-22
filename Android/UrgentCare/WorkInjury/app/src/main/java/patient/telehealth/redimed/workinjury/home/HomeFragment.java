@@ -1,8 +1,10 @@
 package patient.telehealth.redimed.workinjury.home;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -18,12 +20,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.R;
-import patient.telehealth.redimed.workinjury.WorkActivity;
 import patient.telehealth.redimed.workinjury.home.presenter.HomePresenter;
 import patient.telehealth.redimed.workinjury.home.presenter.IHomepresenter;
 import patient.telehealth.redimed.workinjury.home.view.IHomeView;
 import patient.telehealth.redimed.workinjury.login.LoginFragment;
+import patient.telehealth.redimed.workinjury.redisite.patient.PatientRedisiteFragment;
 import patient.telehealth.redimed.workinjury.setting.SettingFragment;
+import patient.telehealth.redimed.workinjury.socket.SocketService;
 import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.utils.PageIndicator;
 import patient.telehealth.redimed.workinjury.utils.SliderImageAdapter;
@@ -55,24 +58,29 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
     @Bind(R.id.btnGP) Button btnGP;
     @Bind(R.id.btnOther) Button btnOther;
     @Bind(R.id.btnLogin) Button btnLogin;
+    @Bind(R.id.btnRedisite) Button btnRedisite;
+    @Bind(R.id.btnListTracking) Button btnListTracking;
+
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        iHomepresenter = new HomePresenter(context, getActivity());
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.context = getContext();
+        iHomepresenter = new HomePresenter(getContext(), getActivity());
         isLogin = iHomepresenter.isLogin();
-        this.context = context;
-        sliderImageAdapter = new SliderImageAdapter(context);
+        sliderImageAdapter = new SliderImageAdapter(getContext());
         application = MyApplication.getInstance();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+//        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.textColorPrimary));
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         TypefaceUtil.applyFont(context, view.findViewById(R.id.activityHome), Key.fontRoboto);
 
@@ -80,6 +88,9 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
 
         if (isLogin){
             btnLogin.setVisibility(View.GONE);
+            btnRedisite.setVisibility(View.VISIBLE);
+            btnListTracking.setVisibility(View.VISIBLE);
+            getActivity().startService(new Intent(getActivity(), SocketService.class));
         }
 
         slider.setAdapter(sliderImageAdapter);
@@ -110,6 +121,7 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
         btnGP.setOnClickListener(this);
         btnOther.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        btnRedisite.setOnClickListener(this);
 
         return view;
     }
@@ -154,25 +166,19 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                 application.replaceFragment(getActivity(), new SettingFragment(),Key.fmSetting,Key.fmHome);
                 break;
             case R.id.btnRehab:
-                i = new Intent(context, WorkActivity.class);
-                i.putExtra(Key.uRType, Key.rehab);
-                startActivity(i);
-                getActivity().finish();
+                iHomepresenter.dispalyWork(Key.Work.rehab);
                 break;
             case R.id.btnSpec:
-                i = new Intent(context, WorkActivity.class);
-                i.putExtra(Key.uRType, Key.specialist);
-                startActivity(i);
-                getActivity().finish();
+                iHomepresenter.dispalyWork(Key.Work.specialistClinic);
                 break;
             case R.id.btnGP:
-                i = new Intent(context, WorkActivity.class);
-                i.putExtra(Key.uRType, Key.gp);
-                startActivity(i);
-                getActivity().finish();
+                iHomepresenter.dispalyWork(Key.Work.generalClinic);
                 break;
             case  R.id.btnLogin:
                 application.replaceFragment(getActivity() ,new LoginFragment(),Key.fmLogin,Key.fmHome);
+                break;
+            case  R.id.btnRedisite:
+                application.ReplaceFragment(new PatientRedisiteFragment());
                 break;
         }
     }

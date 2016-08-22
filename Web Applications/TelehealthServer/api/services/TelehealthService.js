@@ -142,7 +142,7 @@ module.exports = {
         var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
-            path: '/api/appointment-telehealth-list',
+            path: '/api/appointment-wa-list/consultation',
             method: 'POST',
             body: body,
             headers: headers

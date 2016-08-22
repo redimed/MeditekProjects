@@ -203,6 +203,7 @@ module.exports = {
                 },
                 {
                     model: Role,
+                    
                     required: false
                 },
                 {
@@ -641,9 +642,9 @@ module.exports = {
         if (req.body.appointmentUID) {
             whereClause.appointment.UID = req.body.appointmentUID;
         };
-        // if (req.body.appointmentCode) {
-        //     whereClause.appointment.Code = req.body.appointmentCode;
-        // };
+        if (req.body.appointmentCode) {
+            whereClause.appointment.Code = req.body.appointmentCode;
+        };
         if (req.body.templateUID) {
             whereClause.eformTemplate.UID = req.body.templateUID;
         };

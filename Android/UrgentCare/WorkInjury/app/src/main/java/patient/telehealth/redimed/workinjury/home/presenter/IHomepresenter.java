@@ -15,4 +15,6 @@ public interface IHomepresenter {
     boolean isLogin();
 
     void displayFAQs(String content);
+
+    void dispalyWork(String content);
 }

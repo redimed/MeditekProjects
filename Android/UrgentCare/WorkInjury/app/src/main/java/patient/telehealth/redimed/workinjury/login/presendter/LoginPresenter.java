@@ -3,15 +3,17 @@ package patient.telehealth.redimed.workinjury.login.presendter;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.login.view.ILoginView;
-import patient.telehealth.redimed.workinjury.models.RolesModel;
-import patient.telehealth.redimed.workinjury.models.UserModel;
+import patient.telehealth.redimed.workinjury.model.RolesModel;
+import patient.telehealth.redimed.workinjury.model.UserModel;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.utils.Key;
+import patient.telehealth.redimed.workinjury.utils.Key.Login;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -82,8 +84,6 @@ public class LoginPresenter implements ILoginPresenter {
                 application.setDataSharedPreferences(Key.isAuthenticated, true);
 
                 GetTelehealthUser(useruid);
-
-                application.replaceFragment(activity, new HomeFragment(),Key.fmHome,null);
             }
 
             @Override
@@ -99,8 +99,16 @@ public class LoginPresenter implements ILoginPresenter {
         RESTClient.getTelehealthApi().getTelehealthUser(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                String TeleUid = jsonObject.get(Key.Login.data).getAsJsonObject().get(Key.Login.telehealthUser).getAsJsonObject().get(Key.Login.UID).getAsString();
+                String TeleUid = jsonObject.get(Login.data).getAsJsonObject().get(Login.telehealthUser).getAsJsonObject().get(Login.UID).getAsString();
+                String DeviceID = jsonObject.get(Login.data).getAsJsonObject().get(Login.telehealthDevice).getAsJsonObject().get(Login.deviceID).getAsString();
+                String PatientUid = jsonObject.get(Login.data).getAsJsonObject().get(Login.patientInfo).getAsJsonObject().get(Login.UID).getAsString();
+                Log.d(TAG, DeviceID);
                 application.setDataSharedPreferences(Key.teleUid, TeleUid);
+                application.setDataSharedPreferences(Key.patientUid, PatientUid);
+                application.setDataSharedPreferences(Key.deviceID, DeviceID);
+
+                //change page home
+                application.replaceFragment(activity, new HomeFragment(),Key.fmHome,null);
             }
 
             @Override
@@ -122,6 +130,42 @@ public class LoginPresenter implements ILoginPresenter {
 
             @Override
             public void failure(RetrofitError error) {
+            }
+        });
+    }
+
+    @Override
+    public void LoginAccount(String user, String pass) {
+
+        String[] data = {Key.Login.UserName, user, Key.Login.Password, pass};
+
+        RESTClient.getAuthApi().login(application.createJson(data), new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                String token = jsonObject.get(Key.Login.token).getAsString();
+                String refreshCode = jsonObject.get(Key.Login.refreshCode).getAsString();
+                UserModel userModel = gson.fromJson(jsonObject.get(Key.Login.user).getAsJsonObject(), UserModel.class);
+                String useruid = userModel.getUID();
+                String username = userModel.getUserName();
+
+                for (RolesModel rolesModel : userModel.getRoles()) {
+                    if (rolesModel.getRoleCode().equals(Key.typeNameCompany)){
+                        application.setDataSharedPreferences(Key.isTypeCompany, true);
+                    }
+                }
+
+                application.setDataSharedPreferences(Key.token, token);
+                application.setDataSharedPreferences(Key.refreshCode, refreshCode);
+                application.setDataSharedPreferences(Key.useruid, useruid);
+                application.setDataSharedPreferences(Key.username, username);
+                application.setDataSharedPreferences(Key.isAuthenticated, true);
+
+                GetTelehealthUser(useruid);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
             }
         });
     }

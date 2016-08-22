@@ -4,22 +4,30 @@ app.directive('notificationSend', function() {
     return {
         restrict: "EA",
         templateUrl: 'modules/notification/directives/templates/sended.html',
-        scope:{
-            kind:'=onKind',
+        scope: {
+            kind: '=onKind',
         },
-        controller: function($scope,notificationServices, toastr, $cookies, $uibModal,$state) {
+        controller: function($scope, notificationServices, toastr, $cookies, $uibModal, $state, $stateParams) {
             var queue = '';
             var templateUrl = '';
             var templateCtrl = '';
 
-            if ($scope.kind === 'private') {
+            if ($scope.kind === 'Private' || $scope.kind === 'ToDo' || $scope.kind === 'Request' || $scope.kind === 'Review') {
                 queue = 'NOTIFY';
                 templateUrl = 'notificationPrivateDetail.html';
                 templateCtrl = 'notificationPrivateDetailCtrl';
+
+                socketNcFunction.LoadListSended = function() {
+                    $scope.init();
+                };
             } else if ($scope.kind === 'global') {
                 queue = 'GLOBALNOTIFY';
                 templateUrl = 'notificationGlobalDetail.html';
                 templateCtrl = 'notificationGlobalDetailCtrl';
+
+                socketNcFunction.LoadListSendedGlobal = function() {
+                    $scope.init();
+                };
             };
 
             var UserInfo = $cookies.getObject('userInfo');
@@ -29,7 +37,12 @@ app.directive('notificationSend', function() {
 
             $scope.search = {
                 SenderUID: SenderUID,
-                queue: queue
+                queue: queue,
+                kind: $scope.kind,
+            };
+
+            if ($stateParams.type) {
+                $scope.search.type = $stateParams.type;
             };
 
             $scope.itemSearch = [
@@ -64,18 +77,21 @@ app.directive('notificationSend', function() {
                         for (var i = 0; i < data.data.length; i++) {
                             data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
                         };
-                        console.log("LoadListGlobalNotify", data.data);
+                        // console.log("LoadListGlobalNotify", data.data);
                         $scope.listGlobalNotify = data.data;
                         $scope.count = data.count;
                     });
-                } else if ($scope.kind === 'private') {
+                } else if ($scope.kind === 'Private' || $scope.kind === 'ToDo' || $scope.kind === 'Request' || $scope.kind === 'Review') {
+                    console.log("|||||", info);
                     notificationServices.getListNotifySearch(info).then(function(data) {
+                        console.log("length", data.countAll);
                         for (var i = 0; i < data.data.length; i++) {
                             data.data[i].MsgContent = JSON.parse(data.data[i].MsgContent);
                         };
-                        console.log("LoadListPrivateNotify", data.data);
+                        // console.log("LoadListSended", data.data);
                         $scope.listGlobalNotify = data.data;
-                        $scope.count = data.count;
+                        // console.log("LoadListSended count", data.count);
+                        $scope.count = data.countAll;
                     });
                 };
             };
@@ -89,11 +105,15 @@ app.directive('notificationSend', function() {
                     // attributes: scope.items,
                     Search: {
                         SenderUID: SenderUID,
-                        queue: queue
+                        queue: queue,
+                        kind: $scope.kind,
                     },
                     order: 'CreatedDate DESC'
                 };
-                // scope.search.Enable = null;
+                if ($stateParams.type) {
+                    $scope.searchObject.Search.type = $stateParams.type;
+                };
+                console.log("$scope.searchObject", $scope.searchObject);
                 $scope.searchObjectMap = angular.copy($scope.searchObject);
                 LoadListNotify($scope.searchObjectMap);
             };
@@ -146,16 +166,12 @@ app.directive('notificationSend', function() {
                     });
                     modalInstance.result.then(function(result) {
                         if (result === 'close') {
-                            ioSocket.LoadListGlobalNotify();
+                            socketNcFunction.LoadListSended();
                         };
                     }, function(err) {
                         console.log($scope.kind + ".Notification.Detail", err);
                     });
                 }
-            };
-
-            ioSocket.LoadListGlobalNotify = function() {
-                $scope.init();
             };
         },
     };

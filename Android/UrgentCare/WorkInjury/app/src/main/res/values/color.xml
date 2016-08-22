@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Background Color-->
-    <color name="darkBackground">#000000</color>
-    <color name="callBackground">#1E3262</color>
-    <color name="transparent_bg">#38abaaaa</color>
-    <color name="mainBackground">#D5D5D5</color>
-    <color name="profileBackground">#bcbbc1</color>
-    <color name="trackingBackground">#DAD9DE</color>
-    <color name="apptDetailBackground">#cdfffefe</color>
-
     <!-- Font Color-->
     <color name="lightFont">#FFFFFF</color>
     <color name="darkFont">#000000</color>
@@ -17,38 +8,27 @@
     <color name="blueFont">#0B4F66</color>
     <color name="loginPhone">#768594</color>
     <color name="settingBackground">#F0EFF4</color>
-    <color name="lightBackground">#FFFFFF</color>
-    <color name="hintFont">#e6e4e4</color>
-
-    <!-- Call Layout-->
     <color name="colorLine">#4d000000</color>
-    <color name="declineFone">#da0a15</color>
-    <color name="answerFone">#58ed17</color>
-    <color name="foreignCallBtn">#1f78f3</color>
+    <color name="lightBackground">#FFFFFF</color>
+
+
 
     <!-- Status Bar Color-->
-  <color name="colorPrimaryDark">#576170</color>
+    <color name="colorPrimaryDarkNew">#00897B</color>
+    <color name="colorPrimaryDark">#576170</color>
     <color name="colorPrimary">#576170</color>
+    <color name="colorPrimaryNew">#009688</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#B42047</color>
-    <color name="colorToolbar">#5a000000</color>
 
-    <!-- Dialog Alert Color-->
-    <color name="success">#2196f3</color>
-    <color name="error">#F44336</color>
-    <color name="warning">#FFB300</color>
 
-    <!-- Dialog Connection Color-->
-    <color name="bg_primary_alert">#0B4F66</color>
-    <color name="bg_foreign_alert">#0D6480</color>
-    <color name="btn_settings">#E96220</color>
-    <color name="btn_skip">#0B4F66</color>
+    <!-- Call Layout-->
+    <color name="declineFone">#da0a15</color>
+    <color name="answerFone">#58ed17</color>
+    <color name="foreignCallBtn">#1f78f3</color>
 
-    <!-- Status Color-->
-    <color name="approved">#00703C</color>
-    <color name="unapproved">#F44336</color>
 
     <!-- Circle Page Indicator -->
     <bool name="default_circle_indicator_centered">true</bool>
@@ -60,7 +40,14 @@
     <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
     <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
 
-    <!-- Sub Tracking Color-->
-    <color name="line_color_time">#0597f7</color>
+    <!-- Sport Layout-->
     <color name="bg">#14000000</color>
+
+    <!-- Dialog Connection Color-->
+    <color name="bg_primary_alert">#0B4F66</color>
+    <color name="bg_foreign_alert">#0D6480</color>
+    <color name="btn_settings">#E96220</color>
+    <color name="btn_skip">#0B4F66</color>
+    <color name="progressDialogBarColor">#B42047</color>
+    <color name="type_login">#2E6171</color>
 </resources>

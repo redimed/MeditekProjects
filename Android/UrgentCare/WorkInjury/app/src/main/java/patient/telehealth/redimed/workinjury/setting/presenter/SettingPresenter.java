@@ -16,7 +16,6 @@ import patient.telehealth.redimed.workinjury.faq.FAQsFragment;
 import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.setting.view.SettingView;
-import patient.telehealth.redimed.workinjury.utils.Key;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -59,7 +58,7 @@ public class SettingPresenter implements ISettingPresenter {
         Bundle bundle = new Bundle();
         bundle.putString("msg", content);
         fragment.setArguments(bundle);
-        application.replaceFragment(activity, fragment, Key.fmFAQs, activity.getString(R.string.setting));
+        application.replaceFragment(activity, fragment, activity.getString(R.string.FAQs),activity.getString(R.string.setting));
         //fragment.Back(activity.getString(R.string.setting));
     }
 }

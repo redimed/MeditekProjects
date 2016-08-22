@@ -1,5 +1,4 @@
-var app = angular.module('app.authentication.notification.directive.private', [
-]);
+var app = angular.module('app.authentication.notification.directive.private', []);
 
 app.directive('notificationPrivate', function() {
     return {
@@ -8,11 +7,11 @@ app.directive('notificationPrivate', function() {
         options: {
             scope: '=',
         },
-        scope:{
+        scope: {
             kind: "=onKind",
             limit: "=onLimit"
         },
-        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state, $uibModal) {
+        controller: function($scope, notificationServices, AuthenticationService, toastr, $cookies, $state, $stateParams, $uibModal) {
             var self = $scope;
 
             var UserInfo = $cookies.getObject('userInfo');
@@ -21,7 +20,12 @@ app.directive('notificationPrivate', function() {
 
             self.search = {
                 userUID: userUID,
-                queue: queue
+                queue: queue,
+                kind: $scope.kind,
+            };
+
+            if ($stateParams.type) {
+                self.search.type = $stateParams.type;
             };
 
             self.fieldSort = {};
@@ -58,16 +62,20 @@ app.directive('notificationPrivate', function() {
 
             self.init = function() {
                 self.searchObject = {
-                    limit: 5,
+                    limit: $scope.limit ? $scope.limit : 5,
                     offset: 0,
                     currentPage: 1,
                     maxSize: 5,
                     // attributes: scope.items,
                     Search: {
                         userUID: userUID,
-                        queue: queue
+                        queue: queue,
+                        kind: $scope.kind,
                     },
                     order: 'CreatedDate DESC'
+                };
+                if ($stateParams.type) {
+                    self.searchObject.Search.type = $stateParams.type;
                 };
                 // scope.search.Enable = null;
                 self.searchObjectMap = angular.copy(self.searchObject);
@@ -133,7 +141,7 @@ app.directive('notificationPrivate', function() {
                     });
                     modalInstance.result.then(function(result) {
                         if (result === 'close') {
-                            ioSocket.LoadListGlobalNotify();
+                            self.init();
                         };
                     }, function(err) {
                         console.log("Global.Notification.Detail", err);
@@ -149,42 +157,46 @@ app.directive('notificationPrivate', function() {
                     AuthenticationService.updateReadQueueJob(whereClause).then(function(data) {
                         if (data.status === 'success') {
                             self.init();
+                            if (socketNcFunction.LoadPrivateNotify) {
+                                socketNcFunction.LoadPrivateNotify('msg');
+                            };
                         };
                     }, function(err) {
                         console.log("updateReadQueueJob ", err);
                     });
-                    if (ioSocket.telehealthNotify()) {
-                        ioSocket.telehealthNotify('');
-                    };
                 };
+            };
+
+            socketNcFunction.LoadListPrivate = function() {
+                self.init();
             };
 
             self.create = function(data) {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     // size: 'lg', // 
-                    windowClass: 'app-modal-window', 
+                    windowClass: 'app-modal-window',
                     templateUrl: 'modules/notification/views/notificationPrivateCreate.html',
                     resolve: {
-                        data: function() {
-                            return data;
-                        }
+                        kind: function() {
+                            return $scope.kind;
+                        },
                     },
                     controller: 'notificationPrivateCreateCtrl',
                 });
                 modalInstance.result.then(function(result) {
-                    if (result === 'close') {
-                        ioSocket.LoadListPrivateNotify();
+                    if (result.message === 'success') {
+                        if (socketNcFunction.LoadListPrivate) {
+                            socketNcFunction.LoadListPrivate();
+                        };
+                        if (socketNcFunction.LoadListSended) {
+                            socketNcFunction.LoadListSended();
+                        };
                     };
                 }, function(err) {
                     console.log("Private.Notification.Create", err);
                 });
             };
-
-            ioSocket.LoadListPrivateNotify = function() {
-                self.init();
-            };
-
             ComponentsDateTimePickers.init();
         },
     };

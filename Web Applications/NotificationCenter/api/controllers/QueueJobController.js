@@ -9,7 +9,7 @@ module.exports = {
                     type: 'sendmail',
                     payload: data.dataValues
                 }
-                BeansService.putJob('EMAIL', 0, 0, 20, JSON.stringify(job))
+                BeansService.putJob('EMAIL', 0, body.FirstDelay, 20, JSON.stringify(job))
                     .then(function(result) {
                         console.log(result);
                         res.ok(result);
@@ -48,15 +48,17 @@ module.exports = {
 
     CreateNotifyJob: function(req, res) {
         var body = req.body;
-        console.log("CreateNotifyJob");
+        console.log("CreateNotifyJob", body);
 
         QueueJobService.CreateQueueJob(body)
             .then(function(data) {
+                if (body.MsgKind != "Reference") {
+                    sails.sockets.broadcast(body.SenderUID, "LoadList", { message: 'success', data: data });
+                };
                 var job = {
                     type: 'sendnotify',
                     payload: data.dataValues
-                }
-
+                };
                 BeansService.putJob('NOTIFY', 0, body.FirstDelay, 20, JSON.stringify(job))
                     .then(function(result) {
                         console.log(result);
@@ -115,8 +117,8 @@ module.exports = {
 
     LoadListQueueSearch: function(req, res) {
         try {
-            console.log("LoadListQueue Search");
             var data = req.body.data;
+            console.log("LoadListQueue Search");
 
             QueueJobService.GetListQueueByRoleSearch(data).then(function(data) {
                 res.ok({
@@ -164,6 +166,23 @@ module.exports = {
             });
         } catch (err) {
             console.log("ChangEnableQueueJob", err);
+        }
+    },
+
+    UpdateStateQueueJob: function(req, res) {
+        try {
+            console.log("UpdateStatusQueueJob");
+            var info = req.body.data;
+            QueueJobService.UpdateStateQueueJob(info).then(function(data) {
+                res.ok({
+                    status: 'success',
+                    data: data.data
+                });
+            }, function(err) {
+                res.serverError(ErrorWrap(err));
+            });
+        } catch (err) {
+            console.log("UpdateStatusQueueJob", err);
         }
     }
 }

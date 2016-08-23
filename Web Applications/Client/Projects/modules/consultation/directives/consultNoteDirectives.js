@@ -36,15 +36,17 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         delete $scope.requestInfo.Consultations[0].ConsultationData[key];
                     }
                 }
-                for(var i = 0; i < uploader.queue.length; i++) {
-                    if(uploader.queue[i].relevantGroupKey == relevantGroupKey) {
-                        delete uploader.queue[i];
+                if(uploader.queue.length > 0) {
+                    for(var i = 0; i < uploader.queue.length; i++) {
+                        if(uploader.queue[i].relevantGroupKey == relevantGroupKey) {
+                            delete uploader.queue[i];
+                        }
                     }
                 }
                 delete $scope.relevantFileUploads[relevantGroupKey]
                 delete $scope.relevantGroup[relevantGroupKey];
                 // console.log("value ",$scope.requestInfo.Consultations[0].ConsultationData);
-                $scope.updateConsultation();
+                $scope.updateConsultation(true);
             }
             $scope.parseInt = parseInt;
             $scope.setCurrentRelevantGroup = function(key) {
@@ -173,7 +175,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 if ($scope.CheckUpdate) {
                     $scope.createConsultation();
                 } else {
-                    $scope.updateConsultation();
+                    $scope.updateConsultation(true);
                 }
             };
 
@@ -1005,7 +1007,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                                 $scope.requestInfo.Consultations[0].ConsultationData[$scope.currentRelevantFileUploadKey].FileUploads.length;
                         }
                     }
-                    (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
+                    (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation(true));
                 }
 
 
@@ -1029,11 +1031,11 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $('#ctrl *').filter(':input').each(function(key){
                 $(this).blur(function() {
-                    $scope.updateConsultation();
+                    $scope.updateConsultation(true);
                 })
             });
             $scope.autoSave = function() {
-                $scope.updateConsultation();
+                $scope.updateConsultation(true);
             };
             $scope.init = function() {
                 consultationServices.checkconsultnote($stateParams.UID)

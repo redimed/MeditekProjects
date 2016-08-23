@@ -2,9 +2,7 @@
 var domain = 'https://meditek.redimed.com.au';
 //var domain = 'https://192.168.1.172';
 //var domain = 'https://localhost';
-
-// var domain = 'https://localhost';
-// var domain = 'http://localhost';
+var domain = 'http://localhost';
 module.exports = {
 	//apiUrl: 'https://testapp.redimed.com.au:3015/',
 	//apiServerUrl: 'https://testapp.redimed.com.au:3005/',

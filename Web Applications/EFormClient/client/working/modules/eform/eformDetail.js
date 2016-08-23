@@ -5,6 +5,7 @@ var ComponentPageBar = require('modules/eform/eformDetail/pageBar');
 var History = ReactRouter.hashHistory;
 
 module.exports = React.createClass({
+    isAutoSaveRunning: false,
     content: null,
     appointmentUID: null,
     patientUID: null,
@@ -44,21 +45,20 @@ module.exports = React.createClass({
     /// 
     _initAutoSave: function() {
         console.log('STARTING: ACTIVE AUTO SAVE !!!')
-        var isRunning = false;
         // EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME
         var self = this;
         this.autoSaveFunc = setInterval(function(){ 
-            if(isRunning) { // skip if func has running
+            if(self.isAutoSaveRunning) { // skip if func has running
                 return
             }
             self.refs.pageBar.disableSaveButton();
-            isRunning = true;
-
+            self.isAutoSaveRunning = true;
             self._onDetailSaveForm().then(function(){
                 self.refs.pageBar.enableSaveButton(); 
-                isRunning = false          
-            },function(){
-                isRunning = false
+                self.isAutoSaveRunning = false;
+            },function(error){
+                // CONTINUE AUTO SAVE  
+                self.isAutoSaveRunning = false;
             })
         }, 1000*10 );
     },
@@ -840,11 +840,24 @@ module.exports = React.createClass({
             content = JSON.stringify(content);
 
             if(self.EFormStatus === 'unsaved'){
-                EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
-                .then(function(){
-                    resolve();
-                    window.location.reload();
-                })
+                if(self.IS_SAVED_AUTO) { // CALL UPDATE IF SAVED AUTOMATIC
+                    EFormService.formUpdate({UID: self.formUID, content: content})
+                    .then(function(){
+                        resolve();
+                    })
+                } else {
+                    EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
+                    .then(function(){
+                        // FOR AUTOSAVED FIRST TIME
+                        if(self.isAutoSaveRunning) { // do not reload when autosave  
+                            self.IS_SAVED_AUTO = true // NO NEED TO CHANGE THIS ATTRIBUTE IN FUTURE
+                            resolve();
+                            return
+                        }
+                        resolve();
+                        window.location.reload();
+                    })
+                }
             }else{
                 EFormService.formUpdate({UID: self.formUID, content: content})
                 .then(function(){

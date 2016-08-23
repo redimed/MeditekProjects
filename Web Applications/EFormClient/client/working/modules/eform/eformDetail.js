@@ -39,9 +39,29 @@ module.exports = React.createClass({
         if(typeof locationParams.page !== 'undefined')
             this.page = locationParams.page;
         this._serverTemplateDetail();
-        this.is_doctor = true;
+        this.is_doctor = false;
     },
+    /// 
+    _initAutoSave: function() {
+        console.log('STARTING: ACTIVE AUTO SAVE !!!')
+        var isRunning = false;
+        // EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME
+        var self = this;
+        this.autoSaveFunc = setInterval(function(){ 
+            if(isRunning) { // skip if func has running
+                return
+            }
+            self.refs.pageBar.disableSaveButton();
+            isRunning = true;
 
+            self._onDetailSaveForm().then(function(){
+                self.refs.pageBar.enableSaveButton(); 
+                isRunning = false          
+            },function(){
+                isRunning = false
+            })
+        }, 1000*10 );
+    },
     /**
      * Dan xuat tu ham _serverPreFormDetail
      */
@@ -649,6 +669,7 @@ module.exports = React.createClass({
                         }
                     }
                 })
+                self._initAutoSave();
                 if(self.calculation.length > 0){
                     
                 }
@@ -658,6 +679,8 @@ module.exports = React.createClass({
                 .then(function(response){
                     self.EFormID = response.data.ID;
                     self.EFormStatus = response.data.Status;
+
+                    self._initAutoSave();
                 })
             }
         })

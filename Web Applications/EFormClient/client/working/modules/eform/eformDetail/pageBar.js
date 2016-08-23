@@ -26,15 +26,21 @@ module.exports = React.createClass({
             _onPrintForm: function(){
                 this.props.onPrintForm();
             },
-	_onSaveForm: function(){
+            _onSaveForm: function(){
                 this.props.onSaveForm();
-	},
-	render: function(){
-	   return (
+            },
+            enableSaveButton: function(){
+                $(this.refs.btnSave).attr('disabled', false)
+            },
+            disableSaveButton: function(){
+                $(this.refs.btnSave).attr('disabled', true)
+            },
+        	render: function(){
+        	   return (
                    <div className="page-bar" style={{position: 'fixed', top: 0, right: 0}}>
                         <div className="page-toolbar">
                             <div className="pull-right">
-        		      <button type="button" className="btn green btn-sm" onClick={this._onSaveForm}>
+        		      <button ref="btnSave" type="button" className="btn green btn-sm" onClick={this._onSaveForm}>
                                     <i className="fa fa-save"></i>&nbsp;
                                     Save Form
         		      </button>

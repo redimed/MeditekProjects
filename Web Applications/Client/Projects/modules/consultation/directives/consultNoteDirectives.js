@@ -156,7 +156,6 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 if ($scope.CheckUpdate) {
                     $scope.createConsultation();
                 } else {
-                    $scope.uploader.clearQueue();
                     $scope.updateConsultation();
                 }
             };
@@ -719,7 +718,8 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             
             $scope.Update = function(isClickBtnUpdate) {
                 var isClick = isClickBtnUpdate ? isClickBtnUpdate : false;
-                (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation(isClick));
+                // (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation(isClick));
+                $scope.updateConsultation(isClick);
             }
             $scope.createConsultation = function() {
                 $scope.ConsultationDataCreate();

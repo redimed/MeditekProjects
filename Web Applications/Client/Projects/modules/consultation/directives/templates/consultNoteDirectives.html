@@ -211,6 +211,7 @@
                     <div class="row" ng-repeat ="(relevantKey, value) in relevantGroup">
                         <div class="col-lg-6 col-md-12" >
                             <h4 class="">LESION {{parseInt(relevantKey) + 1}}</h4>
+                            <a class="btn red-thunderbird" ng-click="removeRelevantGroup(relevantKey)">Remove</a>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4">Biopsied proven</label>
                                 <div class="col-md-8 col-sm-8">

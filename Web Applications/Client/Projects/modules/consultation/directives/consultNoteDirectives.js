@@ -716,8 +716,9 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.createConsultation());
             }
             
-            $scope.Update = function() {
-                (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
+            $scope.Update = function(isClickBtnUpdate) {
+                var isClick = isClickBtnUpdate ? isClickBtnUpdate : false;
+                (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation(isClick));
             }
             $scope.createConsultation = function() {
                 $scope.ConsultationDataCreate();
@@ -770,19 +771,19 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                     toastr.error("Please input data");
                 };
             }
-            $scope.updateConsultation = function() {
+            $scope.updateConsultation = function(isClickBtnUpdate) {
+                var isClick = isClickBtnUpdate ? isClickBtnUpdate : false;
                 var obj = $scope.ConsultationUpdate();
-                console.log("obj ",obj);
-                console.log("asdasd ",$scope.requestInfo)
                 var objectUpdate = angular.copy($scope.requestInfo);
-                console.log("bebe objectUpdate")
                 objectUpdate.Consultations[0].ConsultationData = obj;
-                console.log("afff ",objectUpdate)
 
                 var UID = angular.copy($scope.requestInfo.Consultations[0].UID);
                 // o.loadingPage(true);
                 consultationServices.updateConsultation(objectUpdate).then(function(response) {
                     if (response == 'success') {
+                        if(isClick == true) {
+                            toastr.success('Update Success');
+                        }
                         // o.loadingPage(false);
                         // consultationServices.detailConsultation(UID).then(function(response) {
                         //     $scope.uploader.clearQueue();
@@ -843,7 +844,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $scope.ConsultationUpdate = function() {
                 var ConsultationDataTemp = [];
-                console.log("ConsultationUpdate: $scope.requestInfo.Consultations[0].ConsultationData", $scope.requestInfo.Consultations[0].ConsultationData);
+                // console.log("ConsultationUpdate: $scope.requestInfo.Consultations[0].ConsultationData", $scope.requestInfo.Consultations[0].ConsultationData);
                 for (var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");
@@ -895,7 +896,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 };
                 // $scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTemp;
                 return ConsultationDataTemp;
-                console.log("update:$scope.requestInfo.Consultations[0].ConsultationData",$scope.requestInfo.Consultations[0].ConsultationData)
+                // console.log("update:$scope.requestInfo.Consultations[0].ConsultationData",$scope.requestInfo.Consultations[0].ConsultationData)
             }
             $scope.cancel = function() {
                 $state.go("authentication.consultation.detail", {

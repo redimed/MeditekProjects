@@ -15,18 +15,23 @@ if (!noEFormAuth) {
     console.log("|||||||||||||||||||||| REQUIRE EFORM AUTHENTICATION");
     eformPolicies = {
         'EForm/EFormController': {
-            'PostUpdate': ['checkExternalToken'],
+            'PostUpdate': ['checkExternalToken', 'roleEformAutoSave'],
             'PostSaveInit': ['checkExternalToken'],
             'PostSaveStep': ['checkExternalToken'],
-            'PostSave': ['checkExternalToken'],
+            'PostSave': ['checkExternalToken', 'roleEformAutoSave'],
             'PostDetail': ['checkExternalToken'],
-            'PostUpdate': ['checkExternalToken'],
             'PostHistoryDetail': ['checkExternalToken'],
             'PostCheckDetail': ['checkExternalToken']
         },
     }
 } else {
     console.log("|||||||||||||||||||||| NO EFORM AUTHENTICATION");
+    eformPolicies = {
+        'EForm/EFormController': {
+            'PostUpdate': ['roleEformAutoSave'],
+            'PostSave': ['roleEformAutoSave']
+        },
+    }
 
 }
 module.exports = eformPolicies;

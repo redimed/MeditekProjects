@@ -44,8 +44,12 @@ module.exports = React.createClass({
     },
     /// 
     _initAutoSave: function() {
-        console.log('STARTING: ACTIVE AUTO SAVE !!!')
         // EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME
+        if(this.EFormStatus === 'finalized') {
+            console.log('FINALIZED')
+            return 
+        }    
+        console.log('STARTING: ACTIVE AUTO SAVE !!!')
         var self = this;
         this.autoSaveFunc = setInterval(function(){ 
             if(self.isAutoSaveRunning) { // skip if func has running
@@ -61,6 +65,7 @@ module.exports = React.createClass({
                 self.isAutoSaveRunning = false;
             })
         }, 1000*10 );
+
     },
     /**
      * Dan xuat tu ham _serverPreFormDetail
@@ -841,15 +846,17 @@ module.exports = React.createClass({
 
             if(self.EFormStatus === 'unsaved'){
                 if(self.IS_SAVED_AUTO) { // CALL UPDATE IF SAVED AUTOMATIC
-                    EFormService.formUpdate({UID: self.formUID, content: content})
+                    EFormService.formUpdate({UID: self.formUID, userUID: self.userUID, content: content})
                     .then(function(){
                         resolve();
                     })
                 } else {
                     EFormService.formSave({id: self.EFormID, templateUID: self.templateUID, appointmentUID: appointmentUID, FormData: content, name: self.state.name, patientUID: self.patientUID, userUID: self.userUID})
-                    .then(function(){
+                    .then(function(response){
+                        // console.log(response)
                         // FOR AUTOSAVED FIRST TIME
                         if(self.isAutoSaveRunning) { // do not reload when autosave  
+                            self.formUID = response.eform.UID
                             self.IS_SAVED_AUTO = true // NO NEED TO CHANGE THIS ATTRIBUTE IN FUTURE
                             resolve();
                             return
@@ -859,7 +866,7 @@ module.exports = React.createClass({
                     })
                 }
             }else{
-                EFormService.formUpdate({UID: self.formUID, content: content})
+                EFormService.formUpdate({UID: self.formUID, userUID: self.userUID, content: content})
                 .then(function(){
                     resolve();
                 })

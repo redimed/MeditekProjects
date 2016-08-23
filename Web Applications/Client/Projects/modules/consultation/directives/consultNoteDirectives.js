@@ -26,7 +26,8 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 };
             };
             $scope.removeRelevantGroup = function (relevantGroupKey) {
-                delete $scope.relevantGroup[relevantGroupKey];
+                console.log("relevantGroupKey ",uploader.queue)
+                console.log("value ",$scope.requestInfo.Consultations[0].ConsultationData);
                 for(var key in $scope.requestInfo.Consultations[0].ConsultationData) {
                     
                     if(key.indexOf('Relevant') !== -1 && key.indexOf(relevantGroupKey) !== -1) {
@@ -35,6 +36,15 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                         delete $scope.requestInfo.Consultations[0].ConsultationData[key];
                     }
                 }
+                for(var i = 0; i < uploader.queue.length; i++) {
+                    if(uploader.queue[i].relevantGroupKey == relevantGroupKey) {
+                        delete uploader.queue[i];
+                    }
+                }
+                delete $scope.relevantFileUploads[relevantGroupKey]
+                delete $scope.relevantGroup[relevantGroupKey];
+                // console.log("value ",$scope.requestInfo.Consultations[0].ConsultationData);
+                $scope.updateConsultation();
             }
             $scope.parseInt = parseInt;
             $scope.setCurrentRelevantGroup = function(key) {
@@ -1019,7 +1029,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $('#ctrl *').filter(':input').each(function(key){
                 $(this).blur(function() {
-                    (($scope.uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.updateConsultation());
+                    $scope.updateConsultation();
                 })
             });
             $scope.autoSave = function() {

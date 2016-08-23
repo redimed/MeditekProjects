@@ -27,4 +27,8 @@ module.exports = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'PushNotification'
     },
+    'POST /api/doctor/logout': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'Logout'
+    },
 };

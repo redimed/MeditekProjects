@@ -137,8 +137,7 @@ module.exports = React.createClass({
         return this.props.series;
     },
     _onChangeInput: function(serie, serieIndex){
-        //console.log(serie);
-        //console.log(serieIndex);
+        var self = this;
     },
     _clickUpdateChart: function(){
         var data = this.refs.inputRecChart.getValue();
@@ -194,19 +193,37 @@ module.exports = React.createClass({
             }
             v_index++;
         })
+        this.getPrint();
     },
     getAllValue: function(){
         if(typeof this.refs.inputRecChart === 'undefined'){
             var data = '';
         }else
             var data = this.refs.inputRecChart.getValue();
-        var type = 'line_chart';
+        var type = 'rec_chart';
         var name = this.props.name;
         var ref = this.props.refTemp;
         return {series: data, type: type, ref: ref, name: name};
     },
+    getPrint: function(){
+        var self = this;
+        var svg = document.getElementById('chart');
+        svg = svg.innerHTML;
+        var image = new Image;
+        var canvas = document.createElement('canvas');
+        canvg(canvas, svg);
+        this.image = canvas.toDataURL();
+        this.image.replace('data:image/png;base64,','');
+
+        var type = 'rec_chart';
+        var name = this.props.name;
+        var ref = this.props.refTemp;
+        var value = this.image;
+        var value_header = this.image_header;
+        return {value: value, type: type, ref: ref, name: name, base64DataHeader: value_header};
+    },
     setValue: function(field, chartType){
-        var data = field.series;
+        var data = field.series || [];
         var self = this;
 
         this.refs.inputRecChart.setSeries(field);
@@ -281,7 +298,7 @@ module.exports = React.createClass({
                             <button className="btn btn-primary btn-small" onClick={this._clickUpdateChart}>
                                 Update Chart
                             </button>
-                            <div ref="header" id="line_chart_header">
+                            <div ref="header" id="rec_chart_header">
                                 <InputRecChart ref="inputRecChart" onChangeInput={this._onChangeInput}/>
                             </div>
                             <center>

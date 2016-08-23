@@ -977,6 +977,48 @@ module.exports = React.createClass({
                             }
                             fields.push(f);
                         }
+                        if(field.type === 'rec_chart'){
+                            chart_flag = true;
+                            html2canvas($('#rec_chart_header'), {
+                                onrendered: function(canvas){
+                                    var image_header = canvas.toDataURL();
+                                    image_header = image_header.replace('data:image/png;base64,','');
+
+                                    var svg = document.getElementById('chart');
+                                    svg = svg.innerHTML;
+                                    var canvas = document.createElement('canvas');
+                                    canvg(canvas, svg);
+                                    var image_main = canvas.toDataURL().replace('data:image/png;base64,','');
+                                    delete f.series;
+                                    f.base64Data = image_main;
+                                    fields.push(f);
+                                    var g = $.extend({}, f);
+                                    g.name = f.name+'_1';
+                                    g.base64Data = image_header;
+                                    fields.push(g);
+                                    var appointmentUID = self.appointmentUID;
+                                    var data = {
+                                        printMethod: self.EFormTemplate.PrintType,
+                                        data: fields,
+                                        templateUID: self.templateUID
+                                    }
+
+                                    EFormService.createPDFForm(data)
+                                    .then(function(response){
+                                        var fileName = 'report_'+moment().format('X');
+                                        var blob = new Blob([response], {
+                                            type: 'application/pdf'
+                                        });
+                                        var filesaver = saveAs(blob, fileName);
+                                        setTimeout(function(){
+                                            //window.location.reload();
+                                        }, 1000)
+                                    }, function(error){
+
+                                    })
+                                }
+                            })
+                        }
                     })
                 }
             }else{

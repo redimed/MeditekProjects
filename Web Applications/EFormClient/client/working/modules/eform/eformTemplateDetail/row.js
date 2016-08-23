@@ -354,7 +354,7 @@ module.exports = React.createClass({
                         series.refRow = this.props.refTemp;
                         results.push(series);
                     }else{
-                        var series = this.refs[fieldRef].getAllValue();
+                        var series = this.refs[fieldRef].getPrint();
                         series.refRow = this.props.refTemp;
                         results.push(series);
                     }

@@ -27,7 +27,14 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             };
             $scope.removeRelevantGroup = function (relevantGroupKey) {
                 delete $scope.relevantGroup[relevantGroupKey];
-                
+                for(var key in $scope.requestInfo.Consultations[0].ConsultationData) {
+                    
+                    if(key.indexOf('Relevant') !== -1 && key.indexOf(relevantGroupKey) !== -1) {
+                        console.log("key ",key);
+                        console.log("value ",$scope.requestInfo.Consultations[0].ConsultationData[key]);
+                        delete $scope.requestInfo.Consultations[0].ConsultationData[key];
+                    }
+                }
             }
             $scope.parseInt = parseInt;
             $scope.setCurrentRelevantGroup = function(key) {

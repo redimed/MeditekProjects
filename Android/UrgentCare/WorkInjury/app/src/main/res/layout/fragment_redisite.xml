@@ -1,0 +1,765 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightBackground"
+    android:orientation="vertical"
+    tools:context=".redisite.patient.PatientRedisiteFragment">
+
+    <include layout="@layout/tool_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layoutPatientRedisite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/padding_right_redisite"
+            android:paddingLeft="@dimen/padding_left_redisite"
+            android:paddingRight="@dimen/padding_right_redisite"
+            android:paddingStart="@dimen/padding_left_redisite">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/custom_border"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupWork"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radioWork"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:hint="@string/hint_yes"
+                            android:text="@string/work" />
+
+                        <View
+                            android:layout_width="230dp"
+                            android:layout_height="1dp"
+                            android:background="#979797" />
+
+                        <RadioButton
+                            android:id="@+id/radioNonWork"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_no"
+                            android:text="@string/not_work" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/service" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvServiceRedisite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/custom_border"
+                        android:scrollbarStyle="insideOverlay" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_patient"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/title_size_redisite" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btnSelectStaff"
+                            android:text="Select Staff"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="260px"
+                            android:textColor="@color/textColorPrimary"
+                            android:background="@color/colorPrimaryNew"
+                            android:paddingLeft="@dimen/padding_left_redisite"
+                            android:paddingRight="@dimen/padding_left_redisite"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Site"
+                            android:id="@+id/btnSelectSite"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:textColor="@color/textColorPrimary"
+                            android:background="@color/colorPrimaryNew"
+                            android:paddingLeft="@dimen/padding_left_redisite"
+                            android:paddingRight="@dimen/padding_left_redisite"
+                            android:layout_marginRight="10dp"/>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblSalutation"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/txtClaimNo"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/salutation"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <Spinner
+                        android:id="@+id/spinnerSalutation"
+                        android:layout_width="200dp"
+                        android:layout_height="35dp"
+                        android:layout_toEndOf="@+id/lblSalutation"
+                        android:layout_toRightOf="@+id/lblSalutation"
+                        android:background="@null"
+                        android:dropDownVerticalOffset="1dp"
+                        android:spinnerMode="dropdown" />
+
+                    <View
+                        android:layout_width="195dp"
+                        android:layout_height="1dp"
+                        android:layout_alignBottom="@+id/spinnerSalutation"
+                        android:layout_alignLeft="@+id/spinnerSalutation"
+                        android:layout_alignStart="@+id/spinnerSalutation"
+                        android:background="#979797" />
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblClaimNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/txtClaimNo"
+                        android:layout_alignBottom="@+id/txtClaimNo"
+                        android:layout_toLeftOf="@+id/txtClaimNo"
+                        android:layout_toStartOf="@+id/txtClaimNo"
+                        android:text="@string/claim"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtClaimNo"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblName"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtFamily"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:hint="@string/name_family"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtGiven"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/name_given"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblDOB"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/txtDOB"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/dob"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtDOB"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/lblDOB"
+                        android:layout_toRightOf="@id/lblDOB"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblOccupation"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/txtOccupation"
+                        android:layout_toLeftOf="@+id/txtOccupation"
+                        android:layout_toStartOf="@+id/txtOccupation"
+                        android:text="@string/occupation"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtOccupation"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblAddress"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/txtAddress"
+                        android:layout_alignBottom="@+id/txtAddress"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/address"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/lblAddress"
+                        android:layout_toRightOf="@+id/lblAddress"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txtSuburb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@+id/lblAddress"
+                        android:layout_toLeftOf="@+id/txtPostCode"
+                        android:layout_toRightOf="@+id/lblAddress"
+                        android:layout_toStartOf="@+id/txtPostCode"
+                        android:hint="@string/address_suburb"
+                        android:maxLength="20"
+                        android:singleLine="true"
+                        android:textColor="@color/darkFont" />
+
+                    <EditText
+                        android:id="@+id/txtPostCode"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:hint="@string/address_postcode"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblTelephone"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/txtHome"
+                        android:layout_alignBottom="@+id/txtHome"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/telephone"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/lblTelephone"
+                        android:layout_toLeftOf="@+id/txtMobile"
+                        android:layout_toRightOf="@+id/lblTelephone"
+                        android:layout_toStartOf="@+id/txtMobile"
+                        android:hint="@string/tele_home"
+                        android:inputType="phone"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtMobile"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@+id/txtWork"
+                        android:layout_toStartOf="@+id/txtWork"
+                        android:hint="@string/tele_mobile"
+                        android:inputType="phone"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtWork"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:hint="@string/tele_work"
+                        android:inputType="phone"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblNOK"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/txtNOK"
+                        android:layout_alignBottom="@+id/txtNOK"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/nos"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtNOK"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/lblNOK"
+                        android:layout_toLeftOf="@+id/txtNOKPhone"
+                        android:layout_toRightOf="@+id/lblNOK"
+                        android:layout_toStartOf="@+id/txtNOKPhone"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtNOKPhone"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@+id/txtNOKEmail"
+                        android:layout_toStartOf="@+id/txtNOKEmail"
+                        android:hint="@string/nos_tele"
+                        android:inputType="phone"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtNOKEmail"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:hint="@string/nos_email"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                </RelativeLayout>
+
+                <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/title_health_insurance"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/title_size_redisite" />
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblMedicare"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/txtNumber"
+                        android:layout_alignBottom="@+id/txtNumber"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/medicare"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/lblMedicare"
+                        android:layout_toLeftOf="@+id/txtPositionNumber"
+                        android:layout_toRightOf="@+id/lblMedicare"
+                        android:layout_toStartOf="@+id/txtPositionNumber"
+                        android:hint="@string/medicare_number"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtPositionNumber"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@+id/txtExpiry"
+                        android:layout_toStartOf="@+id/txtExpiry"
+                        android:hint="@string/medicare_position"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtExpiry"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:hint="@string/medicare_expiry"
+                        android:inputType="date|datetime"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblPrivateInsurance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/toggleInsurance"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ques_insurance"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <RadioGroup
+                        android:id="@+id/toggleInsurance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/txtNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_toEndOf="@+id/lblPrivateInsurance"
+                        android:layout_toLeftOf="@+id/txtHealthFund"
+                        android:layout_toRightOf="@+id/lblPrivateInsurance"
+                        android:layout_toStartOf="@+id/txtHealthFund"
+                        android:checkedButton="@+id/noInsurance"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/noInsurance"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:hint="@string/hint_no"
+                            android:text="@string/no"
+                            android:textColor="@drawable/color_text_radio"/>
+
+                        <RadioButton
+                            android:id="@+id/yesInsurance"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginEnd="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:hint="@string/hint_yes"
+                            android:text="@string/yes"
+                            android:textColor="@drawable/color_text_radio"/>
+                    </RadioGroup>
+
+                    <EditText
+                        android:id="@+id/txtHealthFund"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtPositionNumber"
+                        android:layout_marginTop="8dp"
+                        android:layout_toLeftOf="@+id/txtExpiry"
+                        android:layout_toStartOf="@+id/txtExpiry"
+                        android:hint="@string/insurance_fund"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/txtMembership"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/txtExpiry"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/insurance_membership"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:singleLine="true" />
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblHospitalCover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/toggleHospital"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ques_hospital"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <RadioGroup
+                        android:id="@+id/toggleHospital"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/toggleInsurance"
+                        android:layout_marginTop="15dp"
+                        android:layout_toEndOf="@+id/lblPrivateInsurance"
+                        android:layout_toLeftOf="@+id/txtHealthFund"
+                        android:layout_toRightOf="@+id/lblPrivateInsurance"
+                        android:layout_toStartOf="@+id/txtHealthFund"
+                        android:checkedButton="@+id/noHosCover"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/noHosCover"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:hint="@string/hint_no"
+                            android:text="@string/no"
+                            android:textColor="@drawable/color_text_radio"/>
+
+                        <RadioButton
+                            android:id="@+id/yesHosCover"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginEnd="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:hint="@string/hint_yes"
+                            android:text="@string/yes"
+                            android:textColor="@drawable/color_text_radio"/>
+                    </RadioGroup>
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblVeteran"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignTop="@+id/lblCard"
+                        android:text="@string/ques_veteran"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <EditText
+                        android:id="@+id/txtVeteran"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:singleLine="true"
+                        android:layout_toLeftOf="@id/lblCard"
+                        android:layout_toStartOf="@id/lblCard"
+                        android:layout_alignTop="@+id/toggleCard"
+                        android:layout_toRightOf="@+id/lblVeteran"
+                        android:layout_toEndOf="@+id/lblVeteran" />
+
+                    <patient.telehealth.redimed.workinjury.font.RobotoTextView
+                        android:id="@+id/lblCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/toggleCard"
+                        android:layout_toLeftOf="@+id/txtMembership"
+                        android:layout_toStartOf="@+id/txtMembership"
+                        android:text="@string/card"
+                        android:textSize="@dimen/text_size_redisite" />
+
+                    <RadioGroup
+                        android:id="@+id/toggleCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/toggleHospital"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/lblCard"
+                        android:layout_toRightOf="@+id/lblCard"
+                        android:checkedButton="@+id/naCard"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/naCard"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:hint="@string/hint_na"
+                            android:text="@string/na"
+                            android:textColor="@drawable/color_text_radio"/>
+
+                        <RadioButton
+                            android:id="@+id/goldCard"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:hint="@string/hint_gold"
+                            android:text="@string/gold"
+                            android:textColor="@drawable/color_text_radio"/>
+
+                        <RadioButton
+                            android:id="@+id/whiteCard"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:hint="@string/hint_white"
+                            android:text="@string/white"
+                            android:textColor="@drawable/color_text_radio"/>
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/lblCard"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnInjury"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/injury"
+                            android:textColor="@color/textColorPrimary"
+                            android:background="@color/colorPrimaryNew"
+                            android:layout_marginRight="10dp"/>
+
+                        <Button
+                            android:id="@+id/btnIllness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/illness"
+                            android:textColor="@color/textColorPrimary"
+                            android:background="@color/colorPrimaryNew"
+                            android:paddingRight="@dimen/padding_left_redisite"
+                            android:paddingLeft="@dimen/padding_left_redisite"
+                            android:layout_marginRight="10dp"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

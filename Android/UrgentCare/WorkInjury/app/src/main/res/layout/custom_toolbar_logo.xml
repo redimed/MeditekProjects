@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimaryNew">
+
+    <ImageView
+    android:id="@+id/logo_work"
+    android:layout_width="180dp"
+    android:layout_height="35dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="@dimen/text_size_home"
+    android:layout_marginTop="@dimen/text_size_home"
+    android:background="@drawable/logo_work_injury" />
+
+</LinearLayout>
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--style="@style/ToolBarStyle.Event"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/colorPrimaryNew">-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/logo_work"-->
+        <!--android:layout_width="180dp"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginBottom="@dimen/text_size_home"-->
+        <!--android:layout_marginTop="@dimen/text_size_home"-->
+        <!--android:background="@drawable/logo_work_injury" />-->
+<!--</android.support.v7.widget.Toolbar>-->

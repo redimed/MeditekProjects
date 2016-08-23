@@ -81,7 +81,7 @@ module.exports = function(data, userInfo) {
                 order: pagination.order,
                 limit: pagination.limit,
                 offset: pagination.offset,
-                subQuery:false,
+                subQuery: false
             });
         })
         .then(function(consultList) {

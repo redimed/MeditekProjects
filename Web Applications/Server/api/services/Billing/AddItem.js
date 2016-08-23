@@ -3,10 +3,13 @@ module.exports = function(objAddItem) {
     var defer = $q.defer();
     var data = objAddItem.data;
     var userInfo = objAddItem.userInfo;
+    var rowsError = [];
+    var currentItem = null;
     if (!_.isEmpty(data) &&
         !_.isEmpty(data.Items) &&
         _.isArray(data.Items)) {
         sequelize.Promise.each(data.Items, function(item_v, item_i) {
+                currentItem = item_v;
                 //find item
                 return BillingItem.findOne({
                         attributes: {
@@ -47,21 +50,24 @@ module.exports = function(objAddItem) {
                             });
                         }
                     }, function(err) {
-                        defer.reject(err);
+                        currentItem.error = err;
+                        rowsError.push(currentItem);
                     })
                     .then(function(billingCreatedorUpdated) {
                         return billingCreatedorUpdated;
                     }, function(err) {
-                        defer.reject(err);
+                        currentItem.error = err;
+                        rowsError.push(currentItem);
                     });
             })
             .then(function(dataAdded) {
-                defer.resolve(dataAdded);
+                defer.resolve({ rowsError: rowsError });
             }, function(err) {
                 defer.reject(err);
             });
     } else {
-        defer.reject(new Error('AddItem.data.isEmpty'));
+        error.pushError(new Error('AddItem.data.isEmpty'));
+        defer.reject(error);
     }
     return defer.promise;
 };

@@ -590,7 +590,7 @@ module.exports = {
                                     TempData: req.body.FormData
                                 })
                                 .then(function(data){
-                                    res.json({data: data});
+                                    res.json({data: data, eform: EForm});
                                 })
                             }
                         })

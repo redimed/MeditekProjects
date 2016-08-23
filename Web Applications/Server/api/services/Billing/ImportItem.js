@@ -8,30 +8,33 @@ module.exports = function(data, userInfo) {
         HelperService.CheckExistData(data.Type)) {
         sequelize.transaction({ autocommit: false })
             .then(function(t) {
-                var objAddItemTemp = {
-                    data: data,
-                    userInfo: userInfo,
-                    transaction: t
-                };
-                var objAddItem = {
-                    data: data,
-                    userInfo: userInfo,
-                    transaction: t
-                };
-                $q.all([Services.AddItemTemp(objAddItemTemp),
-                        Services.AddItem(objAddItem)
-                    ])
-                    .then(function(successAll) {
-                        defer.resolve({
-                            data: successAll,
-                            transaction: t
+                    var objAddItemTemp = {
+                        data: data,
+                        userInfo: userInfo,
+                        transaction: t
+                    };
+                    var objAddItem = {
+                        data: data,
+                        userInfo: userInfo,
+                        transaction: t
+                    };
+                    $q.all([Services.AddItemTemp(objAddItemTemp),
+                            Services.AddItem(objAddItem)
+                        ])
+                        .then(function(successAll) {
+                            defer.resolve({
+                                data: {
+                                    responseItem: successAll[1]
+                                },
+                                transaction: t
+                            });
+                        }, function(err) {
+                            defer.reject({ error: err });
                         });
-                    }, function(err) {
-                        defer.reject({ error: err });
-                    });
-            }, function(err) {
-                defer.reject({ error: err });
-            });
+                },
+                function(err) {
+                    defer.reject({ error: err });
+                });
     } else {
         defer.reject({ error: 'data.isEmpty' });
     }

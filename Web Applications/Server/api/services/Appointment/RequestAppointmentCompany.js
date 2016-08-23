@@ -48,7 +48,6 @@ module.exports = function(data, userInfo) {
                                             error: error,
                                             transaction: t
                                         });
-                                        throw error;
                                     })
                                     .then(function(patientApptCreated) {
                                             //add data response
@@ -93,7 +92,6 @@ module.exports = function(data, userInfo) {
                                                 error: error,
                                                 transaction: t
                                             });
-                                            throw error;
                                         })
                                     .then(function(apptDataCreated) {
                                         if ((!_.isEmpty(valueAppt.Patients) ||
@@ -130,7 +128,6 @@ module.exports = function(data, userInfo) {
                                             error: error,
                                             transaction: t
                                         });
-                                        throw error;
                                     })
                                     .then(function(relapptPatientCreated) {
                                         if ((!_.isEmpty(valueAppt.Doctors) ||
@@ -152,7 +149,6 @@ module.exports = function(data, userInfo) {
                                             error: error,
                                             transaction: t
                                         });
-                                        throw error;
                                     })
                                     .then(function(relApptDoctorCreated) {
                                         if (((!_.isEmpty(valueAppt.FileUploads) &&
@@ -181,11 +177,9 @@ module.exports = function(data, userInfo) {
                                             error: error,
                                             transaction: t
                                         });
-                                        throw error;
                                     });
                             } else {
                                 error.pushError('data.isEmpty');
-                                throw error;
                             }
                         })
                         .then(function(appointmentCreated) {
@@ -200,7 +194,6 @@ module.exports = function(data, userInfo) {
                                 error: error,
                                 transaction: t
                             });
-                            throw error;
                         })
                         .then(function(arrayAppointmentCreated) {
                             defer.resolve({
@@ -213,18 +206,15 @@ module.exports = function(data, userInfo) {
                                 error: error,
                                 transaction: t
                             });
-                            throw error;
                         });
                 },
                 function(err) {
                     error.pushError(err);
                     defer.reject({ error: error });
-                    throw error;
                 });
     } else {
         error.pushError('array.data.isEmpty');
         defer.reject({ error: error });
-        throw error;
     }
     return defer.promise;
 }

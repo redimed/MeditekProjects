@@ -771,6 +771,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                     toastr.error("Please input data");
                 };
             }
+            $scope.isUpdateing = false;
             $scope.updateConsultation = function(isClickBtnUpdate) {
                 var isClick = isClickBtnUpdate ? isClickBtnUpdate : false;
                 var obj = $scope.ConsultationUpdate();
@@ -779,28 +780,35 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
 
                 var UID = angular.copy($scope.requestInfo.Consultations[0].UID);
                 // o.loadingPage(true);
-                consultationServices.updateConsultation(objectUpdate).then(function(response) {
-                    if (response == 'success') {
-                        if(isClick == true) {
-                            toastr.success('Update Success');
-                        }
-                        // o.loadingPage(false);
-                        // consultationServices.detailConsultation(UID).then(function(response) {
-                        //     $scope.uploader.clearQueue();
-                        //     $scope.requestInfo = null;
-                        //     $scope.requestOther = {};
-                        //     if (response.data !== null) {
-                        //         toastr.success('Update Success');
-                        //         $scope.loadData(response.data);
-                        //     } else {
-                        //         toastr.error("data error");
-                        //     };
-                        // });
-                    };
-                }, function(err) {
-                    o.loadingPage(false);
-                    toastr.error('update Consultation Fail');
-                });
+                if($scope.isUpdateing == true && isClickBtnUpdate == true) {
+                    toastr.success('Update Success');
+                }
+                else {
+                    $scope.isUpdateing = true;
+                    consultationServices.updateConsultation(objectUpdate).then(function(response) {
+                        if (response == 'success') {
+                            $scope.isUpdateing = false;
+                            if(isClick == true) {
+                                toastr.success('Update Success');
+                            }
+                            // o.loadingPage(false);
+                            // consultationServices.detailConsultation(UID).then(function(response) {
+                            //     $scope.uploader.clearQueue();
+                            //     $scope.requestInfo = null;
+                            //     $scope.requestOther = {};
+                            //     if (response.data !== null) {
+                            //         toastr.success('Update Success');
+                            //         $scope.loadData(response.data);
+                            //     } else {
+                            //         toastr.error("data error");
+                            //     };
+                            // });
+                        };
+                    }, function(err) {
+                        o.loadingPage(false);
+                        toastr.error('update Consultation Fail');
+                    });
+                }
             }
             $scope.ConsultationDataCreate = function() {
                 console.log("$scope.requestInfo.Consultations[0].ConsultationData>>>>>>>>>>>", $scope.requestInfo.Consultations[0].ConsultationData);

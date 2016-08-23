@@ -156,6 +156,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 if ($scope.CheckUpdate) {
                     $scope.createConsultation();
                 } else {
+                    $scope.uploader.clearQueue();
                     $scope.updateConsultation();
                 }
             };

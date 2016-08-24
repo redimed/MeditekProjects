@@ -15,7 +15,7 @@ const CONSTANTS = {
             INPUT: 'input',
             TEXTAREA: 'textarea',
             DYNAMIC: 'dynamic',
-            SIGN: 'signature',
+            SIGN: 'sign',
             CHART: 'chart'
         },
     	OBJECT_TYPE: {

@@ -88,6 +88,7 @@ class EFormTemplateDetail extends Component{
     _initSuggestWidth(){ 
         var self = this
         var addEventToObject = function(srcObj, targetObj) {
+            // if(!srcObj) return
             srcObj.addEventListener('keyup', function(event){
                 if(event.keyCode === 13){
                     var v = $(srcObj).val()
@@ -464,13 +465,13 @@ class EFormTemplateDetail extends Component{
                     name: this.refs.textarea_name.value,
                     rows: this.refs.textarea_rows.value,
                     width: this.refs.textarea_width.value,
-                    border: this.refs.textarea_border.value,
+                    disabled: this.refs.textarea_disabled.checked,
                 }
                 object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index)
                 object.set('name', params.name)
                 object.select('params').set('width', params.width)
                 object.select('params').set('rows', params.rows)
-                object.select('params').set('border', params.border)
+                object.select('params').set('disabled', params.disabled)
 
                 break
             case EFORM_CONST.GROUP_OBJECT.DYNAMIC:    
@@ -620,6 +621,84 @@ class EFormTemplateDetail extends Component{
 
 
     render(){
+        var self = this
+        function renderWidth(GroupObject) {
+            var refWidth = GroupObject + "_width"
+            var refDefWidth = GroupObject + "_suggest_width"
+            console.log(refWidth,  refDefWidth)
+            return (
+                <div className="eform-row">
+                    <b>Width</b>:  <input style={{width: '25%'}} type="text" placeholder="Width" ref={refWidth}/>&nbsp;   
+                    <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref={refDefWidth} /> &nbsp;
+                     Max width : {MAX_WIDTH}px
+                </div>
+            )
+        }
+
+        function renderName(GroupObject) {
+            var refName = GroupObject + "_name"
+            // console.log(refName)
+            return (
+                 <div className="eform-row">
+                    <b>Name</b><br/>
+                    <input type="text" placeholder="Name" ref={refName}/>
+                </div>
+            )
+        }
+
+        function renderOrder(GroupObject) {
+            var refName = GroupObject + "_order"
+            // console.log(refName)
+            return (
+                <div className="eform-row">
+                    <b>Order</b><br/>
+                    <input type="number" step="1" min="0" ref={refName} style={{width: '60%'}}/>
+                    <button onClick={self._onChangeObjectOrder.bind(self, GroupObject)}>Change</button><br/>
+                </div>
+            )
+        }
+
+        function renderAlign(GroupObject) {
+            var refName = GroupObject + "_align"
+            // console.log(refName)
+            return (
+                <div className="eform-row">
+                    <b>Align: </b>
+                    <select ref={refName}>
+                        {
+                            EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function(align){
+                                return <option value={align.code}>{align.name}</option>
+                            })
+                        }
+                    </select>
+                </div>
+            )
+        }
+
+        function renderBorder(GroupObject) {
+            var refName = GroupObject + "_border"
+            // console.log(refName)
+            return (
+                <div className="eform-row">
+                    <b>Border</b><br/>
+                    <input type="text" placeholder="Border" ref={refName}/>
+                </div>
+            )
+        }
+
+        function renderDisabled(GroupObject) {
+            var refName = GroupObject + "_disabled"
+            // console.log(refName)
+            return (
+                <div className="eform-row">
+                    <b>Disabled</b><br/>
+                    <input type="checkbox" ref={refName}/><br/>
+                </div>
+            )
+        }
+
+
+
         return (
             <div>
                 <div className="editor">
@@ -661,23 +740,17 @@ class EFormTemplateDetail extends Component{
                     </div>
                 </div>
                 <div className="detail">
-                    
-
+                
                     {/*    RADIO & CHECKBOX   */}
                     <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.CHECKBOX}>
                         <div className="eform-row">
                             <b>Title</b><br/>
                             <input type="text" placeholder="Title" ref="default_title"/><br/>
                         </div>
-                        <div className="eform-row">
-                            <b>Width</b>:  <input style={{width: '25%'}} type="text" placeholder="Width" ref="default_width"/>&nbsp;   
-                            <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="default_suggest_width"  /> &nbsp;
-                             Max width : {MAX_WIDTH}px
-                        </div>
-                        <div className="eform-row">
-                            <b>Name</b><br/>
-                            <input type="text" placeholder="Name" ref="default_name"/>
-                        </div>
+                        {/* WIDTH & DEFAULT WIDTH*/}
+                        { renderWidth(EFORM_CONST.GROUP_OBJECT.CHECKBOX)}
+                        {/* NAME */}
+                        { renderName(EFORM_CONST.GROUP_OBJECT.CHECKBOX)}
                         <div className="eform-row">
                             <b>Id</b><br/> 
                             <input type="text" placeholder="Id" ref="default_id"/>
@@ -686,30 +759,16 @@ class EFormTemplateDetail extends Component{
                             <b>Value</b><br/>
                             <input type="text" placeholder="Value" ref="default_value"/>
                         </div>  
-                         <div className="eform-row">
-                            <b>Border</b><br/>
-                            <input type="text" placeholder="Border" ref="default_border"/>
-                        </div>
+                        {/* BORDER */}
+                        {renderBorder(EFORM_CONST.GROUP_OBJECT.CHECKBOX)}
+                        {/* ALIGN */}
+                        {renderAlign(EFORM_CONST.GROUP_OBJECT.CHECKBOX)}
+                        {/* DISABLED */}
+                        {renderDisabled(EFORM_CONST.GROUP_OBJECT.CHECKBOX)}
+                        {/* ORDER */}
+                        {renderOrder(EFORM_CONST.GROUP_OBJECT.CHECKBOX)}
+
                         <div className="eform-row">
-                            <b>Align: </b>
-                            <select ref="default_align">
-                                {
-                                    EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function(align){
-                                        return <option value={align.code}>{align.name}</option>
-                                    })
-                                }
-                            </select>
-                        </div>
-                        <div className="eform-row">
-                            <b>Disabled</b><br/>
-                            <input type="checkbox" ref="default_disabled"/><br/>
-                        </div>
-                        <div className="eform-row">
-                            <b>Order</b><br/>
-                            <input type="text" ref="default_order" style={{width: '60%'}}/>
-                            <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX)}>Change</button><br/>
-                        </div>
-                        <div>
                             <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX)}>Submit</button>&nbsp;
                             <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>&nbsp;
                             <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
@@ -718,67 +777,45 @@ class EFormTemplateDetail extends Component{
 
                     {/*    INPUT TEXT, NUMBER, DATE , DRAWING  */}
                     <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.INPUT}>
-                        <div className={'eform-row'}>
-                            <b>Width</b>: <input style={{width: '25%'}} type="text" placeholder="Width" ref="input_width"/> &nbsp;   
-                            <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="input_suggest_width"  /> &nbsp;
-                             Max width : {MAX_WIDTH}px
-                        </div>
-                        
-                        <div className={'eform-row'}>
-                            <b>Name</b><br/>
-                            <input type="text" placeholder="Name" ref="input_name"/>
-                        </div>
+                        {/* WIDTH & DEFAULT WIDTH*/}
+                        { renderWidth(EFORM_CONST.GROUP_OBJECT.INPUT)}
+                        {/* NAME */}
+                        { renderName(EFORM_CONST.GROUP_OBJECT.INPUT)}
 
-                        <b>Default Value</b><br/>
-                        <input type="text" placeholder="Default value" ref="input_default_value"/><br/>
-                        <b>Border</b><br/>
-                        <input type="text" placeholder="Border" ref="input_border"/><br/>
-                        <b>Align</b><br/>
-                        <select ref="input_align">
-                            {
-                                EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function(align){
-                                    return <option value={align.code}>{align.name}</option>
-                                })
-                            }
-                        </select><br/>
-                        <b>Disabled</b><br/>
-                        <input type="checkbox" ref="input_disabled"/><br/>
-                        <b>Order</b><br/>
-                        <input type="text" ref="input_order" style={{width: '60%'}}/>
-                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT)}>Change</button><br/>
-                        <br/>
-                        <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT)}>Submit</button>
-                        &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
-                        &nbsp;
-                        <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                        <div className="eform-row">
+                            <b>Default Value</b><br/>
+                            <input type="text" placeholder="Default value" ref="input_default_value"/><br/>
+                        </div>    
+                        {/* BORDER */}
+                        {renderBorder(EFORM_CONST.GROUP_OBJECT.INPUT)}
+                        {/* ALIGN */}
+                        {renderAlign(EFORM_CONST.GROUP_OBJECT.INPUT)}
+                        {/* DISABLED */}
+                        {renderDisabled(EFORM_CONST.GROUP_OBJECT.INPUT)}
+                        {/* ORDER */}
+                        {renderOrder(EFORM_CONST.GROUP_OBJECT.INPUT)}
+                        <div className="eform-row">
+                            <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT)}>Submit</button>&nbsp;
+                            <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>&nbsp;
+                            <button style={{background: 'red'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
+                        </div>      
                     </div>
 
                     {/*  SIGN  */}
                     <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.SIGN}>
-                        <div className={'eform-row'}>
-                            <b>Width</b>: <input style={{width: '25%'}} type="text" placeholder="Width" ref="sign_width"/> &nbsp;   
-                            <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="sign_suggest_width"  /> &nbsp;
-                             Max width : {MAX_WIDTH}px
-                        </div>
-                        
-                        <div className={'eform-row'}>
-                            <b>Name</b><br/>
-                            <input type="text" placeholder="Name" ref="sign_name"/>
-                        </div>
-
+                        {/* WIDTH & DEFAULT WIDTH*/}
+                        { renderWidth(EFORM_CONST.GROUP_OBJECT.SIGN)}
+                        {/* NAME */}
+                        { renderName(EFORM_CONST.GROUP_OBJECT.SIGN)}
                         <div className={'eform-row'}>
                             <b>Default Value</b><br/>
                             <input type="text" placeholder="Default value" ref="sign_default_value"/><br/>
                         </div>
-                        <div className={'eform-row'}>
-                            <b>Disabled</b><br/>
-                            <input type="checkbox" ref="sign_disabled"/>
-                        </div>
-                        <b>Order</b><br/>
-                        <input type="text" ref="sign_order" style={{width: '60%'}}/>
-                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN)}>Change</button><br/>
-                        <br/>
+                        {/* DISABLED */}
+                        {renderDisabled(EFORM_CONST.GROUP_OBJECT.SIGN)}
+                        {/* ORDER */}
+                        {renderOrder(EFORM_CONST.GROUP_OBJECT.SIGN)}
+
                         <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN)}>Submit</button>
                         &nbsp;
                         <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
@@ -788,26 +825,19 @@ class EFormTemplateDetail extends Component{
 
                     {/*    TEXTAREA  */}
                     <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.TEXTAREA}>
-                         <div>
-                            <div>
-                                <b>Width</b>:  <input style={{width: '25%'}} type="text" placeholder="Width" ref="textarea_width"/> &nbsp;   
-                                <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="textarea_suggest_width"  /> &nbsp;
-                                 Max width : {MAX_WIDTH}px
-                            </div>
-                       </div>
-                        <div>
-                            <b>Name</b><br/>
-                            <input type="text" placeholder="Name" ref="textarea_name"/>
-                        </div>
+                        {/* WIDTH & DEFAULT WIDTH*/}
+                        { renderWidth(EFORM_CONST.GROUP_OBJECT.TEXTAREA)}
+                        {/* NAME */}
+                        { renderName(EFORM_CONST.GROUP_OBJECT.TEXTAREA)}
+
                         <b>Rows</b><br/>
                         <input type="number" min="2" placeholder="Rows" ref="textarea_rows"/><br/>
-                        <b>Border</b><br/>
-                        <input type="text" placeholder="Border" ref="textarea_border"/><br/>
+ 
+                        {/* DISABLED */}
+                        {renderDisabled(EFORM_CONST.GROUP_OBJECT.TEXTAREA)}
+                        {/* ORDER */}
+                        {renderOrder(EFORM_CONST.GROUP_OBJECT.TEXTAREA)}
 
-                        <b>Order</b><br/>
-                        <input type="text" ref="textarea_order" style={{width: '60%'}}/>
-                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA)}>Change</button><br/>
-                        <br/>
                         <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA)}>Submit</button>
                         &nbsp;
                         <button style={{background: 'red'}} onClick={this._onRemoveObject.bind(this)}>Remove</button>
@@ -818,28 +848,19 @@ class EFormTemplateDetail extends Component{
 
                     {/*    LABEL   */}
                     <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.LABEL}>
-                        <div>
-                            <div>
-                                <b>Width</b>:  <input style={{width: '25%'}} type="text" placeholder="Width" ref="label_width"/>&nbsp;   
-                                <b>Segment</b>: <input style={{width: '15%'}} min="0.5" max="10" type="number" step="0.5" ref="label_suggest_width"  />&nbsp;
-                                 Max width : {MAX_WIDTH}px
-                            </div>
-                       </div>
+                        {/* WIDTH & DEFAULT WIDTH*/}
+                        { renderWidth(EFORM_CONST.GROUP_OBJECT.LABEL)}
+
                         <b>Value</b><br/>
                         <textarea placeholder="Value" ref="label_value" rows="10"/><br/>
-                        <b>Border</b><br/>
-                        <input type="text" placeholder="Border" ref="label_border"/><br/>
-                        <b>Align</b><br/>
-                        <select ref="label_align">
-                            {
-                                EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function(align){
-                                    return <option value={align.code}>{align.name}</option>
-                                })
-                            }
-                        </select><br/>
-                        <b>Order</b><br/>
-                        <input type="text" ref="label_order" style={{width: '60%'}}/>
-                        <button onClick={this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL)}>Change</button><br/>
+
+                        {/* BORDER */}
+                        {renderBorder(EFORM_CONST.GROUP_OBJECT.LABEL)}
+                        {/* ALIGN */}
+                        {renderAlign(EFORM_CONST.GROUP_OBJECT.LABEL)}
+                        {/* ORDER */}
+                        {renderOrder(EFORM_CONST.GROUP_OBJECT.LABEL)}
+
                         <br/>
                         <button onClick={this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL)}>Submit</button>
                         &nbsp;
@@ -847,6 +868,8 @@ class EFormTemplateDetail extends Component{
                         &nbsp;
                         <button style={{background: 'green'}} onClick={this._onCloneObject.bind(this)}>Clone</button>
                     </div>
+
+
 
                     {/*    CHART   */}
                     <div className="form-detail" ref={EFORM_CONST.GROUP_OBJECT.CHART}>

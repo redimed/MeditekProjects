@@ -155,20 +155,14 @@
 	            console.log('STARTING: ACTIVE AUTO SAVE !!!');
 	            // EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME
 	            var self = this;
-	            var isRunning = false;
 	            this.autoSaveFunc = setInterval(function () {
-	                if (isRunning) {
-	                    // skip if it has been running
-	                    return;
-	                }
-	                isRunning = true;
-	                $('.btnSave').prop("disabled", true); // DISABLED SAVE BUTTON HERE
+	                // alert("Hello");
+	                // DISABLED SAVE BUTTON HERE
+	                $('.btnSave').prop("disabled", true);
 	                // CALL SAVE get GET PROMISE
 	                self._onSave(false, function () {
-	                    $('.btnSave').prop("disabled", false); // ENABLED SAVE BUTTON
-	                    isRunning = false;
-	                }, function (err) {
-	                    console.log(err);
+	                    // ENABLED SAVE BUTTON
+	                    $('.btnSave').prop("disabled", false);
 	                });
 	            }, EFORM_CLIENT_CONST.AUTO_SAVE_INTERVAL_TIME);
 	        }
@@ -567,6 +561,7 @@
 
 	            // let arrPromiseDrawing = self.__getDrawingPromiseArr(arrDrawing)
 	            if (isUploadSign && isUploadDrawing) {
+
 	                self.__saveEFormData(cbDone);
 	            }
 	        }
@@ -25262,7 +25257,7 @@
 	            INPUT: 'input',
 	            TEXTAREA: 'textarea',
 	            DYNAMIC: 'dynamic',
-	            SIGN: 'signature',
+	            SIGN: 'sign',
 	            CHART: 'chart'
 	        },
 	        OBJECT_TYPE: {

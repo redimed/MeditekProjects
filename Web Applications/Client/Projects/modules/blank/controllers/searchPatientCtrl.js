@@ -67,7 +67,7 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
                 o.loadingPage(false);
                 $cookies.putObject("userInfo", response.user);
                 $cookies.put("token", response.token);
-                $rootScope.refreshCode = response.refreshCode;
+                meditekStorage.refreshCode = response.refreshCode;
                 $state.go("authentication.home.list")
             }, function(err) {
                  o.loadingPage(false);

@@ -109,7 +109,7 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
 
     $scope.cancel = function() {
         console.log("socketTelehealth", socketTelehealth);
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        socketTelehealth.get('/api/socket/messageTransfer', {
             from: uidUser,
             to: uidCall,
             message: "cancel"
@@ -186,7 +186,7 @@ app.controller('receiveCtrl', function($scope, $stateParams, $timeout, Authentic
 
     $scope.addDoctor = function(doctor) {
         if ($scope.streams.length < 2) {
-            socketTelehealth.get('/api/telehealth/socket/addDoctor', {
+            socketTelehealth.get('/api/socket/addDoctor', {
                 from: uidUser,
                 to: doctor.UserAccount.TelehealthUser.UID,
                 message: "add",

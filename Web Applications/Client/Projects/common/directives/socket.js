@@ -27,7 +27,7 @@ socketJoinRoom = function(server, api, obj) {
 }
 
 messageTransfer = function(from, to, message) {
-    socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+    socketTelehealth.get('/api/socket/messageTransfer', {
         from: from,
         to: to,
         message: message

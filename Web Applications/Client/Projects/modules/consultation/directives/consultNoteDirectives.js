@@ -1031,11 +1031,11 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
             }
             $('#ctrl *').filter(':input').each(function(key){
                 $(this).blur(function() {
-                    $scope.updateConsultation(true);
+                    $scope.updateConsultation();
                 })
             });
             $scope.autoSave = function() {
-                $scope.updateConsultation(true);
+                $scope.updateConsultation();
             };
             $scope.init = function() {
                 consultationServices.checkconsultnote($stateParams.UID)

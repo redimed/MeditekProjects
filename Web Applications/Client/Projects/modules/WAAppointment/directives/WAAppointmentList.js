@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.WAAppointment.directives.listWAAppoint', []);
-app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies, toastr, $state, $rootScope, $window) {
+app.directive('listWaapointment', function(WAAppointmentService, BookingService, $modal, $cookies, toastr, $state, $rootScope, $window) {
     return {
         scope: {
             data: "="
@@ -198,6 +198,27 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                 }
                 return r;
             };
+
+            scope.updateStatus = function(appt) {
+                o.loadingPage(true);
+                // console.log("appt ",appt);
+                var data = {
+                    "Appointment": {
+                        UID: appt.UID,
+                        Status: appt.Status,
+                    }
+                };
+                BookingService.ChangeStatusBooking(data)
+                .then(function(response) {
+                    toastr.success('Update Status Successfully.');
+                    o.loadingPage(false);
+                }, function(err) {
+                    o.loadingPage(false);
+                    console.log("err ",err);
+                })
+            };
+
+            
         }
     };
 })

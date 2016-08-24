@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.listAppoint', []);
-app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, toastr, $state, $stateParams) {
+app.directive('listAppoint', function(WAAppointmentService, BookingService, $modal, $cookies, toastr, $state, $stateParams) {
     return {
         restrict: 'E',
         templateUrl: "modules/consultation/directives/templates/listAppoint.html",
@@ -170,6 +170,34 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 scope.fromCreateDate=null;
                 scope.info.data.Filter[0].Appointment.Status = null;
                 scope.LoadData();
+            };
+
+            scope.updateStatus = function(appt) {
+                o.loadingPage(true);
+                // console.log("appt ",appt);
+                var data = {
+                    "Appointment": {
+                        UID: appt.UID,
+                        Status: appt.Status,
+                    }
+                };
+                BookingService.ChangeStatusBooking(data)
+                .then(function(response) {
+                    toastr.success('Update Status Successfully.');
+                    o.loadingPage(false);
+                }, function(err) {
+                    o.loadingPage(false);
+                    console.log("err ",err);
+                })
+            };
+            scope.hightLight = function(status){
+                var r = '';
+                switch (status) {
+                    case 'Not Attended': r = 'red'; break;
+                    case 'Attended': r = 'green'; break;
+                    default: r = '';
+                }
+                return r;
             };
         }
     };

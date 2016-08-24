@@ -88,3 +88,6 @@ var o = {
     },
     audio: new Audio('theme/assets/global/audio/ringtone.mp3'),
 }
+var tracklog = {
+    log: null
+}

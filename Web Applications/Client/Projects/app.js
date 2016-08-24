@@ -76,13 +76,13 @@ app
                                 alert("401:0xx : Error");
                             }
                         }
-                        if($rootScope.pushTrack) {
-                            $rootScope.pushTrack({name: 'interceptors:unauthorization', content: response.data});
+                        if(tracklog.log) {
+                            tracklog.log({name: 'interceptors:unauthorization', content: response.data});
                         }
                         $location.path('/login');
                     } else {
                         if (Boolean(response.headers().requireupdatetoken) === true) {
-                            $rootScope.pushTrack({name: 'requireupdatetoken', content: "requireupdatetoken"});
+                            tracklog.log({name: 'requireupdatetoken', content: "requireupdatetoken"});
                             $rootScope.getNewToken();
                         }
                     }
@@ -96,7 +96,7 @@ app
                         $rootScope.getNewToken();
                     }*/
                     if (Boolean(response.headers().requireupdatetoken) === true) {
-                        $rootScope.pushTrack({name: 'requireupdatetoken', content: "requireupdatetoken"});
+                        tracklog.log({name: 'requireupdatetoken', content: "requireupdatetoken"});
                         $rootScope.getNewToken();
                     }
 
@@ -282,13 +282,15 @@ app
         });
         $rootScope.$on("$stateChangeStart", function() {});
 
-        $rootScope.pushTrack = function (info) {
+        tracklog.log = $rootScope.pushTrack = function (info) {
             var postData = {
                 UserAccountID: $cookies.getObject("userInfo")?$cookies.getObject("userInfo").ID: null,
                 SystemType: 'WEB',
                 TrackingName: info.name,
-                Content: info.content
+                Content: info.content,
+                ClientTime: moment().format("DD/MM/YYYY HH:mm:ss")
             }
+
             $.ajax({
                 type: "POST",
                 xhrFields: {
@@ -336,10 +338,10 @@ app
                             $rootScope.refreshCode = data.refreshCode;
                         }
                     }
-                    $rootScope.pushTrack({name: 'getNewToken', content: data});
+                    tracklog.log({name: 'getNewToken', content: data});
                 },
                 error: function(xhr,status,error) {
-                    $rootScope.pushTrack({name: 'getNewToken', content: error});
+                    tracklog.log({name: 'getNewToken', content: error});
                 }
             });
         }

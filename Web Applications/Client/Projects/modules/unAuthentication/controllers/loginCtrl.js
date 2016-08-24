@@ -58,12 +58,12 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
                 $cookies.put("token", data.token);
                 $rootScope.refreshCode = data.refreshCode;
                 $state.go("authentication.home.list");
-                $rootScope.pushTrack({name:'login', content:data});
+                tracklog.log({name:'login', content:data});
 
             }, function(err) {
                 $scope.laddaLoading = false;
                 toastr.error(!err.data.message ? err.data.ErrorType : err.data.message, "Error");
-                $rootScope.pushTrack({name:'login', content:err});
+                tracklog.log({name:'login', content:err});
             })
         }
     };

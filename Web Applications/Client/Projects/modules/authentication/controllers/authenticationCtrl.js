@@ -16,7 +16,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     $scope.info = {};
     $scope.logout = function() {
         AuthenticationService.logout().then(function() {
-            $rootScope.pushTrack({name:'logout', content: 'logout success'});
+            tracklog.log({name:'logout', content: 'logout success'});
             socketJoinRoom(socketTelehealth, '/api/telehealth/logout', {
                 uid: $cookies.getObject('userInfo').TelehealthUser.UID,
                 deviceid: "30f56b7cb6a4abbc0a1ca359deb",
@@ -34,7 +34,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
 
         }, function(err) {
             toastr.error(err.data.message, "Error");
-            $rootScope.pushTrack({name:'logout', content: err});
+            tracklog.log({name:'logout', content: err});
         })
     };
     AuthenticationService.getListCountry().then(function(result) {

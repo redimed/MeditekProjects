@@ -16,6 +16,7 @@ module.exports = {
                 insertObj.AppID = info.AppID||null;
                 insertObj.TrackingName = info.TrackingName||null;
                 insertObj.Content = JSON.stringify(info.Content)||null;
+                insertObj.ClientTime = info.ClientTime||null;
                 insertObj.CreatedDate = new Date();
                 q.resolve("success");
             } else {

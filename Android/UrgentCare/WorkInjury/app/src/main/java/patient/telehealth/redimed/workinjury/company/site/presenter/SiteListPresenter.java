@@ -26,7 +26,7 @@ public class SiteListPresenter implements ISiteListPresenter {
     @Override
     public void LoadSiteList() {
         String uidCompany = String.valueOf(application.getDataSharedPreferences(Key.companyUid, Key.defalt));
-        RESTClient.getCoreApi().getListSite(uidCompany, new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().getListSite(uidCompany, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 iSiteListView.LoadListSite(jsonObject);

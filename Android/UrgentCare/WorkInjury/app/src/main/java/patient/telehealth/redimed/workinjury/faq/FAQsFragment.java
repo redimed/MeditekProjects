@@ -1,9 +1,7 @@
 package patient.telehealth.redimed.workinjury.faq;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -45,8 +43,8 @@ public class FAQsFragment extends Fragment implements IFAQsView {
         View view = inflater.inflate(R.layout.fragment_faqs, container, false);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
-        application.createTooBar(view, getActivity(),title);
         ifaQsPresenter.contentFAQs(getArguments());
+        application.createTooBarTitle(view, title);
         return view;
     }
 
@@ -54,7 +52,7 @@ public class FAQsFragment extends Fragment implements IFAQsView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.BackFragment(getActivity(),null,null);
+                application.BackFragment(null,null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -1,5 +1,6 @@
 package patient.telehealth.redimed.workinjury.pin;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -51,11 +53,13 @@ public class PinFragment extends Fragment implements IPinView, View.OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         final View v = inflater.inflate(R.layout.fragment_pin, container, false);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, v);
         application.hidenKeyboard(v);
-        application.createTooBar(v,getActivity(), Key.fmChangePin);
+        application.createTooBarTitle(v, Key.fmChangePin);
 
         btnSubmit.setOnClickListener(this);
 
@@ -66,7 +70,7 @@ public class PinFragment extends Fragment implements IPinView, View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.BackFragment(getActivity(), Key.fmSetting, Key.fmHome);
+                application.BackFragment(Key.fmSetting, Key.fmHome);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -76,7 +80,7 @@ public class PinFragment extends Fragment implements IPinView, View.OnClickListe
     @Override
     public void onLoadSuccess() {
         progressDialog.dismiss();
-        application.replaceFragment(getActivity(),new HomeFragment(), Key.fmHome, null);
+        application.replaceFragment(new HomeFragment(), Key.fmHome, null);
     }
 
     @Override

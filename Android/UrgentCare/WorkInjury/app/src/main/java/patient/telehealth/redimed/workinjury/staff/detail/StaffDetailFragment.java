@@ -57,7 +57,7 @@ public class StaffDetailFragment extends Fragment implements IStaffDetailView {
         View view = inflater.inflate(R.layout.fragment_staff_detail, container, false);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
-        application.createTooBar(view,getActivity(),Key.fmStaffDetail);
+        application.createTooBarTitle(view, Key.fmStaffDetail);
 
 
         return view;
@@ -67,7 +67,7 @@ public class StaffDetailFragment extends Fragment implements IStaffDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.replaceFragment(getActivity(), new SiteListFragment(), Key.fmStaffList, Key.fmSetting);
+                application.replaceFragment(new SiteListFragment(), Key.fmStaffList, Key.fmSetting);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

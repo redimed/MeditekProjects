@@ -54,7 +54,7 @@ public class CompanyDetailFragment extends Fragment implements ICompanyDetailVie
         View view = inflater.inflate(R.layout.fragment_company_detail, container, false);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
-        application.createTooBar(view,getActivity(), Company.companyDetail);
+        application.createTooBarTitle(view, Company.companyDetail);
 
         return view;
     }
@@ -63,7 +63,7 @@ public class CompanyDetailFragment extends Fragment implements ICompanyDetailVie
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.replaceFragment(getActivity(), new SettingFragment(), Key.fmSetting, Key.fmHome);
+                application.replaceFragment(new SettingFragment(), Key.fmSetting, Key.fmHome);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -34,7 +34,7 @@
                 android:visibility="visible" />
         </RelativeLayout>
 
-        <font.RobotoTextView
+        <patient.telehealth.redimed.workinjury.font.RobotoTextView
             android:id="@+id/lblNameDoctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:background="#5a000000">
 
-                <font.RobotoTextView
+                <patient.telehealth.redimed.workinjury.font.RobotoTextView
                     android:id="@+id/lblTimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                     android:textColor="@color/lightFont"
                     android:textSize="20dp" />
 
-                <font.RobotoTextView
+                <patient.telehealth.redimed.workinjury.font.RobotoTextView
                     android:id="@+id/lblCaller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

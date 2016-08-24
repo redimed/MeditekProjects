@@ -145,7 +145,7 @@ public class PatientRedisitePresenter implements IPatientRedisitePresenter {
             JsonObject objData = new JsonObject();
             objData.addProperty(Key.Company.data, application.parseToJson(new String[]{Key.Company.model, Key.Company.companySite, Key.Company.UID ,siteUID}));
 
-            RESTClient.getCoreApi().getDetailSite(objData, new Callback<JsonObject>() {
+            RESTClient.getTelehealthApi().getDetailSite(objData, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     modelCompany = gson.fromJson(jsonObject.get(Key.Company.data).getAsJsonObject(), ModelCompany.class);
@@ -166,7 +166,7 @@ public class PatientRedisitePresenter implements IPatientRedisitePresenter {
         if (staffUid != null && bundle != null){
             JsonObject objData = new JsonObject();
             objData.addProperty(Key.Staff.data, application.parseToJson(new String[]{Key.Staff.UID, staffUid}));
-            RESTClient.getCoreApi().getDetailPatient(objData, new Callback<JsonObject>() {
+            RESTClient.getTelehealthApi().getDetailPatient(objData, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject object, Response response) {
                     modelPatient = gson.fromJson(object.get(Key.Staff.data).getAsJsonArray(), ModelPatient[].class);

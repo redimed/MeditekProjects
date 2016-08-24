@@ -1,6 +1,7 @@
 package patient.telehealth.redimed.workinjury.socket;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
@@ -33,7 +34,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import io.socket.engineio.client.Transport;
 import patient.telehealth.redimed.workinjury.MyApplication;
-import patient.telehealth.redimed.workinjury.utils.Config;
+import patient.telehealth.redimed.workinjury.network.Config;
 import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.waiting.WaitingActivity;
 
@@ -138,7 +139,7 @@ public class SocketService extends Service {
         JSONObject obj = new JSONObject();
         try {
             Uri.Builder builder = new Uri.Builder();
-            builder.appendPath("api/telehealth");
+            builder.appendPath("api");
             builder.appendPath(url);
             for (String key : params.keySet()) {
                 builder.appendQueryParameter(key, String.valueOf(params.get(key)));
@@ -211,7 +212,7 @@ public class SocketService extends Service {
         @Override
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
-
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             try {
                 String message = data.get("message").toString();
                 if (message.equalsIgnoreCase("call")) {
@@ -229,6 +230,7 @@ public class SocketService extends Service {
                 if (message.equalsIgnoreCase("cancel") || message.equalsIgnoreCase("decline")) {
                     LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
                     localBroadcastManager.sendBroadcast(new Intent("call.action.finish"));
+                    notificationManager.cancel(0);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

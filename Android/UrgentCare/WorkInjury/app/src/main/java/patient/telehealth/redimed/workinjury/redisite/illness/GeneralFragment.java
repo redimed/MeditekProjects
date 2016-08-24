@@ -42,6 +42,7 @@ import patient.telehealth.redimed.workinjury.redisite.illness.view.IGeneralView;
 import patient.telehealth.redimed.workinjury.redisite.image.ImageFragment;
 import patient.telehealth.redimed.workinjury.utils.DeviceUtils;
 import patient.telehealth.redimed.workinjury.utils.GridItemView;
+import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.utils.PreCachingLayoutManager;
 
 /**
@@ -261,16 +262,6 @@ public class GeneralFragment extends Fragment implements IGeneralView, RadioGrou
         }
     }
 
-    private Fragment setFlagFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString("flagFragment", "general");
-
-        Fragment fragment = new ImageFragment();
-        fragment.setArguments(bundle);
-
-        return fragment;
-    }
-
     @Override
     public void onClick(View view) {
         application.cleanTempDataIllness();
@@ -299,6 +290,7 @@ public class GeneralFragment extends Fragment implements IGeneralView, RadioGrou
         application.setTempDataIllnessList(application.getMedicalHistory());
         application.setTempDataIllnessList(application.getIllnessSymptoms());
 
-        iGeneralPresenter.changeFragment(setFlagFragment());
+        application.setRedisiteInjury(false);
+        application.replaceFragment(new ImageFragment(), Key.fmRedisiteImage, Key.fmRedisiteIllness);
     }
 }

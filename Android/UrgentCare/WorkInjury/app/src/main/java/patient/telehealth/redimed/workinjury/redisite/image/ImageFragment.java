@@ -5,18 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,7 +28,6 @@ import butterknife.ButterKnife;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.R;
 import patient.telehealth.redimed.workinjury.model.CustomGallery;
-import patient.telehealth.redimed.workinjury.model.Singleton;
 import patient.telehealth.redimed.workinjury.redisite.consent.ConsentFragment;
 import patient.telehealth.redimed.workinjury.redisite.illness.GeneralFragment;
 import patient.telehealth.redimed.workinjury.redisite.image.adapter.ImageAdapter;
@@ -41,6 +35,7 @@ import patient.telehealth.redimed.workinjury.redisite.image.presenter.IImagePres
 import patient.telehealth.redimed.workinjury.redisite.image.presenter.ImagePresenter;
 import patient.telehealth.redimed.workinjury.redisite.image.view.IImageView;
 import patient.telehealth.redimed.workinjury.redisite.injury.InjuryFragment;
+import patient.telehealth.redimed.workinjury.utils.Key;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +53,6 @@ public class ImageFragment extends Fragment implements IImageView, View.OnClickL
 
     protected MyApplication application;
 
-    @Bind(R.id.toolBar) Toolbar toolBar;
     @Bind(R.id.lblImage) TextView lblImage;
     @Bind(R.id.gridImageSelected) GridView gridImageSelected;
     @Bind(R.id.btnImageSelected) Button btnImageSelected;
@@ -83,56 +77,19 @@ public class ImageFragment extends Fragment implements IImageView, View.OnClickL
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryNew));
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         View v = inflater.inflate(R.layout.fragment_image, container, false);
         ButterKnife.bind(this, v);
+        application.createTooBarMenu(v);
 
         if (customGalleries.size() > 0){
             onLoadGallery(customGalleries);
         }
 
-        onLoadToolbar();
-
         btnImageSelected.setOnClickListener(this);
 
         return v;
-    }
-
-    private Fragment setFlagFragment() {
-        Bundle bundle = new Bundle();
-        if (getArguments().getString("flagFragment").equalsIgnoreCase("injury")) {
-            bundle.putString("flagFragment", "injury");
-        } else {
-            bundle.putString("flagFragment", "general");
-        }
-        Fragment fragment = new ConsentFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    private void onLoadToolbar() {
-        //init toolbar
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolBar);
-        toolBar.setOverflowIcon(ContextCompat.getDrawable(context, R.drawable.icon_plus));
-
-        ActionBar actionBar = appCompatActivity.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setTitle(getResources().getString(R.string.title_image));
-
-            actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
-            actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
-
-            // Change color image back, set a custom icon for the default home button
-            final Drawable upArrow = ContextCompat.getDrawable(context, R.drawable.abc_ic_clear_material);
-            upArrow.setColorFilter(ContextCompat.getColor(context, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
-            actionBar.setHomeAsUpIndicator(upArrow);
-        }
     }
 
     @Override
@@ -173,20 +130,31 @@ public class ImageFragment extends Fragment implements IImageView, View.OnClickL
         */
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (getArguments().getString("flagFragment").equalsIgnoreCase("injury"))
-                    application.ReplaceFragment(new InjuryFragment());
+                if (application.getRedisiteInjury())
+                    application.replaceFragment(new InjuryFragment(), Key.fmRedisiteInjury, Key.fmRedisitePatient);
                 else
-                    application.ReplaceFragment(new GeneralFragment());
+                    application.replaceFragment(new GeneralFragment(), Key.fmRedisiteIllness, Key.fmRedisitePatient);
                 return true;
             case R.id.action_gallery:
-                Intent galleryIntent = new Intent("ACTION_MULTIPLE_PICK");
-                startActivityForResult(galleryIntent, RESULT_PHOTO);
+                try {
+                    Intent galleryIntent = new Intent("ACTION_MULTIPLE_PICK");
+                    startActivityForResult(galleryIntent, RESULT_PHOTO);
+                }catch (Exception e){
+                    Log.d("action_gallery", e.getMessage());
+                    application.FunctionError("Select Gallery Error");
+                }
                 return true;
             case R.id.action_camera:
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                fileUri = iImagePresenter.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                startActivityForResult(cameraIntent, RESULT_CAMERA);
+                try {
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    fileUri = iImagePresenter.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                    startActivityForResult(cameraIntent, RESULT_CAMERA);
+                }catch (Exception e){
+                    Log.d("action_camera", e.getMessage());
+                    application.FunctionError("Select Camera Error");
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -195,7 +163,6 @@ public class ImageFragment extends Fragment implements IImageView, View.OnClickL
 
     @Override
     public void onLoadGallery(ArrayList<CustomGallery> customGalleries) {
-//        Singleton.getInstance().setCustomGalleries(customGalleries);
         if (customGalleries.size() > 0)
             lblImage.setVisibility(View.GONE);
 
@@ -205,6 +172,6 @@ public class ImageFragment extends Fragment implements IImageView, View.OnClickL
 
     @Override
     public void onClick(View view) {
-        application.ReplaceFragment(setFlagFragment());
+        application.replaceFragment(new ConsentFragment(), Key.fmRedisiteConsent, Key.fmRedisiteImage);
     }
 }

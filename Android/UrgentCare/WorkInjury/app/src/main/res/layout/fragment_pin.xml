@@ -20,9 +20,9 @@
         <EditText
             android:id="@+id/txtCurrentPin"
             android:layout_width="320dp"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="10dp"
-            android:background="@android:color/white"
+            android:background="@drawable/border_edit_text_white"
             android:gravity="center"
             android:hint="@string/current_pin"
             android:inputType="numberPassword"
@@ -32,22 +32,24 @@
             android:paddingLeft="0dp"
             android:paddingRight="5dp"
             android:paddingStart="0dp"
+            android:fontFamily="sans-serif"
             android:singleLine="true"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/txtNewPin"
             android:layout_width="320dp"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp"
-            android:background="@android:color/white"
+            android:background="@drawable/border_edit_text_white"
             android:gravity="center"
             android:hint="@string/new_pin"
             android:inputType="numberPassword"
             android:maxLength="6"
+            android:fontFamily="sans-serif"
             android:maxLines="1"
             android:paddingEnd="5dp"
             android:paddingLeft="0dp"
@@ -56,14 +58,14 @@
             android:singleLine="true"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/txtConfirmPin"
             android:layout_width="320dp"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="10dp"
-            android:background="@android:color/white"
+            android:background="@drawable/border_edit_text_white"
             android:gravity="center"
             android:hint="@string/confirm_pin"
             android:inputType="numberPassword"
@@ -75,17 +77,20 @@
             android:paddingStart="0dp"
             android:singleLine="true"
             android:textColor="@android:color/black"
+            android:fontFamily="sans-serif"
             android:textColorHint="@android:color/black"
-            android:textSize="17sp" />
+            android:textSize="@dimen/abc_text_size_subhead_material"/>
 
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="320dp"
-            android:layout_height="?android:actionBarSize"
+            android:layout_height="45dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_type_login"
             android:enabled="true"
             android:text="@string/change_pin_number"
             android:textAllCaps="false"
+            android:fontFamily="sans-serif"
             android:textColor="@android:color/white"
             android:textSize="17sp"
             android:textStyle="bold" />

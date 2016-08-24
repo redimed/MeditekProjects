@@ -5,5 +5,5 @@ package patient.telehealth.redimed.workinjury.login.view;
  */
 public interface ILoginView {
     void ResponseSuccess();
-    void ResponseError();
+    void onValidated(String result);
 }

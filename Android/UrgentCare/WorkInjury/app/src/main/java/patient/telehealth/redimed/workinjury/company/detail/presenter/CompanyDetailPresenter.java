@@ -39,7 +39,7 @@ public class CompanyDetailPresenter implements ICompanyDetailPresenter {
         if (siteUid != null && bundle != null){
             JsonObject objData = new JsonObject();
             objData.addProperty(Company.data, application.parseToJson(new String[]{Company.model, Company.companySite, Company.UID ,siteUid}));
-            RESTClient.getCoreApi().getDetailSite(objData, new Callback<JsonObject>() {
+            RESTClient.getTelehealthApi().getDetailSite(objData, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     modelCompany = gson.fromJson(jsonObject.get(Company.data).getAsJsonObject(), ModelCompany.class);

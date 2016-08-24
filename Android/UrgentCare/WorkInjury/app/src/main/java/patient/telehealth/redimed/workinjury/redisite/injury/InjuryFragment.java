@@ -43,6 +43,7 @@ import patient.telehealth.redimed.workinjury.redisite.injury.view.IInjuryView;
 import patient.telehealth.redimed.workinjury.redisite.patient.PatientRedisiteFragment;
 import patient.telehealth.redimed.workinjury.utils.DeviceUtils;
 import patient.telehealth.redimed.workinjury.utils.GridItemView;
+import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.utils.PreCachingLayoutManager;
 
 /**
@@ -192,6 +193,8 @@ public class InjuryFragment extends Fragment implements IInjuryView, View.OnClic
         setHasOptionsMenu(true);
         ButterKnife.bind(this, v);
         application.hidenKeyboard(v);
+        application.createTooBarLogo(v);
+
 
         this.getListInjury();
         this.getBodyParts();
@@ -211,19 +214,7 @@ public class InjuryFragment extends Fragment implements IInjuryView, View.OnClic
         btnInjury.setOnClickListener(this);
 
 
-
-
         return v;
-    }
-
-    private Fragment setFlagFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString("flagFragment", "injury");
-
-        Fragment fragment = new ImageFragment();
-        fragment.setArguments(bundle);
-
-        return fragment;
     }
 
     // GridView Body Parts
@@ -256,21 +247,6 @@ public class InjuryFragment extends Fragment implements IInjuryView, View.OnClic
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.menu_main, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
-            so long as you specify a parent activity in AndroidManifest.xml.
-        */
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                iInjuryPresenter.changeFragment(new PatientRedisiteFragment());
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void getListInjury() {
@@ -337,7 +313,8 @@ public class InjuryFragment extends Fragment implements IInjuryView, View.OnClic
         application.setTempDataInjuryList(application.getInjurySymptoms());
         application.setTempDataInjuryList(application.getMedicalHistory());
 
-        iInjuryPresenter.changeFragment(setFlagFragment());
+        application.setRedisiteInjury(true);
+        application.replaceFragment(new ImageFragment(), Key.fmRedisiteImage, Key.fmRedisiteInjury);
     }
 
 
@@ -376,6 +353,17 @@ public class InjuryFragment extends Fragment implements IInjuryView, View.OnClic
                     txtAllergies.setEnabled(false);
                 }
                 break;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                application.replaceFragment(new PatientRedisiteFragment(), Key.fmRedisitePatient, Key.fmHome);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

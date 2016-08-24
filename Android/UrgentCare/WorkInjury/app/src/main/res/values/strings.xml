@@ -197,6 +197,8 @@
     <string name="confirm_alert">Please accept consent and submit booking request</string>
     <string name="redisite">Redisite</string>
     <string name="blue_tracking">List Tracking</string>
+    <string name="not_title">Workinjury</string>
+    <string name="alert_wrong_phone">Phone Number Invalid</string>
 
 
     <!-- Medical History -->

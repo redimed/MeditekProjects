@@ -16,14 +16,9 @@ import retrofit.mime.TypedFile;
  * Created by Lam on 11/3/2015.
  */
 public interface UrgentRequest {
-    @POST("/urgent-request")
-    void sendUrgentRequest(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @GET("/suburb")
     void getListSuburb(Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/checkActivation")
-    void checkActivation(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @POST("/api/login")
     void login(@Body JsonObject jsonObject, Callback<JsonObject> callback);
@@ -34,51 +29,6 @@ public interface UrgentRequest {
     @POST("/api/refresh-token/GetNewToken")
     void getNewToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
-    @GET("/api/company/get-list-staff/{userUid}")
-    void getListStaff(@Path("userUid") String userUid, Callback<JsonObject> callback);
-
-    @GET("/api/company/detail-company-by-user/{userUid}")
-    void getDetailCompany(@Path("userUid") String userUid, Callback<JsonObject> callback);
-
-    @GET("/api/company/get-list-site/{companyUid}")
-    void getListSite(@Path("companyUid") String companyUid, Callback<JsonObject> callback);
-
-    @GET("/api/user-account/GetUserAccountDetails?UID=")
-    void getDetailUser(@Query("userUid") String userUid, Callback<JsonObject> callback);
-
-    @GET("/api/telehealth/user/details/{uid}=")
-    void getDetailAccount(@Query("uid") String uid, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/appointment/request")
-    void sendAppointment(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/appointment-wa-request/patient-new")
-    void sendAppointmentNew(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/sendCoreServer")
-    void sendCoreServer(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/user")
-    void getTelehealthUser(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/user/forgetPin")
-    void forgetPin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/patient/detail-patient")
-    void getDetailPatient(@Body JsonObject object, Callback<JsonObject> callback);
-
-    @POST("/api/company/load-detail")
-    void getDetailSite(@Body JsonObject object, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/updatePinNumber")
-    void updatePin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/telehealth/user/update")
-    void updatePatient(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
-    @POST("/api/appointment-wa-request/company")
-    void makeAppointmentCompany(@Body JsonObject jsonObject, Callback<JsonObject> callback);
-
     @Multipart
     @POST("/api/uploadFile")
     void uploadFile(@Part("userUID") String userUID,
@@ -86,6 +36,50 @@ public interface UrgentRequest {
                     @Part("uploadFile") TypedFile uploadFile,
                     Callback<JsonObject> callback);
 
-    @POST("/eform/saveWithData")
+
+    // get function
+    @GET("/api/workinjury/get-list-staff/{userUid}")
+    void getListStaff(@Path("userUid") String userUid, Callback<JsonObject> callback);
+
+    @GET("/api/workinjury/detail-company-by-user/{userUid}")
+    void getDetailCompany(@Path("userUid") String userUid, Callback<JsonObject> callback);
+
+    @GET("/api/workinjury/get-list-site/{companyUid}")
+    void getListSite(@Path("companyUid") String companyUid, Callback<JsonObject> callback);
+
+    @GET("/api/workinjury/user/details/{uid}=")
+    void getDetailAccount(@Query("uid") String uid, Callback<JsonObject> callback);
+
+
+
+    // post function
+    @POST("/api/workinjury/checkActivation")
+    void checkActivation(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/appointment-request-patient")
+    void sendAppointmentNew(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/user")
+    void getTelehealthUser(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/user/forgetPin")
+    void forgetPin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/detail-patient")
+    void getDetailPatient(@Body JsonObject object, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/load-detail-company")
+    void getDetailSite(@Body JsonObject object, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/updatePinNumber")
+    void updatePin(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/user/update")
+    void updatePatient(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/appointment-request-company")
+    void makeAppointmentCompany(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/workinjury/eform-redisite")
     void submitRedisite(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 }

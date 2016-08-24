@@ -70,7 +70,7 @@ public class StaffListFragment extends Fragment implements IStaffListView, Adapt
         View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
-        application.createTooBar(view, getActivity(), Key.fmStaffList);
+        application.createTooBarTitle(view, Key.fmStaffList);
         return view;
     }
 
@@ -88,11 +88,11 @@ public class StaffListFragment extends Fragment implements IStaffListView, Adapt
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (fmWork){
-                    application.replaceFragment(getActivity(), new WorkFragment(), Key.fmWork, Key.fmHome);
+                    application.replaceFragment(new WorkFragment(), Key.fmWork, Key.fmHome);
                 }else if (fmRedisite){
-                    application.replaceFragment(getActivity(), new PatientRedisiteFragment(), Key.fmRedisitePatient, Key.fmHome);
+                    application.replaceFragment(new PatientRedisiteFragment(), Key.fmRedisitePatient, Key.fmHome);
                 }else {
-                    application.replaceFragment(getActivity(), new SettingFragment(), Key.fmSetting, Key.fmHome);
+                    application.replaceFragment(new SettingFragment(), Key.fmSetting, Key.fmHome);
                 }
                 return true;
             default:
@@ -107,15 +107,15 @@ public class StaffListFragment extends Fragment implements IStaffListView, Adapt
         if (fmWork){
             WorkFragment fragment = new WorkFragment();
             fragment.setArguments(bundle);
-            application.replaceFragment(getActivity(), fragment, Key.fmWork, Key.fmStaffList);
+            application.replaceFragment(fragment, Key.fmWork, Key.fmStaffList);
         }else if (fmRedisite){
             PatientRedisiteFragment fragment = new PatientRedisiteFragment();
             fragment.setArguments(bundle);
-            application.replaceFragment(getActivity(), fragment, Key.fmRedisitePatient, Key.fmHome);
+            application.replaceFragment(fragment, Key.fmRedisitePatient, Key.fmHome);
         }else {
             StaffDetailFragment fragment = new StaffDetailFragment();
             fragment.setArguments(bundle);
-            application.replaceFragment(getActivity(), fragment, Key.fmStaffDetail, Key.fmStaffList);
+            application.replaceFragment(fragment, Key.fmStaffDetail, Key.fmStaffList);
         }
     }
 }

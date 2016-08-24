@@ -6,7 +6,6 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -18,6 +17,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -46,8 +48,8 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import patient.telehealth.redimed.workinjury.company.detail.CompanyDetailFragment;
-import patient.telehealth.redimed.workinjury.gcm.RegistrationIntentService;
 import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.login.LoginFragment;
 import patient.telehealth.redimed.workinjury.model.CustomGallery;
@@ -56,13 +58,13 @@ import patient.telehealth.redimed.workinjury.model.ModelPatient;
 import patient.telehealth.redimed.workinjury.model.ModelGeneral.TempDataBean;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.setting.SettingFragment;
-import patient.telehealth.redimed.workinjury.socket.SocketService;
 import patient.telehealth.redimed.workinjury.staff.list.StaffListFragment;
 import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.utils.TypefaceUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.mime.TypedFile;
+import android.graphics.Color;
 
 /**
  * Created by Lam on 11/6/2015.
@@ -73,6 +75,7 @@ public class MyApplication extends Application {
     private ModelPatient modelPatient;
     private ModelCompany modelCompany;
     private FragmentActivity currentActivity;
+    private Boolean redisiteInjury;
     private List<TempDataBean> tempDataPatient, tempDataInjury, tempDataIllness,
             patientService, injuryBodyPart, injuryData, injurySymptoms, medicalHistory,
             illnessSymptoms, tempDataConsent;
@@ -96,28 +99,8 @@ public class MyApplication extends Application {
         myApplication = this;
         gson = new Gson();
 
-        tempDataPatient = new ArrayList<>();
-        patientService = new ArrayList<>();
-
-        tempDataInjury = new ArrayList<>();
-        injuryBodyPart = new ArrayList<>();
-        injuryData = new ArrayList<>();
-        injurySymptoms = new ArrayList<>();
-
-        medicalHistory = new ArrayList<>();
-
-
-        tempDataIllness = new ArrayList<>();
-        illnessSymptoms = new ArrayList<>();
-
-        customGalleries = new ArrayList<>();
-
-
-        tempDataConsent = new ArrayList<>();
-
         RESTClient.InitRESTClient();
         TypefaceUtil.overrideFont(getApplicationContext(), "serif", "fonts/Roboto-Regular.ttf");
-        startService(new Intent(this, RegistrationIntentService.class));
     }
 
     public boolean IsMyServiceRunning(Class<?> serviceClass) {
@@ -140,10 +123,10 @@ public class MyApplication extends Application {
         super.onTerminate();
     }
 
-    public void replaceFragment(FragmentActivity activity, Fragment fragment, String fragmentName, String backStack) {
+    public void replaceFragment(Fragment fragment, String fragmentName, String backStack) {
         try {
             if (fragment != null){
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentManager fragmentManager = getCurrentActivity().getSupportFragmentManager();
                 if (backStack != null){
                     fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment, fragmentName)
@@ -272,37 +255,115 @@ public class MyApplication extends Application {
         return object;
     }
 
-    public void createTooBar(View view, Activity activity, String title){
+    public void createTooBarTitle(View view, String title){
         try {
             //init toolbar
-            AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getCurrentActivity();
             Toolbar toolbar = (Toolbar) view.findViewById(R.id.tool_bar);
             appCompatActivity.setSupportActionBar(toolbar);
 
             ActionBar actionBar = appCompatActivity.getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setHomeButtonEnabled(true);
-                actionBar.setTitle(title);
-                //actionBar.setLogo(img);
+
+                TextView textview = new TextView(getApplicationContext());
+
+                ActionBar.LayoutParams layoutParams = new  ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+                layoutParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER_HORIZONTAL;
+
+                textview.setText(title);
+
+                textview.setTextColor(Color.WHITE);
+
+                textview.setGravity(Gravity.CENTER);
+
+                textview.setTextSize(20);
+
+                actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+                actionBar.setCustomView(textview, layoutParams);
+                actionBar.setTitle("");
                 actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
                 actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
 
                 // Change color image back, set a custom icon for the default home button abc_ic_clear_mtrl_alpha
-                final Drawable upArrow = ContextCompat.getDrawable(activity, R.drawable.abc_ic_clear_material);
-                upArrow.setColorFilter(ContextCompat.getColor(activity, R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+                final Drawable upArrow = ContextCompat.getDrawable(getCurrentActivity(), R.drawable.abc_ic_clear_material);
+                upArrow.setColorFilter(ContextCompat.getColor(getCurrentActivity(), R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
                 actionBar.setHomeAsUpIndicator(upArrow);
             }
         }catch (Exception e){
-            Log.d("createTooBar",e.getMessage());
+            Log.d("createTooBarTitle",e.getMessage());
         }
     }
 
-    public void BackFragment(Activity activity, String fragment, String backFragment){
+    public void createTooBarLogo(View view){
         try {
-            AppCompatActivity compatActivity = (AppCompatActivity) activity;
-            FragmentActivity fragmentActivity = (FragmentActivity) activity;
+            //init toolbar
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getCurrentActivity();
+            Toolbar toolbar = (Toolbar) view.findViewById(R.id.tool_bar);
+            appCompatActivity.setSupportActionBar(toolbar);
+
+            ActionBar actionBar = appCompatActivity.getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setTitle(null);
+                actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+                actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+                ActionBar.LayoutParams layoutParams = new  ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+                layoutParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER_HORIZONTAL;
+                LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View v = inflator.inflate(R.layout.custom_toolbar_logo, null);
+                actionBar.setCustomView(v, layoutParams);
+
+                // Change color image back, set a custom icon for the default home button abc_ic_clear_mtrl_alpha
+                final Drawable upArrow = ContextCompat.getDrawable(getCurrentActivity(), R.drawable.abc_ic_clear_material);
+                upArrow.setColorFilter(ContextCompat.getColor(getCurrentActivity(), R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+                actionBar.setHomeAsUpIndicator(upArrow);
+            }
+        }catch (Exception e){
+            Log.d("createTooBarLogo",e.getMessage());
+        }
+    }
+
+    public void createTooBarMenu(View view){
+        try {
+            //init toolbar
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getCurrentActivity();
+            Toolbar toolbar = (Toolbar) view.findViewById(R.id.tool_bar);
+            toolbar.setOverflowIcon(ContextCompat.getDrawable(getCurrentActivity(), R.drawable.icon_plus));
+            appCompatActivity.setSupportActionBar(toolbar);
+
+            ActionBar actionBar = appCompatActivity.getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setTitle(null);
+                actionBar.setDisplayShowHomeEnabled(true); // show or hide the default home button
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+                actionBar.setDisplayShowTitleEnabled(true); // disable the default title element here (for centered title)
+                ActionBar.LayoutParams layoutParams = new  ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+                layoutParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER_HORIZONTAL;
+                LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View v = inflator.inflate(R.layout.custom_toolbar_logo, null);
+                actionBar.setCustomView(v, layoutParams);
+
+                // Change color image back, set a custom icon for the default home button abc_ic_clear_mtrl_alpha
+                final Drawable upArrow = ContextCompat.getDrawable(getCurrentActivity(), R.drawable.abc_ic_clear_material);
+                upArrow.setColorFilter(ContextCompat.getColor(getCurrentActivity(), R.color.lightFont), PorterDuff.Mode.SRC_ATOP);
+                actionBar.setHomeAsUpIndicator(upArrow);
+            }
+        }catch (Exception e){
+            Log.d("createTooBarMenu",e.getMessage());
+        }
+    }
+
+    public void BackFragment(String fragment, String backFragment){
+        try {
+            AppCompatActivity compatActivity = (AppCompatActivity) getCurrentActivity();
 
             FragmentManager fragmentManager = compatActivity.getSupportFragmentManager();
             int count = fragmentManager.getBackStackEntryCount();
@@ -340,7 +401,7 @@ public class MyApplication extends Application {
             Log.d("BackFragment", back+"");
             Log.d("BackFragment", fragmentCreate+"");
 
-            replaceFragment(fragmentActivity,fragmentCreate,name,back);
+            replaceFragment(fragmentCreate,name,back);
         }catch (Exception e){
             Log.e("BackFragment",e.getMessage());
         }
@@ -362,12 +423,12 @@ public class MyApplication extends Application {
         return finalDate;
     }
 
-    public void DisplayDatePickerDialog(final EditText editText, Activity activity) {
+    public void DisplayDatePickerDialog(final EditText editText) {
         Calendar birthdayCalendar = Calendar.getInstance();
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         DatePickerDialog birthdayPickerDialog;
 
-        birthdayPickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+        birthdayPickerDialog = new DatePickerDialog(getCurrentActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newCalendar = Calendar.getInstance();
@@ -511,6 +572,14 @@ public class MyApplication extends Application {
 
     public ModelPatient getDataModelPatient(){
         return modelPatient;
+    }
+
+    public Boolean getRedisiteInjury() {
+        return redisiteInjury;
+    }
+
+    public void setRedisiteInjury(Boolean redisiteInjury) {
+        this.redisiteInjury = redisiteInjury;
     }
 
     public boolean CheckRequiredData(EditText editText) {
@@ -701,5 +770,59 @@ public class MyApplication extends Application {
             return deferred.reject(e.getMessage());
         }
         return deferred.promise();
+    }
+
+    public void FunctionError(String error){
+        try {
+            new SweetAlertDialog(getCurrentActivity(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("")
+                .setContentText(error)
+                .show();
+        }catch (Exception e){
+            Log.d("FunctionError",e.getLocalizedMessage());
+        }
+
+    }
+
+    public void CreateDataPatient(){
+        tempDataPatient = new ArrayList<>();
+        patientService = new ArrayList<>();
+    }
+
+    public void CreateDataInjury(){
+        tempDataInjury = new ArrayList<>();
+        injuryBodyPart = new ArrayList<>();
+        injuryData = new ArrayList<>();
+        injurySymptoms = new ArrayList<>();
+
+        medicalHistory = new ArrayList<>();
+    }
+
+    public void CreateDataIllness(){
+        medicalHistory = new ArrayList<>();
+
+        tempDataIllness = new ArrayList<>();
+        illnessSymptoms = new ArrayList<>();
+    }
+
+    public void CreateDataRedisite(){
+        tempDataPatient = new ArrayList<>();
+        patientService = new ArrayList<>();
+
+        tempDataInjury = new ArrayList<>();
+        injuryBodyPart = new ArrayList<>();
+        injuryData = new ArrayList<>();
+        injurySymptoms = new ArrayList<>();
+
+        medicalHistory = new ArrayList<>();
+
+
+        tempDataIllness = new ArrayList<>();
+        illnessSymptoms = new ArrayList<>();
+
+        customGalleries = new ArrayList<>();
+
+
+        tempDataConsent = new ArrayList<>();
     }
 }

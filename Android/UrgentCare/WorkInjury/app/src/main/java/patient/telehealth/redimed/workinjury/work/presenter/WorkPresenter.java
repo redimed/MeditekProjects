@@ -87,7 +87,7 @@ public class WorkPresenter implements IWorkPresenter {
         Log.d(Work.TAG, gson.toJson(modelAppointmentCompany));
         final Deferred deferred = new DeferredObject();
         String[] data = {Company.data, gson.toJson(modelAppointmentCompany)};
-        RESTClient.getCoreApi().makeAppointmentCompany(application.createJson(data), new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().makeAppointmentCompany(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 deferred.resolve(object);
@@ -106,7 +106,7 @@ public class WorkPresenter implements IWorkPresenter {
         final Deferred deferred = new DeferredObject();
 
         String[] data = {Company.data, gson.toJson(modelAppointmentPatient)};
-        RESTClient.getCoreApi().sendAppointmentNew(application.createJson(data), new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().sendAppointmentNew(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 deferred.resolve(object);
@@ -127,7 +127,7 @@ public class WorkPresenter implements IWorkPresenter {
             JsonObject objData = new JsonObject();
             objData.addProperty(Company.data, application.parseToJson(new String[]{Company.model, Company.companySite, Company.UID ,siteUID}));
 
-            RESTClient.getCoreApi().getDetailSite(objData, new Callback<JsonObject>() {
+            RESTClient.getTelehealthApi().getDetailSite(objData, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     modelCompany = gson.fromJson(jsonObject.get(Company.data).getAsJsonObject(), ModelCompany.class);
@@ -148,7 +148,7 @@ public class WorkPresenter implements IWorkPresenter {
         if (staffUid != null && bundle != null){
             JsonObject objData = new JsonObject();
             objData.addProperty(Staff.data, application.parseToJson(new String[]{Staff.UID, staffUid}));
-            RESTClient.getCoreApi().getDetailPatient(objData, new Callback<JsonObject>() {
+            RESTClient.getTelehealthApi().getDetailPatient(objData, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject object, Response response) {
                     modelPatient = gson.fromJson(object.get(Staff.data).getAsJsonArray(), ModelPatient[].class);

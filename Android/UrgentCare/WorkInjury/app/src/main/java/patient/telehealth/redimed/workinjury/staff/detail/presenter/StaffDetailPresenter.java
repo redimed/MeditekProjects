@@ -39,7 +39,7 @@ public class StaffDetailPresenter implements IStaffDetailPresenter {
         String staffUid = bundle.getString(Staff.staffUid);
         JsonObject objData = new JsonObject();
         objData.addProperty(Staff.data, application.parseToJson(new String[]{Staff.UID, staffUid}));
-        RESTClient.getCoreApi().getDetailPatient(objData, new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().getDetailPatient(objData, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 modelPatient = gson.fromJson(object.get(Staff.data).getAsJsonArray(), ModelPatient[].class);

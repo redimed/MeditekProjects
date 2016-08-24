@@ -125,7 +125,7 @@ public class WorkFragment extends Fragment implements IWorkView, View.OnClickLis
         //TypefaceUtil.applyFont(getActivity(), view.findViewById(R.id.workActivity), Key.fontRoboto);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
-        application.createTooBar(view, getActivity(), title);
+        application.createTooBarTitle(view, title);
         application.hidenKeyboard(view);
 
         if (isTypeCompany){
@@ -184,7 +184,7 @@ public class WorkFragment extends Fragment implements IWorkView, View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.replaceFragment(getActivity(), new HomeFragment(), Key.fmHome, null);
+                application.replaceFragment(new HomeFragment(), Key.fmHome, null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -372,14 +372,14 @@ public class WorkFragment extends Fragment implements IWorkView, View.OnClickLis
                 @Override
                 public void onClick(SweetAlertDialog sDialog) {
                     dialog.dismissWithAnimation();
-                    application.replaceFragment(getActivity(),new HomeFragment(), Key.fmHome, null);
+                    application.replaceFragment(new HomeFragment(), Key.fmHome, null);
                 }
             });
             dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                     dialog.dismissWithAnimation();
-                    application.replaceFragment(getActivity(),new HomeFragment(), Key.fmHome, null);
+                    application.replaceFragment(new HomeFragment(), Key.fmHome, null);
                 }
             });
             CheckExistsInformation(dialog);
@@ -404,13 +404,13 @@ public class WorkFragment extends Fragment implements IWorkView, View.OnClickLis
                 StaffListFragment staffFragment = new StaffListFragment();
                 bundle.putBoolean(Work.name, true);
                 staffFragment.setArguments(bundle);
-                application.replaceFragment(getActivity(), staffFragment, Key.fmStaffList, Key.fmWork);
+                application.replaceFragment(staffFragment, Key.fmStaffList, Key.fmWork);
                 break;
             case R.id.btnSelectSite:
                 SiteListFragment siteFragment = new SiteListFragment();
                 bundle.putBoolean(Work.name, true);
                 siteFragment.setArguments(bundle);
-                application.replaceFragment(getActivity(), siteFragment, Key.fmSiteList, Key.fmWork);
+                application.replaceFragment(siteFragment, Key.fmSiteList, Key.fmWork);
                 break;
         }
     }
@@ -428,7 +428,7 @@ public class WorkFragment extends Fragment implements IWorkView, View.OnClickLis
     @Override
     public void onFocusChange(View view, boolean b) {
         if (b) {
-            application.DisplayDatePickerDialog(txtDOB, getActivity());
+            application.DisplayDatePickerDialog(txtDOB);
         }else {
             application.hidenKeyboard(view);
         }
@@ -467,7 +467,7 @@ public class WorkFragment extends Fragment implements IWorkView, View.OnClickLis
         dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                application.replaceFragment(getActivity(),new HomeFragment(), Key.fmHome, null);
+                application.replaceFragment(new HomeFragment(), Key.fmHome, null);
             }
         });
         dialog.setConfirmText(Work.save);
@@ -481,7 +481,7 @@ public class WorkFragment extends Fragment implements IWorkView, View.OnClickLis
                 application.setDataSharedPreferences(Work.dob, String.valueOf(txtDOB.getText()));
                 application.setDataSharedPreferences(Work.email, String.valueOf(txtEmail.getText()));
                 dialog.dismissWithAnimation();
-                application.replaceFragment(getActivity(),new HomeFragment(), Key.fmHome, null);
+                application.replaceFragment(new HomeFragment(), Key.fmHome, null);
             }
         });
         dialog.show();

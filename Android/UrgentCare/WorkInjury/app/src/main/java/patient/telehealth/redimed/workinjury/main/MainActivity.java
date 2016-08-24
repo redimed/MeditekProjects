@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity implements IMainView{
         setContentView(R.layout.activity_main);
         application = MyApplication.getInstance();
         application.setCurrentActivity(this);
-        application.replaceFragment(this, new HomeFragment(), Key.fmHome,null);
-        //star service socket
+        application.replaceFragment(new HomeFragment(), Key.fmHome,null);
     }
 
     @Override

@@ -8,14 +8,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import patient.telehealth.redimed.workinjury.MyApplication;
@@ -76,7 +79,7 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
         ButterKnife.bind(this, view);
 
         setHasOptionsMenu(true);
-        application.createTooBar(view,getActivity(), Key.fmLogin);
+        application.createTooBarTitle(view, Key.fmLogin);
         application.hidenKeyboard(view);
 
         layoutContainer.setAnimateFirstView(true);
@@ -99,11 +102,6 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
         return view;
     }
 
-    public void animationLogo() {
-        Animation anim = AnimationUtils.loadAnimation(context, R.anim.translate_center_to_top);
-        mLogo.startAnimation(anim);
-    }
-
     public void animationContainer() {
         layoutContainer.animate().setStartDelay(200).setDuration(500).alpha(1.0f);
     }
@@ -123,7 +121,7 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
         switch (v.getId()) {
             case R.id.btnCheckActivation:
                 application.hidenKeyboard(txtPhone);
-                iLoginPresenter.CheckActivation(phone);
+                iLoginPresenter.validatedPhone(phone);
                 break;
             case R.id.btnSubmitPinNumber:
                 application.hidenKeyboard(txtVerifyCode);
@@ -147,15 +145,10 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
     }
 
     @Override
-    public void ResponseError() {
-
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.BackFragment(getActivity(),Key.fmHome,null);
+                application.BackFragment(Key.fmHome,null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -173,6 +166,15 @@ public class LoginFragment extends Fragment implements ILoginView, View.OnClickL
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onValidated(String result) {
+        if (!result.equalsIgnoreCase("wrong")) {
+            iLoginPresenter.CheckActivation(result);
+        } else {
+            application.FunctionError(getActivity().getResources().getString(R.string.alert_wrong_phone));
         }
     }
 }

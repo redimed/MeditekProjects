@@ -2,7 +2,6 @@ package patient.telehealth.redimed.workinjury.account;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,7 +70,7 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
         application.hidenKeyboard(view);
-        application.createTooBar(view, getActivity(), Key.fmAccount);
+        application.createTooBarTitle(view, Key.fmAccount);
         btnUpdatePatient.setOnClickListener(this);
         return view;
     }
@@ -81,7 +80,7 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.BackFragment(getActivity(), Key.fmSetting, Key.fmHome);
+                application.BackFragment(Key.fmSetting, Key.fmHome);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -131,7 +130,7 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
 
                 final SweetAlertDialog lDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
                 lDialog.getProgressHelper().setBarColor(R.color.bg_foreign_alert);
-                lDialog.setTitleText(". . .");
+                lDialog.setTitleText("Loading");
                 lDialog.setCancelable(false);
                 lDialog.show();
 
@@ -141,27 +140,26 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
                         lDialog.dismiss();
                         final SweetAlertDialog sDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE);
                         sDialog.setContentText(Account.updatePatientSuccess)
-                                .setTitleText(Account.success)
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        iAccountPresenter.getAccountInfo();
-                                        sDialog.dismiss();
-                                    }
-                                })
-                                .show();
+                            .setTitleText(Account.success)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    iAccountPresenter.getAccountInfo();
+                                    sDialog.dismiss();
+                                }
+                            })
+                            .show();
                     }
                 }, new FailCallback() {
                     @Override
                     public void onFail(Object result) {
                         JsonObject o = (JsonObject) result;
 
-                        Log.d("updatepatienthe", o+"");
                         lDialog.dismiss();
                         new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
-                                .setTitleText(Account.error)
-                                .setContentText(Account.updatePatientError)
-                                .show();
+                            .setTitleText(Account.error)
+                            .setContentText(Account.updatePatientError)
+                            .show();
                     }
                 });
                 break;

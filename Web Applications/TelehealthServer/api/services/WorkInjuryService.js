@@ -17,7 +17,7 @@ module.exports = {
             path: path,
             method: 'GET',
             headers: headers
-        }, config.CoreAPI);
+        })
     },
     GetListStaff: function(headers, userUid) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
@@ -26,7 +26,7 @@ module.exports = {
             path: path,
             method: 'GET',
             headers: headers
-        }, config.CoreAPI);
+        })
     },
     GetListSite: function(headers, companyUid) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
@@ -35,7 +35,7 @@ module.exports = {
             path: path,
             method: 'GET',
             headers: headers
-        }, config.CoreAPI);
+        })
     },
     GetDetailPatient: function(headers, body) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
@@ -44,7 +44,7 @@ module.exports = {
             method: 'POST',
             headers: headers,
             body: body
-        }, config.CoreAPI);
+        })
     },
     GetUserAccountDetail: function(headers, UID) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
@@ -53,7 +53,7 @@ module.exports = {
             path: path,
             method: 'GET',
             headers: headers
-        }, config.CoreAPI);
+        })
     },
     AppointmentRequestCompany: function(headers, body) {
         headers['content-type'] = 'application/json';
@@ -63,7 +63,7 @@ module.exports = {
             method: 'POST',
             headers: headers,
             body: body
-        }, config.CoreAPI);
+        })
     },
     AppointmentRequestPatient: function(headers, body) {
         headers['content-type'] = 'application/json';
@@ -73,17 +73,18 @@ module.exports = {
             method: 'POST',
             headers: headers,
             body: body
-        }, config.CoreAPI);
+        })
     },
     EformRedisite: function(headers, body) {
         headers['content-type'] = 'application/json';
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
+            host: config.EformAPI,
             path: '/eform/saveWithData',
             method: 'POST',
-            headers: headers,
-            body: body
-        }, config.EformAPI);
+            body: body,
+            headers: headers
+        })
     },
     LoadDetailCompany: function(headers, body) {
         headers['content-type'] = 'application/json';
@@ -93,13 +94,13 @@ module.exports = {
             method: 'POST',
             headers: headers,
             body: body
-        }, config.CoreAPI);
+        })
     },
-    MakeRequest: function(info, port) {
+    MakeRequest: function(info) {
         delete info.headers['if-none-match'];
         delete info.headers['content-length'];
         // info.headers['content-length'] = Buffer.byteLength(info.body);
-        return requestify.request((info.host ? info.host : port) + info.path, {
+        return requestify.request((info.host ? info.host : config.CoreAPI) + info.path, {
             method: info.method,
             body: !info.body ? null : info.body,
             params: !info.params ? null : info.params,

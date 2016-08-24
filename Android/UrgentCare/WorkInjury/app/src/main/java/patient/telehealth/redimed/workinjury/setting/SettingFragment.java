@@ -71,7 +71,7 @@ public class SettingFragment extends Fragment implements SettingView, View.OnCli
         ButterKnife.bind(this, view);
 
         setHasOptionsMenu(true);
-        application.createTooBar(view, getActivity(), Key.fmSetting);
+        application.createTooBarTitle(view, Key.fmSetting);
 
         lblUserName.setText(username);
         lblCompanyName.setText(companyName);
@@ -103,10 +103,10 @@ public class SettingFragment extends Fragment implements SettingView, View.OnCli
                 iSettingPresenter.Logout();
                 break;
             case  R.id.layoutAccount:
-                application.replaceFragment(getActivity(), new AccountFragment(), Key.fmAccount, Key.fmSetting);
+                application.replaceFragment(new AccountFragment(), Key.fmAccount, Key.fmSetting);
                 break;
             case R.id.layoutCompany:
-                application.replaceFragment(getActivity(), new SiteListFragment(), Key.fmSiteList, Key.fmSetting);
+                application.replaceFragment(new SiteListFragment(), Key.fmSiteList, Key.fmSetting);
                 break;
             case R.id.layoutAbountRedimed:
                 iSettingPresenter.displayFAQs(Key.FAQ.titleAboutUs);
@@ -115,7 +115,7 @@ public class SettingFragment extends Fragment implements SettingView, View.OnCli
                 iSettingPresenter.displayFAQs(Key.FAQ.titleService);
                 break;
             case R.id.layoutChangePin:
-                application.replaceFragment(getActivity(), new PinFragment(), Key.fmChangePin, Key.fmSetting);
+                application.replaceFragment(new PinFragment(), Key.fmChangePin, Key.fmSetting);
                 break;
         }
     }
@@ -124,7 +124,7 @@ public class SettingFragment extends Fragment implements SettingView, View.OnCli
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                application.BackFragment(getActivity(), Key.fmHome, Key.fmHome);
+                application.BackFragment(Key.fmHome, Key.fmHome);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

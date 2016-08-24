@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "au.redimed.com.UCWork"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 2
         versionName "1.0.1"
@@ -50,7 +50,9 @@ dependencies {
     compile('io.socket:socket.io-client:0.7.0') {
         exclude group: 'org.json', module: 'json'
     }
-    compile 'com.opentok.android:opentok-android-sdk:2.8.1+'
+
+    compile 'com.opentok.android:opentok-android-sdk:2.8.2+'
+
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:support-v4:24.1.1'
     compile 'com.google.code.gson:gson:2.4'
@@ -65,6 +67,10 @@ dependencies {
     compile 'org.jdeferred:jdeferred-android-aar:1.2.4'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
+
+
+    compile 'com.google.firebase:firebase-core:9.4.0'
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
 }
 /*gcm*/
 apply plugin: 'com.google.gms.google-services'

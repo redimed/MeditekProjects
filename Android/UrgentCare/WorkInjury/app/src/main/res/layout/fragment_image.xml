@@ -5,9 +5,7 @@
     android:orientation="vertical"
     tools:context=".redisite.image.ImageFragment">
 
-    <include
-        android:id="@+id/toolBar"
-        layout="@layout/custom_toolbar" />
+    <include layout="@layout/tool_bar" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

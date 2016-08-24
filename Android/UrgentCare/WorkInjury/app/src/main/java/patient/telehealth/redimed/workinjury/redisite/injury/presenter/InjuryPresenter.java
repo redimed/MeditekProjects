@@ -19,9 +19,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import patient.telehealth.redimed.workinjury.MyApplication;
-import patient.telehealth.redimed.workinjury.R;
 import patient.telehealth.redimed.workinjury.model.EFormData;
-import patient.telehealth.redimed.workinjury.model.Singleton;
 import patient.telehealth.redimed.workinjury.redisite.injury.view.IInjuryView;
 
 /**
@@ -83,7 +81,6 @@ public class InjuryPresenter implements IInjuryPresenter {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newCalendar = Calendar.getInstance();
                 newCalendar.set(year, monthOfYear, dayOfMonth);
-                //iInjuryView.onLoadDOC(dateFormat.format(newCalendar.getTime()));
             }
         }, birthdayCalendar.get(Calendar.YEAR), birthdayCalendar.get(Calendar.MONTH), birthdayCalendar.get(Calendar.DATE));
         birthdayPickerDialog.show();

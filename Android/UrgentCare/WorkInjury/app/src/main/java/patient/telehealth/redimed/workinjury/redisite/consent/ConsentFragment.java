@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -35,6 +36,7 @@ import patient.telehealth.redimed.workinjury.model.ModelGeneral;
 import patient.telehealth.redimed.workinjury.redisite.consent.presenter.ConsentPresenter;
 import patient.telehealth.redimed.workinjury.redisite.consent.presenter.IConsentPresenter;
 import patient.telehealth.redimed.workinjury.redisite.consent.view.IConsentView;
+import patient.telehealth.redimed.workinjury.redisite.image.ImageFragment;
 import patient.telehealth.redimed.workinjury.utils.DialogConnection;
 import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.views.SignaturePad;
@@ -92,8 +94,11 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         View v = inflater.inflate(R.layout.fragment_consent, container, false);
         this.context = v.getContext();
+        setHasOptionsMenu(true);
         ButterKnife.bind(this, v);
+
         application.hidenKeyboard(v);
+        application.createTooBarLogo(v);
         iConsentPresenter = new ConsentPresenter(context, this);
 
         if (dataConsent.size() > 0){
@@ -174,7 +179,8 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
 
                     final SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                    pDialog.setTitleText("Loading");
+                    pDialog.setTitleText("");
+                    pDialog.setContentText("Loading");
                     pDialog.setCancelable(false);
                     pDialog.show();
 
@@ -185,12 +191,13 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
                             pDialog.dismiss();
 
                             SweetAlertDialog sDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
-                            sDialog.setTitleText("Send Redisite Success!");
+                            sDialog.setTitleText("");
+                            sDialog.setContentText("Send Redisite Success!");
                             sDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sDialog) {
                                     sDialog.dismissWithAnimation();
-                                    application.replaceFragment(getActivity(),new HomeFragment(), Key.fmHome, null);
+                                    application.replaceFragment(new HomeFragment(), Key.fmHome, null);
                                 }
                             });
                             sDialog.show();
@@ -234,6 +241,20 @@ public class ConsentFragment extends Fragment implements IConsentView, View.OnCl
         if (bitmap != null) {
             imgSignature.setImageBitmap(bitmap);
             vfContainer.setDisplayedChild(vfContainer.indexOfChild(layoutSubmit));
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (application.getRedisiteInjury())
+                    application.replaceFragment(new ImageFragment(), Key.fmRedisiteImage, Key.fmRedisiteInjury);
+                else
+                    application.replaceFragment(new ImageFragment(), Key.fmRedisiteImage, Key.fmRedisiteIllness);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

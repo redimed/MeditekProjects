@@ -1,6 +1,9 @@
 package patient.telehealth.redimed.workinjury.faq.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import patient.telehealth.redimed.workinjury.faq.view.IFAQsView;
 import patient.telehealth.redimed.workinjury.utils.Key;
 

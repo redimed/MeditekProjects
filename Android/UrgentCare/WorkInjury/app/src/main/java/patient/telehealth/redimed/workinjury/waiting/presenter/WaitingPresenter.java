@@ -24,7 +24,7 @@ import java.util.Map;
 import patient.telehealth.redimed.workinjury.R;
 import patient.telehealth.redimed.workinjury.call.CallActivity;
 import patient.telehealth.redimed.workinjury.socket.SocketService;
-import patient.telehealth.redimed.workinjury.utils.Config;
+import patient.telehealth.redimed.workinjury.network.Config;
 import patient.telehealth.redimed.workinjury.utils.DeviceUtils;
 import patient.telehealth.redimed.workinjury.waiting.view.IWaitingView;
 

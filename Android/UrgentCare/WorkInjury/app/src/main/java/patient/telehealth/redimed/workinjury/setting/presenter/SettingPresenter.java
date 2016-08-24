@@ -1,14 +1,9 @@
 package patient.telehealth.redimed.workinjury.setting.presenter;
 
 import android.app.Activity;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import com.google.gson.JsonObject;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.R;
@@ -16,6 +11,7 @@ import patient.telehealth.redimed.workinjury.faq.FAQsFragment;
 import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
 import patient.telehealth.redimed.workinjury.setting.view.SettingView;
+import patient.telehealth.redimed.workinjury.socket.SocketService;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -42,7 +38,8 @@ public class SettingPresenter implements ISettingPresenter {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 application.clearDataSharedPreferences();
-                application.replaceFragment(activity, new HomeFragment(),"Home",null);
+                activity.stopService(new Intent(activity, SocketService.class));
+                application.replaceFragment(new HomeFragment(),"Home",null);
             }
 
             @Override
@@ -58,7 +55,6 @@ public class SettingPresenter implements ISettingPresenter {
         Bundle bundle = new Bundle();
         bundle.putString("msg", content);
         fragment.setArguments(bundle);
-        application.replaceFragment(activity, fragment, activity.getString(R.string.FAQs),activity.getString(R.string.setting));
-        //fragment.Back(activity.getString(R.string.setting));
+        application.replaceFragment(fragment, activity.getString(R.string.FAQs),activity.getString(R.string.setting));
     }
 }

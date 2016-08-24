@@ -30,7 +30,7 @@ public class StaffListPresenter implements IStaffListPresenter {
     public void LoadStaffList() {
         String UserUid = String.valueOf(application.getDataSharedPreferences(Key.useruid, Key.defalt));
 
-        RESTClient.getCoreApi().getListStaff(UserUid, new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().getListStaff(UserUid, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 iStaffListView.StaffList(jsonObject);

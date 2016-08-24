@@ -18,7 +18,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import patient.telehealth.redimed.workinjury.MyApplication;
-import patient.telehealth.redimed.workinjury.R;
 import patient.telehealth.redimed.workinjury.api.UrgentRequest;
 import patient.telehealth.redimed.workinjury.faq.FAQsFragment;
 import patient.telehealth.redimed.workinjury.network.RESTClient;
@@ -53,7 +52,7 @@ public class HomePresenter implements IHomepresenter {
     public void getDetailCompany() {
         String UserUid = (String) application.getDataSharedPreferences(Key.useruid, Key.defalt);
 
-        RESTClient.getCoreApi().getDetailCompany(UserUid, new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().getDetailCompany(UserUid, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String companyUid = ((jsonObject.get(Key.Home.data).getAsJsonArray()).get(0).getAsJsonObject()).get(Key.Home.UID).getAsString();
@@ -129,9 +128,9 @@ public class HomePresenter implements IHomepresenter {
     public void displayFAQs(String content) {
         FAQsFragment fragment = new FAQsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Key.Home.msg, content);
+        bundle.putString(Key.FAQ.msg, content);
         fragment.setArguments(bundle);
-        application.replaceFragment(activity, fragment, Key.fmFAQs, Key.fmHome);
+        application.replaceFragment(fragment, Key.fmFAQs, Key.fmHome);
     }
 
     @Override
@@ -142,7 +141,7 @@ public class HomePresenter implements IHomepresenter {
         Bundle bundle = new Bundle();
         bundle.putString(Key.Work.workType, content);
         fragment.setArguments(bundle);
-        application.replaceFragment(activity, fragment, Key.fmWork, Key.fmHome);
+        application.replaceFragment(fragment, Key.fmWork, Key.fmHome);
     }
 
 }

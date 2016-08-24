@@ -73,7 +73,7 @@ public class SiteListFragment extends DialogFragment implements ISiteListView, A
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
-        application.createTooBar(view, getActivity(), Key.fmSiteList);
+        application.createTooBarTitle(view, Key.fmSiteList);
 
         return view;
     }
@@ -91,11 +91,11 @@ public class SiteListFragment extends DialogFragment implements ISiteListView, A
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (fmWork){
-                    application.replaceFragment(getActivity(), new WorkFragment(), Key.fmWork, Key.fmHome);
+                    application.replaceFragment(new WorkFragment(), Key.fmWork, Key.fmHome);
                 }else if (fmRedisite){
-                    application.replaceFragment(getActivity(), new PatientRedisiteFragment(), Key.fmRedisitePatient, Key.fmHome);
+                    application.replaceFragment(new PatientRedisiteFragment(), Key.fmRedisitePatient, Key.fmHome);
                 }else {
-                    application.replaceFragment(getActivity(), new SettingFragment(), Key.fmSetting, Key.fmHome);
+                    application.replaceFragment(new SettingFragment(), Key.fmSetting, Key.fmHome);
                 }
                 return true;
             default:
@@ -110,15 +110,15 @@ public class SiteListFragment extends DialogFragment implements ISiteListView, A
         if (fmWork){
             WorkFragment fragment = new WorkFragment();
             fragment.setArguments(bundle);
-            application.replaceFragment(getActivity(), fragment, Key.fmWork, Key.fmSiteList);
+            application.replaceFragment(fragment, Key.fmWork, Key.fmSiteList);
         }else if (fmRedisite){
             PatientRedisiteFragment fragment = new PatientRedisiteFragment();
             fragment.setArguments(bundle);
-            application.replaceFragment(getActivity(), fragment, Key.fmRedisitePatient, Key.fmHome);
+            application.replaceFragment(fragment, Key.fmRedisitePatient, Key.fmHome);
         }else {
             CompanyDetailFragment fragment = new CompanyDetailFragment();
             fragment.setArguments(bundle);
-            application.replaceFragment(getActivity(), fragment, Key.fmCompanyDetail, Key.fmSiteList);
+            application.replaceFragment(fragment, Key.fmCompanyDetail, Key.fmSiteList);
         }
     }
 }

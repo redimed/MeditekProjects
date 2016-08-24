@@ -6,9 +6,7 @@
     android:background="@color/lightBackground"
     tools:context="patient.telehealth.redimed.workinjury.redisite.consent.ConsentFragment">
 
-    <include
-        android:id="@+id/toolBar"
-        layout="@layout/custom_toolbar" />
+    <include layout="@layout/tool_bar"/>
 
     <ScrollView
         android:layout_width="wrap_content"

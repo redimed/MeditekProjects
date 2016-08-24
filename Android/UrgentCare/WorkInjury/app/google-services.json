@@ -1,22 +1,43 @@
 {
   "project_info": {
-    "project_number": "296998186967",
-    "project_id": "redimed-work-injury"
+    "project_number": "247846524188",
+    "firebase_url": "https://redimed-health-work-injury.firebaseio.com",
+    "project_id": "redimed-health-work-injury",
+    "storage_bucket": "redimed-health-work-injury.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:296998186967:android:5c9c4f26d812ce0f",
+        "mobilesdk_app_id": "1:247846524188:android:5c9c4f26d812ce0f",
         "android_client_info": {
           "package_name": "au.redimed.com.UCWork"
         }
       },
       "oauth_client": [
-        
+        {
+          "client_id": "247846524188-4f9u1ljbr6kfhdun30o1t0ephdiglbk1.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "247846524188-jb37dul51l6j96covc9fpt09gugrmh29.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "247846524188-e6r04pou45700aggbkv538jq0c2o7nue.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "247846524188-n593oflo05rio0jle3c3gi8ondjc8pfu.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "247846524188-3bfhske0hnqoujihu34te1pqr5ibmmfe.apps.googleusercontent.com",
+          "client_type": 3
+        }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDD5yXHaRXfQ4P9Bd_00crYAywvnUl92dg"
+          "current_key": "AIzaSyDwivHdrhye-sgUsUS5md-FhHMn9KIYcjw"
         }
       ],
       "services": {
@@ -25,12 +46,10 @@
         },
         "appinvite_service": {
           "status": 1,
-          "other_platform_oauth_client": [
-            
-          ]
+          "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

@@ -15,8 +15,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import patient.telehealth.redimed.workinjury.R;
@@ -34,14 +32,10 @@ public class WaitingActivity extends AppCompatActivity implements IWaitingView, 
     private LocalBroadcastManager localBroadcastManager;
     private static final String TAG = "=====WAITING=====";
 
-    @Bind(R.id.lblNameCaller)
-    TextView lblNameCaller;
-    @Bind(R.id.btnDecline)
-    Button btnDecline;
-    @Bind(R.id.btnAnswer)
-    Button btnAnswer;
-    @Bind(R.id.waitCallLayout)
-    RelativeLayout waitCallLayout;
+    @Bind(R.id.lblNameCaller) TextView lblNameCaller;
+    @Bind(R.id.btnDecline) Button btnDecline;
+    @Bind(R.id.btnAnswer) Button btnAnswer;
+    @Bind(R.id.waitCallLayout) RelativeLayout waitCallLayout;
 
     BootReceiver receiver = new BootReceiver() {
         @Override

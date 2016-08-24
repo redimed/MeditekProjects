@@ -6,7 +6,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import patient.telehealth.redimed.workinjury.MyApplication;
+import patient.telehealth.redimed.workinjury.R;
 import patient.telehealth.redimed.workinjury.home.HomeFragment;
 import patient.telehealth.redimed.workinjury.login.view.ILoginView;
 import patient.telehealth.redimed.workinjury.model.RolesModel;
@@ -28,7 +33,7 @@ public class LoginPresenter implements ILoginPresenter {
     private AppCompatActivity activity;
     private ILoginView iLoginView;
     private MyApplication application;
-    private String token;
+    private String deviceToken;
 
     public LoginPresenter(ILoginView iLoginView, Activity activity) {
         this.activity = (AppCompatActivity) activity;
@@ -36,7 +41,7 @@ public class LoginPresenter implements ILoginPresenter {
 
         gson = new Gson();
         application = MyApplication.getInstance();
-        token = (String) application.getDataSharedPreferences(Key.deviceToken, Key.defalt);
+        deviceToken = String.valueOf(application.getDataSharedPreferences(Key.deviceToken, Key.defalt));
     }
 
     @Override
@@ -52,7 +57,7 @@ public class LoginPresenter implements ILoginPresenter {
 
             @Override
             public void failure(RetrofitError error) {
-                iLoginView.ResponseError();
+                application.FunctionError(error.getLocalizedMessage());
             }
         });
     }
@@ -88,14 +93,14 @@ public class LoginPresenter implements ILoginPresenter {
 
             @Override
             public void failure(RetrofitError error) {
-
+                application.FunctionError(error.getLocalizedMessage());
             }
         });
     }
 
     @Override
     public void GetTelehealthUser(String uid) {
-        String[] data = {Key.Login.uid, uid, Key.token, token};
+        String[] data = {Key.Login.uid, uid, Key.token, deviceToken};
         RESTClient.getTelehealthApi().getTelehealthUser(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -106,21 +111,22 @@ public class LoginPresenter implements ILoginPresenter {
                 application.setDataSharedPreferences(Key.teleUid, TeleUid);
                 application.setDataSharedPreferences(Key.patientUid, PatientUid);
                 application.setDataSharedPreferences(Key.deviceID, DeviceID);
+                application.setDataSharedPreferences(Key.deviceToken, deviceToken);
 
                 //change page home
-                application.replaceFragment(activity, new HomeFragment(),Key.fmHome,null);
+                application.replaceFragment(new HomeFragment(),Key.fmHome,null);
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                application.FunctionError(error.getLocalizedMessage());
             }
         });
     }
 
     @Override
     public void ForgetPin(String phone) {
-        String[] data = {Key.Login.phone, phone, Key.token, token};
+        String[] data = {Key.Login.phone, phone, Key.token, deviceToken};
 
         RESTClient.getTelehealthApi().forgetPin(application.createJson(data), new Callback<JsonObject>() {
             @Override
@@ -130,6 +136,7 @@ public class LoginPresenter implements ILoginPresenter {
 
             @Override
             public void failure(RetrofitError error) {
+                application.FunctionError(error.getLocalizedMessage());
             }
         });
     }
@@ -168,5 +175,43 @@ public class LoginPresenter implements ILoginPresenter {
 
             }
         });
+    }
+
+    //Validated phone number match 10-15 digit numbers
+    @Override
+    public void validatedPhone(String phoneNumber) {
+        String result;
+        String code = activity.getResources().getString(R.string.phone_code);
+        if (phoneNumber.length() == 0) {
+            result = "wrong";
+        } else {
+            String expression = "^(/+61|0061|0)?4[0-9]{8}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(phoneNumber);
+            if (matcher.matches()) {
+                String mobile = null;
+                String subStringMobile = phoneNumber.substring(0, 4);
+                if (subStringMobile.equalsIgnoreCase("0061")) {
+                    mobile = code + phoneNumber.substring(4, phoneNumber.length());
+                } else {
+                    char subPhone = phoneNumber.charAt(0);
+                    switch (subPhone) {
+                        case '0':
+                            mobile = code + phoneNumber.substring(1);
+                            break;
+                        case '4':
+                            mobile = code + phoneNumber;
+                            break;
+                        case '+':
+                            mobile = code + phoneNumber;
+                            break;
+                    }
+                }
+                result = mobile;
+            } else {
+                result = "wrong";
+            }
+        }
+        iLoginView.onValidated(result);
     }
 }

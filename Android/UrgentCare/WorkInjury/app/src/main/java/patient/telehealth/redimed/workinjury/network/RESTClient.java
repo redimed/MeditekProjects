@@ -17,7 +17,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import patient.telehealth.redimed.workinjury.MyApplication;
 import patient.telehealth.redimed.workinjury.api.UrgentRequest;
-import patient.telehealth.redimed.workinjury.utils.Config;
 import patient.telehealth.redimed.workinjury.utils.Key;
 import patient.telehealth.redimed.workinjury.utils.RetrofitErrorHandler;
 import retrofit.Callback;
@@ -62,7 +61,7 @@ public class RESTClient {
                 .setEndpoint(Config.Telehealth)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
-                .setErrorHandler(new RetrofitErrorHandler())
+                .setErrorHandler(new CustomRetrofitErrorHandler())
                 .build();
 
         authAdapter = new RestAdapter.Builder()

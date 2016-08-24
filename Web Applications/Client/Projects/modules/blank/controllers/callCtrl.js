@@ -27,8 +27,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
         }, function(data) {
             console.log("send call", data);
         });
-        o.audio.loop = true;
-        o.audio.play();
+        // o.audio.loop = true;
+        // o.audio.play();
     };
 
     console.log("apiKey, sessionId, token");
@@ -54,7 +54,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     $scope.streams = OTSession.streams;
 
     $scope.$on("otStreamCreated", function(event, args) {
-        o.audio.pause();
+        //o.audio.pause();
         var mytimeout = $timeout($scope.onTimeout, 1000);
     });
 

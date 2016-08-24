@@ -160,10 +160,10 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                 iHomepresenter.displayFAQs(Key.FAQ.titleFAQs);
                 break;
             case R.id.btnUrgentCare:
-                iHomepresenter.displayFAQs(Key.FAQ.fileAboutUs);
+                iHomepresenter.displayFAQs(Key.FAQ.titleAboutUs);
                 break;
             case R.id.btnOther:
-                application.replaceFragment(getActivity(), new SettingFragment(),Key.fmSetting,Key.fmHome);
+                application.replaceFragment(new SettingFragment(),Key.fmSetting,Key.fmHome);
                 break;
             case R.id.btnRehab:
                 iHomepresenter.dispalyWork(Key.Work.rehab);
@@ -175,10 +175,11 @@ public class HomeFragment extends Fragment implements IHomeView, View.OnClickLis
                 iHomepresenter.dispalyWork(Key.Work.generalClinic);
                 break;
             case  R.id.btnLogin:
-                application.replaceFragment(getActivity() ,new LoginFragment(),Key.fmLogin,Key.fmHome);
+                application.replaceFragment(new LoginFragment(),Key.fmLogin,Key.fmHome);
                 break;
             case  R.id.btnRedisite:
-                application.ReplaceFragment(new PatientRedisiteFragment());
+                application.CreateDataRedisite();
+                application.replaceFragment(new PatientRedisiteFragment(), Key.fmRedisitePatient, Key.fmHome);
                 break;
         }
     }

@@ -286,12 +286,12 @@ public class ConsentPresenter implements IConsentPresenter {
         }
 
 
-        if (application.getTempDataInjury().size() > 0){
+        if (application.getRedisiteInjury()){
             templateUID = Redisite.templateInjuryUID;
             nameRedisite = Redisite.nameInjuryRedisite;
         }
 
-        if (application.getTempDataIllness().size() > 0){
+        if (!application.getRedisiteInjury()){
             templateUID = Redisite.templateIllnessUID;
             nameRedisite = Redisite.nameIllnessRedisite;
         }
@@ -312,7 +312,7 @@ public class ConsentPresenter implements IConsentPresenter {
 
         JsonObject data = new Gson().toJsonTree(modelGeneral).getAsJsonObject();
 
-        RESTClient.getEFormApi().submitRedisite(data, new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().submitRedisite(data, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 deferred.resolve(jsonObject);
@@ -407,7 +407,7 @@ public class ConsentPresenter implements IConsentPresenter {
     public Promise MakeAppointmentCompany(ModelAppointmentCompany modelAppointmentCompany) {
         final Deferred deferred = new DeferredObject();
         String[] data = {Key.Company.data, gson.toJson(modelAppointmentCompany)};
-        RESTClient.getCoreApi().makeAppointmentCompany(application.createJson(data), new Callback<JsonObject>() {
+        RESTClient.getTelehealthApi().makeAppointmentCompany(application.createJson(data), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 deferred.resolve(object);

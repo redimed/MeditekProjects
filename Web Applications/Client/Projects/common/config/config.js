@@ -91,3 +91,5 @@ var o = {
 var tracklog = {
     log: null
 }
+
+var meditekStorage = localStorage;

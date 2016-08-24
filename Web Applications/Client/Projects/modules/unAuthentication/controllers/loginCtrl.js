@@ -56,7 +56,7 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
                 $cookies.putObject("userInfo", data.user);
                 console.log(data.user);
                 $cookies.put("token", data.token);
-                $rootScope.refreshCode = data.refreshCode;
+                meditekStorage.refreshCode = data.refreshCode;
                 $state.go("authentication.home.list");
                 tracklog.log({name:'login', content:data});
 

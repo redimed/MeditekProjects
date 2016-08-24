@@ -200,6 +200,9 @@ app
             if(localStorage.getItem('listAppt') !== null) {
                 localStorage.removeItem('listAppt');
             }
+            if(meditekStorage.getItem('refreshCode')!==null) {
+                meditekStorage.removeItem('refreshCode')
+            }
         });
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
@@ -282,6 +285,10 @@ app
         });
         $rootScope.$on("$stateChangeStart", function() {});
 
+        /*window.addEventListener('storage', function(){
+            alert("new ne");
+        })*/
+
         tracklog.log = $rootScope.pushTrack = function (info) {
             var postData = {
                 UserAccountID: $cookies.getObject("userInfo")?$cookies.getObject("userInfo").ID: null,
@@ -319,7 +326,7 @@ app
                 },
                 url: o.const.authBaseUrl + '/api/refresh-token/GetNewToken',
                 data: {
-                    refreshCode: $rootScope.refreshCode
+                    refreshCode: meditekStorage.refreshCode
                 },
                 success: function(data, status, xhr) {
                     //STANDARD
@@ -333,9 +340,9 @@ app
                         alert(JSON.stringify(data));
                     }*/
                     if (data) {
-                        if (data.refreshCode != $rootScope.refreshCode) {
+                        if (data.refreshCode != meditekStorage.refreshCode) {
                             $cookies.put("token", data.token);
-                            $rootScope.refreshCode = data.refreshCode;
+                            meditekStorage.refreshCode = data.refreshCode;
                         }
                     }
                     tracklog.log({name: 'getNewToken', content: data});

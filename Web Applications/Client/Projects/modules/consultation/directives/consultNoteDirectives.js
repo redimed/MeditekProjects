@@ -1021,7 +1021,7 @@ app.directive('consultNote', function(consultationServices, doctorService, $moda
                 $scope.setCurrentRelevantGroup(key);
 
                 if (typeof(Window) == 'undefined' || Window.closed) {
-                    window.refreshCode = $rootScope.refreshCode;
+                    //window.refreshCode = meditekStorage.refreshCode;
                     window.relevantFileUploadKey = $scope.currentRelevantFileUploadKey;
                     window.relevantGroupKey = $scope.currentRelevantGroupKey;
                     Window = window.open($state.href("blank.drawing.home"), "", "fullscreen=0");

@@ -55,7 +55,7 @@
                         </th>
                         <th width="1" align="center" style="text-align:center">
                             <span style="display:block;">Referral Tracking</span>
-                            <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
+                            <!-- <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png"> -->
                         </th>
                         
                         <th width="1">Correspondence</th>
@@ -104,18 +104,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-click="WAAppointmentDetail(appt.UID,appt.Type)" 
+                    <tr 
                     ng-repeat="appt in info.listWaapointment.rows"
                     ng-class="hightLight(appt.Type)">
-                        <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
-                        <td>{{appt.Code}}</td>
-                        <td>
+                        <td ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
+                        <td ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >{{appt.Code}}</td>
+                        <td ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >
                             <span>
                                 {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
                             </span>
                             <span ng-if="appt.ishavePatientAppointment === true" style="color:red;">*</span>
                         </td>
-                        <td>
+                        <td ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >
                             <!--{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}-->
                             <span
                                 data-toggle="tooltip"
@@ -125,19 +125,21 @@
                             </span>
                         </td>
                         <!-- submit date -->
-                        <td>{{appt.CreatedDate | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{(appt.Type !== "Onsite")?appt.Type:"On Site"}}</td>
-                        <td>{{appt.FromTime | date: 'dd/MM/yyyy - HH:mm'}}</td>
+                        <td ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >{{appt.CreatedDate | date: 'dd/MM/yyyy'}}</td>
+                        <td ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >{{(appt.Type !== "Onsite")?appt.Type:"On Site"}}</td>
+                        <td ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >{{appt.FromTime | date: 'dd/MM/yyyy - HH:mm'}}</td>
                         <td>
-                            <span ng-if="appt.Status === info.apptStatus[3].value"><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
+                            <!-- <span ng-if="appt.Status === info.apptStatus[3].value"><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
                             <span ng-if="appt.Status === info.apptStatus[4].value"><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
                             <span ng-if="appt.Status === info.apptStatus[1].value"><img src="./theme/assets/layouts/layout/imgStatus/pending.png" ></span>
                             <span ng-if="appt.Status === info.apptStatus[0].value"><img src="./theme/assets/layouts/layout/imgStatus/received.png" ></span>
                             <span ng-if="appt.Status === info.apptStatus[6].value" class="label label-danger">Cancelled</span>
                             <span ng-if="appt.Status === info.apptStatus[2].value"><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
-                            <span ng-if="appt.Status === info.apptStatus[5].value"><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
+                            <span ng-if="appt.Status === info.apptStatus[5].value"><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span> -->
+                            <select class="form-control status" ng-model="appt.Status" name="Status" ng-options="item.value as item.name for item in info.apptStatus" style="color: white" ng-change="updateStatus(appt)" ng-class="{received:appt.Status ==='Received',cancelled:appt.Status ==='Cancelled',pendding:appt.Status ==='Pending',appointment_time:appt.Status ==='Approved',attended:appt.Status ==='Attended',not_attended:appt.Status ==='Not Attended',will_attended:appt.Status ==='Will Attended',wait_list_surgery:appt.Status ==='Waitlist',finished:appt.Status ==='Finished' }">
+                            </select>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center" ng-click="WAAppointmentDetail(appt.UID,appt.Type)" >
                             <i class="fa fa-check fa-1x font-green-haze" ng-if="appt.TelehealthAppointment.Correspondence === 'Y'"></i>
                             <i class="fa fa-remove fa-1x font-red-flamingo" ng-if="appt.TelehealthAppointment.Correspondence !== 'Y'"></i>
                         </td>
@@ -161,3 +163,19 @@
 <script type="text/javascript">
 ComponentsDateTimePickers.init();
 </script>
+
+<style type="text/css">
+    select.cancelled{ background-color: black; }
+    select.received { background-color: teal; }
+    select.pendding { background-color: brown; }
+    select.appointment_time { background-color: blue; }
+    select.attended{ background-color: purple; }
+
+    select.not_attended{ background-color: red; }
+    select.will_attended{ background-color: #c51162; }
+
+
+    select.wait_list_surgery{ background-color: orange ; }
+    select.finished{ background-color: green; }
+    select option { background-color: white; color: #333; }
+</style>

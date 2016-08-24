@@ -40,7 +40,7 @@ angular.module('app.authentication.service', [])
         };
 
         services.CreateRoomInOpentok = function() {
-            return apiTelehealth.one('telehealth/socket/generateSession').get();
+            return apiTelehealth.one('socket/generateSession').get();
         };
 
         return services;

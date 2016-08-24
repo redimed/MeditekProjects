@@ -39,7 +39,7 @@ app.controller('loginCtrl', function($scope, $rootScope, $state, $cookies, Unaut
                 //-----------------------------------------------------
                 // join room telehealth server
                 if (!_.isEmpty(socketTelehealth)) {
-                    socketJoinRoom(socketTelehealth, '/api/telehealth/socket/joinRoom', { uid: data.user.TelehealthUser.UID });
+                    socketJoinRoom(socketTelehealth, '/api/socket/joinRoom', { uid: data.user.TelehealthUser.UID });
                 }
                 //-----------------------------------------------------
 

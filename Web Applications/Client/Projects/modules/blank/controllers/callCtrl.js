@@ -18,7 +18,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
     o.loadingPage(true);
     //Connect to the session
     function sendCall() {
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        socketTelehealth.get('/api/socket/messageTransfer', {
             from: uidUser,
             to: uidCall,
             message: "call",
@@ -194,7 +194,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
 
     $scope.cancel = function() {
         console.log("socketTelehealth", socketTelehealth);
-        socketTelehealth.get('/api/telehealth/socket/messageTransfer', {
+        socketTelehealth.get('/api/socket/messageTransfer', {
             from: uidUser,
             to: uidCall,
             message: "cancel"
@@ -250,7 +250,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout, $cookies, Au
 
     $scope.addDoctor = function(doctor) {
         if ($scope.streams.length < 2) {
-            socketTelehealth.get('/api/telehealth/socket/addDoctor', {
+            socketTelehealth.get('/api/socket/addDoctor', {
                 from: uidUser,
                 to: doctor.UserAccount.TelehealthUser.UID,
                 message: "add",

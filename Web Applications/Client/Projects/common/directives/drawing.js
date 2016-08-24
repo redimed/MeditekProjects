@@ -26,11 +26,7 @@ angular.module("app.common.drawing",[])
             var textMove=false;
             var typingState;
 
-            scope.colors = [{'color': 'blue-ebonyclay'},
-            				{'color': 'green'},
-                            {'color': 'blue'},
-                            {'color': 'red'}];
-            scope.color = 'black';
+            scope.color = "#000000";
 
             scope.sizes=[
                 {'width':550,'height':500,desc:'Canvas 550x500'},
@@ -49,12 +45,42 @@ angular.module("app.common.drawing",[])
             ]
             scope.fontSize=scope.fontSizes[4];
 
-            scope.lineWidth = attrs.linewidth;
             scope.treeArr = [];
 
             canvas.width = attrs.width || element.width();
             canvas.height = attrs.height || element.height();
-                
+
+            scope.currentImageLoaderFile = null;
+            scope.currentImageLoaderFileUrl = null;
+            scope.rotateAngle = 0;
+
+            scope.lineWidths = [
+                {width: 1, desc: 'Line 1'},
+                {width: 2, desc: 'Line 2'},
+                {width: 3, desc: 'Line 3'},
+                {width: 4, desc: 'Line 4'},
+                {width: 5, desc: 'Line 5'},
+            ]
+
+            scope.lineWidth = scope.lineWidths[3];
+
+            scope.preErasingState = {
+                color:"#000000",
+                lineWidth: scope.lineWidths[3]
+            };
+
+            $("#colorInput").minicolors({
+                defaultValue: "#000000"
+            });
+            $("#colorInput").minicolors({
+                defaultValue: "#000000"
+            });
+
+            $("#colorInput").on("change", function(event){
+                scope.color= event.target.value;
+            })
+
+
             //-------------<tannv.dts---------------
 
             //canvas size functions begin
@@ -284,7 +310,7 @@ angular.module("app.common.drawing",[])
                 }
             }
             
-            scope.trackDoubleTouch;
+            /*scope.trackDoubleTouch;
             scope.trackCurrentNodeTouch;
             scope.selectNodeCBViaDoubleTouch = function (e) {
                 var now = new Date().getTime();
@@ -298,17 +324,14 @@ angular.module("app.common.drawing",[])
                  }
                 scope.trackDoubleTouch = new Date().getTime();
                 scope.trackCurrentNodeTouch = idArr[0];
-            }
-      
-            scope.changeColor = function (c) {
-            	if(c == 'blue-ebonyclay')
-	                scope.color = 'black';
-	            else
-	            	scope.color = c;
+            }*/
+            
+            scope.treeLoaded = function(e) {
+                console.log(">>>>>treeLoaded:", e);
+                $(e.currentTarget).jstree('open_all');
 
-                scope.lineWidth = attrs.linewidth;
-                scope.erasing = false;
-            };
+            }
+            
             
             //Lưu giữ transform cũ và clear canvas
             //Nếu không lưu giữ transform cũ thì config transform cũ sẽ bị xóa
@@ -322,11 +345,21 @@ angular.module("app.common.drawing",[])
                 clearCanvas();
                 cPush();
             };
-            
+
             scope.erase = function () {
-                scope.color = element.find('#myCanvas').css("background-color");
-                scope.lineWidth = 50;
-                scope.erasing = true;
+                if(!scope.erasing) {
+                    scope.preErasingState = {
+                        color: scope.color,
+                        lineWidth: scope.lineWidth
+                    }
+                    scope.color = element.find('#myCanvas').css("background-color");
+                    scope.lineWidth = {width:50, desc: 'Erase'};
+                    scope.erasing = true;
+                } else {
+                    scope.color = scope.preErasingState.color;
+                    scope.lineWidth = scope.preErasingState.lineWidth;
+                    scope.erasing = false;
+                }
             };
             
 
@@ -335,7 +368,7 @@ angular.module("app.common.drawing",[])
             	ctx.lineCap = "round";
             	ctx.fillStyle = "solid";
             	ctx.strokeStyle = scope.color;
-		        ctx.lineWidth = scope.lineWidth;
+		        ctx.lineWidth = scope.lineWidth.width;
 		        ctx.moveTo(lX,lY);
 		        ctx.lineTo(cX,cY);
 		        ctx.stroke();
@@ -346,17 +379,112 @@ angular.module("app.common.drawing",[])
             {
                 scope.cClearTyping();
             }
+
+
             angular.element(imageLoader).on('change',function(e){
+
+                scope.currentImageLoaderFile = e.target.files[0];
                 var objectUrl = URL.createObjectURL(e.target.files[0]);
+                scope.currentImageLoaderFileUrl = URL.createObjectURL(e.target.files[0]);
+                $('#imageLoaderPreview').attr('src',scope.currentImageLoaderFileUrl);
                 var img = new Image;
-                img.onload = function() {
+                var flagRotate = false;
+
+                img.onload = function () {
                     clearCanvas();
-                    ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+                    //----------------------
+                    var displayWidth, displayHeight = null;
+                    var ratio = null;
+                    if(img.height>img.width) {
+                        //Hình đứng
+                        displayHeight = canvas.height;
+                        ratio = img.height/canvas.height;
+                        displayWidth = Math.floor(img.width / ratio);
+                    } else {
+                        //Hình ngang
+                        displayWidth = canvas.width;
+                        ratio = img.width/canvas.width;
+                        displayHeight = Math.floor(img.height/ratio);
+                    }
+                    ctx.drawImage(img, (canvas.width-displayWidth)/2, (canvas.height-displayHeight)/2, displayWidth, displayHeight);
                     cPush();
                 }
                 img.src = objectUrl;
+
             });
 
+            scope.nextRotateAngle = function() {
+                if(scope.rotateAngle == (3/2)*Math.PI) {
+                    return 0;
+                } else {
+                    return scope.rotateAngle + Math.PI/2;
+                }
+            };
+
+            scope.rotateImageLoader = function() {
+                console.log("||||||||||||||||||||||||rotateImageLoader:");
+                if(scope.currentImageLoaderFileUrl) {
+                    var img = new Image;
+                    img.onload = function () {
+                        clearCanvas();
+                        scope.rotateAngle = scope.nextRotateAngle();
+                        console.log('rotateAngle', scope.rotateAngle);
+                        var sameLayout = scope.rotateAngle/Math.PI%1 == 0;
+                        console.log("sameLayout", sameLayout);
+                        var displayWidth, displayHeight = null;
+                        var canvasWidth = sameLayout?canvas.width:canvas.height;
+                        var canvasHeight = sameLayout?canvas.height:canvas.width;
+
+                        var quarterList = [
+                            0, //phan tu thu 1
+                            (1/2)*Math.PI, //phan tu thu 2
+                            Math.PI, //phan tu thu 3
+                            (3/2)*Math.PI, //phan tu thu 4
+                        ]
+                        var quarter = 0; //mac dinh phan tu thu 1
+
+                        var quarterVector = {
+                            0: {w: 0,h: 0}, //phan tu thu 1
+                            1: {w: 0, h: -canvas.width}, //phan tu thu 2
+                            2: {w: -canvas.width, h: -canvas.height}, //phan tu thu 3
+                            3: {w: -canvas.height, h: 0} //phan tu thu 4
+                        }
+
+                        var ratio = null;
+                        if(img.height > img.width) {
+                            console.log("Hinh dung")
+                            displayHeight = canvasHeight ;
+                            ratio = img.height/canvasHeight;
+                            displayWidth = Math.floor(img.width / ratio);
+                        } else {
+                            console.log("Hinh ngang");
+                            displayWidth = canvasWidth;
+                            ratio = img.width/canvasWidth;
+                            displayHeight = Math.floor(img.height/ratio);
+                        }
+
+                        for(var i =0; i<quarterList.length; i++) {
+                            if(quarterList[i] == scope.rotateAngle) {
+                                quarter = i;
+                                break;
+                            }
+                        }
+                        console.log("quarter", quarter, quarterList[quarter]);
+                        ctx.save();
+                        ctx.rotate(scope.rotateAngle);
+                        ctx.drawImage(img,quarterVector[quarter].w + (canvasWidth-displayWidth)/2, quarterVector[quarter].h +(canvasHeight-displayHeight)/2 , displayWidth, displayHeight);
+                        cPush();
+                        ctx.restore();
+                    }
+                    img.src = scope.currentImageLoaderFileUrl;
+                }
+            };
+
+            scope.changeLineWidth = function () {
+
+            }
+
+            
 
             angular.element(canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', 
               function (event) {

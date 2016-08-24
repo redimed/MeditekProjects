@@ -95,7 +95,6 @@ module.exports = {
                 }
             }
         },
-
         CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true,

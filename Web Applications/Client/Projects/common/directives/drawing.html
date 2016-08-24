@@ -23,70 +23,128 @@
 	    cursor: inherit;
 	    display: block;
 	}
+
+	.drawingColorChoose .minicolors-theme-default .minicolors-swatch {
+		width: 68px!important;
+		height: 33px;
+	}
+	.drawingColorChoose .minicolors-theme-default.minicolors-position-right .minicolors-swatch {
+		left: auto;
+		botttom:1px;
+	}
+	.drawingColorChoose .minicolors-theme-default .minicolors-swatch .minicolors-swatch-color{
+		border: 1px solid grey;
+
+	}
+
 </style>
 <div class="row">
-	<div class="col-md-3 col-sm-3">
-		<js-tree tree-data="scope" tree-model="treeArr" tree-events="dblclick:selectNodeCB; touchstart:selectNodeCBViaDoubleTouch"></js-tree>
+	<div class="col-md-3 col-sm-3" style="padding: 20px 20px; overflow: auto; height:660px;">
+		<!--<js-tree tree-data="scope" tree-model="treeArr" tree-events="click:selectNodeCB; touchstart:selectNodeCBViaDoubleTouch"></js-tree>-->
+		<!--<js-tree tree-data="scope" tree-model="treeArr" tree-events="click:selectNodeCB; touchstart:demoTouchStart; touchend:demoTouchEnd; loaded:treeLoaded"></js-tree>-->
+		<js-tree tree-data="scope" tree-model="treeArr" tree-events="click:selectNodeCB; loaded:treeLoaded"></js-tree>
 	</div>
 	<div class="col-md-9 col-sm-9">
-		<div class="form-inline">
+		<div class="form-inline" style="margin-bottom:10px">
+
 	        <select class="form-control" 
 	        	ng-options="z as z.desc for z in sizes " 
 	        	ng-model="size" ng-change="changeSize()">
 	        </select>
 
-			<a ng-click="changeColor(c.color)" href="javascript:;" 
-				class="btn btn-icon-only btn-circle" 
-				ng-class="c.color" ng-repeat="c in colors" >
-		    </a>
+			<select class="form-control"
+					ng-options = "lw as lw.desc for lw in lineWidths"
+					ng-model="lineWidth"
+					ng-disabled="erasing">
+			</select>
 
-		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="cUndo()" href="javascript:;"> 
-		    	<i class="fa fa-undo"></i>
-		    </a>
-		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="cRedo()" href="javascript:;"> 
-		    	<i class="fa fa-repeat"></i>
-		    </a>
 
-		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="erase()" href="javascript:;"> 
-		    	<i class="fa fa-eraser"></i>
-		    </a>
-		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="clear()" href="javascript:;"> 
-		    	<i class="fa fa-trash-o"></i>
-		    </a>
+			<!--<input style="height:34px; width:88px; font-size:12px"
+				   type="text"
+				   id="colorInput"
+				   class="form-control"
+				   ng-model="color"
+				   ng-click="changeColor()"
+				   ng-disabled="erasing">-->
 
-		    <!-- <a class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
-		    	<i class="fa fa-save"></i>
-		    </a> -->
-		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
-		    	<i class="fa fa-camera"></i>
-		    </a>
+			<span class="drawingColorChoose">
+				<input type="hidden"
+					   id="colorInput"
+					   class="demo"
+					   value="{{color}}">
+			</span>
 
-		    <span class="btn btn-default btn-file">
+
+			<!--<a href="javascript:;"
+			   class="btn btn-icon-only btn-circle">
+			</a>-->
+
+			<span class="btn btn-default btn-file">
 			    Load Picture<input type="file" id="imageLoader" accept="image/*" ng-click="imageLoaderClick()">
 			</span>
 
-			<a class="btn btn-success" ng-click="uploadDrawing()" href="javascript:;"> 
-		    	<i class="fa fa-floppy-o"></i> Save
-		    </a>
+			<img id="imageLoaderPreview" height="30px"/>
+
+			<a class="btn btn-default" ng-click="rotateImageLoader()" href="javascript:;">
+				<i class="fa fa-repeat"></i> Rotate & Apply
+			</a>
+
+			<a href="javascript:;"
+			   class="btn btn-icon-only btn-circle">
+			</a>
+		</div>
+
+
+		<div class="form-inline" style="margin-bottom:10px">
+			<a class="btn btn-default" ng-click="cUndo()" href="javascript:;">
+				<i class="fa fa-undo"></i> Undo
+			</a>
+			<a class="btn btn-default" ng-click="cRedo()" href="javascript:;">
+				<i class="fa fa-repeat"></i> Redo
+			</a>
+
+			<!--<a ng-class="erasing?'btn btn-danger':'btn btn-default'" ng-click="erase()" href="javascript:;">
+				<i class="fa fa-eraser"></i>  {{!erasing?"Erase": "Stop Erasing"}}
+			</a>-->
+
+			<a class="btn btn-default" ng-click="clear()" href="javascript:;">
+				<i class="fa fa-trash-o"></i> Clear
+			</a>
+
+			<a class="btn btn-default" ng-click="capture()" href="javascript:;">
+				<i class="fa fa-camera"></i> Capture
+			</a>
+
+			<a href="javascript:;"
+			   class="btn btn-icon-only btn-circle">
+			</a>
+
+			<a class="btn btn-success" ng-click="uploadDrawing()">
+				<i class="fa fa-floppy-o"></i> Save
+			</a>
 
 		</div>
-		<br/>
-		<div class="form-inline">
-			<select style="width:176px" class="form-control" 
-				ng-options="fontSize as fontSize.desc for fontSize in fontSizes" 
-				ng-model="fontSize">
+
+		<div class="form-inline" style="margin-bottom:10px">
+			<select style="width:176px" class="form-control"
+					ng-options="fontSize as fontSize.desc for fontSize in fontSizes"
+					ng-model="fontSize">
 			</select>
 			<input class="form-control" type="text" ng-model="cText"/>
 
-			<a ng-disabled="typing" class="btn btn-default" ng-click="cGetText()"> 
+			<a ng-disabled="typing" class="btn btn-default" ng-click="cGetText()">
 				Apply Text
-		    </a> 
-		    <a ng-disabled="!typing" class="btn btn-default" ng-click="cApplyText()"> 
+			</a>
+			<a ng-disabled="!typing" class="btn btn-default" ng-click="cApplyText()">
 				Save Text
-		    </a>
+			</a>
+
+			<a href="javascript:;"
+			   class="btn btn-icon-only btn-circle">
+			</a>
+
 		</div>
-		<br/>
-		<canvas id="myCanvas"></canvas> 
+		<canvas id="myCanvas"></canvas>
 	</div>
 </div>
 

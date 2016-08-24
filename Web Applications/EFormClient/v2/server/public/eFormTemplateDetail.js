@@ -168,6 +168,7 @@
 	        value: function _initSuggestWidth() {
 	            var self = this;
 	            var addEventToObject = function addEventToObject(srcObj, targetObj) {
+	                // if(!srcObj) return
 	                srcObj.addEventListener('keyup', function (event) {
 	                    if (event.keyCode === 13) {
 	                        var v = $(srcObj).val();
@@ -567,13 +568,13 @@
 	                        name: this.refs.textarea_name.value,
 	                        rows: this.refs.textarea_rows.value,
 	                        width: this.refs.textarea_width.value,
-	                        border: this.refs.textarea_border.value
+	                        disabled: this.refs.textarea_disabled.checked
 	                    };
 	                    object = this.list.select('sections', this.selected_obj.s_index, 'r', this.selected_obj.r_index, 'o', this.selected_obj.o_index);
 	                    object.set('name', params.name);
 	                    object.select('params').set('width', params.width);
 	                    object.select('params').set('rows', params.rows);
-	                    object.select('params').set('border', params.border);
+	                    object.select('params').set('disabled', params.disabled);
 
 	                    break;
 	                case EFORM_CONST.GROUP_OBJECT.DYNAMIC:
@@ -722,6 +723,131 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var self = this;
+	            function renderWidth(GroupObject) {
+	                var refWidth = GroupObject + "_width";
+	                var refDefWidth = GroupObject + "_suggest_width";
+	                console.log(refWidth, refDefWidth);
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'eform-row' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Width'
+	                    ),
+	                    ':  ',
+	                    _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: refWidth }),
+	                    ' ',
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Segment'
+	                    ),
+	                    ': ',
+	                    _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: refDefWidth }),
+	                    '   Max width : ',
+	                    MAX_WIDTH,
+	                    'px'
+	                );
+	            }
+
+	            function renderName(GroupObject) {
+	                var refName = GroupObject + "_name";
+	                // console.log(refName)
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'eform-row' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Name'
+	                    ),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: refName })
+	                );
+	            }
+
+	            function renderOrder(GroupObject) {
+	                var refName = GroupObject + "_order";
+	                // console.log(refName)
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'eform-row' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Order'
+	                    ),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { type: 'number', step: '1', min: '0', ref: refName, style: { width: '60%' } }),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: self._onChangeObjectOrder.bind(self, GroupObject) },
+	                        'Change'
+	                    ),
+	                    _react2.default.createElement('br', null)
+	                );
+	            }
+
+	            function renderAlign(GroupObject) {
+	                var refName = GroupObject + "_align";
+	                // console.log(refName)
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'eform-row' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Align: '
+	                    ),
+	                    _react2.default.createElement(
+	                        'select',
+	                        { ref: refName },
+	                        EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function (align) {
+	                            return _react2.default.createElement(
+	                                'option',
+	                                { value: align.code },
+	                                align.name
+	                            );
+	                        })
+	                    )
+	                );
+	            }
+
+	            function renderBorder(GroupObject) {
+	                var refName = GroupObject + "_border";
+	                // console.log(refName)
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'eform-row' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Border'
+	                    ),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: refName })
+	                );
+	            }
+
+	            function renderDisabled(GroupObject) {
+	                var refName = GroupObject + "_disabled";
+	                // console.log(refName)
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'eform-row' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Disabled'
+	                    ),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { type: 'checkbox', ref: refName }),
+	                    _react2.default.createElement('br', null)
+	                );
+	            }
+
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -793,39 +919,8 @@
 	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Title', ref: 'default_title' }),
 	                            _react2.default.createElement('br', null)
 	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Width'
-	                            ),
-	                            ':  ',
-	                            _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'default_width' }),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Segment'
-	                            ),
-	                            ': ',
-	                            _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'default_suggest_width' }),
-	                            '   Max width : ',
-	                            MAX_WIDTH,
-	                            'px'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Name'
-	                            ),
-	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'default_name' })
-	                        ),
+	                        renderWidth(EFORM_CONST.GROUP_OBJECT.CHECKBOX),
+	                        renderName(EFORM_CONST.GROUP_OBJECT.CHECKBOX),
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'eform-row' },
@@ -848,69 +943,13 @@
 	                            _react2.default.createElement('br', null),
 	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Value', ref: 'default_value' })
 	                        ),
+	                        renderBorder(EFORM_CONST.GROUP_OBJECT.CHECKBOX),
+	                        renderAlign(EFORM_CONST.GROUP_OBJECT.CHECKBOX),
+	                        renderDisabled(EFORM_CONST.GROUP_OBJECT.CHECKBOX),
+	                        renderOrder(EFORM_CONST.GROUP_OBJECT.CHECKBOX),
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Border'
-	                            ),
-	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'default_border' })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Align: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'select',
-	                                { ref: 'default_align' },
-	                                EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function (align) {
-	                                    return _react2.default.createElement(
-	                                        'option',
-	                                        { value: align.code },
-	                                        align.name
-	                                    );
-	                                })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Disabled'
-	                            ),
-	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'checkbox', ref: 'default_disabled' }),
-	                            _react2.default.createElement('br', null)
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Order'
-	                            ),
-	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'text', ref: 'default_order', style: { width: '60%' } }),
-	                            _react2.default.createElement(
-	                                'button',
-	                                { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX) },
-	                                'Change'
-	                            ),
-	                            _react2.default.createElement('br', null)
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
 	                            _react2.default.createElement(
 	                                'button',
 	                                { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.CHECKBOX) },
@@ -933,149 +972,51 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.INPUT },
+	                        renderWidth(EFORM_CONST.GROUP_OBJECT.INPUT),
+	                        renderName(EFORM_CONST.GROUP_OBJECT.INPUT),
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'eform-row' },
 	                            _react2.default.createElement(
 	                                'b',
 	                                null,
-	                                'Width'
-	                            ),
-	                            ': ',
-	                            _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'input_width' }),
-	                            '  ',
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Segment'
-	                            ),
-	                            ': ',
-	                            _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'input_suggest_width' }),
-	                            '   Max width : ',
-	                            MAX_WIDTH,
-	                            'px'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Name'
+	                                'Default Value'
 	                            ),
 	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'input_name' })
+	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Default value', ref: 'input_default_value' }),
+	                            _react2.default.createElement('br', null)
 	                        ),
+	                        renderBorder(EFORM_CONST.GROUP_OBJECT.INPUT),
+	                        renderAlign(EFORM_CONST.GROUP_OBJECT.INPUT),
+	                        renderDisabled(EFORM_CONST.GROUP_OBJECT.INPUT),
+	                        renderOrder(EFORM_CONST.GROUP_OBJECT.INPUT),
 	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Default Value'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Default value', ref: 'input_default_value' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Border'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'input_border' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Align'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'select',
-	                            { ref: 'input_align' },
-	                            EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function (align) {
-	                                return _react2.default.createElement(
-	                                    'option',
-	                                    { value: align.code },
-	                                    align.name
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Disabled'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'checkbox', ref: 'input_disabled' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', ref: 'input_order', style: { width: '60%' } }),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT) },
-	                            'Change'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT) },
-	                            'Submit'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
-	                            'Remove'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'button',
-	                            { style: { background: 'red' }, onClick: this._onCloneObject.bind(this) },
-	                            'Clone'
+	                            'div',
+	                            { className: 'eform-row' },
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.INPUT) },
+	                                'Submit'
+	                            ),
+	                            ' ',
+	                            _react2.default.createElement(
+	                                'button',
+	                                { style: { background: 'red' }, onClick: this._onRemoveObject.bind(this) },
+	                                'Remove'
+	                            ),
+	                            ' ',
+	                            _react2.default.createElement(
+	                                'button',
+	                                { style: { background: 'red' }, onClick: this._onCloneObject.bind(this) },
+	                                'Clone'
+	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.SIGN },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Width'
-	                            ),
-	                            ': ',
-	                            _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'sign_width' }),
-	                            '  ',
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Segment'
-	                            ),
-	                            ': ',
-	                            _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'sign_suggest_width' }),
-	                            '   Max width : ',
-	                            MAX_WIDTH,
-	                            'px'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Name'
-	                            ),
-	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'sign_name' })
-	                        ),
+	                        renderWidth(EFORM_CONST.GROUP_OBJECT.SIGN),
+	                        renderName(EFORM_CONST.GROUP_OBJECT.SIGN),
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'eform-row' },
@@ -1088,31 +1029,8 @@
 	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Default value', ref: 'sign_default_value' }),
 	                            _react2.default.createElement('br', null)
 	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'eform-row' },
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Disabled'
-	                            ),
-	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'checkbox', ref: 'sign_disabled' })
-	                        ),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', ref: 'sign_order', style: { width: '60%' } }),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN) },
-	                            'Change'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('br', null),
+	                        renderDisabled(EFORM_CONST.GROUP_OBJECT.SIGN),
+	                        renderOrder(EFORM_CONST.GROUP_OBJECT.SIGN),
 	                        _react2.default.createElement(
 	                            'button',
 	                            { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.SIGN) },
@@ -1134,43 +1052,8 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.TEXTAREA },
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement(
-	                                'div',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    'Width'
-	                                ),
-	                                ':  ',
-	                                _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'textarea_width' }),
-	                                '  ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    'Segment'
-	                                ),
-	                                ': ',
-	                                _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'textarea_suggest_width' }),
-	                                '   Max width : ',
-	                                MAX_WIDTH,
-	                                'px'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Name'
-	                            ),
-	                            _react2.default.createElement('br', null),
-	                            _react2.default.createElement('input', { type: 'text', placeholder: 'Name', ref: 'textarea_name' })
-	                        ),
+	                        renderWidth(EFORM_CONST.GROUP_OBJECT.TEXTAREA),
+	                        renderName(EFORM_CONST.GROUP_OBJECT.TEXTAREA),
 	                        _react2.default.createElement(
 	                            'b',
 	                            null,
@@ -1179,28 +1062,8 @@
 	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement('input', { type: 'number', min: '2', placeholder: 'Rows', ref: 'textarea_rows' }),
 	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Border'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'textarea_border' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', ref: 'textarea_order', style: { width: '60%' } }),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA) },
-	                            'Change'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('br', null),
+	                        renderDisabled(EFORM_CONST.GROUP_OBJECT.TEXTAREA),
+	                        renderOrder(EFORM_CONST.GROUP_OBJECT.TEXTAREA),
 	                        _react2.default.createElement(
 	                            'button',
 	                            { onClick: this._onSubmitObject.bind(this, EFORM_CONST.GROUP_OBJECT.TEXTAREA) },
@@ -1222,32 +1085,7 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'form-detail', ref: EFORM_CONST.GROUP_OBJECT.LABEL },
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement(
-	                                'div',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    'Width'
-	                                ),
-	                                ':  ',
-	                                _react2.default.createElement('input', { style: { width: '25%' }, type: 'text', placeholder: 'Width', ref: 'label_width' }),
-	                                ' ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    'Segment'
-	                                ),
-	                                ': ',
-	                                _react2.default.createElement('input', { style: { width: '15%' }, min: '0.5', max: '10', type: 'number', step: '0.5', ref: 'label_suggest_width' }),
-	                                '  Max width : ',
-	                                MAX_WIDTH,
-	                                'px'
-	                            )
-	                        ),
+	                        renderWidth(EFORM_CONST.GROUP_OBJECT.LABEL),
 	                        _react2.default.createElement(
 	                            'b',
 	                            null,
@@ -1256,45 +1094,9 @@
 	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement('textarea', { placeholder: 'Value', ref: 'label_value', rows: '10' }),
 	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Border'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', placeholder: 'Border', ref: 'label_border' }),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Align'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'select',
-	                            { ref: 'label_align' },
-	                            EFORM_CONST.DEFAULT_VALUE.ALIGN_ARR.map(function (align) {
-	                                return _react2.default.createElement(
-	                                    'option',
-	                                    { value: align.code },
-	                                    align.name
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Order'
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement('input', { type: 'text', ref: 'label_order', style: { width: '60%' } }),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this._onChangeObjectOrder.bind(this, EFORM_CONST.GROUP_OBJECT.LABEL) },
-	                            'Change'
-	                        ),
-	                        _react2.default.createElement('br', null),
+	                        renderBorder(EFORM_CONST.GROUP_OBJECT.LABEL),
+	                        renderAlign(EFORM_CONST.GROUP_OBJECT.LABEL),
+	                        renderOrder(EFORM_CONST.GROUP_OBJECT.LABEL),
 	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement(
 	                            'button',
@@ -25452,7 +25254,7 @@
 	            INPUT: 'input',
 	            TEXTAREA: 'textarea',
 	            DYNAMIC: 'dynamic',
-	            SIGN: 'signature',
+	            SIGN: 'sign',
 	            CHART: 'chart'
 	        },
 	        OBJECT_TYPE: {

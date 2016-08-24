@@ -354,8 +354,8 @@
                                         <div class="form-group" ng-class="{'has-error': userForm.Suburb.$invalid && submited} ">
                                             <label class="control-label col-lg-3 col-md-3 col-sm-4">Suburb</label>
                                             <div class="col-lg-9 col-md-9 col-sm-8">
-                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" required ng-disabled="ShowData.isLinkPatient">
-                                                <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p>
+                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" ng-disabled="ShowData.isLinkPatient">
+                                                <!-- <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p> -->
                                             </div>
                                         </div>
                                         <div class="form-group">

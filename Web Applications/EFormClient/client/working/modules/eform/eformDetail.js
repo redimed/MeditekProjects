@@ -985,6 +985,8 @@ module.exports = React.createClass({
                             fields.push(f);
                         }
                         if(field.type === 'rec_chart'){
+                            if(chart_flag)
+                                return;
                             chart_flag = true;
                             html2canvas($('#rec_chart_header'), {
                                 onrendered: function(canvas){
@@ -998,18 +1000,20 @@ module.exports = React.createClass({
                                     var image_main = canvas.toDataURL().replace('data:image/png;base64,','');
                                     delete f.series;
                                     f.base64Data = image_main;
+                                    f.type = "image";
                                     fields.push(f);
-                                    var g = $.extend({}, f);
+                                    fields.splice(-2, 1);
+                                    /*var g = $.extend({}, f);
                                     g.name = f.name+'_1';
+                                    f.type = "image";
                                     g.base64Data = image_header;
-                                    fields.push(g);
+                                    fields.push(g);*/
                                     var appointmentUID = self.appointmentUID;
                                     var data = {
                                         printMethod: self.EFormTemplate.PrintType,
                                         data: fields,
                                         templateUID: self.templateUID
                                     }
-
                                     EFormService.createPDFForm(data)
                                     .then(function(response){
                                         var fileName = 'report_'+moment().format('X');
@@ -1018,7 +1022,7 @@ module.exports = React.createClass({
                                         });
                                         var filesaver = saveAs(blob, fileName);
                                         setTimeout(function(){
-                                            //window.location.reload();
+                                            window.location.reload();
                                         }, 1000)
                                     }, function(error){
 

@@ -21,4 +21,7 @@ _.extend(routes, RegisterRoutes);
     -------------------------------------------------
 */
 
+var pushTrackingRoutes = require('./routes/pushTrackingRoutes');
+_.extend(routes, pushTrackingRoutes);
+
 module.exports.routes = routes;

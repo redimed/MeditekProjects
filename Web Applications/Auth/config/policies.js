@@ -38,5 +38,10 @@ var registerPolicies = require('./policies/RegisterPolicies');
 _.extend(policies, registerPolicies);
 //End module Register
 
+//Begin module PushTracking
+var pushTrackingPolicies = require('./policies/pushTrackingPolicies');
+_.extend(policies, pushTrackingPolicies);
+//End module PushTracking
+
 module.exports.policies = policies;
 

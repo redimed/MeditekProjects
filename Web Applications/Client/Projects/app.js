@@ -76,9 +76,13 @@ app
                                 alert("401:0xx : Error");
                             }
                         }
+                        if(tracklog.log) {
+                            tracklog.log({name: 'interceptors:unauthorization', content: response.data});
+                        }
                         $location.path('/login');
                     } else {
                         if (Boolean(response.headers().requireupdatetoken) === true) {
+                            tracklog.log({name: 'requireupdatetoken', content: "requireupdatetoken"});
                             $rootScope.getNewToken();
                         }
                     }
@@ -92,6 +96,7 @@ app
                         $rootScope.getNewToken();
                     }*/
                     if (Boolean(response.headers().requireupdatetoken) === true) {
+                        tracklog.log({name: 'requireupdatetoken', content: "requireupdatetoken"});
                         $rootScope.getNewToken();
                     }
 
@@ -277,6 +282,30 @@ app
         });
         $rootScope.$on("$stateChangeStart", function() {});
 
+        tracklog.log = $rootScope.pushTrack = function (info) {
+            var postData = {
+                UserAccountID: $cookies.getObject("userInfo")?$cookies.getObject("userInfo").ID: null,
+                SystemType: 'WEB',
+                TrackingName: info.name,
+                Content: info.content,
+                ClientTime: moment().format("DD/MM/YYYY HH:mm:ss")
+            }
+
+            $.ajax({
+                type: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                url: o.const.authBaseUrl + '/api/pushTrack',
+                data: JSON.stringify(postData),
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log("====================pushTrack=======================");
+                },
+            });
+        }
+
+
         //Get New Token
         $rootScope.getNewToken = function() {
             $.ajax({
@@ -292,7 +321,7 @@ app
                 data: {
                     refreshCode: $rootScope.refreshCode
                 },
-                success: function(data) {
+                success: function(data, status, xhr) {
                     //STANDARD
                     /*if(data && data.status=='hasToken')
                     {
@@ -309,7 +338,11 @@ app
                             $rootScope.refreshCode = data.refreshCode;
                         }
                     }
+                    tracklog.log({name: 'getNewToken', content: data});
                 },
+                error: function(xhr,status,error) {
+                    tracklog.log({name: 'getNewToken', content: error});
+                }
             });
         }
         if ($cookies.get('token')) {
